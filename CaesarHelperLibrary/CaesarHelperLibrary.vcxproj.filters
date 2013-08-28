@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="String Converter">
+      <UniqueIdentifier>{de555248-5730-4dfc-bd8f-f84803da9bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Queryable">
+      <UniqueIdentifier>{798ec669-2020-42a8-b3cf-3d468b766f35}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="StringConverter.h">
+      <Filter>String Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="VectorQueryable.h">
+      <Filter>Queryable</Filter>
+    </ClInclude>
+    <ClInclude Include="MapQueryable.h">
+      <Filter>Queryable</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="StringConverter.cpp">
+      <Filter>String Converter</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
