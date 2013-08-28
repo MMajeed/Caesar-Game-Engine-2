@@ -10,10 +10,10 @@ namespace CHL
 	{
 	protected:
 		static CWrappedClass* ms_instance;
-	private:
+
 		Singelton(){}
-		Singelton(const CSingleton& ) {}
-		Singelton& operator = (const Singelton&) {}
+		Singelton(const Singelton& cs) {}
+		Singelton& operator = (const Singelton& cs) {}
 
 	public:
 		static CWrappedClass& GetInstance()

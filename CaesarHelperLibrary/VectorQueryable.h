@@ -1,5 +1,5 @@
-#ifndef __Querable__
-#define __Querable__
+#ifndef __VectorQuerable__
+#define __VectorQuerable__
 
 #include <vector>
 #include <iterator>
@@ -103,4 +103,4 @@ namespace CHL
 	};
 }
 
-#endif //__Querable__
+#endif //__VectorQuerable__

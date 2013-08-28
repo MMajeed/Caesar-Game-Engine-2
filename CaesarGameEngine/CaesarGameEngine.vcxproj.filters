@@ -2,5 +2,53 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object.cpp">
+      <Filter>Interface\ObjectManager\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Interface\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicManager.cpp">
+      <Filter>Interface\GraphicManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaManager.cpp">
+      <Filter>Interface\LuaManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{747a2147-0c99-4312-a9e7-7cfb4b089298}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager">
+      <UniqueIdentifier>{29a346c0-800b-4145-b142-050b964a0ff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Object">
+      <UniqueIdentifier>{3f777352-1134-42b2-84d2-7e08bff2ff88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager">
+      <UniqueIdentifier>{55993b2d-ca20-429e-8822-8d1f60416fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager">
+      <UniqueIdentifier>{154dbd3d-8700-4836-950e-d4bc1c6ae093}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Interface.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Interface\ObjectManager\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Interface\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicManager.h">
+      <Filter>Interface\GraphicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaManager.h">
+      <Filter>Interface\LuaManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h" />
   </ItemGroup>
 </Project>

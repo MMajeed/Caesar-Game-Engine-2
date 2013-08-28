@@ -1,7 +1,7 @@
-#ifndef __Querable__
-#define __Querable__
+#ifndef __MapQuerable__
+#define __MapQuerable__
 
-#include <map>
+#include <hash_map>
 #include <iterator>
 
 namespace CHL
@@ -11,7 +11,7 @@ namespace CHL
 	{
 	public:
 		MapQuerable(){}
-		MapQuerable(std::map<key, value> input){ this->All = input; } 
+		MapQuerable(std::hash_map<key, value> input){ this->All = input; } 
 
 		// Accepts a lambda function that takes a T
 		// as paramter and returns bool if wants it or not. Check unit test for example
@@ -82,13 +82,13 @@ namespace CHL
 		}
 
 		// returns the begin of the iterator
-		typename std::map<key, value>::iterator begin()
+		typename std::hash_map<key, value>::iterator begin()
 		{
 			return this->All.begin();
 		}
 
 		// returns the emd of the iterator
-		typename std::map<key, value>::iterator end()
+		typename std::hash_map<key, value>::iterator end()
 		{
 			return this->All.end();
 		}
@@ -105,8 +105,8 @@ namespace CHL
 			return All.find(loc);
 		}
 
-		std::map<key, value> All;
+		std::hash_map<key, value> All;
 	};
 }
 
-#endif //__Querable__
+#endif //__MapQuerable__

@@ -1,15 +1,22 @@
 #include <Windows.h>
 #include <exception>
 #include <sstream>
-#include <StringConverter.h>
+#include <Converter.h>
+
+#include "Window.h"
+
 
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
-	UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(hInstance);
 	UNREFERENCED_PARAMETER(hPrevInstance);
-
+	UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(nCmdShow);
+	
 	try
 	{
+		Window::GetInstance().Init();
+		Window::GetInstance().Run();
 	}
 	catch(std::exception ex)
 	{
@@ -17,7 +24,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		wss << "Exception: Something went wrong" << std::endl
 			<< ex.what();
 
-		OutputDebugStringA( CHL::WStringtoString(wss.str()).c_str() );
+		OutputDebugStringA( CHL::ToString(wss.str()).c_str() );
 		MessageBox( NULL, wss.str().c_str(), L"Exception", MB_ICONERROR );
 		return EXIT_FAILURE;
 	}
