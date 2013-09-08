@@ -27,7 +27,7 @@ void Camera::MoveForward(float delta)
 	boost::numeric::ublas::vector<double> vTM = this->TargetMagnitude();
 	XMVECTOR xmTM = XMVectorSet(  (float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3) );
 	
-	XMMATRIX RotationMatrix( XMMatrixRotationRollPitchYaw( this->RadianPitch(), this->RadianYaw(), this->RadianRoll() ));
+	XMMATRIX RotationMatrix( XMMatrixRotationRollPitchYaw( (float)this->RadianPitch(), (float)this->RadianYaw(), (float)this->RadianRoll() ));
 
 	xmTM = XMVector3TransformCoord( xmTM, RotationMatrix );
 	xmTM = XMVector4Normalize(xmTM);
