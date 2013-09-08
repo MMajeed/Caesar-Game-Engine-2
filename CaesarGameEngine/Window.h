@@ -10,6 +10,8 @@ class Interface;
 class Window : public CHL::Singelton<Window>
 {
 public:
+	Window();
+
 	virtual void Init();
 	virtual void Run();	
 	virtual void Shutdown();

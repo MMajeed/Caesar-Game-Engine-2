@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarGameEngine", "CaesarG
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarHelperLibrary", "CaesarHelperLibrary\CaesarHelperLibrary.vcxproj", "{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{0D3CEB7E-BB6C-4F27-B026-925CA788BDCA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM

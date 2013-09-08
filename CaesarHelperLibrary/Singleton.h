@@ -18,14 +18,14 @@ namespace CHL
 	public:
 		static CWrappedClass& GetInstance()
 		{
-			if (ms_instance == NULL)
+			if (ms_instance == 0)
 				ms_instance = new CWrappedClass;
 			return *ms_instance;
 		}
 	};
 
 	template <class CWrappedClass>
-	CWrappedClass* Singelton<CWrappedClass>::ms_instance = NULL;
+	CWrappedClass* Singelton<CWrappedClass>::ms_instance = 0;
 }
 
 #endif //__Singelton___

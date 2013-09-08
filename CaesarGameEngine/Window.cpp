@@ -7,6 +7,14 @@
 #include "LuaManager.h"
 #include "ObjectManager.h"
 
+Window::Window()
+{
+	this->timer.AbsoluteTime = 0;
+	this->timer.FrameCount = 0;
+	this->timer.FrameRate = 0;
+	this->timer.SinceLastRun = 0;
+}
+
 void Window::Init()
 {
 	this->window.hInst = GetModuleHandle(NULL);
@@ -53,6 +61,13 @@ void Window::Init()
 	this->vInterfaces.push_back(&GraphicManager::GetInstance());
 	this->vInterfaces.push_back(&LuaManager::GetInstance());
 	this->vInterfaces.push_back(&ObjectManager::GetInstance());
+
+	for(auto iter = this->vInterfaces.begin();
+		iter != this->vInterfaces.end();
+		++iter)
+	{
+		(*iter)->Init();
+	}
 }
 
 void Window::Run()
@@ -105,20 +120,7 @@ void Window::Run()
 				iter != this->vInterfaces.end();
 				++iter)
 			{
-				(*iter)->Update(frameTime, deltaTime);
-			}
-			
-			if(this->timer.SinceLastRun > 0.012)
-			{
-				for(auto iter = this->vInterfaces.begin();
-					iter != this->vInterfaces.end();
-					++iter)
-				{
-					(*iter)->Run();
-				}
-
-				// render
-				this->timer.SinceLastRun = 0.0;
+				(*iter)->Run(frameTime, deltaTime);
 			}
 
 			// update fps

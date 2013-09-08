@@ -12,6 +12,7 @@ namespace CHL
 	public:
 		VectorQuerable(){}
 		VectorQuerable(std::vector<T> input){ this->All = input; } 
+		//VectorQuerable(VectorQuerable<const T> input){ this->All = input; } 
 
 		// Accepts a lambda function that takes a T
 		// as paramter and returns bool if wants it or not. Check unit test for example
@@ -21,8 +22,8 @@ namespace CHL
 		{
 			std::vector<T> whereVecObjects;
 
-			for(std::vector<T>::iterator iterObject = this->All.begin();
-				iterObject != this->All.end();
+			for(std::vector<T>::iterator iterObject = this->All.cbegin();
+				iterObject != this->All.cend();
 				++iterObject)
 			{
 				bool add = w(*iterObject);
@@ -42,8 +43,8 @@ namespace CHL
 		template<typename lambdaFunc>
 		VectorQuerable<T> ForEach(const lambdaFunc& w)
 		{
-			for(auto iterObject = this->All.begin();
-				iterObject != this->All.end();
+			for(auto iterObject = this->All.cbegin();
+				iterObject != this->All.cend();
 				++iterObject)
 			{
 				w(*iterObject);
@@ -60,8 +61,8 @@ namespace CHL
 		bool FirstOrDefault(const lambdaFunc& w, T& returnType)
 		{
 
-			for(auto iterObject = this->All.begin();
-				iterObject != this->All.end();
+			for(auto iterObject = this->All.cbegin();
+				iterObject != this->All.cend();
 				++iterObject)
 			{
 				bool add = w(*iterObject);
@@ -94,9 +95,20 @@ namespace CHL
 		}
 
 		// Gets you the value at that position
-		T operator[](std::size_t loc)
+		T& operator[](std::size_t loc)
 		{
 			return All[loc];
+		}
+
+		// Gets you the value at that position
+		const T& operator[](std::size_t loc) const
+		{
+			return All[loc];
+		}
+
+		void push_back(T object)
+		{
+			this->All.push_back(object);
 		}
 
 		std::vector<T> All;

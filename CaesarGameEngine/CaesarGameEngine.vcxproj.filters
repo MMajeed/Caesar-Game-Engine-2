@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp">
       <Filter>Interface\ObjectManager\Object</Filter>
     </ClCompile>
@@ -15,6 +14,28 @@
       <Filter>Interface\LuaManager</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp" />
+    <ClCompile Include="Interface.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScreenMessage.cpp">
+      <Filter>Interface\GraphicManager\GraphicMessages\ClearScreen</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaGraphic.cpp">
+      <Filter>Interface\LuaManager\LuaGraphic</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="BasicDrawable.cpp">
+      <Filter>Interface\GraphicManager\Drawable\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Helper.cpp">
+      <Filter>Interface\GraphicManager\D3D Tools\DX11Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Interface\ObjectManager\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Prespective.cpp">
+      <Filter>Interface\ObjectManager\Object\Prespective</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -31,6 +52,39 @@
     </Filter>
     <Filter Include="Interface\LuaManager">
       <UniqueIdentifier>{154dbd3d-8700-4836-950e-d4bc1c6ae093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\LuaGraphic">
+      <UniqueIdentifier>{c9433190-4678-4a85-9ee0-7016024ce6b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\GraphicMessages">
+      <UniqueIdentifier>{3535eea2-4217-40d0-a559-4f6efd02ac0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\GraphicMessages\ClearScreen">
+      <UniqueIdentifier>{95828d01-b664-4226-9f58-0c7fdaa863b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Drawable">
+      <UniqueIdentifier>{6d88bae9-ea64-4cc4-b826-f01079ffe5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Drawable\BasicObject">
+      <UniqueIdentifier>{da4e60d8-ac42-43be-897f-4c6100fecce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools">
+      <UniqueIdentifier>{fa0a746a-30ba-4ab4-968c-39a1e78d59d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\Vertex">
+      <UniqueIdentifier>{f5ea715e-c605-4df6-ac51-12b9ec78a0df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\DX11Helper">
+      <UniqueIdentifier>{6bac47c6-d799-4d8c-a919-e7463bf597f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\Buffers">
+      <UniqueIdentifier>{8bb0aea9-ba88-482c-a2d1-ff1315eb82e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Object\Camera">
+      <UniqueIdentifier>{678a8fde-6a27-4a55-bae3-df87c6efadfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Object\Prespective">
+      <UniqueIdentifier>{d51124a0-d515-4a3d-8838-b0c291bfa9c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,5 +104,32 @@
       <Filter>Interface\LuaManager</Filter>
     </ClInclude>
     <ClInclude Include="Window.h" />
+    <ClInclude Include="ClearScreenMessage.h">
+      <Filter>Interface\GraphicManager\GraphicMessages\ClearScreen</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaGraphic.h">
+      <Filter>Interface\LuaManager\LuaGraphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.h">
+      <Filter>Interface\GraphicManager\Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDrawable.h">
+      <Filter>Interface\GraphicManager\Drawable\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Interface\GraphicManager\D3D Tools\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Helper.h">
+      <Filter>Interface\GraphicManager\D3D Tools\DX11Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers.h">
+      <Filter>Interface\GraphicManager\D3D Tools\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Interface\ObjectManager\Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Prespective.h">
+      <Filter>Interface\ObjectManager\Object\Prespective</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
