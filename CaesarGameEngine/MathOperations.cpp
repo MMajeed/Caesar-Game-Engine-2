@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <xnamath.h>
 
-boost::numeric::ublas::matrix<double> MathOperation::MatrixPerspectiveFovLH( double FovAngleY, double AspectRatio, double NearZ,  double FarZ)
+boost::numeric::ublas::matrix<double> MathOperation::PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ)
 {
 	XMMATRIX xmPrespective =  XMMatrixPerspectiveFovLH( (float)FovAngleY, (float)AspectRatio, (float)NearZ, (float)FarZ);
 	xmPrespective = XMMatrixTranspose(xmPrespective);
@@ -36,4 +36,35 @@ boost::numeric::ublas::matrix<double> MathOperation::ViewCalculation( boost::num
 	boost::numeric::ublas::matrix<double> mView = XNAToUblas::Convert4x4(xmView);
 
 	return mView;
+}
+
+boost::numeric::ublas::matrix<double> MathOperation::ObjectCalculation( boost::numeric::ublas::vector<double> mLocation, boost::numeric::ublas::vector<double> mRotation, boost::numeric::ublas::vector<double> mScale)
+{
+	XMMATRIX xmTranslate = XMMatrixIdentity();
+	XMMATRIX xmRotateX = XMMatrixIdentity();	XMMATRIX xmRotateY = XMMatrixIdentity();	XMMATRIX xmRotateZ = XMMatrixIdentity();
+	XMMATRIX xmScaling = XMMatrixIdentity();
+	XMMATRIX xmObjectFinal = XMMatrixIdentity();
+
+	xmTranslate = XMMatrixTranslation( (float)mLocation(0), (float)mLocation(1), (float)mLocation(2));
+
+	xmRotateX = XMMatrixRotationX((float)mRotation(0));
+	xmRotateY = XMMatrixRotationY((float)mRotation(1));
+	xmRotateZ = XMMatrixRotationZ((float)mRotation(2));
+
+	xmScaling = XMMatrixScaling((float)mScale(0), (float)mScale(1), (float)mScale(2));
+
+	
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmScaling);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateX);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
+	xmObjectFinal = XMMatrixTranspose(xmObjectFinal);
+
+	XMFLOAT4X4 xmFinal4x4;
+	XMStoreFloat4x4(&xmFinal4x4, xmObjectFinal);
+
+	boost::numeric::ublas::matrix<double> mObjectFinal = XNAToUblas::Convert4x4(xmFinal4x4);
+
+	return mObjectFinal;
 }

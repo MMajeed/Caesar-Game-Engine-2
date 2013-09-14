@@ -2,10 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Object.cpp">
-      <Filter>Interface\ObjectManager\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectManager.cpp">
-      <Filter>Interface\ObjectManager</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object</Filter>
     </ClCompile>
     <ClCompile Include="GraphicManager.cpp">
       <Filter>Interface\GraphicManager</Filter>
@@ -31,28 +28,40 @@
       <Filter>Interface\GraphicManager\D3D Tools\DX11Helper</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Interface\ObjectManager\Object\Camera</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Prespective.cpp">
-      <Filter>Interface\ObjectManager\Object\Prespective</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object\Prespective</Filter>
     </ClCompile>
     <ClCompile Include="BasicObject.cpp">
-      <Filter>Interface\ObjectManager\Object\BasicObject</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object\BasicObject</Filter>
     </ClCompile>
     <ClCompile Include="MathOperations.cpp">
       <Filter>Tools\3DMath\Operations</Filter>
     </ClCompile>
-    <ClCompile Include="PlyFileDrawable.cpp">
-      <Filter>Interface\GraphicManager\Drawable\BasicObject\PlyFile</Filter>
-    </ClCompile>
     <ClCompile Include="XNAToUblas.cpp">
-      <Filter>Tools\3DMath\MatrixConverter</Filter>
+      <Filter>Tools\3DMath\XNAToUblas</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Tools\Model</Filter>
     </ClCompile>
     <ClCompile Include="LuaModel.cpp">
       <Filter>Interface\LuaManager\LuaModel</Filter>
+    </ClCompile>
+    <ClCompile Include="AddBasicDrawableMessage.cpp">
+      <Filter>Interface\GraphicManager\GraphicMessages\AddDrawableMessage\AddBasicDrawableMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaObject.cpp">
+      <Filter>Interface\LuaManager\LuaObject</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaUblas.cpp">
+      <Filter>Interface\LuaManager\LuaUblas</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManagerOutput.cpp">
+      <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Interface\ObjectManager\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -61,9 +70,6 @@
     </Filter>
     <Filter Include="Interface\ObjectManager">
       <UniqueIdentifier>{29a346c0-800b-4145-b142-050b964a0ff6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\ObjectManager\Object">
-      <UniqueIdentifier>{3f777352-1134-42b2-84d2-7e08bff2ff88}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interface\GraphicManager">
       <UniqueIdentifier>{55993b2d-ca20-429e-8822-8d1f60416fde}</UniqueIdentifier>
@@ -98,26 +104,11 @@
     <Filter Include="Interface\GraphicManager\D3D Tools\Buffers">
       <UniqueIdentifier>{8bb0aea9-ba88-482c-a2d1-ff1315eb82e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\ObjectManager\Object\Camera">
-      <UniqueIdentifier>{678a8fde-6a27-4a55-bae3-df87c6efadfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\ObjectManager\Object\Prespective">
-      <UniqueIdentifier>{d51124a0-d515-4a3d-8838-b0c291bfa9c4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\ObjectManager\Object\BasicObject">
-      <UniqueIdentifier>{4b70df34-d33e-4b5f-bb5b-9896e37279e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\Drawable\BasicObject\PlyFile">
-      <UniqueIdentifier>{57464cff-f802-467f-86fa-18fe6def26a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{aacba52e-89fa-4853-a2b7-a2b1292a89b3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Tools\3DMath">
       <UniqueIdentifier>{1e8e4855-3c33-4dab-8064-e71bec4264f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\3DMath\MatrixConverter">
-      <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
     </Filter>
     <Filter Include="Tools\3DMath\Operations">
       <UniqueIdentifier>{aa0e2fb9-b322-4b3d-9441-a7e500acf691}</UniqueIdentifier>
@@ -128,16 +119,58 @@
     <Filter Include="Interface\LuaManager\LuaModel">
       <UniqueIdentifier>{742a0059-19ba-46a1-80cc-23c389fcf9f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\D3DShaderInfo">
+      <UniqueIdentifier>{b652feeb-a059-4c6a-82ad-a7342552ec94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\GraphicMessages\AddDrawableMessage">
+      <UniqueIdentifier>{39d9d7b0-f993-4e60-a79f-f4f05ec51441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\GraphicMessages\AddDrawableMessage\AddBasicDrawableMessage">
+      <UniqueIdentifier>{dcb4e1a0-2c17-4d56-a786-55a8e01a7e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\LuaObject">
+      <UniqueIdentifier>{a72b9eae-3501-4e33-8b98-2456883103ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\3DMath\XNAToUblas">
+      <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\LuaUblas">
+      <UniqueIdentifier>{d1e8f1e2-8cda-4d04-91a0-c27057eb5bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Keys">
+      <UniqueIdentifier>{4d41b3af-6ae8-4bf8-9c48-ad601e832844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Input/Output">
+      <UniqueIdentifier>{97e0af94-a40a-4fc0-8c88-e2859edb0988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Input/Output\Input">
+      <UniqueIdentifier>{87d4ddf9-82ba-4d63-a2a7-49b1937e646d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Input/Output\Output">
+      <UniqueIdentifier>{f4835cf9-76b1-4cc2-9a86-3be8b6adf7bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Logic">
+      <UniqueIdentifier>{67b1e7b4-a4bc-4433-83c2-2247ecfea41c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Logic\Object">
+      <UniqueIdentifier>{3f777352-1134-42b2-84d2-7e08bff2ff88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Logic\Object\Camera">
+      <UniqueIdentifier>{678a8fde-6a27-4a55-bae3-df87c6efadfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Logic\Object\Prespective">
+      <UniqueIdentifier>{d51124a0-d515-4a3d-8838-b0c291bfa9c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Logic\Object\BasicObject">
+      <UniqueIdentifier>{4b70df34-d33e-4b5f-bb5b-9896e37279e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interface.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
-      <Filter>Interface\ObjectManager\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectManager.h">
-      <Filter>Interface\ObjectManager</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object</Filter>
     </ClInclude>
     <ClInclude Include="GraphicManager.h">
       <Filter>Interface\GraphicManager</Filter>
@@ -168,28 +201,46 @@
       <Filter>Interface\GraphicManager\D3D Tools\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Interface\ObjectManager\Object\Camera</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Prespective.h">
-      <Filter>Interface\ObjectManager\Object\Prespective</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object\Prespective</Filter>
     </ClInclude>
     <ClInclude Include="BasicObject.h">
-      <Filter>Interface\ObjectManager\Object\BasicObject</Filter>
+      <Filter>Interface\ObjectManager\Logic\Object\BasicObject</Filter>
     </ClInclude>
     <ClInclude Include="MathOperations.h">
       <Filter>Tools\3DMath\Operations</Filter>
     </ClInclude>
-    <ClInclude Include="PlyFileDrawable.h">
-      <Filter>Interface\GraphicManager\Drawable\BasicObject\PlyFile</Filter>
-    </ClInclude>
     <ClInclude Include="XNAToUblas.h">
-      <Filter>Tools\3DMath\MatrixConverter</Filter>
+      <Filter>Tools\3DMath\XNAToUblas</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Tools\Model</Filter>
     </ClInclude>
     <ClInclude Include="LuaModel.h">
       <Filter>Interface\LuaManager\LuaModel</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DShaderInfo.h">
+      <Filter>Interface\GraphicManager\D3D Tools\D3DShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="AddBasicDrawableMessage.h">
+      <Filter>Interface\GraphicManager\GraphicMessages\AddDrawableMessage\AddBasicDrawableMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="Keys.h">
+      <Filter>Tools\Keys</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaObject.h">
+      <Filter>Interface\LuaManager\LuaObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaUblas.h">
+      <Filter>Interface\LuaManager\LuaUblas</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManagerOutput.h">
+      <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Interface\ObjectManager\Logic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

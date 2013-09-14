@@ -1,5 +1,8 @@
 -- lua start
 
-ClearScreen(1.0, 1.0, 1.0)
 ClearScreen(0.5, 0.5, 0.5)
-ClearScreen(0.1, 0.5, 0.8)
+
+local boxDrawable = AddBasicObject("Assets/PlyFiles/Box2.ply", 
+                                   "Assets/ShaderFiles/VS_0_Regular.fx",
+                                   "Assets/ShaderFiles/PS_0_Basic.fx",
+                                   "")

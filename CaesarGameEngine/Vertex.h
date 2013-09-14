@@ -9,8 +9,7 @@ struct Vertex
 {
 	XMFLOAT4 Pos;
 	XMFLOAT4 Normal;
-	XMFLOAT2 Texture0;
-	XMFLOAT2 Texture1;    
+	XMFLOAT2 Texture;   
 };
 
 #endif //__Vertex__

@@ -31,12 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="VectorQueryable.h">
-      <Filter>Queryable</Filter>
-    </ClInclude>
-    <ClInclude Include="MapQueryable.h">
-      <Filter>Queryable</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
@@ -354,6 +348,12 @@
     </ClInclude>
     <ClInclude Include="luabind\detail\yes_no.hpp">
       <Filter>Lua\luabind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorQueryable.h">
+      <Filter>Queryable</Filter>
+    </ClInclude>
+    <ClInclude Include="MapQueryable.h">
+      <Filter>Queryable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

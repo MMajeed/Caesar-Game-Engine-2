@@ -3,16 +3,20 @@
 #include "Prespective.h"
 #include "Camera.h"
 
+#include "ObjectManager.h"
+#include "Keys.h"
+
 GraphicManager::GraphicManager()
-	: ClearColour(3)
+	: Interface("Graphic")
+	, ClearColour(3)
 {
 	this->direct3d.pd3dDevice			= 0;
-	this->direct3d.pImmediateContext		= 0;
+	this->direct3d.pImmediateContext	= 0;
 	this->direct3d.pSwapChain			= 0;
-	this->direct3d.pRenderTargetView		= 0;
+	this->direct3d.pRenderTargetView	= 0;
 	this->direct3d.pDepthStencilBuffer	= 0;
 	this->direct3d.pDepthStencilState	= 0;
-	this->direct3d.pDepthStencilView		= 0;
+	this->direct3d.pDepthStencilView	= 0;
 
 	this->ClearColour(0) = 0.5;
 	this->ClearColour(1) = 0.5;
@@ -56,13 +60,22 @@ void GraphicManager::ClearScreen()
 
 void GraphicManager::DrawObjects()
 {
-
+	
 }
 
 void GraphicManager::Present()
 {
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->direct3d.pSwapChain->Present( 0, 0 );
+}
+
+void GraphicManager::Insert(std::shared_ptr<Drawable> obj)
+{
+	this->objects.push_back(obj);
+}
+const CHL::VectorQueryable<std::shared_ptr<Drawable>> GraphicManager::AllObjects()
+{
+	return this->objects;
 }
 
 void GraphicManager::InitDevice()

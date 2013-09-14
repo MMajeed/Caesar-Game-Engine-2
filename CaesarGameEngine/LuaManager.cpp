@@ -4,9 +4,12 @@
 #include <sstream>
 
 #include "LuaGraphic.h"
+#include "LuaModel.h"
+#include "LuaUblas.h"
 
 LuaManager::LuaManager()
-	: lua(0)
+	: Interface("Lua")
+	, lua(0)
 {
 
 }
@@ -32,7 +35,7 @@ void LuaManager::Init()
 	case LUA_ERRFILE:
 		{
 			std::stringstream ss;
-			ss << "Cannot find/open lua script file: " << mainLua <<std::endl;
+			ss << "Cannot find/open lua script file: " << mainLua << std::endl;
 			throw std::exception( ss.str().c_str() );
 		}
 	case LUA_ERRSYNTAX:
@@ -49,7 +52,9 @@ void LuaManager::Init()
 		}
 	}
 
-	LuaGraphic::RegisterAllLuaFunction();
+	LuaGraphic::RegisterAllLuaFunction(this->lua);
+	LuaModel::RegisterAllLuaFunction(this->lua);
+	LuaUblas::RegisterAllLuaFunction(this->lua);
 
 	lua_call(this->lua,0,0);
 }
@@ -61,8 +66,6 @@ void LuaManager::Update(double realTime, double deltaTime)
 
 void LuaManager::Work()
 {
-	luaL_loadfile(lua, mainLua);
-	lua_call(lua,0,0);
 }
 
 void LuaManager::Shutdown()

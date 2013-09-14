@@ -1,49 +1,61 @@
-#ifndef __MapQuerable__
-#define __MapQuerable__
+#ifndef __MapQueryable__
+#define __MapQueryable__
 
 #include <hash_map>
 #include <iterator>
 
 namespace CHL
 {
-	template<typename key, typename value>
-	class MapQuerable
+	template<typename T1, typename T2>
+	class MapQueryable : public std::hash_map<T1, T2>
 	{
 	public:
-		MapQuerable(){}
-		MapQuerable(std::hash_map<key, value> input){ this->All = input; } 
+		MapQueryable(){}
 
 		// Accepts a lambda function that takes a T
 		// as paramter and returns bool if wants it or not. Check unit test for example
 		// It then goes through the list and returns you everyitem that returned true
 		template<typename lambdaFunc>
-		MapQuerable<key, value> Where(const lambdaFunc& w)
+		MapQueryable<T1, T2> Where(const lambdaFunc& w) const
 		{
-			std::map<key, value> whereVecObjects;
+			std::hash_map<T1, T2> whereVecObjects;
 
-			for(auto iterObject = this->All.begin();
-				iterObject != this->All.end();
+			for(auto iterObject = this->cbegin();
+				iterObject != this->cend();
 				++iterObject)
 			{
 				bool add = w(*iterObject);
 				if(add == true)
 				{
-					whereVecObjects[iterObject->first] = iterObject->second;
+					whereVecObjects.push_back(*iterObject);
 				}
 			}
 
-			MapQuerable<key, value> whereQuerableObject(whereVecObjects);
+			MapQueryable<T> whereQuerableObject(whereVecObjects);
 
 			return whereQuerableObject;
 		}
 		
 		// Goes through each item in the list and perform the func on it
-		// Check unit test for example
 		template<typename lambdaFunc>
-		MapQuerable<key, value> ForEach(const lambdaFunc& w)
+		MapQueryable<T1, T2> ForEach(const lambdaFunc& w) const
 		{
-			for(auto iterObject = this->All.begin();
-				iterObject != this->All.end();
+			for(auto iterObject = this->cbegin();
+				iterObject != this->cend();
+				++iterObject)
+			{
+				w(*iterObject);
+			}
+
+			return *this;
+		}
+
+		// Goes through each item in the list and perform the func on it
+		template<typename lambdaFunc>
+		MapQueryable<T1, T2> ForEach(const lambdaFunc& w)
+		{
+			for(auto iterObject = this->begin();
+				iterObject != this->end();
 				++iterObject)
 			{
 				w(*iterObject);
@@ -57,11 +69,11 @@ namespace CHL
 		// It returns the first value that returns true, but if it didn't value then it return false
 		// So do check it before you use
 		template<typename lambdaFunc>
-		bool FirstOrDefault(const lambdaFunc& w, std::pair<key, value>& returnType)
+		bool FirstOrDefault(const lambdaFunc& w, std::pair<T1, T2>& returnType) const
 		{
 
-			for(auto iterObject = this->All.begin();
-				iterObject != this->All.end();
+			for(auto iterObject = this->cbegin();
+				iterObject != this->cend();
 				++iterObject)
 			{
 				bool add = w(*iterObject);
@@ -74,39 +86,7 @@ namespace CHL
 
 			return false;
 		}
-
-		// Returns size
-		std::size_t size()
-		{
-			return this->All.size();
-		}
-
-		// returns the begin of the iterator
-		typename std::hash_map<key, value>::iterator begin()
-		{
-			return this->All.begin();
-		}
-
-		// returns the emd of the iterator
-		typename std::hash_map<key, value>::iterator end()
-		{
-			return this->All.end();
-		}
-
-		// Gets you the value at that position
-		value operator[](key loc)
-		{
-			return All[loc];
-		}
-
-		// Gets you the value at that position
-		std::pair<key, value> find(key loc)
-		{
-			return All.find(loc);
-		}
-
-		std::hash_map<key, value> All;
 	};
 }
 
-#endif //__MapQuerable__
+#endif //__MapQueryable__

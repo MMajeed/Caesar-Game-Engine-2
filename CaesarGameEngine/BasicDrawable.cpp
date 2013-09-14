@@ -1,14 +1,15 @@
+#include "BasicDrawable.h"
+
 #include <Converter.h>
 
-#include "BasicDrawable.h"
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
 #include "BasicObject.h"
 #include "ObjectManager.h"
 #include "XNAToUblas.h"
-
-BasicDrawable::BasicDrawable()
+#include "Keys.h"
+BasicDrawable::BasicDrawable(std::string newID) : Drawable(newID)
 {
 	this->D3DInfo.pVertexBuffer = 0;
 	this->D3DInfo.pIndexBuffer = 0;
@@ -52,6 +53,13 @@ void BasicDrawable::Update(float delta)
 
 void BasicDrawable::Draw(std::shared_ptr<Object> object)
 {
+	assert(object->Exist(Keys::ID));
+	assert(object->Exist(Keys::LOCATION));
+	assert(object->Exist(Keys::ROTATION));
+	assert(object->Exist(Keys::SCALE));
+	assert(object->Exist(Keys::COLOUR));
+	assert(object->Exist(Keys::GRAPHICDRAWABLEID));
+
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
 	this->SetupDrawInputVertexShader(object);
@@ -112,9 +120,12 @@ void BasicDrawable::SetupDrawRasterizeShader(std::shared_ptr<Object> object)
 }
 void BasicDrawable::SetupDrawTexture(std::shared_ptr<Object> object)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
-
-	pImmediateContext->PSSetShaderResources( 0, 1, &(this->D3DInfo.pTexture) );
+	if(!this->D3DInfo.textureFileName.empty())
+	{
+		ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	
+		pImmediateContext->PSSetShaderResources( 0, 1, &(this->D3DInfo.pTexture) );
+	}
 }
 void BasicDrawable::DrawObject(std::shared_ptr<Object> object)
 {
@@ -208,16 +219,39 @@ void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 }
 void BasicDrawable::InitTexture(ID3D11Device* device)
 {
-	std::wstring error;
-	if(!DX11Helper::LoadTextureFile(CHL::ToWString(this->D3DInfo.textureFileName), device, &(this->D3DInfo.pTexture), error))
+	if(!this->D3DInfo.textureFileName.empty())
 	{
-		throw std::exception(CHL::ToString(error).c_str());
+		std::wstring error;
+		if(!DX11Helper::LoadTextureFile(CHL::ToWString(this->D3DInfo.textureFileName), device, &(this->D3DInfo.pTexture), error))
+		{
+			throw std::exception(CHL::ToString(error).c_str());
+		}
 	}
 }
 
-Drawable* BasicDrawable::clone() const
+std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::string id,
+													const std::vector<Vertex>& vectorVertices,
+													const std::vector<WORD>&	vectorIndices,
+													D3DShaderInfo				vertexFile,
+													D3DShaderInfo				pixelFile,
+													std::string					textureFileName )
 {
-	Drawable* pNewCopy = 0;
+	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(id));
 
-	return pNewCopy;
+	newObject->D3DInfo.vertices = vectorVertices;
+	newObject->D3DInfo.indices = vectorIndices;
+	newObject->D3DInfo.VertexShaderInfo = vertexFile;
+	newObject->D3DInfo.PixelShaderInfo = pixelFile;
+	newObject->D3DInfo.textureFileName = textureFileName;
+
+	newObject->Init();
+
+	return newObject;
+}
+
+std::shared_ptr<Drawable> BasicDrawable::clone() const
+{
+	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(""));
+
+	return std::dynamic_pointer_cast<Drawable>(newObject);
 }

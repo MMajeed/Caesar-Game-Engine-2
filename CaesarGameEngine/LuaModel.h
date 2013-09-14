@@ -10,17 +10,7 @@ extern "C" {
 class LuaModel
 {
 public:
-	class Model
-	{
-	public:
-		static int NewModel(lua_State *lua);
-		static void Register();
-	};
-
-	static inline void RegisterAllLuaFunction()
-	{
-		LuaModel::Model::Register();
-	}
+	static void RegisterAllLuaFunction(lua_State *lua);
 };
 
 #endif //__LuaModel__

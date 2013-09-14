@@ -1,5 +1,5 @@
-#ifndef __VectorQuerable__
-#define __VectorQuerable__
+#ifndef __VectorQueryable__
+#define __VectorQueryable__
 
 #include <vector>
 #include <iterator>
@@ -7,23 +7,21 @@
 namespace CHL
 {
 	template<typename T>
-	class VectorQuerable
+	class VectorQueryable : public std::vector<T>
 	{
 	public:
-		VectorQuerable(){}
-		VectorQuerable(std::vector<T> input){ this->All = input; } 
-		//VectorQuerable(VectorQuerable<const T> input){ this->All = input; } 
+		VectorQueryable(){}
 
 		// Accepts a lambda function that takes a T
 		// as paramter and returns bool if wants it or not. Check unit test for example
 		// It then goes through the list and returns you everyitem that returned true
 		template<typename lambdaFunc>
-		VectorQuerable<T> Where(const lambdaFunc& w)
+		VectorQueryable<T>Where(const lambdaFunc& w) const
 		{
 			std::vector<T> whereVecObjects;
 
-			for(std::vector<T>::iterator iterObject = this->All.cbegin();
-				iterObject != this->All.cend();
+			for(auto iterObject = this->cbegin();
+				iterObject != this->cend();
 				++iterObject)
 			{
 				bool add = w(*iterObject);
@@ -33,18 +31,31 @@ namespace CHL
 				}
 			}
 
-			VectorQuerable<T> whereQuerableObject(whereVecObjects);
+			VectorQueryable<T>whereQuerableObject(whereVecObjects);
 
 			return whereQuerableObject;
 		}
 		
 		// Goes through each item in the list and perform the func on it
-		// Check unit test for example
 		template<typename lambdaFunc>
-		VectorQuerable<T> ForEach(const lambdaFunc& w)
+		VectorQueryable<T>ForEach(const lambdaFunc& w) const
 		{
-			for(auto iterObject = this->All.cbegin();
-				iterObject != this->All.cend();
+			for(auto iterObject = this->cbegin();
+				iterObject != this->cend();
+				++iterObject)
+			{
+				w(*iterObject);
+			}
+
+			return *this;
+		}
+
+		// Goes through each item in the list and perform the func on it
+		template<typename lambdaFunc>
+		VectorQueryable<T>ForEach(const lambdaFunc& w)
+		{
+			for(auto iterObject = this->begin();
+				iterObject != this->end();
 				++iterObject)
 			{
 				w(*iterObject);
@@ -61,8 +72,8 @@ namespace CHL
 		bool FirstOrDefault(const lambdaFunc& w, T& returnType) const
 		{
 
-			for(auto iterObject = this->All.cbegin();
-				iterObject != this->All.cend();
+			for(auto iterObject = this->cbegin();
+				iterObject != this->cend();
 				++iterObject)
 			{
 				bool add = w(*iterObject);
@@ -75,44 +86,7 @@ namespace CHL
 
 			return false;
 		}
-
-		// Returns size
-		std::size_t size()
-		{
-			return this->All.size();
-		}
-
-		// returns the begin of the iterator
-		typename std::vector<T>::iterator begin()
-		{
-			return this->All.begin();
-		}
-
-		// returns the emd of the iterator
-		typename std::vector<T>::iterator end()
-		{
-			return this->All.end();
-		}
-
-		// Gets you the value at that position
-		T& operator[](std::size_t loc)
-		{
-			return All[loc];
-		}
-
-		// Gets you the value at that position
-		const T& operator[](std::size_t loc) const
-		{
-			return All[loc];
-		}
-
-		void push_back(T object)
-		{
-			this->All.push_back(object);
-		}
-
-		std::vector<T> All;
 	};
 }
 
-#endif //__VectorQuerable__
+#endif //__VectorQueryable__

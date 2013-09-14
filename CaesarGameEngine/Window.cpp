@@ -9,10 +9,6 @@
 
 Window::Window()
 {
-	this->timer.AbsoluteTime = 0;
-	this->timer.FrameCount = 0;
-	this->timer.FrameRate = 0;
-	this->timer.SinceLastRun = 0;
 }
 
 void Window::Init()
@@ -73,20 +69,19 @@ void Window::Init()
 void Window::Run()
 {
 	SetTimer( this->window.hWnd, FRAMERATE_UPDATE_TIMER, 100, NULL );
+	
 
-	// setup the frame timer
-	LARGE_INTEGER timerFrequency = { 0 };
-	LARGE_INTEGER timerBase = { 0 };
-	LARGE_INTEGER timerLast = { 0 };
-	LARGE_INTEGER timerNow = { 0 };
-	if( !QueryPerformanceFrequency( &timerFrequency ) ) 
-		throw std::exception( "QueryPerformanceFrequency() failed to create a high-performance timer." );
-	double tickInterval = static_cast<double>( timerFrequency.QuadPart );
+	std::shared_ptr<boost::thread> graphicManagerThread
+		= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&GraphicManager::Run, &GraphicManager::GetInstance())));
+	this->vThreads.push_back(graphicManagerThread);
 
-	if( !QueryPerformanceCounter( &timerBase ) )
-		throw std::exception( "QueryPerformanceCounter() failed to read the high-performance timer." );
-	timerLast = timerBase;
-	this->timer.FrameCount = 0;
+	std::shared_ptr<boost::thread> luaManagerThread
+		= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&LuaManager::Run, &LuaManager::GetInstance())));
+	this->vThreads.push_back(luaManagerThread);
+
+	std::shared_ptr<boost::thread> objectManagerThread
+		= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&ObjectManager::Run, &ObjectManager::GetInstance())));
+	this->vThreads.push_back(objectManagerThread);
 
 	// Main message loop
 	MSG msg = {0};
@@ -96,36 +91,6 @@ void Window::Run()
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
-		}
-		else
-		{
-			// update timer
-			if( !QueryPerformanceCounter( &timerNow ) )
-				throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
-			long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
-			long long elapsedFrameCount = timerNow.QuadPart - timerLast.QuadPart;
-			timer.AbsoluteTime = elapsedCount / tickInterval;
-			double frameTime = elapsedFrameCount / tickInterval;
-			this->timer.SinceLastRun += frameTime;
-
-			double deltaTime = this->timer.SinceLastRun;
-
-			const double MIN_TIMESTEP = 0.001f;
-			if ( deltaTime > MIN_TIMESTEP )
-			{
-				deltaTime = MIN_TIMESTEP;
-			}
-
-			for(auto iter = this->vInterfaces.begin();
-				iter != this->vInterfaces.end();
-				++iter)
-			{
-				(*iter)->Run(frameTime, deltaTime);
-			}
-
-			// update fps
-			timerLast = timerNow;
-			++(timer.FrameCount);
 		}
 	}
 
@@ -151,14 +116,20 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 				case FRAMERATE_UPDATE_TIMER:
 				/* Update the frame rate and its string representation. */
 				{
-					Window::GetInstance().timer.FrameRate = Window::GetInstance().timer.FrameCount / Window::GetInstance().timer.AbsoluteTime;
 					std::wostringstream fr;
-					fr << std::setprecision(2) << std::fixed << Window::GetInstance().timer.FrameRate;
 
-					std::wostringstream caption;
-					caption << "Framerate: " << fr.str() << " ";
+					for(auto interFaceIter = Window::GetInstance().vInterfaces.begin();
+						interFaceIter != Window::GetInstance().vInterfaces.end();
+						++interFaceIter)
+					{
+						double frameTimer = (*interFaceIter)->timer.FrameCount / (*interFaceIter)->timer.AbsoluteTime;
+						
+						fr << (*interFaceIter)->Name.c_str() << " : ";
+						fr << std::setprecision(2) << std::fixed << frameTimer << ". ";
+					}
+					
+					SetWindowTextW( hWnd, fr.str().c_str() );
 
-					SetWindowTextW( hWnd, caption.str().c_str() );
 					break;
 				}
 			}

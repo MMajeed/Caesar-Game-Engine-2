@@ -7,7 +7,7 @@
 class Camera : public Object
 {
 public:
-	Camera();
+	Camera(std::string ID);
 
 	void MoveForward(float delta);
 	boost::numeric::ublas::matrix<double> GetViewMatrix();
@@ -25,16 +25,6 @@ public:
 	void RadianPitch(double);
 	const double RadianYaw();
 	void RadianYaw(double);
-
-	struct CameraKeys
-	{
-		const static std::string EYE;
-		const static std::string TARGETMAGNITUDE;
-		const static std::string UP;
-		const static std::string RADIANROLL;
-		const static std::string RADIANPITCH;
-		const static std::string RADIANYAW;
-	};
 
 	static const std::shared_ptr<Camera> GetFirstOrDefultCamera();
 };

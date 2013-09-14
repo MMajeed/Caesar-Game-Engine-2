@@ -3,22 +3,26 @@
 #include "MathOperations.h"
 #include "XNAToUblas.h"
 #include "ObjectManager.h"
+#include "Keys.h"
 
-Camera::Camera()
+Camera::Camera(std::string ID)
+	: Object(ID)
 {
 	boost::numeric::ublas::vector<double> eye(4);
 	eye(0) = 0.0f;	eye(1) = 5.0f;	eye(2) = -20.0f;	eye(3) = 0.0f; 
-	this->Store(Camera::CameraKeys::EYE, eye);
+	this->Store(Keys::EYE, eye);
 	boost::numeric::ublas::vector<double> target(4);
 	target(0) = 0.0f;	target(1) = 0.0f;	target(2) = 10.0f;	target(3) = 0.0f; 
-	this->Store(Camera::CameraKeys::TARGETMAGNITUDE, target);
+	this->Store(Keys::TARGETMAGNITUDE, target);
 	boost::numeric::ublas::vector<double> up(4);
 	up(0) = 0.0f;	up(1) = 1.0f;	up(2) = 0.0f;	up(3) = 0.0f; 
-	this->Store(Camera::CameraKeys::UP, up);
+	this->Store(Keys::UP, up);
 
-	this->Store(Camera::CameraKeys::RADIANROLL, 0.0);
-	this->Store(Camera::CameraKeys::RADIANPITCH, 0.0);
-	this->Store(Camera::CameraKeys::RADIANYAW, 0.0);
+	this->Store(Keys::RADIANROLL, 0.0);
+	this->Store(Keys::RADIANPITCH, 0.0);
+	this->Store(Keys::RADIANYAW, 0.0);
+
+	this->Store(Keys::Class, Keys::ClassType::Camera);
 }
 
 void Camera::MoveForward(float delta)
@@ -52,70 +56,63 @@ boost::numeric::ublas::matrix<double> Camera::GetViewMatrix()
 const boost::numeric::ublas::vector<double> Camera::Eye()
 {
 	boost::numeric::ublas::vector<double> vec(4);
-	this->Retrieve(Camera::CameraKeys::EYE, vec);
+	this->Retrieve(Keys::EYE, vec);
 	return vec;
 }
 const boost::numeric::ublas::vector<double> Camera::TargetMagnitude()
 {
 	boost::numeric::ublas::vector<double> vec(4);
-	this->Retrieve(Camera::CameraKeys::TARGETMAGNITUDE, vec);
+	this->Retrieve(Keys::TARGETMAGNITUDE, vec);
 	return vec;
 }
 const boost::numeric::ublas::vector<double> Camera::Up()
 {
 	boost::numeric::ublas::vector<double> vec(4);
-	this->Retrieve(Camera::CameraKeys::UP, vec);
+	this->Retrieve(Keys::UP, vec);
 	return vec;
 }
 void Camera::Eye(boost::numeric::ublas::vector<double> vec)
 {
-	this->Store(Camera::CameraKeys::EYE, vec);
+	this->Store(Keys::EYE, vec);
 }
 void Camera::TargetMagnitude(boost::numeric::ublas::vector<double> vec)
 {
-	this->Store(Camera::CameraKeys::TARGETMAGNITUDE, vec);
+	this->Store(Keys::TARGETMAGNITUDE, vec);
 }
 void Camera::Up(boost::numeric::ublas::vector<double> vec)
 {
-	this->Store(Camera::CameraKeys::UP, vec);
+	this->Store(Keys::UP, vec);
 }
 const double Camera::RadianRoll()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Camera::CameraKeys::RADIANROLL, reutrnValue);
+	this->Store(Keys::RADIANROLL, reutrnValue);
 	return reutrnValue;
 }
 const double Camera::RadianPitch()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Camera::CameraKeys::RADIANPITCH, reutrnValue);
+	this->Store(Keys::RADIANPITCH, reutrnValue);
 	return reutrnValue;
 }
 const double Camera::RadianYaw()
 {	
 	double reutrnValue = 0.0f;
-	this->Store(Camera::CameraKeys::RADIANYAW, reutrnValue);
+	this->Store(Keys::RADIANYAW, reutrnValue);
 	return reutrnValue;
 }
 void Camera::RadianRoll(double value)
 {
-	this->Store(Camera::CameraKeys::RADIANROLL, value);
+	this->Store(Keys::RADIANROLL, value);
 }
 void Camera::RadianPitch(double value)
 {
-	this->Store(Camera::CameraKeys::RADIANPITCH, value);
+	this->Store(Keys::RADIANPITCH, value);
 }
 void Camera::RadianYaw(double value)
 {
-	this->Store(Camera::CameraKeys::RADIANYAW, value);
+	this->Store(Keys::RADIANYAW, value);
 }
-
-const std::string Camera::CameraKeys::EYE = "EYE";
-const std::string Camera::CameraKeys::TARGETMAGNITUDE  = "TARGETMAGNITUDE";
-const std::string Camera::CameraKeys::UP  = "UP";
-const std::string Camera::CameraKeys::RADIANROLL  = "RADIANROLL";
-const std::string Camera::CameraKeys::RADIANPITCH  = "RADIANPITCH";
-const std::string Camera::CameraKeys::RADIANYAW  = "RADIANYAW";
 
 const std::shared_ptr<Camera> Camera::GetFirstOrDefultCamera()
 {

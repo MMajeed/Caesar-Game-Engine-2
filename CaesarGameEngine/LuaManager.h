@@ -13,7 +13,6 @@ extern "C" {
 #include <luabind\luabind.hpp>
 
 #include <Singleton.h>
-#include <MapQueryable.h>
 
 #include "Interface.h"
 

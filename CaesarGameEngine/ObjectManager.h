@@ -7,20 +7,23 @@
 #include <Singleton.h>
 #include <VectorQueryable.h>
 #include <memory>
+#include <boost/thread/mutex.hpp>
 
 class ObjectManager : public Interface, public CHL::Singelton<ObjectManager>
 {
 public:
+	ObjectManager();
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Work();
 	virtual void Shutdown();
 
 	void Insert(std::shared_ptr<Object> obj);
-	const CHL::VectorQuerable<std::shared_ptr<Object>> AllObjects();
+	const CHL::VectorQueryable<std::shared_ptr<Object>> AllObjects();
 
+	boost::mutex::scoped_lock lock;
 protected:	
-	CHL::VectorQuerable<std::shared_ptr<Object>> objects;
+	CHL::VectorQueryable<std::shared_ptr<Object>> objects;
 };
 
 #endif //__ObjectManager__

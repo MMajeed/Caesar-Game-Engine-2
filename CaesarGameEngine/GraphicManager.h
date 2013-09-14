@@ -6,9 +6,10 @@
 #include <d3d11.h>
 
 #include <Singleton.h>
-#include <MapQueryable.h>
+#include <VectorQueryable.h>
 
 #include "Interface.h"
+#include "Drawable.h"
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
 {
@@ -25,6 +26,9 @@ public:
 	virtual void DrawObjects();
 	virtual void Present();
 
+	void Insert(std::shared_ptr<Drawable> obj);
+	const CHL::VectorQueryable<std::shared_ptr<Drawable>> AllObjects();
+
 	// DirectX stuff
 	struct
 	{
@@ -40,6 +44,12 @@ public:
 		D3D11_VIEWPORT vp;
 	} direct3d;
 
+	
+protected:
+	CHL::VectorQueryable<std::shared_ptr<Drawable>> objects;
+
+	virtual void InitDevice();
+public:
 	boost::numeric::ublas::vector<double> ClearColour;
 
 	boost::numeric::ublas::matrix<double> GetCameraView();
@@ -57,8 +67,6 @@ public:
 		bool use;		
 		_Prespective(): view(4,4), use(false){}
 	}TempPrespective;
-protected:
-	virtual void InitDevice();
 };
 
 #endif //__GraphicManager__

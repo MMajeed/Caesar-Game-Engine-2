@@ -4,6 +4,8 @@
 #include <Singleton.h>
 #include <Windows.h>
 #include <vector>
+#include <boost/thread/thread.hpp>
+#include <memory>
 
 class Interface;
 
@@ -25,19 +27,11 @@ public:
 		UINT		height;
 	} window;
 
-	// timer stuff
-	struct
-	{
-		double 	  	AbsoluteTime;
-		long long	FrameCount;
-		double 	  	FrameRate;		
-		double 	  	SinceLastRun;
-	} timer;
-
 	static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
 
 protected:
 	std::vector<Interface*> vInterfaces;
+	std::vector<std::shared_ptr<boost::thread>> vThreads;
 	enum { FRAMERATE_UPDATE_TIMER = 1 };
 };
 

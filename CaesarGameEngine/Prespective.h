@@ -7,7 +7,7 @@
 class Prespective : public Object
 {
 public:
-	Prespective();
+	Prespective(std::string ID);
 
 	boost::numeric::ublas::matrix<double> GetPrespectiveMatrix();
 
@@ -21,15 +21,6 @@ public:
 	void MinViewable(double);
 	const double MaxViewable();
 	void MaxViewable(double);
-
-	struct PrespectiveKeys
-	{
-		const static std::string FOVANGLE;
-		const static std::string WIDTH;
-		const static std::string HEIGHT;
-		const static std::string MINVIEWABLE;
-		const static std::string MAXCIEWABLE;
-	};	
 
 	static const std::shared_ptr<Prespective> GetFirstOrDefultPrespective();
 };

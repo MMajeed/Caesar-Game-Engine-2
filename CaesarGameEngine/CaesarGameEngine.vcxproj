@@ -84,9 +84,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddBasicDrawableMessage.cpp" />
+    <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="MathOperations.cpp" />
+    <ClCompile Include="LuaUblas.cpp" />
+    <ClCompile Include="ObjectManagerOutput.cpp" />
     <ClCompile Include="XNAToUblas.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="BasicObject.cpp" />
@@ -100,14 +104,19 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
-    <ClCompile Include="PlyFileDrawable.cpp" />
     <ClCompile Include="Prespective.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddBasicDrawableMessage.h" />
+    <ClInclude Include="Keys.h" />
+    <ClInclude Include="LuaObject.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="MathOperations.h" />
+    <ClInclude Include="D3DShaderInfo.h" />
+    <ClInclude Include="LuaUblas.h" />
+    <ClInclude Include="ObjectManagerOutput.h" />
     <ClInclude Include="XNAToUblas.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="BasicObject.h" />
@@ -122,7 +131,6 @@
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
-    <ClInclude Include="PlyFileDrawable.h" />
     <ClInclude Include="Prespective.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />

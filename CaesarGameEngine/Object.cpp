@@ -1,14 +1,17 @@
 #include "Object.h"
 
+#include "Keys.h"
+
 #include <Converter.h>
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 #include <boost/numeric/ublas/io.hpp>
 #include <sstream>
 
-Object::Object()
+Object::Object(std::string ID)
 {
-	this->Store(Object::Keys::ID, CHL::ToString(boost::uuids::random_generator()()));
+	this->Store(Keys::ID, ID);
+	this->Store(Keys::Class, Keys::ClassType::Object);
 }
 
 void Object::Store(std::string key, const std::string& value)
@@ -28,52 +31,44 @@ void Object::Store(std::string key, const boost::numeric::ublas::vector<double>&
 	this->info[key] = CHL::ToString(value);
 }
 
-bool Object::Retrieve(std::string key, std::string& value)
+bool Object::Retrieve(std::string key, std::string& value) const
 {
-	std::hash_map<std::string, std::string>::iterator valueIterator;
+	auto valueIterator = this->info.find(key);
 
-	valueIterator = this->info.find(key);
-
-	if(valueIterator != this->info.end())
+	if(valueIterator != this->info.cend())
 	{
 		value = valueIterator->second;
 		return true;
 	}
 	return false;
 }
-bool Object::Retrieve(std::string key, int& value)
+bool Object::Retrieve(std::string key, int& value) const
 {
-	std::hash_map<std::string, std::string>::iterator valueIterator;
+	auto valueIterator = this->info.find(key);
 
-	valueIterator = this->info.find(key);
-
-	if(valueIterator != this->info.end())
+	if(valueIterator != this->info.cend())
 	{
 		value = CHL::ToInt(valueIterator->second);
 		return true;
 	}
 	return false;
 }
-bool Object::Retrieve(std::string key, double& value)
+bool Object::Retrieve(std::string key, double& value) const
 {
-	std::hash_map<std::string, std::string>::iterator valueIterator;
+	auto valueIterator = this->info.find(key);
 
-	valueIterator = this->info.find(key);
-
-	if(valueIterator != this->info.end())
+	if(valueIterator != this->info.cend())
 	{
 		value = CHL::ToDouble(valueIterator->second);
 		return true;
 	}
 	return false;
 }
-bool Object::Retrieve(std::string key, boost::numeric::ublas::vector<double>& value)
+bool Object::Retrieve(std::string key, boost::numeric::ublas::vector<double>& value) const
 {
-	std::hash_map<std::string, std::string>::iterator valueIterator;
+	auto valueIterator = this->info.find(key);
 
-	valueIterator = this->info.find(key);
-
-	if(valueIterator != this->info.end())
+	if(valueIterator != this->info.cend())
 	{
 		std::stringstream ss;
 		ss << valueIterator->second;
@@ -84,4 +79,14 @@ bool Object::Retrieve(std::string key, boost::numeric::ublas::vector<double>& va
 	return false;
 }
 
-const std::string Object::Keys::ID = "__ID";
+bool Object::Exist(std::string key) const
+{
+	auto valueIterator = this->info.find(key);
+
+	return (valueIterator != this->info.cend());
+}
+
+Object::operator CHL::MapQueryable<std::string, std::string>()
+{
+	return this->info;
+}

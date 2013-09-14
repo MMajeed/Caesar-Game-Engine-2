@@ -3,6 +3,8 @@
 
 #include "Drawable.h"
 #include "Vertex.h"
+#include "D3DShaderInfo.h"
+#include "Model.h"
 
 #include <string>
 #include <D3D11.h>
@@ -10,12 +12,19 @@
 class BasicDrawable : public Drawable
 {
 public:
-	BasicDrawable();
+	BasicDrawable(std::string newID);
 	virtual void Init();
 	virtual void Clean();
 	virtual void Update(float delta);
 	virtual void Draw(std::shared_ptr<Object> object);
-	virtual Drawable* clone() const;
+	virtual std::shared_ptr<Drawable> clone() const;
+	
+	static std::shared_ptr<BasicDrawable> Spawn(std::string					id,
+												const std::vector<Vertex>&	vectorVertices,
+												const std::vector<WORD>&	vectorIndices,
+												D3DShaderInfo				vertexFile,
+												D3DShaderInfo				pixelFile,
+												std::string					textureFileName = "");
 
 	struct
 	{
@@ -23,19 +32,9 @@ public:
 		ID3D11Buffer*				pIndexBuffer;
 		ID3D11Buffer*				pConstantBuffer;
 		ID3D11InputLayout*			pInputLayout;
-		struct
-		{
-			std::string				FileName;
-			std::string				EntryPoint;
-			std::string				Model;
-		}VertexShaderInfo;
+		D3DShaderInfo				VertexShaderInfo;
 		ID3D11VertexShader*			pVertexShader;
-		struct
-		{
-			std::string				FileName;
-			std::string				EntryPoint;
-			std::string				Model;
-		}PixelShaderInfo;
+		D3DShaderInfo				PixelShaderInfo;
 		ID3D11PixelShader*			pPixelShader;
 		ID3D11RasterizerState*		pRastersizerState;
 		std::string					textureFileName;
@@ -61,6 +60,8 @@ public:
 	virtual void SetupDrawTexture(std::shared_ptr<Object> object);
 	virtual void DrawObject(std::shared_ptr<Object> object);
 	virtual void CleanupAfterDraw(std::shared_ptr<Object> object);
+
+
 };
 
 

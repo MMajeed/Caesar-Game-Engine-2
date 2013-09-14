@@ -7,9 +7,9 @@
 class BasicObject : public Object
 {
 public:
-	BasicObject();
+	BasicObject(std::string ID);
 
-	boost::numeric::ublas::matrix<double> GetWorldLocation(boost::numeric::ublas::matrix<double> world, boost::numeric::ublas::matrix<double> prespective);
+	boost::numeric::ublas::matrix<double> GetWorldLocation(boost::numeric::ublas::matrix<double> camera, boost::numeric::ublas::matrix<double> prespective);
 	boost::numeric::ublas::matrix<double> GetMatrix();
 
 	const boost::numeric::ublas::vector<double> Location();
@@ -20,14 +20,6 @@ public:
 	void Scale(boost::numeric::ublas::vector<double>);
 	const boost::numeric::ublas::vector<double> Colour();
 	void Colour(boost::numeric::ublas::vector<double>);
-
-	struct BasicObjectKeys
-	{
-		const static std::string LOCATION;
-		const static std::string ROTATION;
-		const static std::string SCALE;
-		const static std::string COLOUR;
-	};
 
 	static std::shared_ptr<BasicObject> ConvertObjectPtr(std::shared_ptr<Object> obj);
 };

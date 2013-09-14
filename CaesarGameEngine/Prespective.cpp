@@ -1,19 +1,22 @@
 #include "Prespective.h"
 #include "ObjectManager.h"
 #include "MathOperations.h"
+#include "Keys.h"
 
-Prespective::Prespective()
+Prespective::Prespective(std::string ID)
+	: Object(ID)
 {
-	this->Store(Prespective::PrespectiveKeys::FOVANGLE, 0.0);
-	this->Store(Prespective::PrespectiveKeys::WIDTH, 0.0);
-	this->Store(Prespective::PrespectiveKeys::HEIGHT, 0.0);
-	this->Store(Prespective::PrespectiveKeys::MINVIEWABLE, 0.0);
-	this->Store(Prespective::PrespectiveKeys::MAXCIEWABLE, 0.0);
+	this->Store(Keys::FOVANGLE, 0.0);
+	this->Store(Keys::SCREENWIDTH, 0.0);
+	this->Store(Keys::SCREENHEIGHT, 0.0);
+	this->Store(Keys::MINVIEWABLE, 0.0);
+	this->Store(Keys::MAXCIEWABLE, 0.0);
+	this->Store(Keys::Class, Keys::ClassType::Prespective);
 }
 
 boost::numeric::ublas::matrix<double> Prespective::GetPrespectiveMatrix()
 {
-	boost::numeric::ublas::matrix<double> mMatrixPrespective =  MathOperation::MatrixPerspectiveFovLH(this->FovAngle(), this->Width() / this->Height(), this->MinViewable(), this->MaxViewable() );
+	boost::numeric::ublas::matrix<double> mMatrixPrespective =  MathOperation::PerspectiveFovLHCalculation(this->FovAngle(), this->Width() / this->Height(), this->MinViewable(), this->MaxViewable() );
 
 	return mMatrixPrespective;
 }
@@ -21,59 +24,53 @@ boost::numeric::ublas::matrix<double> Prespective::GetPrespectiveMatrix()
 const double Prespective::FovAngle()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Prespective::PrespectiveKeys::FOVANGLE, reutrnValue);
+	this->Store(Keys::FOVANGLE, reutrnValue);
 	return reutrnValue;
 }
 void Prespective::FovAngle(double value)
 {
-	this->Store(Prespective::PrespectiveKeys::FOVANGLE, value);
+	this->Store(Keys::FOVANGLE, value);
 }
 const double Prespective::Width()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Prespective::PrespectiveKeys::WIDTH, reutrnValue);
+	this->Store(Keys::SCREENWIDTH, reutrnValue);
 	return reutrnValue;
 }
 void Prespective::Width(double value)
 {
-	this->Store(Prespective::PrespectiveKeys::WIDTH, value);
+	this->Store(Keys::SCREENWIDTH, value);
 }
 const double Prespective::Height()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Prespective::PrespectiveKeys::HEIGHT, reutrnValue);
+	this->Store(Keys::SCREENHEIGHT, reutrnValue);
 	return reutrnValue;
 }
 void Prespective::Height(double value)
 {
-	this->Store(Prespective::PrespectiveKeys::HEIGHT, value);
+	this->Store(Keys::SCREENHEIGHT, value);
 }
 const double Prespective::MinViewable()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Prespective::PrespectiveKeys::MINVIEWABLE, reutrnValue);
+	this->Store(Keys::MINVIEWABLE, reutrnValue);
 	return reutrnValue;
 }
 void Prespective::MinViewable(double value)
 {
-	this->Store(Prespective::PrespectiveKeys::MINVIEWABLE, value);
+	this->Store(Keys::MINVIEWABLE, value);
 }
 const double Prespective::MaxViewable()
 {
 	double reutrnValue = 0.0f;
-	this->Store(Prespective::PrespectiveKeys::MAXCIEWABLE, reutrnValue);
+	this->Store(Keys::MAXCIEWABLE, reutrnValue);
 	return reutrnValue;
 }
 void Prespective::MaxViewable(double value)
 {
-	this->Store(Prespective::PrespectiveKeys::MAXCIEWABLE, value);
+	this->Store(Keys::MAXCIEWABLE, value);
 }
-
-const std::string Prespective::PrespectiveKeys::FOVANGLE = "FOVANGLE";
-const std::string Prespective::PrespectiveKeys::WIDTH  = "WIDTH";
-const std::string Prespective::PrespectiveKeys::HEIGHT  = "HEIGHT";
-const std::string Prespective::PrespectiveKeys::MINVIEWABLE = "MINVIEWABLE";
-const std::string Prespective::PrespectiveKeys::MAXCIEWABLE = "MAXVIEWABLE";
 
 const std::shared_ptr<Prespective> Prespective::GetFirstOrDefultPrespective()
 {

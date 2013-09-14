@@ -14,23 +14,31 @@ public:
 class Interface
 {
 public:
+	Interface(std::string name) : Name(name){}
+
 	virtual void Init() = 0;
-
-	virtual void Run(double realTime, double deltaTime);
-
+	virtual void Run();
 	virtual void Shutdown() = 0;
 
 	virtual void SubmitMessage(std::shared_ptr<Message> msg);
 
+	virtual ~Interface();
+
+	std::string Name;
+
+	// timer stuff
+	struct
+	{
+		double 	  	AbsoluteTime;
+		long long	FrameCount;
+		double 	  	SinceLastWork;
+	} timer;
+protected:
 	virtual void ProccessMessages();
 	virtual void Update(double realTime, double deltaTime) = 0;
 	virtual void Work() = 0;
 
-	virtual ~Interface();
-protected:
 	std::queue<std::shared_ptr<Message>> QueueMessages;
-
-	double SinceLastWork;
 };
 
 #endif
