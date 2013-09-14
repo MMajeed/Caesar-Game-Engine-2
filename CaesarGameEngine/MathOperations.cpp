@@ -1,6 +1,6 @@
 #include "MathOperations.h"
 
-#include "MatrixConverter.h"
+#include "XNAToUblas.h"
 
 #include <Windows.h>
 #include <xnamath.h>
@@ -12,7 +12,7 @@ boost::numeric::ublas::matrix<double> MathOperation::MatrixPerspectiveFovLH( dou
 	XMFLOAT4X4 xmMatrixPrespective;
 	XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
 
-	boost::numeric::ublas::matrix<double> mMatrixPrespective =  MatrixConverter::Convert4x4(xmMatrixPrespective);
+	boost::numeric::ublas::matrix<double> mMatrixPrespective =  XNAToUblas::Convert4x4(xmMatrixPrespective);
 
 	return mMatrixPrespective;
 }
@@ -33,7 +33,7 @@ boost::numeric::ublas::matrix<double> MathOperation::ViewCalculation( boost::num
 	XMFLOAT4X4  xmView;
 	XMStoreFloat4x4(&xmView, XMMatrixTranspose(XMMatrixLookAtLH( xmEye, xmTM, xmUp )));
 	
-	boost::numeric::ublas::matrix<double> mView = MatrixConverter::Convert4x4(xmView);
+	boost::numeric::ublas::matrix<double> mView = XNAToUblas::Convert4x4(xmView);
 
 	return mView;
 }

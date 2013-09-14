@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\Mohammed\Desktop\Caesar-Game-Engine-2\CaesarHelperLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Mohammed\Desktop\Caesar-Game-Engine-2\Lib\CaesarHelper\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\CaesarHelper\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -61,7 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,8 +84,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="MathOperations.cpp" />
-    <ClCompile Include="MatrixConverter.cpp" />
+    <ClCompile Include="XNAToUblas.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="BasicObject.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -103,8 +105,10 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="LuaModel.h" />
     <ClInclude Include="MathOperations.h" />
-    <ClInclude Include="MatrixConverter.h" />
+    <ClInclude Include="XNAToUblas.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="BasicObject.h" />
     <ClInclude Include="Buffers.h" />
@@ -126,4 +130,12 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="CopyDLL" AfterTargets="Rebuild;Build">
+    <Message Text="Copying All '*.dll' to bin directory" Importance="high">
+    </Message>
+    <ItemGroup>
+      <SourceFiles Include="$(SolutionDir)DLL\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(SolutionDir)$(Configuration)\" />
+  </Target>
 </Project>

@@ -39,14 +39,20 @@
     <ClCompile Include="BasicObject.cpp">
       <Filter>Interface\ObjectManager\Object\BasicObject</Filter>
     </ClCompile>
-    <ClCompile Include="MatrixConverter.cpp">
-      <Filter>Interface\GraphicManager\D3D Tools\3DMath\MatrixConverter</Filter>
-    </ClCompile>
     <ClCompile Include="MathOperations.cpp">
-      <Filter>Interface\GraphicManager\D3D Tools\3DMath\Operations</Filter>
+      <Filter>Tools\3DMath\Operations</Filter>
     </ClCompile>
     <ClCompile Include="PlyFileDrawable.cpp">
       <Filter>Interface\GraphicManager\Drawable\BasicObject\PlyFile</Filter>
+    </ClCompile>
+    <ClCompile Include="XNAToUblas.cpp">
+      <Filter>Tools\3DMath\MatrixConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Tools\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaModel.cpp">
+      <Filter>Interface\LuaManager\LuaModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -101,17 +107,26 @@
     <Filter Include="Interface\ObjectManager\Object\BasicObject">
       <UniqueIdentifier>{4b70df34-d33e-4b5f-bb5b-9896e37279e5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\3DMath">
-      <UniqueIdentifier>{1e8e4855-3c33-4dab-8064-e71bec4264f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\3DMath\MatrixConverter">
-      <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\3DMath\Operations">
-      <UniqueIdentifier>{aa0e2fb9-b322-4b3d-9441-a7e500acf691}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Interface\GraphicManager\Drawable\BasicObject\PlyFile">
       <UniqueIdentifier>{57464cff-f802-467f-86fa-18fe6def26a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools">
+      <UniqueIdentifier>{aacba52e-89fa-4853-a2b7-a2b1292a89b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\3DMath">
+      <UniqueIdentifier>{1e8e4855-3c33-4dab-8064-e71bec4264f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\3DMath\MatrixConverter">
+      <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\3DMath\Operations">
+      <UniqueIdentifier>{aa0e2fb9-b322-4b3d-9441-a7e500acf691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Model">
+      <UniqueIdentifier>{1e6a0a68-b911-4317-bf7a-18b66bd70e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\LuaModel">
+      <UniqueIdentifier>{742a0059-19ba-46a1-80cc-23c389fcf9f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -161,14 +176,20 @@
     <ClInclude Include="BasicObject.h">
       <Filter>Interface\ObjectManager\Object\BasicObject</Filter>
     </ClInclude>
-    <ClInclude Include="MatrixConverter.h">
-      <Filter>Interface\GraphicManager\D3D Tools\3DMath\MatrixConverter</Filter>
-    </ClInclude>
     <ClInclude Include="MathOperations.h">
-      <Filter>Interface\GraphicManager\D3D Tools\3DMath\Operations</Filter>
+      <Filter>Tools\3DMath\Operations</Filter>
     </ClInclude>
     <ClInclude Include="PlyFileDrawable.h">
       <Filter>Interface\GraphicManager\Drawable\BasicObject\PlyFile</Filter>
+    </ClInclude>
+    <ClInclude Include="XNAToUblas.h">
+      <Filter>Tools\3DMath\MatrixConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Tools\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaModel.h">
+      <Filter>Interface\LuaManager\LuaModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

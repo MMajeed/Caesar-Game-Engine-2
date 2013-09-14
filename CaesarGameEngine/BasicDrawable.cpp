@@ -6,7 +6,7 @@
 #include "Buffers.h"
 #include "BasicObject.h"
 #include "ObjectManager.h"
-#include "MatrixConverter.h"
+#include "XNAToUblas.h"
 
 BasicDrawable::BasicDrawable()
 {
@@ -65,14 +65,14 @@ void BasicDrawable::SetupDrawConstantBuffer(std::shared_ptr<Object> object)
 	std::shared_ptr<BasicObject> basicObject = BasicObject::ConvertObjectPtr(object);
 
 	auto m = basicObject->GetWorldLocation(GraphicManager::GetInstance().GetCameraView(), GraphicManager::GetInstance().GetPrespective() );
-	XMFLOAT4X4 finalMatrix = MatrixConverter::Convert4x4(m);
+	XMFLOAT4X4 finalMatrix = XNAToUblas::Convert4x4(m);
 
 	cBuffer::cbObjectConstantBuffer cbCEF;
 
 	cbCEF.finalMatrix = XMLoadFloat4x4(&finalMatrix);
-	cbCEF.colour.diffuse = MatrixConverter::ConvertVec4(basicObject->Colour());
-	cbCEF.colour.ambient = MatrixConverter::ConvertVec4(basicObject->Colour());
-	cbCEF.colour.spec = MatrixConverter::ConvertVec4(basicObject->Colour());
+	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(basicObject->Colour());
+	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(basicObject->Colour());
+	cbCEF.colour.spec = XNAToUblas::ConvertVec4(basicObject->Colour());
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 

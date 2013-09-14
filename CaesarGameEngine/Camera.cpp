@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 #include "MathOperations.h"
-#include "MatrixConverter.h"
+#include "XNAToUblas.h"
 #include "ObjectManager.h"
 
 Camera::Camera()

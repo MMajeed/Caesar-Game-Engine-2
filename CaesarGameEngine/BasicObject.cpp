@@ -1,6 +1,6 @@
 #include "BasicObject.h"
 
-#include "MatrixConverter.h"
+#include "XNAToUblas.h"
 
 BasicObject::BasicObject()
 {
@@ -14,12 +14,12 @@ BasicObject::BasicObject()
 
 boost::numeric::ublas::matrix<double> BasicObject::GetWorldLocation(boost::numeric::ublas::matrix<double> world, boost::numeric::ublas::matrix<double> prespective)
 {
-	XMFLOAT4X4  xmWorld = MatrixConverter::Convert4x4(world);
+	XMFLOAT4X4  xmWorld = XNAToUblas::Convert4x4(world);
 
-	XMFLOAT4X4  xmPrespective = MatrixConverter::Convert4x4(prespective);
+	XMFLOAT4X4  xmPrespective = XNAToUblas::Convert4x4(prespective);
 
 	boost::numeric::ublas::matrix<double> object = this->GetMatrix();
-	XMFLOAT4X4  xmObject = MatrixConverter::Convert4x4(object);
+	XMFLOAT4X4  xmObject = XNAToUblas::Convert4x4(object);
 
 	XMMATRIX xmFinal = XMMatrixIdentity();
 
@@ -30,7 +30,7 @@ boost::numeric::ublas::matrix<double> BasicObject::GetWorldLocation(boost::numer
 	XMFLOAT4X4 xm4x4;
 	XMStoreFloat4x4(&xm4x4, xmFinal);
 
-	boost::numeric::ublas::matrix<double> mFinal = MatrixConverter::Convert4x4(xm4x4);
+	boost::numeric::ublas::matrix<double> mFinal = XNAToUblas::Convert4x4(xm4x4);
 
 	return mFinal;
 }
@@ -43,12 +43,12 @@ boost::numeric::ublas::matrix<double> BasicObject::GetMatrix()
 	XMMATRIX xmObjectFinal = XMMatrixIdentity();
 
 	const boost::numeric::ublas::vector<double> mLocation = this->Location();
-	xmTranslate = XMMatrixTranslation( mLocation(0), mLocation(1), mLocation(2));
+	xmTranslate = XMMatrixTranslation( (float)mLocation(0), (float)mLocation(1), (float)mLocation(2));
 
 	const boost::numeric::ublas::vector<double> mRotation = this->Rotation();
-	xmRotateX = XMMatrixRotationX(mRotation(0));
-	xmRotateY = XMMatrixRotationY(mRotation(1));
-	xmRotateZ = XMMatrixRotationZ(mRotation(2));
+	xmRotateX = XMMatrixRotationX((float)mRotation(0));
+	xmRotateY = XMMatrixRotationY((float)mRotation(1));
+	xmRotateZ = XMMatrixRotationZ((float)mRotation(2));
 
 	const boost::numeric::ublas::vector<double> mScale = this->Scale();
 	xmScaling = XMMatrixScaling(mScale(0), mScale(1), mScale(2));
@@ -64,7 +64,7 @@ boost::numeric::ublas::matrix<double> BasicObject::GetMatrix()
 	XMFLOAT4X4 xmFinal4x4;
 	XMStoreFloat4x4(&xmFinal4x4, xmObjectFinal);
 
-	boost::numeric::ublas::matrix<double> mObjectFinal = MatrixConverter::Convert4x4(xmFinal4x4);
+	boost::numeric::ublas::matrix<double> mObjectFinal = XNAToUblas::Convert4x4(xmFinal4x4);
 
 	return mObjectFinal;
 }

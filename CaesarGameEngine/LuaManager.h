@@ -10,6 +10,8 @@ extern "C" {
 #include <lua-5.1.0\\lauxlib.h>
 }
 
+#include <luabind\luabind.hpp>
+
 #include <Singleton.h>
 #include <MapQueryable.h>
 
