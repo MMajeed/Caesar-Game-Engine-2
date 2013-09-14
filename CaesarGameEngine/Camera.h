@@ -35,6 +35,8 @@ public:
 		const static std::string RADIANPITCH;
 		const static std::string RADIANYAW;
 	};
+
+	static const std::shared_ptr<Camera> GetFirstOrDefultCamera();
 };
 
 #endif //__Camera__

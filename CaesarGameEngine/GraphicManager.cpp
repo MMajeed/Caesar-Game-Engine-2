@@ -1,9 +1,19 @@
 #include "GraphicManager.h"
 #include "Window.h"
+#include "Prespective.h"
+#include "Camera.h"
 
 GraphicManager::GraphicManager()
 	: ClearColour(3)
 {
+	this->direct3d.pd3dDevice			= 0;
+	this->direct3d.pImmediateContext		= 0;
+	this->direct3d.pSwapChain			= 0;
+	this->direct3d.pRenderTargetView		= 0;
+	this->direct3d.pDepthStencilBuffer	= 0;
+	this->direct3d.pDepthStencilState	= 0;
+	this->direct3d.pDepthStencilView		= 0;
+
 	this->ClearColour(0) = 0.5;
 	this->ClearColour(1) = 0.5;
 	this->ClearColour(2) = 0.5;
@@ -202,4 +212,29 @@ void GraphicManager::InitDevice()
 	this->direct3d.vp.TopLeftX = 0;
 	this->direct3d.vp.TopLeftY = 0;
 	this->direct3d.pImmediateContext->RSSetViewports( 1, &(this->direct3d.vp) );
+}
+
+boost::numeric::ublas::matrix<double> GraphicManager::GetCameraView()
+{
+	if(this->TempCamera.use == false)
+	{
+		std::shared_ptr<Camera> camera = Camera::GetFirstOrDefultCamera();
+		return camera->GetViewMatrix();
+	}
+	else
+	{
+		return this->TempCamera.view;
+	}
+}
+boost::numeric::ublas::matrix<double> GraphicManager::GetPrespective()
+{
+	if(this->TempPrespective.use == false)
+	{
+		std::shared_ptr<Prespective> prespective = Prespective::GetFirstOrDefultPrespective();
+		return prespective->GetPrespectiveMatrix();
+	}
+	else
+	{
+		return this->TempPrespective.view;
+	}
 }

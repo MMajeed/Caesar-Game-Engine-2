@@ -38,7 +38,7 @@ public:
 
 	struct cbObjectConstantBuffer
 	{
-		XMMATRIX mWorld;
+		XMMATRIX finalMatrix;
 		MaterialInfo colour;   
 	};
 };

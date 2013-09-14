@@ -1,9 +1,12 @@
+#include <Converter.h>
+
 #include "BasicDrawable.h"
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
-
-#include <Converter.h>
+#include "BasicObject.h"
+#include "ObjectManager.h"
+#include "MatrixConverter.h"
 
 BasicDrawable::BasicDrawable()
 {
@@ -47,54 +50,85 @@ void BasicDrawable::Update(float delta)
 
 }
 
-void BasicDrawable::Draw()
+void BasicDrawable::Draw(std::shared_ptr<Object> object)
 {
-	this->SetupDrawConstantBuffer();
-	this->SetupDrawVertexBuffer();
-	this->SetupDrawInputVertexShader();
-	this->SetupDrawPixelShader();
-	this->SetupDrawRasterizeShader();
-	this->SetupDrawTexture();
+	this->SetupDrawConstantBuffer(object);
+	this->SetupDrawVertexBuffer(object);
+	this->SetupDrawInputVertexShader(object);
+	this->SetupDrawPixelShader(object);
+	this->SetupDrawRasterizeShader(object);
+	this->SetupDrawTexture(object);
 }
 
-void BasicDrawable::SetupDrawConstantBuffer()
+void BasicDrawable::SetupDrawConstantBuffer(std::shared_ptr<Object> object)
 {
+	std::shared_ptr<BasicObject> basicObject = BasicObject::ConvertObjectPtr(object);
 
+	auto m = basicObject->GetWorldLocation(GraphicManager::GetInstance().GetCameraView(), GraphicManager::GetInstance().GetPrespective() );
+	XMFLOAT4X4 finalMatrix = MatrixConverter::Convert4x4(m);
+
+	cBuffer::cbObjectConstantBuffer cbCEF;
+
+	cbCEF.finalMatrix = XMLoadFloat4x4(&finalMatrix);
+	cbCEF.colour.diffuse = MatrixConverter::ConvertVec4(basicObject->Colour());
+	cbCEF.colour.ambient = MatrixConverter::ConvertVec4(basicObject->Colour());
+	cbCEF.colour.spec = MatrixConverter::ConvertVec4(basicObject->Colour());
+
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+
+	pImmediateContext->UpdateSubresource( this->D3DInfo.pConstantBuffer, 0, NULL, &cbCEF, 0, 0 );
+	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->D3DInfo.pConstantBuffer) );
+	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->D3DInfo.pConstantBuffer) );
 }
+void BasicDrawable::SetupDrawVertexBuffer(std::shared_ptr<Object> object)
+{	
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
-void BasicDrawable::SetupDrawVertexBuffer()
-{
-
+	UINT stride = sizeof( Vertex );
+	UINT offset = 0;
+	pImmediateContext->IASetVertexBuffers( 0, 1, &this->D3DInfo.pVertexBuffer, &stride, &offset );
+	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
+	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-
-void BasicDrawable::SetupDrawInputVertexShader()
+void BasicDrawable::SetupDrawInputVertexShader(std::shared_ptr<Object> object)
 {
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
+	// Set the input layout
+	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
+	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
 }
-
-void BasicDrawable::SetupDrawPixelShader()
+void BasicDrawable::SetupDrawPixelShader(std::shared_ptr<Object> object)
 {
-
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	
+	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
-
-void BasicDrawable::SetupDrawRasterizeShader()
+void BasicDrawable::SetupDrawRasterizeShader(std::shared_ptr<Object> object)
 {
-
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	
+	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-
-void BasicDrawable::SetupDrawTexture()
+void BasicDrawable::SetupDrawTexture(std::shared_ptr<Object> object)
 {
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
+	pImmediateContext->PSSetShaderResources( 0, 1, &(this->D3DInfo.pTexture) );
 }
-
-void BasicDrawable::DrawObject()
+void BasicDrawable::DrawObject(std::shared_ptr<Object> object)
 {
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
+	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-
-void BasicDrawable::CleanupAfterDraw()	
+void BasicDrawable::CleanupAfterDraw(std::shared_ptr<Object> object)	
 {
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
+	ID3D11ShaderResourceView* tab = NULL;
+
+	pImmediateContext->PSSetShaderResources(0,1,&tab);
 }
 
 void BasicDrawable::InitVertexBuffer(ID3D11Device* device)
@@ -106,7 +140,6 @@ void BasicDrawable::InitVertexBuffer(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 {
 	std::wstring error;
@@ -116,7 +149,6 @@ void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitInputLayout(ID3D11Device* device)
 {
 	std::wstring error;
@@ -136,7 +168,6 @@ void BasicDrawable::InitInputLayout(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitVertexShader(ID3D11Device* device)
 {
 	std::wstring error;
@@ -148,7 +179,6 @@ void BasicDrawable::InitVertexShader(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitPixelShader(ID3D11Device* device)
 {
 	std::wstring error;
@@ -160,7 +190,6 @@ void BasicDrawable::InitPixelShader(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {
 	std::wstring error;
@@ -169,7 +198,6 @@ void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 {
 	std::wstring error;
@@ -178,7 +206,6 @@ void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-
 void BasicDrawable::InitTexture(ID3D11Device* device)
 {
 	std::wstring error;

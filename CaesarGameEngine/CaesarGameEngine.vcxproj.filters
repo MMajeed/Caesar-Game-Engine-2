@@ -36,6 +36,18 @@
     <ClCompile Include="Prespective.cpp">
       <Filter>Interface\ObjectManager\Object\Prespective</Filter>
     </ClCompile>
+    <ClCompile Include="BasicObject.cpp">
+      <Filter>Interface\ObjectManager\Object\BasicObject</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixConverter.cpp">
+      <Filter>Interface\GraphicManager\D3D Tools\3DMath\MatrixConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="MathOperations.cpp">
+      <Filter>Interface\GraphicManager\D3D Tools\3DMath\Operations</Filter>
+    </ClCompile>
+    <ClCompile Include="PlyFileDrawable.cpp">
+      <Filter>Interface\GraphicManager\Drawable\BasicObject\PlyFile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -86,6 +98,21 @@
     <Filter Include="Interface\ObjectManager\Object\Prespective">
       <UniqueIdentifier>{d51124a0-d515-4a3d-8838-b0c291bfa9c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface\ObjectManager\Object\BasicObject">
+      <UniqueIdentifier>{4b70df34-d33e-4b5f-bb5b-9896e37279e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\3DMath">
+      <UniqueIdentifier>{1e8e4855-3c33-4dab-8064-e71bec4264f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\3DMath\MatrixConverter">
+      <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\D3D Tools\3DMath\Operations">
+      <UniqueIdentifier>{aa0e2fb9-b322-4b3d-9441-a7e500acf691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Drawable\BasicObject\PlyFile">
+      <UniqueIdentifier>{57464cff-f802-467f-86fa-18fe6def26a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interface.h">
@@ -130,6 +157,18 @@
     </ClInclude>
     <ClInclude Include="Prespective.h">
       <Filter>Interface\ObjectManager\Object\Prespective</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicObject.h">
+      <Filter>Interface\ObjectManager\Object\BasicObject</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixConverter.h">
+      <Filter>Interface\GraphicManager\D3D Tools\3DMath\MatrixConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="MathOperations.h">
+      <Filter>Interface\GraphicManager\D3D Tools\3DMath\Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="PlyFileDrawable.h">
+      <Filter>Interface\GraphicManager\Drawable\BasicObject\PlyFile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -36,6 +36,7 @@
     <ClInclude Include="lua-5.1.0\lvm.h" />
     <ClInclude Include="lua-5.1.0\lzio.h" />
     <ClInclude Include="MapQueryable.h" />
+    <ClInclude Include="rply\rply.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="VectorQueryable.h" />
     <ClInclude Include="Converter.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="lua-5.1.0\lvm.c" />
     <ClCompile Include="lua-5.1.0\lzio.c" />
     <ClCompile Include="lua-5.1.0\print.c" />
+    <ClCompile Include="rply\rply.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}</ProjectGuid>
@@ -124,7 +126,7 @@
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
-      <WarningLevel>Level4</WarningLevel>
+      <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4996;4244;4702;4006</DisableSpecificWarnings>

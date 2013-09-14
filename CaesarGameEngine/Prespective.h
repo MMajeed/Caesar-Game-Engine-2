@@ -9,7 +9,7 @@ class Prespective : public Object
 public:
 	Prespective();
 
-	boost::numeric::ublas::matrix<double> GetPrespective();
+	boost::numeric::ublas::matrix<double> GetPrespectiveMatrix();
 
 	const double FovAngle();
 	void FovAngle(double);
@@ -29,7 +29,9 @@ public:
 		const static std::string HEIGHT;
 		const static std::string MINVIEWABLE;
 		const static std::string MAXCIEWABLE;
-	};
+	};	
+
+	static const std::shared_ptr<Prespective> GetFirstOrDefultPrespective();
 };
 
 #endif //__Prespective__

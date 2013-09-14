@@ -84,7 +84,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MathOperations.cpp" />
+    <ClCompile Include="MatrixConverter.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
+    <ClCompile Include="BasicObject.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
@@ -95,11 +98,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
+    <ClCompile Include="PlyFileDrawable.cpp" />
     <ClCompile Include="Prespective.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MathOperations.h" />
+    <ClInclude Include="MatrixConverter.h" />
     <ClInclude Include="BasicDrawable.h" />
+    <ClInclude Include="BasicObject.h" />
     <ClInclude Include="Buffers.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ClearScreenMessage.h" />
@@ -111,6 +118,7 @@
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
+    <ClInclude Include="PlyFileDrawable.h" />
     <ClInclude Include="Prespective.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />

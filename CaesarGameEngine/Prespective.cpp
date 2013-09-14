@@ -1,7 +1,6 @@
 #include "Prespective.h"
-
-#include <windows.h>
-#include <xnamath.h>
+#include "ObjectManager.h"
+#include "MathOperations.h"
 
 Prespective::Prespective()
 {
@@ -12,17 +11,9 @@ Prespective::Prespective()
 	this->Store(Prespective::PrespectiveKeys::MAXCIEWABLE, 0.0);
 }
 
-boost::numeric::ublas::matrix<double> Prespective::GetPrespective()
+boost::numeric::ublas::matrix<double> Prespective::GetPrespectiveMatrix()
 {
-	XMMATRIX xmPrespective =  XMMatrixPerspectiveFovLH( (float)this->FovAngle(), (float)this->Width() / (float)this->Height(), (float)this->MinViewable(), (float)this->MaxViewable() );
-	XMFLOAT4X4 xmMatrixPrespective;
-	XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
-
-	boost::numeric::ublas::matrix<double> mMatrixPrespective(4, 4);
-
-	for (unsigned i = 0; i < mMatrixPrespective.size1 (); ++ i)
-        for (unsigned j = 0; j < mMatrixPrespective.size2 (); ++ j)
-            mMatrixPrespective(i, j) = xmMatrixPrespective(i, j);
+	boost::numeric::ublas::matrix<double> mMatrixPrespective =  MathOperation::MatrixPerspectiveFovLH(this->FovAngle(), this->Width() / this->Height(), this->MinViewable(), this->MaxViewable() );
 
 	return mMatrixPrespective;
 }
@@ -83,3 +74,14 @@ const std::string Prespective::PrespectiveKeys::WIDTH  = "WIDTH";
 const std::string Prespective::PrespectiveKeys::HEIGHT  = "HEIGHT";
 const std::string Prespective::PrespectiveKeys::MINVIEWABLE = "MINVIEWABLE";
 const std::string Prespective::PrespectiveKeys::MAXCIEWABLE = "MAXVIEWABLE";
+
+const std::shared_ptr<Prespective> Prespective::GetFirstOrDefultPrespective()
+{
+	std::shared_ptr<Object> obj;
+
+	ObjectManager::GetInstance().AllObjects()
+		.FirstOrDefault([](const std::shared_ptr<Object> obj){ return (std::dynamic_pointer_cast<Prespective>(obj)); }, obj);
+
+	std::shared_ptr<Prespective> prespective = std::dynamic_pointer_cast<Prespective>(obj);
+	return prespective;
+}

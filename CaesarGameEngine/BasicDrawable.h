@@ -14,7 +14,7 @@ public:
 	virtual void Init();
 	virtual void Clean();
 	virtual void Update(float delta);
-	virtual void Draw();
+	virtual void Draw(std::shared_ptr<Object> object);
 	virtual Drawable* clone() const;
 
 	struct
@@ -53,14 +53,14 @@ public:
 	virtual void InitConstantBuffer(ID3D11Device* device);
 	virtual void InitTexture(ID3D11Device* device);
 
-	virtual void SetupDrawConstantBuffer();
-	virtual void SetupDrawVertexBuffer();
-	virtual void SetupDrawInputVertexShader();
-	virtual void SetupDrawPixelShader();
-	virtual void SetupDrawRasterizeShader();
-	virtual void SetupDrawTexture();
-	virtual void DrawObject();
-	virtual void CleanupAfterDraw();
+	virtual void SetupDrawConstantBuffer(std::shared_ptr<Object> object);
+	virtual void SetupDrawVertexBuffer(std::shared_ptr<Object> object);
+	virtual void SetupDrawInputVertexShader(std::shared_ptr<Object> object);
+	virtual void SetupDrawPixelShader(std::shared_ptr<Object> object);
+	virtual void SetupDrawRasterizeShader(std::shared_ptr<Object> object);
+	virtual void SetupDrawTexture(std::shared_ptr<Object> object);
+	virtual void DrawObject(std::shared_ptr<Object> object);
+	virtual void CleanupAfterDraw(std::shared_ptr<Object> object);
 };
 
 

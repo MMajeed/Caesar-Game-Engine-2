@@ -26,6 +26,8 @@ public:
 	{
 		const static std::string ID;
 	};
+
+	virtual ~Object(){}
 };
 
 #endif //__Object__

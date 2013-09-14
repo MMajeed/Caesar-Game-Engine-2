@@ -13,6 +13,9 @@
     <Filter Include="Lua">
       <UniqueIdentifier>{f48d4419-5d57-41b1-b31f-abe042ec2cf7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="rply">
+      <UniqueIdentifier>{ffc28525-a03c-415a-94ab-cbfb69199268}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
@@ -96,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="lua-5.1.0\lzio.h">
       <Filter>Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="rply\rply.h">
+      <Filter>rply</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="lua-5.1.0\print.c">
       <Filter>Lua</Filter>
+    </ClCompile>
+    <ClCompile Include="rply\rply.c">
+      <Filter>rply</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

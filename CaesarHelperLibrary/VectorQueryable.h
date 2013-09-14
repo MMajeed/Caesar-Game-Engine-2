@@ -58,7 +58,7 @@ namespace CHL
 		// It returns the first value that returns true, but if it didn't value then it return false
 		// So do check it before you use
 		template<typename lambdaFunc>
-		bool FirstOrDefault(const lambdaFunc& w, T& returnType)
+		bool FirstOrDefault(const lambdaFunc& w, T& returnType) const
 		{
 
 			for(auto iterObject = this->All.cbegin();
