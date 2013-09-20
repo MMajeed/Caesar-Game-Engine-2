@@ -1,5 +1,5 @@
-#ifndef __Ublas__
-#define __Ublas__
+#ifndef __LuaUblas__
+#define __LuaUblas__
 
 extern "C" {
 #include <lua-5.1.0\lua.h>
@@ -19,6 +19,9 @@ public:
 		Vector4();
 		Vector4(double xValue, double yValue, double zValue, double wValue);
 		Vector4(boost::numeric::ublas::vector<double> vecValue);
+
+		operator boost::numeric::ublas::vector<double>();
+
 		boost::numeric::ublas::vector<double> vector;
 
 		double GetterX();
@@ -40,4 +43,4 @@ public:
 	}
 };
 
-#endif //__Ublas__
+#endif //__LuaUblas__

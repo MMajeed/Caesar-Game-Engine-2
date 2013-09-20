@@ -4,6 +4,15 @@
 
 #include <Windows.h>
 
+Interface::Interface(std::string name)
+	: Name(name)
+{
+	this->running = true;
+	this->timer.AbsoluteTime = 0.0;
+	this->timer.FrameCount = 0;
+	this->timer.SinceLastWork = 0.0;
+}
+
 void Interface::Run()
 {
 	// setup the frame timer
@@ -21,7 +30,7 @@ void Interface::Run()
 
 	this->timer.FrameCount = 0;
 
-	while( true )
+	while( running == true )
 	{
 		// update timer
 		if( !QueryPerformanceCounter( &timerNow ) )
@@ -43,7 +52,7 @@ void Interface::Run()
 		this->ProccessMessages();
 		this->Update(frameTime, deltaTime);
 
-		if(this->timer.SinceLastWork <= 0.012)
+		if(this->timer.SinceLastWork >= 0.012)
 		{
 			this->Work();
 			this->timer.SinceLastWork = 0.0;

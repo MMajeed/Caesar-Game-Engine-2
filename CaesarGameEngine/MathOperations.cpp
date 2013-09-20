@@ -68,3 +68,12 @@ boost::numeric::ublas::matrix<double> MathOperation::ObjectCalculation( boost::n
 
 	return mObjectFinal;
 }
+
+void MathOperation::Normalize(boost::numeric::ublas::matrix<double>& matrix)
+{
+	XMMATRIX identiy = XMMatrixIdentity();
+
+	for (unsigned i = 0; i < matrix.size1(); ++ i)
+        for (unsigned j = 0; j < matrix.size2(); ++ j)
+            matrix(i, j) = identiy(i, j);
+}

@@ -7,7 +7,7 @@ extern "C" {
 #include <lua-5.1.0\\lauxlib.h>
 }
 
-#include <string>
+#include <luabind\luabind.hpp>
 
 class LuaGraphic
 {
@@ -22,10 +22,7 @@ public:
 	class AddObject
 	{
 	public:
-		static std::string AddBasicObject(std::string modleFileName,
-						    std::string	vertexFileName,
-							std::string	pixelFileName,
-							std::string texture);
+		static std::string AddBasicObject(luabind::object const& table);
 		static void Register(lua_State *lua);
 	};
 

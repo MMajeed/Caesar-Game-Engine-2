@@ -23,6 +23,10 @@ LuaUblas::Vector4::Vector4(double xValue, double yValue, double zValue, double w
 	this->vector(2) = zValue;
 	this->vector(3) = wValue;
 }
+LuaUblas::Vector4::operator boost::numeric::ublas::vector<double>()
+{
+	return this->vector;
+}
 
 double LuaUblas::Vector4::GetterX(){ return this->vector(0); }
 double LuaUblas::Vector4::GetterY(){ return this->vector(1); }

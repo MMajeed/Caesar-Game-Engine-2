@@ -27,6 +27,7 @@ public:
 	virtual void Shutdown();
 
 	lua_State *lua;
+	bool FileRun;
 };
 
 #endif //__LuaManager__

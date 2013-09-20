@@ -1,7 +1,7 @@
 #ifndef __AddBasicDrawableMessage__
 #define __AddBasicDrawableMessage__
 
-#include "Interface.h"
+#include "Message.h"
 #include "Model.h"
 #include "Vertex.h"
 #include "D3DShaderInfo.h"
@@ -11,8 +11,7 @@
 class AddBasicDrawableMessage : public Message
 {
 public:
-	AddBasicDrawableMessage(std::string newID,
-							const Model& model,
+	AddBasicDrawableMessage(const Model& model,
 						    std::string	vertexFileName,
 							std::string	vertexEntryPoint,
 							std::string	vertexModel,
@@ -21,8 +20,8 @@ public:
 							std::string	pixelModel,
 							std::string texture = "");
 
-	virtual void Proccess();
-protected:
+	virtual Message::Status Work();
+
 	std::string			ID;
 	std::vector<Vertex> vectorVertices;
 	std::vector<WORD>	vectorIndices;

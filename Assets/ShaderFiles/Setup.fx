@@ -5,7 +5,7 @@
 //--------------------------------------------------------------------------------------
 cbuffer cbObject : register( b0 )
 {
-    matrix World;
+    matrix gWorldViewProj;
 	MaterialInfo objectMaterial;
 };
 

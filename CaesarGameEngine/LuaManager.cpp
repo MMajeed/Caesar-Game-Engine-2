@@ -5,13 +5,15 @@
 
 #include "LuaGraphic.h"
 #include "LuaModel.h"
+#include "LuaObject.h"
 #include "LuaUblas.h"
+#include "LuaKeys.h"
 
 LuaManager::LuaManager()
 	: Interface("Lua")
 	, lua(0)
 {
-
+	this->FileRun = false;
 }
 
 static const char mainLua[] = "Assets/Lua/main.lua";
@@ -55,8 +57,8 @@ void LuaManager::Init()
 	LuaGraphic::RegisterAllLuaFunction(this->lua);
 	LuaModel::RegisterAllLuaFunction(this->lua);
 	LuaUblas::RegisterAllLuaFunction(this->lua);
-
-	lua_call(this->lua,0,0);
+	LuaObject::RegisterAllLuaFunction(this->lua);
+	LuaKeys::RegisterAllLuaFunction(this->lua);
 }
 
 void LuaManager::Update(double realTime, double deltaTime)
@@ -66,6 +68,11 @@ void LuaManager::Update(double realTime, double deltaTime)
 
 void LuaManager::Work()
 {
+	if(this->FileRun == false)
+	{
+		lua_call(this->lua,0,0);
+		this->FileRun = true;
+	}
 }
 
 void LuaManager::Shutdown()

@@ -8,10 +8,14 @@
 #include <boost/numeric/ublas/io.hpp>
 #include <sstream>
 
-Object::Object(std::string ID)
+Object::Object()
 {
-	this->Store(Keys::ID, ID);
-	this->Store(Keys::Class, Keys::ClassType::Object);
+	this->Store(Keys::ID, CHL::ToString(boost::uuids::random_generator()()));
+}
+Object::Object(CHL::MapQueryable<std::string, std::string> input)
+{
+	this->Store(Keys::ID, CHL::ToString(boost::uuids::random_generator()()));
+	this->info = input;
 }
 
 void Object::Store(std::string key, const std::string& value)

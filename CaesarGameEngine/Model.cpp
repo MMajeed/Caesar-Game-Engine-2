@@ -39,10 +39,20 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Normal() const
 	{
 		boost::numeric::ublas::vector<double> normal(4);
 
-		normal(0) = mesh->mNormals[i].x;
-		normal(1) = mesh->mNormals[i].y;
-		normal(2) = mesh->mNormals[i].z;
-		normal(3) = 1.0;
+		if(mesh->HasNormals())
+		{
+			normal(0) = mesh->mNormals[i].x;
+			normal(1) = mesh->mNormals[i].y;
+			normal(2) = mesh->mNormals[i].z;
+			normal(3) = 1.0;
+		}
+		else
+		{
+			normal(0) = 0.0;
+			normal(1) = 0.0;
+			normal(2) = 0.0;
+			normal(3) = 1.0;
+		}
 
 		vectorNormal.push_back(normal);
 	}
@@ -60,12 +70,10 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Texture() const
 	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
 	{
 		boost::numeric::ublas::vector<double> texture(2);
-		if(mesh->mTextureCoords[i] != 0)
+		if(mesh->HasTextureCoords(i))
 		{
-
 			texture(0) = mesh->mTextureCoords[i]->x;
 			texture(1) = mesh->mTextureCoords[i]->y;
-
 		}
 		else
 		{

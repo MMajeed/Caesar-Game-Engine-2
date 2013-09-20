@@ -1,10 +1,13 @@
 #include "GraphicManager.h"
-#include "Window.h"
-#include "Prespective.h"
-#include "Camera.h"
 
-#include "ObjectManager.h"
+#include <boost/numeric/ublas/io.hpp>
+#include <Converter.h>
+
+#include "Window.h"
+#include "ObjectManagerOutput.h"
 #include "Keys.h"
+#include "MathOperations.h"
+#include "XNAToUblas.h"
 
 GraphicManager::GraphicManager()
 	: Interface("Graphic")
@@ -35,6 +38,7 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
+	this->SetupCameraNPrespective();
 	this->ClearScreen();
 	this->DrawObjects();
 	this->Present();	
@@ -45,9 +49,42 @@ void GraphicManager::Shutdown()
 
 }
 
-void GraphicManager::SetupSampler()
+void GraphicManager::SetupCameraNPrespective()
 {
+	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
 
+	// Camera
+	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator cameraIter;
+	cameraIter = objects.First([](CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator objIter)
+			{ return (objIter->find(Keys::Class)->second == Keys::ClassType::Camera); }); // Find Camera
+
+	if(cameraIter != objects.cend())
+	{
+		CHL::MapQueryable<std::string, std::string> camera = *cameraIter;
+		boost::numeric::ublas::vector<double> vEye = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::EYE]);
+		boost::numeric::ublas::vector<double> vTM = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::TARGETMAGNITUDE]);
+		boost::numeric::ublas::vector<double> vUp = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::UP]);
+		double pitch = CHL::ToDouble(camera[Keys::RADIANPITCH]) ;
+		double yaw = CHL::ToDouble(camera[Keys::RADIANYAW]); 
+		double roll = CHL::ToDouble(camera[Keys::RADIANROLL]);
+	
+		this->CamerMatrix = MathOperation::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	}
+	// Prespective
+	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator prespectiveIter;
+	prespectiveIter = objects.First([](CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator objIter)
+			{ return (objIter->find(Keys::Class)->second == Keys::ClassType::Prespective); }); // Find prespective
+
+	if(cameraIter != objects.cend())
+	{
+		CHL::MapQueryable<std::string, std::string> prespective = *prespectiveIter;
+		double FovAngleY = CHL::ToDouble(prespective[Keys::FOVANGLE]);
+		double height = CHL::ToDouble(prespective[Keys::SCREENHEIGHT]);;
+		double width = CHL::ToDouble(prespective[Keys::SCREENWIDTH]);;
+		double NearZ = CHL::ToDouble(prespective[Keys::MINVIEWABLE]);;  
+		double FarZ = CHL::ToDouble(prespective[Keys::MAXVIEWABLE]);;
+		this->PrespectiveMatrix = MathOperation::PerspectiveFovLHCalculation(FovAngleY, height/width, NearZ, FarZ);
+	}
 }
 
 void GraphicManager::ClearScreen()
@@ -60,7 +97,33 @@ void GraphicManager::ClearScreen()
 
 void GraphicManager::DrawObjects()
 {
-	
+	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
+
+	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> filteredObjects
+		= objects.Where([](const CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator iterObj)
+						{ return (iterObj->find(Keys::GRAPHICDRAWABLEID) != iterObj->end()); });
+
+
+	for(auto iterObj = filteredObjects.begin();
+		iterObj != filteredObjects.end();
+		++iterObj)
+	{
+		std::string graphicObjectID = iterObj->find(Keys::GRAPHICDRAWABLEID)->second;
+
+		auto drawableIter = 
+			this->objects.First([graphicObjectID](CHL::VectorQueryable<std::shared_ptr<Drawable>>::const_iterator iterDrawableObj)
+					{ 
+						auto thisObjectID = (*iterDrawableObj)->ID;
+						return (thisObjectID == graphicObjectID);
+					});
+		
+		if(drawableIter != this->objects.end())
+		{
+			auto drawable = *drawableIter;
+			drawable->Draw(*iterObj);
+		}
+	}
+
 }
 
 void GraphicManager::Present()
@@ -225,29 +288,4 @@ void GraphicManager::InitDevice()
 	this->direct3d.vp.TopLeftX = 0;
 	this->direct3d.vp.TopLeftY = 0;
 	this->direct3d.pImmediateContext->RSSetViewports( 1, &(this->direct3d.vp) );
-}
-
-boost::numeric::ublas::matrix<double> GraphicManager::GetCameraView()
-{
-	if(this->TempCamera.use == false)
-	{
-		std::shared_ptr<Camera> camera = Camera::GetFirstOrDefultCamera();
-		return camera->GetViewMatrix();
-	}
-	else
-	{
-		return this->TempCamera.view;
-	}
-}
-boost::numeric::ublas::matrix<double> GraphicManager::GetPrespective()
-{
-	if(this->TempPrespective.use == false)
-	{
-		std::shared_ptr<Prespective> prespective = Prespective::GetFirstOrDefultPrespective();
-		return prespective->GetPrespectiveMatrix();
-	}
-	else
-	{
-		return this->TempPrespective.view;
-	}
 }

@@ -10,7 +10,6 @@ namespace Keys
 		const static std::string Object			= "_Object";
 		const static std::string Camera			= "_Camera";
 		const static std::string Prespective	= "_Prespective";
-		const static std::string BasicObject	= "_BasicObject";
 	};
 
 	const static std::string ID					= "_ID";
@@ -30,7 +29,11 @@ namespace Keys
 	const static std::string SCREENWIDTH		= "ScreenWidth";
 	const static std::string SCREENHEIGHT		= "ScreenHeight";
 	const static std::string MINVIEWABLE		= "MinViewable";
-	const static std::string MAXCIEWABLE		= "MaxViewable";
+	const static std::string MAXVIEWABLE		= "MaxViewable";
+	const static std::string MODELFILE			= "ModelFile";
+	const static std::string VERTEXSHADERFILE	= "VertexShaderFile";
+	const static std::string PIXELSHADERFILE	= "PixelShaderFile";
+	const static std::string TEXTUREFILE		= "TextureFile";
 };
 
 #endif //__Keys__

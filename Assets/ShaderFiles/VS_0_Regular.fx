@@ -13,14 +13,14 @@ PS_INPUT VS( VS_INPUT input )
 	PS_INPUT output = (PS_INPUT)0;
 
 	// Combine the matrices first...
-	output.PosMVP = mul( input.VertexPos, World );
+	output.PosMVP = mul( input.VertexPos, gWorldViewProj );
 
 	// Passed to the pixel shader for correct lighting:
-	output.PosWorld = mul( input.VertexPos, World );
+	output.PosWorld = mul( input.VertexPos, gWorldViewProj );
 
 	output.Normal = input.VertexNorm;
 
-	output.NormalWorld = mul( input.VertexNorm, World );
+	output.NormalWorld = mul( input.VertexNorm, gWorldViewProj );
 	output.NormalWorld = normalize( output.NormalWorld );
 
 	// Pass the texture coordinates to the pixel shader

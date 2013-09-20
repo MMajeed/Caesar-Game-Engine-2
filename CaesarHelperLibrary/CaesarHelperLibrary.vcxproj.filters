@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="String Converter">
-      <UniqueIdentifier>{de555248-5730-4dfc-bd8f-f84803da9bac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Queryable">
       <UniqueIdentifier>{798ec669-2020-42a8-b3cf-3d468b766f35}</UniqueIdentifier>
     </Filter>
@@ -28,6 +25,9 @@
     <Filter Include="Lua\luabind\detail">
       <UniqueIdentifier>{2a923d71-194e-4c76-ac46-273f341a097d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Converter">
+      <UniqueIdentifier>{de555248-5730-4dfc-bd8f-f84803da9bac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
@@ -35,7 +35,7 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="Converter.h">
-      <Filter>String Converter</Filter>
+      <Filter>Converter</Filter>
     </ClInclude>
     <ClInclude Include="rply\rply.h">
       <Filter>rply</Filter>
@@ -349,16 +349,13 @@
     <ClInclude Include="luabind\detail\yes_no.hpp">
       <Filter>Lua\luabind\detail</Filter>
     </ClInclude>
-    <ClInclude Include="VectorQueryable.h">
-      <Filter>Queryable</Filter>
-    </ClInclude>
-    <ClInclude Include="MapQueryable.h">
+    <ClInclude Include="Queryable.h">
       <Filter>Queryable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Converter.cpp">
-      <Filter>String Converter</Filter>
+      <Filter>Converter</Filter>
     </ClCompile>
     <ClCompile Include="rply\rply.c">
       <Filter>rply</Filter>

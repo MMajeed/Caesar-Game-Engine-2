@@ -4,37 +4,22 @@
     <ClCompile Include="Object.cpp">
       <Filter>Interface\ObjectManager\Logic\Object</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicManager.cpp">
-      <Filter>Interface\GraphicManager</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaManager.cpp">
-      <Filter>Interface\LuaManager</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="Interface.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
     <ClCompile Include="ClearScreenMessage.cpp">
-      <Filter>Interface\GraphicManager\GraphicMessages\ClearScreen</Filter>
+      <Filter>Interface\GraphicManager\Input/Output\Input\ClearScreen</Filter>
     </ClCompile>
     <ClCompile Include="LuaGraphic.cpp">
-      <Filter>Interface\LuaManager\LuaGraphic</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaGraphic</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BasicDrawable.cpp">
-      <Filter>Interface\GraphicManager\Drawable\BasicObject</Filter>
+      <Filter>Interface\GraphicManager\Logic\Drawable\BasicObject</Filter>
     </ClCompile>
     <ClCompile Include="DX11Helper.cpp">
-      <Filter>Interface\GraphicManager\D3D Tools\DX11Helper</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Interface\ObjectManager\Logic\Object\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Prespective.cpp">
-      <Filter>Interface\ObjectManager\Logic\Object\Prespective</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicObject.cpp">
-      <Filter>Interface\ObjectManager\Logic\Object\BasicObject</Filter>
+      <Filter>Interface\GraphicManager\Logic\D3D Tools\DX11Helper</Filter>
     </ClCompile>
     <ClCompile Include="MathOperations.cpp">
       <Filter>Tools\3DMath\Operations</Filter>
@@ -46,22 +31,37 @@
       <Filter>Tools\Model</Filter>
     </ClCompile>
     <ClCompile Include="LuaModel.cpp">
-      <Filter>Interface\LuaManager\LuaModel</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaModel</Filter>
     </ClCompile>
     <ClCompile Include="AddBasicDrawableMessage.cpp">
-      <Filter>Interface\GraphicManager\GraphicMessages\AddDrawableMessage\AddBasicDrawableMessage</Filter>
+      <Filter>Interface\GraphicManager\Input/Output\Input\AddDrawableMessage\AddBasicDrawableMessage</Filter>
     </ClCompile>
     <ClCompile Include="LuaObject.cpp">
-      <Filter>Interface\LuaManager\LuaObject</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaObject</Filter>
     </ClCompile>
     <ClCompile Include="LuaUblas.cpp">
-      <Filter>Interface\LuaManager\LuaUblas</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaUblas</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManagerOutput.cpp">
       <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Interface\ObjectManager\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaManager.cpp">
+      <Filter>Interface\LuaManager\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicManager.cpp">
+      <Filter>Interface\GraphicManager\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="AddObjectMessage.cpp">
+      <Filter>Interface\ObjectManager\Input/Output\Input\AddObjectMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>Tools\Message</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeys.cpp">
+      <Filter>Interface\LuaManager\Logic\LuaKeys</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,33 +77,6 @@
     <Filter Include="Interface\LuaManager">
       <UniqueIdentifier>{154dbd3d-8700-4836-950e-d4bc1c6ae093}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\LuaManager\LuaGraphic">
-      <UniqueIdentifier>{c9433190-4678-4a85-9ee0-7016024ce6b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\GraphicMessages">
-      <UniqueIdentifier>{3535eea2-4217-40d0-a559-4f6efd02ac0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\GraphicMessages\ClearScreen">
-      <UniqueIdentifier>{95828d01-b664-4226-9f58-0c7fdaa863b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\Drawable">
-      <UniqueIdentifier>{6d88bae9-ea64-4cc4-b826-f01079ffe5df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\Drawable\BasicObject">
-      <UniqueIdentifier>{da4e60d8-ac42-43be-897f-4c6100fecce1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools">
-      <UniqueIdentifier>{fa0a746a-30ba-4ab4-968c-39a1e78d59d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\Vertex">
-      <UniqueIdentifier>{f5ea715e-c605-4df6-ac51-12b9ec78a0df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\DX11Helper">
-      <UniqueIdentifier>{6bac47c6-d799-4d8c-a919-e7463bf597f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\Buffers">
-      <UniqueIdentifier>{8bb0aea9-ba88-482c-a2d1-ff1315eb82e7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{aacba52e-89fa-4853-a2b7-a2b1292a89b3}</UniqueIdentifier>
     </Filter>
@@ -116,26 +89,8 @@
     <Filter Include="Tools\Model">
       <UniqueIdentifier>{1e6a0a68-b911-4317-bf7a-18b66bd70e4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\LuaManager\LuaModel">
-      <UniqueIdentifier>{742a0059-19ba-46a1-80cc-23c389fcf9f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\D3D Tools\D3DShaderInfo">
-      <UniqueIdentifier>{b652feeb-a059-4c6a-82ad-a7342552ec94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\GraphicMessages\AddDrawableMessage">
-      <UniqueIdentifier>{39d9d7b0-f993-4e60-a79f-f4f05ec51441}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\GraphicManager\GraphicMessages\AddDrawableMessage\AddBasicDrawableMessage">
-      <UniqueIdentifier>{dcb4e1a0-2c17-4d56-a786-55a8e01a7e82}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\LuaManager\LuaObject">
-      <UniqueIdentifier>{a72b9eae-3501-4e33-8b98-2456883103ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Tools\3DMath\XNAToUblas">
       <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\LuaManager\LuaUblas">
-      <UniqueIdentifier>{d1e8f1e2-8cda-4d04-91a0-c27057eb5bad}</UniqueIdentifier>
     </Filter>
     <Filter Include="Tools\Keys">
       <UniqueIdentifier>{4d41b3af-6ae8-4bf8-9c48-ad601e832844}</UniqueIdentifier>
@@ -155,14 +110,80 @@
     <Filter Include="Interface\ObjectManager\Logic\Object">
       <UniqueIdentifier>{3f777352-1134-42b2-84d2-7e08bff2ff88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\ObjectManager\Logic\Object\Camera">
-      <UniqueIdentifier>{678a8fde-6a27-4a55-bae3-df87c6efadfa}</UniqueIdentifier>
+    <Filter Include="Interface\LuaManager\Input/Output">
+      <UniqueIdentifier>{ce9070b4-97cb-45d4-84d0-9565d9ff3f1d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\ObjectManager\Logic\Object\Prespective">
-      <UniqueIdentifier>{d51124a0-d515-4a3d-8838-b0c291bfa9c4}</UniqueIdentifier>
+    <Filter Include="Interface\LuaManager\Logic">
+      <UniqueIdentifier>{e48fd430-b435-4fd0-9b9d-5972ba7317e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\ObjectManager\Logic\Object\BasicObject">
-      <UniqueIdentifier>{4b70df34-d33e-4b5f-bb5b-9896e37279e5}</UniqueIdentifier>
+    <Filter Include="Interface\LuaManager\Logic\LuaGraphic">
+      <UniqueIdentifier>{c9433190-4678-4a85-9ee0-7016024ce6b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaModel">
+      <UniqueIdentifier>{742a0059-19ba-46a1-80cc-23c389fcf9f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaObject">
+      <UniqueIdentifier>{a72b9eae-3501-4e33-8b98-2456883103ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaUblas">
+      <UniqueIdentifier>{d1e8f1e2-8cda-4d04-91a0-c27057eb5bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Input/Output">
+      <UniqueIdentifier>{3e239da4-ac9a-467c-8e8d-6e13b113c81c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic">
+      <UniqueIdentifier>{79d03d1e-89e2-4a7c-bd54-db151146f4ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\D3D Tools">
+      <UniqueIdentifier>{fa0a746a-30ba-4ab4-968c-39a1e78d59d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\D3D Tools\Vertex">
+      <UniqueIdentifier>{f5ea715e-c605-4df6-ac51-12b9ec78a0df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\D3D Tools\DX11Helper">
+      <UniqueIdentifier>{6bac47c6-d799-4d8c-a919-e7463bf597f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\D3D Tools\Buffers">
+      <UniqueIdentifier>{8bb0aea9-ba88-482c-a2d1-ff1315eb82e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\D3D Tools\D3DShaderInfo">
+      <UniqueIdentifier>{b652feeb-a059-4c6a-82ad-a7342552ec94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\Drawable">
+      <UniqueIdentifier>{6d88bae9-ea64-4cc4-b826-f01079ffe5df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Logic\Drawable\BasicObject">
+      <UniqueIdentifier>{da4e60d8-ac42-43be-897f-4c6100fecce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Input/Output\Input">
+      <UniqueIdentifier>{f99a0b34-05d5-4492-93c3-53ac450b044d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Input/Output\Output">
+      <UniqueIdentifier>{e2497643-8315-4f10-8372-27e5e7c4dab8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Input/Output\Input\ClearScreen">
+      <UniqueIdentifier>{95828d01-b664-4226-9f58-0c7fdaa863b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Input/Output\Input\AddDrawableMessage">
+      <UniqueIdentifier>{39d9d7b0-f993-4e60-a79f-f4f05ec51441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\GraphicManager\Input/Output\Input\AddDrawableMessage\AddBasicDrawableMessage">
+      <UniqueIdentifier>{dcb4e1a0-2c17-4d56-a786-55a8e01a7e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Input/Output\Input">
+      <UniqueIdentifier>{156bbb50-0ecc-4080-a9d5-ab3561eab56e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Input/Output\Output">
+      <UniqueIdentifier>{9243fd58-4326-4cf1-9425-fba2f4d06b2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tools\Message">
+      <UniqueIdentifier>{f7449aa5-fc7a-4a9c-8b63-9ebf3a760c89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Input/Output\Input\AddObjectMessage">
+      <UniqueIdentifier>{3b965314-91b1-425d-b29a-a8c157b8606d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaKeys">
+      <UniqueIdentifier>{7c31463d-da94-423f-8468-7d5b35619fce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -172,42 +193,27 @@
     <ClInclude Include="Object.h">
       <Filter>Interface\ObjectManager\Logic\Object</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicManager.h">
-      <Filter>Interface\GraphicManager</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaManager.h">
-      <Filter>Interface\LuaManager</Filter>
-    </ClInclude>
     <ClInclude Include="Window.h" />
     <ClInclude Include="ClearScreenMessage.h">
-      <Filter>Interface\GraphicManager\GraphicMessages\ClearScreen</Filter>
+      <Filter>Interface\GraphicManager\Input/Output\Input\ClearScreen</Filter>
     </ClInclude>
     <ClInclude Include="LuaGraphic.h">
-      <Filter>Interface\LuaManager\LuaGraphic</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaGraphic</Filter>
     </ClInclude>
     <ClInclude Include="Drawable.h">
-      <Filter>Interface\GraphicManager\Drawable</Filter>
+      <Filter>Interface\GraphicManager\Logic\Drawable</Filter>
     </ClInclude>
     <ClInclude Include="BasicDrawable.h">
-      <Filter>Interface\GraphicManager\Drawable\BasicObject</Filter>
+      <Filter>Interface\GraphicManager\Logic\Drawable\BasicObject</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
-      <Filter>Interface\GraphicManager\D3D Tools\Vertex</Filter>
+      <Filter>Interface\GraphicManager\Logic\D3D Tools\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="DX11Helper.h">
-      <Filter>Interface\GraphicManager\D3D Tools\DX11Helper</Filter>
+      <Filter>Interface\GraphicManager\Logic\D3D Tools\DX11Helper</Filter>
     </ClInclude>
     <ClInclude Include="Buffers.h">
-      <Filter>Interface\GraphicManager\D3D Tools\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Interface\ObjectManager\Logic\Object\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Prespective.h">
-      <Filter>Interface\ObjectManager\Logic\Object\Prespective</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicObject.h">
-      <Filter>Interface\ObjectManager\Logic\Object\BasicObject</Filter>
+      <Filter>Interface\GraphicManager\Logic\D3D Tools\Buffers</Filter>
     </ClInclude>
     <ClInclude Include="MathOperations.h">
       <Filter>Tools\3DMath\Operations</Filter>
@@ -218,29 +224,44 @@
     <ClInclude Include="Model.h">
       <Filter>Tools\Model</Filter>
     </ClInclude>
-    <ClInclude Include="LuaModel.h">
-      <Filter>Interface\LuaManager\LuaModel</Filter>
-    </ClInclude>
     <ClInclude Include="D3DShaderInfo.h">
-      <Filter>Interface\GraphicManager\D3D Tools\D3DShaderInfo</Filter>
+      <Filter>Interface\GraphicManager\Logic\D3D Tools\D3DShaderInfo</Filter>
     </ClInclude>
     <ClInclude Include="AddBasicDrawableMessage.h">
-      <Filter>Interface\GraphicManager\GraphicMessages\AddDrawableMessage\AddBasicDrawableMessage</Filter>
+      <Filter>Interface\GraphicManager\Input/Output\Input\AddDrawableMessage\AddBasicDrawableMessage</Filter>
     </ClInclude>
     <ClInclude Include="Keys.h">
       <Filter>Tools\Keys</Filter>
     </ClInclude>
     <ClInclude Include="LuaObject.h">
-      <Filter>Interface\LuaManager\LuaObject</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaObject</Filter>
     </ClInclude>
     <ClInclude Include="LuaUblas.h">
-      <Filter>Interface\LuaManager\LuaUblas</Filter>
+      <Filter>Interface\LuaManager\Logic\LuaUblas</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManagerOutput.h">
       <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Interface\ObjectManager\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaManager.h">
+      <Filter>Interface\LuaManager\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicManager.h">
+      <Filter>Interface\GraphicManager\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="AddObjectMessage.h">
+      <Filter>Interface\ObjectManager\Input/Output\Input\AddObjectMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>Tools\Message</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeys.h">
+      <Filter>Interface\LuaManager\Logic\LuaKeys</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaModel.h">
+      <Filter>Interface\LuaManager\Logic\LuaModel</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

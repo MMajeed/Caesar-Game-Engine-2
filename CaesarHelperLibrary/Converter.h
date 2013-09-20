@@ -24,7 +24,7 @@ namespace CHL
 		return ss.str();
 	}
 	std::wstring ToWString (const std::string& t);
-		
+			
 	std::string ToLower(std::string inputString);
 
 	template <class T>
@@ -67,6 +67,16 @@ namespace CHL
 		ss << t;
 		ss >> returnValue;
 
+		return returnValue;
+	}
+
+	template <typename T1, typename T2>
+	T1 sstringConverter(T2 t2)
+	{
+		T1 returnValue;
+		std::stringstream ss;
+		ss << t2;
+		ss >> returnValue;
 		return returnValue;
 	}
 }

@@ -3,8 +3,7 @@
 #include "BasicDrawable.h"
 #include "GraphicManager.h"
 
-AddBasicDrawableMessage::AddBasicDrawableMessage(std::string newID,
-												const Model& model,
+AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 												std::string	vertexFileName,
 												std::string	vertexEntryPoint,
 												std::string	vertexModel,
@@ -13,8 +12,6 @@ AddBasicDrawableMessage::AddBasicDrawableMessage(std::string newID,
 												std::string	pixelModel,
 												std::string texture)
 {
-	this->ID = newID;
-
 	this->vertexFile.FileName		= vertexFileName;
 	this->vertexFile.EntryPoint		= vertexEntryPoint;
 	this->vertexFile.Model			= vertexModel;
@@ -34,18 +31,18 @@ AddBasicDrawableMessage::AddBasicDrawableMessage(std::string newID,
 	auto vectorPos = model.Pos();
 	auto vectorNormal = model.Normal();
 	auto vectorTexture = model.Texture();
-	this->vectorVertices.resize(vectorPos.size());
+	this->vectorVertices.reserve(vectorPos.size());
 
 	for(std::size_t i = 0; i < vectorPos.size(); ++i)
 	{
 		Vertex v;
 		auto pos = vectorPos[i];
-		v.Pos = XMFLOAT4((float)pos(0), (float)pos(1), (float)pos(2), (float)pos(3)) ;
+		v.Pos = XMFLOAT4((float)pos(0), (float)pos(1), (float)pos(2), 1.0f) ;
 		
 		if(vectorNormal.size() < i)
 		{
 			auto normal = vectorNormal[i];
-			v.Normal = XMFLOAT4((float)normal(0), (float)normal(1), (float)normal(2), (float)normal(3)) ;
+			v.Normal = XMFLOAT4((float)normal(0), (float)normal(1), (float)normal(2), 1.0f) ;
 		}
 		else
 		{
@@ -66,15 +63,20 @@ AddBasicDrawableMessage::AddBasicDrawableMessage(std::string newID,
 	}
 }
 
-void AddBasicDrawableMessage::Proccess()
+Message::Status AddBasicDrawableMessage::Work()
 {
+	boost::mutex::scoped_lock lock(GraphicManager::GetInstance().mutex);
+
 	std::shared_ptr<BasicDrawable> newObject =
-		BasicDrawable::Spawn(this->ID,
-							this->vectorVertices,
+		BasicDrawable::Spawn(this->vectorVertices,
 							this->vectorIndices,
 							this->vertexFile,
 							this->pixelFile,
 							this->textureFileName);
 
 	GraphicManager::GetInstance().Insert(newObject);
+
+	this->ID = newObject->ID;
+
+	return Message::Complete;
 }

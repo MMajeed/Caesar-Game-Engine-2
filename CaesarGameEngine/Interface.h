@@ -4,21 +4,22 @@
 #include <queue>
 #include <string>
 #include <memory>
+#include <boost/thread/mutex.hpp>
 
-class Message
-{
-public:
-	virtual void Proccess() = 0;
-};
+#include "Message.h"
 
 class Interface
 {
 public:
-	Interface(std::string name) : Name(name){}
+	Interface(std::string name);
 
 	virtual void Init() = 0;
 	virtual void Run();
-	virtual void Shutdown() = 0;
+	virtual void Shutdown() = 0;	
+
+	virtual void ProccessMessages();
+	virtual void Update(double realTime, double deltaTime) = 0;
+	virtual void Work() = 0;
 
 	virtual void SubmitMessage(std::shared_ptr<Message> msg);
 
@@ -33,12 +34,12 @@ public:
 		long long	FrameCount;
 		double 	  	SinceLastWork;
 	} timer;
-protected:
-	virtual void ProccessMessages();
-	virtual void Update(double realTime, double deltaTime) = 0;
-	virtual void Work() = 0;
 
-	std::queue<std::shared_ptr<Message>> QueueMessages;
+	boost::mutex mutex;
+
+	bool running;	
+protected:
+	std::queue<std::shared_ptr<Message>> QueueMessages;	
 };
 
 #endif

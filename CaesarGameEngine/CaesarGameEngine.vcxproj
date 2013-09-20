@@ -85,7 +85,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicDrawableMessage.cpp" />
+    <ClCompile Include="AddObjectMessage.cpp" />
+    <ClCompile Include="LuaKeys.cpp" />
     <ClCompile Include="LuaObject.cpp" />
+    <ClCompile Include="Message.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="MathOperations.cpp" />
@@ -93,8 +96,6 @@
     <ClCompile Include="ObjectManagerOutput.cpp" />
     <ClCompile Include="XNAToUblas.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
-    <ClCompile Include="BasicObject.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
@@ -104,13 +105,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
-    <ClCompile Include="Prespective.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddBasicDrawableMessage.h" />
+    <ClInclude Include="AddObjectMessage.h" />
     <ClInclude Include="Keys.h" />
+    <ClInclude Include="LuaKeys.h" />
     <ClInclude Include="LuaObject.h" />
+    <ClInclude Include="Message.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="MathOperations.h" />
@@ -119,9 +122,7 @@
     <ClInclude Include="ObjectManagerOutput.h" />
     <ClInclude Include="XNAToUblas.h" />
     <ClInclude Include="BasicDrawable.h" />
-    <ClInclude Include="BasicObject.h" />
     <ClInclude Include="Buffers.h" />
-    <ClInclude Include="Camera.h" />
     <ClInclude Include="ClearScreenMessage.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="DX11Helper.h" />
@@ -131,7 +132,6 @@
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
-    <ClInclude Include="Prespective.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

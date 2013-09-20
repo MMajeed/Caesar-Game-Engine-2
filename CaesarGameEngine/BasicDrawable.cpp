@@ -1,15 +1,16 @@
 #include "BasicDrawable.h"
 
+#include <boost/numeric/ublas/io.hpp>
 #include <Converter.h>
 
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
-#include "BasicObject.h"
-#include "ObjectManager.h"
 #include "XNAToUblas.h"
 #include "Keys.h"
-BasicDrawable::BasicDrawable(std::string newID) : Drawable(newID)
+#include "MathOperations.h"
+
+BasicDrawable::BasicDrawable()
 {
 	this->D3DInfo.pVertexBuffer = 0;
 	this->D3DInfo.pIndexBuffer = 0;
@@ -51,44 +52,51 @@ void BasicDrawable::Update(float delta)
 
 }
 
-void BasicDrawable::Draw(std::shared_ptr<Object> object)
+void BasicDrawable::Draw(const CHL::MapQueryable<std::string, std::string>& object)
 {
-	assert(object->Exist(Keys::ID));
-	assert(object->Exist(Keys::LOCATION));
-	assert(object->Exist(Keys::ROTATION));
-	assert(object->Exist(Keys::SCALE));
-	assert(object->Exist(Keys::COLOUR));
-	assert(object->Exist(Keys::GRAPHICDRAWABLEID));
-
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
 	this->SetupDrawInputVertexShader(object);
 	this->SetupDrawPixelShader(object);
 	this->SetupDrawRasterizeShader(object);
 	this->SetupDrawTexture(object);
+	this->DrawObject(object);
+	this->CleanupAfterDraw(object);
 }
 
-void BasicDrawable::SetupDrawConstantBuffer(std::shared_ptr<Object> object)
+void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQueryable<std::string, std::string>& object)
 {
-	std::shared_ptr<BasicObject> basicObject = BasicObject::ConvertObjectPtr(object);
+	boost::numeric::ublas::vector<double> location;
+	boost::numeric::ublas::vector<double> rotation;
+	boost::numeric::ublas::vector<double> scale;
+	boost::numeric::ublas::vector<double> diffuse;
+	boost::numeric::ublas::vector<double> ambient;
+	boost::numeric::ublas::vector<double> spec;
 
-	auto m = basicObject->GetWorldLocation(GraphicManager::GetInstance().GetCameraView(), GraphicManager::GetInstance().GetPrespective() );
-	XMFLOAT4X4 finalMatrix = XNAToUblas::Convert4x4(m);
+	this->GetInfo(object, location, rotation, scale, diffuse, ambient, spec);	
+
+	boost::numeric::ublas::matrix<double> mObjectFinal = MathOperation::ObjectCalculation(location, rotation, scale);
+
+	boost::numeric::ublas::matrix<double> mFinal(4,4);
+	mFinal = boost::numeric::ublas::prod(mObjectFinal, GraphicManager::GetInstance().CamerMatrix);
+	mFinal = boost::numeric::ublas::prod(mFinal, GraphicManager::GetInstance().PrespectiveMatrix);
+
+	XMFLOAT4X4 finalMatrix = XNAToUblas::Convert4x4(mFinal);
 
 	cBuffer::cbObjectConstantBuffer cbCEF;
 
 	cbCEF.finalMatrix = XMLoadFloat4x4(&finalMatrix);
-	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(basicObject->Colour());
-	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(basicObject->Colour());
-	cbCEF.colour.spec = XNAToUblas::ConvertVec4(basicObject->Colour());
+	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(diffuse);
+	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(ambient);
+	cbCEF.colour.spec = XNAToUblas::ConvertVec4(spec);
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
 	pImmediateContext->UpdateSubresource( this->D3DInfo.pConstantBuffer, 0, NULL, &cbCEF, 0, 0 );
-	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->D3DInfo.pConstantBuffer) );
-	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->D3DInfo.pConstantBuffer) );
+	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
+	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 }
-void BasicDrawable::SetupDrawVertexBuffer(std::shared_ptr<Object> object)
+void BasicDrawable::SetupDrawVertexBuffer(const CHL::MapQueryable<std::string, std::string>& object)
 {	
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -98,7 +106,7 @@ void BasicDrawable::SetupDrawVertexBuffer(std::shared_ptr<Object> object)
 	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-void BasicDrawable::SetupDrawInputVertexShader(std::shared_ptr<Object> object)
+void BasicDrawable::SetupDrawInputVertexShader(const CHL::MapQueryable<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -106,19 +114,19 @@ void BasicDrawable::SetupDrawInputVertexShader(std::shared_ptr<Object> object)
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
 	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
 }
-void BasicDrawable::SetupDrawPixelShader(std::shared_ptr<Object> object)
+void BasicDrawable::SetupDrawPixelShader(const CHL::MapQueryable<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
-void BasicDrawable::SetupDrawRasterizeShader(std::shared_ptr<Object> object)
+void BasicDrawable::SetupDrawRasterizeShader(const CHL::MapQueryable<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-void BasicDrawable::SetupDrawTexture(std::shared_ptr<Object> object)
+void BasicDrawable::SetupDrawTexture(const CHL::MapQueryable<std::string, std::string>& object)
 {
 	if(!this->D3DInfo.textureFileName.empty())
 	{
@@ -127,13 +135,13 @@ void BasicDrawable::SetupDrawTexture(std::shared_ptr<Object> object)
 		pImmediateContext->PSSetShaderResources( 0, 1, &(this->D3DInfo.pTexture) );
 	}
 }
-void BasicDrawable::DrawObject(std::shared_ptr<Object> object)
+void BasicDrawable::DrawObject(const CHL::MapQueryable<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-void BasicDrawable::CleanupAfterDraw(std::shared_ptr<Object> object)	
+void BasicDrawable::CleanupAfterDraw(const CHL::MapQueryable<std::string, std::string>& object)	
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -155,7 +163,7 @@ void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 {
 	std::wstring error;
 
-	if(!DX11Helper::LoadVertexBuffer<WORD>(device, &(this->D3DInfo.indices.front()), this->D3DInfo.indices.size(), &(this->D3DInfo.pIndexBuffer), error ))
+	if(!DX11Helper::LoadIndexBuffer<WORD>(device, &(this->D3DInfo.indices.front()), this->D3DInfo.indices.size(), &(this->D3DInfo.pIndexBuffer), error ))
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}
@@ -229,14 +237,13 @@ void BasicDrawable::InitTexture(ID3D11Device* device)
 	}
 }
 
-std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::string id,
-													const std::vector<Vertex>& vectorVertices,
+std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>& vectorVertices,
 													const std::vector<WORD>&	vectorIndices,
 													D3DShaderInfo				vertexFile,
 													D3DShaderInfo				pixelFile,
 													std::string					textureFileName )
 {
-	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(id));
+	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable);
 
 	newObject->D3DInfo.vertices = vectorVertices;
 	newObject->D3DInfo.indices = vectorIndices;
@@ -251,7 +258,62 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::string id,
 
 std::shared_ptr<Drawable> BasicDrawable::clone() const
 {
-	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(""));
+	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable);
 
 	return std::dynamic_pointer_cast<Drawable>(newObject);
+}
+
+void BasicDrawable::GetInfo(const CHL::MapQueryable<std::string, std::string>& object,
+							boost::numeric::ublas::vector<double>& location,
+							boost::numeric::ublas::vector<double>& rotation,
+							boost::numeric::ublas::vector<double>& scale,
+							boost::numeric::ublas::vector<double>& diffuse,
+							boost::numeric::ublas::vector<double>& ambient,
+							boost::numeric::ublas::vector<double>& spec)
+{
+	location.resize(4);
+	if(object.find(Keys::LOCATION) != object.end())
+	{
+		location = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(object.find(Keys::LOCATION)->second);
+	}
+	else
+	{
+		location(0) = 0.0f; location(1) = 0.0f; location(2) = 0.0f; location(3) = 1.0f; 
+	}
+
+	rotation.resize(4);
+	if(object.find(Keys::ROTATION) != object.end())
+	{
+		rotation = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(object.find(Keys::ROTATION)->second);
+	}
+	else
+	{
+		rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f; 
+	}
+
+	scale.resize(4);
+	if(object.find(Keys::SCALE) != object.end())
+	{
+		scale = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(object.find(Keys::SCALE)->second);
+	}
+	else
+	{
+		scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f; 
+	}
+
+	diffuse.resize(4);
+	ambient.resize(4);
+	spec.resize(4);
+	if(object.find(Keys::COLOUR) != object.end())
+	{
+		diffuse = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(object.find(Keys::COLOUR)->second);
+		ambient = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(object.find(Keys::COLOUR)->second);
+		spec = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(object.find(Keys::COLOUR)->second);
+	}
+	else
+	{
+		diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f; 
+		ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f; 
+		spec(0) = 1.0f; spec(1) = 1.0f; spec(2) = 1.0f; spec(3) = 1.0f; 
+	}
 }

@@ -115,10 +115,9 @@
     <ClInclude Include="luabind\weak_ref.hpp" />
     <ClInclude Include="luabind\wrapper_base.hpp" />
     <ClInclude Include="luabind\yield_policy.hpp" />
-    <ClInclude Include="MapQueryable.h" />
     <ClInclude Include="rply\rply.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="VectorQueryable.h" />
+    <ClInclude Include="Queryable.h" />
     <ClInclude Include="Converter.h" />
   </ItemGroup>
   <ItemGroup>

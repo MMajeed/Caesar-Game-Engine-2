@@ -6,7 +6,7 @@
 #include <d3d11.h>
 
 #include <Singleton.h>
-#include <VectorQueryable.h>
+#include <Queryable.h>
 
 #include "Interface.h"
 #include "Drawable.h"
@@ -21,7 +21,7 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
-	virtual void SetupSampler();
+	virtual void SetupCameraNPrespective();
 	virtual void ClearScreen();
 	virtual void DrawObjects();
 	virtual void Present();
@@ -52,21 +52,8 @@ protected:
 public:
 	boost::numeric::ublas::vector<double> ClearColour;
 
-	boost::numeric::ublas::matrix<double> GetCameraView();
-	boost::numeric::ublas::matrix<double> GetPrespective();
-
-	struct _Camera
-	{
-		boost::numeric::ublas::matrix<double> view;
-		bool use;
-		_Camera(): view(4,4), use(false){}
-	}TempCamera;
-	struct _Prespective
-	{
-		boost::numeric::ublas::matrix<double> view;
-		bool use;		
-		_Prespective(): view(4,4), use(false){}
-	}TempPrespective;
+	boost::numeric::ublas::matrix<double> CamerMatrix;
+	boost::numeric::ublas::matrix<double> PrespectiveMatrix;
 };
 
 #endif //__GraphicManager__

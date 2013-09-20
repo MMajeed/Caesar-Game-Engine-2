@@ -1,7 +1,7 @@
 #ifndef __Object__
 #define __Object__
 
-#include <MapQueryable.h>
+#include <Queryable.h>
 #include <string>
 #include <boost/numeric/ublas/vector.hpp>
 
@@ -10,7 +10,8 @@ class Object
 protected:
 	CHL::MapQueryable<std::string, std::string> info;
 public:
-	Object(std::string ID);
+	Object();
+	Object(CHL::MapQueryable<std::string, std::string> input);
 
 	void Store(std::string key, const std::string& value);
 	void Store(std::string key, const int value);

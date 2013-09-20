@@ -1,8 +1,7 @@
 #ifndef __ObjectManagerOutput__
 #define __ObjectManagerOutput__
 
-#include <MapQueryable.h>
-#include <VectorQueryable.h>
+#include <Queryable.h>
 
 class ObjectManagerOutput
 {
