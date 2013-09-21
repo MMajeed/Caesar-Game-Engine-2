@@ -63,6 +63,18 @@
     <ClCompile Include="LuaKeys.cpp">
       <Filter>Interface\LuaManager\Logic\LuaKeys</Filter>
     </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Interface\InputManager\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyStatus.cpp">
+      <Filter>Interface\InputManager\Logic\KeyStatus</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateKey.cpp">
+      <Filter>Interface\InputManager\Input/Output\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="GetAllKeysStatus.cpp">
+      <Filter>Interface\InputManager\Input/Output\Output</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interface">
@@ -185,6 +197,24 @@
     <Filter Include="Interface\LuaManager\Logic\LuaKeys">
       <UniqueIdentifier>{7c31463d-da94-423f-8468-7d5b35619fce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface\InputManager">
+      <UniqueIdentifier>{1401c33d-b588-4361-ab1b-3a218c0545bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\InputManager\Input/Output">
+      <UniqueIdentifier>{3daa1854-a189-45b8-be12-b41223b938b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\InputManager\Logic">
+      <UniqueIdentifier>{156b0f1c-d1f4-48ae-9597-72605480e214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\InputManager\Logic\KeyStatus">
+      <UniqueIdentifier>{910e4ce1-0929-4e6c-abb6-bd093c50bfed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\InputManager\Input/Output\Input">
+      <UniqueIdentifier>{74c36a3c-b51c-4ada-ab30-9945cbd01f5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\InputManager\Input/Output\Output">
+      <UniqueIdentifier>{70b9f34c-61f7-4135-bd1f-16bd5d421338}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interface.h">
@@ -262,6 +292,18 @@
     </ClInclude>
     <ClInclude Include="LuaModel.h">
       <Filter>Interface\LuaManager\Logic\LuaModel</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Interface\InputManager\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyStatus.h">
+      <Filter>Interface\InputManager\Logic\KeyStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateKey.h">
+      <Filter>Interface\InputManager\Input/Output\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="GetAllKeysStatus.h">
+      <Filter>Interface\InputManager\Input/Output\Output</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

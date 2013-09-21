@@ -10,5 +10,5 @@ ClearScreenMessage::ClearScreenMessage(const boost::numeric::ublas::vector<doubl
 Message::Status ClearScreenMessage::Work()
 {
 	GraphicManager::GetInstance().ClearColour = this->colour;
-	return Message::Complete;
+	return Message::Status::Complete;
 }

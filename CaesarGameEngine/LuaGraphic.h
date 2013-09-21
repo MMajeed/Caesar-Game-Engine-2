@@ -2,9 +2,9 @@
 #define __LuaGraphic__
 
 extern "C" {
-#include <lua-5.1.0\lua.h>
-#include <lua-5.1.0\\lualib.h>
-#include <lua-5.1.0\\lauxlib.h>
+#include <lua5.1.0\lua.h>
+#include <lua5.1.0\\lualib.h>
+#include <lua5.1.0\\lauxlib.h>
 }
 
 #include <luabind\luabind.hpp>

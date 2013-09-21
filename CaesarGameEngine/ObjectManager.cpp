@@ -3,7 +3,6 @@
 #include "Window.h"
 
 ObjectManager::ObjectManager()
-	: Interface("Object Manager")
 {
 
 }

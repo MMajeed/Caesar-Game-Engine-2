@@ -20,13 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE
 // OR OTHER DEALINGS IN THE SOFTWARE.
 
+#ifndef LUA_INCLUDE_HPP_INCLUDED
+#define LUA_INCLUDE_HPP_INCLUDED
 
-#ifndef LUABIND_BIND_HPP_INCLUDED
-#define LUABIND_BIND_HPP_INCLUDED
+#ifndef LUABIND_CPLUSPLUS_LUA
+extern "C"
+{
+#endif
 
-#include <luabind/config.hpp>
-#include <luabind/class.hpp>
-#include <luabind/function.hpp>
-#include <luabind/open.hpp>
+	#include "..\lua5.1.0\lua.h"
+	#include "..\lua5.1.0\lauxlib.h"
 
-#endif // LUABIND_BIND_HPP_INCLUDED
+#ifndef LUABIND_CPLUSPLUS_LUA
+}
+#endif
+
+#endif
+

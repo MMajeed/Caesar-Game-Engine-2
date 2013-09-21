@@ -20,5 +20,5 @@ Message::Status AddObjectMessage::Work()
 		ObjectManager().GetInstance().Insert(obj);
 	}
 
-	return Message::Complete;
+	return Message::Status::Complete;
 }

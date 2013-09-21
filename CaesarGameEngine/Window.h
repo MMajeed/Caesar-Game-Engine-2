@@ -3,7 +3,7 @@
 
 #include <Singleton.h>
 #include <Windows.h>
-#include <vector>
+#include <map>
 #include <boost/thread/thread.hpp>
 #include <memory>
 
@@ -30,7 +30,7 @@ public:
 	static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
 
 protected:
-	std::vector<Interface*> vInterfaces;
+	std::map<std::string, Interface*> vInterfaces;
 	std::vector<std::shared_ptr<boost::thread>> vThreads;
 	enum { FRAMERATE_UPDATE_TIMER = 1 };
 };

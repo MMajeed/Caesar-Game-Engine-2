@@ -78,5 +78,5 @@ Message::Status AddBasicDrawableMessage::Work()
 
 	this->ID = newObject->ID;
 
-	return Message::Complete;
+	return Message::Status::Complete;
 }

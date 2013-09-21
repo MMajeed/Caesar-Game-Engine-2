@@ -10,9 +10,8 @@
 #include "LuaKeys.h"
 
 LuaManager::LuaManager()
-	: Interface("Lua")
-	, lua(0)
 {
+	this->lua = 0;
 	this->FileRun = false;
 }
 

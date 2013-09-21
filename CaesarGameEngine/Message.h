@@ -4,7 +4,7 @@
 class Message
 {
 public:	
-	enum Status{ Incomplete, InProcess , Complete, Unvalid };
+	enum class Status{ Incomplete, InProcess , Complete, Unvalid };
 
 	Message();
 

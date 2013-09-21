@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarGameEngine", "CaesarGameEngine\CaesarGameEngine.vcxproj", "{9239EA0D-3EB3-416B-A672-C4BEA37B445B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A} = {087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF} = {11625FDA-7800-4867-A29A-DA870E6CF4EF}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarHelperLibrary", "CaesarHelperLibrary\CaesarHelperLibrary.vcxproj", "{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}"
@@ -22,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shader Files", "Shader File
 		Assets\ShaderFiles\Setup.fx = Assets\ShaderFiles\Setup.fx
 		Assets\ShaderFiles\VS_0_Regular.fx = Assets\ShaderFiles\VS_0_Regular.fx
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForeignLibrary", "ForeignLibrary\ForeignLibrary.vcxproj", "{11625FDA-7800-4867-A29A-DA870E6CF4EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +52,14 @@ Global
 		{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}.Release|Win32.ActiveCfg = Release|Win32
 		{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}.Release|Win32.Build.0 = Release|Win32
 		{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}.Release|x64.ActiveCfg = Release|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Debug|ARM.ActiveCfg = Debug|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Debug|Win32.Build.0 = Debug|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Debug|x64.ActiveCfg = Debug|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Release|ARM.ActiveCfg = Release|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Release|Win32.ActiveCfg = Release|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Release|Win32.Build.0 = Release|Win32
+		{11625FDA-7800-4867-A29A-DA870E6CF4EF}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

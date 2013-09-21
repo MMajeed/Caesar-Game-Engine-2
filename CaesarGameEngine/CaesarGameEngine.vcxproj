@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\CaesarHelper\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\Mohammed\Desktop\Caesar-Game-Engine-2\CaesarHelperLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Mohammed\Desktop\Caesar-Game-Engine-2\Lib\CaesarHelper\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -80,12 +80,15 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicDrawableMessage.cpp" />
     <ClCompile Include="AddObjectMessage.cpp" />
+    <ClCompile Include="GetAllKeysStatus.cpp" />
+    <ClCompile Include="KeyStatus.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LuaKeys.cpp" />
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="Message.cpp" />
@@ -94,6 +97,7 @@
     <ClCompile Include="MathOperations.cpp" />
     <ClCompile Include="LuaUblas.cpp" />
     <ClCompile Include="ObjectManagerOutput.cpp" />
+    <ClCompile Include="UpdateKey.cpp" />
     <ClCompile Include="XNAToUblas.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
@@ -110,6 +114,9 @@
   <ItemGroup>
     <ClInclude Include="AddBasicDrawableMessage.h" />
     <ClInclude Include="AddObjectMessage.h" />
+    <ClInclude Include="GetAllKeysStatus.h" />
+    <ClInclude Include="KeyStatus.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keys.h" />
     <ClInclude Include="LuaKeys.h" />
     <ClInclude Include="LuaObject.h" />
@@ -120,6 +127,7 @@
     <ClInclude Include="D3DShaderInfo.h" />
     <ClInclude Include="LuaUblas.h" />
     <ClInclude Include="ObjectManagerOutput.h" />
+    <ClInclude Include="UpdateKey.h" />
     <ClInclude Include="XNAToUblas.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="Buffers.h" />

@@ -6,6 +6,7 @@
 #include "GraphicManager.h"
 #include "LuaManager.h"
 #include "ObjectManager.h"
+#include "InputManager.h"
 
 Window::Window()
 {
@@ -54,15 +55,16 @@ void Window::Init()
 
     ShowWindow( this->window.hWnd, 10 );
 
-	this->vInterfaces.push_back(&GraphicManager::GetInstance());
-	this->vInterfaces.push_back(&LuaManager::GetInstance());
-	this->vInterfaces.push_back(&ObjectManager::GetInstance());
+	this->vInterfaces["Graphic"] = &GraphicManager::GetInstance();
+	this->vInterfaces["Lua"] = &LuaManager::GetInstance();
+	this->vInterfaces["Object Manager"] = &ObjectManager::GetInstance();
+	this->vInterfaces["Input Manager"] = &InputManager::GetInstance();
 
 	for(auto iter = this->vInterfaces.begin();
 		iter != this->vInterfaces.end();
 		++iter)
 	{
-		(*iter)->Init();
+		iter->second->Init();
 	}
 }
 
@@ -70,18 +72,16 @@ void Window::Run()
 {
 	SetTimer( this->window.hWnd, FRAMERATE_UPDATE_TIMER, 100, NULL );
 	
+	for(auto iter = this->vInterfaces.begin();
+		iter != this->vInterfaces.end();
+		++iter)
+	{
+		std::shared_ptr<boost::thread> thread
+			= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&Interface::Run, iter->second)));
+		
+		this->vThreads.push_back(thread);
+	}
 
-	std::shared_ptr<boost::thread> graphicManagerThread
-		= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&GraphicManager::Run, &GraphicManager::GetInstance())));
-	this->vThreads.push_back(graphicManagerThread);
-
-	std::shared_ptr<boost::thread> luaManagerThread
-		= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&LuaManager::Run, &LuaManager::GetInstance())));
-	this->vThreads.push_back(luaManagerThread);
-
-	std::shared_ptr<boost::thread> objectManagerThread
-		= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&ObjectManager::Run, &ObjectManager::GetInstance())));
-	this->vThreads.push_back(objectManagerThread);
 
 	// Main message loop
 	MSG msg = {0};
@@ -122,9 +122,9 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 						interFaceIter != Window::GetInstance().vInterfaces.end();
 						++interFaceIter)
 					{
-						double frameTimer = (*interFaceIter)->timer.FrameCount / (*interFaceIter)->timer.AbsoluteTime;
+						double frameTimer = interFaceIter->second->timer.FrameCount / interFaceIter->second->timer.AbsoluteTime;
 						
-						fr << (*interFaceIter)->Name.c_str() << " : ";
+						fr << interFaceIter->first.c_str() << " : ";
 						fr << std::setprecision(2) << std::fixed << frameTimer << ". ";
 					}
 					

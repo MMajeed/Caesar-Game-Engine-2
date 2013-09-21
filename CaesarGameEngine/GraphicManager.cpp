@@ -10,8 +10,7 @@
 #include "XNAToUblas.h"
 
 GraphicManager::GraphicManager()
-	: Interface("Graphic")
-	, ClearColour(3)
+	: ClearColour(3)
 {
 	this->direct3d.pd3dDevice			= 0;
 	this->direct3d.pImmediateContext	= 0;

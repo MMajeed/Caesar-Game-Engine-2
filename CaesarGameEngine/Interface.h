@@ -11,7 +11,7 @@
 class Interface
 {
 public:
-	Interface(std::string name);
+	Interface();
 
 	virtual void Init() = 0;
 	virtual void Run();
@@ -24,8 +24,6 @@ public:
 	virtual void SubmitMessage(std::shared_ptr<Message> msg);
 
 	virtual ~Interface();
-
-	std::string Name;
 
 	// timer stuff
 	struct

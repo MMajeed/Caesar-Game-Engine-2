@@ -4,8 +4,7 @@
 
 #include <Windows.h>
 
-Interface::Interface(std::string name)
-	: Name(name)
+Interface::Interface()
 {
 	this->running = true;
 	this->timer.AbsoluteTime = 0.0;
