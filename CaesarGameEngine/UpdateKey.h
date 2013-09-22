@@ -10,7 +10,7 @@ public:
 	// false is up, true is down
 	UpdateKey(unsigned int inputKey, bool keyStatus);
 
-	virtual Status Work() = 0;
+	virtual Status Work();
 
 	unsigned int key;
 	bool currentStatus;

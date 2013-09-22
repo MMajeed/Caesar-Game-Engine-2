@@ -11,38 +11,38 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="lua5.1.0\lapi.c" />
-    <ClCompile Include="lua5.1.0\lauxlib.c" />
-    <ClCompile Include="lua5.1.0\lbaselib.c" />
-    <ClCompile Include="lua5.1.0\lcode.c" />
-    <ClCompile Include="lua5.1.0\ldblib.c" />
-    <ClCompile Include="lua5.1.0\ldebug.c" />
-    <ClCompile Include="lua5.1.0\ldo.c" />
-    <ClCompile Include="lua5.1.0\ldump.c" />
-    <ClCompile Include="lua5.1.0\lfunc.c" />
-    <ClCompile Include="lua5.1.0\lgc.c" />
-    <ClCompile Include="lua5.1.0\linit.c" />
-    <ClCompile Include="lua5.1.0\liolib.c" />
-    <ClCompile Include="lua5.1.0\llex.c" />
-    <ClCompile Include="lua5.1.0\lmathlib.c" />
-    <ClCompile Include="lua5.1.0\lmem.c" />
-    <ClCompile Include="lua5.1.0\loadlib.c" />
-    <ClCompile Include="lua5.1.0\lobject.c" />
-    <ClCompile Include="lua5.1.0\lopcodes.c" />
-    <ClCompile Include="lua5.1.0\loslib.c" />
-    <ClCompile Include="lua5.1.0\lparser.c" />
-    <ClCompile Include="lua5.1.0\lstate.c" />
-    <ClCompile Include="lua5.1.0\lstring.c" />
-    <ClCompile Include="lua5.1.0\lstrlib.c" />
-    <ClCompile Include="lua5.1.0\ltable.c" />
-    <ClCompile Include="lua5.1.0\ltablib.c" />
-    <ClCompile Include="lua5.1.0\ltm.c" />
-    <ClCompile Include="lua5.1.0\lua.c" />
-    <ClCompile Include="lua5.1.0\luac.c" />
-    <ClCompile Include="lua5.1.0\lundump.c" />
-    <ClCompile Include="lua5.1.0\lvm.c" />
-    <ClCompile Include="lua5.1.0\lzio.c" />
-    <ClCompile Include="lua5.1.0\print.c" />
+    <ClCompile Include="lua5.1.5\lapi.c" />
+    <ClCompile Include="lua5.1.5\lauxlib.c" />
+    <ClCompile Include="lua5.1.5\lbaselib.c" />
+    <ClCompile Include="lua5.1.5\lcode.c" />
+    <ClCompile Include="lua5.1.5\ldblib.c" />
+    <ClCompile Include="lua5.1.5\ldebug.c" />
+    <ClCompile Include="lua5.1.5\ldo.c" />
+    <ClCompile Include="lua5.1.5\ldump.c" />
+    <ClCompile Include="lua5.1.5\lfunc.c" />
+    <ClCompile Include="lua5.1.5\lgc.c" />
+    <ClCompile Include="lua5.1.5\linit.c" />
+    <ClCompile Include="lua5.1.5\liolib.c" />
+    <ClCompile Include="lua5.1.5\llex.c" />
+    <ClCompile Include="lua5.1.5\lmathlib.c" />
+    <ClCompile Include="lua5.1.5\lmem.c" />
+    <ClCompile Include="lua5.1.5\loadlib.c" />
+    <ClCompile Include="lua5.1.5\lobject.c" />
+    <ClCompile Include="lua5.1.5\lopcodes.c" />
+    <ClCompile Include="lua5.1.5\loslib.c" />
+    <ClCompile Include="lua5.1.5\lparser.c" />
+    <ClCompile Include="lua5.1.5\lstate.c" />
+    <ClCompile Include="lua5.1.5\lstring.c" />
+    <ClCompile Include="lua5.1.5\lstrlib.c" />
+    <ClCompile Include="lua5.1.5\ltable.c" />
+    <ClCompile Include="lua5.1.5\ltablib.c" />
+    <ClCompile Include="lua5.1.5\ltm.c" />
+    <ClCompile Include="lua5.1.5\lua.c" />
+    <ClCompile Include="lua5.1.5\luac.c" />
+    <ClCompile Include="lua5.1.5\lundump.c" />
+    <ClCompile Include="lua5.1.5\lvm.c" />
+    <ClCompile Include="lua5.1.5\lzio.c" />
+    <ClCompile Include="lua5.1.5\print.c" />
     <ClCompile Include="luabind\src\class.cpp" />
     <ClCompile Include="luabind\src\class_info.cpp" />
     <ClCompile Include="luabind\src\class_registry.cpp" />
@@ -63,29 +63,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="lua5.1.0\lapi.h" />
-    <ClInclude Include="lua5.1.0\lauxlib.h" />
-    <ClInclude Include="lua5.1.0\lcode.h" />
-    <ClInclude Include="lua5.1.0\ldebug.h" />
-    <ClInclude Include="lua5.1.0\ldo.h" />
-    <ClInclude Include="lua5.1.0\lfunc.h" />
-    <ClInclude Include="lua5.1.0\lgc.h" />
-    <ClInclude Include="lua5.1.0\llex.h" />
-    <ClInclude Include="lua5.1.0\llimits.h" />
-    <ClInclude Include="lua5.1.0\lmem.h" />
-    <ClInclude Include="lua5.1.0\lobject.h" />
-    <ClInclude Include="lua5.1.0\lopcodes.h" />
-    <ClInclude Include="lua5.1.0\lparser.h" />
-    <ClInclude Include="lua5.1.0\lstate.h" />
-    <ClInclude Include="lua5.1.0\lstring.h" />
-    <ClInclude Include="lua5.1.0\ltable.h" />
-    <ClInclude Include="lua5.1.0\ltm.h" />
-    <ClInclude Include="lua5.1.0\lua.h" />
-    <ClInclude Include="lua5.1.0\luaconf.h" />
-    <ClInclude Include="lua5.1.0\lualib.h" />
-    <ClInclude Include="lua5.1.0\lundump.h" />
-    <ClInclude Include="lua5.1.0\lvm.h" />
-    <ClInclude Include="lua5.1.0\lzio.h" />
+    <ClInclude Include="lua5.1.5\lapi.h" />
+    <ClInclude Include="lua5.1.5\lauxlib.h" />
+    <ClInclude Include="lua5.1.5\lcode.h" />
+    <ClInclude Include="lua5.1.5\ldebug.h" />
+    <ClInclude Include="lua5.1.5\ldo.h" />
+    <ClInclude Include="lua5.1.5\lfunc.h" />
+    <ClInclude Include="lua5.1.5\lgc.h" />
+    <ClInclude Include="lua5.1.5\llex.h" />
+    <ClInclude Include="lua5.1.5\llimits.h" />
+    <ClInclude Include="lua5.1.5\lmem.h" />
+    <ClInclude Include="lua5.1.5\lobject.h" />
+    <ClInclude Include="lua5.1.5\lopcodes.h" />
+    <ClInclude Include="lua5.1.5\lparser.h" />
+    <ClInclude Include="lua5.1.5\lstate.h" />
+    <ClInclude Include="lua5.1.5\lstring.h" />
+    <ClInclude Include="lua5.1.5\ltable.h" />
+    <ClInclude Include="lua5.1.5\ltm.h" />
+    <ClInclude Include="lua5.1.5\lua.h" />
+    <ClInclude Include="lua5.1.5\luaconf.h" />
+    <ClInclude Include="lua5.1.5\lualib.h" />
+    <ClInclude Include="lua5.1.5\lundump.h" />
+    <ClInclude Include="lua5.1.5\lvm.h" />
+    <ClInclude Include="lua5.1.5\lzio.h" />
     <ClInclude Include="luabind\adopt_policy.hpp" />
     <ClInclude Include="luabind\back_reference.hpp" />
     <ClInclude Include="luabind\back_reference_fwd.hpp" />
@@ -167,6 +167,9 @@
     <ClInclude Include="luabind\wrapper_base.hpp" />
     <ClInclude Include="luabind\yield_policy.hpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="lua5.1.5\Makefile" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{11625FDA-7800-4867-A29A-DA870E6CF4EF}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -222,6 +225,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4996;4244;4702;4006</DisableSpecificWarnings>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -239,6 +243,9 @@
       <Inputs>
       </Inputs>
     </CustomBuildStep>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

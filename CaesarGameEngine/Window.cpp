@@ -1,8 +1,11 @@
 #include <exception>
 #include <sstream>
 #include <iomanip>
+#include <memory>
 
 #include "Window.h"
+#include "UpdateKey.h"
+
 #include "GraphicManager.h"
 #include "LuaManager.h"
 #include "ObjectManager.h"
@@ -109,32 +112,44 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	case WM_DESTROY:
 		PostQuitMessage( 0 );
 		break;
+	case WM_KEYDOWN:
+	{
+		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, true));
+		InputManager::GetInstance().SubmitMessage(keyMessage);
+		break;
+	}
+	case WM_KEYUP:
+	{
+		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, false));
+		InputManager::GetInstance().SubmitMessage(keyMessage);
+		break;
+	}
 	case WM_TIMER:
+	{
+		switch( wParam )
 		{
-			switch( wParam )
+			/* Update the frame rate and its string representation. */
+			case FRAMERATE_UPDATE_TIMER:
 			{
-				case FRAMERATE_UPDATE_TIMER:
-				/* Update the frame rate and its string representation. */
+				std::wostringstream fr;
+
+				for(auto interFaceIter = Window::GetInstance().vInterfaces.begin();
+					interFaceIter != Window::GetInstance().vInterfaces.end();
+					++interFaceIter)
 				{
-					std::wostringstream fr;
-
-					for(auto interFaceIter = Window::GetInstance().vInterfaces.begin();
-						interFaceIter != Window::GetInstance().vInterfaces.end();
-						++interFaceIter)
-					{
-						double frameTimer = interFaceIter->second->timer.FrameCount / interFaceIter->second->timer.AbsoluteTime;
+					double frameTimer = interFaceIter->second->timer.FrameCount / interFaceIter->second->timer.AbsoluteTime;
 						
-						fr << interFaceIter->first.c_str() << " : ";
-						fr << std::setprecision(2) << std::fixed << frameTimer << ". ";
-					}
-					
-					SetWindowTextW( hWnd, fr.str().c_str() );
-
-					break;
+					fr << interFaceIter->first.c_str() << " : ";
+					fr << std::setprecision(2) << std::fixed << frameTimer << ". ";
 				}
+					
+				SetWindowTextW( hWnd, fr.str().c_str() );
+
+				break;
 			}
-			return 0;
 		}
+		return 0;
+	}
 
 	default:
 		return DefWindowProc( hWnd, message, wParam, lParam );

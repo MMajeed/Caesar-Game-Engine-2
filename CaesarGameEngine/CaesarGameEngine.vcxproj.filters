@@ -12,7 +12,7 @@
       <Filter>Interface\GraphicManager\Input/Output\Input\ClearScreen</Filter>
     </ClCompile>
     <ClCompile Include="LuaGraphic.cpp">
-      <Filter>Interface\LuaManager\Logic\LuaGraphic</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaGraphic</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="BasicDrawable.cpp">
@@ -31,16 +31,16 @@
       <Filter>Tools\Model</Filter>
     </ClCompile>
     <ClCompile Include="LuaModel.cpp">
-      <Filter>Interface\LuaManager\Logic\LuaModel</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaModel</Filter>
     </ClCompile>
     <ClCompile Include="AddBasicDrawableMessage.cpp">
       <Filter>Interface\GraphicManager\Input/Output\Input\AddDrawableMessage\AddBasicDrawableMessage</Filter>
     </ClCompile>
     <ClCompile Include="LuaObject.cpp">
-      <Filter>Interface\LuaManager\Logic\LuaObject</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaObject</Filter>
     </ClCompile>
     <ClCompile Include="LuaUblas.cpp">
-      <Filter>Interface\LuaManager\Logic\LuaUblas</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaUblas</Filter>
     </ClCompile>
     <ClCompile Include="ObjectManagerOutput.cpp">
       <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
@@ -60,9 +60,6 @@
     <ClCompile Include="Message.cpp">
       <Filter>Tools\Message</Filter>
     </ClCompile>
-    <ClCompile Include="LuaKeys.cpp">
-      <Filter>Interface\LuaManager\Logic\LuaKeys</Filter>
-    </ClCompile>
     <ClCompile Include="InputManager.cpp">
       <Filter>Interface\InputManager\Logic</Filter>
     </ClCompile>
@@ -72,8 +69,20 @@
     <ClCompile Include="UpdateKey.cpp">
       <Filter>Interface\InputManager\Input/Output\Input</Filter>
     </ClCompile>
-    <ClCompile Include="GetAllKeysStatus.cpp">
+    <ClCompile Include="GetKeyStatus.cpp">
       <Filter>Interface\InputManager\Input/Output\Output</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeyAction.cpp">
+      <Filter>Interface\LuaManager\Logic\LuaProcesses\LuaKeyAction</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeysID.cpp">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeysID</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeySetup.cpp">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeySettup</Filter>
+    </ClCompile>
+    <ClCompile Include="AddKeyStateAction.cpp">
+      <Filter>Interface\LuaManager\Input/Output\Input\AddKeyStateAction</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -127,18 +136,6 @@
     </Filter>
     <Filter Include="Interface\LuaManager\Logic">
       <UniqueIdentifier>{e48fd430-b435-4fd0-9b9d-5972ba7317e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\LuaManager\Logic\LuaGraphic">
-      <UniqueIdentifier>{c9433190-4678-4a85-9ee0-7016024ce6b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\LuaManager\Logic\LuaModel">
-      <UniqueIdentifier>{742a0059-19ba-46a1-80cc-23c389fcf9f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\LuaManager\Logic\LuaObject">
-      <UniqueIdentifier>{a72b9eae-3501-4e33-8b98-2456883103ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interface\LuaManager\Logic\LuaUblas">
-      <UniqueIdentifier>{d1e8f1e2-8cda-4d04-91a0-c27057eb5bad}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interface\GraphicManager\Input/Output">
       <UniqueIdentifier>{3e239da4-ac9a-467c-8e8d-6e13b113c81c}</UniqueIdentifier>
@@ -194,9 +191,6 @@
     <Filter Include="Interface\ObjectManager\Input/Output\Input\AddObjectMessage">
       <UniqueIdentifier>{3b965314-91b1-425d-b29a-a8c157b8606d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\LuaManager\Logic\LuaKeys">
-      <UniqueIdentifier>{7c31463d-da94-423f-8468-7d5b35619fce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Interface\InputManager">
       <UniqueIdentifier>{1401c33d-b588-4361-ab1b-3a218c0545bb}</UniqueIdentifier>
     </Filter>
@@ -215,6 +209,36 @@
     <Filter Include="Interface\InputManager\Input/Output\Output">
       <UniqueIdentifier>{70b9f34c-61f7-4135-bd1f-16bd5d421338}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions">
+      <UniqueIdentifier>{1c054fc2-ed2e-477d-993a-57731b4f2e1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaUblas">
+      <UniqueIdentifier>{d1e8f1e2-8cda-4d04-91a0-c27057eb5bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaGraphic">
+      <UniqueIdentifier>{c9433190-4678-4a85-9ee0-7016024ce6b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaModel">
+      <UniqueIdentifier>{742a0059-19ba-46a1-80cc-23c389fcf9f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaObject">
+      <UniqueIdentifier>{a72b9eae-3501-4e33-8b98-2456883103ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaProcesses">
+      <UniqueIdentifier>{785eaa50-8bc9-4a8d-8685-7fc02088e006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaProcesses\LuaKeyAction">
+      <UniqueIdentifier>{286e23a5-e8f0-415c-a5bc-31ef27e23c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeysID">
+      <UniqueIdentifier>{7c31463d-da94-423f-8468-7d5b35619fce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeySettup">
+      <UniqueIdentifier>{3e134aab-26d3-4b20-83bb-b1f8452ca061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Input/Output\Input\AddKeyStateAction">
+      <UniqueIdentifier>{f1f592ce-5f24-4181-a3dc-a3df06e74fee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interface.h">
@@ -228,7 +252,7 @@
       <Filter>Interface\GraphicManager\Input/Output\Input\ClearScreen</Filter>
     </ClInclude>
     <ClInclude Include="LuaGraphic.h">
-      <Filter>Interface\LuaManager\Logic\LuaGraphic</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaGraphic</Filter>
     </ClInclude>
     <ClInclude Include="Drawable.h">
       <Filter>Interface\GraphicManager\Logic\Drawable</Filter>
@@ -264,10 +288,10 @@
       <Filter>Tools\Keys</Filter>
     </ClInclude>
     <ClInclude Include="LuaObject.h">
-      <Filter>Interface\LuaManager\Logic\LuaObject</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaObject</Filter>
     </ClInclude>
     <ClInclude Include="LuaUblas.h">
-      <Filter>Interface\LuaManager\Logic\LuaUblas</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaUblas</Filter>
     </ClInclude>
     <ClInclude Include="ObjectManagerOutput.h">
       <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
@@ -287,11 +311,8 @@
     <ClInclude Include="Message.h">
       <Filter>Tools\Message</Filter>
     </ClInclude>
-    <ClInclude Include="LuaKeys.h">
-      <Filter>Interface\LuaManager\Logic\LuaKeys</Filter>
-    </ClInclude>
     <ClInclude Include="LuaModel.h">
-      <Filter>Interface\LuaManager\Logic\LuaModel</Filter>
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaModel</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
       <Filter>Interface\InputManager\Logic</Filter>
@@ -302,8 +323,23 @@
     <ClInclude Include="UpdateKey.h">
       <Filter>Interface\InputManager\Input/Output\Input</Filter>
     </ClInclude>
-    <ClInclude Include="GetAllKeysStatus.h">
+    <ClInclude Include="GetKeyStatus.h">
       <Filter>Interface\InputManager\Input/Output\Output</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaProcesses.h">
+      <Filter>Interface\LuaManager\Logic\LuaProcesses</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeyAction.h">
+      <Filter>Interface\LuaManager\Logic\LuaProcesses\LuaKeyAction</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeysID.h">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeysID</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeySetup.h">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeySettup</Filter>
+    </ClInclude>
+    <ClInclude Include="AddKeyStateAction.h">
+      <Filter>Interface\LuaManager\Input/Output\Input\AddKeyStateAction</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

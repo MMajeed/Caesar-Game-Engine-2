@@ -4,7 +4,7 @@
 class KeyStatus
 {
 public:
-	enum class Status {Up = 0, Down = 1};
+	enum class Status { KeyUp = 0, KeyDown = 1 };
 
 	KeyStatus();
 

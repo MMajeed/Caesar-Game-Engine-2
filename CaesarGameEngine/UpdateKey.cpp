@@ -11,7 +11,7 @@ Message::Status UpdateKey::Work()
 {
 	boost::mutex::scoped_lock lock(InputManager().GetInstance().mutex);
 
-	KeyStatus::Status status = this->currentStatus ? KeyStatus::Status::Down : KeyStatus::Status::Up;
+	KeyStatus::Status status = this->currentStatus ? KeyStatus::Status::KeyDown : KeyStatus::Status::KeyUp;
 
 	InputManager().GetInstance().UpdateKeyStatus(this->key, status);
 

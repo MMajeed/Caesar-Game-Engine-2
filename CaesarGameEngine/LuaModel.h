@@ -2,9 +2,9 @@
 #define __LuaModel__
 
 extern "C" {
-#include <lua5.1.0\lua.h>
-#include <lua5.1.0\\lualib.h>
-#include <lua5.1.0\\lauxlib.h>
+#include <lua5.1.5\lua.h>
+#include <lua5.1.5\lualib.h>
+#include <lua5.1.5\lauxlib.h>
 }
 
 class LuaModel

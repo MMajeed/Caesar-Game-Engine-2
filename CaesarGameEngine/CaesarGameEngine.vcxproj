@@ -57,12 +57,16 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4996;4005;4127;4100</DisableSpecificWarnings>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -85,11 +89,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicDrawableMessage.cpp" />
+    <ClCompile Include="AddKeyStateAction.cpp" />
     <ClCompile Include="AddObjectMessage.cpp" />
-    <ClCompile Include="GetAllKeysStatus.cpp" />
+    <ClCompile Include="GetKeyStatus.cpp" />
     <ClCompile Include="KeyStatus.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="LuaKeys.cpp" />
+    <ClCompile Include="LuaKeyAction.cpp" />
+    <ClCompile Include="LuaKeySetup.cpp" />
+    <ClCompile Include="LuaKeysID.cpp" />
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -113,13 +120,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddBasicDrawableMessage.h" />
+    <ClInclude Include="AddKeyStateAction.h" />
     <ClInclude Include="AddObjectMessage.h" />
-    <ClInclude Include="GetAllKeysStatus.h" />
+    <ClInclude Include="GetKeyStatus.h" />
     <ClInclude Include="KeyStatus.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keys.h" />
-    <ClInclude Include="LuaKeys.h" />
+    <ClInclude Include="LuaKeyAction.h" />
+    <ClInclude Include="LuaKeySetup.h" />
+    <ClInclude Include="LuaKeysID.h" />
     <ClInclude Include="LuaObject.h" />
+    <ClInclude Include="LuaProcesses.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="LuaModel.h" />

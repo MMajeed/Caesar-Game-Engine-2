@@ -2,7 +2,7 @@
 
 KeyStatus::KeyStatus()
 {
-	this->CurrentStatus = KeyStatus::Status::Down;
+	this->CurrentStatus = KeyStatus::Status::KeyDown;
 	this->duration = 0.0;
 }
 
