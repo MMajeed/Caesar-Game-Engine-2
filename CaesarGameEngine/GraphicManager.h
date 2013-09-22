@@ -13,9 +13,9 @@
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
 {
-public:
+protected:
 	GraphicManager();
-
+public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Work();
@@ -54,6 +54,8 @@ public:
 
 	boost::numeric::ublas::matrix<double> CamerMatrix;
 	boost::numeric::ublas::matrix<double> PrespectiveMatrix;
+
+	friend CHL::Singelton<GraphicManager>;
 };
 
 #endif //__GraphicManager__

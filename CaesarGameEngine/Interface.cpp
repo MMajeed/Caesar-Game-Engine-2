@@ -75,7 +75,7 @@ void Interface::ProccessMessages()
 	while( !(this->QueueMessages.empty()) )
 	{
 
-		std::shared_ptr<Message> msg = this->QueueMessages.back();
+		std::shared_ptr<Message> msg = this->QueueMessages.front();
 		
 		msg->Proccess();
 

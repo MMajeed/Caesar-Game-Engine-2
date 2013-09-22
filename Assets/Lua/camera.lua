@@ -1,2 +1,8 @@
+local camera = {}
 
-ClearScreen(1.0, 0.5, 0.5)
+function camera.foo()
+    print("Hello World!")
+end
+
+return camera
+

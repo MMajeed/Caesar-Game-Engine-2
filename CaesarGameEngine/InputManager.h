@@ -11,8 +11,9 @@
 
 class InputManager : public Interface, public CHL::Singelton<InputManager>
 {
-public:
+protected:	
 	InputManager();
+public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Work();
@@ -21,8 +22,10 @@ public:
 	void UpdateKeyStatus(unsigned int, KeyStatus::Status);
 
 	const CHL::MapQueryable<unsigned int, KeyStatus> AllObjects();
-protected:	
+protected:
 	CHL::MapQueryable<unsigned int, KeyStatus> objects;
+
+	friend CHL::Singelton<InputManager>;
 };
 
 #endif //__InputManager__

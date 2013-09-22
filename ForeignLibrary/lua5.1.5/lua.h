@@ -9,6 +9,8 @@
 #ifndef lua_h
 #define lua_h
 
+#include "..\Linker.h"
+
 #include <stdarg.h>
 #include <stddef.h>
 

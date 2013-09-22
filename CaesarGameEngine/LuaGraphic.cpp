@@ -22,9 +22,7 @@ void LuaGraphic::ClearScreen::Action(double x, double y, double z)
 
 	std::shared_ptr<ClearScreenMessage> msg(new ClearScreenMessage(newColour));
 
-	GraphicManager().GetInstance().SubmitMessage(msg);
-	
-	msg->WaitTillProcccesed();
+	GraphicManager::GetInstance().SubmitMessage(msg);
 }
 
 void LuaGraphic::ClearScreen::Register(lua_State *lua)
@@ -56,7 +54,7 @@ std::string LuaGraphic::AddObject::AddBasicObject(luabind::object const& table)
 	std::shared_ptr<AddBasicDrawableMessage> msg(
 			new AddBasicDrawableMessage(m, vertexFileName, "VS", "vs_4_0", pixelFileName, "PS", "ps_4_0", texture ));
 
-	GraphicManager().GetInstance().SubmitMessage(msg);
+	GraphicManager::GetInstance().SubmitMessage(msg);
 
 	msg->WaitTillProcccesed();
 

@@ -10,8 +10,9 @@
 
 class ObjectManager : public Interface, public CHL::Singelton<ObjectManager>
 {
-public:
+protected:
 	ObjectManager();
+public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Work();
@@ -21,6 +22,8 @@ public:
 	const CHL::VectorQueryable<std::shared_ptr<Object>> AllObjects();
 protected:	
 	CHL::VectorQueryable<std::shared_ptr<Object>> objects;
+
+	friend CHL::Singelton<ObjectManager>;
 };
 
 #endif //__ObjectManager__

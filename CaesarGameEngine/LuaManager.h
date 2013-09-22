@@ -20,9 +20,9 @@ extern "C" {
 
 class LuaManager : public Interface, public CHL::Singelton<LuaManager>
 {
-public:
+protected:
 	LuaManager();
-
+public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Work();
@@ -34,6 +34,8 @@ public:
 	virtual void SubmitProcesses(std::shared_ptr<LuaProcesses> process);
 protected:
 	CHL::VectorQueryable<std::shared_ptr<LuaProcesses>> allProcesses;
+
+	friend CHL::Singelton<LuaManager>;
 };
 
 #endif //__LuaManager__

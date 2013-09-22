@@ -23,7 +23,7 @@ std::string LuaObject::Object::AddObject(luabind::object const& table)
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
-	ObjectManager().GetInstance().SubmitMessage(msg);
+	ObjectManager::GetInstance().SubmitMessage(msg);
 
 	msg->WaitTillProcccesed();
 

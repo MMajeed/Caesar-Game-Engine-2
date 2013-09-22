@@ -4,9 +4,9 @@
 
 CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> ObjectManagerOutput::GetAllObjects()
 {
-	boost::mutex::scoped_lock lock(ObjectManager().GetInstance().mutex);
+	boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
 
-	auto allObjects = ObjectManager().GetInstance().AllObjects();
+	auto allObjects = ObjectManager::GetInstance().AllObjects();
 
 	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> convertedVec;
 

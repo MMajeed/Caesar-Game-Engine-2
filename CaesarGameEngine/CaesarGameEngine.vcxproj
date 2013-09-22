@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(SolutionDir)Lib\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(SolutionDir)Lib\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -161,7 +161,7 @@
     <Message Text="Copying All '*.dll' to bin directory" Importance="high">
     </Message>
     <ItemGroup>
-      <SourceFiles Include="$(SolutionDir)DLL\*.*" />
+      <SourceFiles Include="$(SolutionDir)Lib\Assimp\dll\x86\Assimp32.dll" />
     </ItemGroup>
     <Copy SourceFiles="@(SourceFiles)" DestinationFolder="$(SolutionDir)$(Configuration)\" />
   </Target>

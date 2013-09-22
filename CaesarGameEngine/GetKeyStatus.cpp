@@ -3,7 +3,7 @@
 
 GetKeyStatus::Key GetKeyStatus::GetKey(unsigned int keyID)
 {
-	boost::mutex::scoped_lock lock(InputManager().GetInstance().mutex);
+	boost::mutex::scoped_lock lock(InputManager::GetInstance().mutex);
 
 	const CHL::MapQueryable<unsigned int, KeyStatus> keys = InputManager::GetInstance().AllObjects();
 
@@ -21,7 +21,7 @@ GetKeyStatus::Key GetKeyStatus::GetKey(unsigned int keyID)
 	{
 		returnValue.state = GetKeyStatus::Key::KeyState::KeyUp;
 		returnValue.key = keyID;
-		returnValue.duration = InputManager().GetInstance().timer.AbsoluteTime;
+		returnValue.duration = InputManager::GetInstance().timer.AbsoluteTime;
 	}
 
 	return returnValue;

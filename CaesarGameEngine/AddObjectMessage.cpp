@@ -16,8 +16,8 @@ Message::Status AddObjectMessage::Work()
 	obj->Retrieve(Keys::ID, this->ID);
 
 	{
-		boost::mutex::scoped_lock lock(ObjectManager().GetInstance().mutex);
-		ObjectManager().GetInstance().Insert(obj);
+		boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
+		ObjectManager::GetInstance().Insert(obj);
 	}
 
 	return Message::Status::Complete;

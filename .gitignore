@@ -15,7 +15,6 @@
 */[Dd]ebug/*
 */[Rr]elease/*
 
-Lib/*
 [Bb]in/*
 [Dd]ebug/*
 [Rr]elease/*
@@ -26,3 +25,8 @@ Lib/*
 *.vcxproj.user
 *.ipch
 *.sdf
+
+*/CaesarHelperLibrary-mt.lib
+*/CaesarHelperLibrary-mt-d.lib
+*/ForeignLibrary-mt.lib
+*/ForeignLibrary-mt-d.lib
