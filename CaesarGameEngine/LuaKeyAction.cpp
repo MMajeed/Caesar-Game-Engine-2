@@ -19,7 +19,12 @@ void LuaKeyAction::Action()
 
 		if(this->wanted == this->currentKey)
 		{
-			luabind::call_function<void>(function);
+			luabind::call_function<void>(this->function);
 		}
 	}
+}
+
+void LuaKeyAction::Update(double realTime, double deltaTime)
+{
+
 }

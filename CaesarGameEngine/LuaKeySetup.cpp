@@ -2,7 +2,7 @@
 
 #include <luabind\luabind.hpp>
 
-#include "AddKeyStateAction.h"
+#include "LuaKeyAction.h"
 #include "LuaManager.h"
 
 std::string LuaKeySetup::OnKeyDown(unsigned int key, luabind::object function)
@@ -12,12 +12,11 @@ std::string LuaKeySetup::OnKeyDown(unsigned int key, luabind::object function)
 		throw std::exception("Wrong paramter for OnKeyDown, Please pass in the key and function");
     }
 
-	std::shared_ptr<AddKeyStateAction> msg(
-		new AddKeyStateAction(key, AddKeyStateAction::StateWanted::KeyDown, function));
+	std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(key, LuaKeyAction::KeyStatWanted::KeyDown, function));
 
-	LuaManager::GetInstance().SubmitMessage(msg);
+	LuaManager::GetInstance().SubmitProcesses(newKeyAction);
 
-	return msg->ID;
+	return newKeyAction->ID;
 }
 std::string LuaKeySetup::OnKeyUp(unsigned int key, luabind::object const& function)
 {
@@ -26,23 +25,17 @@ std::string LuaKeySetup::OnKeyUp(unsigned int key, luabind::object const& functi
 		throw std::exception("Wrong paramter for OnKeyUp, Please pass in the key and function");
     }
 
-	return "";
-}
-std::string LuaKeySetup::OnKeyHold(unsigned int key, luabind::object const& function)
-{
-	if (luabind::type(function) != LUA_TFUNCTION)
-    {	
-		throw std::exception("Wrong paramter for OnKeyHold, Please pass in the key and function");
-    }
+	std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(key, LuaKeyAction::KeyStatWanted::KeyUp, function));
 
-	return "";
+	LuaManager::GetInstance().SubmitProcesses(newKeyAction);
+
+	return newKeyAction->ID;
 }
 	
 void LuaKeySetup::Register(lua_State *lua)
 {
 	luabind::module(lua)[
 		luabind::def("OnKeyDown", LuaKeySetup::OnKeyDown),
-		luabind::def("OnKeyUp", LuaKeySetup::OnKeyUp),
-		luabind::def("OnKeyHold", LuaKeySetup::OnKeyHold)
+		luabind::def("OnKeyUp", LuaKeySetup::OnKeyUp)
 	  ];
 }

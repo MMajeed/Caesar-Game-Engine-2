@@ -6,7 +6,7 @@
 #include "ObjectManager.h"
 #include "Keys.h"
 
-AddObjectMessage::AddObjectMessage(CHL::MapQueryable<std::string, std::string> info)
+AddObjectMessage::AddObjectMessage(CHL::MapQ<std::string, std::string> info)
 {
 	this->messageInfo = info;
 }

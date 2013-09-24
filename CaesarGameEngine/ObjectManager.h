@@ -19,9 +19,11 @@ public:
 	virtual void Shutdown();
 
 	void Insert(std::shared_ptr<Object> obj);
-	const CHL::VectorQueryable<std::shared_ptr<Object>> AllObjects();
+	void UpdateObject(std::string ID, std::string infoID, std::string info);
+	const CHL::VectorQ<std::shared_ptr<Object>> AllObjects();
+	std::shared_ptr<Object> GetObjectW(std::string ID);
 protected:	
-	CHL::VectorQueryable<std::shared_ptr<Object>> objects;
+	CHL::VectorQ<std::shared_ptr<Object>> objects;
 
 	friend CHL::Singelton<ObjectManager>;
 };

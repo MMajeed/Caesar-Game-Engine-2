@@ -9,9 +9,9 @@
 class AddObjectMessage : public Message
 {
 public:
-	AddObjectMessage(CHL::MapQueryable<std::string, std::string> info);
+	AddObjectMessage(CHL::MapQ<std::string, std::string> info);
 	virtual Message::Status Work();
-	CHL::MapQueryable<std::string, std::string> messageInfo;
+	CHL::MapQ<std::string, std::string> messageInfo;
 	std::string ID;
 };
 

@@ -8,7 +8,7 @@ extern "C" {
 }
 
 #include <string>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector.hpp>
 
 class LuaUblas
 {

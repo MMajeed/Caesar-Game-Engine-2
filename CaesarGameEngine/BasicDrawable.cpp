@@ -52,7 +52,7 @@ void BasicDrawable::Update(float delta)
 
 }
 
-void BasicDrawable::Draw(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::Draw(const CHL::MapQ<std::string, std::string>& object)
 {
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
@@ -64,27 +64,24 @@ void BasicDrawable::Draw(const CHL::MapQueryable<std::string, std::string>& obje
 	this->CleanupAfterDraw(object);
 }
 
-void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::string>& object)
 {
-	boost::numeric::ublas::vector<double> location;
-	boost::numeric::ublas::vector<double> rotation;
-	boost::numeric::ublas::vector<double> scale;
-	boost::numeric::ublas::vector<double> diffuse;
-	boost::numeric::ublas::vector<double> ambient;
-	boost::numeric::ublas::vector<double> spec;
+	boost::numeric::ublas::vector<double> location;	boost::numeric::ublas::vector<double> diffuse;
+	boost::numeric::ublas::vector<double> rotation;	boost::numeric::ublas::vector<double> ambient;
+	boost::numeric::ublas::vector<double> scale;	boost::numeric::ublas::vector<double> spec;
 
 	this->GetInfo(object, location, rotation, scale, diffuse, ambient, spec);	
 
 	boost::numeric::ublas::matrix<double> mObjectFinal = MathOperation::ObjectCalculation(location, rotation, scale);
 
 	boost::numeric::ublas::matrix<double> mFinal(4,4);
-	mFinal = boost::numeric::ublas::prod(mObjectFinal, GraphicManager::GetInstance().CamerMatrix);
-	mFinal = boost::numeric::ublas::prod(mFinal, GraphicManager::GetInstance().PrespectiveMatrix);
+	mFinal = boost::numeric::ublas::prod(GraphicManager::GetInstance().CamerMatrix, mObjectFinal);
+	mFinal = boost::numeric::ublas::prod(GraphicManager::GetInstance().PrespectiveMatrix, mFinal);
 
 	XMFLOAT4X4 finalMatrix = XNAToUblas::Convert4x4(mFinal);
 
 	cBuffer::cbObjectConstantBuffer cbCEF;
-
+	
 	cbCEF.finalMatrix = XMLoadFloat4x4(&finalMatrix);
 	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(diffuse);
 	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(ambient);
@@ -96,7 +93,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQueryable<std::string,
 	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 }
-void BasicDrawable::SetupDrawVertexBuffer(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::string>& object)
 {	
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -106,7 +103,7 @@ void BasicDrawable::SetupDrawVertexBuffer(const CHL::MapQueryable<std::string, s
 	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-void BasicDrawable::SetupDrawInputVertexShader(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -114,19 +111,19 @@ void BasicDrawable::SetupDrawInputVertexShader(const CHL::MapQueryable<std::stri
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
 	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
 }
-void BasicDrawable::SetupDrawPixelShader(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::SetupDrawPixelShader(const CHL::MapQ<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
-void BasicDrawable::SetupDrawRasterizeShader(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-void BasicDrawable::SetupDrawTexture(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::SetupDrawTexture(const CHL::MapQ<std::string, std::string>& object)
 {
 	if(!this->D3DInfo.textureFileName.empty())
 	{
@@ -135,13 +132,13 @@ void BasicDrawable::SetupDrawTexture(const CHL::MapQueryable<std::string, std::s
 		pImmediateContext->PSSetShaderResources( 0, 1, &(this->D3DInfo.pTexture) );
 	}
 }
-void BasicDrawable::DrawObject(const CHL::MapQueryable<std::string, std::string>& object)
+void BasicDrawable::DrawObject(const CHL::MapQ<std::string, std::string>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-void BasicDrawable::CleanupAfterDraw(const CHL::MapQueryable<std::string, std::string>& object)	
+void BasicDrawable::CleanupAfterDraw(const CHL::MapQ<std::string, std::string>& object)	
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -263,7 +260,7 @@ std::shared_ptr<Drawable> BasicDrawable::clone() const
 	return std::dynamic_pointer_cast<Drawable>(newObject);
 }
 
-void BasicDrawable::GetInfo(const CHL::MapQueryable<std::string, std::string>& object,
+void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::string>& object,
 							boost::numeric::ublas::vector<double>& location,
 							boost::numeric::ublas::vector<double>& rotation,
 							boost::numeric::ublas::vector<double>& scale,

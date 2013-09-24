@@ -16,7 +16,7 @@ public:
 	virtual void Init();
 	virtual void Clean();
 	virtual void Update(float delta);
-	virtual void Draw(const CHL::MapQueryable<std::string, std::string>& object);
+	virtual void Draw(const CHL::MapQ<std::string, std::string>& object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
 	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
@@ -51,17 +51,17 @@ public:
 	virtual void InitConstantBuffer(ID3D11Device* device);
 	virtual void InitTexture(ID3D11Device* device);
 
-	virtual void SetupDrawConstantBuffer(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void SetupDrawVertexBuffer(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void SetupDrawInputVertexShader(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void SetupDrawPixelShader(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void SetupDrawRasterizeShader(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void SetupDrawTexture(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void DrawObject(const CHL::MapQueryable<std::string, std::string>& object);
-	virtual void CleanupAfterDraw(const CHL::MapQueryable<std::string, std::string>& object);
+	virtual void SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::string>& object);
+	virtual void SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::string>& object);
+	virtual void SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::string>& object);
+	virtual void SetupDrawPixelShader(const CHL::MapQ<std::string, std::string>& object);
+	virtual void SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::string>& object);
+	virtual void SetupDrawTexture(const CHL::MapQ<std::string, std::string>& object);
+	virtual void DrawObject(const CHL::MapQ<std::string, std::string>& object);
+	virtual void CleanupAfterDraw(const CHL::MapQ<std::string, std::string>& object);
 
 protected:
-	virtual void GetInfo(const CHL::MapQueryable<std::string, std::string>& objec,
+	virtual void GetInfo(const CHL::MapQ<std::string, std::string>& objec,
 						 boost::numeric::ublas::vector<double>& location,
 						 boost::numeric::ublas::vector<double>& rotation,
 						 boost::numeric::ublas::vector<double>& scale,

@@ -96,16 +96,16 @@ namespace CHL
 	};
 
 	template<typename T1>
-	class VectorQueryable : public Queryable<std::vector<T1>>
+	class VectorQ : public Queryable<std::vector<T1>>
 	{
 	public:
-		VectorQueryable(){}
-		VectorQueryable(typename std::vector<T1> vec)
+		VectorQ(){}
+		VectorQ(typename std::vector<T1> vec)
 		{
 			this->resize(vec.size());
 			std::copy(vec.begin(), vec.end(), this->begin()); 
 		}
-		VectorQueryable(typename Queryable<std::vector<T1>> vec)
+		VectorQ(typename Queryable<std::vector<T1>> vec)
 		{
 			this->resize(vec.size());
 			std::copy(vec.begin(), vec.end(), this->begin()); 
@@ -113,15 +113,15 @@ namespace CHL
 	};
 
 	template<typename T1, typename T2>
-	class MapQueryable : public Queryable<std::hash_map<T1, T2>>
+	class MapQ : public Queryable<std::hash_map<T1, T2>>
 	{
 	public:
-		MapQueryable(){}
-		MapQueryable(typename std::hash_map<T1, T2> vec)
+		MapQ(){}
+		MapQ(typename std::hash_map<T1, T2> vec)
 		{
 			this->insert(vec.begin(), vec.end());
 		}
-		MapQueryable(typename Queryable<std::hash_map<T1, T2>> vec)
+		MapQ(typename Queryable<std::hash_map<T1, T2>> vec)
 		{
 			this->insert(vec.begin(), vec.end());
 		}

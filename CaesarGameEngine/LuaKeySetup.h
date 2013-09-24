@@ -16,7 +16,6 @@ class LuaKeySetup
 public:
 	static std::string OnKeyDown(unsigned int key, luabind::object function);
 	static std::string OnKeyUp(unsigned int key, luabind::object const& function);
-	static std::string OnKeyHold(unsigned int key, luabind::object const& function);
 	static void Register(lua_State *lua);
 
 	static inline void RegisterAllLuaFunction(lua_State *lua)

@@ -2,13 +2,13 @@
 
 #include "ObjectManager.h"
 
-CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> ObjectManagerOutput::GetAllObjects()
+CHL::VectorQ<CHL::MapQ<std::string, std::string>> ObjectManagerOutput::GetAllObjects()
 {
 	boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
 
 	auto allObjects = ObjectManager::GetInstance().AllObjects();
 
-	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> convertedVec;
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>> convertedVec;
 
 	convertedVec.reserve(allObjects.size());
 
@@ -20,4 +20,11 @@ CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> ObjectManagerO
 	}
 
 	return convertedVec;
+}
+
+CHL::MapQ<std::string, std::string> ObjectManagerOutput::GetObject(std::string id)
+{
+	boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
+
+	return ObjectManager::GetInstance().GetObjectW(id)->info;
 }

@@ -38,7 +38,7 @@ void Interface::Run()
 				throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
 			long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 			long long elapsedFrameCount = timerNow.QuadPart - timerLast.QuadPart;
-			timer.AbsoluteTime = elapsedCount / tickInterval;
+			this->timer.AbsoluteTime = elapsedCount / tickInterval;
 			double frameTime = elapsedFrameCount / tickInterval;
 			this->timer.SinceLastWork += frameTime;
 

@@ -11,6 +11,8 @@
 #include "LuaUblas.h"
 #include "LuaKeysID.h"
 #include "LuaKeySetup.h"
+#include "LuaCamera.h"
+#include "LuaLoopCallSetup.h"
 
 LuaManager::LuaManager()
 {
@@ -18,7 +20,6 @@ LuaManager::LuaManager()
 	this->FileRun = false;
 }
 
-static const char mainLua[] = "Assets/Lua/main.lua";
 
 void LuaManager::Init()
 {
@@ -54,12 +55,21 @@ void LuaManager::Init()
 	LuaObject::RegisterAllLuaFunction(this->lua);
 	LuaKeysID::RegisterAllLuaFunction(this->lua);
 	LuaKeySetup::RegisterAllLuaFunction(this->lua);
+	LuaCameraSetup::RegisterAllLuaFunction(this->lua);
+	LuaLoopCallSetup::RegisterAllLuaFunction(this->lua);
 }
 
 void LuaManager::Update(double realTime, double deltaTime)
 {
-
+	for(auto iterProcesses = this->allProcesses.begin();
+		iterProcesses != this->allProcesses.end();
+		++iterProcesses)
+	{
+		(*iterProcesses)->Update(realTime, deltaTime);
+	}
 }
+
+static const char mainLua[] = "Assets/Lua/main.lua";
 
 void LuaManager::Work()
 {

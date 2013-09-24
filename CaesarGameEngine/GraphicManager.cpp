@@ -50,40 +50,79 @@ void GraphicManager::Shutdown()
 
 void GraphicManager::SetupCameraNPrespective()
 {
-	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
 
 	// Camera
-	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator cameraIter;
-	cameraIter = objects.First([](CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator objIter)
-			{ return (objIter->find(Keys::Class)->second == Keys::ClassType::Camera); }); // Find Camera
+	boost::numeric::ublas::vector<double> vEye(4);
+	boost::numeric::ublas::vector<double> vTM(4);
+	boost::numeric::ublas::vector<double> vUp(4);
+	double pitch;	double yaw;	double roll;
 
-	if(cameraIter != objects.cend())
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator cameraIter;
+	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+			{ 
+				auto classTypeIter = objIter->find(Keys::Class);
+				if(classTypeIter != objIter->end())
+					return (classTypeIter->second == Keys::ClassType::Camera); 
+				else
+					return false;
+			}); // Find Camera
+	if(cameraIter != objects.cend()) // if camera found
 	{
-		CHL::MapQueryable<std::string, std::string> camera = *cameraIter;
-		boost::numeric::ublas::vector<double> vEye = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::EYE]);
-		boost::numeric::ublas::vector<double> vTM = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::TARGETMAGNITUDE]);
-		boost::numeric::ublas::vector<double> vUp = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::UP]);
-		double pitch = CHL::ToDouble(camera[Keys::RADIANPITCH]) ;
-		double yaw = CHL::ToDouble(camera[Keys::RADIANYAW]); 
-		double roll = CHL::ToDouble(camera[Keys::RADIANROLL]);
-	
-		this->CamerMatrix = MathOperation::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+		CHL::MapQ<std::string, std::string> camera = *cameraIter;
+		vEye = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::EYE]);
+		vTM = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::TARGETMAGNITUDE]);
+		vUp = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::UP]);
+		pitch = CHL::ToDouble(camera[Keys::RADIANPITCH]) ;
+		yaw = CHL::ToDouble(camera[Keys::RADIANYAW]); 
+		roll = CHL::ToDouble(camera[Keys::RADIANROLL]);
 	}
+	else
+	{
+		vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0; 
+		vTM(0) = 0.0;	vTM(1) = 0.0;	vTM(2) = 1.0;	vTM(3) = 0.0; 
+		vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0; 
+		pitch = 0;	yaw = 0;	roll = 0;	
+	}
+
+	this->CamerMatrix = MathOperation::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+
 	// Prespective
-	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator prespectiveIter;
-	prespectiveIter = objects.First([](CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator objIter)
-			{ return (objIter->find(Keys::Class)->second == Keys::ClassType::Prespective); }); // Find prespective
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator prespectiveIter;
 
-	if(cameraIter != objects.cend())
+	double FovAngleY; 
+	double height; double width;
+	double nearZ;
+	double farZ;
+
+	prespectiveIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+			{ 
+				auto classTypeIter = objIter->find(Keys::Class);
+				if(classTypeIter != objIter->end())
+					return (classTypeIter->second == Keys::ClassType::Prespective); 
+				else
+					return false;
+			}); // Find prespective]
+
+	if(prespectiveIter != objects.cend()) // if prespective found
 	{
-		CHL::MapQueryable<std::string, std::string> prespective = *prespectiveIter;
-		double FovAngleY = CHL::ToDouble(prespective[Keys::FOVANGLE]);
-		double height = CHL::ToDouble(prespective[Keys::SCREENHEIGHT]);;
-		double width = CHL::ToDouble(prespective[Keys::SCREENWIDTH]);;
-		double NearZ = CHL::ToDouble(prespective[Keys::MINVIEWABLE]);;  
-		double FarZ = CHL::ToDouble(prespective[Keys::MAXVIEWABLE]);;
-		this->PrespectiveMatrix = MathOperation::PerspectiveFovLHCalculation(FovAngleY, height/width, NearZ, FarZ);
+		CHL::MapQ<std::string, std::string> prespective = *prespectiveIter;
+		FovAngleY = CHL::ToDouble(prespective[Keys::FOVANGLE]);
+		height = CHL::ToDouble(prespective[Keys::SCREENHEIGHT]);;
+		width = CHL::ToDouble(prespective[Keys::SCREENWIDTH]);;
+		nearZ = CHL::ToDouble(prespective[Keys::MINVIEWABLE]);;  
+		farZ = CHL::ToDouble(prespective[Keys::MAXVIEWABLE]);;		
 	}
+	else
+	{
+		FovAngleY = 0.785398163;
+		height = Window::GetInstance().window.height;
+		width = Window::GetInstance().window.width;
+		nearZ = 0.01;
+		farZ = 5000.0;
+	}
+
+	this->PrespectiveMatrix = MathOperation::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }
 
 void GraphicManager::ClearScreen()
@@ -96,10 +135,10 @@ void GraphicManager::ClearScreen()
 
 void GraphicManager::DrawObjects()
 {
-	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
 
-	CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> filteredObjects
-		= objects.Where([](const CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>>::const_iterator iterObj)
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>> filteredObjects
+		= objects.Where([](const CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator iterObj)
 						{ return (iterObj->find(Keys::GRAPHICDRAWABLEID) != iterObj->end()); });
 
 
@@ -110,7 +149,7 @@ void GraphicManager::DrawObjects()
 		std::string graphicObjectID = iterObj->find(Keys::GRAPHICDRAWABLEID)->second;
 
 		auto drawableIter = 
-			this->objects.First([graphicObjectID](CHL::VectorQueryable<std::shared_ptr<Drawable>>::const_iterator iterDrawableObj)
+			this->objects.First([graphicObjectID](CHL::VectorQ<std::shared_ptr<Drawable>>::const_iterator iterDrawableObj)
 					{ 
 						auto thisObjectID = (*iterDrawableObj)->ID;
 						return (thisObjectID == graphicObjectID);
@@ -135,7 +174,7 @@ void GraphicManager::Insert(std::shared_ptr<Drawable> obj)
 {
 	this->objects.push_back(obj);
 }
-const CHL::VectorQueryable<std::shared_ptr<Drawable>> GraphicManager::AllObjects()
+const CHL::VectorQ<std::shared_ptr<Drawable>> GraphicManager::AllObjects()
 {
 	return this->objects;
 }

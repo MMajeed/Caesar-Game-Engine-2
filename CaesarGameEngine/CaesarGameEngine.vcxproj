@@ -89,11 +89,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicDrawableMessage.cpp" />
-    <ClCompile Include="AddKeyStateAction.cpp" />
     <ClCompile Include="AddObjectMessage.cpp" />
+    <ClCompile Include="LuaLoopCall.cpp" />
+    <ClCompile Include="LuaLoopCallSetup.cpp" />
     <ClCompile Include="GetKeyStatus.cpp" />
     <ClCompile Include="KeyStatus.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="LuaCamera.cpp" />
     <ClCompile Include="LuaKeyAction.cpp" />
     <ClCompile Include="LuaKeySetup.cpp" />
     <ClCompile Include="LuaKeysID.cpp" />
@@ -105,6 +107,7 @@
     <ClCompile Include="LuaUblas.cpp" />
     <ClCompile Include="ObjectManagerOutput.cpp" />
     <ClCompile Include="UpdateKey.cpp" />
+    <ClCompile Include="UpdateObjectMessage.cpp" />
     <ClCompile Include="XNAToUblas.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
@@ -120,12 +123,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddBasicDrawableMessage.h" />
-    <ClInclude Include="AddKeyStateAction.h" />
     <ClInclude Include="AddObjectMessage.h" />
+    <ClInclude Include="LuaLoopCall.h" />
+    <ClInclude Include="LuaLoopCallSetup.h" />
     <ClInclude Include="GetKeyStatus.h" />
     <ClInclude Include="KeyStatus.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keys.h" />
+    <ClInclude Include="LuaCamera.h" />
     <ClInclude Include="LuaKeyAction.h" />
     <ClInclude Include="LuaKeySetup.h" />
     <ClInclude Include="LuaKeysID.h" />
@@ -139,6 +144,7 @@
     <ClInclude Include="LuaUblas.h" />
     <ClInclude Include="ObjectManagerOutput.h" />
     <ClInclude Include="UpdateKey.h" />
+    <ClInclude Include="UpdateObjectMessage.h" />
     <ClInclude Include="XNAToUblas.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="Buffers.h" />

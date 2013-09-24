@@ -5,9 +5,9 @@ GetKeyStatus::Key GetKeyStatus::GetKey(unsigned int keyID)
 {
 	boost::mutex::scoped_lock lock(InputManager::GetInstance().mutex);
 
-	const CHL::MapQueryable<unsigned int, KeyStatus> keys = InputManager::GetInstance().AllObjects();
+	const CHL::MapQ<unsigned int, KeyStatus> keys = InputManager::GetInstance().AllObjects();
 
-	CHL::MapQueryable<unsigned int, KeyStatus>::const_iterator key = keys.find(keyID);
+	CHL::MapQ<unsigned int, KeyStatus>::const_iterator key = keys.find(keyID);
 
 	GetKeyStatus::Key returnValue;
 

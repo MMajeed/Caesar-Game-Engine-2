@@ -6,7 +6,8 @@
 class ObjectManagerOutput
 {
 public:
-	static CHL::VectorQueryable<CHL::MapQueryable<std::string, std::string>> GetAllObjects();
+	static CHL::VectorQ<CHL::MapQ<std::string, std::string>> GetAllObjects();
+	static CHL::MapQ<std::string, std::string> GetObject(std::string id);
 };
 
 #endif //__ObjectManagerOutput__

@@ -33,7 +33,7 @@ public:
 
 	virtual void SubmitProcesses(std::shared_ptr<LuaProcesses> process);
 protected:
-	CHL::VectorQueryable<std::shared_ptr<LuaProcesses>> allProcesses;
+	CHL::VectorQ<std::shared_ptr<LuaProcesses>> allProcesses;
 
 	friend CHL::Singelton<LuaManager>;
 };

@@ -12,6 +12,8 @@ class LuaProcesses
 public:
 	LuaProcesses(){this->ID = CHL::ToString(boost::uuids::random_generator()()); }
 
+	virtual void Update(double realTime, double deltaTime) = 0;
+
 	virtual void Action() = 0;
 
 	std::string ID;

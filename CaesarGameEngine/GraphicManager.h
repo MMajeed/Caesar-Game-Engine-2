@@ -27,7 +27,7 @@ public:
 	virtual void Present();
 
 	void Insert(std::shared_ptr<Drawable> obj);
-	const CHL::VectorQueryable<std::shared_ptr<Drawable>> AllObjects();
+	const CHL::VectorQ<std::shared_ptr<Drawable>> AllObjects();
 
 	// DirectX stuff
 	struct
@@ -46,7 +46,7 @@ public:
 
 	
 protected:
-	CHL::VectorQueryable<std::shared_ptr<Drawable>> objects;
+	CHL::VectorQ<std::shared_ptr<Drawable>> objects;
 
 	virtual void InitDevice();
 public:

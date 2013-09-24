@@ -21,9 +21,9 @@ public:
 
 	void UpdateKeyStatus(unsigned int, KeyStatus::Status);
 
-	const CHL::MapQueryable<unsigned int, KeyStatus> AllObjects();
+	const CHL::MapQ<unsigned int, KeyStatus> AllObjects();
 protected:
-	CHL::MapQueryable<unsigned int, KeyStatus> objects;
+	CHL::MapQ<unsigned int, KeyStatus> objects;
 
 	friend CHL::Singelton<InputManager>;
 };

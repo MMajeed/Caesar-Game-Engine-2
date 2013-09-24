@@ -42,9 +42,6 @@
     <ClCompile Include="LuaUblas.cpp">
       <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaUblas</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectManagerOutput.cpp">
-      <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectManager.cpp">
       <Filter>Interface\ObjectManager\Logic</Filter>
     </ClCompile>
@@ -81,8 +78,20 @@
     <ClCompile Include="LuaKeySetup.cpp">
       <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeySettup</Filter>
     </ClCompile>
-    <ClCompile Include="AddKeyStateAction.cpp">
-      <Filter>Interface\LuaManager\Input/Output\Input\AddKeyStateAction</Filter>
+    <ClCompile Include="LuaCamera.cpp">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaLoopCallSetup.cpp">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaLoopCallSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaLoopCall.cpp">
+      <Filter>Interface\LuaManager\Logic\LuaProcesses\LuaLoop</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateObjectMessage.cpp">
+      <Filter>Interface\ObjectManager\Input/Output\Input\UpdateObjectMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManagerOutput.cpp">
+      <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,8 +245,17 @@
     <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeySettup">
       <UniqueIdentifier>{3e134aab-26d3-4b20-83bb-b1f8452ca061}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interface\LuaManager\Input/Output\Input\AddKeyStateAction">
-      <UniqueIdentifier>{f1f592ce-5f24-4181-a3dc-a3df06e74fee}</UniqueIdentifier>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaCamera">
+      <UniqueIdentifier>{f6f419e2-0d7b-44cd-94c8-63cf1a262200}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\LuaProcesses\LuaLoop">
+      <UniqueIdentifier>{9a339b63-21db-4ede-8a78-45f262098dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\LuaManager\Logic\Lua Objects/Functions\LuaLoopCallSetup">
+      <UniqueIdentifier>{9a6e614d-9b1b-4980-b63f-8160c73998f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface\ObjectManager\Input/Output\Input\UpdateObjectMessage">
+      <UniqueIdentifier>{3d260e65-96d3-442c-bb9f-745730e91b1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -293,9 +311,6 @@
     <ClInclude Include="LuaUblas.h">
       <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaUblas</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectManagerOutput.h">
-      <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
-    </ClInclude>
     <ClInclude Include="ObjectManager.h">
       <Filter>Interface\ObjectManager\Logic</Filter>
     </ClInclude>
@@ -338,8 +353,20 @@
     <ClInclude Include="LuaKeySetup.h">
       <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaKeySettup</Filter>
     </ClInclude>
-    <ClInclude Include="AddKeyStateAction.h">
-      <Filter>Interface\LuaManager\Input/Output\Input\AddKeyStateAction</Filter>
+    <ClInclude Include="LuaCamera.h">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaLoopCallSetup.h">
+      <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaLoopCallSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaLoopCall.h">
+      <Filter>Interface\LuaManager\Logic\LuaProcesses\LuaLoop</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateObjectMessage.h">
+      <Filter>Interface\ObjectManager\Input/Output\Input\UpdateObjectMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManagerOutput.h">
+      <Filter>Interface\ObjectManager\Input/Output\Output</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
