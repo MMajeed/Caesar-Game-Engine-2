@@ -21,15 +21,6 @@
     <ClCompile Include="DX11Helper.cpp">
       <Filter>Interface\GraphicManager\Logic\D3D Tools\DX11Helper</Filter>
     </ClCompile>
-    <ClCompile Include="MathOperations.cpp">
-      <Filter>Tools\3DMath\Operations</Filter>
-    </ClCompile>
-    <ClCompile Include="XNAToUblas.cpp">
-      <Filter>Tools\3DMath\XNAToUblas</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Tools\Model</Filter>
-    </ClCompile>
     <ClCompile Include="LuaModel.cpp">
       <Filter>Interface\LuaManager\Logic\Lua Objects/Functions\LuaModel</Filter>
     </ClCompile>
@@ -109,18 +100,6 @@
     </Filter>
     <Filter Include="Tools">
       <UniqueIdentifier>{aacba52e-89fa-4853-a2b7-a2b1292a89b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\3DMath">
-      <UniqueIdentifier>{1e8e4855-3c33-4dab-8064-e71bec4264f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\3DMath\Operations">
-      <UniqueIdentifier>{aa0e2fb9-b322-4b3d-9441-a7e500acf691}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\Model">
-      <UniqueIdentifier>{1e6a0a68-b911-4317-bf7a-18b66bd70e4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tools\3DMath\XNAToUblas">
-      <UniqueIdentifier>{1dbf2d86-8d83-42ac-8e5e-767f7affc477}</UniqueIdentifier>
     </Filter>
     <Filter Include="Tools\Keys">
       <UniqueIdentifier>{4d41b3af-6ae8-4bf8-9c48-ad601e832844}</UniqueIdentifier>
@@ -286,15 +265,6 @@
     </ClInclude>
     <ClInclude Include="Buffers.h">
       <Filter>Interface\GraphicManager\Logic\D3D Tools\Buffers</Filter>
-    </ClInclude>
-    <ClInclude Include="MathOperations.h">
-      <Filter>Tools\3DMath\Operations</Filter>
-    </ClInclude>
-    <ClInclude Include="XNAToUblas.h">
-      <Filter>Tools\3DMath\XNAToUblas</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Tools\Model</Filter>
     </ClInclude>
     <ClInclude Include="D3DShaderInfo.h">
       <Filter>Interface\GraphicManager\Logic\D3D Tools\D3DShaderInfo</Filter>

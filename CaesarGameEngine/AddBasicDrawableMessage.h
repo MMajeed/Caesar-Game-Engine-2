@@ -2,7 +2,7 @@
 #define __AddBasicDrawableMessage__
 
 #include "Message.h"
-#include "Model.h"
+#include <Model.h>
 #include "Vertex.h"
 #include "D3DShaderInfo.h"
 #include <string>

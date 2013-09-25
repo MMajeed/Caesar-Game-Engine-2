@@ -6,8 +6,8 @@
 #include "Window.h"
 #include "ObjectManagerOutput.h"
 #include "Keys.h"
-#include "MathOperations.h"
-#include "XNAToUblas.h"
+#include <MathOperations.h>
+#include <XNAToUblas.h>
 
 GraphicManager::GraphicManager()
 	: ClearColour(3)

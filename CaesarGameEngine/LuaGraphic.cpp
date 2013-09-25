@@ -9,7 +9,7 @@
 #include "ClearScreenMessage.h"
 #include "GraphicManager.h"
 #include "AddBasicDrawableMessage.h"
-#include "Model.h"
+#include <Model.h>
 #include "Keys.h"
 
 void LuaGraphic::ClearScreen::Action(double x, double y, double z)

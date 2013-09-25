@@ -6,9 +6,9 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
-#include "XNAToUblas.h"
+#include <XNAToUblas.h>
 #include "Keys.h"
-#include "MathOperations.h"
+#include <MathOperations.h>
 
 BasicDrawable::BasicDrawable()
 {

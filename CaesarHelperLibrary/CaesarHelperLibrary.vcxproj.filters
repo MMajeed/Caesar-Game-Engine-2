@@ -10,6 +10,18 @@
     <Filter Include="Converter">
       <UniqueIdentifier>{de555248-5730-4dfc-bd8f-f84803da9bac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3DMath">
+      <UniqueIdentifier>{0b6c318e-d09a-4662-9504-8ebef3e7c8d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{6b25834a-e096-4951-931e-f79d6d0bb535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\XNAToUblas">
+      <UniqueIdentifier>{8d084626-e6a1-4e6e-9f54-782b19aae73a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\MathOperations">
+      <UniqueIdentifier>{2cabd67c-66e6-41b3-a95c-c6879aed46a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
@@ -22,10 +34,28 @@
     <ClInclude Include="Queryable.h">
       <Filter>Queryable</Filter>
     </ClInclude>
+    <ClInclude Include="XNAToUblas.h">
+      <Filter>3DMath\XNAToUblas</Filter>
+    </ClInclude>
+    <ClInclude Include="MathOperations.h">
+      <Filter>3DMath\MathOperations</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Converter.cpp">
       <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="XNAToUblas.cpp">
+      <Filter>3DMath\XNAToUblas</Filter>
+    </ClCompile>
+    <ClCompile Include="MathOperations.cpp">
+      <Filter>3DMath\MathOperations</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

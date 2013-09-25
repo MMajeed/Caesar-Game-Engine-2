@@ -199,7 +199,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
     <TargetName>ForeignLibrary-mt-d</TargetName>
     <CustomBuildAfterTargets>
       CopyToIncludeFiles
@@ -273,15 +273,9 @@
     </Copy>
   </Target>-->
   <Target Name="CopyLibFilesDebug" AfterTargets="Rebuild;Build" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Message Text="Copying All '*.lib' to the library directory for debug" Importance="high">
+    <Message Text="Copying All '*.lib' to the library directory to lib" Importance="high">
     </Message>
-    <Copy SourceFiles="$(SolutionDir)$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">
-    </Copy>
-  </Target>
-  <Target Name="CopyLibFilesRelease" AfterTargets="Rebuild;Build" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Message Text="Copying All '*.lib' to the library directory for release" Importance="high">
-    </Message>
-    <Copy SourceFiles="$(SolutionDir)$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">
+    <Copy SourceFiles="$(SolutionDir)$(ProjectName)\$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">
     </Copy>
   </Target>
 </Project>

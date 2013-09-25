@@ -46,8 +46,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(SolutionDir)Lib\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(SolutionDir)Lib\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,14 +101,11 @@
     <ClCompile Include="LuaKeysID.cpp" />
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="Message.cpp" />
-    <ClCompile Include="Model.cpp" />
     <ClCompile Include="LuaModel.cpp" />
-    <ClCompile Include="MathOperations.cpp" />
     <ClCompile Include="LuaUblas.cpp" />
     <ClCompile Include="ObjectManagerOutput.cpp" />
     <ClCompile Include="UpdateKey.cpp" />
     <ClCompile Include="UpdateObjectMessage.cpp" />
-    <ClCompile Include="XNAToUblas.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
@@ -137,15 +134,12 @@
     <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaProcesses.h" />
     <ClInclude Include="Message.h" />
-    <ClInclude Include="Model.h" />
     <ClInclude Include="LuaModel.h" />
-    <ClInclude Include="MathOperations.h" />
     <ClInclude Include="D3DShaderInfo.h" />
     <ClInclude Include="LuaUblas.h" />
     <ClInclude Include="ObjectManagerOutput.h" />
     <ClInclude Include="UpdateKey.h" />
     <ClInclude Include="UpdateObjectMessage.h" />
-    <ClInclude Include="XNAToUblas.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="Buffers.h" />
     <ClInclude Include="ClearScreenMessage.h" />

@@ -12,12 +12,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="MathOperations.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Queryable.h" />
     <ClInclude Include="Converter.h" />
+    <ClInclude Include="XNAToUblas.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Converter.cpp" />
+    <ClCompile Include="MathOperations.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="XNAToUblas.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}</ProjectGuid>
@@ -48,14 +54,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
     <TargetName>CaesarHelperLibrary-mt-d</TargetName>
     <CustomBuildAfterTargets>
       CopyToIncludeFiles
     </CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
-    <IncludePath>$(SolutionDir)$(ProjectName);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
@@ -64,7 +71,8 @@
     </CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
-    <IncludePath>$(SolutionDir)$(ProjectName);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,15 +130,9 @@
     </Copy>
   </Target>-->
   <Target Name="CopyLibFilesDebug" AfterTargets="Rebuild;Build" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Message Text="Copying All '*.lib' to the library directory for debug" Importance="high">
+    <Message Text="Copying All '*.lib' to the library directory to lib" Importance="high">
     </Message>
-    <Copy SourceFiles="$(SolutionDir)$(Configuration)\CaesarHelperLibrary-mt-d.lib" DestinationFolder="$(SolutionDir)Lib\">
-    </Copy>
-  </Target>
-  <Target Name="CopyLibFilesRelease" AfterTargets="Rebuild;Build" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Message Text="Copying All '*.lib' to the library directory for release" Importance="high">
-    </Message>
-    <Copy SourceFiles="$(SolutionDir)$(Configuration)\CaesarHelperLibrary-mt.lib" DestinationFolder="$(SolutionDir)Lib\">
+    <Copy SourceFiles="$(SolutionDir)$(ProjectName)\$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">
     </Copy>
   </Target>
 </Project>

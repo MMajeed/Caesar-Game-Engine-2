@@ -1,7 +1,7 @@
 #include "LuaModel.h"
 
 #include "LuaManager.h"
-#include "Model.h"
+#include <Model.h>
 #include <string>
 
 void LuaModel::RegisterAllLuaFunction(lua_State *lua)

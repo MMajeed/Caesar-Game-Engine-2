@@ -1,5 +1,11 @@
 #include "Model.h"
 
+// assimp include files. These three are usually needed.
+#include <assimp/cimport.h>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
 Model::Model(std::string file)
 {
 	this->scene = aiImportFile(file.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);

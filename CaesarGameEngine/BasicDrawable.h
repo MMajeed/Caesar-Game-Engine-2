@@ -4,7 +4,7 @@
 #include "Drawable.h"
 #include "Vertex.h"
 #include "D3DShaderInfo.h"
-#include "Model.h"
+#include <Model.h>
 
 #include <string>
 #include <D3D11.h>
