@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GraphicManager.h" />
+    <ClInclude Include="Drawable.h">
+      <Filter>Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDrawable.h">
+      <Filter>Drawable\BasicDrawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers.h">
+      <Filter>D3D Tools\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DShaderInfo.h">
+      <Filter>D3D Tools\D3dShaderInfo</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Helper.h">
+      <Filter>D3D Tools\DX11Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>D3D Tools\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GraphicManager.cpp" />
+    <ClCompile Include="BasicDrawable.cpp">
+      <Filter>Drawable\BasicDrawable</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Helper.cpp">
+      <Filter>D3D Tools\DX11Helper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Drawable">
+      <UniqueIdentifier>{22ac4106-ee8b-4168-9dc3-462a360f8166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\BasicDrawable">
+      <UniqueIdentifier>{6ecccf77-6892-4631-b816-96f01f8ff2b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools">
+      <UniqueIdentifier>{454d39e7-3edc-445d-9a62-b7e0b96c73f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\Buffers">
+      <UniqueIdentifier>{69747fe4-1464-495f-9fbd-495549793ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\D3dShaderInfo">
+      <UniqueIdentifier>{b1d50383-28bd-4e83-bdc5-73a368f0b155}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\DX11Helper">
+      <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\Vertex">
+      <UniqueIdentifier>{247a606b-cc65-4896-9752-f731be732ff2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

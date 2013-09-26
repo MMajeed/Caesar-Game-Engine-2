@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="LuaManager.h" />
+    <ClInclude Include="LuaCamera.h">
+      <Filter>Lua Class/Function\LuaCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaGraphic.h">
+      <Filter>Lua Class/Function\LuaGraphic</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeySetup.h">
+      <Filter>Lua Class/Function\LuaKeySetup</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeysID.h">
+      <Filter>Lua Class/Function\LuaKeysID</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaLoopCallSetup.h">
+      <Filter>Lua Class/Function\LuaLoopCallSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaModel.h">
+      <Filter>Lua Class/Function\LuaModel</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaObject.h">
+      <Filter>Lua Class/Function\LuaObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaProcesses.h">
+      <Filter>Lua Processes</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaUblas.h">
+      <Filter>Lua Class/Function\LuaUblas</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeyAction.h">
+      <Filter>Lua Processes\LuaKeyAction</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaLoopCall.h">
+      <Filter>Lua Processes\LuaLoopCall</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaManager.cpp" />
+    <ClCompile Include="LuaCamera.cpp">
+      <Filter>Lua Class/Function\LuaCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaGraphic.cpp">
+      <Filter>Lua Class/Function\LuaGraphic</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeySetup.cpp">
+      <Filter>Lua Class/Function\LuaKeySetup</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeysID.cpp">
+      <Filter>Lua Class/Function\LuaKeysID</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaLoopCallSetup.cpp">
+      <Filter>Lua Class/Function\LuaLoopCallSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaModel.cpp">
+      <Filter>Lua Class/Function\LuaModel</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaObject.cpp">
+      <Filter>Lua Class/Function\LuaObject</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaUblas.cpp">
+      <Filter>Lua Class/Function\LuaUblas</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeyAction.cpp">
+      <Filter>Lua Processes\LuaKeyAction</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaLoopCall.cpp">
+      <Filter>Lua Processes\LuaLoopCall</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Lua Class/Function">
+      <UniqueIdentifier>{951c548c-e607-4ef5-988b-fe49eabdc9ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes">
+      <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaCamera">
+      <UniqueIdentifier>{d1199bf0-fb1c-44e4-bee8-7e4f1ad705c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaGraphic">
+      <UniqueIdentifier>{330e9428-616f-44ea-8430-c29218450476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaKeySetup">
+      <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaKeysID">
+      <UniqueIdentifier>{fdcfefed-1638-4c58-9e66-0fef002d79f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaLoopCallSetup">
+      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaModel">
+      <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaObject">
+      <UniqueIdentifier>{7c157c13-425c-470f-971d-0dd4fc24e16a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaUblas">
+      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes\LuaKeyAction">
+      <UniqueIdentifier>{066781f6-0fc4-46de-8fae-591dcdbacb65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes\LuaLoopCall">
+      <UniqueIdentifier>{12120ca4-4311-4d8b-95d6-baf25a7e4c90}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

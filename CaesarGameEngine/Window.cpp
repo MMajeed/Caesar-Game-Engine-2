@@ -4,12 +4,15 @@
 #include <memory>
 
 #include "Window.h"
-#include "UpdateKey.h"
 
-#include "GraphicManager.h"
-#include "LuaManager.h"
-#include "ObjectManager.h"
-#include "InputManager.h"
+#include <InputCommunicator\GetInputManager.h>
+#include <GraphicCommunicator\GetGraphicManager.h>
+#include <ScriptCommunicator\GetScriptManager.h>
+#include <InfoCommunicator\GetInfoManager.h>
+#include <InputCommunicator\UpdateKey.h>
+#include <InfoCommunicator\AddObjectMessage.h>
+#include <Keys.h>
+#include <Converter.h>
 
 Window::Window()
 {
@@ -58,10 +61,24 @@ void Window::Init()
 
     ShowWindow( this->window.hWnd, 10 );
 
-	this->vInterfaces["Graphic"] = &GraphicManager::GetInstance();
-	this->vInterfaces["Lua"] = &LuaManager::GetInstance();
-	this->vInterfaces["Object Manager"] = &ObjectManager::GetInstance();
-	this->vInterfaces["Input Manager"] = &InputManager::GetInstance();
+	this->vInterfaces["Graphic"] = GetGraphicManager::GetComponent();
+	this->vInterfaces["Lua"] = GetScriptManager::GetComponent();
+	this->vInterfaces["Info Manager"] = GetInfoManager::GetComponent();
+	this->vInterfaces["Input Manager"] = GetInputManager::GetComponent();
+
+	CHL::MapQ<std::string, std::string> camera;
+
+	camera[Keys::Class] = Keys::ClassType::WindowInfo;
+	camera[Keys::HEIGHT] = CHL::ToString(this->window.height);
+	camera[Keys::WIDTH] = CHL::ToString(this->window.width);
+	camera[Keys::HWND] = CHL::ToString(this->window.hWnd);
+
+	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
+
+	GetInfoManager::GetComponent()->SubmitMessage(msg);	
+	GetInfoManager::GetComponent()->ProccessMessages();
+
+	msg->WaitTillProcccesed();
 
 	for(auto iter = this->vInterfaces.begin();
 		iter != this->vInterfaces.end();
@@ -115,13 +132,13 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	case WM_KEYDOWN:
 	{
 		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, true));
-		InputManager::GetInstance().SubmitMessage(keyMessage);
+		GetInputManager::GetComponent()->SubmitMessage(keyMessage);
 		break;
 	}
 	case WM_KEYUP:
 	{
 		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, false));
-		InputManager::GetInstance().SubmitMessage(keyMessage);
+		GetInputManager::GetComponent()->SubmitMessage(keyMessage);
 		break;
 	}
 	case WM_TIMER:

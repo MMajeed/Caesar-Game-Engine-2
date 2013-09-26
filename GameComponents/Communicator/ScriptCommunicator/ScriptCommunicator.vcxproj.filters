@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GetScriptManager.h">
+      <Filter>GetScriptManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GetScriptManager">
+      <UniqueIdentifier>{f6141471-d04d-4633-bf7e-11e341afa04b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GetScriptManager.cpp">
+      <Filter>GetScriptManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

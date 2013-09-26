@@ -209,7 +209,7 @@
     <IncludePath>$(SolutionDir)$(ProjectName);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
     <TargetName>ForeignLibrary-mt</TargetName>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
@@ -272,7 +272,7 @@
     <Copy SourceFiles="@(ClInclude)" DestinationFolder="$(SolutionDir)Lib\CaesarHelper\include\">
     </Copy>
   </Target>-->
-  <Target Name="CopyLibFilesDebug" AfterTargets="Rebuild;Build" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <Target Name="CopyLibFilesDebug" AfterTargets="Rebuild;Build">
     <Message Text="Copying All '*.lib' to the library directory to lib" Importance="high">
     </Message>
     <Copy SourceFiles="$(SolutionDir)$(ProjectName)\$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">

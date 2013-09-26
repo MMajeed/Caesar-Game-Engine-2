@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="AddObjectMessage.h">
+      <Filter>AddObjectMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManagerOutput.h">
+      <Filter>ObjectManagerOutput</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateObjectMessage.h">
+      <Filter>UpdateObjectMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="GetInfoManager.h">
+      <Filter>GetInfoManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AddObjectMessage.cpp">
+      <Filter>AddObjectMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManagerOutput.cpp">
+      <Filter>ObjectManagerOutput</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateObjectMessage.cpp">
+      <Filter>UpdateObjectMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="GetInfoManager.cpp">
+      <Filter>GetInfoManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AddObjectMessage">
+      <UniqueIdentifier>{557b34ef-3bc7-4862-9428-443bd0cceee0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ObjectManagerOutput">
+      <UniqueIdentifier>{0dab36c1-23f8-4792-b77f-38a726f9095f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UpdateObjectMessage">
+      <UniqueIdentifier>{9b0b872d-4de2-483a-974e-9394e554b69c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GetInfoManager">
+      <UniqueIdentifier>{5b98223d-a2b9-4b94-bbab-a92783fa8980}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

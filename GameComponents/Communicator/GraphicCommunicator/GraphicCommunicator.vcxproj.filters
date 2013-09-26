@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="AddBasicDrawableMessage.h">
+      <Filter>AddBasicDrawableMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="ClearScreenMessage.h">
+      <Filter>ClearScreenMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="GetGraphicManager.h">
+      <Filter>GetGraphicManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AddBasicDrawableMessage.cpp">
+      <Filter>AddBasicDrawableMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="ClearScreenMessage.cpp">
+      <Filter>ClearScreenMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="GetGraphicManager.cpp">
+      <Filter>GetGraphicManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AddBasicDrawableMessage">
+      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ClearScreenMessage">
+      <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GetGraphicManager">
+      <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

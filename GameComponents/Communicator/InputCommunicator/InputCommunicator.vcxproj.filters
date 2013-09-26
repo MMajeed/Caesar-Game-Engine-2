@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="UpdateKey.h">
+      <Filter>UpdateKey</Filter>
+    </ClInclude>
+    <ClInclude Include="GetKeyStatus.h">
+      <Filter>GetKeyStatus</Filter>
+    </ClInclude>
+    <ClInclude Include="GetInputManager.h">
+      <Filter>GetInputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="UpdateKey.cpp">
+      <Filter>UpdateKey</Filter>
+    </ClCompile>
+    <ClCompile Include="GetKeyStatus.cpp">
+      <Filter>GetKeyStatus</Filter>
+    </ClCompile>
+    <ClCompile Include="GetInputManager.cpp">
+      <Filter>GetInputManager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GetKeyStatus">
+      <UniqueIdentifier>{77ef6950-fcd9-4597-9247-5f627b95b600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UpdateKey">
+      <UniqueIdentifier>{f76766e7-9c25-42bf-a4a3-553f08f42867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GetInputManager">
+      <UniqueIdentifier>{f229f551-5f4b-4cd8-9084-0b75d21a9e89}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
