@@ -19,6 +19,11 @@
 [Dd]ebug/*
 [Rr]elease/*
 
+*/[Bb]in/*
+*/[Dd]ebug/*
+*/[Rr]elease/*
+
+
 *.sdf 
 *.opensdf
 *.suo
@@ -26,7 +31,5 @@
 *.ipch
 *.sdf
 
-*/CaesarHelperLibrary-mt.lib
-*/CaesarHelperLibrary-mt-d.lib
-*/ForeignLibrary-mt.lib
-*/ForeignLibrary-mt-d.lib
+Lib/*.lib
+Lib/*.bsc
