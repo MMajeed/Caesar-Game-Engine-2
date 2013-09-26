@@ -1,7 +1,7 @@
 #ifndef __GetGraphicManager__
 #define __GetGraphicManager__
 
-#include"DLLLinker.h"
+#include "Linker.h"
 
 #include <Interface.h>
 

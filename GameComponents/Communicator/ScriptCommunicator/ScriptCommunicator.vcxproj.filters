@@ -4,7 +4,7 @@
     <ClInclude Include="GetScriptManager.h">
       <Filter>GetScriptManager</Filter>
     </ClInclude>
-    <ClInclude Include="Linker.h.h" />
+    <ClInclude Include="Linker.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GetScriptManager">

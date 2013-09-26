@@ -1,7 +1,7 @@
 #ifndef __GetInfoManager__
 #define __GetInfoManager__
 
-#include"DLLLinker.h"
+#include "Linker.h"
 
 #include <Interface.h>
 

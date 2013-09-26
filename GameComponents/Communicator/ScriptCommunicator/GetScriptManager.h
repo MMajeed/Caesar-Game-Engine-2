@@ -1,7 +1,7 @@
 #ifndef __GetScriptManager__
 #define __GetScriptManager__
 
-#include"DLLLinker.h"
+#include "Linker.h"
 
 #include <Interface.h>
 

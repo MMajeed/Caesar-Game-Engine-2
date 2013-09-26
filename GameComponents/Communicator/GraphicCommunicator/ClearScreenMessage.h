@@ -1,7 +1,7 @@
 #ifndef __ClearScreen__
 #define __ClearScreen__
 
-#include"DLLLinker.h"
+#include "Linker.h"
 
 #include <Message.h>
 

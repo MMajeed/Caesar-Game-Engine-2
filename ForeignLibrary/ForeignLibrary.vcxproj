@@ -199,8 +199,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
-    <TargetName>ForeignLibrary-mt-d</TargetName>
+    <OutDir>$(SolutionDir)Lib\</OutDir>
+    <TargetName>$(ProjectName)-mt-d</TargetName>
     <CustomBuildAfterTargets>
       CopyToIncludeFiles
     </CustomBuildAfterTargets>
@@ -209,8 +209,8 @@
     <IncludePath>$(SolutionDir)$(ProjectName);$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
-    <TargetName>ForeignLibrary-mt</TargetName>
+    <OutDir>$(SolutionDir)Lib\</OutDir>
+    <TargetName>$(ProjectName)-mt</TargetName>
     <CustomBuildAfterTargets>
     </CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>
@@ -266,16 +266,4 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
-  <!--<Target Name="CopyToIncludeFiles" AfterTargets="Rebuild;Build">
-    <Message Text="Copying All '*.h' and '*.hpp' to the include directory" Importance="high">
-    </Message>
-    <Copy SourceFiles="@(ClInclude)" DestinationFolder="$(SolutionDir)Lib\CaesarHelper\include\">
-    </Copy>
-  </Target>-->
-  <Target Name="CopyLibFilesDebug" AfterTargets="Rebuild;Build">
-    <Message Text="Copying All '*.lib' to the library directory to lib" Importance="high">
-    </Message>
-    <Copy SourceFiles="$(SolutionDir)$(ProjectName)\$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">
-    </Copy>
-  </Target>
 </Project>

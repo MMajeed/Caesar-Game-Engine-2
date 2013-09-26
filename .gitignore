@@ -11,10 +11,6 @@
 *.la
 *.a
 
-*/[Bb]in/*
-*/[Dd]ebug/*
-*/[Rr]elease/*
-
 [Bb]in/*
 [Dd]ebug/*
 [Rr]elease/*
@@ -23,6 +19,13 @@
 */[Dd]ebug/*
 */[Rr]elease/*
 
+*/*/[Bb]in/*
+*/*/[Dd]ebug/*
+*/*/[Rr]elease/*
+
+*/*/*/[Bb]in/*
+*/*/*/[Dd]ebug/*
+*/*/*/[Rr]elease/*
 
 *.sdf 
 *.opensdf

@@ -1,7 +1,7 @@
 #ifndef __GetInputManager__
 #define __GetInputManager__
 
-#include"DLLLinker.h"
+#include "Linker.h"
 
 #include <Interface.h>
 

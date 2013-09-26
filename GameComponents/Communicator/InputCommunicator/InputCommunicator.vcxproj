@@ -43,13 +43,15 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\InputComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)GameComponents\Communicator\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)Lib\</OutDir>
+    <TargetName>$(ProjectName)-mt-d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\InputComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)GameComponents\Communicator\$(ProjectName)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)Lib\</OutDir>
+    <TargetName>$(ProjectName)-mt</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,10 +99,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <Target Name="CopyLibFiles" AfterTargets="Rebuild;Build">
-    <Message Text="Copying All '*.lib' to the library directory to lib" Importance="high">
-    </Message>
-    <Copy SourceFiles="$(SolutionDir)GameComponents\Communicator\$(ProjectName)\$(Configuration)\$(TargetName)$(TargetExt)" DestinationFolder="$(SolutionDir)Lib\">
-    </Copy>
-  </Target>
 </Project>
