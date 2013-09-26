@@ -72,7 +72,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::st
 
 	this->GetInfo(object, location, rotation, scale, diffuse, ambient, spec);	
 
-	boost::numeric::ublas::matrix<double> mObjectFinal = MathOperation::ObjectCalculation(location, rotation, scale);
+	boost::numeric::ublas::matrix<double> mObjectFinal = MathOperations::ObjectCalculation(location, rotation, scale);
 
 	boost::numeric::ublas::matrix<double> mFinal(4,4);
 	mFinal = boost::numeric::ublas::prod(GraphicManager::GetInstance().CamerMatrix, mObjectFinal);

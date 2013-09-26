@@ -1,6 +1,7 @@
 #include "LuaCamera.h"
 
 #include <Converter.h>
+#include <MathOperations.h>
 #include <luabind\luabind.hpp>
 #include <boost/numeric/ublas/io.hpp>
 
@@ -37,7 +38,14 @@ void LuaCameraSetup::LuaCamera::SetAsMain()
 		
 void LuaCameraSetup::LuaCamera::MoveFroward(double distance)
 {
+	LuaUblas::Vector4 eye = this->GetEye();
+	LuaUblas::Vector4 target = this->GetTargetMagintude();
+	double pitch = this->GetPitch();
+	double yaw = this->GetYaw();
+	double roll = this->GetRoll();
 
+	auto newEye = MathOperations::MoveForward(eye, target, pitch, yaw, roll, distance);
+	this->SetEye(newEye);
 }
 
 void LuaCameraSetup::LuaCamera::SetEye(LuaUblas::Vector4 eye)
@@ -117,5 +125,6 @@ void LuaCameraSetup::LuaCamera::Register(lua_State *lua)
 		  .property("Roll", &LuaCameraSetup::LuaCamera::GetRoll, &LuaCameraSetup::LuaCamera::SetRoll)
 		  .property("Pitch", &LuaCameraSetup::LuaCamera::GetPitch, &LuaCameraSetup::LuaCamera::SetPitch)
 		  .property("Yaw", &LuaCameraSetup::LuaCamera::GetYaw, &LuaCameraSetup::LuaCamera::SetYaw)
+		  .def("MoveFroward", &LuaCameraSetup::LuaCamera::MoveFroward)
 	  ];
 }

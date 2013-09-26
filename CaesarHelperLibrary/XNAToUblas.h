@@ -5,14 +5,15 @@
 #include <Windows.h>
 #include <xnamath.h>
 
-class XNAToUblas
+namespace XNAToUblas
 {
-public:
-	static boost::numeric::ublas::matrix<double> Convert4x4(XMFLOAT4X4 xmMatrix);
-	static XMFLOAT4X4 Convert4x4(boost::numeric::ublas::matrix<double> matrix);
+	using namespace boost::numeric::ublas;
 
-	static XMFLOAT4 ConvertVec4(boost::numeric::ublas::vector<double> vector);
-	static boost::numeric::ublas::vector<double> ConvertVec4(XMFLOAT4 xmVector);
+	matrix<double> Convert4x4(const XMFLOAT4X4& xmMatrix);
+	XMFLOAT4X4 Convert4x4(const matrix<double>& matrix);
+
+	XMFLOAT4 ConvertVec4(const vector<double>& vector);
+	vector<double> ConvertVec4(const XMFLOAT4& xmVector);
 };
 
 #endif //__XNAToUblas__

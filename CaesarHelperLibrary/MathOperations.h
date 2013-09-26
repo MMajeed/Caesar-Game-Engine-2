@@ -1,18 +1,21 @@
-#ifndef __MathOperation__
-#define __MathOperation__
+#ifndef __MathOperations__
+#define __MathOperations__
 
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/vector.hpp>
 
-class MathOperation
+namespace MathOperations
 {
-public:
-	static boost::numeric::ublas::matrix<double> PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ);
-	static boost::numeric::ublas::matrix<double> ViewCalculation(boost::numeric::ublas::vector<double> vEye, boost::numeric::ublas::vector<double> vTM,  boost::numeric::ublas::vector<double> vUp, double pitch, double yaw, double roll );
+	using namespace boost::numeric::ublas;
 
-	static boost::numeric::ublas::matrix<double> ObjectCalculation( boost::numeric::ublas::vector<double> mLocation, boost::numeric::ublas::vector<double> mRotation, boost::numeric::ublas::vector<double> mScale);
+	matrix<double> PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ);
+	matrix<double> ViewCalculation(const vector<double>& vEye, const vector<double>& vTM,  const vector<double>& vUp, double pitch, double yaw, double roll );
 
-	static void Normalize(boost::numeric::ublas::matrix<double>& matrix);
+	matrix<double> ObjectCalculation( const vector<double>& mLocation, const vector<double>& mRotation, const vector<double>& mScale);
+
+	void Normalize(matrix<double>& matrix);
+
+	vector<double> MoveForward(const vector<double>& vEye, const vector<double>& vTM, double pitch, double yaw, double roll, double distance);
 };
 
-#endif //__MathOperation__
+#endif //__MathOperations__

@@ -1,8 +1,10 @@
 #include "XNAToUblas.h"
 
-boost::numeric::ublas::matrix<double> XNAToUblas::Convert4x4(XMFLOAT4X4 xmMatrix)
+using namespace boost::numeric::ublas;
+
+matrix<double> XNAToUblas::Convert4x4(const XMFLOAT4X4& xmMatrix)
 {	
-	boost::numeric::ublas::matrix<double> matrix(4, 4);
+	matrix<double> matrix(4, 4);
 
 	for (unsigned i = 0; i < matrix.size1(); ++ i)
         for (unsigned j = 0; j < matrix.size2(); ++ j)
@@ -10,7 +12,7 @@ boost::numeric::ublas::matrix<double> XNAToUblas::Convert4x4(XMFLOAT4X4 xmMatrix
 
 	return matrix;
 }
-XMFLOAT4X4 XNAToUblas::Convert4x4(boost::numeric::ublas::matrix<double> matrix)
+XMFLOAT4X4 XNAToUblas::Convert4x4(const matrix<double>& matrix)
 {
 	XMFLOAT4X4 xmMatrix;
 
@@ -21,13 +23,13 @@ XMFLOAT4X4 XNAToUblas::Convert4x4(boost::numeric::ublas::matrix<double> matrix)
 	return xmMatrix;
 }
 
-XMFLOAT4 XNAToUblas::ConvertVec4(boost::numeric::ublas::vector<double> vector)
+XMFLOAT4 XNAToUblas::ConvertVec4(const vector<double>& vector)
 {
 	return XMFLOAT4((float)vector(0), (float)vector(1), (float)vector(2), (float)vector(3));
 }
-boost::numeric::ublas::vector<double> XNAToUblas::ConvertVec4(XMFLOAT4 xmVector)
+vector<double> XNAToUblas::ConvertVec4(const XMFLOAT4& xmVector)
 {
-	boost::numeric::ublas::vector<double> vector(4);
+	vector<double> vector(4);
 	vector(0) = xmVector.x; vector(1) = xmVector.y; vector(2) = xmVector.z; vector(3) = xmVector.w;
 	return vector;
 }

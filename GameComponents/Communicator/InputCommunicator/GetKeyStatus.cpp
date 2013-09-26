@@ -3,9 +3,11 @@
 
 GetKeyStatus::Key GetKeyStatus::GetKey(unsigned int keyID)
 {
-	boost::mutex::scoped_lock lock(InputManager::GetInstance().mutex);
+	CHL::MapQ<unsigned int, KeyStatus> keys;
 
-	const CHL::MapQ<unsigned int, KeyStatus> keys = InputManager::GetInstance().AllObjects();
+	{boost::mutex::scoped_lock lock(InputManager::GetInstance().mutex);		
+		keys = InputManager::GetInstance().AllObjects();
+	}
 
 	CHL::MapQ<unsigned int, KeyStatus>::const_iterator key = keys.find(keyID);
 

@@ -84,7 +84,7 @@ void GraphicManager::SetupCameraNPrespective()
 		pitch = 0;	yaw = 0;	roll = 0;	
 	}
 
-	this->CamerMatrix = MathOperation::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	this->CamerMatrix = MathOperations::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 
 	// Prespective
 	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator prespectiveIter;
@@ -137,7 +137,7 @@ void GraphicManager::SetupCameraNPrespective()
 		farZ = 5000.0;
 	}
 
-	this->PrespectiveMatrix = MathOperation::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
+	this->PrespectiveMatrix = MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }
 
 void GraphicManager::ClearScreen()

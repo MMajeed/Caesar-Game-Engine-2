@@ -27,24 +27,24 @@ void ObjectManager::Shutdown()
 
 void ObjectManager::UpdateObject(std::string ID, std::string infoID, std::string info)
 {
-	auto obj = *this->objects.First([&ID](CHL::VectorQ<std::shared_ptr<Object>>::iterator iterObj)
-					{ return (*iterObj)->ID() == ID; });
+	auto obj = this->objects.First([&ID](CHL::VectorQ<Object>::iterator iterObj)
+					{ return iterObj->ID() == ID; });
 
 	obj->Store(infoID, info);
 }
 
-std::shared_ptr<Object> ObjectManager::GetObjectW(std::string ID)
+Object ObjectManager::GetObjectInfo(std::string ID)
 {
-	return *this->objects.First([&ID](CHL::VectorQ<std::shared_ptr<Object>>::iterator iterObj)
-					{ return (*iterObj)->ID() == ID; });
+	return *this->objects.First([&ID](CHL::VectorQ<Object>::iterator iterObj)
+					{ return iterObj->ID() == ID; });
 }
 
-void ObjectManager::Insert(std::shared_ptr<Object> obj)
+void ObjectManager::Insert(Object obj)
 {
 	this->objects.push_back(obj);
 }
 
-const CHL::VectorQ<std::shared_ptr<Object>> ObjectManager::AllObjects()
+const CHL::VectorQ<Object> ObjectManager::AllObjects()
 {
 	return this->objects;
 }

@@ -16,7 +16,7 @@ CHL::VectorQ<CHL::MapQ<std::string, std::string>> ObjectManagerOutput::GetAllObj
 		iter != allObjects.end();
 		++iter)
 	{
-		convertedVec.push_back(**iter);
+		convertedVec.push_back(*iter);
 	}
 
 	return convertedVec;
@@ -26,5 +26,5 @@ CHL::MapQ<std::string, std::string> ObjectManagerOutput::GetObject(std::string i
 {
 	boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
 
-	return ObjectManager::GetInstance().GetObjectW(id)->info;
+	return ObjectManager::GetInstance().GetObjectInfo(id).info;
 }

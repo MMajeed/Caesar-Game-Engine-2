@@ -64,7 +64,11 @@ void Interface::Run()
 			++(timer.FrameCount);
 		}
 	}
-	catch(...)
+	catch(std::exception ex)
+	{
+		throw;
+	}
+	catch( ... )
 	{
 		throw;
 	}

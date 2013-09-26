@@ -12,8 +12,8 @@ AddObjectMessage::AddObjectMessage(CHL::MapQ<std::string, std::string> info)
 }
 Message::Status AddObjectMessage::Work()
 {
-	std::shared_ptr<Object> obj(new Object(this->messageInfo));
-	obj->Retrieve(Keys::ID, this->ID);
+	Object obj(this->messageInfo);
+	obj.Retrieve(Keys::ID, this->ID);
 
 	{
 		boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
