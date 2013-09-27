@@ -11,8 +11,7 @@ AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 												std::string	vertexModel,
 												std::string	pixelFileName,
 												std::string	pixelEntryPoint,
-												std::string	pixelModel,
-												std::string texture)
+												std::string	pixelModel)
 	: model(model)
 {
 	this->vertexFileName = vertexFileName;
@@ -22,7 +21,6 @@ AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 	this->pixelFileName = pixelFileName;
 	this->pixelEntryPoint = pixelEntryPoint;
 	this->pixelModel = pixelModel;
-	this->texture = texture;
 }
 
 Message::Status AddBasicDrawableMessage::Work()
@@ -57,7 +55,7 @@ Message::Status AddBasicDrawableMessage::Work()
 		auto pos = vectorPos[i];
 		v.Pos = XMFLOAT4((float)pos(0), (float)pos(1), (float)pos(2), 1.0f) ;
 		
-		if(vectorNormal.size() < i)
+		if(vectorNormal.size() > i)
 		{
 			auto normal = vectorNormal[i];
 			v.Normal = XMFLOAT4((float)normal(0), (float)normal(1), (float)normal(2), 1.0f) ;
@@ -67,7 +65,7 @@ Message::Status AddBasicDrawableMessage::Work()
 			v.Normal = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f) ;
 		}
 
-		if(vectorTexture.size() < i)
+		if(vectorTexture.size() > i)
 		{
 			auto texture = vectorTexture[i];
 			v.Texture = XMFLOAT2((float)texture(0), (float)texture(1));
@@ -86,10 +84,9 @@ Message::Status AddBasicDrawableMessage::Work()
 		BasicDrawable::Spawn(vectorVertices,
 							vectorIndices,
 							vertexFile,
-							pixelFile,
-							this->texture);
+							pixelFile);
 
-	GraphicManager::GetInstance().Insert(newObject);
+	GraphicManager::GetInstance().InsertObjectDrawable(newObject);
 
 	this->ID = newObject->ID;
 

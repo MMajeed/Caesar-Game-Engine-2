@@ -1,11 +1,7 @@
 #ifndef __LuaKeysID__
 #define __LuaKeysID__
 
-extern "C" {
-#include <lua5.1.5\lua.h>
-#include <lua5.1.5\lualib.h>
-#include <lua5.1.5\lauxlib.h>
-}
+#include <Lua.hpp>
 
 class LuaKeysID
 {

@@ -9,29 +9,17 @@ cbuffer cbObject : register( b0 )
 	MaterialInfo objectMaterial;
 };
 
-cbuffer cbNeverChanges : register( b1 )
-{
-    matrix CameraView;
-	matrix LightView;
-	float4 eye;
-	float4 target;
-	LightDesc light[10];		// Light type now in light description
-};
-
-cbuffer AnimMatrices : register( b2 )
-{
-	matrix BoneTransforms[128];
-};
-
 Texture2D texture00 : register( t0 );
 Texture2D texture01 : register( t1 );
 Texture2D texture02 : register( t2 );
 Texture2D texture03 : register( t3 );
 Texture2D texture04 : register( t4 );
+TextureCube cubeTexture01 : register( t5 );
+TextureCube cubeTexture02 : register( t6 );
+TextureCube cubeTexture03 : register( t7 );
+TextureCube cubeTexture04 : register( t8 );
+TextureCube cubeTexture05 : register( t9 );
 
-TextureCube myCubeMap : register( t5 );
-
-Texture2D Shadow : register( t10 );
 
 //--------------------------------------------------------------------------------------
 struct PS_INPUT
@@ -43,4 +31,12 @@ struct PS_INPUT
 	float4 LightMVP    : LightMVP;
     float4 Color       : COLOR0;
 	float2 tex         : TEXCOORD0;
+};
+
+SamplerState samLinear
+{
+	Filter   = MIN_MAG_MIP_LINEAR;
+	AddressU = Wrap;
+	AddressV = Wrap;
+	AddressW = Wrap;
 };

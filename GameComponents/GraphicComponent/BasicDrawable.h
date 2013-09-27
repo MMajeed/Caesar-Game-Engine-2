@@ -16,7 +16,7 @@ class BasicDrawable : public Drawable
 public:
 	BasicDrawable();
 	virtual void Init();
-	virtual void Clean();
+	virtual void Destory();
 	virtual void Update(float delta);
 	virtual void Draw(const CHL::MapQ<std::string, std::string>& object);
 	virtual std::shared_ptr<Drawable> clone() const;
@@ -24,8 +24,7 @@ public:
 	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
 												const std::vector<WORD>&	vectorIndices,
 												D3DShaderInfo				vertexFile,
-												D3DShaderInfo				pixelFile,
-												std::string					textureFileName = "");
+												D3DShaderInfo				pixelFile);
 
 	struct
 	{
@@ -38,8 +37,6 @@ public:
 		D3DShaderInfo				PixelShaderInfo;
 		ID3D11PixelShader*			pPixelShader;
 		ID3D11RasterizerState*		pRastersizerState;
-		std::string					textureFileName;
-		ID3D11ShaderResourceView*	pTexture;
 		std::vector<Vertex>			vertices;
 		std::vector<WORD>			indices;
 	} D3DInfo;
@@ -51,14 +48,12 @@ public:
 	virtual void InitPixelShader(ID3D11Device* device);
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitConstantBuffer(ID3D11Device* device);
-	virtual void InitTexture(ID3D11Device* device);
 
 	virtual void SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::string>& object);
 	virtual void SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::string>& object);
 	virtual void SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::string>& object);
 	virtual void SetupDrawPixelShader(const CHL::MapQ<std::string, std::string>& object);
 	virtual void SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::string>& object);
-	virtual void SetupDrawTexture(const CHL::MapQ<std::string, std::string>& object);
 	virtual void DrawObject(const CHL::MapQ<std::string, std::string>& object);
 	virtual void CleanupAfterDraw(const CHL::MapQ<std::string, std::string>& object);
 

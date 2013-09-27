@@ -12,6 +12,7 @@
 
 #include <Interface.h>
 #include "Drawable.h"
+#include "Texture.h"
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
 {
@@ -28,8 +29,11 @@ public:
 	virtual void DrawObjects();
 	virtual void Present();
 
-	void Insert(std::shared_ptr<Drawable> obj);
-	const CHL::VectorQ<std::shared_ptr<Drawable>> AllObjects();
+	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
+	const CHL::MapQ<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
+
+	void InsertTexture(std::shared_ptr<Texture> obj);
+	const CHL::MapQ<std::string, std::shared_ptr<Texture>> AllTexture();
 
 	// DirectX stuff
 	struct
@@ -48,7 +52,8 @@ public:
 
 	
 protected:
-	CHL::VectorQ<std::shared_ptr<Drawable>> objects;
+	CHL::MapQ<std::string, std::shared_ptr<Drawable>> objectDrawables;
+	CHL::MapQ<std::string, std::shared_ptr<Texture>> textures;
 
 	virtual void InitDevice();
 public:

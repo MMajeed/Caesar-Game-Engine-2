@@ -1,17 +1,9 @@
 #ifndef __LuaManager__
 #define __LuaManager__
 
-//#include <lua-5.2.2\lua.hpp>
-// <<extern "C">> not supplied automatically because Lua also compiles as C++
-
 #include "Linker.h"
 
-extern "C" {
-#include <lua5.1.5\lua.h>
-#include <lua5.1.5\lualib.h>
-#include <lua5.1.5\lauxlib.h>
-}
-
+#include <Lua.hpp>
 #include <luabind\luabind.hpp>
 #include <Singleton.h>
 #include <Queryable.h>

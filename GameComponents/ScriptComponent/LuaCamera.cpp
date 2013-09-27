@@ -11,7 +11,7 @@
 #include <InfoCommunicator\GetInfoManager.h>
 #include <Keys.h>
 
-LuaCameraSetup::LuaCamera::LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 targetMagintude, LuaUblas::Vector4 up, double roll, double pitch, double yaw)
+LuaCamera::LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 targetMagintude, LuaUblas::Vector4 up, double roll, double pitch, double yaw)
 {
 	CHL::MapQ<std::string, std::string> camera;
 
@@ -31,12 +31,12 @@ LuaCameraSetup::LuaCamera::LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 ta
 
 	this->ID = msg->ID;
 }
-void LuaCameraSetup::LuaCamera::SetAsMain()
+void LuaCamera::SetAsMain()
 {
 
 }
 		
-void LuaCameraSetup::LuaCamera::MoveFroward(double distance)
+void LuaCamera::MoveFroward(double distance)
 {
 	LuaUblas::Vector4 eye = this->GetEye();
 	LuaUblas::Vector4 target = this->GetTargetMagintude();
@@ -48,83 +48,83 @@ void LuaCameraSetup::LuaCamera::MoveFroward(double distance)
 	this->SetEye(newEye);
 }
 
-void LuaCameraSetup::LuaCamera::SetEye(LuaUblas::Vector4 eye)
+void LuaCamera::SetEye(LuaUblas::Vector4 eye)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::EYE, CHL::ToString(eye.vector)));
 	GetInfoManager::GetComponent()->SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaCameraSetup::LuaCamera::GetEye()
+LuaUblas::Vector4 LuaCamera::GetEye()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
 	return CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(obj[Keys::EYE]);
 }
 
-void LuaCameraSetup::LuaCamera::SetTargetMagintude(LuaUblas::Vector4 targetMagintude)
+void LuaCamera::SetTargetMagintude(LuaUblas::Vector4 targetMagintude)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::TARGETMAGNITUDE, CHL::ToString(targetMagintude.vector)));
 	GetInfoManager::GetComponent()->SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaCameraSetup::LuaCamera::GetTargetMagintude()
+LuaUblas::Vector4 LuaCamera::GetTargetMagintude()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
 	return CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(obj[Keys::TARGETMAGNITUDE]);
 }
 
-void LuaCameraSetup::LuaCamera::SetUp(LuaUblas::Vector4 up)
+void LuaCamera::SetUp(LuaUblas::Vector4 up)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::UP, CHL::ToString(up.vector)));
 	GetInfoManager::GetComponent()->SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaCameraSetup::LuaCamera::GetUp()
+LuaUblas::Vector4 LuaCamera::GetUp()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
 	return CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(obj[Keys::UP]);
 }
 
-void LuaCameraSetup::LuaCamera::SetRoll(double roll)
+void LuaCamera::SetRoll(double roll)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::RADIANROLL, CHL::ToString(roll)));
 	GetInfoManager::GetComponent()->SubmitMessage(msg);
 }
-double LuaCameraSetup::LuaCamera::GetRoll()
+double LuaCamera::GetRoll()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
 	return CHL::sstringConverter<double, std::string>(obj[Keys::RADIANROLL]);
 }
 
-void LuaCameraSetup::LuaCamera::SetPitch(double pitch)
+void LuaCamera::SetPitch(double pitch)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::RADIANPITCH, CHL::ToString(pitch)));
 	GetInfoManager::GetComponent()->SubmitMessage(msg);
 }
-double LuaCameraSetup::LuaCamera::GetPitch()
+double LuaCamera::GetPitch()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
 	return CHL::sstringConverter<double, std::string>(obj[Keys::RADIANPITCH]);
 }
 
-void LuaCameraSetup::LuaCamera::SetYaw(double yaw)
+void LuaCamera::SetYaw(double yaw)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::RADIANYAW, CHL::ToString(yaw)));
 	GetInfoManager::GetComponent()->SubmitMessage(msg);
 }
-double LuaCameraSetup::LuaCamera::GetYaw()
+double LuaCamera::GetYaw()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
 	return CHL::sstringConverter<double, std::string>(obj[Keys::RADIANYAW]);
 }
 
-void LuaCameraSetup::LuaCamera::Register(lua_State *lua)
+void LuaCamera::Register(lua_State *lua)
 {
 	luabind::module(lua) [
-		luabind::class_<LuaCameraSetup::LuaCamera>("Camera")
+		luabind::class_<LuaCamera>("Camera")
 		  .def(luabind::constructor<LuaUblas::Vector4, LuaUblas::Vector4, LuaUblas::Vector4, double, double, double>())
-		  .property("Eye", &LuaCameraSetup::LuaCamera::GetEye, &LuaCameraSetup::LuaCamera::SetEye)
-		  .property("TargetMagintude", &LuaCameraSetup::LuaCamera::GetTargetMagintude, &LuaCameraSetup::LuaCamera::SetTargetMagintude)
-		  .property("Up", &LuaCameraSetup::LuaCamera::GetUp, &LuaCameraSetup::LuaCamera::SetUp)
-		  .property("Roll", &LuaCameraSetup::LuaCamera::GetRoll, &LuaCameraSetup::LuaCamera::SetRoll)
-		  .property("Pitch", &LuaCameraSetup::LuaCamera::GetPitch, &LuaCameraSetup::LuaCamera::SetPitch)
-		  .property("Yaw", &LuaCameraSetup::LuaCamera::GetYaw, &LuaCameraSetup::LuaCamera::SetYaw)
-		  .def("MoveFroward", &LuaCameraSetup::LuaCamera::MoveFroward)
+		  .property("Eye", &LuaCamera::GetEye, &LuaCamera::SetEye)
+		  .property("TargetMagintude", &LuaCamera::GetTargetMagintude, &LuaCamera::SetTargetMagintude)
+		  .property("Up", &LuaCamera::GetUp, &LuaCamera::SetUp)
+		  .property("Roll", &LuaCamera::GetRoll, &LuaCamera::SetRoll)
+		  .property("Pitch", &LuaCamera::GetPitch, &LuaCamera::SetPitch)
+		  .property("Yaw", &LuaCamera::GetYaw, &LuaCamera::SetYaw)
+		  .def("MoveFroward", &LuaCamera::MoveFroward)
 	  ];
 }

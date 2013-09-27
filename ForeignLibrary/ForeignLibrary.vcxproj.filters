@@ -474,6 +474,9 @@
     <ClInclude Include="lua5.1.5\lzio.h">
       <Filter>Lua5.1.5</Filter>
     </ClInclude>
+    <ClInclude Include="Lua.hpp">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="lua5.1.5\Makefile">

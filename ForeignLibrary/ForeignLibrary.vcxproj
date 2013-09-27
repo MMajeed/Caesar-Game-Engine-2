@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="Lua.hpp" />
     <ClInclude Include="lua5.1.5\lapi.h" />
     <ClInclude Include="lua5.1.5\lauxlib.h" />
     <ClInclude Include="lua5.1.5\lcode.h" />

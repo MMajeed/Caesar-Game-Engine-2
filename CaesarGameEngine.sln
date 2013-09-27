@@ -29,9 +29,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shader Files", "Shader Files", "{E2A237E8-6CB8-4C0F-9BB8-6EA948B09172}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\ShaderFiles\HLSL_4_BasicLightFunctions.fx = Assets\ShaderFiles\HLSL_4_BasicLightFunctions.fx
-		Assets\ShaderFiles\PS_0_Basic.fx = Assets\ShaderFiles\PS_0_Basic.fx
 		Assets\ShaderFiles\Setup.fx = Assets\ShaderFiles\Setup.fx
-		Assets\ShaderFiles\VS_0_Regular.fx = Assets\ShaderFiles\VS_0_Regular.fx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ForeignLibrary", "ForeignLibrary\ForeignLibrary.vcxproj", "{11625FDA-7800-4867-A29A-DA870E6CF4EF}"
@@ -88,6 +86,17 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ScriptCommunicator", "GameComponents\Communicator\ScriptCommunicator\ScriptCommunicator.vcxproj", "{DD0A37AF-4AD5-492F-8DE3-BEB3BD74EFFC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{17A58400-1B6B-4A1B-BA78-E91F0719BDFE} = {17A58400-1B6B-4A1B-BA78-E91F0719BDFE}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VS", "VS", "{A515F5F3-DD37-4112-83EE-B2086F7DA3AF}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\ShaderFiles\VS_0_Regular.fx = Assets\ShaderFiles\VS_0_Regular.fx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PS", "PS", "{C4204B4C-43E7-4097-9E12-5DE2CBF8B378}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\ShaderFiles\PS_0_Basic.fx = Assets\ShaderFiles\PS_0_Basic.fx
+		Assets\ShaderFiles\PS_1_Texture.fx = Assets\ShaderFiles\PS_1_Texture.fx
 	EndProjectSection
 EndProject
 Global
@@ -205,6 +214,8 @@ Global
 		{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A} = {A23A83D9-9645-4158-A34F-8639D001FCD4}
 		{20C64F0E-7A31-448B-A8F9-462071C81651} = {0D3CEB7E-BB6C-4F27-B026-925CA788BDCA}
 		{E2A237E8-6CB8-4C0F-9BB8-6EA948B09172} = {0D3CEB7E-BB6C-4F27-B026-925CA788BDCA}
+		{A515F5F3-DD37-4112-83EE-B2086F7DA3AF} = {E2A237E8-6CB8-4C0F-9BB8-6EA948B09172}
+		{C4204B4C-43E7-4097-9E12-5DE2CBF8B378} = {E2A237E8-6CB8-4C0F-9BB8-6EA948B09172}
 		{18A334CB-53DE-49C7-803A-C3E7A5624AE3} = {6BF4FA07-CB86-471B-9659-0495DD76C07C}
 		{61C716F7-6F6E-42D2-98CB-C120E5E56674} = {6BF4FA07-CB86-471B-9659-0495DD76C07C}
 		{3F30B7EB-34D3-4477-B1E7-A1B5C30268FF} = {6BF4FA07-CB86-471B-9659-0495DD76C07C}

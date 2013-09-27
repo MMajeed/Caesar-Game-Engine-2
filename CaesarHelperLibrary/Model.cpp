@@ -8,7 +8,7 @@
 
 Model::Model(std::string file)
 {
-	this->scene = aiImportFile(file.c_str(), aiProcessPreset_TargetRealtime_MaxQuality);
+	this->scene = aiImportFile(file.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_TransformUVCoords);
 }
 
 std::vector<boost::numeric::ublas::vector<double>> Model::Pos() const
@@ -76,10 +76,10 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Texture() const
 	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
 	{
 		boost::numeric::ublas::vector<double> texture(2);
-		if(mesh->HasTextureCoords(i))
+		if(mesh->HasTextureCoords(0))
 		{
-			texture(0) = mesh->mTextureCoords[i]->x;
-			texture(1) = mesh->mTextureCoords[i]->y;
+			texture(0) = mesh->mTextureCoords[0][i].x;
+			texture(1) = mesh->mTextureCoords[0][i].y;
 		}
 		else
 		{

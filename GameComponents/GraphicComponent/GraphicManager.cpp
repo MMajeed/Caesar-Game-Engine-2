@@ -161,19 +161,47 @@ void GraphicManager::DrawObjects()
 		iterObj != filteredObjects.end();
 		++iterObj)
 	{
-		std::string graphicObjectID = iterObj->find(Keys::GRAPHICDRAWABLEID)->second;
+		auto obj = *iterObj;
 
-		auto drawableIter = 
-			this->objects.First([graphicObjectID](CHL::VectorQ<std::shared_ptr<Drawable>>::const_iterator iterDrawableObj)
-					{ 
-						auto thisObjectID = (*iterDrawableObj)->ID;
-						return (thisObjectID == graphicObjectID);
-					});
+		std::string graphicObjectID = obj.find(Keys::GRAPHICDRAWABLEID)->second;
+
+		auto drawableIter = this->objectDrawables.find(graphicObjectID);
 		
-		if(drawableIter != this->objects.end())
+		if(drawableIter == this->objectDrawables.end())
 		{
-			auto drawable = *drawableIter;
-			drawable->Draw(*iterObj);
+			continue;
+		}// If it didn't fine then continue
+
+		auto textures = obj.Where([](const CHL::MapQ<std::string, std::string>::const_iterator iterObj)
+						{ 
+							return (iterObj->first.compare(0, Keys::TEXTUREFILE.size(), Keys::TEXTUREFILE) == 0);
+						});
+
+		for(auto iterTexture = textures.begin();
+			iterTexture != textures.end();
+			++iterTexture)
+		{
+			auto texture = this->textures.find(iterTexture->second);
+		
+			if(texture != this->textures.end())
+			{
+				texture->second->SettupTexture();
+			}
+		}
+
+		auto drawable = *drawableIter;
+		drawable.second->Draw(*iterObj);
+
+		for(auto iterTexture = textures.begin();
+			iterTexture != textures.end();
+			++iterTexture)
+		{
+			auto texture = this->textures.find(iterTexture->second);
+		
+			if(texture != this->textures.end())
+			{
+				texture->second->CleanupTexture();
+			}
 		}
 	}
 
@@ -185,13 +213,22 @@ void GraphicManager::Present()
 	this->direct3d.pSwapChain->Present( 0, 0 );
 }
 
-void GraphicManager::Insert(std::shared_ptr<Drawable> obj)
+void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
 {
-	this->objects.push_back(obj);
+	this->objectDrawables[obj->ID] = obj;
 }
-const CHL::VectorQ<std::shared_ptr<Drawable>> GraphicManager::AllObjects()
+const CHL::MapQ<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
 {
-	return this->objects;
+	return this->objectDrawables;
+}
+
+void GraphicManager::InsertTexture(std::shared_ptr<Texture> obj)
+{
+	this->textures[obj->ID] = obj;
+}
+const CHL::MapQ<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
+{
+	return this->textures;
 }
 
 void GraphicManager::InitDevice()

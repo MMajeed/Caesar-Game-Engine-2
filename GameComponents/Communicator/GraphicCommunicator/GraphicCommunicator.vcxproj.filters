@@ -11,6 +11,9 @@
       <Filter>GetGraphicManager</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="AddBasicTexture.h">
+      <Filter>AddBasicTexture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicDrawableMessage.cpp">
@@ -22,6 +25,9 @@
     <ClCompile Include="GetGraphicManager.cpp">
       <Filter>GetGraphicManager</Filter>
     </ClCompile>
+    <ClCompile Include="AddBasicTexture.cpp">
+      <Filter>AddBasicTexture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AddBasicDrawableMessage">
@@ -32,6 +38,9 @@
     </Filter>
     <Filter Include="GetGraphicManager">
       <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AddBasicTexture">
+      <UniqueIdentifier>{17e44715-c07d-4d19-8385-0f7100a45282}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

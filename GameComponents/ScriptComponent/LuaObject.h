@@ -1,27 +1,41 @@
 #ifndef __LuaObject__
 #define __LuaObject__
 
-extern "C" {
-#include <lua5.1.5\lua.h>
-#include <lua5.1.5\lualib.h>
-#include <lua5.1.5\lauxlib.h>
-}
-
+#include <Lua.hpp>
 #include <luabind\luabind.hpp>
+#include "LuaBasicDrawableObject.h"
+#include "LuaBasicTexture.h"
+#include "LuaUblas.h"
 
 class LuaObject
 {
 public:
-	class Object
-	{
-	public:
-		static std::string AddObject(luabind::object const& table);
-		static void Register(lua_State *lua);
-	};
+	LuaObject();
 
+	std::string ID;
+
+	void SetGraphic(LuaBasicDrawableObject graphic);
+	void RemoveGraphic();
+
+	void SetTexture(LuaBasicTexture texture);
+	void RemoveTexture(LuaBasicTexture texture);
+
+	void SetLocation(LuaUblas::Vector4 vec);
+	LuaUblas::Vector4 GetLocation();
+
+	void SetScale(LuaUblas::Vector4 vec);
+	LuaUblas::Vector4 GetScale();
+
+	void SetRotation(LuaUblas::Vector4 vec);
+	LuaUblas::Vector4 GetRotation();
+
+	void SetColour(LuaUblas::Vector4 vec);
+	LuaUblas::Vector4 GetColour();
+
+	static void Register(lua_State *lua);
 	static inline void RegisterAllLuaFunction(lua_State *lua)
 	{
-		LuaObject::Object::Register(lua);
+		LuaObject::Register(lua);
 	}
 };
 

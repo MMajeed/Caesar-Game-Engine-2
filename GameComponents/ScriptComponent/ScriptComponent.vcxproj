@@ -87,10 +87,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="LuaBasicDrawableObject.h" />
     <ClInclude Include="LuaCamera.h" />
     <ClInclude Include="LuaGraphic.h" />
     <ClInclude Include="LuaKeyAction.h" />
-    <ClInclude Include="LuaKeySetup.h" />
+    <ClInclude Include="LuaKeyActionSetup.h" />
     <ClInclude Include="LuaKeysID.h" />
     <ClInclude Include="LuaLoopCall.h" />
     <ClInclude Include="LuaLoopCallSetup.h" />
@@ -98,19 +99,22 @@
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaProcesses.h" />
+    <ClInclude Include="LuaBasicTexture.h" />
     <ClInclude Include="LuaUblas.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LuaBasicDrawableObject.cpp" />
     <ClCompile Include="LuaCamera.cpp" />
     <ClCompile Include="LuaGraphic.cpp" />
     <ClCompile Include="LuaKeyAction.cpp" />
-    <ClCompile Include="LuaKeySetup.cpp" />
+    <ClCompile Include="LuaKeyActionSetup.cpp" />
     <ClCompile Include="LuaKeysID.cpp" />
     <ClCompile Include="LuaLoopCall.cpp" />
     <ClCompile Include="LuaLoopCallSetup.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaObject.cpp" />
+    <ClCompile Include="LuaBasicTexture.cpp" />
     <ClCompile Include="LuaUblas.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

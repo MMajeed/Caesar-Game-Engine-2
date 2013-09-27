@@ -19,7 +19,6 @@ BasicDrawable::BasicDrawable()
 	this->D3DInfo.pVertexShader = 0;
 	this->D3DInfo.pPixelShader = 0;
 	this->D3DInfo.pRastersizerState = 0;
-	this->D3DInfo.pTexture = 0;
 }
 
 void BasicDrawable::Init()
@@ -32,10 +31,9 @@ void BasicDrawable::Init()
 	this->InitPixelShader(device);
 	this->InitRastersizerState(device);
 	this->InitConstantBuffer(device);
-	this->InitTexture(device);
 }
 
-void BasicDrawable::Clean()
+void BasicDrawable::Destory()
 {
 	this->D3DInfo.pVertexBuffer->Release();
 	this->D3DInfo.pIndexBuffer->Release();
@@ -44,7 +42,6 @@ void BasicDrawable::Clean()
 	this->D3DInfo.pVertexShader->Release();
 	this->D3DInfo.pPixelShader->Release();
 	this->D3DInfo.pRastersizerState->Release();
-	this->D3DInfo.pTexture->Release();
 }
 
 void BasicDrawable::Update(float delta)
@@ -59,7 +56,6 @@ void BasicDrawable::Draw(const CHL::MapQ<std::string, std::string>& object)
 	this->SetupDrawInputVertexShader(object);
 	this->SetupDrawPixelShader(object);
 	this->SetupDrawRasterizeShader(object);
-	this->SetupDrawTexture(object);
 	this->DrawObject(object);
 	this->CleanupAfterDraw(object);
 }
@@ -122,15 +118,6 @@ void BasicDrawable::SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::s
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
-}
-void BasicDrawable::SetupDrawTexture(const CHL::MapQ<std::string, std::string>& object)
-{
-	if(!this->D3DInfo.textureFileName.empty())
-	{
-		ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
-	
-		pImmediateContext->PSSetShaderResources( 0, 1, &(this->D3DInfo.pTexture) );
-	}
 }
 void BasicDrawable::DrawObject(const CHL::MapQ<std::string, std::string>& object)
 {
@@ -222,23 +209,11 @@ void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-void BasicDrawable::InitTexture(ID3D11Device* device)
-{
-	if(!this->D3DInfo.textureFileName.empty())
-	{
-		std::wstring error;
-		if(!DX11Helper::LoadTextureFile(CHL::ToWString(this->D3DInfo.textureFileName), device, &(this->D3DInfo.pTexture), error))
-		{
-			throw std::exception(CHL::ToString(error).c_str());
-		}
-	}
-}
 
 std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>& vectorVertices,
 													const std::vector<WORD>&	vectorIndices,
 													D3DShaderInfo				vertexFile,
-													D3DShaderInfo				pixelFile,
-													std::string					textureFileName )
+													D3DShaderInfo				pixelFile )
 {
 	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable);
 
@@ -246,7 +221,6 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>& v
 	newObject->D3DInfo.indices = vectorIndices;
 	newObject->D3DInfo.VertexShaderInfo = vertexFile;
 	newObject->D3DInfo.PixelShaderInfo = pixelFile;
-	newObject->D3DInfo.textureFileName = textureFileName;
 
 	newObject->Init();
 

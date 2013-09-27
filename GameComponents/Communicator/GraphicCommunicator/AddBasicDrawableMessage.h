@@ -17,8 +17,7 @@ public:
 							std::string	vertexModel,
 							std::string	pixelFileName,
 							std::string	pixelEntryPoint,
-							std::string	pixelModel,
-							std::string texture = "");
+							std::string	pixelModel);
 
 	virtual Message::Status Work();
 
@@ -29,7 +28,6 @@ public:
 	std::string	pixelFileName;
 	std::string	pixelEntryPoint;
 	std::string	pixelModel;
-	std::string texture;
 
 	std::string	ID;
 };

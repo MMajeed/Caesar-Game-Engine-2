@@ -87,12 +87,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AddBasicDrawableMessage.h" />
+    <ClInclude Include="AddBasicTexture.h" />
     <ClInclude Include="ClearScreenMessage.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="GetGraphicManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicDrawableMessage.cpp" />
+    <ClCompile Include="AddBasicTexture.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
     <ClCompile Include="GetGraphicManager.cpp" />
   </ItemGroup>

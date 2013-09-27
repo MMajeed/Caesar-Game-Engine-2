@@ -1,12 +1,7 @@
 #ifndef __LuaUblas__
 #define __LuaUblas__
 
-extern "C" {
-#include <lua5.1.5\lua.h>
-#include <lua5.1.5\lualib.h>
-#include <lua5.1.5\lauxlib.h>
-}
-
+#include <Lua.hpp>
 #include <string>
 #include <boost/numeric/ublas/vector.hpp>
 

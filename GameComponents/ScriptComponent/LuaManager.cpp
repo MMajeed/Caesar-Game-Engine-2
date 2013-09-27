@@ -10,9 +10,11 @@
 #include "LuaObject.h"
 #include "LuaUblas.h"
 #include "LuaKeysID.h"
-#include "LuaKeySetup.h"
+#include "LuaKeyActionSetup.h"
 #include "LuaCamera.h"
 #include "LuaLoopCallSetup.h"
+#include "LuaBasicDrawableObject.h"
+#include "LuaBasicTexture.h"
 
 LuaManager::LuaManager()
 {
@@ -54,9 +56,11 @@ void LuaManager::Init()
 	LuaUblas::RegisterAllLuaFunction(this->lua);
 	LuaObject::RegisterAllLuaFunction(this->lua);
 	LuaKeysID::RegisterAllLuaFunction(this->lua);
-	LuaKeySetup::RegisterAllLuaFunction(this->lua);
-	LuaCameraSetup::RegisterAllLuaFunction(this->lua);
+	LuaKeyActionSetup::RegisterAllLuaFunction(this->lua);
+	LuaCamera::RegisterAllLuaFunction(this->lua);
 	LuaLoopCallSetup::RegisterAllLuaFunction(this->lua);
+	LuaBasicDrawableObject::RegisterAllLuaFunction(this->lua);
+	LuaBasicTexture::RegisterAllLuaFunction(this->lua);
 }
 
 void LuaManager::Update(double realTime, double deltaTime)
