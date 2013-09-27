@@ -46,7 +46,7 @@ public:
 	virtual void InitInputLayout(ID3D11Device* device);
 	virtual void InitVertexShader(ID3D11Device* device);
 	virtual void InitPixelShader(ID3D11Device* device);
-	virtual void InitRastersizerState(ID3D11Device* device);
+	virtual void InitRastersizerState(ID3D11Device* device, D3D11_CULL_MODE cullMode = D3D11_CULL_BACK, D3D11_FILL_MODE fillMode = D3D11_FILL_SOLID, bool bAntialiasedLine = true, bool bMultisampleEnable = true);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
 	virtual void SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::string>& object);

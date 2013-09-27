@@ -29,19 +29,18 @@ public:
 		XMFLOAT4 lightPowerRangeType;	// // x = power, y = range, z = light type, w = not used
 	};
 
-	struct cbNeverChanges
+	struct cbObject
 	{
-		XMMATRIX mCameraView;			//matrix View;
-		XMMATRIX mLightView;			//matrix View;
-		XMFLOAT4 eye;					//float4 eye;
-		XMFLOAT4 target;				//float4 target;
-		CLightDesc lights[NUMBEROFLIGHTS];
+		XMMATRIX world;
+		XMMATRIX worldViewProj;
+		MaterialInfo colour;   
 	};
 
-	struct cbObjectConstantBuffer
+	struct cbInfo
 	{
-		XMMATRIX finalMatrix;
-		MaterialInfo colour;   
+		XMMATRIX view;
+		XMMATRIX proj;
+		XMFLOAT4 eye;
 	};
 };
 #endif //__Buffer__

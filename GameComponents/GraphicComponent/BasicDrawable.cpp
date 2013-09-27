@@ -75,10 +75,12 @@ void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::st
 	mFinal = boost::numeric::ublas::prod(GraphicManager::GetInstance().PrespectiveMatrix, mFinal);
 
 	XMFLOAT4X4 finalMatrix = XNAToUblas::Convert4x4(mFinal);
+	XMFLOAT4X4 worldMatrix = XNAToUblas::Convert4x4(mObjectFinal);
 
-	cBuffer::cbObjectConstantBuffer cbCEF;
+	cBuffer::cbObject cbCEF;
 	
-	cbCEF.finalMatrix = XMLoadFloat4x4(&finalMatrix);
+	cbCEF.world = XMLoadFloat4x4(&worldMatrix);
+	cbCEF.worldViewProj = XMLoadFloat4x4(&finalMatrix);
 	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(diffuse);
 	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(ambient);
 	cbCEF.colour.spec = XNAToUblas::ConvertVec4(spec);
@@ -193,10 +195,10 @@ void BasicDrawable::InitPixelShader(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-void BasicDrawable::InitRastersizerState(ID3D11Device* device)
+void BasicDrawable::InitRastersizerState(ID3D11Device* device, D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable)
 {
 	std::wstring error;
-	if(!DX11Helper::LoadRasterizerState(D3D11_CULL_BACK, D3D11_FILL_SOLID, true, true, device, &(this->D3DInfo.pRastersizerState), error))
+	if(!DX11Helper::LoadRasterizerState(cullMode, fillMode, bAntialiasedLine, bMultisampleEnable, device, &(this->D3DInfo.pRastersizerState), error))
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}
@@ -204,7 +206,7 @@ void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 {
 	std::wstring error;
-	if(!DX11Helper::LoadBuffer<cBuffer::cbObjectConstantBuffer>(device, &(this->D3DInfo.pConstantBuffer), error))
+	if(!DX11Helper::LoadBuffer<cBuffer::cbObject>(device, &(this->D3DInfo.pConstantBuffer), error))
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}

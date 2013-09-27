@@ -12,7 +12,7 @@ public:
 	{
 	public:
 		Vector4();
-		Vector4(double xValue, double yValue, double zValue, double wValue);
+		Vector4(double xValue, double yValue, double zValue, double wValue = 0.0);
 		Vector4(boost::numeric::ublas::vector<double> vecValue);
 
 		operator boost::numeric::ublas::vector<double>();

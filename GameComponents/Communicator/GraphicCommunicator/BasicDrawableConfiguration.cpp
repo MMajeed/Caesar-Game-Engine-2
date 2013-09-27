@@ -1,11 +1,11 @@
-#include "AddBasicDrawableMessage.h"
+#include "BasicDrawableConfiguration.h"
 
 #include <Vertex.h>
 #include <D3DShaderInfo.h>
 #include "BasicDrawable.h"
 #include "GraphicManager.h"
 
-AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
+BasicDrawableConfiguration::AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 												std::string	vertexFileName,
 												std::string	vertexEntryPoint,
 												std::string	vertexModel,
@@ -23,7 +23,7 @@ AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 	this->pixelModel = pixelModel;
 }
 
-Message::Status AddBasicDrawableMessage::Work()
+Message::Status BasicDrawableConfiguration::AddBasicDrawableMessage::Work()
 {
 	D3DShaderInfo vertexFile;
 	vertexFile.FileName		= vertexFileName;
@@ -89,6 +89,43 @@ Message::Status AddBasicDrawableMessage::Work()
 	GraphicManager::GetInstance().InsertObjectDrawable(newObject);
 
 	this->ID = newObject->ID;
+
+	return Message::Status::Complete;
+}
+
+BasicDrawableConfiguration::ChangeRastersizerState::ChangeRastersizerState
+	(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode, bool antialiasedLine, bool multisampleEnable)
+{
+	this->ID = ID;
+	this->cullMode = cullMode;
+	this->fillMode = fillMode;
+	this->antialiasedLine = antialiasedLine;
+	this->multisampleEnable = multisampleEnable;
+}
+
+Message::Status BasicDrawableConfiguration::ChangeRastersizerState::Work()
+{
+	boost::mutex::scoped_lock lock(GraphicManager::GetInstance().mutex);
+
+	auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+	auto iterObjDrawable = allObjects.find(this->ID);
+
+	if(iterObjDrawable != allObjects.end())
+	{
+		std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+
+		if(bdObj)
+		{
+			ID3D11Device* pDevice = GraphicManager::GetInstance().direct3d.pd3dDevice;
+			bdObj->D3DInfo.pRastersizerState->Release();
+
+			bdObj->InitRastersizerState(pDevice,
+										static_cast<D3D11_CULL_MODE>(this->cullMode), 
+										static_cast<D3D11_FILL_MODE>(this->fillMode), 
+										this->antialiasedLine, 
+										this->multisampleEnable);
+		}
+	}
 
 	return Message::Status::Complete;
 }

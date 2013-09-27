@@ -43,6 +43,7 @@ void LuaUblas::Vector4::Register(lua_State *lua)
 	luabind::module(lua) [
 		luabind::class_<LuaUblas::Vector4>("Vector4")
 		  .def(luabind::constructor<double, double, double, double>())
+		  .def(luabind::constructor<double, double, double>())
 		  .property("X", &LuaUblas::Vector4::GetterX, &LuaUblas::Vector4::SetterX)
 		  .property("Y", &LuaUblas::Vector4::GetterY, &LuaUblas::Vector4::SetterY)
 		  .property("Z", &LuaUblas::Vector4::GetterZ, &LuaUblas::Vector4::SetterZ)

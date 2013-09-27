@@ -7,7 +7,6 @@
 
 #include "LuaManager.h"
 #include <GraphicCommunicator\ClearScreenMessage.h>
-#include <GraphicCommunicator\AddBasicDrawableMessage.h>
 #include <GraphicCommunicator\GetGraphicManager.h>
 #include <Model.h>
 #include <Keys.h>

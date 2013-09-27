@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="AddBasicDrawableMessage.h">
-      <Filter>AddBasicDrawableMessage</Filter>
-    </ClInclude>
     <ClInclude Include="ClearScreenMessage.h">
       <Filter>ClearScreenMessage</Filter>
     </ClInclude>
@@ -14,11 +11,11 @@
     <ClInclude Include="AddBasicTexture.h">
       <Filter>AddBasicTexture</Filter>
     </ClInclude>
+    <ClInclude Include="BasicDrawableConfiguration.h">
+      <Filter>BasicDrawableConfiguration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AddBasicDrawableMessage.cpp">
-      <Filter>AddBasicDrawableMessage</Filter>
-    </ClCompile>
     <ClCompile Include="ClearScreenMessage.cpp">
       <Filter>ClearScreenMessage</Filter>
     </ClCompile>
@@ -28,11 +25,11 @@
     <ClCompile Include="AddBasicTexture.cpp">
       <Filter>AddBasicTexture</Filter>
     </ClCompile>
+    <ClCompile Include="BasicDrawableConfiguration.cpp">
+      <Filter>BasicDrawableConfiguration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="AddBasicDrawableMessage">
-      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ClearScreenMessage">
       <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
     </Filter>
@@ -41,6 +38,9 @@
     </Filter>
     <Filter Include="AddBasicTexture">
       <UniqueIdentifier>{17e44715-c07d-4d19-8385-0f7100a45282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BasicDrawableConfiguration">
+      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

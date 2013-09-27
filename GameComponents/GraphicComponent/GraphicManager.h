@@ -25,6 +25,7 @@ public:
 	virtual void Shutdown();
 	
 	virtual void SetupCameraNPrespective();
+	virtual void SetupConstantBuffer();
 	virtual void ClearScreen();
 	virtual void DrawObjects();
 	virtual void Present();
@@ -47,7 +48,8 @@ public:
 		ID3D11Texture2D*			pDepthStencilBuffer;
 		ID3D11DepthStencilState*	pDepthStencilState;
 		ID3D11DepthStencilView*		pDepthStencilView;
-		D3D11_VIEWPORT vp;
+		D3D11_VIEWPORT				vp;
+		ID3D11Buffer*				pCBInfo;
 	} direct3d;
 
 	

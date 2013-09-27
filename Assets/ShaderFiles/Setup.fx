@@ -5,8 +5,16 @@
 //--------------------------------------------------------------------------------------
 cbuffer cbObject : register( b0 )
 {
+	matrix gWorld;
     matrix gWorldViewProj;
 	MaterialInfo objectMaterial;
+};
+
+cbuffer cbInfo : register( b1 )
+{
+	matrix gView;
+	matrix gProj;
+	float4 eye;
 };
 
 Texture2D texture00 : register( t0 );
@@ -24,7 +32,7 @@ TextureCube cubeTexture05 : register( t9 );
 //--------------------------------------------------------------------------------------
 struct PS_INPUT
 {
-    float4 PosMVP      : SV_POSITION;
+    float4 PosWVP      : SV_POSITION;
 	float4 PosWorld    : POSITION;
 	float4 Normal      : NORMAL1;
 	float4 NormalWorld : NORMAL2;

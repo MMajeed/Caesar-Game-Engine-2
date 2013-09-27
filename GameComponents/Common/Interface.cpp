@@ -1,7 +1,8 @@
 #include "Interface.h"
 
 #include <iomanip>
-
+#include <boost/thread.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <Windows.h>
 
 Interface::Interface()
@@ -44,11 +45,11 @@ void Interface::Run()
 
 			double deltaTime = this->timer.SinceLastWork;
 
-			const double MIN_TIMESTEP = 0.001f;
+			/*const double MIN_TIMESTEP = 0.001f;
 			if ( deltaTime > MIN_TIMESTEP )
 			{
 				deltaTime = MIN_TIMESTEP;
-			}
+			}*/
 
 			this->ProccessMessages();
 			this->Update(frameTime, deltaTime);

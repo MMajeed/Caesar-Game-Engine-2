@@ -13,10 +13,10 @@ PS_INPUT VS( VS_INPUT input )
 	PS_INPUT output = (PS_INPUT)0;
 
 	// Combine the matrices first...
-	output.PosMVP = mul( input.VertexPos, gWorldViewProj );
+	output.PosWVP = mul( input.VertexPos, gWorldViewProj );
 
 	// Passed to the pixel shader for correct lighting:
-	output.PosWorld = mul( input.VertexPos, gWorldViewProj );
+	output.PosWorld = mul( input.VertexPos, gWorld );
 
 	output.Normal = input.VertexNorm;
 

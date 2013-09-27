@@ -2,11 +2,12 @@
 
 #include <boost/numeric/ublas/io.hpp>
 #include <Converter.h>
-
 #include <InfoCommunicator\ObjectManagerOutput.h>
 #include <Keys.h>
 #include <MathOperations.h>
 #include <XNAToUblas.h>
+#include "DX11Helper.h"
+#include "Buffers.h"
 
 GraphicManager::GraphicManager()
 	: ClearColour(3)
@@ -37,6 +38,7 @@ void GraphicManager::Update(double realTime, double deltaTime)
 void GraphicManager::Work()
 {
 	this->SetupCameraNPrespective();
+	this->SetupConstantBuffer();
 	this->ClearScreen();
 	this->DrawObjects();
 	this->Present();	
@@ -138,6 +140,48 @@ void GraphicManager::SetupCameraNPrespective()
 	}
 
 	this->PrespectiveMatrix = MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
+}
+
+void GraphicManager::SetupConstantBuffer()
+{
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
+
+	boost::numeric::ublas::vector<double> vEye(4);
+
+	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator cameraIter;
+	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+			{ 
+				auto classTypeIter = objIter->find(Keys::Class);
+				if(classTypeIter != objIter->end())
+					return (classTypeIter->second == Keys::ClassType::Camera); 
+				else
+					return false;
+			}); // Find Camera
+
+	if(cameraIter != objects.cend()) // if camera found
+	{
+		CHL::MapQ<std::string, std::string> camera = *cameraIter;
+		vEye = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::EYE]);
+	}
+	else
+	{
+		vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0; 
+	}
+
+	cBuffer::cbInfo cbInfo;
+	
+	XMFLOAT4X4 view4x4 = XNAToUblas::Convert4x4(this->CamerMatrix);;
+	XMFLOAT4X4 proj4x4 = XNAToUblas::Convert4x4(this->PrespectiveMatrix);;
+
+	cbInfo.view = XMLoadFloat4x4(&view4x4);
+	cbInfo.proj = XMLoadFloat4x4(&proj4x4);
+	cbInfo.eye = XMFLOAT4((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
+
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+
+	pImmediateContext->UpdateSubresource( this->direct3d.pCBInfo, 0, NULL, &cbInfo, 0, 0 );
+	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->direct3d.pCBInfo) );
+	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->direct3d.pCBInfo) );
 }
 
 void GraphicManager::ClearScreen()
@@ -400,4 +444,10 @@ void GraphicManager::InitDevice()
 	this->direct3d.vp.TopLeftX = 0;
 	this->direct3d.vp.TopLeftY = 0;
 	this->direct3d.pImmediateContext->RSSetViewports( 1, &(this->direct3d.vp) );
+
+	std::wstring error;
+	if(!DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->direct3d.pd3dDevice, &(this->direct3d.pCBInfo), error))
+	{
+		throw std::exception(CHL::ToString(error).c_str());
+	}
 }

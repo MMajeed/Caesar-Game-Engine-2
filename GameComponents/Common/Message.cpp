@@ -1,6 +1,6 @@
 #include "Message.h"
 #include <boost/thread.hpp>
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
 
 Message::Message(){ MessageStatus = Message::Status::Incomplete; }
 

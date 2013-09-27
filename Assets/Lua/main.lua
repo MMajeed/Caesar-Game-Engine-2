@@ -1,4 +1,5 @@
 require("camera")
+require("SkyBox")
 
 ClearScreen(0.5, 0.5, 0.5);
 
@@ -9,6 +10,6 @@ boxDrawable = BasicDrawableObject({[Keys["ModelFile"]]        = "Assets/PlyFiles
 tilesTexture = BasicTexture(0, "Assets/Texture/Tiles.png");
 
 box1 = Object();
-box1.Scale = Vector4(20.0, 20.0, 20.0, 0.0);
+box1.Scale = Vector4(20.0, 20.0, 20.0);
 box1:SetGraphic(boxDrawable);
 box1:SetTexture(tilesTexture);

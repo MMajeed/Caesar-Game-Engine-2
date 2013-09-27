@@ -26,10 +26,10 @@ function UpdateCamera()
     end
     
     if(CamUpButton == true) then
-        cam:MoveFroward(0.5);
+        cam:MoveFroward(1.0);
     end
     if(CamDownButton == true) then
-        cam:MoveFroward(-0.5);
+        cam:MoveFroward(-1.0);
     end
 end
 
