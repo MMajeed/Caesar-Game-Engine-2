@@ -1,17 +1,4 @@
-struct MaterialInfo
-{
-    float4 diffuse;
-	float shininess;
-};
-
-struct Light
-{
-	float4 Location;
-	float4 Direction;
-	float4 diffuse;	
-
-	bool InUse;
-};
+#include "HLSL_Light.fx"
 
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
@@ -32,7 +19,7 @@ cbuffer cbInfo : register( b1 )
 
 cbuffer cbLight : register( b2 )
 {
-	Light lightArray[10];
+	LightDesc lights[128];
 };
 
 Texture2D texture00 : register( t0 );
