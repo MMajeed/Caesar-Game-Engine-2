@@ -4,7 +4,7 @@
 #include <Converter.h>
 #include "LuaManager.h"
 #include <GraphicCommunicator\BasicDrawableConfiguration.h>
-#include <GraphicCommunicator\GetGraphicManager.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Model.h>
 #include <Keys.h>
 
@@ -31,7 +31,7 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 			new BasicDrawableConfiguration::AddBasicDrawableMessage
 				(m, vertexFileName, "VS", "vs_4_0", pixelFileName, "PS", "ps_4_0" ));
 
-	GetGraphicManager::GetComponent()->SubmitMessage(msg);
+	GraphicCommunicator::SubmitMessage(msg);
 
 	msg->WaitTillProcccesed();
 
@@ -48,7 +48,7 @@ void LuaBasicDrawableObject::ChangeRastersizerState(int cullMode, int fillMode, 
 				antialiasedLine, 
 				multisampleEnable));
 
-	GetGraphicManager::GetComponent()->SubmitMessage(msg);
+	GraphicCommunicator::SubmitMessage(msg);
 }
 void LuaBasicDrawableObject::Register(lua_State *lua)
 {

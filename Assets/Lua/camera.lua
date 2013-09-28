@@ -12,17 +12,17 @@ CamPgUpButton   = false;    CamPgDownButton = false;
 
 function UpdateCamera()
     if(CamLeftButton == true) then
-        cam.Yaw = cam.Yaw - 0.025;
+        cam.Yaw = cam.Yaw - 0.05;
     end
     if(CamRightButton == true) then
-        cam.Yaw = cam.Yaw + 0.025;
+        cam.Yaw = cam.Yaw + 0.05;
     end
     
     if(CamPgUpButton == true) then
-        cam.Pitch = cam.Pitch - 0.025;
+        cam.Pitch = cam.Pitch - 0.05;
     end
     if(CamPgDownButton == true) then
-        cam.Pitch = cam.Pitch + 0.025;
+        cam.Pitch = cam.Pitch + 0.05;
     end
     
     if(CamUpButton == true) then

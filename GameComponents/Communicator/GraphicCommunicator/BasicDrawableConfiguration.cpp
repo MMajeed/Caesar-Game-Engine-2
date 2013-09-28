@@ -2,8 +2,8 @@
 
 #include <Vertex.h>
 #include <D3DShaderInfo.h>
-#include "BasicDrawable.h"
-#include "GraphicManager.h"
+#include <BasicDrawable.h>
+#include <GraphicManager.h>
 
 BasicDrawableConfiguration::AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 												std::string	vertexFileName,

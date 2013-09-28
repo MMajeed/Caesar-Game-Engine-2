@@ -7,7 +7,7 @@
 
 #include "LuaManager.h"
 #include <GraphicCommunicator\ClearScreenMessage.h>
-#include <GraphicCommunicator\GetGraphicManager.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Model.h>
 #include <Keys.h>
 
@@ -21,7 +21,7 @@ void LuaGraphic::ClearScreen::Action(double x, double y, double z)
 
 	std::shared_ptr<ClearScreenMessage> msg(new ClearScreenMessage(newColour));
 
-	GetGraphicManager::GetComponent()->SubmitMessage(msg);
+	GraphicCommunicator::SubmitMessage(msg);
 }
 
 void LuaGraphic::ClearScreen::Register(lua_State *lua)

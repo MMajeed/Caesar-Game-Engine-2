@@ -87,10 +87,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="GetScriptManager.h" />
+    <ClInclude Include="ScriptCommunicator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GetScriptManager.cpp" />
+    <ClCompile Include="ScriptCommunicator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

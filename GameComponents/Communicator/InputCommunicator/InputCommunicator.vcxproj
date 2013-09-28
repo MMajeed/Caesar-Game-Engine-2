@@ -87,12 +87,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="GetInputManager.h" />
+    <ClInclude Include="InputCommunicator.h" />
     <ClInclude Include="GetKeyStatus.h" />
     <ClInclude Include="UpdateKey.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GetInputManager.cpp" />
+    <ClCompile Include="InputCommunicator.cpp" />
     <ClCompile Include="GetKeyStatus.cpp" />
     <ClCompile Include="UpdateKey.cpp" />
   </ItemGroup>

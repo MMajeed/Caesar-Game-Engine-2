@@ -20,7 +20,7 @@ PS_INPUT VS( VS_INPUT input )
 
 	output.Normal = input.VertexNorm;
 
-	output.NormalWorld = mul( input.VertexNorm, gWorldViewProj );
+	output.NormalWorld = mul( input.VertexNorm, gWorld );
 	output.NormalWorld = normalize( output.NormalWorld );
 
 	// Pass the texture coordinates to the pixel shader

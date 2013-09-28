@@ -7,7 +7,7 @@
 #include <InfoCommunicator\AddObjectMessage.h>
 #include <InfoCommunicator\UpdateObjectMessage.h>
 #include <InfoCommunicator\ObjectManagerOutput.h>
-#include <InfoCommunicator\GetInfoManager.h>
+#include <InfoCommunicator\InfoCommunicator.h>
 #include <boost/numeric/ublas/io.hpp>
 
 LuaObject::LuaObject()
@@ -34,7 +34,7 @@ LuaObject::LuaObject()
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 
 	msg->WaitTillProcccesed();
 
@@ -44,31 +44,31 @@ LuaObject::LuaObject()
 void LuaObject::SetGraphic(LuaBasicDrawableObject graphic)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::GRAPHICDRAWABLEID, graphic.ID));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 void LuaObject::RemoveGraphic()
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::GRAPHICDRAWABLEID, ""));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 
 void LuaObject::SetTexture(LuaBasicTexture texture)
 {
 	std::string textureID = Keys::TEXTUREFILE + texture.ID;
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, textureID, texture.ID));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 void LuaObject::RemoveTexture(LuaBasicTexture texture)
 {
 	std::string textureID = Keys::TEXTUREFILE + texture.ID;
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, textureID, ""));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 
 void LuaObject::SetLocation(LuaUblas::Vector4 vec)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::LOCATION, CHL::ToString(vec.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetLocation()
 {
@@ -79,7 +79,7 @@ LuaUblas::Vector4 LuaObject::GetLocation()
 void LuaObject::SetScale(LuaUblas::Vector4 vec)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::SCALE, CHL::ToString(vec.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetScale()
 {
@@ -90,7 +90,7 @@ LuaUblas::Vector4 LuaObject::GetScale()
 void LuaObject::SetRotation(LuaUblas::Vector4 vec)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ROTATION, CHL::ToString(vec.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetRotation()
 {
@@ -101,7 +101,7 @@ LuaUblas::Vector4 LuaObject::GetRotation()
 void LuaObject::SetColour(LuaUblas::Vector4 vec)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::COLOUR, CHL::ToString(vec.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetColour()
 {

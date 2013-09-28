@@ -4,9 +4,6 @@
     <ClInclude Include="ClearScreenMessage.h">
       <Filter>ClearScreenMessage</Filter>
     </ClInclude>
-    <ClInclude Include="GetGraphicManager.h">
-      <Filter>GetGraphicManager</Filter>
-    </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="AddBasicTexture.h">
       <Filter>AddBasicTexture</Filter>
@@ -14,13 +11,13 @@
     <ClInclude Include="BasicDrawableConfiguration.h">
       <Filter>BasicDrawableConfiguration</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicCommunicator.h">
+      <Filter>GraphicCommunicator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ClearScreenMessage.cpp">
       <Filter>ClearScreenMessage</Filter>
-    </ClCompile>
-    <ClCompile Include="GetGraphicManager.cpp">
-      <Filter>GetGraphicManager</Filter>
     </ClCompile>
     <ClCompile Include="AddBasicTexture.cpp">
       <Filter>AddBasicTexture</Filter>
@@ -28,19 +25,22 @@
     <ClCompile Include="BasicDrawableConfiguration.cpp">
       <Filter>BasicDrawableConfiguration</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicCommunicator.cpp">
+      <Filter>GraphicCommunicator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ClearScreenMessage">
       <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GetGraphicManager">
-      <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
     </Filter>
     <Filter Include="AddBasicTexture">
       <UniqueIdentifier>{17e44715-c07d-4d19-8385-0f7100a45282}</UniqueIdentifier>
     </Filter>
     <Filter Include="BasicDrawableConfiguration">
       <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicCommunicator">
+      <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

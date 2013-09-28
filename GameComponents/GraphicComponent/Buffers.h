@@ -16,8 +16,6 @@ public:
 	struct MaterialInfo
 	{
 		XMFLOAT4 diffuse;
-		XMFLOAT4 ambient;
-		XMFLOAT4 spec;
 	};
 
 	struct CLightDesc

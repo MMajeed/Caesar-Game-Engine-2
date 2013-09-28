@@ -90,13 +90,13 @@
     <ClInclude Include="AddBasicTexture.h" />
     <ClInclude Include="ClearScreenMessage.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="GetGraphicManager.h" />
+    <ClInclude Include="GraphicCommunicator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDrawableConfiguration.cpp" />
     <ClCompile Include="AddBasicTexture.cpp" />
     <ClCompile Include="ClearScreenMessage.cpp" />
-    <ClCompile Include="GetGraphicManager.cpp" />
+    <ClCompile Include="GraphicCommunicator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

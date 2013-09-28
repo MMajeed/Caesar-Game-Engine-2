@@ -82,8 +82,6 @@ void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::st
 	cbCEF.world = XMLoadFloat4x4(&worldMatrix);
 	cbCEF.worldViewProj = XMLoadFloat4x4(&finalMatrix);
 	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(diffuse);
-	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(ambient);
-	cbCEF.colour.spec = XNAToUblas::ConvertVec4(spec);
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 

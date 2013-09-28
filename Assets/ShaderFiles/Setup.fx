@@ -1,4 +1,17 @@
-#include "HLSL_4_BasicLightFunctions.fx"
+struct MaterialInfo
+{
+    float4 diffuse;
+	float shininess;
+};
+
+struct Light
+{
+	float4 Location;
+	float4 Direction;
+	float4 diffuse;	
+
+	bool InUse;
+};
 
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
@@ -15,6 +28,11 @@ cbuffer cbInfo : register( b1 )
 	matrix gView;
 	matrix gProj;
 	float4 eye;
+};
+
+cbuffer cbLight : register( b2 )
+{
+	Light lightArray[10];
 };
 
 Texture2D texture00 : register( t0 );

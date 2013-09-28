@@ -5,10 +5,10 @@
 
 #include "Window.h"
 
-#include <InputCommunicator\GetInputManager.h>
-#include <GraphicCommunicator\GetGraphicManager.h>
-#include <ScriptCommunicator\GetScriptManager.h>
-#include <InfoCommunicator\GetInfoManager.h>
+#include <InputCommunicator\InputCommunicator.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
+#include <ScriptCommunicator\ScriptCommunicator.h>
+#include <InfoCommunicator\InfoCommunicator.h>
 #include <InputCommunicator\UpdateKey.h>
 #include <InfoCommunicator\AddObjectMessage.h>
 #include <Keys.h>
@@ -61,10 +61,10 @@ void Window::Init()
 
     ShowWindow( this->window.hWnd, 10 );
 
-	this->vInterfaces["Graphic"] = GetGraphicManager::GetComponent();
-	this->vInterfaces["Lua"] = GetScriptManager::GetComponent();
-	this->vInterfaces["Info Manager"] = GetInfoManager::GetComponent();
-	this->vInterfaces["Input Manager"] = GetInputManager::GetComponent();
+	this->vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
+	this->vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
+	this->vInterfaces["Info Manager"] = InfoCommunicator::GetComponent();
+	this->vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
 
 	CHL::MapQ<std::string, std::string> camera;
 
@@ -75,8 +75,8 @@ void Window::Init()
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
 
-	GetInfoManager::GetComponent()->SubmitMessage(msg);	
-	GetInfoManager::GetComponent()->ProccessMessages();
+	InfoCommunicator::SubmitMessage(msg);	
+	InfoCommunicator::GetComponent()->ProccessMessages();
 
 	msg->WaitTillProcccesed();
 
@@ -132,13 +132,13 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	case WM_KEYDOWN:
 	{
 		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, true));
-		GetInputManager::GetComponent()->SubmitMessage(keyMessage);
+		InputCommunicator::SubmitMessage(keyMessage);
 		break;
 	}
 	case WM_KEYUP:
 	{
 		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, false));
-		GetInputManager::GetComponent()->SubmitMessage(keyMessage);
+		InputCommunicator::SubmitMessage(keyMessage);
 		break;
 	}
 	case WM_TIMER:

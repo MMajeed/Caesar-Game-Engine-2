@@ -8,7 +8,7 @@
 #include <InfoCommunicator\AddObjectMessage.h>
 #include <InfoCommunicator\UpdateObjectMessage.h>
 #include <InfoCommunicator\ObjectManagerOutput.h>
-#include <InfoCommunicator\GetInfoManager.h>
+#include <InfoCommunicator\InfoCommunicator.h>
 #include <Keys.h>
 
 LuaCamera::LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 targetMagintude, LuaUblas::Vector4 up, double roll, double pitch, double yaw)
@@ -25,7 +25,7 @@ LuaCamera::LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 targetMagintude, L
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
 
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 
 	msg->WaitTillProcccesed();
 
@@ -51,7 +51,7 @@ void LuaCamera::MoveFroward(double distance)
 void LuaCamera::SetEye(LuaUblas::Vector4 eye)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::EYE, CHL::ToString(eye.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaCamera::GetEye()
 {
@@ -62,7 +62,7 @@ LuaUblas::Vector4 LuaCamera::GetEye()
 void LuaCamera::SetTargetMagintude(LuaUblas::Vector4 targetMagintude)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::TARGETMAGNITUDE, CHL::ToString(targetMagintude.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaCamera::GetTargetMagintude()
 {
@@ -73,7 +73,7 @@ LuaUblas::Vector4 LuaCamera::GetTargetMagintude()
 void LuaCamera::SetUp(LuaUblas::Vector4 up)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::UP, CHL::ToString(up.vector)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaCamera::GetUp()
 {
@@ -84,7 +84,7 @@ LuaUblas::Vector4 LuaCamera::GetUp()
 void LuaCamera::SetRoll(double roll)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::RADIANROLL, CHL::ToString(roll)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 double LuaCamera::GetRoll()
 {
@@ -95,7 +95,7 @@ double LuaCamera::GetRoll()
 void LuaCamera::SetPitch(double pitch)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::RADIANPITCH, CHL::ToString(pitch)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 double LuaCamera::GetPitch()
 {
@@ -106,7 +106,7 @@ double LuaCamera::GetPitch()
 void LuaCamera::SetYaw(double yaw)
 {
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::RADIANYAW, CHL::ToString(yaw)));
-	GetInfoManager::GetComponent()->SubmitMessage(msg);
+	InfoCommunicator::SubmitMessage(msg);
 }
 double LuaCamera::GetYaw()
 {

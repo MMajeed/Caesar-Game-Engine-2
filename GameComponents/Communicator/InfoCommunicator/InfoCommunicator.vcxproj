@@ -88,13 +88,13 @@
   <ItemGroup>
     <ClInclude Include="AddObjectMessage.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="GetInfoManager.h" />
+    <ClInclude Include="InfoCommunicator.h" />
     <ClInclude Include="ObjectManagerOutput.h" />
     <ClInclude Include="UpdateObjectMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddObjectMessage.cpp" />
-    <ClCompile Include="GetInfoManager.cpp" />
+    <ClCompile Include="InfoCommunicator.cpp" />
     <ClCompile Include="ObjectManagerOutput.cpp" />
     <ClCompile Include="UpdateObjectMessage.cpp" />
   </ItemGroup>

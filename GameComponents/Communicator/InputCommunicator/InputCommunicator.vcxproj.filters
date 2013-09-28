@@ -7,10 +7,10 @@
     <ClInclude Include="GetKeyStatus.h">
       <Filter>GetKeyStatus</Filter>
     </ClInclude>
-    <ClInclude Include="GetInputManager.h">
-      <Filter>GetInputManager</Filter>
-    </ClInclude>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="InputCommunicator.h">
+      <Filter>InputCommunicator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UpdateKey.cpp">
@@ -19,8 +19,8 @@
     <ClCompile Include="GetKeyStatus.cpp">
       <Filter>GetKeyStatus</Filter>
     </ClCompile>
-    <ClCompile Include="GetInputManager.cpp">
-      <Filter>GetInputManager</Filter>
+    <ClCompile Include="InputCommunicator.cpp">
+      <Filter>InputCommunicator</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -30,7 +30,7 @@
     <Filter Include="UpdateKey">
       <UniqueIdentifier>{f76766e7-9c25-42bf-a4a3-553f08f42867}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GetInputManager">
+    <Filter Include="InputCommunicator">
       <UniqueIdentifier>{f229f551-5f4b-4cd8-9084-0b75d21a9e89}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

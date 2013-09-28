@@ -17,4 +17,4 @@ public:
 	bool currentStatus;
 };
 
-#endif //__InputManager__
+#endif //__InputCommunicator__

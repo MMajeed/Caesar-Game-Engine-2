@@ -1,13 +1,13 @@
 #include "LuaBasicTexture.h"
 
 #include <GraphicCommunicator\AddBasicTexture.h>
-#include <GraphicCommunicator\GetGraphicManager.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
 
 LuaBasicTexture::LuaBasicTexture(int slot, std::string textureFile)
 {
 	std::shared_ptr<AddBasicTexture> msg(new AddBasicTexture(slot, textureFile));
 
-	GetGraphicManager::GetComponent()->SubmitMessage(msg);
+	GraphicCommunicator::SubmitMessage(msg);
 
 	msg->WaitTillProcccesed();
 
