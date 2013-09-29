@@ -30,7 +30,6 @@ public:
 	{
 		double 	  	AbsoluteTime;
 		long long	FrameCount;
-		double 	  	SinceLastWork;
 	} timer;
 
 	boost::mutex mutex;

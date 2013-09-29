@@ -20,7 +20,7 @@ sphereDrawable = BasicDrawableObject({[Keys["ModelFile"]]        = "Assets/PlyFi
                                       [Keys["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_2_Light.fx",});
 
 
-for i = 1, 5000, 1 do
+for i = 1, 10, 1 do
     sphereObject = Object();
     if(i % 2 == 0) then
         sphereObject.Location = Vector4((i * 2), 5.0, 00.0)

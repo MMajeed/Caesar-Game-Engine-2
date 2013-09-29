@@ -21,7 +21,7 @@ public:
 
 	void Insert(Info obj);
 	void UpdateObject(std::string ID, std::string infoID, std::shared_ptr<Object> info);
-	const CHL::MapQ<std::string, Info> AllObjects();
+	const CHL::MapQ<std::string, Info>& AllObjects();
 	Info GetObjectInfo(std::string ID);
 protected:	
 	CHL::MapQ<std::string, Info> objects;

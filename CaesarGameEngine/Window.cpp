@@ -103,6 +103,16 @@ void Window::Run()
 	}
 
 
+	
+	LARGE_INTEGER timerBase = { 0 };
+	LARGE_INTEGER timerNow = { 0 };
+	LARGE_INTEGER timerFrequency = { 0 };
+	if( !QueryPerformanceCounter( &timerBase ) )
+			throw std::exception( "QueryPerformanceCounter() failed to read the high-performance timer." );
+	if( !QueryPerformanceFrequency( &timerFrequency ) ) 
+			throw std::exception( "QueryPerformanceFrequency() failed to create a high-performance timer." );
+		double tickInterval = static_cast<double>( timerFrequency.QuadPart );
+
 	// Main message loop
 	MSG msg = {0};
 	while( WM_QUIT != msg.message )
@@ -111,7 +121,15 @@ void Window::Run()
 		{
 			TranslateMessage( &msg );
 			DispatchMessage( &msg );
-		}
+		}		
+		
+		
+		if( !QueryPerformanceCounter( &timerNow ) )
+			throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
+		long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
+		this->window.AbsoluteTime = elapsedCount / tickInterval;
+
+		boost::this_thread::sleep(boost::posix_time::milliseconds(15));
 	}
 
 	KillTimer( this->window.hWnd, FRAMERATE_UPDATE_TIMER );
@@ -154,7 +172,7 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 					interFaceIter != Window::GetInstance().vInterfaces.end();
 					++interFaceIter)
 				{
-					double frameTimer = interFaceIter->second->timer.FrameCount / interFaceIter->second->timer.AbsoluteTime;
+					double frameTimer = interFaceIter->second->timer.FrameCount / Window::GetInstance().window.AbsoluteTime;
 						
 					fr << interFaceIter->first.c_str() << " : ";
 					fr << std::setprecision(2) << std::fixed << frameTimer << ". ";

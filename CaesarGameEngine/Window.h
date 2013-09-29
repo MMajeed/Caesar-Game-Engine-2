@@ -25,6 +25,7 @@ public:
 		HWND		hWnd;
 		UINT		width;
 		UINT		height;
+		double		AbsoluteTime;
 	} window;
 
 	static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );

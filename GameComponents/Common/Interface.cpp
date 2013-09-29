@@ -10,7 +10,6 @@ Interface::Interface()
 	this->running = true;
 	this->timer.AbsoluteTime = 0.0;
 	this->timer.FrameCount = 0;
-	this->timer.SinceLastWork = 0.0;
 }
 
 void Interface::Run()
@@ -22,6 +21,7 @@ void Interface::Run()
 		LARGE_INTEGER timerBase = { 0 };
 		LARGE_INTEGER timerLast = { 0 };
 		LARGE_INTEGER timerNow = { 0 };
+		LARGE_INTEGER timerWorked = { 0 };
 		if( !QueryPerformanceFrequency( &timerFrequency ) ) 
 			throw std::exception( "QueryPerformanceFrequency() failed to create a high-performance timer." );
 		double tickInterval = static_cast<double>( timerFrequency.QuadPart );
@@ -41,9 +41,8 @@ void Interface::Run()
 			long long elapsedFrameCount = timerNow.QuadPart - timerLast.QuadPart;
 			this->timer.AbsoluteTime = elapsedCount / tickInterval;
 			double frameTime = elapsedFrameCount / tickInterval;
-			this->timer.SinceLastWork += frameTime;
 
-			double deltaTime = this->timer.SinceLastWork;
+			double deltaTime = frameTime;
 
 			/*const double MIN_TIMESTEP = 0.001f;
 			if ( deltaTime > MIN_TIMESTEP )
@@ -53,16 +52,23 @@ void Interface::Run()
 
 			this->ProccessMessages();
 			this->Update(frameTime, deltaTime);
-
-			if(this->timer.SinceLastWork >= 0.012)
-			{
-				this->Work();
-				this->timer.SinceLastWork = 0.0;
-			}
+			this->Work();
 
 			// update fps
 			timerLast = timerNow;
 			++(timer.FrameCount);
+
+			// update timer
+			if( !QueryPerformanceCounter( &timerWorked ) )
+				throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
+			elapsedFrameCount = timerWorked.QuadPart - timerNow.QuadPart ;
+			double timeWorked = elapsedFrameCount / tickInterval;;
+			timeWorked *= 1000;
+
+			if(timeWorked < 15)
+			{
+				boost::this_thread::sleep(boost::posix_time::milliseconds((int)(15 - timeWorked)));
+			}
 		}
 	}
 	catch(std::exception ex)

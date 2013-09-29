@@ -14,9 +14,8 @@ public:
 template<typename T>
 class GenericObject : public Object
 {
-protected:
-	T item;
 public:
+	T item;
 	GenericObject(T copy) : item(copy){}
 	operator T() const{ return this->item; } 
 	operator T&(){ return this->item; }
@@ -28,7 +27,7 @@ public:
 	}
 
 	static std::shared_ptr<Object> CreateNew(T value){ return std::shared_ptr<GenericObject<T>>(new GenericObject<T>(value)); }
-	static T GetValue(std::shared_ptr<Object> value){ return std::dynamic_pointer_cast<GenericObject<T>>(value)->GetValue(); }
+	static T& GetValue(std::shared_ptr<Object> value){ return std::dynamic_pointer_cast<GenericObject<T>>(value)->item; }
 };
 
 #endif //__Object__

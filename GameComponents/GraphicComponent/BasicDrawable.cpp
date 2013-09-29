@@ -63,9 +63,9 @@ void BasicDrawable::Draw(const CHL::MapQ<std::string, std::shared_ptr<Object>>& 
 
 void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
 {
-	boost::numeric::ublas::vector<double> location;	boost::numeric::ublas::vector<double> diffuse;
-	boost::numeric::ublas::vector<double> rotation;	boost::numeric::ublas::vector<double> ambient;
-	boost::numeric::ublas::vector<double> scale;	boost::numeric::ublas::vector<double> spec;
+	boost::numeric::ublas::vector<double> location(4);	boost::numeric::ublas::vector<double> diffuse(4);
+	boost::numeric::ublas::vector<double> rotation(4);	boost::numeric::ublas::vector<double> ambient(4);
+	boost::numeric::ublas::vector<double> scale(4);		boost::numeric::ublas::vector<double> spec(4);
 
 	this->GetInfo(object, location, rotation, scale, diffuse, ambient, spec);	
 
@@ -245,9 +245,11 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 							boost::numeric::ublas::vector<double>& ambient,
 							boost::numeric::ublas::vector<double>& spec)
 {	
-	if(object.find(Keys::LOCATION) != object.end())
+	CHL::MapQ<std::string, std::shared_ptr<Object>>::const_iterator iterKey;
+	iterKey = object.find(Keys::LOCATION);
+	if(iterKey != object.end())
 	{
-		location = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(object.find(Keys::LOCATION)->second);
+		location = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -256,9 +258,10 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 	}
 
 	
-	if(object.find(Keys::ROTATION) != object.end())
+	iterKey = object.find(Keys::ROTATION);
+	if(iterKey != object.end())
 	{
-		rotation = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(object.find(Keys::ROTATION)->second);
+		rotation = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -266,9 +269,10 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 		rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f; 
 	}
 
-	if(object.find(Keys::SCALE) != object.end())
+	iterKey = object.find(Keys::SCALE);
+	if(iterKey != object.end())
 	{
-		scale = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(object.find(Keys::SCALE)->second);
+		scale = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -276,9 +280,10 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 		scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f; 
 	}
 
-	if(object.find(Keys::DIFFUSE) != object.end())
+	iterKey = object.find(Keys::DIFFUSE);
+	if(iterKey != object.end())
 	{
-		diffuse = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(object.find(Keys::DIFFUSE)->second);
+		diffuse = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -286,9 +291,10 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 		diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f; 
 	}
 
-	if(object.find(Keys::AMBIENT) != object.end())
+	iterKey = object.find(Keys::AMBIENT);
+	if(iterKey != object.end())
 	{
-		ambient = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(object.find(Keys::AMBIENT)->second);
+		ambient = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -296,9 +302,10 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 		ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f; 
 	}
 
-	if(object.find(Keys::SPECULAR) != object.end())
+	iterKey = object.find(Keys::SPECULAR);
+	if(iterKey != object.end())
 	{
-		spec = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(object.find(Keys::SPECULAR)->second);
+		spec = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
 	}
 	else
 	{

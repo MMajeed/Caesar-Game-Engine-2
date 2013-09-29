@@ -1,31 +1,79 @@
 #include "ObjectManagerOutput.h"
+#include <boost/thread/thread.hpp>
+#include <boost/bind/bind.hpp>
 
 #include <InfoManager.h>
+
+void FuncInsert(CHL::MapQ<std::string, Info>::const_iterator startIter,
+					   CHL::MapQ<std::string, Info>::const_iterator endIter,
+					   std::size_t start,
+					   CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>* convertedVec)
+{
+	int i = start;
+	for(auto objIter = startIter;
+		objIter != endIter;
+		++objIter)
+	{
+		CHL::MapQ<std::string, std::shared_ptr<Object>> newInfo;
+		newInfo.reserve( objIter->second.info.size());
+		for(auto infoIter = objIter->second.info.cbegin();
+			infoIter != objIter->second.info.cend();
+			++infoIter)
+		{
+			newInfo[infoIter->first] = infoIter->second->Clone();
+		}
+		(*convertedVec)[i] = newInfo;
+		++i;
+	}
+}
 
 CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutput::GetAllObjects()
 {
 	boost::mutex::scoped_lock lock(InfoManager::GetInstance().mutex);
 
-	auto allObjects = InfoManager::GetInstance().AllObjects();
+	const CHL::MapQ<std::string, Info>&  allObjects = InfoManager::GetInstance().AllObjects();
 
 	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> convertedVec;
 
-	convertedVec.reserve(allObjects.size());
+	convertedVec.resize(allObjects.size());
+		
+	std::vector<std::shared_ptr<boost::thread>> vThreads;
 
-	for(auto objIter = allObjects.begin();
-		objIter != allObjects.end();
-		++objIter)
+	static const int threadsPer = 100;
+
+	int numberOfThreads = (convertedVec.size() / threadsPer) + 1;
+	std::vector<std::shared_ptr<boost::thread>> threads;
+	threads.reserve(numberOfThreads);
+
+	for(int i = 0; i < numberOfThreads; ++i)
 	{
-		CHL::MapQ<std::string, std::shared_ptr<Object>> newInfo;
-		newInfo.reserve( objIter->second.info.size());
-		for(auto infoIter = objIter->second.info.begin();
-			infoIter != objIter->second.info.end();
-			++infoIter)
-		{
-			newInfo[infoIter->first] = infoIter->second->Clone();
-		}
-		convertedVec.push_back(newInfo);
+		std::size_t start = 0;
+		std::size_t end = 0;
+		CHL::MapQ<std::string, Info>::const_iterator startIter = allObjects.cbegin();
+		CHL::MapQ<std::string, Info>::const_iterator endIter = allObjects.cbegin();
+
+		start = i * threadsPer;		
+		std::advance(startIter, start);
+				
+		end = (i + 1) * threadsPer;
+		if(end > convertedVec.size())
+			end = convertedVec.size();
+		std::advance(endIter, end);
+
+		std::shared_ptr<boost::thread> thread = 
+			std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&FuncInsert, startIter, endIter, start, &convertedVec)));
+		
+		threads.push_back(thread);
 	}
+
+
+	for(auto threadIter = threads.begin();
+		threadIter != threads.end();
+		++threadIter)
+	{
+		(*threadIter)->join();
+	}
+	
 
 	return convertedVec;
 }

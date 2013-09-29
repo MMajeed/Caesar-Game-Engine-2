@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lua", "Lua", "{20C64F0E-7A3
 	ProjectSection(SolutionItems) = preProject
 		Assets\Lua\camera.lua = Assets\Lua\camera.lua
 		Assets\Lua\main.lua = Assets\Lua\main.lua
+		Assets\Lua\Skybox.lua = Assets\Lua\Skybox.lua
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shader Files", "Shader Files", "{E2A237E8-6CB8-4C0F-9BB8-6EA948B09172}"
@@ -239,8 +240,5 @@ Global
 		{9799E6FB-BF57-41DD-B87A-772B743F21FD} = {767D1DFA-AF97-4D43-BD4D-FFBE1387A0B0}
 		{DD0A37AF-4AD5-492F-8DE3-BEB3BD74EFFC} = {5B6A4ED0-5B13-430A-8894-4513D903E987}
 		{17A58400-1B6B-4A1B-BA78-E91F0719BDFE} = {5B6A4ED0-5B13-430A-8894-4513D903E987}
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
