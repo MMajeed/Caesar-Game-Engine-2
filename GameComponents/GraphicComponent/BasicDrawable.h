@@ -7,7 +7,6 @@
 #include "Vertex.h"
 #include "D3DShaderInfo.h"
 #include <Model.h>
-
 #include <string>
 #include <D3D11.h>
 
@@ -18,7 +17,7 @@ public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(float delta);
-	virtual void Draw(const CHL::MapQ<std::string, std::string>& object);
+	virtual void Draw(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
 	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
@@ -49,16 +48,16 @@ public:
 	virtual void InitRastersizerState(ID3D11Device* device, D3D11_CULL_MODE cullMode = D3D11_CULL_BACK, D3D11_FILL_MODE fillMode = D3D11_FILL_SOLID, bool bAntialiasedLine = true, bool bMultisampleEnable = true);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
-	virtual void SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::string>& object);
-	virtual void SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::string>& object);
-	virtual void SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::string>& object);
-	virtual void SetupDrawPixelShader(const CHL::MapQ<std::string, std::string>& object);
-	virtual void SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::string>& object);
-	virtual void DrawObject(const CHL::MapQ<std::string, std::string>& object);
-	virtual void CleanupAfterDraw(const CHL::MapQ<std::string, std::string>& object);
+	virtual void SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void SetupDrawPixelShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void DrawObject(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void CleanupAfterDraw(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
 
 protected:
-	virtual void GetInfo(const CHL::MapQ<std::string, std::string>& objec,
+	virtual void GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>>& objec,
 						 boost::numeric::ublas::vector<double>& location,
 						 boost::numeric::ublas::vector<double>& rotation,
 						 boost::numeric::ublas::vector<double>& scale,

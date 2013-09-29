@@ -1,8 +1,8 @@
 #include "UpdateObjectMessage.h"
 
-#include <ObjectManager.h>
+#include <InfoManager.h>
 
-UpdateObjectMessage::UpdateObjectMessage(const std::string& inputObjectID, const std::string& inputInfoID, const std::string& inputInfo )
+UpdateObjectMessage::UpdateObjectMessage(const std::string& inputObjectID, const std::string& inputInfoID,  std::shared_ptr<Object> inputInfo )
 {
 	this->objectID = inputObjectID;
 	this->infoID = inputInfoID;
@@ -10,9 +10,9 @@ UpdateObjectMessage::UpdateObjectMessage(const std::string& inputObjectID, const
 }
 Message::Status UpdateObjectMessage::Work()
 {
-	boost::mutex::scoped_lock lock(ObjectManager::GetInstance().mutex);
+	boost::mutex::scoped_lock lock(InfoManager::GetInstance().mutex);
 
-	ObjectManager::GetInstance().UpdateObject(this->objectID, this->infoID, this->info);
+	InfoManager::GetInstance().UpdateObject(this->objectID, this->infoID, this->info);
 
 	return Message::Status::Complete;
 }

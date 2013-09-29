@@ -11,6 +11,7 @@ namespace Keys
 		const static std::string Camera			= "_Camera";
 		const static std::string Prespective	= "_Prespective";
 		const static std::string WindowInfo		= "_WindowInfo";
+		const static std::string Light			= "_Light";
 	};
 
 	const static std::string ID					= "_ID";
@@ -18,7 +19,9 @@ namespace Keys
 	const static std::string LOCATION			= "Location";
 	const static std::string ROTATION			= "Rotation";
 	const static std::string SCALE				= "Scale";
-	const static std::string COLOUR				= "Colour";
+	const static std::string DIFFUSE			= "Diffuse";
+	const static std::string AMBIENT			= "Ambient";
+	const static std::string SPECULAR			= "Specular";
 	const static std::string GRAPHICDRAWABLEID	= "GraphicDrawableID";
 	const static std::string EYE				= "Eye";
 	const static std::string TARGETMAGNITUDE	= "TargetMagnitude";

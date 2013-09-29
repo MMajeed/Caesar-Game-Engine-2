@@ -16,6 +16,8 @@ public:
 	struct MaterialInfo
 	{
 		XMFLOAT4 diffuse;
+		XMFLOAT4 ambient;
+		XMFLOAT4 specular;
 	};
 
 	struct CLightDesc
@@ -23,8 +25,10 @@ public:
 		XMFLOAT4 pos;		
 		XMFLOAT4 dir;		
 		MaterialInfo material;
-		XMFLOAT4 attenuation;				
-		XMFLOAT4 lightPowerRangeType;	// // x = power, y = range, z = light type, w = not used
+		XMFLOAT4 attenuation;	
+		float spot;
+		float range;
+		int type;
 	};
 
 	struct cbObject

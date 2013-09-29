@@ -13,7 +13,9 @@ void LuaKeysID::Register(lua_State *lua)
 	luaKeyTable[Keys::LOCATION]             = Keys::LOCATION;
 	luaKeyTable[Keys::ROTATION]             = Keys::ROTATION;
 	luaKeyTable[Keys::SCALE]                = Keys::SCALE;
-	luaKeyTable[Keys::COLOUR]               = Keys::COLOUR;
+	luaKeyTable[Keys::DIFFUSE]              = Keys::DIFFUSE;
+	luaKeyTable[Keys::AMBIENT]              = Keys::AMBIENT;
+	luaKeyTable[Keys::SPECULAR]             = Keys::SPECULAR;
 	luaKeyTable[Keys::GRAPHICDRAWABLEID]    = Keys::GRAPHICDRAWABLEID;
 	luaKeyTable[Keys::EYE]                  = Keys::EYE;
 	luaKeyTable[Keys::TARGETMAGNITUDE]      = Keys::TARGETMAGNITUDE;

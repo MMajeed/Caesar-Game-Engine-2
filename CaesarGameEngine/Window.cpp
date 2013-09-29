@@ -66,12 +66,12 @@ void Window::Init()
 	this->vInterfaces["Info Manager"] = InfoCommunicator::GetComponent();
 	this->vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
 
-	CHL::MapQ<std::string, std::string> camera;
+	CHL::MapQ<std::string, std::shared_ptr<Object>> camera;
 
-	camera[Keys::Class] = Keys::ClassType::WindowInfo;
-	camera[Keys::HEIGHT] = CHL::ToString(this->window.height);
-	camera[Keys::WIDTH] = CHL::ToString(this->window.width);
-	camera[Keys::HWND] = CHL::ToString(this->window.hWnd);
+	camera[Keys::Class] =  GenericObject<std::string>::CreateNew(Keys::ClassType::WindowInfo);
+	camera[Keys::HEIGHT] =  GenericObject<int>::CreateNew(this->window.height);
+	camera[Keys::WIDTH] =  GenericObject<int>::CreateNew(this->window.width);
+	camera[Keys::HWND] =  GenericObject<HWND>::CreateNew(this->window.hWnd);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
 

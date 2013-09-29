@@ -14,7 +14,7 @@ struct LightDesc
 	float4 Att;
 	float Spot;
 	float Range;
-	int type;
+	int Type;
 };
 
 //---------------------------------------------------------------------------------------

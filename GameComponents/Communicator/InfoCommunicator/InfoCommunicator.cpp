@@ -1,6 +1,6 @@
 #include "InfoCommunicator.h"
 
-#include <ObjectManager.h>
+#include <InfoManager.h>
 
 void InfoCommunicator::SubmitMessage(std::shared_ptr<Message> msg)
 {
@@ -9,5 +9,5 @@ void InfoCommunicator::SubmitMessage(std::shared_ptr<Message> msg)
 
 Interface* InfoCommunicator::GetComponent()
 {
-	return &ObjectManager::GetInstance();
+	return &InfoManager::GetInstance();
 }

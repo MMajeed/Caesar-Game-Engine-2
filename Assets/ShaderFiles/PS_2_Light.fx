@@ -2,31 +2,31 @@
 
 float4 PS( PS_INPUT input ) : SV_Target
 {
-	float4 finalLightColour = float4( 0.0f, 0.0f, 0.0f, 1.0f );
+	float4 finalLightColour = objectMaterial.Diffuse;
 
-	for ( int index = 0; index < 10; index++ )
+	for ( int index = 0; index < numberOfLights; index++ )
 	{
-		if ( light[index].lightPowerRangeType.z > 2.9f && light[index].lightPowerRangeType.z < 3.1f ) // Don't do light
+		if( lightArray[index].Type == 0 )
 		{			
 			continue;
 		}
-		else if ( light[index].lightPowerRangeType.z == 0.0f ) // Parallel light
+		else if( lightArray[index].Type == 1 ) // Parallel light
 		{
-			finalLightColour += ComputeDirectionalLight( objectMaterial, light[index], 
-										 input.PosWorld, 
-										 input.NormalWorld, eye );	
+			float3 toEyeW = normalize(eye - input.PosWorld);
+			finalLightColour += ComputeDirectionalLight( objectMaterial, lightArray[index],
+														 input.NormalWorld, eye );	
 		}
-		else if ( light[index].lightPowerRangeType.z == 1.0f ) // Point
+		else if( lightArray[index].Type == 2 ) // Point
 		{
-			finalLightColour += ComputePointLight(objectMaterial, light[index], 
-									 input.PosWorld, 
-									 input.NormalWorld, eye );
+			float3 toEyeW = normalize(eye - input.PosWorld);
+			finalLightColour += ComputePointLight( objectMaterial, lightArray[index],
+													input.NormalWorld, input.NormalWorld, eye );	
 		}
-		else if ( light[index].lightPowerRangeType.z > 1.0f ) // Point
+		else if( lightArray[index].Type == 3 ) // Spot
 		{
-			finalLightColour += ComputeSpotLight( objectMaterial, light[index], 
-									 input.PosWorld, 
-									 input.NormalWorld, eye );
+			float3 toEyeW = normalize(eye - input.PosWorld);
+			finalLightColour += ComputeSpotLight( objectMaterial, lightArray[index],
+												  input.NormalWorld, input.NormalWorld, eye );	
 		}
 	}
 
@@ -35,4 +35,5 @@ float4 PS( PS_INPUT input ) : SV_Target
 
 	finalLightColour.w = objectMaterial.Diffuse.w;
 
+	return finalLightColour;
 }

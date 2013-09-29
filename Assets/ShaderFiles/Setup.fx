@@ -17,9 +17,11 @@ cbuffer cbInfo : register( b1 )
 	float4 eye;
 };
 
+static const int numberOfLights = 10;
+
 cbuffer cbLight : register( b2 )
 {
-	LightDesc lights[128];
+	LightDesc lightArray[numberOfLights];
 };
 
 Texture2D texture00 : register( t0 );

@@ -93,6 +93,7 @@
     <ClInclude Include="LuaKeyAction.h" />
     <ClInclude Include="LuaKeyActionSetup.h" />
     <ClInclude Include="LuaKeysID.h" />
+    <ClInclude Include="LuaLight.h" />
     <ClInclude Include="LuaLoopCall.h" />
     <ClInclude Include="LuaLoopCallSetup.h" />
     <ClInclude Include="LuaManager.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="LuaKeyAction.cpp" />
     <ClCompile Include="LuaKeyActionSetup.cpp" />
     <ClCompile Include="LuaKeysID.cpp" />
+    <ClCompile Include="LuaLight.cpp" />
     <ClCompile Include="LuaLoopCall.cpp" />
     <ClCompile Include="LuaLoopCallSetup.cpp" />
     <ClCompile Include="LuaManager.cpp" />

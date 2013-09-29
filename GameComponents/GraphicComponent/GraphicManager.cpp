@@ -37,11 +37,13 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
-	this->SetupCameraNPrespective();
-	this->SetupConstantBuffer();
-	this->ClearScreen();
-	this->DrawObjects();
-	this->Present();	
+	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> objects = ObjectManagerOutput::GetAllObjects();
+
+	this->SetupCameraNPrespective(objects);
+	this->SetupConstantBuffer(objects);
+	this->ClearScreen(objects);
+	this->DrawObjects(objects);
+	this->Present(objects);	
 }
 
 void GraphicManager::Shutdown()
@@ -49,34 +51,35 @@ void GraphicManager::Shutdown()
 
 }
 
-void GraphicManager::SetupCameraNPrespective()
+void GraphicManager::SetupCameraNPrespective(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
-
 	// Camera
 	boost::numeric::ublas::vector<double> vEye(4);
 	boost::numeric::ublas::vector<double> vTM(4);
 	boost::numeric::ublas::vector<double> vUp(4);
 	double pitch;	double yaw;	double roll;
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator cameraIter;
-	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator cameraIter;
+	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
-					return (classTypeIter->second == Keys::ClassType::Camera); 
+				{
+					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+					return (classID == Keys::ClassType::Camera); 
+				}
 				else
 					return false;
 			}); // Find Camera
 	if(cameraIter != objects.cend()) // if camera found
 	{
-		CHL::MapQ<std::string, std::string> camera = *cameraIter;
-		vEye = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::EYE]);
-		vTM = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::TARGETMAGNITUDE]);
-		vUp = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::UP]);
-		pitch = CHL::ToDouble(camera[Keys::RADIANPITCH]) ;
-		yaw = CHL::ToDouble(camera[Keys::RADIANYAW]); 
-		roll = CHL::ToDouble(camera[Keys::RADIANROLL]);
+		CHL::MapQ<std::string, std::shared_ptr<Object>> camera = *cameraIter;
+		vEye = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::EYE]);
+		vTM = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::TARGETMAGNITUDE]);
+		vUp = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::UP]);
+		pitch = GenericObject<double>::GetValue(camera[Keys::RADIANPITCH]);
+		yaw = GenericObject<double>::GetValue(camera[Keys::RADIANYAW]);
+		roll = GenericObject<double>::GetValue(camera[Keys::RADIANROLL]);
 	}
 	else
 	{
@@ -89,51 +92,57 @@ void GraphicManager::SetupCameraNPrespective()
 	this->CamerMatrix = MathOperations::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 
 	// Prespective
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator prespectiveIter;
+	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator prespectiveIter;
 
 	double FovAngleY; 
 	double height; double width;
 	double nearZ;
 	double farZ;
 
-	prespectiveIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+	prespectiveIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
-					return (classTypeIter->second == Keys::ClassType::Prespective); 
+				{
+					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+					return (classID == Keys::ClassType::Prespective); 
+				}
 				else
 					return false;
 			}); // Find prespective]
 
 	if(prespectiveIter != objects.cend()) // if prespective found
 	{
-		CHL::MapQ<std::string, std::string> prespective = *prespectiveIter;
-		FovAngleY = CHL::ToDouble(prespective[Keys::FOVANGLE]);
-		height = CHL::ToDouble(prespective[Keys::SCREENHEIGHT]);;
-		width = CHL::ToDouble(prespective[Keys::SCREENWIDTH]);;
-		nearZ = CHL::ToDouble(prespective[Keys::MINVIEWABLE]);;  
-		farZ = CHL::ToDouble(prespective[Keys::MAXVIEWABLE]);;		
+		CHL::MapQ<std::string, std::shared_ptr<Object>> prespective = *prespectiveIter;
+		FovAngleY = GenericObject<double>::GetValue(prespective[Keys::FOVANGLE]);
+		height = GenericObject<double>::GetValue(prespective[Keys::SCREENHEIGHT]);
+		width = GenericObject<double>::GetValue(prespective[Keys::SCREENWIDTH]);
+		nearZ = GenericObject<double>::GetValue(prespective[Keys::MINVIEWABLE]);
+		farZ = GenericObject<double>::GetValue(prespective[Keys::MAXVIEWABLE]);
 	}
 	else
 	{
-		CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator windowInfoIter;
-		windowInfoIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+		CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator windowInfoIter;
+		windowInfoIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
 				{ 
 					auto classTypeIter = objIter->find(Keys::Class);
 					if(classTypeIter != objIter->end())
-						return (classTypeIter->second == Keys::ClassType::WindowInfo); 
+					{
+						std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+						return (classID == Keys::ClassType::WindowInfo); 
+					}
 					else
 						return false;
-				}); // Find Camera
+				}); // Find WindoInfo
 
 		if(windowInfoIter == objects.cend())
 		{
 			throw std::exception("Failed to find windows info");
 		}
-		CHL::MapQ<std::string, std::string> windowInfo = *windowInfoIter;
+		CHL::MapQ<std::string, std::shared_ptr<Object>> windowInfo = *windowInfoIter;
 
-		width = CHL::ToInt(windowInfo[Keys::WIDTH]);
-		height = CHL::ToInt(windowInfo[Keys::HEIGHT]);
+		width = GenericObject<int>::GetValue(windowInfo[Keys::WIDTH]);
+		height = GenericObject<int>::GetValue(windowInfo[Keys::HEIGHT]);
 		FovAngleY = 0.785398163;
 		nearZ = 0.01;
 		farZ = 5000.0;
@@ -142,26 +151,27 @@ void GraphicManager::SetupCameraNPrespective()
 	this->PrespectiveMatrix = MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }
 
-void GraphicManager::SetupConstantBuffer()
+void GraphicManager::SetupConstantBuffer(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
-
 	boost::numeric::ublas::vector<double> vEye(4);
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator cameraIter;
-	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator cameraIter;
+	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
-					return (classTypeIter->second == Keys::ClassType::Camera); 
+				{
+					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+					return (classID == Keys::ClassType::Camera); 
+				}
 				else
 					return false;
 			}); // Find Camera
 
 	if(cameraIter != objects.cend()) // if camera found
 	{
-		CHL::MapQ<std::string, std::string> camera = *cameraIter;
-		vEye = CHL::sstringConverter<boost::numeric::ublas::vector<double>, std::string>(camera[Keys::EYE]);
+		CHL::MapQ<std::string, std::shared_ptr<Object>> camera = *cameraIter;
+		vEye = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::EYE]);
 	}
 	else
 	{
@@ -184,7 +194,7 @@ void GraphicManager::SetupConstantBuffer()
 	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->direct3d.pCBInfo) );
 }
 
-void GraphicManager::ClearScreen()
+void GraphicManager::ClearScreen(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
 	// Clear the back buffer 
 	float ClearColor[4] = { (float)this->ClearColour(0), (float)this->ClearColour(1), (float)this->ClearColour(2), 1.0f }; // red,green,blue,alpha
@@ -192,22 +202,19 @@ void GraphicManager::ClearScreen()
 	this->direct3d.pImmediateContext->ClearDepthStencilView( this->direct3d.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 
-void GraphicManager::DrawObjects()
+void GraphicManager::DrawObjects(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
-
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>> filteredObjects
-		= objects.Where([](const CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator iterObj)
-						{ return (iterObj->find(Keys::GRAPHICDRAWABLEID) != iterObj->end()); });
-
-
-	for(auto iterObj = filteredObjects.begin();
-		iterObj != filteredObjects.end();
+	for(auto iterObj = objects.cbegin();
+		iterObj != objects.cend();
 		++iterObj)
 	{
-		auto obj = *iterObj;
+		auto graphicIDIter = iterObj->find(Keys::GRAPHICDRAWABLEID);
+		if(graphicIDIter == iterObj->cend() )
+		{
+			continue;
+		}
 
-		std::string graphicObjectID = obj.find(Keys::GRAPHICDRAWABLEID)->second;
+		std::string graphicObjectID = GenericObject<std::string>::GetValue(graphicIDIter->second);
 
 		auto drawableIter = this->objectDrawables.find(graphicObjectID);
 		
@@ -216,33 +223,34 @@ void GraphicManager::DrawObjects()
 			continue;
 		}// If it didn't fine then continue
 
-		auto textures = obj.Where([](const CHL::MapQ<std::string, std::string>::const_iterator iterObj)
+		auto textures = iterObj->Where([](const CHL::MapQ<std::string, std::shared_ptr<Object>>::const_iterator iterObj)
 						{ 
 							return (iterObj->first.compare(0, Keys::TEXTUREFILE.size(), Keys::TEXTUREFILE) == 0);
 						});
 
-		for(auto iterTexture = textures.begin();
-			iterTexture != textures.end();
+		for(auto iterTexture = textures.cbegin();
+			iterTexture != textures.cend();
 			++iterTexture)
 		{
-			auto texture = this->textures.find(iterTexture->second);
+			std::string textureID = GenericObject<std::string>::GetValue(iterTexture->second);
+			auto texture = this->textures.find(textureID);
 		
-			if(texture != this->textures.end())
+			if(texture != this->textures.cend())
 			{
 				texture->second->SettupTexture();
 			}
 		}
 
-		auto drawable = *drawableIter;
-		drawable.second->Draw(*iterObj);
+		drawableIter->second->Draw(*iterObj);
 
-		for(auto iterTexture = textures.begin();
-			iterTexture != textures.end();
+		for(auto iterTexture = textures.cbegin();
+			iterTexture != textures.cend();
 			++iterTexture)
 		{
-			auto texture = this->textures.find(iterTexture->second);
-		
-			if(texture != this->textures.end())
+			std::string textureID = GenericObject<std::string>::GetValue(iterTexture->second);
+			auto texture = this->textures.find(textureID);
+
+			if(texture != this->textures.cend())
 			{
 				texture->second->CleanupTexture();
 			}
@@ -251,7 +259,7 @@ void GraphicManager::DrawObjects()
 
 }
 
-void GraphicManager::Present()
+void GraphicManager::Present(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->direct3d.pSwapChain->Present( 0, 0 );
@@ -277,23 +285,30 @@ const CHL::MapQ<std::string, std::shared_ptr<Texture>> GraphicManager::AllTextur
 
 void GraphicManager::InitDevice()
 {
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>> objects = ObjectManagerOutput::GetAllObjects();
+	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> objects = ObjectManagerOutput::GetAllObjects();
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator windowInfoIter;
-	windowInfoIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::string>>::const_iterator objIter)
+	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator windowInfoIter;
+	windowInfoIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
-					return (classTypeIter->second == Keys::ClassType::WindowInfo); 
+				{
+					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+					return (classID == Keys::ClassType::WindowInfo); 
+				}
 				else
 					return false;
-			}); // Find Camera
+			}); // Find WindoInfo
 
 	if(windowInfoIter == objects.cend())
 	{
 		throw std::exception("Failed to find windows info");
 	}
-	CHL::MapQ<std::string, std::string> windowInfo = *windowInfoIter;
+	CHL::MapQ<std::string, std::shared_ptr<Object>> windowInfo = *windowInfoIter;
+
+	int Width = GenericObject<int>::GetValue(windowInfo[Keys::WIDTH]);
+	int Height = GenericObject<int>::GetValue(windowInfo[Keys::HEIGHT]);
+	HWND hwnd = GenericObject<HWND>::GetValue(windowInfo[Keys::HWND]);
 
 	HRESULT hr = S_OK;
 
@@ -321,17 +336,13 @@ void GraphicManager::InitDevice()
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory( &sd, sizeof( sd ) );
 	sd.BufferCount = 1;
-	sd.BufferDesc.Width = CHL::ToInt(windowInfo[Keys::WIDTH]);
-	sd.BufferDesc.Height = CHL::ToInt(windowInfo[Keys::HEIGHT]);
+	sd.BufferDesc.Width = Width;
+	sd.BufferDesc.Height = Height;
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	sd.BufferDesc.RefreshRate.Numerator = 60;
 	sd.BufferDesc.RefreshRate.Denominator = 1;
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	unsigned int x;   
-	std::stringstream ss;
-	ss << std::hex << windowInfo[Keys::HWND];
-	ss >> x;
-	sd.OutputWindow = (HWND)x;
+	sd.OutputWindow = hwnd;
 	sd.SampleDesc.Count = 1;
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = TRUE;
@@ -364,8 +375,8 @@ void GraphicManager::InitDevice()
 	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
 
 	// Set up the description of the depth buffer.
-	depthBufferDesc.Width = CHL::ToInt(windowInfo[Keys::WIDTH]);
-	depthBufferDesc.Height = CHL::ToInt(windowInfo[Keys::HEIGHT]);
+	depthBufferDesc.Width = Width;
+	depthBufferDesc.Height = Height;
 	depthBufferDesc.MipLevels = 1;
 	depthBufferDesc.ArraySize = 1;
 	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -437,8 +448,8 @@ void GraphicManager::InitDevice()
 	this->direct3d.pImmediateContext->OMSetRenderTargets( 1, &this->direct3d.pRenderTargetView, this->direct3d.pDepthStencilView );
 	
 	// Setup the viewport
-	this->direct3d.vp.Width = (FLOAT)CHL::ToInt(windowInfo[Keys::WIDTH]);
-	this->direct3d.vp.Height = (FLOAT)CHL::ToInt(windowInfo[Keys::HEIGHT]);
+	this->direct3d.vp.Width = (FLOAT)Width;
+	this->direct3d.vp.Height = (FLOAT)Height;
 	this->direct3d.vp.MinDepth = 0.0f;
 	this->direct3d.vp.MaxDepth = 1.0f;
 	this->direct3d.vp.TopLeftX = 0;

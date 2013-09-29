@@ -19,6 +19,9 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Keys">
@@ -29,6 +32,9 @@
     </Filter>
     <Filter Include="Message">
       <UniqueIdentifier>{9f928656-2491-4f9c-889a-a462f19ee5cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{5c73e92a-bf60-4850-9197-4f23c5bf59f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -91,7 +91,7 @@ vector<double> MathOperations::MoveForward(const vector<double>& vEye, const vec
 
 	At = XMVector3TransformCoord( At, RotationMatrix );
 	At = XMVector4Normalize(At);
-	Eye += At * distance;
+	Eye += At * (float)distance;
 
 	XMFLOAT4 tempEye;
 	XMStoreFloat4(&tempEye, Eye);

@@ -4,15 +4,16 @@
 #include "Linker.h"
 #include <Queryable.h>
 #include <string>
+#include <Object.h>
 
 #include <Message.h>
 
 class AddObjectMessage : public Message
 {
 public:
-	AddObjectMessage(CHL::MapQ<std::string, std::string> info);
+	AddObjectMessage(CHL::MapQ<std::string, std::shared_ptr<Object>> info);
 	virtual Message::Status Work();
-	CHL::MapQ<std::string, std::string> messageInfo;
+	CHL::MapQ<std::string, std::shared_ptr<Object>> messageInfo;
 	std::string ID;
 };
 

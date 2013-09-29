@@ -6,10 +6,9 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <d3d11.h>
-
 #include <Singleton.h>
 #include <Queryable.h>
-
+#include <Object.h>
 #include <Interface.h>
 #include "Drawable.h"
 #include "Texture.h"
@@ -24,11 +23,11 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
-	virtual void SetupCameraNPrespective();
-	virtual void SetupConstantBuffer();
-	virtual void ClearScreen();
-	virtual void DrawObjects();
-	virtual void Present();
+	virtual void SetupCameraNPrespective(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void SetupConstantBuffer(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void ClearScreen(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void DrawObjects(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void Present(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
 
 	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
 	const CHL::MapQ<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
