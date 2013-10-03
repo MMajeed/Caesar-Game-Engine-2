@@ -1,6 +1,6 @@
 local camera = {}
 
-eye = Vector4(0.0, 5.0, -20.0, 0.0)
+eye = Vector4(0.0, 5.0, -50.0, 0.0)
 targetMagintude = Vector4(0.0, 0.0, 1.0, 0.0)
 up = Vector4(0.0, 1.0, 0.0, 0.0)
 

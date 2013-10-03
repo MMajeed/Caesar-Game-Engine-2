@@ -13,6 +13,12 @@ namespace Keys
 		const static std::string WindowInfo		= "_WindowInfo";
 		const static std::string Light			= "_Light";
 	};
+	namespace LightType
+	{
+		const static std::string DIRECTIONAL	= "Directional";
+		const static std::string POINT			= "Point";
+		const static std::string SPOT			= "Spot";
+	};
 
 	const static std::string ID					= "_ID";
 	const static std::string Class				= "_Class";
@@ -41,6 +47,14 @@ namespace Keys
 	const static std::string WIDTH				= "WIDTH";
 	const static std::string HEIGHT				= "HEIGHT";
 	const static std::string HWND				= "HWND";
+	const static std::string LIGHTSLOT			= "LightSlot";
+	const static std::string DIRECTION			= "Direction";
+	const static std::string RANGE				= "Range";
+	const static std::string ATTENUATION		= "Attenuation";
+	const static std::string SPOT				= "Spot";
+	const static std::string POSITION			= "Position";
+	const static std::string LIGHTTYPE			= "LightType";
+
 };
 
 #endif //__Keys__

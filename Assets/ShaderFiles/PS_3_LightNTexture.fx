@@ -30,10 +30,13 @@ float4 PS( PS_INPUT input ) : SV_Target
 		}
 	}
 
+	float4 texColour0 = texture00.Sample( samLinear, input.tex );
 
-	finalLightColour = saturate( finalLightColour );
+	float4 finalColor = texColour0 * finalLightColour;
 
-	finalLightColour.w = objectMaterial.Diffuse.w;
+	finalColor = saturate( finalColor );
 
-	return finalLightColour;
+	finalColor.w = objectMaterial.Diffuse.w;
+
+	return finalColor;
 }

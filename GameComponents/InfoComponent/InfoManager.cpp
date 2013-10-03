@@ -35,7 +35,7 @@ Info InfoManager::GetObjectInfo(std::string ID)
 	return this->objects[ID];
 }
 
-void InfoManager::Insert(Info obj)
+void InfoManager::Insert(const Info& obj)
 {
 	this->objects[obj.ID()] = obj;
 }

@@ -46,7 +46,6 @@ LuaObject::LuaObject()
 
 void LuaObject::SetGraphic(LuaBasicDrawableObject graphic)
 {
-
 	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew(graphic.ID);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::GRAPHICDRAWABLEID, obj));
 	InfoCommunicator::SubmitMessage(msg);

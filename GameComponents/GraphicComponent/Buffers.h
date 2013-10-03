@@ -11,8 +11,6 @@
 class cBuffer
 {
 public:
-	static const int NUMBEROFLIGHTS = 10;
-
 	struct MaterialInfo
 	{
 		XMFLOAT4 diffuse;
@@ -29,6 +27,7 @@ public:
 		float spot;
 		float range;
 		int type;
+		int padding;
 	};
 
 	struct cbObject
@@ -43,6 +42,12 @@ public:
 		XMMATRIX view;
 		XMMATRIX proj;
 		XMFLOAT4 eye;
+	};
+
+	static const int numberOfLights = 10;
+	struct cbLight
+	{
+		CLightDesc lights[numberOfLights];
 	};
 };
 #endif //__Buffer__

@@ -23,6 +23,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lua", "Lua", "{20C64F0E-7A31-448B-A8F9-462071C81651}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Lua\camera.lua = Assets\Lua\camera.lua
+		Assets\Lua\LightSetup.lua = Assets\Lua\LightSetup.lua
 		Assets\Lua\main.lua = Assets\Lua\main.lua
 		Assets\Lua\Skybox.lua = Assets\Lua\Skybox.lua
 	EndProjectSection
@@ -99,6 +100,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PS", "PS", "{C4204B4C-43E7-
 		Assets\ShaderFiles\PS_0_Basic.fx = Assets\ShaderFiles\PS_0_Basic.fx
 		Assets\ShaderFiles\PS_1_Texture.fx = Assets\ShaderFiles\PS_1_Texture.fx
 		Assets\ShaderFiles\PS_2_Light.fx = Assets\ShaderFiles\PS_2_Light.fx
+		Assets\ShaderFiles\PS_3_LightNTexture.fx = Assets\ShaderFiles\PS_3_LightNTexture.fx
 		Assets\ShaderFiles\PS_5_SkyMap.fx = Assets\ShaderFiles\PS_5_SkyMap.fx
 	EndProjectSection
 EndProject

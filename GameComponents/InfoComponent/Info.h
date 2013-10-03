@@ -21,7 +21,7 @@ public:
 
 	bool Exist(std::string key) const;
 
-	std::string ID();
+	std::string ID() const;
 
 	virtual ~Info(){}
 };

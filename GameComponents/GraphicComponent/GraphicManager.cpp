@@ -9,6 +9,8 @@
 #include "DX11Helper.h"
 #include "Buffers.h"
 
+using boost::numeric::ublas::vector;
+
 GraphicManager::GraphicManager()
 	: ClearColour(3)
 {
@@ -38,6 +40,7 @@ void GraphicManager::Work()
 {
 	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> objects = ObjectManagerOutput::GetAllObjects();
 
+	this->SetupLight(objects);
 	this->SetupCameraNPrespective(objects);
 	this->SetupConstantBuffer(objects);
 	this->ClearScreen(objects);
@@ -50,12 +53,97 @@ void GraphicManager::Shutdown()
 
 }
 
-void GraphicManager::SetupCameraNPrespective(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::SetupLight(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+{
+	cBuffer::cbLight lightBuffer;
+	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
+
+	for(auto iterObj = objects.begin();
+		iterObj != objects.end();
+		++iterObj)
+	{
+		auto classTypeIter = iterObj->find(Keys::Class);
+		auto lightTypeIter = iterObj->find(Keys::LIGHTTYPE);
+		if(	   classTypeIter == iterObj->cend()  // If it has a class type
+			|| GenericObject<std::string>::GetValue(classTypeIter->second) != Keys::ClassType::Light // and that class type is NOT a light
+			|| lightTypeIter == iterObj->cend()) // and it dosn't have a light type
+		{// then continue
+			continue;
+		}
+
+		int slot;
+		cBuffer::CLightDesc light;
+		ZeroMemory(&light, sizeof(cBuffer::CLightDesc));
+		if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::DIRECTIONAL)
+		{
+			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
+			vector<double>& diffuse = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
+			vector<double>& ambient = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::AMBIENT)->second);
+			vector<double>& specular = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::SPECULAR)->second);
+			vector<double>& direction = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIRECTION)->second);
+
+			light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
+			light.material.ambient = XNAToUblas::ConvertVec4(ambient);
+			light.material.specular = XNAToUblas::ConvertVec4(specular);
+			light.dir = XNAToUblas::ConvertVec4(direction);
+			light.type = 1;
+		}
+		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::POINT)
+		{
+			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
+			vector<double>& diffuse = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
+			vector<double>& ambient = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::AMBIENT)->second);
+			vector<double>& specular = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::SPECULAR)->second);
+			vector<double>& position = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::POSITION)->second);
+			double range = GenericObject<double>::GetValue(iterObj->find(Keys::RANGE)->second);
+			vector<double>& att = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::ATTENUATION)->second);
+
+			light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
+			light.material.ambient = XNAToUblas::ConvertVec4(ambient);
+			light.material.specular = XNAToUblas::ConvertVec4(specular);
+			light.pos = XNAToUblas::ConvertVec4(position);
+			light.range = (float)range;
+			light.attenuation = XNAToUblas::ConvertVec4(att);
+			light.type = 2;
+		}
+		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::SPOT)
+		{
+			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
+			vector<double>& diffuse = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
+			vector<double>& ambient = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::AMBIENT)->second);
+			vector<double>& specular = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::SPECULAR)->second);
+			vector<double>& position = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::POSITION)->second);
+			double range = GenericObject<double>::GetValue(iterObj->find(Keys::RANGE)->second);
+			vector<double>& direction = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIRECTION)->second);
+			double spot = GenericObject<double>::GetValue(iterObj->find(Keys::SPOT)->second);
+			vector<double>& att = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::ATTENUATION)->second);
+
+			light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
+			light.material.ambient = XNAToUblas::ConvertVec4(ambient);
+			light.material.specular = XNAToUblas::ConvertVec4(specular);
+			light.pos = XNAToUblas::ConvertVec4(position);
+			light.range = (float)range;
+			light.dir = XNAToUblas::ConvertVec4(direction);
+			light.spot = (float)spot;
+			light.attenuation = XNAToUblas::ConvertVec4(att);
+			light.type = 3;
+		}
+		
+		lightBuffer.lights[slot] = light;
+	}
+
+	ID3D11DeviceContext* pImmediateContext = this->direct3d.pImmediateContext;
+
+	pImmediateContext->UpdateSubresource( this->direct3d.pCBLight, 0, NULL, &lightBuffer, 0, 0 );
+	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->direct3d.pCBLight) );
+	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->direct3d.pCBLight) );
+}
+void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
 	// Camera
-	boost::numeric::ublas::vector<double> vEye(4);
-	boost::numeric::ublas::vector<double> vTM(4);
-	boost::numeric::ublas::vector<double> vUp(4);
+	vector<double> vEye(4);
+	vector<double> vTM(4);
+	vector<double> vUp(4);
 	double pitch;	double yaw;	double roll;
 
 	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator cameraIter;
@@ -73,9 +161,9 @@ void GraphicManager::SetupCameraNPrespective(const CHL::VectorQ<CHL::MapQ<std::s
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		CHL::MapQ<std::string, std::shared_ptr<Object>> camera = *cameraIter;
-		vEye = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::EYE]);
-		vTM = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::TARGETMAGNITUDE]);
-		vUp = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::UP]);
+		vEye = GenericObject<vector<double>>::GetValue(camera[Keys::EYE]);
+		vTM = GenericObject<vector<double>>::GetValue(camera[Keys::TARGETMAGNITUDE]);
+		vUp = GenericObject<vector<double>>::GetValue(camera[Keys::UP]);
 		pitch = GenericObject<double>::GetValue(camera[Keys::RADIANPITCH]);
 		yaw = GenericObject<double>::GetValue(camera[Keys::RADIANYAW]);
 		roll = GenericObject<double>::GetValue(camera[Keys::RADIANROLL]);
@@ -149,10 +237,9 @@ void GraphicManager::SetupCameraNPrespective(const CHL::VectorQ<CHL::MapQ<std::s
 
 	this->PrespectiveMatrix = MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }
-
-void GraphicManager::SetupConstantBuffer(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::SetupConstantBuffer(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
-	boost::numeric::ublas::vector<double> vEye(4);
+	vector<double> vEye(4);
 
 	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator cameraIter;
 	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
@@ -170,7 +257,7 @@ void GraphicManager::SetupConstantBuffer(const CHL::VectorQ<CHL::MapQ<std::strin
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		CHL::MapQ<std::string, std::shared_ptr<Object>> camera = *cameraIter;
-		vEye = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(camera[Keys::EYE]);
+		vEye = GenericObject<vector<double>>::GetValue(camera[Keys::EYE]);
 	}
 	else
 	{
@@ -186,25 +273,23 @@ void GraphicManager::SetupConstantBuffer(const CHL::VectorQ<CHL::MapQ<std::strin
 	cbInfo.proj = XMLoadFloat4x4(&proj4x4);
 	cbInfo.eye = XMFLOAT4((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
 
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = this->direct3d.pImmediateContext;
 
 	pImmediateContext->UpdateSubresource( this->direct3d.pCBInfo, 0, NULL, &cbInfo, 0, 0 );
-	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->direct3d.pCBInfo) );
-	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->direct3d.pCBInfo) );
+	pImmediateContext->VSSetConstantBuffers( 1, 1, &(this->direct3d.pCBInfo) );
+	pImmediateContext->PSSetConstantBuffers( 1, 1, &(this->direct3d.pCBInfo) );
 }
-
-void GraphicManager::ClearScreen(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::ClearScreen(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
 	// Clear the back buffer 
 	float ClearColor[4] = { (float)this->ClearColour(0), (float)this->ClearColour(1), (float)this->ClearColour(2), 1.0f }; // red,green,blue,alpha
 	this->direct3d.pImmediateContext->ClearRenderTargetView( this->direct3d.pRenderTargetView, ClearColor );
 	this->direct3d.pImmediateContext->ClearDepthStencilView( this->direct3d.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-
-void GraphicManager::DrawObjects(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::DrawObjects(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
-	for(auto iterObj = objects.cbegin();
-		iterObj != objects.cend();
+	for(auto iterObj = objects.begin();
+		iterObj != objects.end();
 		++iterObj)
 	{
 		auto graphicIDIter = iterObj->find(Keys::GRAPHICDRAWABLEID);
@@ -255,15 +340,12 @@ void GraphicManager::DrawObjects(const CHL::VectorQ<CHL::MapQ<std::string, std::
 			}
 		}
 	}
-
 }
-
-void GraphicManager::Present(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::Present(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
 {
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->direct3d.pSwapChain->Present( 0, 0 );
 }
-
 void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
 {
 	this->objectDrawables[obj->ID] = obj;
@@ -457,6 +539,11 @@ void GraphicManager::InitDevice()
 
 	std::wstring error;
 	if(!DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->direct3d.pd3dDevice, &(this->direct3d.pCBInfo), error))
+	{
+		throw std::exception(CHL::ToString(error).c_str());
+	}
+
+	if(!DX11Helper::LoadBuffer<cBuffer::cbLight>(this->direct3d.pd3dDevice, &(this->direct3d.pCBLight), error))
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}

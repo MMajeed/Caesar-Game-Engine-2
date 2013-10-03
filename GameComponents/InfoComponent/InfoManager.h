@@ -19,7 +19,7 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 
-	void Insert(Info obj);
+	void Insert(const Info& obj);
 	void UpdateObject(std::string ID, std::string infoID, std::shared_ptr<Object> info);
 	const CHL::MapQ<std::string, Info>& AllObjects();
 	Info GetObjectInfo(std::string ID);

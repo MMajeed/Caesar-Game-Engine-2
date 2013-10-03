@@ -1,48 +1,89 @@
-#ifndef __LuaObject__
-#define __LuaObject__
+#ifndef __LuaLight__
+#define __LuaLight__
 
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include "LuaBasicDrawableObject.h"
-#include "LuaBasicTexture.h"
 #include "LuaUblas.h"
+#include <string>
 
-class LuaObject
+class LuaLight
 {
 public:
-	LuaObject();
+	class Light
+	{
+	public:
+		LuaUblas::Vector4 GetDiffuse();
+		void SetDiffuse(LuaUblas::Vector4 vec);
 
-	std::string ID;
+		LuaUblas::Vector4 GetAmient();
+		void SetAmbient(LuaUblas::Vector4 vec);
 
-	void SetGraphic(LuaBasicDrawableObject graphic);
-	void RemoveGraphic();
+		LuaUblas::Vector4 GetSpecular();
+		void SetSpecular(LuaUblas::Vector4 vec);
 
-	void SetTexture(LuaBasicTexture texture);
-	void RemoveTexture(LuaBasicTexture texture);
+		int GetSlot();
+		void SetSlot(int i);
 
-	void SetLocation(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetLocation();
+		std::string ID;
+	};
 
-	void SetScale(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetScale();
+	class DirectionalLight : public Light
+	{
+	public:
+		DirectionalLight(int slot, LuaUblas::Vector4 diffuse, LuaUblas::Vector4 ambient, LuaUblas::Vector4 specular, LuaUblas::Vector4 direction );
+		
+		LuaUblas::Vector4 GetDirection();
+		void SetDirection(LuaUblas::Vector4 vec);
 
-	void SetRotation(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetRotation();
+		static void Register(lua_State *lua);
+	};
 
-	void SetDiffuse(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetDiffuse();
+	class PointLight : public Light
+	{
+	public:
+		PointLight(int slot, LuaUblas::Vector4 diffuse, LuaUblas::Vector4 ambient, LuaUblas::Vector4 specular, LuaUblas::Vector4 position, double range, LuaUblas::Vector4 att);
 
-	void SetAmibent(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetAmibent();
+		LuaUblas::Vector4 GetPosition();
+		void SetPosition(LuaUblas::Vector4 vec);
 
-	void SetSpecular(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetSpecular();
+		double GetRange();
+		void SetRange(double val);
 
-	static void Register(lua_State *lua);
+		LuaUblas::Vector4 GetAttenuation();
+		void SetAttenuation(LuaUblas::Vector4 vec);
+
+		static void Register(lua_State *lua);
+	};
+
+	class SpotLight : public Light
+	{
+	public:
+		SpotLight(int slot, LuaUblas::Vector4 diffuse, LuaUblas::Vector4 ambient, LuaUblas::Vector4 specular, LuaUblas::Vector4 position, double range, LuaUblas::Vector4 Direction, double spot, LuaUblas::Vector4  att);
+
+		LuaUblas::Vector4 GetPosition();
+		void SetPosition(LuaUblas::Vector4 vec);
+
+		double GetRange();
+		void SetRange(double val);
+
+		LuaUblas::Vector4 GetDirection();
+		void SetDirection(LuaUblas::Vector4 vec);
+
+		double GetSpot();
+		void SetSpot(double val);
+
+		LuaUblas::Vector4 GetAttenuation();
+		void SetAttenuation(LuaUblas::Vector4 vec);
+
+		static void Register(lua_State *lua);
+	};
+
 	static inline void RegisterAllLuaFunction(lua_State *lua)
 	{
-		LuaObject::Register(lua);
+		DirectionalLight::Register(lua);
+		PointLight::Register(lua);
+		SpotLight::Register(lua);
 	}
 };
 
-#endif //__LuaObject__
+#endif //__LuaLight__

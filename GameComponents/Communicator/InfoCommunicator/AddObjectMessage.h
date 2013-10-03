@@ -11,7 +11,7 @@
 class AddObjectMessage : public Message
 {
 public:
-	AddObjectMessage(CHL::MapQ<std::string, std::shared_ptr<Object>> info);
+	AddObjectMessage(const CHL::MapQ<std::string, std::shared_ptr<Object>>& info);
 	virtual Message::Status Work();
 	CHL::MapQ<std::string, std::shared_ptr<Object>> messageInfo;
 	std::string ID;

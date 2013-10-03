@@ -15,6 +15,7 @@ struct LightDesc
 	float Spot;
 	float Range;
 	int Type;
+	int padding;
 };
 
 //---------------------------------------------------------------------------------------
@@ -131,7 +132,7 @@ float4 ComputeSpotLight(MaterialInfo mat, LightDesc L, float3 pos, float3 normal
 	// Range test.
 	if( d > L.Range )
 		return float4(0.0f, 0.0f, 0.0f, 0.0f);
-		
+	
 	// Normalize the light vector.
 	lightVec /= d; 
 	

@@ -50,7 +50,7 @@ void BasicDrawable::Update(float delta)
 
 }
 
-void BasicDrawable::Draw(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::Draw(CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
 {
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
@@ -71,17 +71,16 @@ void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::sh
 
 	boost::numeric::ublas::matrix<double> mObjectFinal = MathOperations::ObjectCalculation(location, rotation, scale);
 
-	boost::numeric::ublas::matrix<double> mFinal(4,4);
-	mFinal = boost::numeric::ublas::prod(GraphicManager::GetInstance().CamerMatrix, mObjectFinal);
-	mFinal = boost::numeric::ublas::prod(GraphicManager::GetInstance().PrespectiveMatrix, mFinal);
-
-	XMFLOAT4X4 finalMatrix = XNAToUblas::Convert4x4(mFinal);
 	XMFLOAT4X4 worldMatrix = XNAToUblas::Convert4x4(mObjectFinal);
+	XMFLOAT4X4 prespectiveMatrix = XNAToUblas::Convert4x4(GraphicManager::GetInstance().PrespectiveMatrix);
+	XMFLOAT4X4 viewMatrix = XNAToUblas::Convert4x4(GraphicManager::GetInstance().CamerMatrix);
+	
+	XMMATRIX finalMatrix = XMLoadFloat4x4(&prespectiveMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&worldMatrix);
 
 	cBuffer::cbObject cbCEF;
 	
 	cbCEF.world = XMLoadFloat4x4(&worldMatrix);
-	cbCEF.worldViewProj = XMLoadFloat4x4(&finalMatrix);
+	cbCEF.worldViewProj = finalMatrix;
 	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(diffuse);
 	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(ambient);
 	cbCEF.colour.specular = XNAToUblas::ConvertVec4(spec);

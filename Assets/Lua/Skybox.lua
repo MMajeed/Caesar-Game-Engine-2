@@ -1,6 +1,6 @@
 local SkyBox = {}
 
-skyBoxDrawable = BasicDrawableObject({[Keys["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth_3.ply",
+skyBoxDrawable = BasicDrawableObject({[Keys["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
                                       [Keys["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.fx",
                                       [Keys["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_5_SkyMap.fx",});
 

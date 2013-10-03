@@ -23,11 +23,12 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
-	virtual void SetupCameraNPrespective(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void SetupConstantBuffer(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void ClearScreen(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void DrawObjects(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void Present(const CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void SetupLight(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void SetupConstantBuffer(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void ClearScreen(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void DrawObjects(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void Present(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
 
 	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
 	const CHL::MapQ<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
@@ -49,6 +50,7 @@ public:
 		ID3D11DepthStencilView*		pDepthStencilView;
 		D3D11_VIEWPORT				vp;
 		ID3D11Buffer*				pCBInfo;
+		ID3D11Buffer*				pCBLight;
 	} direct3d;
 
 	

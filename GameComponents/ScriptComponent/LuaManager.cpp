@@ -15,6 +15,7 @@
 #include "LuaLoopCallSetup.h"
 #include "LuaBasicDrawableObject.h"
 #include "LuaBasicTexture.h"
+#include "LuaLight.h"
 
 LuaManager::LuaManager()
 {
@@ -61,6 +62,7 @@ void LuaManager::Init()
 	LuaLoopCallSetup::RegisterAllLuaFunction(this->lua);
 	LuaBasicDrawableObject::RegisterAllLuaFunction(this->lua);
 	LuaBasicTexture::RegisterAllLuaFunction(this->lua);
+	LuaLight::RegisterAllLuaFunction(this->lua);
 }
 
 void LuaManager::Update(double realTime, double deltaTime)

@@ -42,7 +42,7 @@ bool Info::Exist(std::string key) const
 	return (valueIterator != this->info.cend());
 }
 
-std::string Info::ID()
+std::string Info::ID() const
 {
 	std::shared_ptr<Object> idObj;
 	this->Retrieve(Keys::ID, idObj);
