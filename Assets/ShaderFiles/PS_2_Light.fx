@@ -4,7 +4,7 @@ float4 PS( PS_INPUT input ) : SV_Target
 {
 	float4 finalLightColour = float4(0.0, 0.0, 0.0, 0.0);
 
-	for ( int index = 0; index < numberOfLights; index++ )
+	for ( int index = 0; index < numOfLights; index++ )
 	{
 		if( lightArray[index].Type == 0 )
 		{			

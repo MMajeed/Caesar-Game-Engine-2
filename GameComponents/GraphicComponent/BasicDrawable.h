@@ -17,7 +17,7 @@ public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(float delta);
-	virtual void Draw(CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void Draw(TypedefObject::ObjectInfo& object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
 	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
@@ -48,16 +48,16 @@ public:
 	virtual void InitRastersizerState(ID3D11Device* device, D3D11_CULL_MODE cullMode = D3D11_CULL_BACK, D3D11_FILL_MODE fillMode = D3D11_FILL_SOLID, bool bAntialiasedLine = true, bool bMultisampleEnable = true);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
-	virtual void SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
-	virtual void SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
-	virtual void SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
-	virtual void SetupDrawPixelShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
-	virtual void SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
-	virtual void DrawObject(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
-	virtual void CleanupAfterDraw(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object);
+	virtual void SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& object);
+	virtual void SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& object);
+	virtual void SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& object);
+	virtual void SetupDrawPixelShader(const TypedefObject::ObjectInfo& object);
+	virtual void SetupDrawRasterizeShader(const TypedefObject::ObjectInfo& object);
+	virtual void DrawObject(const TypedefObject::ObjectInfo& object);
+	virtual void CleanupAfterDraw(const TypedefObject::ObjectInfo& object);
 
 protected:
-	virtual void GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>>& objec,
+	virtual void GetInfo(const TypedefObject::ObjectInfo& objec,
 						 boost::numeric::ublas::vector<double>& location,
 						 boost::numeric::ublas::vector<double>& rotation,
 						 boost::numeric::ublas::vector<double>& scale,

@@ -103,8 +103,11 @@
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="DX11Helper.h" />
     <ClInclude Include="GraphicManager.h" />
+    <ClInclude Include="Shadow.h" />
+    <ClInclude Include="SpotLightShadow.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="BasicTexture.h" />
+    <ClInclude Include="TypedefObject.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +115,7 @@
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="BasicTexture.cpp" />
+    <ClCompile Include="SpotLightShadow.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

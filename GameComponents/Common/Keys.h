@@ -54,6 +54,7 @@ namespace Keys
 	const static std::string SPOT				= "Spot";
 	const static std::string POSITION			= "Position";
 	const static std::string LIGHTTYPE			= "LightType";
+	const static std::string HASHADOW			= "HasShadow";
 
 };
 

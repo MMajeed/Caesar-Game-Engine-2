@@ -12,6 +12,7 @@
 #include <Interface.h>
 #include "Drawable.h"
 #include "Texture.h"
+#include "TypedefObject.h"
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
 {
@@ -23,12 +24,12 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
-	virtual void SetupLight(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void SetupConstantBuffer(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void ClearScreen(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void DrawObjects(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
-	virtual void Present(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects);
+	virtual void SetupLight(TypedefObject::ObjectVector& objects);
+	virtual void SetupCameraNPrespective(TypedefObject::ObjectVector& objects);
+	virtual void SetupConstantBuffer(TypedefObject::ObjectVector& objects);
+	virtual void ClearScreen(TypedefObject::ObjectVector& objects);
+	virtual void DrawObjects(TypedefObject::ObjectVector& objects);
+	virtual void Present(TypedefObject::ObjectVector& objects);
 
 	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
 	const CHL::MapQ<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();

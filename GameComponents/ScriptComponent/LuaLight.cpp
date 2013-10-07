@@ -177,6 +177,7 @@ LuaLight::SpotLight::SpotLight(int slot,
 	mapKeys[Keys::DIRECTION] = GenericObject<vector<double>>::CreateNew(Direction.vector);
 	mapKeys[Keys::SPOT] = GenericObject<double>::CreateNew(spot);
 	mapKeys[Keys::ATTENUATION] = GenericObject<vector<double>>::CreateNew(att.vector);
+	mapKeys[Keys::HASHADOW] = GenericObject<bool>::CreateNew(false);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
@@ -246,6 +247,24 @@ void LuaLight::SpotLight::SetAttenuation(LuaUblas::Vector4 vec)
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ATTENUATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
+
+void LuaLight::SpotLight::ApplyShadow()
+{
+	std::shared_ptr<Object> obj = GenericObject<bool>::CreateNew(true);
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::HASHADOW, obj));
+	InfoCommunicator::SubmitMessage(msg);
+}
+void LuaLight::SpotLight::RemoveShadow()
+{
+	std::shared_ptr<Object> obj = GenericObject<bool>::CreateNew(false);
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::HASHADOW, obj));
+	InfoCommunicator::SubmitMessage(msg);
+}
+bool LuaLight::SpotLight::GetShadowState()
+{
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::HASHADOW];
+	return GenericObject<bool>::GetValue(obj);
+}
 // SpotLight end
 
 void LuaLight::DirectionalLight::Register(lua_State *lua)
@@ -293,5 +312,8 @@ void LuaLight::SpotLight::Register(lua_State *lua)
 		  .property("Direction", &LuaLight::SpotLight::GetDirection, &LuaLight::SpotLight::SetDirection)
 		  .property("Spot", &LuaLight::SpotLight::GetSpot, &LuaLight::SpotLight::SetSpot)
 		  .property("Attenuation", &LuaLight::SpotLight::GetAttenuation, &LuaLight::SpotLight::SetAttenuation)
+		  .property("ShadowState", &LuaLight::SpotLight::GetShadowState)
+		  .def("ApplyShadow", &LuaLight::SpotLight::ApplyShadow)
+		  .def("RemoveShadow", &LuaLight::SpotLight::RemoveShadow)
 	  ];
 }

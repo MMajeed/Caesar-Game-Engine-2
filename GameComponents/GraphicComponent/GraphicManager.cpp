@@ -8,6 +8,7 @@
 #include <XNAToUblas.h>
 #include "DX11Helper.h"
 #include "Buffers.h"
+#include "SpotLightShadow.h"
 
 using boost::numeric::ublas::vector;
 
@@ -38,7 +39,7 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> objects = ObjectManagerOutput::GetAllObjects();
+	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
 	this->SetupLight(objects);
 	this->SetupCameraNPrespective(objects);
@@ -53,7 +54,7 @@ void GraphicManager::Shutdown()
 
 }
 
-void GraphicManager::SetupLight(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 {
 	cBuffer::cbLight lightBuffer;
 	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
@@ -127,6 +128,22 @@ void GraphicManager::SetupLight(CHL::VectorQ<CHL::MapQ<std::string, std::shared_
 			light.spot = (float)spot;
 			light.attenuation = XNAToUblas::ConvertVec4(att);
 			light.type = 3;
+
+			auto h = GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second);
+			if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
+			{
+				SpotLightShadow::GetInstance().GenerateShadowTexture(*iterObj, objects);
+
+				XMFLOAT4X4 viewShadow4x4 = XNAToUblas::Convert4x4(SpotLightShadow::GetInstance().GetViewMatrix(*iterObj));
+				XMFLOAT4X4 presShadow4x4 = XNAToUblas::Convert4x4(SpotLightShadow::GetInstance().GetPrespectiveMatrix(*iterObj));
+
+				XMMATRIX viewMatrix = XMLoadFloat4x4(&viewShadow4x4);
+				XMMATRIX presMatrix = XMLoadFloat4x4(&presShadow4x4);
+
+				light.lightView = viewMatrix;
+				light.lightProject = presMatrix;
+				light.hasShadow = true;
+			}
 		}
 		
 		lightBuffer.lights[slot] = light;
@@ -138,7 +155,7 @@ void GraphicManager::SetupLight(CHL::VectorQ<CHL::MapQ<std::string, std::shared_
 	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->direct3d.pCBLight) );
 	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->direct3d.pCBLight) );
 }
-void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& objects)
 {
 	// Camera
 	vector<double> vEye(4);
@@ -146,8 +163,8 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 	vector<double> vUp(4);
 	double pitch;	double yaw;	double roll;
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator cameraIter;
-	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
+	TypedefObject::ObjectVector::const_iterator cameraIter;
+	cameraIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
@@ -160,7 +177,7 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 			}); // Find Camera
 	if(cameraIter != objects.cend()) // if camera found
 	{
-		CHL::MapQ<std::string, std::shared_ptr<Object>> camera = *cameraIter;
+		TypedefObject::ObjectInfo camera = *cameraIter;
 		vEye = GenericObject<vector<double>>::GetValue(camera[Keys::EYE]);
 		vTM = GenericObject<vector<double>>::GetValue(camera[Keys::TARGETMAGNITUDE]);
 		vUp = GenericObject<vector<double>>::GetValue(camera[Keys::UP]);
@@ -179,14 +196,14 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 	this->CamerMatrix = MathOperations::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 
 	// Prespective
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator prespectiveIter;
+	TypedefObject::ObjectVector::const_iterator prespectiveIter;
 
 	double FovAngleY; 
 	double height; double width;
 	double nearZ;
 	double farZ;
 
-	prespectiveIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
+	prespectiveIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
@@ -200,7 +217,7 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 
 	if(prespectiveIter != objects.cend()) // if prespective found
 	{
-		CHL::MapQ<std::string, std::shared_ptr<Object>> prespective = *prespectiveIter;
+		TypedefObject::ObjectInfo prespective = *prespectiveIter;
 		FovAngleY = GenericObject<double>::GetValue(prespective[Keys::FOVANGLE]);
 		height = GenericObject<double>::GetValue(prespective[Keys::SCREENHEIGHT]);
 		width = GenericObject<double>::GetValue(prespective[Keys::SCREENWIDTH]);
@@ -209,8 +226,8 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 	}
 	else
 	{
-		CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator windowInfoIter;
-		windowInfoIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
+		TypedefObject::ObjectVector::const_iterator windowInfoIter;
+		windowInfoIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
 				{ 
 					auto classTypeIter = objIter->find(Keys::Class);
 					if(classTypeIter != objIter->end())
@@ -226,7 +243,7 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 		{
 			throw std::exception("Failed to find windows info");
 		}
-		CHL::MapQ<std::string, std::shared_ptr<Object>> windowInfo = *windowInfoIter;
+		TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
 
 		width = GenericObject<int>::GetValue(windowInfo[Keys::WIDTH]);
 		height = GenericObject<int>::GetValue(windowInfo[Keys::HEIGHT]);
@@ -237,12 +254,12 @@ void GraphicManager::SetupCameraNPrespective(CHL::VectorQ<CHL::MapQ<std::string,
 
 	this->PrespectiveMatrix = MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }
-void GraphicManager::SetupConstantBuffer(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 {
 	vector<double> vEye(4);
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator cameraIter;
-	cameraIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
+	TypedefObject::ObjectVector::const_iterator cameraIter;
+	cameraIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
@@ -256,7 +273,7 @@ void GraphicManager::SetupConstantBuffer(CHL::VectorQ<CHL::MapQ<std::string, std
 
 	if(cameraIter != objects.cend()) // if camera found
 	{
-		CHL::MapQ<std::string, std::shared_ptr<Object>> camera = *cameraIter;
+		TypedefObject::ObjectInfo camera = *cameraIter;
 		vEye = GenericObject<vector<double>>::GetValue(camera[Keys::EYE]);
 	}
 	else
@@ -279,14 +296,14 @@ void GraphicManager::SetupConstantBuffer(CHL::VectorQ<CHL::MapQ<std::string, std
 	pImmediateContext->VSSetConstantBuffers( 1, 1, &(this->direct3d.pCBInfo) );
 	pImmediateContext->PSSetConstantBuffers( 1, 1, &(this->direct3d.pCBInfo) );
 }
-void GraphicManager::ClearScreen(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::ClearScreen(TypedefObject::ObjectVector& objects)
 {
 	// Clear the back buffer 
 	float ClearColor[4] = { (float)this->ClearColour(0), (float)this->ClearColour(1), (float)this->ClearColour(2), 1.0f }; // red,green,blue,alpha
 	this->direct3d.pImmediateContext->ClearRenderTargetView( this->direct3d.pRenderTargetView, ClearColor );
 	this->direct3d.pImmediateContext->ClearDepthStencilView( this->direct3d.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void GraphicManager::DrawObjects(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 {
 	for(auto iterObj = objects.begin();
 		iterObj != objects.end();
@@ -307,7 +324,7 @@ void GraphicManager::DrawObjects(CHL::VectorQ<CHL::MapQ<std::string, std::shared
 			continue;
 		}// If it didn't fine then continue
 
-		auto textures = iterObj->Where([](const CHL::MapQ<std::string, std::shared_ptr<Object>>::const_iterator iterObj)
+		auto textures = iterObj->Where([](const TypedefObject::ObjectInfo::const_iterator iterObj)
 						{ 
 							return (iterObj->first.compare(0, Keys::TEXTUREFILE.size(), Keys::TEXTUREFILE) == 0);
 						});
@@ -341,7 +358,7 @@ void GraphicManager::DrawObjects(CHL::VectorQ<CHL::MapQ<std::string, std::shared
 		}
 	}
 }
-void GraphicManager::Present(CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>& objects)
+void GraphicManager::Present(TypedefObject::ObjectVector& objects)
 {
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->direct3d.pSwapChain->Present( 0, 0 );
@@ -366,10 +383,10 @@ const CHL::MapQ<std::string, std::shared_ptr<Texture>> GraphicManager::AllTextur
 
 void GraphicManager::InitDevice()
 {
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> objects = ObjectManagerOutput::GetAllObjects();
+	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator windowInfoIter;
-	windowInfoIter = objects.First([](CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>::const_iterator objIter)
+	TypedefObject::ObjectVector::const_iterator windowInfoIter;
+	windowInfoIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
 			{ 
 				auto classTypeIter = objIter->find(Keys::Class);
 				if(classTypeIter != objIter->end())
@@ -385,7 +402,7 @@ void GraphicManager::InitDevice()
 	{
 		throw std::exception("Failed to find windows info");
 	}
-	CHL::MapQ<std::string, std::shared_ptr<Object>> windowInfo = *windowInfoIter;
+	TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
 
 	int Width = GenericObject<int>::GetValue(windowInfo[Keys::WIDTH]);
 	int Height = GenericObject<int>::GetValue(windowInfo[Keys::HEIGHT]);
@@ -547,4 +564,6 @@ void GraphicManager::InitDevice()
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}
+
+	SpotLightShadow::GetInstance().Init();
 }

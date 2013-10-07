@@ -23,17 +23,17 @@ sphereDrawable = BasicDrawableObject({[Keys["ModelFile"]]        = "Assets/PlyFi
                                       [Keys["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_2_Light.fx",});
 
 
-for i = 1, 10, 1 do
-    local x = ((i % 10) - 5) * 4;
-    local y = 2;
-    local z = 0;
-    sphereObject = Object();
-    sphereObject.Location = Vector4(x, y, z);
-    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
-    sphereObject.Amibent = Vector4(0.5, 0.5, 0.5)
-    sphereObject.Specular = Vector4(0.5, 0.5, 0.5, 0.5)
-    sphereObject:SetGraphic(sphereDrawable);
-end
+--for i = 1, 10, 1 do
+--    local x = ((i % 10) - 5) * 4;
+--    local y = 2;
+--    local z = 0;
+--    sphereObject = Object();
+--    sphereObject.Location = Vector4(x, y, z);
+--    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
+--    sphereObject.Amibent = Vector4(0.5, 0.5, 0.5)
+--    sphereObject.Specular = Vector4(0.5, 0.5, 0.5, 0.5)
+--    sphereObject:SetGraphic(sphereDrawable);
+--end
 
 for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
@@ -47,14 +47,14 @@ for i = 1, 10, 1 do
     sphereObject:SetGraphic(sphereDrawable);
 end
 
-for i = 1, 10, 1 do
-    local x = ((i % 10) - 5) * 4;
-    local y = 2;
-    local z = -20;
-    sphereObject = Object();
-    sphereObject.Location = Vector4(x, y, z);
-    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
-    sphereObject.Amibent = Vector4(0.4, 0.4, 0.4)
-    sphereObject.Specular = Vector4(0.4, 0.4, 0.4, 0.1)
-    sphereObject:SetGraphic(sphereDrawable);
-end
+--for i = 1, 10, 1 do
+--    local x = ((i % 10) - 5) * 4;
+--    local y = 2;
+--    local z = -20;
+--    sphereObject = Object();
+--    sphereObject.Location = Vector4(x, y, z);
+--    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
+--    sphereObject.Amibent = Vector4(0.4, 0.4, 0.4)
+--    sphereObject.Specular = Vector4(0.4, 0.4, 0.4, 0.1)
+--    sphereObject:SetGraphic(sphereDrawable);
+--end

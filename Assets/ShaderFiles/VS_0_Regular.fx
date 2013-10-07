@@ -14,7 +14,12 @@ PS_INPUT VS( VS_INPUT input )
 
 	// Combine the matrices first...
 	output.PosWVP = mul( input.VertexPos, gWorldViewProj );
-
+/*
+	output.PosWVP = input.VertexPos;
+	output.PosWVP = mul(output.PosWVP, gWorld );
+	output.PosWVP = mul( output.PosWVP, lightArray[2].lightView );
+	output.PosWVP = mul( output.PosWVP, lightArray[2].lightProject );			
+*/
 	// Passed to the pixel shader for correct lighting:
 	output.PosWorld = mul( input.VertexPos, gWorld );
 
@@ -25,6 +30,25 @@ PS_INPUT VS( VS_INPUT input )
 
 	// Pass the texture coordinates to the pixel shader
 	output.tex = input.tex;
+
+
+	for(unsigned int i = 0; i < numOfLights; ++i)
+	{
+		if(lightArray[i].HasShadow != 0)
+		{
+			static const matrix T = matrix(
+				0.5f, 0.0f, 0.0f, 0.0f,
+				0.0f, -0.5f, 0.0f, 0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f,
+				0.5f, 0.5f, 0.0f, 1.0f);
+
+			output.LightShadow[i] = input.VertexPos;
+			output.LightShadow[i] = mul( output.LightShadow[i], gWorld );
+			output.LightShadow[i] = mul( output.LightShadow[i], lightArray[i].lightView );
+			output.LightShadow[i] = mul( output.LightShadow[i], lightArray[i].lightProject );			
+			output.LightShadow[i] = mul( output.LightShadow[i], T );
+		}
+	}
 
     return output;
 }

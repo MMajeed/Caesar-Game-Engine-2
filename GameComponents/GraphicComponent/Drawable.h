@@ -4,12 +4,12 @@
 #include "Linker.h"
 
 #include <string>
-#include <limits>
 #include <Converter.h>
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 #include <Queryable.h>
 #include <Object.h>
+#include "TypedefObject.h"
 
 class Drawable
 {
@@ -19,9 +19,8 @@ public:
 	virtual void Init()															= 0;
 	virtual void Destory()														= 0;
 	virtual void Update(float delta)											= 0;
-	virtual void Draw(CHL::MapQ<std::string, std::shared_ptr<Object>>& object)	= 0;
+	virtual void Draw(TypedefObject::ObjectInfo& object)	= 0;
 	virtual std::shared_ptr<Drawable>clone() const								= 0;
-	virtual float GetOrder(){return std::numeric_limits<float>::max();}
 
 	virtual ~Drawable(){}
 

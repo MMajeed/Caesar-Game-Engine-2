@@ -27,7 +27,9 @@ public:
 		float spot;
 		float range;
 		int type;
-		int padding;
+		int hasShadow;
+		XMMATRIX lightView;
+		XMMATRIX lightProject;
 	};
 
 	struct cbObject
@@ -44,10 +46,10 @@ public:
 		XMFLOAT4 eye;
 	};
 
-	static const int numberOfLights = 10;
+	static const int numOfLights = 10;
 	struct cbLight
 	{
-		CLightDesc lights[numberOfLights];
+		CLightDesc lights[numOfLights];
 	};
 };
 #endif //__Buffer__

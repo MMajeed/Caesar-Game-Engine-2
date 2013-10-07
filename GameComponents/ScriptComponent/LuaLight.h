@@ -75,6 +75,10 @@ public:
 		LuaUblas::Vector4 GetAttenuation();
 		void SetAttenuation(LuaUblas::Vector4 vec);
 
+		void ApplyShadow();
+		void RemoveShadow();
+		bool GetShadowState();
+
 		static void Register(lua_State *lua);
 	};
 

@@ -4,7 +4,7 @@
 
 void InfoCommunicator::SubmitMessage(std::shared_ptr<Message> msg)
 {
-	InfoCommunicator::GetComponent()->SubmitMessage(msg);
+	msg->Proccess();
 }
 
 Interface* InfoCommunicator::GetComponent()

@@ -4,29 +4,43 @@ float4 PS( PS_INPUT input ) : SV_Target
 {
 	float4 finalLightColour = float4(0.0, 0.0, 0.0, 0.0);
 
-	for ( int index = 0; index < numberOfLights; index++ )
+	for ( int index = 0; index < numOfLights; index++ )
 	{
-		if( lightArray[index].Type == 0 )
-		{			
-			continue;
+		float shadow = 1.0f;
+
+		bool isInShadow = lightArray[index].HasShadow && IsInShadow(input.LightShadow[index], Shadow, samShadow);
+	
+		if(isInShadow == true)
+		{
+			shadow = CalcShadowFactor(input.LightShadow[index], Shadow, samShadowComparison);
 		}
-		else if( lightArray[index].Type == 1 ) // Parallel light
+
+		if( lightArray[index].Type == 1 ) // Parallel light
 		{
 			float3 toEyeW = normalize(eye - input.PosWorld);
-			finalLightColour += ComputeDirectionalLight( objectMaterial, lightArray[index],
+			float4 lightColor = ComputeDirectionalLight( objectMaterial, lightArray[index],
 														 input.NormalWorld, toEyeW );	
+
+			lightColor *= shadow;
+			finalLightColour += lightColor;
 		}
 		else if( lightArray[index].Type == 2 ) // Point
 		{
 			float3 toEyeW = normalize(eye - input.PosWorld);
-			finalLightColour += ComputePointLight( objectMaterial, lightArray[index],
+			float4 lightColor = ComputePointLight( objectMaterial, lightArray[index],
 													input.PosWorld, input.NormalWorld, toEyeW );	
+
+			lightColor *= shadow;
+			finalLightColour += lightColor;
 		}
 		else if( lightArray[index].Type == 3 ) // Spot
 		{
 			float3 toEyeW = normalize(eye - input.PosWorld);
-			finalLightColour += ComputeSpotLight( objectMaterial, lightArray[index],
-												  input.PosWorld, input.NormalWorld, toEyeW );	
+			float4 lightColor = ComputeSpotLight( objectMaterial, lightArray[index],
+												  input.PosWorld, input.NormalWorld, toEyeW );		
+
+			lightColor *= shadow;
+			finalLightColour += lightColor;
 		}
 	}
 

@@ -50,7 +50,7 @@ void BasicDrawable::Update(float delta)
 
 }
 
-void BasicDrawable::Draw(CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::Draw(TypedefObject::ObjectInfo& object)
 {
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
@@ -61,7 +61,7 @@ void BasicDrawable::Draw(CHL::MapQ<std::string, std::shared_ptr<Object>>& object
 	this->CleanupAfterDraw(object);
 }
 
-void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& object)
 {
 	boost::numeric::ublas::vector<double> location(4);	boost::numeric::ublas::vector<double> diffuse(4);
 	boost::numeric::ublas::vector<double> rotation(4);	boost::numeric::ublas::vector<double> ambient(4);
@@ -91,7 +91,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const CHL::MapQ<std::string, std::sh
 	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 }
-void BasicDrawable::SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& object)
 {	
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -101,7 +101,7 @@ void BasicDrawable::SetupDrawVertexBuffer(const CHL::MapQ<std::string, std::shar
 	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-void BasicDrawable::SetupDrawInputVertexShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -109,25 +109,25 @@ void BasicDrawable::SetupDrawInputVertexShader(const CHL::MapQ<std::string, std:
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
 	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
 }
-void BasicDrawable::SetupDrawPixelShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::SetupDrawPixelShader(const TypedefObject::ObjectInfo& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
-void BasicDrawable::SetupDrawRasterizeShader(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::SetupDrawRasterizeShader(const TypedefObject::ObjectInfo& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-void BasicDrawable::DrawObject(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)
+void BasicDrawable::DrawObject(const TypedefObject::ObjectInfo& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-void BasicDrawable::CleanupAfterDraw(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object)	
+void BasicDrawable::CleanupAfterDraw(const TypedefObject::ObjectInfo& object)	
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -236,7 +236,7 @@ std::shared_ptr<Drawable> BasicDrawable::clone() const
 	return std::dynamic_pointer_cast<Drawable>(newObject);
 }
 
-void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>>& object,
+void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 							boost::numeric::ublas::vector<double>& location,
 							boost::numeric::ublas::vector<double>& rotation,
 							boost::numeric::ublas::vector<double>& scale,
@@ -244,7 +244,7 @@ void BasicDrawable::GetInfo(const CHL::MapQ<std::string, std::shared_ptr<Object>
 							boost::numeric::ublas::vector<double>& ambient,
 							boost::numeric::ublas::vector<double>& spec)
 {	
-	CHL::MapQ<std::string, std::shared_ptr<Object>>::const_iterator iterKey;
+	TypedefObject::ObjectInfo::const_iterator iterKey;
 	iterKey = object.find(Keys::LOCATION);
 	if(iterKey != object.end())
 	{

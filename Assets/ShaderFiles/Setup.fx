@@ -1,4 +1,5 @@
 #include "HLSL_Light.fx"
+#include "Shadow.fx"
 
 //--------------------------------------------------------------------------------------
 // Constant Buffer Variables
@@ -17,11 +18,11 @@ cbuffer cbInfo : register( b1 )
 	float4 eye;
 };
 
-static const int numberOfLights = 10;
+static const int numOfLights = 10;
 
 cbuffer cbLight : register( b2 )
 {
-	LightDesc lightArray[numberOfLights];
+	LightDesc lightArray[numOfLights];
 };
 
 Texture2D texture00 : register( t0 );
@@ -35,17 +36,18 @@ TextureCube cubeTexture03 : register( t7 );
 TextureCube cubeTexture04 : register( t8 );
 TextureCube cubeTexture05 : register( t9 );
 
+Texture2D Shadow : register( t10 );
 
 //--------------------------------------------------------------------------------------
 struct PS_INPUT
 {
-    float4 PosWVP      : SV_POSITION;
-	float4 PosWorld    : POSITION;
-	float4 Normal      : NORMAL1;
-	float4 NormalWorld : NORMAL2;
-	float4 LightMVP    : LightMVP;
-    float4 Color       : COLOR0;
-	float2 tex         : TEXCOORD0;
+    float4 PosWVP					: SV_POSITION;
+	float4 PosWorld					: POSITION;
+	float4 Normal					: NORMAL1;
+	float4 NormalWorld				: NORMAL2;
+	float4 LightShadow[numOfLights] : LightMVP;
+    float4 Color					: COLOR0;
+	float2 tex						: TEXCOORD0;
 };
 
 SamplerState samLinear
@@ -54,4 +56,25 @@ SamplerState samLinear
 	AddressU = Wrap;
 	AddressV = Wrap;
 	AddressW = Wrap;
+};
+
+SamplerState samShadow
+{
+	Filter   = MIN_MAG_MIP_LINEAR;
+	AddressU = Border;
+	AddressV = Border;
+	AddressW = Border;
+	BorderColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+};
+
+
+SamplerComparisonState samShadowComparison
+{
+	Filter   = COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+	AddressU = BORDER;
+	AddressV = BORDER;
+	AddressW = BORDER;
+	BorderColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
+
+    ComparisonFunc = LESS;
 };
