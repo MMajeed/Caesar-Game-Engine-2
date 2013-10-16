@@ -8,7 +8,8 @@
 #include <XNAToUblas.h>
 #include "DX11Helper.h"
 #include "Buffers.h"
-#include "SpotLightShadow.h"
+#include "SpotLight.h"
+#include "DirectLight.h"
 
 using boost::numeric::ublas::vector;
 
@@ -78,16 +79,22 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::DIRECTIONAL)
 		{
 			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
-			vector<double>& diffuse = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
-			vector<double>& ambient = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::AMBIENT)->second);
-			vector<double>& specular = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::SPECULAR)->second);
-			vector<double>& direction = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIRECTION)->second);
+			light = DirectLight::GetInstance().GetLightDesc(*iterObj);
 
-			light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
-			light.material.ambient = XNAToUblas::ConvertVec4(ambient);
-			light.material.specular = XNAToUblas::ConvertVec4(specular);
-			light.dir = XNAToUblas::ConvertVec4(direction);
-			light.type = 1;
+			//if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
+			{
+				DirectLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
+
+				XMFLOAT4X4 viewShadow4x4 = XNAToUblas::Convert4x4(DirectLight::GetInstance().GetViewMatrix(*iterObj));
+				XMFLOAT4X4 presShadow4x4 = XNAToUblas::Convert4x4(DirectLight::GetInstance().GetPrespectiveMatrix(*iterObj));
+
+				XMMATRIX viewMatrix = XMLoadFloat4x4(&viewShadow4x4);
+				XMMATRIX presMatrix = XMLoadFloat4x4(&presShadow4x4);
+
+				light.lightView = viewMatrix;
+				light.lightProject = presMatrix;
+				light.hasShadow = true;
+			}
 		}
 		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::POINT)
 		{
@@ -110,32 +117,14 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::SPOT)
 		{
 			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
-			vector<double>& diffuse = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
-			vector<double>& ambient = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::AMBIENT)->second);
-			vector<double>& specular = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::SPECULAR)->second);
-			vector<double>& position = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::POSITION)->second);
-			double range = GenericObject<double>::GetValue(iterObj->find(Keys::RANGE)->second);
-			vector<double>& direction = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIRECTION)->second);
-			double spot = GenericObject<double>::GetValue(iterObj->find(Keys::SPOT)->second);
-			vector<double>& att = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::ATTENUATION)->second);
-
-			light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
-			light.material.ambient = XNAToUblas::ConvertVec4(ambient);
-			light.material.specular = XNAToUblas::ConvertVec4(specular);
-			light.pos = XNAToUblas::ConvertVec4(position);
-			light.range = (float)range;
-			light.dir = XNAToUblas::ConvertVec4(direction);
-			light.spot = (float)spot;
-			light.attenuation = XNAToUblas::ConvertVec4(att);
-			light.type = 3;
-
-			auto h = GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second);
-			if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
+			light = SpotLight::GetInstance().GetLightDesc(*iterObj);
+			
+			/*if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
 			{
-				SpotLightShadow::GetInstance().GenerateShadowTexture(*iterObj, objects);
+				SpotLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
-				XMFLOAT4X4 viewShadow4x4 = XNAToUblas::Convert4x4(SpotLightShadow::GetInstance().GetViewMatrix(*iterObj));
-				XMFLOAT4X4 presShadow4x4 = XNAToUblas::Convert4x4(SpotLightShadow::GetInstance().GetPrespectiveMatrix(*iterObj));
+				XMFLOAT4X4 viewShadow4x4 = XNAToUblas::Convert4x4(SpotLight::GetInstance().GetViewMatrix(*iterObj));
+				XMFLOAT4X4 presShadow4x4 = XNAToUblas::Convert4x4(SpotLight::GetInstance().GetPrespectiveMatrix(*iterObj));
 
 				XMMATRIX viewMatrix = XMLoadFloat4x4(&viewShadow4x4);
 				XMMATRIX presMatrix = XMLoadFloat4x4(&presShadow4x4);
@@ -143,7 +132,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 				light.lightView = viewMatrix;
 				light.lightProject = presMatrix;
 				light.hasShadow = true;
-			}
+			}*/
 		}
 		
 		lightBuffer.lights[slot] = light;
@@ -564,6 +553,4 @@ void GraphicManager::InitDevice()
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}
-
-	SpotLightShadow::GetInstance().Init();
 }

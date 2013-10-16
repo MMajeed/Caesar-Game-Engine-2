@@ -1,11 +1,16 @@
-#include "SpotLightShadow.h"
+#include "DirectLight.h"
 #include "GraphicManager.h"
 #include <MathOperations.h>
 #include <Keys.h>
+#include <XNAToUblas.h>
 
-void SpotLightShadow::Init()
+using boost::numeric::ublas::vector;
+
+static const float radius = 100.0f;
+
+DirectLight::DirectLight()
 {
-	static const int imageSize = 1024;
+	static const int imageSize = 2048;
 
 	auto d3dStuff = GraphicManager::GetInstance().direct3d;
 
@@ -64,7 +69,7 @@ void SpotLightShadow::Init()
 	depthMap->Release();
 }
 
-void SpotLightShadow::GenerateShadowTexture(TypedefObject::ObjectInfo& light,
+void DirectLight::GenerateShadowTexture(TypedefObject::ObjectInfo& light,
 										    TypedefObject::ObjectVector& objects)
 {
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
@@ -77,11 +82,11 @@ void SpotLightShadow::GenerateShadowTexture(TypedefObject::ObjectInfo& light,
 
 	this->Draw(objects);
 
-	//graphicManager.CamerMatrix = oldViewMatrix;
-	//graphicManager.PrespectiveMatrix = oldPrespectiveMatrix;
+	graphicManager.CamerMatrix = oldViewMatrix;
+	graphicManager.PrespectiveMatrix = oldPrespectiveMatrix;
 }
 
-void SpotLightShadow::Draw(TypedefObject::ObjectVector& objects)
+void DirectLight::Draw(TypedefObject::ObjectVector& objects)
 {
 	auto d3dStuff = GraphicManager::GetInstance().direct3d;
 
@@ -104,30 +109,79 @@ void SpotLightShadow::Draw(TypedefObject::ObjectVector& objects)
 	d3dStuff.pImmediateContext->PSSetShaderResources( 10, 1, &(this->mDepthMapSRV) );
 }
 
-boost::numeric::ublas::matrix<double> SpotLightShadow::GetViewMatrix(TypedefObject::ObjectInfo& light)
+cBuffer::CLightDesc DirectLight::GetLightDesc(TypedefObject::ObjectInfo& lightInfo)
 {
-	boost::numeric::ublas::vector<double> vEye(4);
-	boost::numeric::ublas::vector<double> vT(4);
-	boost::numeric::ublas::vector<double> vUp(4);
-	double pitch; double yaw; double roll;
+	vector<double>& diffuse = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
+	vector<double>& ambient = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
+	vector<double>& specular = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
+	vector<double>& direction = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
 
-	vEye = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::POSITION]);
-	vT(0) = 0.0; vT(1) = 0.0; vT(2) = 1.0; vT(3) = 0.0;
-	vUp(0) = 0.0; vUp(1) = 1.0; vUp(2) = 0.0; vUp(3) = 0.0;
+	cBuffer::CLightDesc light;
+	light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
+	light.material.ambient = XNAToUblas::ConvertVec4(ambient);
+	light.material.specular = XNAToUblas::ConvertVec4(specular);
+	light.dir = XNAToUblas::ConvertVec4(direction);
+	light.type = 1;
+	return light;
+}
+
+boost::numeric::ublas::matrix<double> DirectLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
+{
+	double pitch; double yaw; double roll;
 
 	pitch = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(0);
 	yaw = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(1);
 	roll = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(2);
 
-	return MathOperations::ViewCalculation(vEye, vT, vUp, pitch, yaw, roll);
-}
-boost::numeric::ublas::matrix<double> SpotLightShadow::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
-{
-	double FovAngleY = 1.570796327; 
-	double height = 1080;
-	double width = 1080;
-	double nearZ = 1.0;
-	double farZ = GenericObject<double>::GetValue(light.find(Keys::RANGE)->second);
+	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
+	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
 
-	return MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
+	XMVECTOR lightDir = XMLoadFloat3(&dir);
+	XMVECTOR lightPos = radius*lightDir;
+	XMVECTOR targetPos = XMLoadFloat3(&center);
+	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+	XMMATRIX V = XMMatrixLookAtLH(lightPos, targetPos, up);
+	V = XMMatrixTranspose(V);
+
+	XMFLOAT4X4 vFloat4x4;
+	XMStoreFloat4x4(&vFloat4x4, V); 
+	return XNAToUblas::Convert4x4(vFloat4x4);
+}
+boost::numeric::ublas::matrix<double> DirectLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
+{
+	double pitch; double yaw; double roll;
+
+	pitch = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(0);
+	yaw = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(1);
+	roll = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(2);
+
+	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
+	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
+
+	XMVECTOR lightDir = XMLoadFloat3(&dir);
+	XMVECTOR lightPos = radius*lightDir;
+	XMVECTOR targetPos = XMLoadFloat3(&center);
+	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+	XMMATRIX V = XMMatrixLookAtLH(lightPos, targetPos, up);
+
+	// Transform bounding sphere to light space.
+	XMFLOAT3 sphereCenterLS;
+	XMStoreFloat3(&sphereCenterLS, XMVector3TransformCoord(targetPos, V));
+		
+	// Ortho frustum in light space encloses scene.
+	float l = sphereCenterLS.x - radius;
+	float b = sphereCenterLS.y - radius;
+	float n = sphereCenterLS.z - radius;
+	float r = sphereCenterLS.x + radius;
+	float t = sphereCenterLS.y + radius;
+	float f = sphereCenterLS.z + radius;
+	XMMATRIX P = XMMatrixOrthographicOffCenterLH(l, r, b, t, n, f);
+
+	P = XMMatrixTranspose(P);
+
+	XMFLOAT4X4 pFloat4x4;
+	XMStoreFloat4x4(&pFloat4x4, P); 
+	return XNAToUblas::Convert4x4(pFloat4x4);
 }

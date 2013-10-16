@@ -27,14 +27,14 @@
     <ClInclude Include="BasicTexture.h">
       <Filter>Texture\BasicTexture</Filter>
     </ClInclude>
-    <ClInclude Include="Shadow.h">
-      <Filter>Shadow</Filter>
-    </ClInclude>
-    <ClInclude Include="SpotLightShadow.h">
-      <Filter>Shadow\SpotLightShadow</Filter>
-    </ClInclude>
     <ClInclude Include="TypedefObject.h">
       <Filter>ObjectName</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
+      <Filter>Light\SpotLight</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectLight.h">
+      <Filter>Light\DirectLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -48,8 +48,11 @@
     <ClCompile Include="BasicTexture.cpp">
       <Filter>Texture\BasicTexture</Filter>
     </ClCompile>
-    <ClCompile Include="SpotLightShadow.cpp">
-      <Filter>Shadow\SpotLightShadow</Filter>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Light\SpotLight</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectLight.cpp">
+      <Filter>Light\DirectLight</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +83,17 @@
     <Filter Include="Texture\BasicTexture">
       <UniqueIdentifier>{5e802e12-8aba-4f8f-806d-e9dce2bdad79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shadow">
-      <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shadow\SpotLightShadow">
-      <UniqueIdentifier>{d147f29e-caed-400a-8896-c8cb7bf0938e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ObjectName">
       <UniqueIdentifier>{7b156573-8227-43ea-acac-ce8ec30c5b5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light\SpotLight">
+      <UniqueIdentifier>{d147f29e-caed-400a-8896-c8cb7bf0938e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light\DirectLight">
+      <UniqueIdentifier>{0217d582-611d-4dfd-917f-b715c41066ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -167,7 +167,7 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 			case FRAMERATE_UPDATE_TIMER:
 			{
 				std::wostringstream fr;
-
+				fr << std::setprecision(2) << std::fixed ;
 				for(auto interFaceIter = Window::GetInstance().vInterfaces.begin();
 					interFaceIter != Window::GetInstance().vInterfaces.end();
 					++interFaceIter)
@@ -175,7 +175,7 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 					double frameTimer = interFaceIter->second->timer.FrameCount / Window::GetInstance().window.AbsoluteTime;
 						
 					fr << interFaceIter->first.c_str() << " : ";
-					fr << std::setprecision(2) << std::fixed << frameTimer << ". ";
+					fr << frameTimer << ". ";
 				}
 					
 				SetWindowTextW( hWnd, fr.str().c_str() );

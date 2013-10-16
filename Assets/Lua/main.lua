@@ -43,7 +43,7 @@ for i = 1, 10, 1 do
     sphereObject.Location = Vector4(x, y, z);
     sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
     sphereObject.Amibent = Vector4(0.4, 0.4, 0.4)
-    sphereObject.Specular = Vector4(0.4, 0.4, 0.4, 0.1)
+    sphereObject.Specular = Vector4(0.3, 0.3, 0.3, 0.3)
     sphereObject:SetGraphic(sphereDrawable);
 end
 

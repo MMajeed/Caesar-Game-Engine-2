@@ -5,7 +5,6 @@
 #include <string>
 #include <memory>
 #include <boost/thread/mutex.hpp>
-
 #include "Message.h"
 
 class Interface

@@ -33,8 +33,7 @@ float4 ComputeDirectionalLight(MaterialInfo mat, LightDesc L,
 	float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	float4 spec    = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	// The light vector aims opposite the direction the light rays travel.
-	float3 lightVec = -L.Direction;
+	float3 lightVec = L.Direction;
 
 	// Add ambient term.
 	ambient = mat.Ambient * L.material.Ambient;	

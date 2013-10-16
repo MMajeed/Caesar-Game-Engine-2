@@ -1,11 +1,11 @@
 local LightSetup = {}
 
 diffuse = Vector4(1.0, 1.0, 1.0);
-amibent = Vector4(0.2, 0.2, 0.2);
+amibent = Vector4(0.5, 0.5, 0.5);
 specular = Vector4(0.3, 0.3, 0.3);
-direction = Vector4(0.0, -0.78539816339744830961566084581988, 0.0);
+direction = Vector4(0.0, 0.785, 0.1);
 
-DirectionalLight(0, diffuse, amibent, specular, direction);
+directionLight = DirectionalLight(0, diffuse, amibent, specular, direction);
 
 --diffuse = Vector4(1.0, 1.0, 0.0);
 --amibent = Vector4(0.0, 0.0, 0.0);

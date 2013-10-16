@@ -29,7 +29,7 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 
 	std::shared_ptr<BasicDrawableConfiguration::AddBasicDrawableMessage> msg(
 			new BasicDrawableConfiguration::AddBasicDrawableMessage
-				(m, vertexFileName, "VS", "vs_4_0", pixelFileName, "PS", "ps_4_0" ));
+				(m, vertexFileName, "VS", "vs_4_1", pixelFileName, "PS", "ps_4_1" ));
 
 	GraphicCommunicator::SubmitMessage(msg);
 

@@ -44,11 +44,11 @@ void Interface::Run()
 
 			double deltaTime = frameTime;
 
-			/*const double MIN_TIMESTEP = 0.001f;
+			const double MIN_TIMESTEP = 0.015;
 			if ( deltaTime > MIN_TIMESTEP )
 			{
 				deltaTime = MIN_TIMESTEP;
-			}*/
+			}
 
 			this->ProccessMessages();
 			this->Update(frameTime, deltaTime);

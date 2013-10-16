@@ -3,7 +3,7 @@
 float4 PS( PS_INPUT input ) : SV_Target
 {
 	float4 finalLightColour = float4(0.0, 0.0, 0.0, 0.0);
-
+	
 	for ( int index = 0; index < numOfLights; index++ )
 	{
 		float shadow = 1.0f;
@@ -12,7 +12,7 @@ float4 PS( PS_INPUT input ) : SV_Target
 	
 		if(isInShadow == true)
 		{
-			shadow = CalcShadowFactor(input.LightShadow[index], Shadow, samShadowComparison);
+			shadow = 0.5f;
 		}
 
 		if( lightArray[index].Type == 1 ) // Parallel light
