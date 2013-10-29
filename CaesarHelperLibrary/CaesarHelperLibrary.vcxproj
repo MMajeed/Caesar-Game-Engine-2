@@ -11,19 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3DMath.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="MathOperations.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Queryable.h" />
     <ClInclude Include="Converter.h" />
-    <ClInclude Include="XNAToUblas.h" />
+    <ClInclude Include="Vector.h" />
+    <ClInclude Include="XNAConverter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3DMath.cpp" />
     <ClCompile Include="Converter.cpp" />
-    <ClCompile Include="MathOperations.cpp" />
     <ClCompile Include="Model.cpp" />
-    <ClCompile Include="XNAToUblas.cpp" />
+    <ClCompile Include="XNAConverter.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{087F7F7C-F71C-40E5-86CC-2ACC70D8EB2A}</ProjectGuid>

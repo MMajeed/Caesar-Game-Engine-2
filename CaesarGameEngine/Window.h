@@ -4,7 +4,8 @@
 #include <Singleton.h>
 #include <Windows.h>
 #include <map>
-#include <boost/thread/thread.hpp>
+#include <thread>
+#include <vector>
 #include <memory>
 
 class Interface;
@@ -32,7 +33,7 @@ public:
 
 protected:
 	std::map<std::string, Interface*> vInterfaces;
-	std::vector<std::shared_ptr<boost::thread>> vThreads;
+	std::vector<std::shared_ptr<std::thread>> vThreads;
 	enum { FRAMERATE_UPDATE_TIMER = 1 };
 };
 

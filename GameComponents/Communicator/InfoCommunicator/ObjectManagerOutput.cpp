@@ -1,6 +1,5 @@
 #include "ObjectManagerOutput.h"
-#include <boost/thread/thread.hpp>
-#include <boost/bind/bind.hpp>
+#include <thread>
 
 #include <InfoManager.h>
 
@@ -29,20 +28,20 @@ void FuncInsert(CHL::MapQ<std::string, Info>::const_iterator startIter,
 
 CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutput::GetAllObjects()
 {
-	boost::mutex::scoped_lock lock(InfoManager::GetInstance().mutex);
-
+	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
+	
 	const CHL::MapQ<std::string, Info>&  allObjects = InfoManager::GetInstance().AllObjects();
 
 	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> convertedVec;
 
 	convertedVec.resize(allObjects.size());
 		
-	std::vector<std::shared_ptr<boost::thread>> vThreads;
+	std::vector<std::shared_ptr<std::thread>> vThreads;
 
 	static const int threadsPer = 100;
 
 	int numberOfThreads = (convertedVec.size() / threadsPer) + 1;
-	std::vector<std::shared_ptr<boost::thread>> threads;
+	std::vector<std::shared_ptr<std::thread>> threads;
 	threads.reserve(numberOfThreads);
 
 	for(int i = 0; i < numberOfThreads; ++i)
@@ -60,8 +59,8 @@ CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutpu
 			end = convertedVec.size();
 		std::advance(endIter, end);
 
-		std::shared_ptr<boost::thread> thread = 
-			std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&FuncInsert, startIter, endIter, start, &convertedVec)));
+		std::shared_ptr<std::thread> thread = 
+			std::shared_ptr<std::thread>(new std::thread(std::bind(&FuncInsert, startIter, endIter, start, &convertedVec)));
 		
 		threads.push_back(thread);
 	}
@@ -80,7 +79,7 @@ CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutpu
 
 CHL::MapQ<std::string, std::shared_ptr<Object>> ObjectManagerOutput::GetObject(std::string id)
 {
-	boost::mutex::scoped_lock lock(InfoManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
 
 	CHL::MapQ<std::string, std::shared_ptr<Object>> returnValue;
 

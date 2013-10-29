@@ -1,25 +1,21 @@
-#include "MathOperations.h"
-
-#include "XNAToUblas.h"
-
+#include "3DMath.h"
+#include "XNAConverter.h"
 #include <Windows.h>
 #include <xnamath.h>
 
-using namespace boost::numeric::ublas;
-
-matrix<double> MathOperations::PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ)
+CHL::Matrix4x4 CHL::PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ)
 {
 	XMMATRIX xmPrespective =  XMMatrixPerspectiveFovLH( (float)FovAngleY, (float)AspectRatio, (float)NearZ, (float)FarZ);
 	xmPrespective = XMMatrixTranspose(xmPrespective);
 	XMFLOAT4X4 xmMatrixPrespective;
 	XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
 
-	matrix<double> mMatrixPrespective =  XNAToUblas::Convert4x4(xmMatrixPrespective);
+	CHL::Matrix4x4 mMatrixPrespective = CHL::Convert4x4(xmMatrixPrespective);
 
 	return mMatrixPrespective;
 }
 
-matrix<double> MathOperations::ViewCalculation( const vector<double>& vEye, const vector<double>& vTM,  const vector<double>& vUp, double pitch, double yaw, double roll)
+CHL::Matrix4x4 CHL::ViewCalculation(const CHL::Vec4& vEye, const CHL::Vec4& vTM, const CHL::Vec4& vUp, double pitch, double yaw, double roll )
 {
 	XMVECTOR xmEye = XMVectorSet( (float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3) );
 	XMVECTOR xmTM = XMVectorSet(  (float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3) );
@@ -35,12 +31,12 @@ matrix<double> MathOperations::ViewCalculation( const vector<double>& vEye, cons
 	XMFLOAT4X4  xmView;
 	XMStoreFloat4x4(&xmView, XMMatrixTranspose(XMMatrixLookAtLH( xmEye, xmTM, xmUp )));
 	
-	matrix<double> mView = XNAToUblas::Convert4x4(xmView);
+	CHL::Matrix4x4 mView = CHL::Convert4x4(xmView);
 
 	return mView;
 }
 
-matrix<double> MathOperations::ObjectCalculation( const vector<double>& mLocation, const vector<double>& mRotation, const vector<double>& mScale)
+CHL::Matrix4x4 CHL::ObjectCalculation( const CHL::Vec4& mLocation, const CHL::Vec4& mRotation, const CHL::Vec4& mScale)
 {
 	XMMATRIX xmTranslate = XMMatrixIdentity();
 	XMMATRIX xmRotateX = XMMatrixIdentity();	XMMATRIX xmRotateY = XMMatrixIdentity();	XMMATRIX xmRotateZ = XMMatrixIdentity();
@@ -66,21 +62,21 @@ matrix<double> MathOperations::ObjectCalculation( const vector<double>& mLocatio
 	XMFLOAT4X4 xmFinal4x4;
 	XMStoreFloat4x4(&xmFinal4x4, xmObjectFinal);
 
-	matrix<double> mObjectFinal = XNAToUblas::Convert4x4(xmFinal4x4);
+	CHL::Matrix4x4 mObjectFinal = CHL::Convert4x4(xmFinal4x4);
 
 	return mObjectFinal;
 }
 
-void MathOperations::Normalize(matrix<double>& matrix)
+void CHL::Normalize(CHL::Matrix4x4& matrix)
 {
 	XMMATRIX identiy = XMMatrixIdentity();
 
-	for (unsigned i = 0; i < matrix.size1(); ++ i)
-        for (unsigned j = 0; j < matrix.size2(); ++ j)
+	for (unsigned i = 0; i < 4; ++ i)
+        for (unsigned j = 0; j < 4; ++ j)
             matrix(i, j) = identiy(i, j);
 }
 
-vector<double> MathOperations::MoveForward(const vector<double>& vEye, const vector<double>& vTM, double pitch, double yaw, double roll, double distance)
+CHL::Vec4 CHL::MoveForward(const CHL::Vec4& vEye, const CHL::Vec4& vTM, double pitch, double yaw, double roll, double distance)
 {
 	XMVECTOR Eye = XMVectorSet( (float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3) );
 	XMVECTOR At = XMVectorSet(  (float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3) );
@@ -96,5 +92,5 @@ vector<double> MathOperations::MoveForward(const vector<double>& vEye, const vec
 	XMFLOAT4 tempEye;
 	XMStoreFloat4(&tempEye, Eye);
 
-	return XNAToUblas::ConvertVec4(tempEye);
+	return CHL::ConvertVec4(tempEye);
 }

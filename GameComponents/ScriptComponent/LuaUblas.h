@@ -3,7 +3,7 @@
 
 #include <Lua.hpp>
 #include <string>
-#include <boost/numeric/ublas/vector.hpp>
+#include <Vector.h>
 
 class LuaUblas
 {
@@ -13,11 +13,11 @@ public:
 	public:
 		Vector4();
 		Vector4(double xValue, double yValue, double zValue, double wValue = 0.0);
-		Vector4(boost::numeric::ublas::vector<double> vecValue);
+		Vector4(CHL::Vec4 vecValue);
 
-		operator boost::numeric::ublas::vector<double>();
+		operator CHL::Vec4();
 
-		boost::numeric::ublas::vector<double> vector;
+		CHL::Vec4 vector;
 
 		double GetterX();
 		double GetterY();

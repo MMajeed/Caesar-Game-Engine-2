@@ -3,7 +3,7 @@
 
 #include <Singleton.h>
 #include <D3D11.h>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <Matrix.h>
 #include "TypedefObject.h"
 #include "Buffers.h"
 
@@ -15,8 +15,8 @@ public:
 									   TypedefObject::ObjectVector& objects);
 	virtual cBuffer::CLightDesc GetLightDesc(TypedefObject::ObjectInfo& lightInfo);
 
-	virtual boost::numeric::ublas::matrix<double> GetViewMatrix(TypedefObject::ObjectInfo& light);
-	virtual boost::numeric::ublas::matrix<double> GetPrespectiveMatrix(TypedefObject::ObjectInfo& light);
+	virtual CHL::Matrix4x4 GetViewMatrix(TypedefObject::ObjectInfo& light);
+	virtual CHL::Matrix4x4 GetPrespectiveMatrix(TypedefObject::ObjectInfo& light);
 
 	ID3D11ShaderResourceView* mDepthMapSRV;
 	ID3D11DepthStencilView* mDepthMapDSV;

@@ -4,7 +4,7 @@
 #include <queue>
 #include <string>
 #include <memory>
-#include <boost/thread/mutex.hpp>
+#include <mutex>
 #include "Message.h"
 
 class Interface
@@ -31,7 +31,7 @@ public:
 		long long	FrameCount;
 	} timer;
 
-	boost::mutex mutex;
+	std::mutex mutex;
 
 	bool running;	
 protected:

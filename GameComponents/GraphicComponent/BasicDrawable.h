@@ -58,12 +58,12 @@ public:
 
 protected:
 	virtual void GetInfo(const TypedefObject::ObjectInfo& objec,
-						 boost::numeric::ublas::vector<double>& location,
-						 boost::numeric::ublas::vector<double>& rotation,
-						 boost::numeric::ublas::vector<double>& scale,
-						 boost::numeric::ublas::vector<double>& diffuse,
-						 boost::numeric::ublas::vector<double>& ambient,
-						 boost::numeric::ublas::vector<double>& spec);
+						 CHL::Vec4& location,
+						 CHL::Vec4& rotation,
+						 CHL::Vec4& scale,
+						 CHL::Vec4& diffuse,
+						 CHL::Vec4& ambient,
+						 CHL::Vec4& spec);
 
 };
 

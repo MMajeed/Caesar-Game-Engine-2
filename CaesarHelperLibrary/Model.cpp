@@ -11,9 +11,9 @@ Model::Model(std::string file)
 	this->scene = aiImportFile(file.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_TransformUVCoords);
 }
 
-std::vector<boost::numeric::ublas::vector<double>> Model::Pos() const
+std::vector<CHL::Vec4> Model::Pos() const
 {
-	std::vector<boost::numeric::ublas::vector<double>> vectorPos;
+	std::vector<CHL::Vec4> vectorPos;
 
 	aiMesh* mesh = *(this->scene->mMeshes);
 
@@ -21,7 +21,7 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Pos() const
 
 	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
 	{
-		boost::numeric::ublas::vector<double> pos(4);
+		CHL::Vec4 pos;
 
 		pos(0) = mesh->mVertices[i].x;
 		pos(1) = mesh->mVertices[i].y;
@@ -33,9 +33,9 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Pos() const
 
 	return vectorPos;
 }
-std::vector<boost::numeric::ublas::vector<double>> Model::Normal() const
+std::vector<CHL::Vec4> Model::Normal() const
 {
-	std::vector<boost::numeric::ublas::vector<double>> vectorNormal;
+	std::vector<CHL::Vec4> vectorNormal;
 
 	aiMesh* mesh = *(this->scene->mMeshes);
 
@@ -43,7 +43,7 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Normal() const
 
 	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
 	{
-		boost::numeric::ublas::vector<double> normal(4);
+		CHL::Vec4 normal;
 
 		if(mesh->HasNormals())
 		{
@@ -65,9 +65,9 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Normal() const
 
 	return vectorNormal;
 }
-std::vector<boost::numeric::ublas::vector<double>> Model::Texture() const
+std::vector<CHL::Vec2> Model::Texture() const
 {
-	std::vector<boost::numeric::ublas::vector<double>> vectorTexture;
+	std::vector<CHL::Vec2> vectorTexture;
 
 	aiMesh* mesh = *(this->scene->mMeshes);
 
@@ -75,7 +75,7 @@ std::vector<boost::numeric::ublas::vector<double>> Model::Texture() const
 
 	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
 	{
-		boost::numeric::ublas::vector<double> texture(2);
+		CHL::Vec2 texture;
 		if(mesh->HasTextureCoords(0))
 		{
 			texture(0) = mesh->mTextureCoords[0][i].x;

@@ -7,17 +7,15 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <Keys.h>
 
-using boost::numeric::ublas::vector;
-
 // Light Class
 LuaUblas::Vector4 LuaLight::Light::GetDiffuse()
 {	
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::DIFFUSE];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetDiffuse(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::DIFFUSE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -25,11 +23,11 @@ void LuaLight::Light::SetDiffuse(LuaUblas::Vector4 vec)
 LuaUblas::Vector4 LuaLight::Light::GetAmient()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::AMBIENT];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetAmbient(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::AMBIENT, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -37,11 +35,11 @@ void LuaLight::Light::SetAmbient(LuaUblas::Vector4 vec)
 LuaUblas::Vector4 LuaLight::Light::GetSpecular()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::SPECULAR];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetSpecular(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::SPECULAR, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -67,10 +65,10 @@ LuaLight::DirectionalLight::DirectionalLight(int slot, LuaUblas::Vector4 diffuse
 	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Light);
 	mapKeys[Keys::LIGHTTYPE] = GenericObject<std::string>::CreateNew(Keys::LightType::DIRECTIONAL);
 	mapKeys[Keys::LIGHTSLOT] = GenericObject<int>::CreateNew(slot);
-	mapKeys[Keys::DIFFUSE] = GenericObject<vector<double>>::CreateNew(diffuse.vector);
-	mapKeys[Keys::AMBIENT] = GenericObject<vector<double>>::CreateNew(ambient.vector);
-	mapKeys[Keys::SPECULAR] = GenericObject<vector<double>>::CreateNew(specular.vector);
-	mapKeys[Keys::DIRECTION] = GenericObject<vector<double>>::CreateNew(direction.vector);
+	mapKeys[Keys::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse.vector);
+	mapKeys[Keys::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(ambient.vector);
+	mapKeys[Keys::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular.vector);
+	mapKeys[Keys::DIRECTION] = GenericObject<CHL::Vec4>::CreateNew(direction.vector);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
@@ -84,11 +82,11 @@ LuaLight::DirectionalLight::DirectionalLight(int slot, LuaUblas::Vector4 diffuse
 LuaUblas::Vector4 LuaLight::DirectionalLight::GetDirection()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::DIRECTION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::DirectionalLight::SetDirection(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::DIRECTION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -104,12 +102,12 @@ LuaLight::PointLight::PointLight(int slot,
 	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Light);
 	mapKeys[Keys::LIGHTTYPE] = GenericObject<std::string>::CreateNew(Keys::LightType::POINT);
 	mapKeys[Keys::LIGHTSLOT] = GenericObject<int>::CreateNew(slot);
-	mapKeys[Keys::DIFFUSE] = GenericObject<vector<double>>::CreateNew(diffuse.vector);
-	mapKeys[Keys::AMBIENT] = GenericObject<vector<double>>::CreateNew(ambient.vector);
-	mapKeys[Keys::SPECULAR] = GenericObject<vector<double>>::CreateNew(specular.vector);
-	mapKeys[Keys::POSITION] = GenericObject<vector<double>>::CreateNew(position.vector);
+	mapKeys[Keys::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse.vector);
+	mapKeys[Keys::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(ambient.vector);
+	mapKeys[Keys::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular.vector);
+	mapKeys[Keys::POSITION] = GenericObject<CHL::Vec4>::CreateNew(position.vector);
 	mapKeys[Keys::RANGE] = GenericObject<double>::CreateNew(range);
-	mapKeys[Keys::ATTENUATION] = GenericObject<vector<double>>::CreateNew(att.vector);
+	mapKeys[Keys::ATTENUATION] = GenericObject<CHL::Vec4>::CreateNew(att.vector);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
@@ -123,11 +121,11 @@ LuaLight::PointLight::PointLight(int slot,
 LuaUblas::Vector4 LuaLight::PointLight::GetPosition()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::POSITION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::PointLight::SetPosition(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::POSITION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -147,11 +145,11 @@ void LuaLight::PointLight::SetRange(double val)
 LuaUblas::Vector4 LuaLight::PointLight::GetAttenuation()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ATTENUATION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::PointLight::SetAttenuation(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ATTENUATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -169,14 +167,14 @@ LuaLight::SpotLight::SpotLight(int slot,
 	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Light);
 	mapKeys[Keys::LIGHTTYPE] = GenericObject<std::string>::CreateNew(Keys::LightType::SPOT);
 	mapKeys[Keys::LIGHTSLOT] = GenericObject<int>::CreateNew(slot);
-	mapKeys[Keys::DIFFUSE] = GenericObject<vector<double>>::CreateNew(diffuse.vector);
-	mapKeys[Keys::AMBIENT] = GenericObject<vector<double>>::CreateNew(ambient.vector);
-	mapKeys[Keys::SPECULAR] = GenericObject<vector<double>>::CreateNew(specular.vector);
-	mapKeys[Keys::POSITION] = GenericObject<vector<double>>::CreateNew(position.vector);
+	mapKeys[Keys::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse.vector);
+	mapKeys[Keys::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(ambient.vector);
+	mapKeys[Keys::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular.vector);
+	mapKeys[Keys::POSITION] = GenericObject<CHL::Vec4>::CreateNew(position.vector);
 	mapKeys[Keys::RANGE] = GenericObject<double>::CreateNew(range);
-	mapKeys[Keys::DIRECTION] = GenericObject<vector<double>>::CreateNew(Direction.vector);
+	mapKeys[Keys::DIRECTION] = GenericObject<CHL::Vec4>::CreateNew(Direction.vector);
 	mapKeys[Keys::SPOT] = GenericObject<double>::CreateNew(spot);
-	mapKeys[Keys::ATTENUATION] = GenericObject<vector<double>>::CreateNew(att.vector);
+	mapKeys[Keys::ATTENUATION] = GenericObject<CHL::Vec4>::CreateNew(att.vector);
 	mapKeys[Keys::HASHADOW] = GenericObject<bool>::CreateNew(false);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
@@ -191,11 +189,11 @@ LuaLight::SpotLight::SpotLight(int slot,
 LuaUblas::Vector4 LuaLight::SpotLight::GetPosition()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::POSITION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetPosition(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::POSITION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -215,11 +213,11 @@ void LuaLight::SpotLight::SetRange(double val)
 LuaUblas::Vector4 LuaLight::SpotLight::GetDirection()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::DIRECTION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetDirection(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::DIRECTION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
@@ -239,11 +237,11 @@ void LuaLight::SpotLight::SetSpot(double val)
 LuaUblas::Vector4 LuaLight::SpotLight::GetAttenuation()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ATTENUATION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetAttenuation(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ATTENUATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }

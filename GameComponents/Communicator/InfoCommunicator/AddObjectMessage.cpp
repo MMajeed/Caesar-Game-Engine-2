@@ -19,7 +19,7 @@ Message::Status AddObjectMessage::Work()
 	this->ID = GenericObject<std::string>::GetValue(idObj);
 
 	{
-		boost::mutex::scoped_lock lock(InfoManager::GetInstance().mutex);
+		std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
 		InfoManager::GetInstance().Insert(obj);
 	}
 

@@ -1,8 +1,8 @@
 #include "Interface.h"
 
 #include <iomanip>
-#include <boost/thread.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <thread>
+#include <chrono>
 #include <Windows.h>
 
 Interface::Interface()
@@ -67,7 +67,7 @@ void Interface::Run()
 
 			if(timeWorked < 15)
 			{
-				boost::this_thread::sleep(boost::posix_time::milliseconds((int)(15 - timeWorked)));
+				std::this_thread::sleep_for(std::chrono::milliseconds((int)(15 - timeWorked)));
 			}
 		}
 	}
@@ -89,14 +89,14 @@ void Interface::ProccessMessages()
 		std::shared_ptr<Message> msg;
 
 		{
-			boost::mutex::scoped_lock lock(this->mutex);
+			std::lock_guard<std::mutex> lock(this->mutex);
 			msg = this->QueueMessages.front();
 		}
 		
 		msg->Proccess();
 
 		{
-			boost::mutex::scoped_lock lock(this->mutex);
+			std::lock_guard<std::mutex> lock(this->mutex);
 			this->QueueMessages.pop();
 		}
 	}
@@ -104,7 +104,7 @@ void Interface::ProccessMessages()
 
 void Interface::SubmitMessage(std::shared_ptr<Message> msg)
 {
-	boost::mutex::scoped_lock lock(this->mutex);
+    std::lock_guard<std::mutex> lock(this->mutex);
 	this->QueueMessages.push(msg);
 }
 

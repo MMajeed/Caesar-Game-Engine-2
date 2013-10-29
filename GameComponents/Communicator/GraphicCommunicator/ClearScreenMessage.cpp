@@ -2,7 +2,7 @@
 
 #include <GraphicManager.h>
 
-ClearScreenMessage::ClearScreenMessage(const boost::numeric::ublas::vector<double>& input)
+ClearScreenMessage::ClearScreenMessage(const CHL::Vec4& input)
 	: colour(input)
 {
 }

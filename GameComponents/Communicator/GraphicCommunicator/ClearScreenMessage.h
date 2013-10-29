@@ -2,20 +2,18 @@
 #define __ClearScreen__
 
 #include "Linker.h"
-
 #include <Message.h>
-
-#include <boost/numeric/ublas/vector.hpp>
+#include <Vector.h>
 
 class ClearScreenMessage : public Message
 {
 public:
-	ClearScreenMessage(const boost::numeric::ublas::vector<double>& input);
+	ClearScreenMessage(const CHL::Vec4& input);
 
 	virtual Message::Status Work();
 
 protected:
-	boost::numeric::ublas::vector<double> colour;
+	CHL::Vec4 colour;
 };
 
 #endif

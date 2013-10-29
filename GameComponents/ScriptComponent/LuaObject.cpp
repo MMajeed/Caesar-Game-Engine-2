@@ -10,30 +10,29 @@
 #include <InfoCommunicator\InfoCommunicator.h>
 #include <boost/numeric/ublas/io.hpp>
 
-using namespace boost::numeric::ublas;
 LuaObject::LuaObject()
 {
 	std::hash_map<std::string, std::shared_ptr<Object>> mapKeys;
 
 	mapKeys[Keys::GRAPHICDRAWABLEID] = std::shared_ptr<Object>(new GenericObject<std::string>(""));
 
-	boost::numeric::ublas::vector<double> loc(4);
+	CHL::Vec4 loc;
 	loc(0) = 0;	loc(1) = 0;	loc(2) = 0;	loc(3) = 0;	
-	mapKeys[Keys::LOCATION] = GenericObject<vector<double>>::CreateNew(loc);
+	mapKeys[Keys::LOCATION] = GenericObject<CHL::Vec4>::CreateNew(loc);
 
-	boost::numeric::ublas::vector<double> rot(4);
+	CHL::Vec4 rot;
 	rot(0) = 0;	rot(1) = 0;	rot(2) = 0;	rot(3) = 0;	
-	mapKeys[Keys::ROTATION] = GenericObject<vector<double>>::CreateNew(rot);
+	mapKeys[Keys::ROTATION] = GenericObject<CHL::Vec4>::CreateNew(rot);
 
-	boost::numeric::ublas::vector<double> sca(4);
+	CHL::Vec4 sca;
 	sca(0) = 1.0;	sca(1) = 1.0;	sca(2) = 1.0;	sca(3) = 1.0;	
-	mapKeys[Keys::SCALE] = GenericObject<vector<double>>::CreateNew(sca);
+	mapKeys[Keys::SCALE] = GenericObject<CHL::Vec4>::CreateNew(sca);
 
-	boost::numeric::ublas::vector<double> col(4);
+	CHL::Vec4 col;
 	col(0) = 1.0;	col(1) = 1.0;	col(2) = 1.0;	col(3) = 1.0;	
-	mapKeys[Keys::DIFFUSE] = GenericObject<vector<double>>::CreateNew(col);
-	mapKeys[Keys::AMBIENT] = GenericObject<vector<double>>::CreateNew(col);
-	mapKeys[Keys::SPECULAR] = GenericObject<vector<double>>::CreateNew(col);
+	mapKeys[Keys::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(col);
+	mapKeys[Keys::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(col);
+	mapKeys[Keys::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(col);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
@@ -74,74 +73,74 @@ void LuaObject::RemoveTexture(LuaBasicTexture texture)
 
 void LuaObject::SetLocation(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec.vector);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::LOCATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetLocation()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::LOCATION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetScale(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec.vector);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::SCALE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetScale()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::SCALE];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetRotation(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec.vector);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ROTATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetRotation()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ROTATION];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetDiffuse(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec.vector);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::DIFFUSE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetDiffuse()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::DIFFUSE];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetAmibent(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec.vector);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::AMBIENT, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetAmibent()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::AMBIENT];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetSpecular(LuaUblas::Vector4 vec)
 {
-	std::shared_ptr<Object> obj = GenericObject<vector<double>>::CreateNew(vec.vector);
+	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::SPECULAR, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaUblas::Vector4 LuaObject::GetSpecular()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::SPECULAR];
-	return GenericObject<vector<double>>::GetValue(obj);
+	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::Register(lua_State *lua)

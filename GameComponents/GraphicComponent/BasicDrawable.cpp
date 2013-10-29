@@ -7,9 +7,9 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
-#include <XNAToUblas.h>
+#include <XNAConverter.h>
 #include <Keys.h>
-#include <MathOperations.h>
+#include <3DMath.h>
 
 BasicDrawable::BasicDrawable()
 {
@@ -63,17 +63,17 @@ void BasicDrawable::Draw(TypedefObject::ObjectInfo& object)
 
 void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& object)
 {
-	boost::numeric::ublas::vector<double> location(4);	boost::numeric::ublas::vector<double> diffuse(4);
-	boost::numeric::ublas::vector<double> rotation(4);	boost::numeric::ublas::vector<double> ambient(4);
-	boost::numeric::ublas::vector<double> scale(4);		boost::numeric::ublas::vector<double> spec(4);
+	CHL::Vec4 location;	CHL::Vec4 diffuse;
+	CHL::Vec4 rotation;	CHL::Vec4 ambient;
+	CHL::Vec4 scale;	CHL::Vec4 spec;
 
 	this->GetInfo(object, location, rotation, scale, diffuse, ambient, spec);	
 
-	boost::numeric::ublas::matrix<double> mObjectFinal = MathOperations::ObjectCalculation(location, rotation, scale);
+	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(location, rotation, scale);
 
-	XMFLOAT4X4 worldMatrix = XNAToUblas::Convert4x4(mObjectFinal);
-	XMFLOAT4X4 prespectiveMatrix = XNAToUblas::Convert4x4(GraphicManager::GetInstance().PrespectiveMatrix);
-	XMFLOAT4X4 viewMatrix = XNAToUblas::Convert4x4(GraphicManager::GetInstance().CamerMatrix);
+	XMFLOAT4X4 worldMatrix = CHL::Convert4x4(mObjectFinal);
+	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().PrespectiveMatrix);
+	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(GraphicManager::GetInstance().CamerMatrix);
 	
 	XMMATRIX finalMatrix = XMLoadFloat4x4(&prespectiveMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&worldMatrix);
 
@@ -81,9 +81,9 @@ void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& obj
 	
 	cbCEF.world = XMLoadFloat4x4(&worldMatrix);
 	cbCEF.worldViewProj = finalMatrix;
-	cbCEF.colour.diffuse = XNAToUblas::ConvertVec4(diffuse);
-	cbCEF.colour.ambient = XNAToUblas::ConvertVec4(ambient);
-	cbCEF.colour.specular = XNAToUblas::ConvertVec4(spec);
+	cbCEF.colour.diffuse = CHL::ConvertVec4(diffuse);
+	cbCEF.colour.ambient = CHL::ConvertVec4(ambient);
+	cbCEF.colour.specular = CHL::ConvertVec4(spec);
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
@@ -237,22 +237,21 @@ std::shared_ptr<Drawable> BasicDrawable::clone() const
 }
 
 void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
-							boost::numeric::ublas::vector<double>& location,
-							boost::numeric::ublas::vector<double>& rotation,
-							boost::numeric::ublas::vector<double>& scale,
-							boost::numeric::ublas::vector<double>& diffuse,
-							boost::numeric::ublas::vector<double>& ambient,
-							boost::numeric::ublas::vector<double>& spec)
+							CHL::Vec4& location,
+							CHL::Vec4& rotation,
+							CHL::Vec4& scale,
+							CHL::Vec4& diffuse,
+							CHL::Vec4& ambient,
+							CHL::Vec4& spec)
 {	
 	TypedefObject::ObjectInfo::const_iterator iterKey;
 	iterKey = object.find(Keys::LOCATION);
 	if(iterKey != object.end())
 	{
-		location = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
+		location = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
-		location.resize(4);
 		location(0) = 0.0f; location(1) = 0.0f; location(2) = 0.0f; location(3) = 1.0f; 
 	}
 
@@ -260,55 +259,50 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ROTATION);
 	if(iterKey != object.end())
 	{
-		rotation = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
+		rotation = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
-		rotation.resize(4);
 		rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f; 
 	}
 
 	iterKey = object.find(Keys::SCALE);
 	if(iterKey != object.end())
 	{
-		scale = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
+		scale = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
-		scale.resize(4);
 		scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f; 
 	}
 
 	iterKey = object.find(Keys::DIFFUSE);
 	if(iterKey != object.end())
 	{
-		diffuse = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
+		diffuse = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
-		diffuse.resize(4);
 		diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f; 
 	}
 
 	iterKey = object.find(Keys::AMBIENT);
 	if(iterKey != object.end())
 	{
-		ambient = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
+		ambient = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
-		ambient.resize(4);
 		ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f; 
 	}
 
 	iterKey = object.find(Keys::SPECULAR);
 	if(iterKey != object.end())
 	{
-		spec = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(iterKey->second);
+		spec = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
-		spec.resize(4);
 		spec(0) = 1.0f; spec(1) = 1.0f; spec(2) = 1.0f; spec(3) = 1.0f; 
 	}
 }

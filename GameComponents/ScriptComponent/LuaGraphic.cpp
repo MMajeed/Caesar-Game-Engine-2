@@ -1,19 +1,11 @@
 #include "LuaGraphic.h"
-
-#include <exception>
-#include <Converter.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-
 #include "LuaManager.h"
 #include <GraphicCommunicator\ClearScreenMessage.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
-#include <Model.h>
-#include <Keys.h>
 
 void LuaGraphic::ClearScreen::Action(double x, double y, double z)
 {
-	boost::numeric::ublas::vector<double> newColour(3);
+	CHL::Vec4 newColour;
 
 	newColour(0) = x;	// Get the 1 paramter
 	newColour(1) = y;	// Get the 2 paramter

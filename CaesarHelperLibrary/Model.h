@@ -1,8 +1,7 @@
 #ifndef __Model__
 #define __Model__
 
-#include <boost/numeric/ublas/matrix.hpp>
-
+#include "Vector.h"
 #include <string>
 #include <vector>
 
@@ -15,9 +14,9 @@ public:
 
 	const aiScene* scene;
 	
-	std::vector<boost::numeric::ublas::vector<double>> Pos() const;
-	std::vector<boost::numeric::ublas::vector<double>> Normal() const;
-	std::vector<boost::numeric::ublas::vector<double>> Texture() const;
+	std::vector<CHL::Vec4> Pos() const;
+	std::vector<CHL::Vec4> Normal() const;
+	std::vector<CHL::Vec2> Texture() const;
 
 	std::vector<unsigned int> Faces()  const;
 

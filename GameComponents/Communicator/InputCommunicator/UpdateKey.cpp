@@ -9,7 +9,7 @@ UpdateKey::UpdateKey(unsigned int inputKey, bool keyStatus)
 
 Message::Status UpdateKey::Work() 
 {
-	boost::mutex::scoped_lock lock(InputManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(InputManager::GetInstance().mutex);
 
 	KeyStatus::Status status = this->currentStatus ? KeyStatus::Status::KeyDown : KeyStatus::Status::KeyUp;
 

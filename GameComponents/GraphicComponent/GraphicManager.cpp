@@ -4,17 +4,14 @@
 #include <Converter.h>
 #include <InfoCommunicator\ObjectManagerOutput.h>
 #include <Keys.h>
-#include <MathOperations.h>
-#include <XNAToUblas.h>
+#include <3DMath.h>
+#include <XNAConverter.h>
 #include "DX11Helper.h"
 #include "Buffers.h"
 #include "SpotLight.h"
 #include "DirectLight.h"
 
-using boost::numeric::ublas::vector;
-
 GraphicManager::GraphicManager()
-	: ClearColour(3)
 {
 	this->direct3d.pd3dDevice			= 0;
 	this->direct3d.pImmediateContext	= 0;
@@ -85,8 +82,8 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 			{
 				DirectLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
-				XMFLOAT4X4 viewShadow4x4 = XNAToUblas::Convert4x4(DirectLight::GetInstance().GetViewMatrix(*iterObj));
-				XMFLOAT4X4 presShadow4x4 = XNAToUblas::Convert4x4(DirectLight::GetInstance().GetPrespectiveMatrix(*iterObj));
+				XMFLOAT4X4 viewShadow4x4 = CHL::Convert4x4(DirectLight::GetInstance().GetViewMatrix(*iterObj));
+				XMFLOAT4X4 presShadow4x4 = CHL::Convert4x4(DirectLight::GetInstance().GetPrespectiveMatrix(*iterObj));
 
 				XMMATRIX viewMatrix = XMLoadFloat4x4(&viewShadow4x4);
 				XMMATRIX presMatrix = XMLoadFloat4x4(&presShadow4x4);
@@ -99,19 +96,19 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::POINT)
 		{
 			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
-			vector<double>& diffuse = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
-			vector<double>& ambient = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::AMBIENT)->second);
-			vector<double>& specular = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::SPECULAR)->second);
-			vector<double>& position = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::POSITION)->second);
+			CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
+			CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::AMBIENT)->second);
+			CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::SPECULAR)->second);
+			CHL::Vec4& position = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::POSITION)->second);
 			double range = GenericObject<double>::GetValue(iterObj->find(Keys::RANGE)->second);
-			vector<double>& att = GenericObject<vector<double>>::GetValue(iterObj->find(Keys::ATTENUATION)->second);
+			CHL::Vec4& att = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::ATTENUATION)->second);
 
-			light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
-			light.material.ambient = XNAToUblas::ConvertVec4(ambient);
-			light.material.specular = XNAToUblas::ConvertVec4(specular);
-			light.pos = XNAToUblas::ConvertVec4(position);
+			light.material.diffuse = CHL::ConvertVec4(diffuse);
+			light.material.ambient = CHL::ConvertVec4(ambient);
+			light.material.specular = CHL::ConvertVec4(specular);
+			light.pos = CHL::ConvertVec4(position);
 			light.range = (float)range;
-			light.attenuation = XNAToUblas::ConvertVec4(att);
+			light.attenuation = CHL::ConvertVec4(att);
 			light.type = 2;
 		}
 		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::SPOT)
@@ -123,8 +120,8 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 			{
 				SpotLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
-				XMFLOAT4X4 viewShadow4x4 = XNAToUblas::Convert4x4(SpotLight::GetInstance().GetViewMatrix(*iterObj));
-				XMFLOAT4X4 presShadow4x4 = XNAToUblas::Convert4x4(SpotLight::GetInstance().GetPrespectiveMatrix(*iterObj));
+				XMFLOAT4X4 viewShadow4x4 = CHL::Convert4x4(SpotLight::GetInstance().GetViewMatrix(*iterObj));
+				XMFLOAT4X4 presShadow4x4 = CHL::Convert4x4(SpotLight::GetInstance().GetPrespectiveMatrix(*iterObj));
 
 				XMMATRIX viewMatrix = XMLoadFloat4x4(&viewShadow4x4);
 				XMMATRIX presMatrix = XMLoadFloat4x4(&presShadow4x4);
@@ -147,9 +144,9 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& objects)
 {
 	// Camera
-	vector<double> vEye(4);
-	vector<double> vTM(4);
-	vector<double> vUp(4);
+	CHL::Vec4 vEye;
+	CHL::Vec4 vTM;
+	CHL::Vec4 vUp;
 	double pitch;	double yaw;	double roll;
 
 	TypedefObject::ObjectVector::const_iterator cameraIter;
@@ -167,9 +164,9 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		TypedefObject::ObjectInfo camera = *cameraIter;
-		vEye = GenericObject<vector<double>>::GetValue(camera[Keys::EYE]);
-		vTM = GenericObject<vector<double>>::GetValue(camera[Keys::TARGETMAGNITUDE]);
-		vUp = GenericObject<vector<double>>::GetValue(camera[Keys::UP]);
+		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::EYE]);
+		vTM = GenericObject<CHL::Vec4>::GetValue(camera[Keys::TARGETMAGNITUDE]);
+		vUp = GenericObject<CHL::Vec4>::GetValue(camera[Keys::UP]);
 		pitch = GenericObject<double>::GetValue(camera[Keys::RADIANPITCH]);
 		yaw = GenericObject<double>::GetValue(camera[Keys::RADIANYAW]);
 		roll = GenericObject<double>::GetValue(camera[Keys::RADIANROLL]);
@@ -182,7 +179,7 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 		pitch = 0;	yaw = 0;	roll = 0;	
 	}
 
-	this->CamerMatrix = MathOperations::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	this->CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 
 	// Prespective
 	TypedefObject::ObjectVector::const_iterator prespectiveIter;
@@ -241,11 +238,11 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 		farZ = 5000.0;
 	}
 
-	this->PrespectiveMatrix = MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
+	this->PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }
 void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 {
-	vector<double> vEye(4);
+	CHL::Vec4 vEye;
 
 	TypedefObject::ObjectVector::const_iterator cameraIter;
 	cameraIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
@@ -263,7 +260,7 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		TypedefObject::ObjectInfo camera = *cameraIter;
-		vEye = GenericObject<vector<double>>::GetValue(camera[Keys::EYE]);
+		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::EYE]);
 	}
 	else
 	{
@@ -272,8 +269,8 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 
 	cBuffer::cbInfo cbInfo;
 	
-	XMFLOAT4X4 view4x4 = XNAToUblas::Convert4x4(this->CamerMatrix);;
-	XMFLOAT4X4 proj4x4 = XNAToUblas::Convert4x4(this->PrespectiveMatrix);;
+	XMFLOAT4X4 view4x4 = CHL::Convert4x4(this->CamerMatrix);;
+	XMFLOAT4X4 proj4x4 = CHL::Convert4x4(this->PrespectiveMatrix);;
 
 	cbInfo.view = XMLoadFloat4x4(&view4x4);
 	cbInfo.proj = XMLoadFloat4x4(&proj4x4);

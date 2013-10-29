@@ -2,9 +2,8 @@
 #include <sstream>
 #include <iomanip>
 #include <memory>
-
+#include <chrono>
 #include "Window.h"
-
 #include <InputCommunicator\InputCommunicator.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
@@ -96,8 +95,8 @@ void Window::Run()
 		iter != this->vInterfaces.end();
 		++iter)
 	{
-		std::shared_ptr<boost::thread> thread
-			= std::shared_ptr<boost::thread>(new boost::thread(boost::bind(&Interface::Run, iter->second)));
+		std::shared_ptr<std::thread> thread
+			= std::shared_ptr<std::thread>(new std::thread(std::bind(&Interface::Run, iter->second)));
 		
 		this->vThreads.push_back(thread);
 	}
@@ -129,7 +128,8 @@ void Window::Run()
 		long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 		this->window.AbsoluteTime = elapsedCount / tickInterval;
 
-		boost::this_thread::sleep(boost::posix_time::milliseconds(15));
+		
+		std::this_thread::sleep_for(std::chrono::milliseconds((int)(15)));
 	}
 
 	KillTimer( this->window.hWnd, FRAMERATE_UPDATE_TIMER );

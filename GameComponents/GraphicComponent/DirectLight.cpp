@@ -1,10 +1,8 @@
 #include "DirectLight.h"
 #include "GraphicManager.h"
-#include <MathOperations.h>
+#include <3DMath.h>
 #include <Keys.h>
-#include <XNAToUblas.h>
-
-using boost::numeric::ublas::vector;
+#include <XNAConverter.h>
 
 static const float radius = 100.0f;
 
@@ -74,8 +72,8 @@ void DirectLight::GenerateShadowTexture(TypedefObject::ObjectInfo& light,
 {
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
 
-	boost::numeric::ublas::matrix<double> oldViewMatrix = graphicManager.CamerMatrix;
-	boost::numeric::ublas::matrix<double> oldPrespectiveMatrix = graphicManager.PrespectiveMatrix;
+	CHL::Matrix4x4 oldViewMatrix = graphicManager.CamerMatrix;
+	CHL::Matrix4x4 oldPrespectiveMatrix = graphicManager.PrespectiveMatrix;
 
 	graphicManager.CamerMatrix = this->GetViewMatrix(light);
 	graphicManager.PrespectiveMatrix = this->GetPrespectiveMatrix(light);
@@ -111,27 +109,27 @@ void DirectLight::Draw(TypedefObject::ObjectVector& objects)
 
 cBuffer::CLightDesc DirectLight::GetLightDesc(TypedefObject::ObjectInfo& lightInfo)
 {
-	vector<double>& diffuse = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
-	vector<double>& ambient = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
-	vector<double>& specular = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
-	vector<double>& direction = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
+	CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
+	CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
+	CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
+	CHL::Vec4& direction = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
 
 	cBuffer::CLightDesc light;
-	light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
-	light.material.ambient = XNAToUblas::ConvertVec4(ambient);
-	light.material.specular = XNAToUblas::ConvertVec4(specular);
-	light.dir = XNAToUblas::ConvertVec4(direction);
+	light.material.diffuse = CHL::ConvertVec4(diffuse);
+	light.material.ambient = CHL::ConvertVec4(ambient);
+	light.material.specular = CHL::ConvertVec4(specular);
+	light.dir = CHL::ConvertVec4(direction);
 	light.type = 1;
 	return light;
 }
 
-boost::numeric::ublas::matrix<double> DirectLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
+CHL::Matrix4x4 DirectLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
 {
 	double pitch; double yaw; double roll;
 
-	pitch = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(0);
-	yaw = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(1);
-	roll = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(2);
+	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(0);
+	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(1);
+	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
 	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
@@ -146,15 +144,15 @@ boost::numeric::ublas::matrix<double> DirectLight::GetViewMatrix(TypedefObject::
 
 	XMFLOAT4X4 vFloat4x4;
 	XMStoreFloat4x4(&vFloat4x4, V); 
-	return XNAToUblas::Convert4x4(vFloat4x4);
+	return CHL::Convert4x4(vFloat4x4);
 }
-boost::numeric::ublas::matrix<double> DirectLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
+CHL::Matrix4x4 DirectLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
 {
 	double pitch; double yaw; double roll;
 
-	pitch = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(0);
-	yaw = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(1);
-	roll = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(2);
+	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(0);
+	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(1);
+	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
 	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
@@ -183,5 +181,5 @@ boost::numeric::ublas::matrix<double> DirectLight::GetPrespectiveMatrix(TypedefO
 
 	XMFLOAT4X4 pFloat4x4;
 	XMStoreFloat4x4(&pFloat4x4, P); 
-	return XNAToUblas::Convert4x4(pFloat4x4);
+	return CHL::Convert4x4(pFloat4x4);
 }

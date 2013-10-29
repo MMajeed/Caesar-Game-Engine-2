@@ -1,10 +1,8 @@
 #include "SpotLight.h"
 #include "GraphicManager.h"
-#include <MathOperations.h>
+#include <3DMath.h>
 #include <Keys.h>
-#include <XNAToUblas.h>
-
-using boost::numeric::ublas::vector;
+#include <XNAConverter.h>
 
 SpotLight::SpotLight()
 {
@@ -72,8 +70,8 @@ void SpotLight::GenerateShadowTexture(TypedefObject::ObjectInfo& light,
 {
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
 
-	boost::numeric::ublas::matrix<double> oldViewMatrix = graphicManager.CamerMatrix;
-	boost::numeric::ublas::matrix<double> oldPrespectiveMatrix = graphicManager.PrespectiveMatrix;
+	CHL::Matrix4x4 oldViewMatrix = graphicManager.CamerMatrix;
+	CHL::Matrix4x4 oldPrespectiveMatrix = graphicManager.PrespectiveMatrix;
 
 	graphicManager.CamerMatrix = this->GetViewMatrix(light);
 	graphicManager.PrespectiveMatrix = this->GetPrespectiveMatrix(light);
@@ -109,46 +107,46 @@ void SpotLight::Draw(TypedefObject::ObjectVector& objects)
 
 cBuffer::CLightDesc SpotLight::GetLightDesc(TypedefObject::ObjectInfo& lightInfo)
 {
-	vector<double>& diffuse = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
-	vector<double>& ambient = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
-	vector<double>& specular = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
-	vector<double>& position = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::POSITION)->second);
+	CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
+	CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
+	CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
+	CHL::Vec4& position = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::POSITION)->second);
 	double range = GenericObject<double>::GetValue(lightInfo.find(Keys::RANGE)->second);
-	vector<double>& direction = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
+	CHL::Vec4& direction = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
 	double spot = GenericObject<double>::GetValue(lightInfo.find(Keys::SPOT)->second);
-	vector<double>& att = GenericObject<vector<double>>::GetValue(lightInfo.find(Keys::ATTENUATION)->second);
+	CHL::Vec4& att = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::ATTENUATION)->second);
 
 	cBuffer::CLightDesc light;
-	light.material.diffuse = XNAToUblas::ConvertVec4(diffuse);
-	light.material.ambient = XNAToUblas::ConvertVec4(ambient);
-	light.material.specular = XNAToUblas::ConvertVec4(specular);
-	light.pos = XNAToUblas::ConvertVec4(position);
+	light.material.diffuse = CHL::ConvertVec4(diffuse);
+	light.material.ambient = CHL::ConvertVec4(ambient);
+	light.material.specular = CHL::ConvertVec4(specular);
+	light.pos = CHL::ConvertVec4(position);
 	light.range = (float)range;
-	light.dir = XNAToUblas::ConvertVec4(direction);
+	light.dir = CHL::ConvertVec4(direction);
 	light.spot = (float)spot;
-	light.attenuation = XNAToUblas::ConvertVec4(att);
+	light.attenuation = CHL::ConvertVec4(att);
 	light.type = 3;
 	return light;
 }
 
-boost::numeric::ublas::matrix<double> SpotLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
+CHL::Matrix4x4 SpotLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
 {
-	boost::numeric::ublas::vector<double> vEye(4);
-	boost::numeric::ublas::vector<double> vT(4);
-	boost::numeric::ublas::vector<double> vUp(4);
+	CHL::Vec4 vEye;
+	CHL::Vec4 vT;
+	CHL::Vec4 vUp;
 	double pitch; double yaw; double roll;
 
-	vEye = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::POSITION]);
+	vEye = GenericObject<CHL::Vec4>::GetValue(light[Keys::POSITION]);
 	vT(0) = 0.0; vT(1) = 0.0; vT(2) = 1.0; vT(3) = 0.0;
 	vUp(0) = 0.0; vUp(1) = 1.0; vUp(2) = 0.0; vUp(3) = 0.0;
 
-	pitch = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(0);
-	yaw = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(1);
-	roll = GenericObject<boost::numeric::ublas::vector<double>>::GetValue(light[Keys::DIRECTION])(2);
+	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(0);
+	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(1);
+	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(2);
 
-	return MathOperations::ViewCalculation(vEye, vT, vUp, pitch, yaw, roll);
+	return CHL::ViewCalculation(vEye, vT, vUp, pitch, yaw, roll);
 }
-boost::numeric::ublas::matrix<double> SpotLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
+CHL::Matrix4x4 SpotLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
 {
 	double FovAngleY = 1.570796327; 
 	double height = 2048;
@@ -156,5 +154,5 @@ boost::numeric::ublas::matrix<double> SpotLight::GetPrespectiveMatrix(TypedefObj
 	double nearZ = 1.0;
 	double farZ = GenericObject<double>::GetValue(light.find(Keys::RANGE)->second);
 
-	return MathOperations::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
+	return CHL::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }

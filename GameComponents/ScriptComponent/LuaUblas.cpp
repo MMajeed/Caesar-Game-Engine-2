@@ -3,27 +3,24 @@
 #include <luabind\luabind.hpp>
 
 LuaUblas::Vector4::Vector4()
-	: vector(4)
 {
 	this->vector(0) = 0.0;
 	this->vector(1) = 0.0;
 	this->vector(2) = 0.0;
 	this->vector(3) = 0.0;
 }
-LuaUblas::Vector4::Vector4(boost::numeric::ublas::vector<double> vecValue)
-	: vector(4)
+LuaUblas::Vector4::Vector4(CHL::Vec4 vecValue)
 {
 	this->vector = vecValue;
 }
 LuaUblas::Vector4::Vector4(double xValue, double yValue, double zValue, double wValue)
-	: vector(4)
 {
 	this->vector(0) = xValue;
 	this->vector(1) = yValue;
 	this->vector(2) = zValue;
 	this->vector(3) = wValue;
 }
-LuaUblas::Vector4::operator boost::numeric::ublas::vector<double>()
+LuaUblas::Vector4::operator CHL::Vec4()
 {
 	return this->vector;
 }

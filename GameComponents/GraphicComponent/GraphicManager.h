@@ -3,8 +3,8 @@
 
 #include "Linker.h"
 
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <Vector.h>
+#include <Matrix.h>
 #include <d3d11.h>
 #include <Singleton.h>
 #include <Queryable.h>
@@ -61,10 +61,10 @@ protected:
 
 	virtual void InitDevice();
 public:
-	boost::numeric::ublas::vector<double> ClearColour;
+	CHL::Vec4 ClearColour;
 
-	boost::numeric::ublas::matrix<double> CamerMatrix;
-	boost::numeric::ublas::matrix<double> PrespectiveMatrix;
+	CHL::Matrix4x4 CamerMatrix;
+	CHL::Matrix4x4 PrespectiveMatrix;
 
 	friend CHL::Singelton<GraphicManager>;
 };

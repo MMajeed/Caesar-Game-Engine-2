@@ -78,7 +78,7 @@ Message::Status BasicDrawableConfiguration::AddBasicDrawableMessage::Work()
 		vectorVertices.push_back(v);
 	}
 
-	boost::mutex::scoped_lock lock(GraphicManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 	std::shared_ptr<BasicDrawable> newObject =
 		BasicDrawable::Spawn(vectorVertices,
@@ -105,7 +105,7 @@ BasicDrawableConfiguration::ChangeRastersizerState::ChangeRastersizerState
 
 Message::Status BasicDrawableConfiguration::ChangeRastersizerState::Work()
 {
-	boost::mutex::scoped_lock lock(GraphicManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 	auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
 	auto iterObjDrawable = allObjects.find(this->ID);

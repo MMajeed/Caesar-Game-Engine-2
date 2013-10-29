@@ -10,7 +10,7 @@ UpdateObjectMessage::UpdateObjectMessage(const std::string& inputObjectID, const
 }
 Message::Status UpdateObjectMessage::Work()
 {
-	boost::mutex::scoped_lock lock(InfoManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
 
 	InfoManager::GetInstance().UpdateObject(this->objectID, this->infoID, this->info);
 

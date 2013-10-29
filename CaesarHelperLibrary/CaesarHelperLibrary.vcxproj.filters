@@ -16,11 +16,17 @@
     <Filter Include="Model">
       <UniqueIdentifier>{6b25834a-e096-4951-931e-f79d6d0bb535}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DMath\XNAToUblas">
-      <UniqueIdentifier>{8d084626-e6a1-4e6e-9f54-782b19aae73a}</UniqueIdentifier>
+    <Filter Include="3DMath\Vector">
+      <UniqueIdentifier>{4daac0df-106c-4c6a-b117-150468900652}</UniqueIdentifier>
     </Filter>
-    <Filter Include="3DMath\MathOperations">
-      <UniqueIdentifier>{2cabd67c-66e6-41b3-a95c-c6879aed46a0}</UniqueIdentifier>
+    <Filter Include="3DMath\Matrix">
+      <UniqueIdentifier>{58100e33-3d80-482b-b5bc-ae8d8865e889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\XNAConverter">
+      <UniqueIdentifier>{a6dd602b-cd65-4516-a888-8596b5422531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\3DMath">
+      <UniqueIdentifier>{c3e9a25e-be88-4225-8a4a-80f83c17f02c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -34,28 +40,34 @@
     <ClInclude Include="Queryable.h">
       <Filter>Queryable</Filter>
     </ClInclude>
-    <ClInclude Include="XNAToUblas.h">
-      <Filter>3DMath\XNAToUblas</Filter>
-    </ClInclude>
-    <ClInclude Include="MathOperations.h">
-      <Filter>3DMath\MathOperations</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>3DMath\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>3DMath\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="XNAConverter.h">
+      <Filter>3DMath\XNAConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMath.h">
+      <Filter>3DMath\3DMath</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Converter.cpp">
       <Filter>Converter</Filter>
     </ClCompile>
-    <ClCompile Include="XNAToUblas.cpp">
-      <Filter>3DMath\XNAToUblas</Filter>
-    </ClCompile>
-    <ClCompile Include="MathOperations.cpp">
-      <Filter>3DMath\MathOperations</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="XNAConverter.cpp">
+      <Filter>3DMath\XNAConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMath.cpp">
+      <Filter>3DMath\3DMath</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

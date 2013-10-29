@@ -5,7 +5,7 @@ GetKeyStatus::Key GetKeyStatus::GetKey(unsigned int keyID)
 {
 	CHL::MapQ<unsigned int, KeyStatus> keys;
 
-	{boost::mutex::scoped_lock lock(InputManager::GetInstance().mutex);		
+	{std::lock_guard<std::mutex> lock(InputManager::GetInstance().mutex);
 		keys = InputManager::GetInstance().AllObjects();
 	}
 
