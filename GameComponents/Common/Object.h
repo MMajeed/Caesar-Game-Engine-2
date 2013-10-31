@@ -26,8 +26,9 @@ public:
 		return std::shared_ptr<Object>(new GenericObject(*this));
 	}
 
-	static std::shared_ptr<Object> CreateNew(T value){ return std::shared_ptr<GenericObject<T>>(new GenericObject<T>(value)); }
+	static std::shared_ptr<GenericObject<T>> CreateNew(T value){ return std::shared_ptr<GenericObject<T>>(new GenericObject<T>(value)); }
 	static T& GetValue(std::shared_ptr<Object> value){ return std::dynamic_pointer_cast<GenericObject<T>>(value)->item; }
+	static std::shared_ptr<GenericObject<T>> Cast(std::shared_ptr<Object> value){ return std::dynamic_pointer_cast<GenericObject<T>>(value); }
 };
 
 #endif //__Object__

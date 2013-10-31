@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarGameEngine", "CaesarGameEngine\CaesarGameEngine.vcxproj", "{9239EA0D-3EB3-416B-A672-C4BEA37B445B}"
 	ProjectSection(ProjectDependencies) = postProject
 		{17A58400-1B6B-4A1B-BA78-E91F0719BDFE} = {17A58400-1B6B-4A1B-BA78-E91F0719BDFE}
@@ -243,5 +245,8 @@ Global
 		{9799E6FB-BF57-41DD-B87A-772B743F21FD} = {767D1DFA-AF97-4D43-BD4D-FFBE1387A0B0}
 		{DD0A37AF-4AD5-492F-8DE3-BEB3BD74EFFC} = {5B6A4ED0-5B13-430A-8894-4513D903E987}
 		{17A58400-1B6B-4A1B-BA78-E91F0719BDFE} = {5B6A4ED0-5B13-430A-8894-4513D903E987}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal
