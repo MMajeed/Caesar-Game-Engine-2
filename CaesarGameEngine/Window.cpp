@@ -12,6 +12,7 @@
 #include <InfoCommunicator\AddObjectMessage.h>
 #include <Keys.h>
 #include <Converter.h>
+#include <Error.h>
 
 Window::Window()
 {
@@ -130,6 +131,8 @@ void Window::Run()
 
 		
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(15)));
+
+		Error::GetInstance().Check();
 	}
 
 	KillTimer( this->window.hWnd, FRAMERATE_UPDATE_TIMER );

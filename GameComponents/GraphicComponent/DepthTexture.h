@@ -1,32 +1,28 @@
-#ifndef __BasicTexture__
-#define __BasicTexture__
+#ifndef __DepthTexture__
+#define __DepthTexture__
 
 #include "Linker.h"
-
 #include "Texture.h"
-
-#include <string>
 #include <D3D11.h>
 
-class BasicTexture : public Texture
+class DepthTexture : public Texture
 {
 public:
-	BasicTexture(const std::string& inputID);
+	DepthTexture(const std::string& inputID);
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void SettupTexture();
 	virtual void CleanupTexture();
-	
-	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, int slot, const std::string& fileName);
+
+	static std::shared_ptr<DepthTexture> Spawn(const std::string& inputID, int slot, const std::string& fileName);
 
 	struct
 	{
 		int							slot;
-		std::string					textureFileName;
 		ID3D11ShaderResourceView*	pTexture;
 	} D3DInfo;
 };
 
 
-#endif //__BasicTexture__
+#endif //__DepthTexture__

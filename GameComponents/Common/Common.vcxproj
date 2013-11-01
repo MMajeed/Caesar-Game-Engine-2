@@ -86,10 +86,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Error.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Message.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Error.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Keys.h" />

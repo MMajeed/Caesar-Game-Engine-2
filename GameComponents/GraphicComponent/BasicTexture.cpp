@@ -40,7 +40,10 @@ void BasicTexture::CleanupTexture()
 	
 	pImmediateContext->PSSetShaderResources(this->D3DInfo.slot,1,&tab);
 }
-	
+void BasicTexture::Update(double realTime, double deltaTime)
+{
+
+}
 std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID, int slot, const std::string& fileName)
 {
 	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));

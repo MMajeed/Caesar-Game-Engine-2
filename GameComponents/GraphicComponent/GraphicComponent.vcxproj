@@ -99,6 +99,7 @@
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="Buffers.h" />
     <ClInclude Include="D3DShaderInfo.h" />
+    <ClInclude Include="DepthTexture.h" />
     <ClInclude Include="DirectLight.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Drawable.h" />

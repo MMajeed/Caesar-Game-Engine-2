@@ -7,6 +7,9 @@
     <ClCompile Include="Message.cpp">
       <Filter>Message</Filter>
     </ClCompile>
+    <ClCompile Include="Error.cpp">
+      <Filter>Error</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keys.h">
@@ -22,6 +25,9 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="Error.h">
+      <Filter>Error</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Keys">
@@ -35,6 +41,9 @@
     </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{5c73e92a-bf60-4850-9197-4f23c5bf59f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Error">
+      <UniqueIdentifier>{f62a7ced-a9a3-43a6-84b2-8b2b23647062}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

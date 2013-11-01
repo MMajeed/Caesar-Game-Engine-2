@@ -16,7 +16,7 @@ public:
 	BasicDrawable(const std::string& inputID);
 	virtual void Init();
 	virtual void Destory();
-	virtual void Update(float delta);
+	virtual void Update(double realTime, double deltaTime);
 	virtual void Draw(TypedefObject::ObjectInfo& object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	

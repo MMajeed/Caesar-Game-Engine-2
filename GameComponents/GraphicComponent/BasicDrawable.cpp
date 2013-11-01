@@ -46,7 +46,7 @@ void BasicDrawable::Destory()
 	this->D3DInfo.pRastersizerState->Release();
 }
 
-void BasicDrawable::Update(float delta)
+void BasicDrawable::Update(double realTime, double deltaTime)
 {
 
 }

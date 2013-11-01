@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include <Windows.h>
+#include "Error.h"
 
 Interface::Interface()
 {
@@ -71,13 +72,9 @@ void Interface::Run()
 			}
 		}
 	}
-	catch(std::exception ex)
-	{
-		throw;
-	}
 	catch( ... )
 	{
-		throw;
+		Error::GetInstance().SetError(std::current_exception());
 	}
 }
 
