@@ -3,7 +3,8 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 
-BasicTexture::BasicTexture()
+BasicTexture::BasicTexture(const std::string& inputID)
+	: Texture(inputID)
 {
 	this->D3DInfo.pTexture = 0;
 	this->D3DInfo.slot = 0;
@@ -40,9 +41,9 @@ void BasicTexture::CleanupTexture()
 	pImmediateContext->PSSetShaderResources(this->D3DInfo.slot,1,&tab);
 }
 	
-std::shared_ptr<BasicTexture> BasicTexture::Spawn(int slot, std::string fileName)
+std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID, int slot, const std::string& fileName)
 {
-	std::shared_ptr<BasicTexture> newTexture(new BasicTexture);
+	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));
 	newTexture->D3DInfo.textureFileName = fileName;
 	newTexture->D3DInfo.slot = slot;
 

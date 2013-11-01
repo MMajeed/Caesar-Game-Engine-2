@@ -79,7 +79,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 			light = DirectLight::GetInstance().GetLightDesc(*iterObj);
 
 			//if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
-			{
+			/*{
 				DirectLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
 				XMFLOAT4X4 viewShadow4x4 = CHL::Convert4x4(DirectLight::GetInstance().GetViewMatrix(*iterObj));
@@ -91,7 +91,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 				light.lightView = viewMatrix;
 				light.lightProject = presMatrix;
 				light.hasShadow = true;
-			}
+			}*/
 		}
 		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::POINT)
 		{
@@ -116,7 +116,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
 			light = SpotLight::GetInstance().GetLightDesc(*iterObj);
 			
-			/*if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
+			if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
 			{
 				SpotLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
@@ -129,7 +129,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 				light.lightView = viewMatrix;
 				light.lightProject = presMatrix;
 				light.hasShadow = true;
-			}*/
+			}
 		}
 		
 		lightBuffer.lights[slot] = light;

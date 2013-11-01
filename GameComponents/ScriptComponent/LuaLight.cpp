@@ -74,8 +74,6 @@ LuaLight::DirectionalLight::DirectionalLight(int slot, LuaUblas::Vector4 diffuse
 
 	InfoCommunicator::SubmitMessage(msg);
 
-	msg->WaitTillProcccesed();
-
 	this->ID = msg->ID;
 }
 		
@@ -112,8 +110,6 @@ LuaLight::PointLight::PointLight(int slot,
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
 	InfoCommunicator::SubmitMessage(msg);
-
-	msg->WaitTillProcccesed();
 
 	this->ID = msg->ID;
 }
@@ -180,8 +176,6 @@ LuaLight::SpotLight::SpotLight(int slot,
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
 	InfoCommunicator::SubmitMessage(msg);
-
-	msg->WaitTillProcccesed();
 
 	this->ID = msg->ID;
 }

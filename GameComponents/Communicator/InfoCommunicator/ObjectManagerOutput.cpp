@@ -2,9 +2,10 @@
 #include <thread>
 
 #include <InfoManager.h>
+#include <Keys.h>
 
 void FuncInsert(CHL::MapQ<std::string, Info>::const_iterator startIter,
-					   CHL::MapQ<std::string, Info>::const_iterator endIter,
+				CHL::MapQ<std::string, Info>::const_iterator endIter,
 					   std::size_t start,
 					   CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>* convertedVec)
 {
@@ -38,26 +39,30 @@ CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutpu
 		
 	std::vector<std::shared_ptr<std::thread>> vThreads;
 
-	static const int threadsPer = 100;
+	static const int threadsPer = 2000;
 
-	int numberOfThreads = (convertedVec.size() / threadsPer) + 1;
+	int numberOfThreads = ( (convertedVec.size() - 1) / threadsPer) + 1;
 	std::vector<std::shared_ptr<std::thread>> threads;
 	threads.reserve(numberOfThreads);
+
+	CHL::MapQ<std::string, Info>::const_iterator startIter = allObjects.cbegin();
+	CHL::MapQ<std::string, Info>::const_iterator endIter = allObjects.cbegin();
+	std::size_t currentEndLoc = 0;
 
 	for(int i = 0; i < numberOfThreads; ++i)
 	{
 		std::size_t start = 0;
 		std::size_t end = 0;
-		CHL::MapQ<std::string, Info>::const_iterator startIter = allObjects.cbegin();
-		CHL::MapQ<std::string, Info>::const_iterator endIter = allObjects.cbegin();
 
-		start = i * threadsPer;		
-		std::advance(startIter, start);
+		start = i * threadsPer;
+		startIter = endIter;
 				
 		end = (i + 1) * threadsPer;
 		if(end > convertedVec.size())
 			end = convertedVec.size();
-		std::advance(endIter, end);
+		std::size_t moveForward = end - currentEndLoc;
+		std::advance(endIter, moveForward);
+		currentEndLoc = end;
 
 		std::shared_ptr<std::thread> thread = 
 			std::shared_ptr<std::thread>(new std::thread(std::bind(&FuncInsert, startIter, endIter, start, &convertedVec)));
@@ -65,14 +70,26 @@ CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutpu
 		threads.push_back(thread);
 	}
 
-
 	for(auto threadIter = threads.begin();
 		threadIter != threads.end();
 		++threadIter)
 	{
 		(*threadIter)->join();
 	}
-	
+
+	/*int i = 0;
+	for (auto iter = allObjects.begin();
+		iter != allObjects.end();
+		++iter, ++i)
+	{
+		std::string id1 = iter->first;
+		std::string id2 = GenericObject<std::string>::GetValue(convertedVec[i][Keys::ID]);
+
+		if (id1 != id2)
+		{
+			throw i;
+		}
+	}*/
 
 	return convertedVec;
 }

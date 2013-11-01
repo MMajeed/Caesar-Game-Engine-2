@@ -38,8 +38,6 @@ LuaObject::LuaObject()
 
 	InfoCommunicator::SubmitMessage(msg);
 
-	msg->WaitTillProcccesed();
-
 	this->ID = msg->ID;
 }
 

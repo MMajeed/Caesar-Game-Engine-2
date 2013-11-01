@@ -1,9 +1,11 @@
 #include "BasicDrawableConfiguration.h"
-
 #include <Vertex.h>
 #include <D3DShaderInfo.h>
 #include <BasicDrawable.h>
 #include <GraphicManager.h>
+#include <Converter.h>
+#include <boost/uuid/uuid_generators.hpp> // generators
+#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 
 BasicDrawableConfiguration::AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 												std::string	vertexFileName,
@@ -14,6 +16,7 @@ BasicDrawableConfiguration::AddBasicDrawableMessage::AddBasicDrawableMessage(con
 												std::string	pixelModel)
 	: model(model)
 {
+	this->ID = CHL::ToString(boost::uuids::random_generator()());
 	this->vertexFileName = vertexFileName;
 	this->vertexEntryPoint = vertexEntryPoint;
 	this->vertexModel = vertexModel;
@@ -81,7 +84,8 @@ Message::Status BasicDrawableConfiguration::AddBasicDrawableMessage::Work()
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 	std::shared_ptr<BasicDrawable> newObject =
-		BasicDrawable::Spawn(vectorVertices,
+		BasicDrawable::Spawn(this->ID,
+							vectorVertices,
 							vectorIndices,
 							vertexFile,
 							pixelFile);

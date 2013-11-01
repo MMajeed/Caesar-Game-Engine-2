@@ -10,15 +10,14 @@
 class Texture
 {
 public:
-	Texture(){this->ID = CHL::ToString(boost::uuids::random_generator()()); }
+	Texture(const std::string& inputID) : ID(inputID){}
 	virtual void Init()				= 0;
 	virtual void Destory()			= 0;
 	virtual void SettupTexture()	= 0;
-	virtual void CleanupTexture()	= 0;
-
-	std::string	ID;
-
+	virtual void CleanupTexture()   = 0;
 	virtual ~Texture(){}
+
+	const std::string	ID;
 };
 
 

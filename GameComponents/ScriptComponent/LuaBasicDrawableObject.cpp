@@ -33,8 +33,6 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 
 	GraphicCommunicator::SubmitMessage(msg);
 
-	msg->WaitTillProcccesed();
-
 	this->ID = msg->ID;
 }
 

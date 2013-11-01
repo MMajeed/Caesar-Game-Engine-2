@@ -27,8 +27,6 @@ LuaCamera::LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 targetMagintude, L
 
 	InfoCommunicator::SubmitMessage(msg);
 
-	msg->WaitTillProcccesed();
-
 	this->ID = msg->ID;
 }
 void LuaCamera::SetAsMain()

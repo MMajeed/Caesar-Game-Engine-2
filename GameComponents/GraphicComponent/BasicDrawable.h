@@ -13,14 +13,15 @@
 class BasicDrawable : public Drawable
 {
 public:
-	BasicDrawable();
+	BasicDrawable(const std::string& inputID);
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(float delta);
 	virtual void Draw(TypedefObject::ObjectInfo& object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
-	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
+	static std::shared_ptr<BasicDrawable> Spawn(const std::string& inputID,
+												const std::vector<Vertex>&	vectorVertices,
 												const std::vector<WORD>&	vectorIndices,
 												D3DShaderInfo				vertexFile,
 												D3DShaderInfo				pixelFile);

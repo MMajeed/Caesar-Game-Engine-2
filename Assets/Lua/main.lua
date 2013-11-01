@@ -35,7 +35,7 @@ sphereDrawable = BasicDrawableObject({[Keys["ModelFile"]]        = "Assets/PlyFi
 --    sphereObject:SetGraphic(sphereDrawable);
 --end
 
-for i = 1, 10000, 1 do
+for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
     local y = 2;
     local z = 20;

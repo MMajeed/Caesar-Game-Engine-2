@@ -11,13 +11,13 @@
 class BasicTexture : public Texture
 {
 public:
-	BasicTexture();
+	BasicTexture(const std::string& inputID);
 	virtual void Init();
 	virtual void Destory();
 	virtual void SettupTexture();
 	virtual void CleanupTexture();
 	
-	static std::shared_ptr<BasicTexture> Spawn(int slot, std::string fileName);
+	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, int slot, const std::string& fileName);
 
 	struct
 	{
