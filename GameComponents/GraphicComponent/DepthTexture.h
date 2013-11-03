@@ -20,7 +20,10 @@ public:
 	struct
 	{
 		int							slot;
-		ID3D11ShaderResourceView*	pTexture;
+		unsigned int				int imageSize;
+		ID3D11ShaderResourceView*	mDepthMapSRV;
+		ID3D11DepthStencilView*		mDepthMapDSV;
+		D3D11_VIEWPORT				mViewport;
 	} D3DInfo;
 };
 

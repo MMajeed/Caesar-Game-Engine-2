@@ -21,14 +21,23 @@ public:
 	operator T&(){ return this->item; }
 	T GetValue()const{ return this->item; } 
 	T& GetValue(){ return this->item; }
-	std::shared_ptr<Object> Clone()  const
-	{
-		return std::shared_ptr<Object>(new GenericObject(*this));
-	}
+	std::shared_ptr<Object> Clone()  const{ return std::make_shared<GenericObject<T>>(*this); }
 
-	static std::shared_ptr<GenericObject<T>> CreateNew(T value){ return std::shared_ptr<GenericObject<T>>(new GenericObject<T>(value)); }
-	static T& GetValue(std::shared_ptr<Object> value){ return std::dynamic_pointer_cast<GenericObject<T>>(value)->item; }
-	static std::shared_ptr<GenericObject<T>> Cast(std::shared_ptr<Object> value){ return std::dynamic_pointer_cast<GenericObject<T>>(value); }
+	static std::shared_ptr<GenericObject<T>> CreateNew(const T& value){ return std::make_shared<GenericObject<T>>(value); }
+	static T& GetValue(std::shared_ptr<Object> value){ return GenericObject<T>::Cast(value)->item; }
+	static std::shared_ptr<GenericObject<T>> Cast(std::shared_ptr<Object> value)
+	{
+#ifdef _DEBUG
+		std::shared_ptr<GenericObject<T>> obj = std::dynamic_pointer_cast<GenericObject<T>>(value);
+		if (!obj)
+		{
+			throw std::exception("Attempting to access a wrong Generic Object in T& GetValue(std::shared_ptr<Object> value)");
+		}
+		return obj;
+#else
+		return std::static_pointer_cast<GenericObject<T>>(value);
+#endif
+	}
 };
 
 #endif //__Object__

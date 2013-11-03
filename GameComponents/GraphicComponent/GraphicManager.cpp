@@ -44,7 +44,7 @@ void GraphicManager::Work()
 	this->SetupConstantBuffer(objects);
 	this->ClearScreen(objects);
 	this->DrawObjects(objects);
-	this->Present(objects);	
+	this->Present(objects);
 }
 
 void GraphicManager::Shutdown()
