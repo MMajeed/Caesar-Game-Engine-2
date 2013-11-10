@@ -21,9 +21,6 @@ public:
 		LuaMath::Vector4 GetSpecular();
 		void SetSpecular(LuaMath::Vector4 vec);
 
-		int GetSlot();
-		void SetSlot(int i);
-
 		std::string ID;
 	};
 

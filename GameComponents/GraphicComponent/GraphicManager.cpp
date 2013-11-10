@@ -54,8 +54,7 @@ void GraphicManager::Shutdown()
 
 void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 {
-	cBuffer::cbLight lightBuffer;
-	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
+	std::vector<cBuffer::CLightDesc> vecLightBuffer;
 
 	for(auto iterObj = objects.begin();
 		iterObj != objects.end();
@@ -70,12 +69,10 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 			continue;
 		}
 
-		int slot;
 		cBuffer::CLightDesc light;
 		ZeroMemory(&light, sizeof(cBuffer::CLightDesc));
 		if (GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::Light::LightTypes::DIRECTIONAL)
 		{
-			slot = GenericObject<int>::GetValue(iterObj->find(Keys::Light::LIGHTSLOT)->second);
 			light = DirectLight::GetInstance().GetLightDesc(*iterObj);
 
 			//if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
@@ -95,7 +92,6 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		}
 		else if (GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::Light::LightTypes::POINT)
 		{
-			slot = GenericObject<int>::GetValue(iterObj->find(Keys::Light::LIGHTSLOT)->second);
 			CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::DIFFUSE)->second);
 			CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::AMBIENT)->second);
 			CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::SPECULAR)->second);
@@ -113,7 +109,6 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		}
 		else if (GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::Light::LightTypes::SPOT)
 		{
-			slot = GenericObject<int>::GetValue(iterObj->find(Keys::Light::LIGHTSLOT)->second);
 			light = SpotLight::GetInstance().GetLightDesc(*iterObj);
 			
 			if (GenericObject<bool>::GetValue(iterObj->find(Keys::Light::HASHADOW)->second) == true)
@@ -131,8 +126,22 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 				light.hasShadow = true;
 			}
 		}
-		
-		lightBuffer.lights[slot] = light;
+
+		vecLightBuffer.push_back(light);
+	}
+
+	cBuffer::cbLight lightBuffer;
+	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
+
+	std::size_t numberOfLights = vecLightBuffer.size();
+	if (numberOfLights > 0)
+	{
+		unsigned int totalSize = numberOfLights * sizeof(cBuffer::CLightDesc);
+	
+		if (totalSize > sizeof(cBuffer::cbLight))
+			totalSize = sizeof(cBuffer::cbLight);
+
+		memcpy(&lightBuffer.lights, &vecLightBuffer.front(), totalSize);
 	}
 
 	ID3D11DeviceContext* pImmediateContext = this->direct3d.pImmediateContext;

@@ -26,7 +26,6 @@ namespace Keys
 			const static std::string POINT			= "Point";
 			const static std::string SPOT			= "Spot";
 		};
-		const static std::string LIGHTSLOT = "LightSlot";
 		const static std::string DIFFUSE = "Diffuse";
 		const static std::string AMBIENT = "Ambient";
 		const static std::string SPECULAR = "Specular";
@@ -76,6 +75,7 @@ namespace Keys
 		const static std::string ANTIALIASEDLINE = "Antialiasedline";
 		const static std::string MULTISAMPLEENABLE = "MultisampleEnable";
 	};
+
 	namespace BasicTexture
 	{
 		const static std::string TEXTUREFILE = "TextureFile";

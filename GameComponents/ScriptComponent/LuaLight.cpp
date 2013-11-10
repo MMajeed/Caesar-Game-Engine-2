@@ -44,17 +44,6 @@ void LuaLight::Light::SetSpecular(LuaMath::Vector4 vec)
 	InfoCommunicator::SubmitMessage(msg);
 }
 
-int LuaLight::Light::GetSlot()
-{
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::Light::LIGHTSLOT];
-	return GenericObject<int>::GetValue(obj);
-}
-void LuaLight::Light::SetSlot(int i)
-{
-	std::shared_ptr<Object> obj = GenericObject<int>::CreateNew(i);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Light::LIGHTSLOT, obj));
-	InfoCommunicator::SubmitMessage(msg);
-}
 // Light Class End
 
 // DirectionalLight class
@@ -63,7 +52,6 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	if (luabind::type(table) != LUA_TTABLE)
 		throw std::exception("Wrong paramter for DirectionalLight, please send in a table");
 
-	int slot = 0;
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 direction;
 
@@ -73,8 +61,7 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	{
 		std::string key = luabind::object_cast<std::string>(it.key());
 
-			 if (key == Keys::Light::LIGHTSLOT)		{ slot = luabind::object_cast<int>(*it); }
-		else if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
+			 if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::DIRECTION)		{ direction = luabind::object_cast<LuaMath::Vector4>(*it); }
@@ -83,7 +70,6 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	std::hash_map<std::string, std::shared_ptr<Object>> mapKeys;
 	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Light);
 	mapKeys[Keys::Light::LIGHTTYPE] = GenericObject<std::string>::CreateNew(Keys::Light::LightTypes::DIRECTIONAL);
-	mapKeys[Keys::Light::LIGHTSLOT] = GenericObject<int>::CreateNew(slot);
 	mapKeys[Keys::Light::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse);
 	mapKeys[Keys::Light::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(ambient);
 	mapKeys[Keys::Light::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular);
@@ -123,8 +109,7 @@ LuaLight::PointLight::PointLight(luabind::object const& table)
 	{
 		std::string key = luabind::object_cast<std::string>(it.key());
 
-			 if (key == Keys::Light::LIGHTSLOT)		{ slot = luabind::object_cast<int>(*it); }
-		else if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
+			 if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::POSITION)		{ position = luabind::object_cast<LuaMath::Vector4>(*it); }
@@ -136,7 +121,6 @@ LuaLight::PointLight::PointLight(luabind::object const& table)
 
 	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Light);
 	mapKeys[Keys::Light::LIGHTTYPE] = GenericObject<std::string>::CreateNew(Keys::Light::LightTypes::POINT);
-	mapKeys[Keys::Light::LIGHTSLOT] = GenericObject<int>::CreateNew(slot);
 	mapKeys[Keys::Light::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse);
 	mapKeys[Keys::Light::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(ambient);
 	mapKeys[Keys::Light::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular);
@@ -206,8 +190,7 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 	{
 		std::string key = luabind::object_cast<std::string>(it.key());
 
-			 if (key == Keys::Light::LIGHTSLOT)		{ slot = luabind::object_cast<int>(*it); }
-		else if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
+			 if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Light::POSITION)		{ position = luabind::object_cast<LuaMath::Vector4>(*it); }
@@ -220,7 +203,6 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 
 	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Light);
 	mapKeys[Keys::Light::LIGHTTYPE] = GenericObject<std::string>::CreateNew(Keys::Light::LightTypes::SPOT);
-	mapKeys[Keys::Light::LIGHTSLOT] = GenericObject<int>::CreateNew(slot);
 	mapKeys[Keys::Light::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse);
 	mapKeys[Keys::Light::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(ambient);
 	mapKeys[Keys::Light::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular);
@@ -323,7 +305,6 @@ void LuaLight::DirectionalLight::Register(lua_State *lua)
 		luabind::class_<LuaLight::DirectionalLight>("DirectionalLight")
 		  .def(luabind::constructor<luabind::object const&>())
 		  .def_readonly("ID", &LuaLight::DirectionalLight::ID)
-		  .property("Slot", &LuaLight::DirectionalLight::GetSlot, &LuaLight::DirectionalLight::SetSlot)
 		  .property("Diffuse", &LuaLight::DirectionalLight::GetDiffuse, &LuaLight::DirectionalLight::SetDiffuse)
 		  .property("Ambient", &LuaLight::DirectionalLight::GetAmient, &LuaLight::DirectionalLight::SetAmbient)
 		  .property("Specular", &LuaLight::DirectionalLight::GetSpecular, &LuaLight::DirectionalLight::SetSpecular)
@@ -337,7 +318,6 @@ void LuaLight::PointLight::Register(lua_State *lua)
 		luabind::class_<LuaLight::PointLight>("PointLight")
 		  .def(luabind::constructor<luabind::object const&>())
 		  .def_readonly("ID", &LuaLight::PointLight::ID)
-		  .property("Slot", &LuaLight::PointLight::GetSlot, &LuaLight::PointLight::SetSlot)
 		  .property("Diffuse", &LuaLight::PointLight::GetDiffuse, &LuaLight::PointLight::SetDiffuse)
 		  .property("Ambient", &LuaLight::PointLight::GetAmient, &LuaLight::PointLight::SetAmbient)
 		  .property("Specular", &LuaLight::PointLight::GetSpecular, &LuaLight::PointLight::SetSpecular)
@@ -353,7 +333,6 @@ void LuaLight::SpotLight::Register(lua_State *lua)
 		luabind::class_<LuaLight::SpotLight>("SpotLight")
 		  .def(luabind::constructor<luabind::object const&>())
 		  .def_readonly("ID", &LuaLight::SpotLight::ID)
-		  .property("Slot", &LuaLight::SpotLight::GetSlot, &LuaLight::SpotLight::SetSlot)
 		  .property("Diffuse", &LuaLight::SpotLight::GetDiffuse, &LuaLight::SpotLight::SetDiffuse)
 		  .property("Ambient", &LuaLight::SpotLight::GetAmient, &LuaLight::SpotLight::SetAmbient)
 		  .property("Specular", &LuaLight::SpotLight::GetSpecular, &LuaLight::SpotLight::SetSpecular)

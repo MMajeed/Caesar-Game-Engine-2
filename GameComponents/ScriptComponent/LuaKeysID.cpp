@@ -26,7 +26,6 @@ void LuaKeysID::Register(lua_State *lua)
 			lightTypeTable[Keys::Light::LightTypes::POINT] = Keys::Light::LightTypes::POINT;
 			lightTypeTable[Keys::Light::LightTypes::SPOT] = Keys::Light::LightTypes::SPOT;
 		lightTable["Types"] = lightTypeTable;
-		lightTable[Keys::Light::LIGHTSLOT] = Keys::Light::LIGHTSLOT;
 		lightTable[Keys::Light::DIFFUSE] = Keys::Light::DIFFUSE;
 		lightTable[Keys::Light::AMBIENT] = Keys::Light::AMBIENT;
 		lightTable[Keys::Light::SPECULAR] = Keys::Light::SPECULAR;
