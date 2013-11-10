@@ -109,10 +109,10 @@ void DirectLight::Draw(TypedefObject::ObjectVector& objects)
 
 cBuffer::CLightDesc DirectLight::GetLightDesc(TypedefObject::ObjectInfo& lightInfo)
 {
-	CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
-	CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
-	CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
-	CHL::Vec4& direction = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
+	CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::DIFFUSE)->second);
+	CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::AMBIENT)->second);
+	CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::SPECULAR)->second);
+	CHL::Vec4& direction = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::DIRECTION)->second);
 
 	cBuffer::CLightDesc light;
 	light.material.diffuse = CHL::ConvertVec4(diffuse);
@@ -127,9 +127,9 @@ CHL::Matrix4x4 DirectLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
 {
 	double pitch; double yaw; double roll;
 
-	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(0);
-	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(1);
-	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(2);
+	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(0);
+	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(1);
+	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
 	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
@@ -150,9 +150,9 @@ CHL::Matrix4x4 DirectLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& ligh
 {
 	double pitch; double yaw; double roll;
 
-	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(0);
-	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(1);
-	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(2);
+	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(0);
+	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(1);
+	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
 	XMFLOAT3 center(0.0f, 0.0f, 0.0f);

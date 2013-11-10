@@ -1,4 +1,5 @@
 #include "LuaLoopCall.h"
+#include "LuaError.h"
 
 LuaLoopCall::LuaLoopCall(double inputMilliseconds, luabind::object inputFunction)
 {
@@ -11,11 +12,18 @@ void LuaLoopCall::Update(double realTime, double deltaTime)
 {
 	this->timeSinceLastCall += (realTime * 1000);
 }
-void LuaLoopCall::Action()
+void LuaLoopCall::Action(lua_State *lua)
 {
 	if(this->timeSinceLastCall >= this->milliseconds)
 	{
-		luabind::call_function<void>(this->function);
+		try
+		{
+			luabind::call_function<void>(this->function);
+		}
+		catch (...)
+		{
+			throw LuaError(lua);
+		}
 		this->timeSinceLastCall = 0.0;
 	}
 }

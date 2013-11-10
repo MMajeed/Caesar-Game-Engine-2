@@ -11,7 +11,7 @@ public:
 	LuaLoopCall(double inputMilliseconds, luabind::object inputFunction);
 
 	virtual void Update(double realTime, double deltaTime);
-	virtual void Action();
+	virtual void Action(lua_State *lua);
 
 	double milliseconds;
 	luabind::object function;

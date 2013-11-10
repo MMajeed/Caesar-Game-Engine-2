@@ -14,25 +14,25 @@ LuaObject::LuaObject()
 {
 	std::hash_map<std::string, std::shared_ptr<Object>> mapKeys;
 
-	mapKeys[Keys::GRAPHICDRAWABLEID] = std::shared_ptr<Object>(new GenericObject<std::string>(""));
+	mapKeys[Keys::BasicDrawable::GRAPHICDRAWABLEID] = GenericObject<std::string>::CreateNew("");
 
 	CHL::Vec4 loc;
 	loc(0) = 0;	loc(1) = 0;	loc(2) = 0;	loc(3) = 0;	
-	mapKeys[Keys::LOCATION] = GenericObject<CHL::Vec4>::CreateNew(loc);
+	mapKeys[Keys::ObjectInfo::LOCATION] = GenericObject<CHL::Vec4>::CreateNew(loc);
 
 	CHL::Vec4 rot;
 	rot(0) = 0;	rot(1) = 0;	rot(2) = 0;	rot(3) = 0;	
-	mapKeys[Keys::ROTATION] = GenericObject<CHL::Vec4>::CreateNew(rot);
+	mapKeys[Keys::ObjectInfo::ROTATION] = GenericObject<CHL::Vec4>::CreateNew(rot);
 
 	CHL::Vec4 sca;
 	sca(0) = 1.0;	sca(1) = 1.0;	sca(2) = 1.0;	sca(3) = 1.0;	
-	mapKeys[Keys::SCALE] = GenericObject<CHL::Vec4>::CreateNew(sca);
+	mapKeys[Keys::ObjectInfo::SCALE] = GenericObject<CHL::Vec4>::CreateNew(sca);
 
 	CHL::Vec4 col;
 	col(0) = 1.0;	col(1) = 1.0;	col(2) = 1.0;	col(3) = 1.0;	
-	mapKeys[Keys::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(col);
-	mapKeys[Keys::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(col);
-	mapKeys[Keys::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(col);
+	mapKeys[Keys::ObjectInfo::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(col);
+	mapKeys[Keys::ObjectInfo::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(col);
+	mapKeys[Keys::ObjectInfo::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(col);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(mapKeys));
 
@@ -44,100 +44,100 @@ LuaObject::LuaObject()
 void LuaObject::SetGraphic(LuaBasicDrawableObject graphic)
 {
 	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew(graphic.ID);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::GRAPHICDRAWABLEID, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::BasicDrawable::GRAPHICDRAWABLEID, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 void LuaObject::RemoveGraphic()
 {
 	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew("");
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::GRAPHICDRAWABLEID, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::BasicDrawable::GRAPHICDRAWABLEID, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 
 void LuaObject::SetTexture(LuaBasicTexture texture)
 {
 	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew(texture.ID);
-	std::string textureID = Keys::TEXTUREFILE + texture.ID;
+	std::string textureID = Keys::BasicTexture::TEXTUREFILE + texture.ID;
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, textureID, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 void LuaObject::RemoveTexture(LuaBasicTexture texture)
 {
 	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew("");
-	std::string textureID = Keys::TEXTUREFILE + texture.ID;
+	std::string textureID = Keys::BasicTexture::TEXTUREFILE + texture.ID;
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, textureID, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 
-void LuaObject::SetLocation(LuaUblas::Vector4 vec)
+void LuaObject::SetLocation(LuaMath::Vector4 vec)
 {
 	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::LOCATION, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ObjectInfo::LOCATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaObject::GetLocation()
+LuaMath::Vector4 LuaObject::GetLocation()
 {
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::LOCATION];
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ObjectInfo::LOCATION];
 	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
-void LuaObject::SetScale(LuaUblas::Vector4 vec)
+void LuaObject::SetScale(LuaMath::Vector4 vec)
 {
 	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::SCALE, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ObjectInfo::SCALE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaObject::GetScale()
+LuaMath::Vector4 LuaObject::GetScale()
 {
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::SCALE];
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ObjectInfo::SCALE];
 	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
-void LuaObject::SetRotation(LuaUblas::Vector4 vec)
+void LuaObject::SetRotation(LuaMath::Vector4 vec)
 {
 	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ROTATION, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ObjectInfo::ROTATION, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaObject::GetRotation()
+LuaMath::Vector4 LuaObject::GetRotation()
 {
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ROTATION];
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ObjectInfo::ROTATION];
 	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
-void LuaObject::SetDiffuse(LuaUblas::Vector4 vec)
+void LuaObject::SetDiffuse(LuaMath::Vector4 vec)
 {
 	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::DIFFUSE, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ObjectInfo::DIFFUSE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaObject::GetDiffuse()
+LuaMath::Vector4 LuaObject::GetDiffuse()
 {
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::DIFFUSE];
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ObjectInfo::DIFFUSE];
 	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
-void LuaObject::SetAmibent(LuaUblas::Vector4 vec)
+void LuaObject::SetAmibent(LuaMath::Vector4 vec)
 {
 	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::AMBIENT, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ObjectInfo::AMBIENT, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaObject::GetAmibent()
+LuaMath::Vector4 LuaObject::GetAmibent()
 {
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::AMBIENT];
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ObjectInfo::AMBIENT];
 	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 
-void LuaObject::SetSpecular(LuaUblas::Vector4 vec)
+void LuaObject::SetSpecular(LuaMath::Vector4 vec)
 {
 	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(vec.vector);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::SPECULAR, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::ObjectInfo::SPECULAR, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
-LuaUblas::Vector4 LuaObject::GetSpecular()
+LuaMath::Vector4 LuaObject::GetSpecular()
 {
-	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::SPECULAR];
+	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::ObjectInfo::SPECULAR];
 	return GenericObject<CHL::Vec4>::GetValue(obj);
 }
 

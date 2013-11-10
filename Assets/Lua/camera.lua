@@ -1,10 +1,11 @@
 local camera = {}
 
-eye = Vector4(0.0, 5.0, -50.0, 0.0)
-targetMagintude = Vector4(0.0, 0.0, 1.0, 0.0)
-up = Vector4(0.0, 1.0, 0.0, 0.0)
-
-cam = Camera(eye, targetMagintude, up, 0.0, 0.0, 0.0); 
+cam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0),
+              [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
+              [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
+              [Keys["Camera"]["RadianRoll"]]      = 0.0,
+              [Keys["Camera"]["RadianPitch"]]     = 0.0,
+              [Keys["Camera"]["RadianYaw"]]       = 0.0,}); 
 
 CamLeftButton   = false;    CamRightButton  = false;
 CamUpButton     = false;    CamDownButton   = false;

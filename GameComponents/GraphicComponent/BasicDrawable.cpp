@@ -21,6 +21,10 @@ BasicDrawable::BasicDrawable(const std::string& inputID)
 	this->D3DInfo.pVertexShader = 0;
 	this->D3DInfo.pPixelShader = 0;
 	this->D3DInfo.pRastersizerState = 0;
+	this->D3DInfo.cullMode = D3D11_CULL_BACK;
+	this->D3DInfo.fillMode = D3D11_FILL_SOLID;
+	this->D3DInfo.bAntialiasedLine = true;
+	this->D3DInfo.bMultisampleEnable = true;
 }
 
 void BasicDrawable::Init()
@@ -196,10 +200,14 @@ void BasicDrawable::InitPixelShader(ID3D11Device* device)
 		throw std::exception(CHL::ToString(error).c_str());
 	}
 }
-void BasicDrawable::InitRastersizerState(ID3D11Device* device, D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable)
+void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {
 	std::wstring error;
-	if(!DX11Helper::LoadRasterizerState(cullMode, fillMode, bAntialiasedLine, bMultisampleEnable, device, &(this->D3DInfo.pRastersizerState), error))
+	if (!DX11Helper::LoadRasterizerState(this->D3DInfo.cullMode, 
+										 this->D3DInfo.fillMode,
+										 this->D3DInfo.bAntialiasedLine,
+										 this->D3DInfo.bMultisampleEnable, 
+										 device, &(this->D3DInfo.pRastersizerState), error))
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}
@@ -213,11 +221,31 @@ void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 	}
 }
 
+void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable)
+{
+	this->D3DInfo.cullMode           = cullMode;
+	this->D3DInfo.fillMode           = fillMode;
+	this->D3DInfo.bAntialiasedLine   = bAntialiasedLine;
+	this->D3DInfo.bMultisampleEnable = bMultisampleEnable;
+
+	if (this->D3DInfo.pRastersizerState)
+	{
+		this->D3DInfo.pRastersizerState->Release();
+	}
+
+	ID3D11Device* pDevice = GraphicManager::GetInstance().direct3d.pd3dDevice;
+	this->InitRastersizerState(pDevice);
+}
+
 std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
 													const std::vector<Vertex>& vectorVertices,
 													const std::vector<WORD>&	vectorIndices,
 													D3DShaderInfo				vertexFile,
-													D3DShaderInfo				pixelFile )
+													D3DShaderInfo				pixelFile,
+													D3D11_CULL_MODE				cullMode,
+													D3D11_FILL_MODE				fillMode,
+													bool						bAntialiasedLine,
+													bool						bMultisampleEnable)
 {
 	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(inputID));
 
@@ -225,6 +253,10 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
 	newObject->D3DInfo.indices = vectorIndices;
 	newObject->D3DInfo.VertexShaderInfo = vertexFile;
 	newObject->D3DInfo.PixelShaderInfo = pixelFile;
+	newObject->D3DInfo.cullMode = cullMode;
+	newObject->D3DInfo.fillMode = fillMode;
+	newObject->D3DInfo.bAntialiasedLine = bAntialiasedLine;
+	newObject->D3DInfo.bMultisampleEnable = bMultisampleEnable;
 
 	newObject->Init();
 
@@ -247,7 +279,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 							CHL::Vec4& spec)
 {	
 	TypedefObject::ObjectInfo::const_iterator iterKey;
-	iterKey = object.find(Keys::LOCATION);
+	iterKey = object.find(Keys::ObjectInfo::LOCATION);
 	if(iterKey != object.end())
 	{
 		location = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
@@ -258,7 +290,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	}
 
 	
-	iterKey = object.find(Keys::ROTATION);
+	iterKey = object.find(Keys::ObjectInfo::ROTATION);
 	if(iterKey != object.end())
 	{
 		rotation = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
@@ -268,7 +300,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 		rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f; 
 	}
 
-	iterKey = object.find(Keys::SCALE);
+	iterKey = object.find(Keys::ObjectInfo::SCALE);
 	if(iterKey != object.end())
 	{
 		scale = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
@@ -278,7 +310,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 		scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f; 
 	}
 
-	iterKey = object.find(Keys::DIFFUSE);
+	iterKey = object.find(Keys::ObjectInfo::DIFFUSE);
 	if(iterKey != object.end())
 	{
 		diffuse = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
@@ -288,7 +320,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 		diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f; 
 	}
 
-	iterKey = object.find(Keys::AMBIENT);
+	iterKey = object.find(Keys::ObjectInfo::AMBIENT);
 	if(iterKey != object.end())
 	{
 		ambient = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
@@ -298,7 +330,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 		ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f; 
 	}
 
-	iterKey = object.find(Keys::SPECULAR);
+	iterKey = object.find(Keys::ObjectInfo::SPECULAR);
 	if(iterKey != object.end())
 	{
 		spec = GenericObject<CHL::Vec4>::GetValue(iterKey->second);

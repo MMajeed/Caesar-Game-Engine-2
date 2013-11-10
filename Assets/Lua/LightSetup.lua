@@ -1,31 +1,28 @@
 local LightSetup = {}
 
-diffuse = Vector4(1.0, 1.0, 1.0);
-amibent = Vector4(0.5, 0.5, 0.5);
-specular = Vector4(0.3, 0.3, 0.3);
-direction = Vector4(0.0, 0.785, 0.1);
+directionLight = DirectionalLight({[Keys["Light"]["LightSlot"]] = 0,
+                                   [Keys["Light"]["Diffuse"]]   = Vector4(1.0, 1.0, 1.0),
+                                   [Keys["Light"]["Ambient"]]   = Vector4(0.5, 0.5, 0.5),
+                                   [Keys["Light"]["Specular"]]  = Vector4(0.3, 0.3, 0.3),
+                                   [Keys["Light"]["Direction"]] = Vector4(0.0, 0.785, 0.1),});
 
-directionLight = DirectionalLight(0, diffuse, amibent, specular, direction);
-
---diffuse = Vector4(1.0, 1.0, 0.0);
---amibent = Vector4(0.0, 0.0, 0.0);
---specular = Vector4(0.0, 0.0, 0.0);
---position = Vector4(0.0, 10.0, -45.0);
---range = 40;
---att =  Vector4(1.0, 0.0, 0.0);
-
---PointLight(1, diffuse, amibent, specular, position, range, att);
-
-diffuse = Vector4(0.0, 0.0, 1.0);
-amibent = Vector4(0.0, 0.0, 0.0);
-specular = Vector4(0.2, 0.2, 0.2);
-position = Vector4(0.0, 10.0, 35.0);
-range = 20;
-direction = Vector4(0.7853, -3.14, -3.14);
-spot = 0.5;
-att =  Vector4(0.0, 0.1, 0.0);
-
-spotLight = SpotLight(2, diffuse, amibent, specular, position, range, direction, spot, att);
+PointLight({[Keys["Light"]["LightSlot"]]   = 1,
+            [Keys["Light"]["Diffuse"]]     = Vector4(1.0, 1.0, 0.0),
+            [Keys["Light"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
+            [Keys["Light"]["Specular"]]    = Vector4(0.0, 0.0, 0.0),
+            [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, -45.0),
+            [Keys["Light"]["Range"]]       = 40,
+            [Keys["Light"]["Attenuation"]] = Vector4(1.0, 0.0, 0.0),});
+            
+spotLight = SpotLight({[Keys["Light"]["LightSlot"]]   = 2,
+                       [Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 1.0),
+                       [Keys["Light"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
+                       [Keys["Light"]["Specular"]]    = Vector4(0.2, 0.2, 0.2),
+                       [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, 35.0),
+                       [Keys["Light"]["Range"]]       = 20,
+                       [Keys["Light"]["Direction"]]   = Vector4(0.7853, -3.14, -3.14),
+                       [Keys["Light"]["Spot"]]        = 0.5,
+                       [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),});
 spotLight:ApplyShadow();
 
 return LightSetup

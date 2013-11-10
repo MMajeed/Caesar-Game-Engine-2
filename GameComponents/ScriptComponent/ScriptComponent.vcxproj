@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="LuaError.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaBasicDrawableObject.h" />
     <ClInclude Include="LuaCamera.h" />
@@ -101,11 +102,13 @@
     <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaProcesses.h" />
     <ClInclude Include="LuaBasicTexture.h" />
-    <ClInclude Include="LuaUblas.h" />
+    <ClInclude Include="LuaMath.h" />
+    <ClInclude Include="LuaRegisterAll.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaBasicDrawableObject.cpp" />
     <ClCompile Include="LuaCamera.cpp" />
+    <ClCompile Include="LuaError.cpp" />
     <ClCompile Include="LuaGraphic.cpp" />
     <ClCompile Include="LuaKeyAction.cpp" />
     <ClCompile Include="LuaKeyActionSetup.cpp" />
@@ -117,7 +120,7 @@
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="LuaBasicTexture.cpp" />
-    <ClCompile Include="LuaUblas.cpp" />
+    <ClCompile Include="LuaMath.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

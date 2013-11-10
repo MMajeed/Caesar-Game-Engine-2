@@ -2,24 +2,25 @@
 #define __LuaCamera__
 
 #include <Lua.hpp>
-#include "LuaUblas.h"
+#include <luabind\luabind.hpp>
+#include "LuaMath.h"
 
 class LuaCamera
 {
 public:
-	LuaCamera(LuaUblas::Vector4 eye, LuaUblas::Vector4 targetMagintude, LuaUblas::Vector4 up, double roll, double pitch, double yaw);
+	LuaCamera(luabind::object const& table);
 	void SetAsMain();
 		
 	void MoveFroward(double distance);
 
-	void SetEye(LuaUblas::Vector4 eye);
-	LuaUblas::Vector4 GetEye();
+	void SetEye(LuaMath::Vector4 eye);
+	LuaMath::Vector4 GetEye();
 
-	void SetTargetMagintude(LuaUblas::Vector4 targetMagintude);
-	LuaUblas::Vector4 GetTargetMagintude();
+	void SetTargetMagintude(LuaMath::Vector4 targetMagintude);
+	LuaMath::Vector4 GetTargetMagintude();
 
-	void SetUp(LuaUblas::Vector4 up);
-	LuaUblas::Vector4 GetUp();
+	void SetUp(LuaMath::Vector4 up);
+	LuaMath::Vector4 GetUp();
 
 	void SetRoll(double roll);
 	double GetRoll();

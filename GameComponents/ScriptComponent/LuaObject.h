@@ -5,7 +5,7 @@
 #include <luabind\luabind.hpp>
 #include "LuaBasicDrawableObject.h"
 #include "LuaBasicTexture.h"
-#include "LuaUblas.h"
+#include "LuaMath.h"
 
 class LuaObject
 {
@@ -20,23 +20,23 @@ public:
 	void SetTexture(LuaBasicTexture texture);
 	void RemoveTexture(LuaBasicTexture texture);
 
-	void SetLocation(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetLocation();
+	void SetLocation(LuaMath::Vector4 vec);
+	LuaMath::Vector4 GetLocation();
 
-	void SetScale(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetScale();
+	void SetScale(LuaMath::Vector4 vec);
+	LuaMath::Vector4 GetScale();
 
-	void SetRotation(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetRotation();
+	void SetRotation(LuaMath::Vector4 vec);
+	LuaMath::Vector4 GetRotation();
 
-	void SetDiffuse(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetDiffuse();
+	void SetDiffuse(LuaMath::Vector4 vec);
+	LuaMath::Vector4 GetDiffuse();
 
-	void SetAmibent(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetAmibent();
+	void SetAmibent(LuaMath::Vector4 vec);
+	LuaMath::Vector4 GetAmibent();
 
-	void SetSpecular(LuaUblas::Vector4 vec);
-	LuaUblas::Vector4 GetSpecular();
+	void SetSpecular(LuaMath::Vector4 vec);
+	LuaMath::Vector4 GetSpecular();
 
 	static void Register(lua_State *lua);
 	static inline void RegisterAllLuaFunction(lua_State *lua)

@@ -1,4 +1,4 @@
-#include "BasicDrawableConfiguration.h"
+#include "BasicDrawableConfig.h"
 #include <Vertex.h>
 #include <D3DShaderInfo.h>
 #include <BasicDrawable.h>
@@ -7,36 +7,35 @@
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
 
-BasicDrawableConfiguration::AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
-												std::string	vertexFileName,
-												std::string	vertexEntryPoint,
-												std::string	vertexModel,
-												std::string	pixelFileName,
-												std::string	pixelEntryPoint,
-												std::string	pixelModel)
+BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
+													std::string	vertexFileName,
+													std::string	pixelFileName,
+													CULL_MODE cullMode,
+													FILL_MODE fillMode,
+													bool antialiasedLine,
+													bool multisampleEnable)
 	: model(model)
 {
 	this->ID = CHL::ToString(boost::uuids::random_generator()());
-	this->vertexFileName = vertexFileName;
-	this->vertexEntryPoint = vertexEntryPoint;
-	this->vertexModel = vertexModel;
-	this->vertexModel = vertexModel;
-	this->pixelFileName = pixelFileName;
-	this->pixelEntryPoint = pixelEntryPoint;
-	this->pixelModel = pixelModel;
+	this->vertexFileName    = vertexFileName;
+	this->pixelFileName     = pixelFileName;
+	this->cullMode          = cullMode;
+	this->fillMode          = fillMode;
+	this->antialiasedLine   = antialiasedLine;
+	this->multisampleEnable = multisampleEnable;
 }
 
-Message::Status BasicDrawableConfiguration::AddBasicDrawableMessage::Work()
+Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 {
 	D3DShaderInfo vertexFile;
 	vertexFile.FileName		= vertexFileName;
-	vertexFile.EntryPoint	= vertexEntryPoint;
-	vertexFile.Model		= vertexModel;
+	vertexFile.EntryPoint	= "VS";
+	vertexFile.Model		= "vs_4_1";
 
 	D3DShaderInfo pixelFile;
 	pixelFile.FileName		= pixelFileName;
-	pixelFile.EntryPoint	= pixelEntryPoint;
-	pixelFile.Model			= pixelModel;
+	pixelFile.EntryPoint	= "PS";
+	pixelFile.Model			= "ps_4_1";
 
 	auto vectorFaces = model.Faces();
 	std::vector<WORD> vectorIndices;
@@ -88,7 +87,11 @@ Message::Status BasicDrawableConfiguration::AddBasicDrawableMessage::Work()
 							vectorVertices,
 							vectorIndices,
 							vertexFile,
-							pixelFile);
+							pixelFile,
+							static_cast<D3D11_CULL_MODE>(this->cullMode),
+							static_cast<D3D11_FILL_MODE>(this->fillMode),
+							this->antialiasedLine,
+							this->multisampleEnable);
 
 	GraphicManager::GetInstance().InsertObjectDrawable(newObject);
 
@@ -97,7 +100,7 @@ Message::Status BasicDrawableConfiguration::AddBasicDrawableMessage::Work()
 	return Message::Status::Complete;
 }
 
-BasicDrawableConfiguration::ChangeRastersizerState::ChangeRastersizerState
+BasicDrawableConfig::ChangeRastersizerState::ChangeRastersizerState
 	(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode, bool antialiasedLine, bool multisampleEnable)
 {
 	this->ID = ID;
@@ -107,7 +110,7 @@ BasicDrawableConfiguration::ChangeRastersizerState::ChangeRastersizerState
 	this->multisampleEnable = multisampleEnable;
 }
 
-Message::Status BasicDrawableConfiguration::ChangeRastersizerState::Work()
+Message::Status BasicDrawableConfig::ChangeRastersizerState::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
@@ -120,14 +123,10 @@ Message::Status BasicDrawableConfiguration::ChangeRastersizerState::Work()
 
 		if(bdObj)
 		{
-			ID3D11Device* pDevice = GraphicManager::GetInstance().direct3d.pd3dDevice;
-			bdObj->D3DInfo.pRastersizerState->Release();
-
-			bdObj->InitRastersizerState(pDevice,
-										static_cast<D3D11_CULL_MODE>(this->cullMode), 
-										static_cast<D3D11_FILL_MODE>(this->fillMode), 
-										this->antialiasedLine, 
-										this->multisampleEnable);
+			bdObj->ChangeRasterizerState(static_cast<D3D11_CULL_MODE>(this->cullMode), 
+										 static_cast<D3D11_FILL_MODE>(this->fillMode), 
+										 this->antialiasedLine, 
+										 this->multisampleEnable);
 		}
 	}
 

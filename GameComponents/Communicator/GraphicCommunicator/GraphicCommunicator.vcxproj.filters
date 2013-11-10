@@ -8,11 +8,11 @@
     <ClInclude Include="AddBasicTexture.h">
       <Filter>AddBasicTexture</Filter>
     </ClInclude>
-    <ClInclude Include="BasicDrawableConfiguration.h">
-      <Filter>BasicDrawableConfiguration</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicCommunicator.h">
       <Filter>GraphicCommunicator</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDrawableConfig.h">
+      <Filter>BasicDrawableConfig</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -22,11 +22,11 @@
     <ClCompile Include="AddBasicTexture.cpp">
       <Filter>AddBasicTexture</Filter>
     </ClCompile>
-    <ClCompile Include="BasicDrawableConfiguration.cpp">
-      <Filter>BasicDrawableConfiguration</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicCommunicator.cpp">
       <Filter>GraphicCommunicator</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicDrawableConfig.cpp">
+      <Filter>BasicDrawableConfig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -36,11 +36,11 @@
     <Filter Include="AddBasicTexture">
       <UniqueIdentifier>{17e44715-c07d-4d19-8385-0f7100a45282}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BasicDrawableConfiguration">
-      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GraphicCommunicator">
       <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BasicDrawableConfig">
+      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

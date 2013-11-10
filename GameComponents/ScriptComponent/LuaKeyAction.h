@@ -13,7 +13,7 @@ public:
 	LuaKeyAction(unsigned int inputKey, KeyStatWanted inputWanted, luabind::object inputFunction);
 
 	virtual void Update(double realTime, double deltaTime);
-	virtual void Action();
+	virtual void Action(lua_State *lua);
 
 	unsigned int key;
 	KeyStatWanted wanted;

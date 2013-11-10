@@ -68,10 +68,10 @@ void Window::Init()
 
 	CHL::MapQ<std::string, std::shared_ptr<Object>> camera;
 
-	camera[Keys::Class] =  GenericObject<std::string>::CreateNew(Keys::ClassType::WindowInfo);
-	camera[Keys::HEIGHT] =  GenericObject<int>::CreateNew(this->window.height);
-	camera[Keys::WIDTH] =  GenericObject<int>::CreateNew(this->window.width);
-	camera[Keys::HWND] =  GenericObject<HWND>::CreateNew(this->window.hWnd);
+	camera[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::WindowInfo);
+	camera[Keys::Window::HEIGHT] = GenericObject<int>::CreateNew(this->window.height);
+	camera[Keys::Window::WIDTH] = GenericObject<int>::CreateNew(this->window.width);
+	camera[Keys::Window::HWND] = GenericObject<HWND>::CreateNew(this->window.hWnd);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
 

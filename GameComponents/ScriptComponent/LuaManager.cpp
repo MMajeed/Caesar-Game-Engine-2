@@ -4,18 +4,8 @@
 #include <sstream>
 #include <boost/filesystem.hpp>
 #include <algorithm>
-
-#include "LuaGraphic.h"
-#include "LuaModel.h"
-#include "LuaObject.h"
-#include "LuaUblas.h"
-#include "LuaKeysID.h"
-#include "LuaKeyActionSetup.h"
-#include "LuaCamera.h"
-#include "LuaLoopCallSetup.h"
-#include "LuaBasicDrawableObject.h"
-#include "LuaBasicTexture.h"
-#include "LuaLight.h"
+#include "LuaError.h"
+#include "LuaRegisterAll.h"
 
 LuaManager::LuaManager()
 {
@@ -52,17 +42,7 @@ void LuaManager::Init()
 	std::replace(packagePath.begin(), packagePath.end(), '\\', '/');
 	luaL_dostring(this->lua, packagePath.c_str());	
 
-	LuaGraphic::RegisterAllLuaFunction(this->lua);
-	LuaModel::RegisterAllLuaFunction(this->lua);
-	LuaUblas::RegisterAllLuaFunction(this->lua);
-	LuaObject::RegisterAllLuaFunction(this->lua);
-	LuaKeysID::RegisterAllLuaFunction(this->lua);
-	LuaKeyActionSetup::RegisterAllLuaFunction(this->lua);
-	LuaCamera::RegisterAllLuaFunction(this->lua);
-	LuaLoopCallSetup::RegisterAllLuaFunction(this->lua);
-	LuaBasicDrawableObject::RegisterAllLuaFunction(this->lua);
-	LuaBasicTexture::RegisterAllLuaFunction(this->lua);
-	LuaLight::RegisterAllLuaFunction(this->lua);
+	LuaRegisterAll(this->lua);
 }
 
 void LuaManager::Update(double realTime, double deltaTime)
@@ -75,37 +55,18 @@ void LuaManager::Update(double realTime, double deltaTime)
 	}
 }
 
-static const char mainLua[] = "Assets/Lua/main.lua";
-
 void LuaManager::Work()
 {
 	if(this->FileRun == false)
 	{
+		static const char mainLua[] = "Assets/Lua/main.lua";
+
 		int error = luaL_loadfile(this->lua, mainLua);
+		if (error != 0)	throw LuaError(this->lua);
 
-		switch( error )
-		{
-		case LUA_ERRFILE:
-			{
-				std::stringstream ss;
-				ss << "Cannot find/open lua script file: " << mainLua << std::endl;
-				throw std::exception( ss.str().c_str() );
-			}
-		case LUA_ERRSYNTAX:
-			{
-				std::stringstream ss;
-				ss << "Fatal memory allocation error during processing of script file: " << mainLua << std::endl;
-				throw std::exception( ss.str().c_str() );
-			}
-		case LUA_ERRMEM:
-			{
-				std::stringstream ss;
-				ss << "Syntax error during pre-compilation of script file:  " << mainLua << std::endl;
-				throw std::exception( ss.str().c_str() );
-			}
-		}
+		error = lua_pcall(this->lua, 0, 0, 0);
+		if (error != 0)	throw LuaError(this->lua);
 
-		lua_call(this->lua,0,0);
 		this->FileRun = true;
 	}
 
@@ -113,7 +74,7 @@ void LuaManager::Work()
 		iterProccessers !=  this->allProcesses.end();
 		++iterProccessers)
 	{
-		(*iterProccessers)->Action();
+		(*iterProccessers)->Action(this->lua);
 	}
 }
 

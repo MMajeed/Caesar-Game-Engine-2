@@ -3,7 +3,7 @@
 
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include "LuaUblas.h"
+#include "LuaMath.h"
 #include <string>
 
 class LuaLight
@@ -12,14 +12,14 @@ public:
 	class Light
 	{
 	public:
-		LuaUblas::Vector4 GetDiffuse();
-		void SetDiffuse(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetDiffuse();
+		void SetDiffuse(LuaMath::Vector4 vec);
 
-		LuaUblas::Vector4 GetAmient();
-		void SetAmbient(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetAmient();
+		void SetAmbient(LuaMath::Vector4 vec);
 
-		LuaUblas::Vector4 GetSpecular();
-		void SetSpecular(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetSpecular();
+		void SetSpecular(LuaMath::Vector4 vec);
 
 		int GetSlot();
 		void SetSlot(int i);
@@ -30,10 +30,10 @@ public:
 	class DirectionalLight : public Light
 	{
 	public:
-		DirectionalLight(int slot, LuaUblas::Vector4 diffuse, LuaUblas::Vector4 ambient, LuaUblas::Vector4 specular, LuaUblas::Vector4 direction );
+		DirectionalLight(luabind::object const& table);
 		
-		LuaUblas::Vector4 GetDirection();
-		void SetDirection(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetDirection();
+		void SetDirection(LuaMath::Vector4 vec);
 
 		static void Register(lua_State *lua);
 	};
@@ -41,16 +41,16 @@ public:
 	class PointLight : public Light
 	{
 	public:
-		PointLight(int slot, LuaUblas::Vector4 diffuse, LuaUblas::Vector4 ambient, LuaUblas::Vector4 specular, LuaUblas::Vector4 position, double range, LuaUblas::Vector4 att);
+		PointLight(luabind::object const& table);
 
-		LuaUblas::Vector4 GetPosition();
-		void SetPosition(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetPosition();
+		void SetPosition(LuaMath::Vector4 vec);
 
 		double GetRange();
 		void SetRange(double val);
 
-		LuaUblas::Vector4 GetAttenuation();
-		void SetAttenuation(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetAttenuation();
+		void SetAttenuation(LuaMath::Vector4 vec);
 
 		static void Register(lua_State *lua);
 	};
@@ -58,22 +58,22 @@ public:
 	class SpotLight : public Light
 	{
 	public:
-		SpotLight(int slot, LuaUblas::Vector4 diffuse, LuaUblas::Vector4 ambient, LuaUblas::Vector4 specular, LuaUblas::Vector4 position, double range, LuaUblas::Vector4 Direction, double spot, LuaUblas::Vector4  att);
+		SpotLight(luabind::object const& table);
 
-		LuaUblas::Vector4 GetPosition();
-		void SetPosition(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetPosition();
+		void SetPosition(LuaMath::Vector4 vec);
 
 		double GetRange();
 		void SetRange(double val);
 
-		LuaUblas::Vector4 GetDirection();
-		void SetDirection(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetDirection();
+		void SetDirection(LuaMath::Vector4 vec);
 
 		double GetSpot();
 		void SetSpot(double val);
 
-		LuaUblas::Vector4 GetAttenuation();
-		void SetAttenuation(LuaUblas::Vector4 vec);
+		LuaMath::Vector4 GetAttenuation();
+		void SetAttenuation(LuaMath::Vector4 vec);
 
 		void ApplyShadow();
 		void RemoveShadow();

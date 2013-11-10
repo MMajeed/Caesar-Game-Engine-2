@@ -107,14 +107,14 @@ void SpotLight::Draw(TypedefObject::ObjectVector& objects)
 
 cBuffer::CLightDesc SpotLight::GetLightDesc(TypedefObject::ObjectInfo& lightInfo)
 {
-	CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIFFUSE)->second);
-	CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::AMBIENT)->second);
-	CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::SPECULAR)->second);
-	CHL::Vec4& position = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::POSITION)->second);
-	double range = GenericObject<double>::GetValue(lightInfo.find(Keys::RANGE)->second);
-	CHL::Vec4& direction = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::DIRECTION)->second);
-	double spot = GenericObject<double>::GetValue(lightInfo.find(Keys::SPOT)->second);
-	CHL::Vec4& att = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::ATTENUATION)->second);
+	CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::DIFFUSE)->second);
+	CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::AMBIENT)->second);
+	CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::SPECULAR)->second);
+	CHL::Vec4& position = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::POSITION)->second);
+	double range = GenericObject<double>::GetValue(lightInfo.find(Keys::Light::RANGE)->second);
+	CHL::Vec4& direction = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::DIRECTION)->second);
+	double spot = GenericObject<double>::GetValue(lightInfo.find(Keys::Light::SPOT)->second);
+	CHL::Vec4& att = GenericObject<CHL::Vec4>::GetValue(lightInfo.find(Keys::Light::ATTENUATION)->second);
 
 	cBuffer::CLightDesc light;
 	light.material.diffuse = CHL::ConvertVec4(diffuse);
@@ -136,13 +136,13 @@ CHL::Matrix4x4 SpotLight::GetViewMatrix(TypedefObject::ObjectInfo& light)
 	CHL::Vec4 vUp;
 	double pitch; double yaw; double roll;
 
-	vEye = GenericObject<CHL::Vec4>::GetValue(light[Keys::POSITION]);
+	vEye = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::POSITION]);
 	vT(0) = 0.0; vT(1) = 0.0; vT(2) = 1.0; vT(3) = 0.0;
 	vUp(0) = 0.0; vUp(1) = 1.0; vUp(2) = 0.0; vUp(3) = 0.0;
 
-	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(0);
-	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(1);
-	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::DIRECTION])(2);
+	pitch = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(0);
+	yaw = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(1);
+	roll = GenericObject<CHL::Vec4>::GetValue(light[Keys::Light::DIRECTION])(2);
 
 	return CHL::ViewCalculation(vEye, vT, vUp, pitch, yaw, roll);
 }
@@ -152,7 +152,7 @@ CHL::Matrix4x4 SpotLight::GetPrespectiveMatrix(TypedefObject::ObjectInfo& light)
 	double height = 2048;
 	double width = 2048;
 	double nearZ = 1.0;
-	double farZ = GenericObject<double>::GetValue(light.find(Keys::RANGE)->second);
+	double farZ = GenericObject<double>::GetValue(light.find(Keys::Light::RANGE)->second);
 
 	return CHL::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
 }

@@ -5,6 +5,9 @@
 
 namespace Keys
 {
+	const static std::string ID = "_ID";
+	const static std::string Class = "_Class";
+
 	namespace ClassType
 	{
 		const static std::string Object			= "_Object";
@@ -13,48 +16,81 @@ namespace Keys
 		const static std::string WindowInfo		= "_WindowInfo";
 		const static std::string Light			= "_Light";
 	};
-	namespace LightType
+
+	namespace Light
 	{
-		const static std::string DIRECTIONAL	= "Directional";
-		const static std::string POINT			= "Point";
-		const static std::string SPOT			= "Spot";
+		const static std::string LIGHTTYPE = "LightType";
+		namespace LightTypes
+		{
+			const static std::string DIRECTIONAL	= "Directional";
+			const static std::string POINT			= "Point";
+			const static std::string SPOT			= "Spot";
+		};
+		const static std::string LIGHTSLOT = "LightSlot";
+		const static std::string DIFFUSE = "Diffuse";
+		const static std::string AMBIENT = "Ambient";
+		const static std::string SPECULAR = "Specular";
+		const static std::string DIRECTION = "Direction";
+		const static std::string RANGE = "Range";
+		const static std::string ATTENUATION = "Attenuation";
+		const static std::string SPOT = "Spot";
+		const static std::string POSITION = "Position";
+		const static std::string HASHADOW = "HasShadow";
 	};
 
-	const static std::string ID					= "_ID";
-	const static std::string Class				= "_Class";
-	const static std::string LOCATION			= "Location";
-	const static std::string ROTATION			= "Rotation";
-	const static std::string SCALE				= "Scale";
-	const static std::string DIFFUSE			= "Diffuse";
-	const static std::string AMBIENT			= "Ambient";
-	const static std::string SPECULAR			= "Specular";
-	const static std::string GRAPHICDRAWABLEID	= "GraphicDrawableID";
-	const static std::string EYE				= "Eye";
-	const static std::string TARGETMAGNITUDE	= "TargetMagnitude";
-	const static std::string UP					= "Up";
-	const static std::string RADIANROLL			= "RadianRoll";
-	const static std::string RADIANPITCH		= "RadianPitch";
-	const static std::string RADIANYAW			= "RadianYaw";
-	const static std::string FOVANGLE			= "FovAngle";
-	const static std::string SCREENWIDTH		= "ScreenWidth";
-	const static std::string SCREENHEIGHT		= "ScreenHeight";
-	const static std::string MINVIEWABLE		= "MinViewable";
-	const static std::string MAXVIEWABLE		= "MaxViewable";
-	const static std::string MODELFILE			= "ModelFile";
-	const static std::string VERTEXSHADERFILE	= "VertexShaderFile";
-	const static std::string PIXELSHADERFILE	= "PixelShaderFile";
-	const static std::string TEXTUREFILE		= "TextureFile";
-	const static std::string WIDTH				= "WIDTH";
-	const static std::string HEIGHT				= "HEIGHT";
-	const static std::string HWND				= "HWND";
-	const static std::string LIGHTSLOT			= "LightSlot";
-	const static std::string DIRECTION			= "Direction";
-	const static std::string RANGE				= "Range";
-	const static std::string ATTENUATION		= "Attenuation";
-	const static std::string SPOT				= "Spot";
-	const static std::string POSITION			= "Position";
-	const static std::string LIGHTTYPE			= "LightType";
-	const static std::string HASHADOW			= "HasShadow";
+	namespace Window
+	{
+		const static std::string WIDTH = "WIDTH";
+		const static std::string HEIGHT = "HEIGHT";
+		const static std::string HWND = "HWND";
+	};
+
+	namespace Camera
+	{
+		const static std::string EYE = "Eye";
+		const static std::string TARGETMAGNITUDE = "TargetMagnitude";
+		const static std::string UP = "Up";
+		const static std::string RADIANROLL = "RadianRoll";
+		const static std::string RADIANPITCH = "RadianPitch";
+		const static std::string RADIANYAW = "RadianYaw";
+	};
+
+	namespace Prespective
+	{
+		const static std::string FOVANGLE = "FovAngle";
+		const static std::string SCREENWIDTH = "ScreenWidth";
+		const static std::string SCREENHEIGHT = "ScreenHeight";
+		const static std::string MINVIEWABLE = "MinViewable";
+		const static std::string MAXVIEWABLE = "MaxViewable";
+	};
+
+	
+	namespace BasicDrawable
+	{
+		const static std::string GRAPHICDRAWABLEID = "GraphicDrawableID";
+		const static std::string MODELFILE = "ModelFile";
+		const static std::string VERTEXSHADERFILE = "VertexShaderFile";
+		const static std::string PIXELSHADERFILE = "PixelShaderFile";
+		const static std::string CULLMODE = "CullMode";
+		const static std::string FILLMODE = "FillMode";
+		const static std::string ANTIALIASEDLINE = "Antialiasedline";
+		const static std::string MULTISAMPLEENABLE = "MultisampleEnable";
+	};
+	namespace BasicTexture
+	{
+		const static std::string TEXTUREFILE = "TextureFile";
+		const static std::string TEXTURESLOT = "TextureSlot";
+	}
+
+	namespace ObjectInfo
+	{
+		const static std::string LOCATION = "Location";
+		const static std::string ROTATION = "Rotation";
+		const static std::string SCALE = "Scale";
+		const static std::string DIFFUSE = "Diffuse";
+		const static std::string AMBIENT = "Ambient";
+		const static std::string SPECULAR = "Specular";
+	};
 
 };
 

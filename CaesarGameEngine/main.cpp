@@ -12,7 +12,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 		Window::GetInstance().Init();
 		Window::GetInstance().Run();
 	}
-	catch(std::exception ex)
+	catch(const std::exception& ex)
 	{
 		std::wstringstream wss;
 		wss << "Exception: Something went wrong" << std::endl

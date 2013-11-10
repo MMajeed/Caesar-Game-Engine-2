@@ -23,9 +23,6 @@
     <ClInclude Include="LuaProcesses.h">
       <Filter>Lua Processes</Filter>
     </ClInclude>
-    <ClInclude Include="LuaUblas.h">
-      <Filter>Lua Class/Function\LuaUblas</Filter>
-    </ClInclude>
     <ClInclude Include="LuaKeyAction.h">
       <Filter>Lua Processes\LuaKeyAction</Filter>
     </ClInclude>
@@ -44,6 +41,15 @@
     </ClInclude>
     <ClInclude Include="LuaLight.h">
       <Filter>Lua Class/Function\LuaLight</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaError.h">
+      <Filter>LuaError</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaRegisterAll.h">
+      <Filter>Lua Class/Function</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaMath.h">
+      <Filter>Lua Class/Function\LuaUblas</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -66,9 +72,6 @@
     <ClCompile Include="LuaObject.cpp">
       <Filter>Lua Class/Function\LuaObject</Filter>
     </ClCompile>
-    <ClCompile Include="LuaUblas.cpp">
-      <Filter>Lua Class/Function\LuaUblas</Filter>
-    </ClCompile>
     <ClCompile Include="LuaKeyAction.cpp">
       <Filter>Lua Processes\LuaKeyAction</Filter>
     </ClCompile>
@@ -86,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="LuaLight.cpp">
       <Filter>Lua Class/Function\LuaLight</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaError.cpp">
+      <Filter>LuaError</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMath.cpp">
+      <Filter>Lua Class/Function\LuaUblas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +142,9 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaLight">
       <UniqueIdentifier>{99aafd94-0f2e-47fe-a6c5-083161a4eb45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaError">
+      <UniqueIdentifier>{0068221f-3e77-415c-a28c-d60079bcd49a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

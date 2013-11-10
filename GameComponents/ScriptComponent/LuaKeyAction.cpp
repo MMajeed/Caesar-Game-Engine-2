@@ -1,5 +1,5 @@
 #include "LuaKeyAction.h"
-
+#include "LuaError.h"
 #include <InputCommunicator\GetKeyStatus.h>
 
 LuaKeyAction::LuaKeyAction(unsigned int inputKey, LuaKeyAction::KeyStatWanted inputWanted, luabind::object inputFunction)
@@ -9,7 +9,7 @@ LuaKeyAction::LuaKeyAction(unsigned int inputKey, LuaKeyAction::KeyStatWanted in
 	this->function = inputFunction;
 }
 
-void LuaKeyAction::Action()
+void LuaKeyAction::Action(lua_State *lua)
 {
 	GetKeyStatus::Key keyStatus = GetKeyStatus::GetKey(this->key);
 
@@ -19,7 +19,14 @@ void LuaKeyAction::Action()
 
 		if(this->wanted == this->currentKey)
 		{
-			luabind::call_function<void>(this->function);
+			try
+			{
+				luabind::call_function<void>(this->function);
+			}
+			catch (...)
+			{
+				throw LuaError(lua);
+			}
 		}
 	}
 }

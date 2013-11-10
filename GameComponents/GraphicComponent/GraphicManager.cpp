@@ -62,7 +62,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		++iterObj)
 	{
 		auto classTypeIter = iterObj->find(Keys::Class);
-		auto lightTypeIter = iterObj->find(Keys::LIGHTTYPE);
+		auto lightTypeIter = iterObj->find(Keys::Light::LIGHTTYPE);
 		if(	   classTypeIter == iterObj->cend()  // If it has a class type
 			|| GenericObject<std::string>::GetValue(classTypeIter->second) != Keys::ClassType::Light // and that class type is NOT a light
 			|| lightTypeIter == iterObj->cend()) // and it dosn't have a light type
@@ -73,9 +73,9 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		int slot;
 		cBuffer::CLightDesc light;
 		ZeroMemory(&light, sizeof(cBuffer::CLightDesc));
-		if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::DIRECTIONAL)
+		if (GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::Light::LightTypes::DIRECTIONAL)
 		{
-			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
+			slot = GenericObject<int>::GetValue(iterObj->find(Keys::Light::LIGHTSLOT)->second);
 			light = DirectLight::GetInstance().GetLightDesc(*iterObj);
 
 			//if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
@@ -93,15 +93,15 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 				light.hasShadow = true;
 			}*/
 		}
-		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::POINT)
+		else if (GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::Light::LightTypes::POINT)
 		{
-			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
-			CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::DIFFUSE)->second);
-			CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::AMBIENT)->second);
-			CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::SPECULAR)->second);
-			CHL::Vec4& position = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::POSITION)->second);
-			double range = GenericObject<double>::GetValue(iterObj->find(Keys::RANGE)->second);
-			CHL::Vec4& att = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::ATTENUATION)->second);
+			slot = GenericObject<int>::GetValue(iterObj->find(Keys::Light::LIGHTSLOT)->second);
+			CHL::Vec4& diffuse = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::DIFFUSE)->second);
+			CHL::Vec4& ambient = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::AMBIENT)->second);
+			CHL::Vec4& specular = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::SPECULAR)->second);
+			CHL::Vec4& position = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::POSITION)->second);
+			double range = GenericObject<double>::GetValue(iterObj->find(Keys::Light::RANGE)->second);
+			CHL::Vec4& att = GenericObject<CHL::Vec4>::GetValue(iterObj->find(Keys::Light::ATTENUATION)->second);
 
 			light.material.diffuse = CHL::ConvertVec4(diffuse);
 			light.material.ambient = CHL::ConvertVec4(ambient);
@@ -111,12 +111,12 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 			light.attenuation = CHL::ConvertVec4(att);
 			light.type = 2;
 		}
-		else if(GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::LightType::SPOT)
+		else if (GenericObject<std::string>::GetValue(lightTypeIter->second) == Keys::Light::LightTypes::SPOT)
 		{
-			slot = GenericObject<int>::GetValue(iterObj->find(Keys::LIGHTSLOT)->second);
+			slot = GenericObject<int>::GetValue(iterObj->find(Keys::Light::LIGHTSLOT)->second);
 			light = SpotLight::GetInstance().GetLightDesc(*iterObj);
 			
-			if(GenericObject<bool>::GetValue(iterObj->find(Keys::HASHADOW)->second) == true)
+			if (GenericObject<bool>::GetValue(iterObj->find(Keys::Light::HASHADOW)->second) == true)
 			{
 				SpotLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
@@ -164,12 +164,12 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		TypedefObject::ObjectInfo camera = *cameraIter;
-		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::EYE]);
-		vTM = GenericObject<CHL::Vec4>::GetValue(camera[Keys::TARGETMAGNITUDE]);
-		vUp = GenericObject<CHL::Vec4>::GetValue(camera[Keys::UP]);
-		pitch = GenericObject<double>::GetValue(camera[Keys::RADIANPITCH]);
-		yaw = GenericObject<double>::GetValue(camera[Keys::RADIANYAW]);
-		roll = GenericObject<double>::GetValue(camera[Keys::RADIANROLL]);
+		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
+		vTM = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::TARGETMAGNITUDE]);
+		vUp = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::UP]);
+		pitch = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANPITCH]);
+		yaw = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANYAW]);
+		roll = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANROLL]);
 	}
 	else
 	{
@@ -204,11 +204,11 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	if(prespectiveIter != objects.cend()) // if prespective found
 	{
 		TypedefObject::ObjectInfo prespective = *prespectiveIter;
-		FovAngleY = GenericObject<double>::GetValue(prespective[Keys::FOVANGLE]);
-		height = GenericObject<double>::GetValue(prespective[Keys::SCREENHEIGHT]);
-		width = GenericObject<double>::GetValue(prespective[Keys::SCREENWIDTH]);
-		nearZ = GenericObject<double>::GetValue(prespective[Keys::MINVIEWABLE]);
-		farZ = GenericObject<double>::GetValue(prespective[Keys::MAXVIEWABLE]);
+		FovAngleY = GenericObject<double>::GetValue(prespective[Keys::Prespective::FOVANGLE]);
+		height = GenericObject<double>::GetValue(prespective[Keys::Prespective::SCREENHEIGHT]);
+		width = GenericObject<double>::GetValue(prespective[Keys::Prespective::SCREENWIDTH]);
+		nearZ = GenericObject<double>::GetValue(prespective[Keys::Prespective::MINVIEWABLE]);
+		farZ = GenericObject<double>::GetValue(prespective[Keys::Prespective::MAXVIEWABLE]);
 	}
 	else
 	{
@@ -231,8 +231,8 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 		}
 		TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
 
-		width = GenericObject<int>::GetValue(windowInfo[Keys::WIDTH]);
-		height = GenericObject<int>::GetValue(windowInfo[Keys::HEIGHT]);
+		width = GenericObject<int>::GetValue(windowInfo[Keys::Window::WIDTH]);
+		height = GenericObject<int>::GetValue(windowInfo[Keys::Window::HEIGHT]);
 		FovAngleY = 0.785398163;
 		nearZ = 0.01;
 		farZ = 5000.0;
@@ -260,7 +260,7 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		TypedefObject::ObjectInfo camera = *cameraIter;
-		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::EYE]);
+		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
 	}
 	else
 	{
@@ -295,7 +295,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 		iterObj != objects.end();
 		++iterObj)
 	{
-		auto graphicIDIter = iterObj->find(Keys::GRAPHICDRAWABLEID);
+		auto graphicIDIter = iterObj->find(Keys::BasicDrawable::GRAPHICDRAWABLEID);
 		if(graphicIDIter == iterObj->cend() )
 		{
 			continue;
@@ -312,7 +312,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 
 		auto textures = iterObj->Where([](const TypedefObject::ObjectInfo::const_iterator iterObj)
 						{ 
-							return (iterObj->first.compare(0, Keys::TEXTUREFILE.size(), Keys::TEXTUREFILE) == 0);
+							return (iterObj->first.compare(0, Keys::BasicTexture::TEXTUREFILE.size(), Keys::BasicTexture::TEXTUREFILE) == 0);
 						});
 
 		for(auto iterTexture = textures.cbegin();
@@ -390,9 +390,9 @@ void GraphicManager::InitDevice()
 	}
 	TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
 
-	int Width = GenericObject<int>::GetValue(windowInfo[Keys::WIDTH]);
-	int Height = GenericObject<int>::GetValue(windowInfo[Keys::HEIGHT]);
-	HWND hwnd = GenericObject<HWND>::GetValue(windowInfo[Keys::HWND]);
+	int Width = GenericObject<int>::GetValue(windowInfo[Keys::Window::WIDTH]);
+	int Height = GenericObject<int>::GetValue(windowInfo[Keys::Window::HEIGHT]);
+	HWND hwnd = GenericObject<HWND>::GetValue(windowInfo[Keys::Window::HWND]);
 
 	HRESULT hr = S_OK;
 
