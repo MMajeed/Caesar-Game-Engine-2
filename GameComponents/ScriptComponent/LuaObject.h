@@ -11,6 +11,7 @@ class LuaObject
 {
 public:
 	LuaObject();
+	LuaObject(luabind::object const& table);
 
 	std::string ID;
 
@@ -18,6 +19,7 @@ public:
 	void RemoveGraphic();
 
 	void SetTexture(LuaBasicTexture texture);
+	void SetTextureAndSlot(LuaBasicTexture texture, int slot);
 	void RemoveTexture(LuaBasicTexture texture);
 
 	void SetLocation(LuaMath::Vector4 vec);

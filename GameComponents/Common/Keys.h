@@ -66,7 +66,7 @@ namespace Keys
 	
 	namespace BasicDrawable
 	{
-		const static std::string GRAPHICDRAWABLEID = "GraphicDrawableID";
+		const static std::string DRAWABLEOBJ = "DrawableObj";
 		const static std::string MODELFILE = "ModelFile";
 		const static std::string VERTEXSHADERFILE = "VertexShaderFile";
 		const static std::string PIXELSHADERFILE = "PixelShaderFile";
@@ -79,7 +79,7 @@ namespace Keys
 	namespace BasicTexture
 	{
 		const static std::string TEXTUREFILE = "TextureFile";
-		const static std::string TEXTURESLOT = "TextureSlot";
+		const static std::string TEXTUREOBJ = "TextureObj";
 	}
 
 	namespace ObjectInfo
@@ -90,6 +90,9 @@ namespace Keys
 		const static std::string DIFFUSE = "Diffuse";
 		const static std::string AMBIENT = "Ambient";
 		const static std::string SPECULAR = "Specular";
+		const static std::string DRAWABLEOBJ = "DrawableObj";
+		const static std::string TEXTUREOBJ = "TextureObj";
+		const static std::string TEXTURESLOT = "TextureSlot";
 	};
 
 };

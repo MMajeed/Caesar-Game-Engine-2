@@ -8,7 +8,7 @@
 class LuaBasicTexture
 {
 public:
-	LuaBasicTexture(int slot, std::string textureFile);
+	LuaBasicTexture(std::string textureFile);
 
 	std::string ID;
 

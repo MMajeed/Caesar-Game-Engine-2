@@ -30,6 +30,11 @@ void InfoManager::UpdateObject(std::string ID, std::string infoID, std::shared_p
 	this->objects[ID].Store(infoID, info);
 }
 
+void InfoManager::DeleteInfo(std::string ID, std::string infoID)
+{
+	this->objects[ID].Erase(infoID);
+}
+
 Info InfoManager::GetObjectInfo(std::string ID)
 {
 	return this->objects[ID];

@@ -14,22 +14,20 @@ LuaObject::LuaObject()
 {
 	std::hash_map<std::string, std::shared_ptr<Object>> mapKeys;
 
-	mapKeys[Keys::BasicDrawable::GRAPHICDRAWABLEID] = GenericObject<std::string>::CreateNew("");
+	mapKeys[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Object);
 
-	CHL::Vec4 loc;
-	loc(0) = 0;	loc(1) = 0;	loc(2) = 0;	loc(3) = 0;	
+	mapKeys[Keys::BasicDrawable::DRAWABLEOBJ] = GenericObject<std::string>::CreateNew("");
+
+	CHL::Vec4 loc;	loc(0) = 0;	loc(1) = 0;	loc(2) = 0;	loc(3) = 0;	
 	mapKeys[Keys::ObjectInfo::LOCATION] = GenericObject<CHL::Vec4>::CreateNew(loc);
 
-	CHL::Vec4 rot;
-	rot(0) = 0;	rot(1) = 0;	rot(2) = 0;	rot(3) = 0;	
+	CHL::Vec4 rot;  rot(0) = 0;	rot(1) = 0;	rot(2) = 0;	rot(3) = 0;	
 	mapKeys[Keys::ObjectInfo::ROTATION] = GenericObject<CHL::Vec4>::CreateNew(rot);
 
-	CHL::Vec4 sca;
-	sca(0) = 1.0;	sca(1) = 1.0;	sca(2) = 1.0;	sca(3) = 1.0;	
+	CHL::Vec4 sca;  sca(0) = 1.0;	sca(1) = 1.0;	sca(2) = 1.0;	sca(3) = 1.0;	
 	mapKeys[Keys::ObjectInfo::SCALE] = GenericObject<CHL::Vec4>::CreateNew(sca);
 
-	CHL::Vec4 col;
-	col(0) = 1.0;	col(1) = 1.0;	col(2) = 1.0;	col(3) = 1.0;	
+	CHL::Vec4 col;  col(0) = 1.0;	col(1) = 1.0;	col(2) = 1.0;	col(3) = 1.0;	
 	mapKeys[Keys::ObjectInfo::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(col);
 	mapKeys[Keys::ObjectInfo::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(col);
 	mapKeys[Keys::ObjectInfo::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(col);
@@ -40,32 +38,117 @@ LuaObject::LuaObject()
 
 	this->ID = msg->ID;
 }
+LuaObject::LuaObject(luabind::object const& table)
+{
+	if (luabind::type(table) != LUA_TTABLE)
+		throw std::exception("Wrong paramter for Camera, please send in a table");
+
+	CHL::Vec4 loc;	loc(0) = 0.0; loc(1) = 0.0; loc(2) = 0.0; loc(3) = 0.0;
+	CHL::Vec4 rot;	rot(0) = 0.0; rot(1) = 0.0; rot(2) = 0.0; rot(3) = 0.0;
+	CHL::Vec4 sca;	sca(0) = 1.0; sca(1) = 1.0; sca(2) = 1.0; sca(3) = 1.0;
+	CHL::Vec4 diffuse;	diffuse(0) = 1.0; diffuse(1) = 1.0; diffuse(2) = 1.0; diffuse(3) = 1.0;
+	CHL::Vec4 amibent;	amibent(0) = 1.0; amibent(1) = 1.0; amibent(2) = 1.0; amibent(3) = 1.0;
+	CHL::Vec4 specular;	specular(0) = 1.0; specular(1) = 1.0; specular(2) = 1.0; specular(3) = 1.0;
+	std::string graphicDrawable;
+	std::vector< std::pair<std::string, int> > textures;
+
+	for (luabind::iterator it(table);
+		it != luabind::iterator();
+		++it)
+	{
+		std::string key = luabind::object_cast<std::string>(it.key());
+
+			 if (key == Keys::ObjectInfo::LOCATION)		{ loc = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if (key == Keys::ObjectInfo::ROTATION)		{ rot = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if (key == Keys::ObjectInfo::SCALE)		{ sca = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if (key == Keys::ObjectInfo::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if (key == Keys::ObjectInfo::AMBIENT)		{ amibent = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if (key == Keys::ObjectInfo::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if (key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject>(*it).ID; }
+		else if (key.compare(0, Keys::ObjectInfo::TEXTUREOBJ.size(), Keys::ObjectInfo::TEXTUREOBJ) == 0)
+		{
+			std::string textureID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+			int textureSlot = 0;
+			std::string parse = key.substr(Keys::ObjectInfo::TEXTUREOBJ.size() );
+			if (!parse.empty())
+			{
+				std::stringstream ss;
+				ss << parse;
+				ss >> textureSlot;
+			}
+			textures.push_back(std::make_pair(textureID, textureSlot));
+		}
+	}
+
+	CHL::MapQ<std::string, std::shared_ptr<Object>> objectInfo;
+	objectInfo[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Object);
+	objectInfo[Keys::ObjectInfo::LOCATION] = GenericObject<CHL::Vec4>::CreateNew(loc);
+	objectInfo[Keys::ObjectInfo::ROTATION] = GenericObject<CHL::Vec4>::CreateNew(rot);
+	objectInfo[Keys::ObjectInfo::SCALE] = GenericObject<CHL::Vec4>::CreateNew(sca);
+	objectInfo[Keys::ObjectInfo::DIFFUSE] = GenericObject<CHL::Vec4>::CreateNew(diffuse);
+	objectInfo[Keys::ObjectInfo::AMBIENT] = GenericObject<CHL::Vec4>::CreateNew(amibent);
+	objectInfo[Keys::ObjectInfo::SPECULAR] = GenericObject<CHL::Vec4>::CreateNew(specular);
+	objectInfo[Keys::ObjectInfo::DRAWABLEOBJ] = GenericObject<std::string>::CreateNew(graphicDrawable);
+	for (auto iter = textures.begin();
+		iter != textures.end();
+		++iter)
+	{
+		std::string textureIDKey = Keys::ObjectInfo::TEXTUREOBJ + iter->first;
+		std::string texutureSlotKey = Keys::ObjectInfo::TEXTURESLOT + iter->first;
+
+		objectInfo[textureIDKey] = GenericObject<std::string>::CreateNew(iter->first);
+		objectInfo[texutureSlotKey] = GenericObject<int>::CreateNew(iter->second);
+	}
+	
+	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(objectInfo));
+	InfoCommunicator::SubmitMessage(msg);
+	this->ID = msg->ID;
+}
 
 void LuaObject::SetGraphic(LuaBasicDrawableObject graphic)
 {
 	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew(graphic.ID);
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::BasicDrawable::GRAPHICDRAWABLEID, obj));
+	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::BasicDrawable::DRAWABLEOBJ, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 void LuaObject::RemoveGraphic()
 {
-	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew("");
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::BasicDrawable::GRAPHICDRAWABLEID, obj));
+	std::shared_ptr<DeleteInfoMessgae> msg(new DeleteInfoMessgae(this->ID, Keys::BasicDrawable::DRAWABLEOBJ));
 	InfoCommunicator::SubmitMessage(msg);
 }
 
 void LuaObject::SetTexture(LuaBasicTexture texture)
 {
-	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew(texture.ID);
-	std::string textureID = Keys::BasicTexture::TEXTUREFILE + texture.ID;
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, textureID, obj));
-	InfoCommunicator::SubmitMessage(msg);
+	std::shared_ptr<Object> objTexture = GenericObject<std::string>::CreateNew(texture.ID);
+	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + texture.ID;
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, textureID, objTexture));
+	InfoCommunicator::SubmitMessage(msg1);
+
+	std::shared_ptr<Object> objSlot = GenericObject<int>::CreateNew(0);
+	std::string textureSlotID = Keys::ObjectInfo::TEXTURESLOT + texture.ID;
+	std::shared_ptr<UpdateObjectMessage> msg2(new UpdateObjectMessage(this->ID, textureSlotID, objSlot));
+	InfoCommunicator::SubmitMessage(msg2);
+}
+void LuaObject::SetTextureAndSlot(LuaBasicTexture texture, int slot)
+{
+	std::shared_ptr<Object> objTexture = GenericObject<std::string>::CreateNew(texture.ID);
+	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + texture.ID;
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, textureID, objTexture));
+	InfoCommunicator::SubmitMessage(msg1);
+
+	std::shared_ptr<Object> objSlot = GenericObject<int>::CreateNew(slot);
+	std::string textureSlotID = Keys::ObjectInfo::TEXTURESLOT + texture.ID;
+	std::shared_ptr<UpdateObjectMessage> msg2(new UpdateObjectMessage(this->ID, textureSlotID, objSlot));
+	InfoCommunicator::SubmitMessage(msg2);
 }
 void LuaObject::RemoveTexture(LuaBasicTexture texture)
 {
-	std::shared_ptr<Object> obj = GenericObject<std::string>::CreateNew("");
-	std::string textureID = Keys::BasicTexture::TEXTUREFILE + texture.ID;
-	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, textureID, obj));
+	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + texture.ID;
+	std::shared_ptr<DeleteInfoMessgae> msg1(new DeleteInfoMessgae(this->ID, textureID));
+	InfoCommunicator::SubmitMessage(msg1);
+
+	std::string textureSlot = Keys::ObjectInfo::TEXTURESLOT + texture.ID;
+	std::shared_ptr<DeleteInfoMessgae> msg(new DeleteInfoMessgae(this->ID, textureSlot));
 	InfoCommunicator::SubmitMessage(msg);
 }
 
@@ -145,17 +228,19 @@ void LuaObject::Register(lua_State *lua)
 {
 	luabind::module(lua) [
 		luabind::class_<LuaObject>("Object")
-		  .def(luabind::constructor<>())
-		  .def_readonly("ID", &LuaObject::ID)
-		  .def("SetGraphic", &LuaObject::SetGraphic)
-		  .def("RemoveGraphic", &LuaObject::RemoveGraphic)
-		  .def("SetTexture", &LuaObject::SetTexture)
-		  .def("RemoveTexture", &LuaObject::RemoveTexture)
-		  .property("Location", &LuaObject::GetLocation, &LuaObject::SetLocation)
-		  .property("Scale", &LuaObject::GetScale, &LuaObject::SetScale)
-		  .property("Rotation", &LuaObject::GetRotation, &LuaObject::SetRotation)
-		  .property("Diffuse", &LuaObject::GetDiffuse, &LuaObject::SetDiffuse)
-		  .property("Amibent", &LuaObject::GetAmibent, &LuaObject::SetAmibent)
-		  .property("Specular", &LuaObject::GetSpecular, &LuaObject::SetSpecular)
+			.def(luabind::constructor<>())
+			.def(luabind::constructor<luabind::object const&>())
+			.def_readonly("ID", &LuaObject::ID)
+			.def("SetGraphic", &LuaObject::SetGraphic)
+			.def("RemoveGraphic", &LuaObject::RemoveGraphic)
+			.def("SetTexture", &LuaObject::SetTexture)
+			.def("SetTextureAndSlot", &LuaObject::SetTextureAndSlot)
+			.def("RemoveTexture", &LuaObject::RemoveTexture)
+			.property("Location", &LuaObject::GetLocation, &LuaObject::SetLocation)
+			.property("Scale", &LuaObject::GetScale, &LuaObject::SetScale)
+			.property("Rotation", &LuaObject::GetRotation, &LuaObject::SetRotation)
+			.property("Diffuse", &LuaObject::GetDiffuse, &LuaObject::SetDiffuse)
+			.property("Amibent", &LuaObject::GetAmibent, &LuaObject::SetAmibent)
+			.property("Specular", &LuaObject::GetSpecular, &LuaObject::SetSpecular)
 	  ];
 }

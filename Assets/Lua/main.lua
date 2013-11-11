@@ -8,15 +8,15 @@ boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        =
                                    [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.fx",
                                    [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_3_LightNTexture.fx",});
 
-tilesTexture = BasicTexture(0, "Assets/Texture/Tiles.png");
+tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
 
-box1 = Object();
-box1.Scale = Vector4(50.0, 0.2, 50.0);
-box1:SetGraphic(boxDrawable);
-box1:SetTexture(tilesTexture);
-box1.Diffuse = Vector4(1.0, 1.0, 1.0)
-box1.Amibent = Vector4(1.0, 1.0, 1.0)
-box1.Specular = Vector4(0.4, 0.4, 0.4, 0.4)
+
+box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
+               [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(1.0, 1.0, 1.0),
+               [Keys["ObjectInfo"]["Ambient"]]     = Vector4(1.0, 1.0, 1.0),
+               [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.4, 0.4, 0.4, 0.4),
+               [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
+               [Keys["ObjectInfo"]["TextureObj"]]  = tilesTexture,});
 
 sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.fx",
@@ -27,34 +27,31 @@ for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
     local y = 2;
     local z = 0;
-    sphereObject = Object();
-    sphereObject.Location = Vector4(x, y, z);
-    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
-    sphereObject.Amibent = Vector4(0.5, 0.5, 0.5)
-    sphereObject.Specular = Vector4(0.5, 0.5, 0.5, 0.5)
-    sphereObject:SetGraphic(sphereDrawable);
+    local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
+                                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
+                                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                                 [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
 end
 
 for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
     local y = 2;
     local z = 20;
-    sphereObject = Object();
-    sphereObject.Location = Vector4(x, y, z);
-    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
-    sphereObject.Amibent = Vector4(0.4, 0.4, 0.4)
-    sphereObject.Specular = Vector4(0.3, 0.3, 0.3, 0.3)
-    sphereObject:SetGraphic(sphereDrawable);
+    local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
+                                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
+                                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                                 [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
 end
 
 for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
     local y = 2;
     local z = -20;
-    sphereObject = Object();
-    sphereObject.Location = Vector4(x, y, z);
-    sphereObject.Diffuse = Vector4(0.51, 0.53, 0.58)
-    sphereObject.Amibent = Vector4(0.4, 0.4, 0.4)
-    sphereObject.Specular = Vector4(0.4, 0.4, 0.4, 0.1)
-    sphereObject:SetGraphic(sphereDrawable);
+    local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
+                                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
+                                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                                 [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
 end

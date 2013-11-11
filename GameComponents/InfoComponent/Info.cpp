@@ -23,6 +23,11 @@ void Info::Store(std::string key, std::shared_ptr<Object> value)
 	this->info[key] = value;
 }
 
+void  Info::Erase(std::string key)
+{
+	this->info.erase(key);
+}
+
 bool Info::Retrieve(std::string key, std::shared_ptr<Object>& value) const
 {
 	auto valueIterator = this->info.find(key);

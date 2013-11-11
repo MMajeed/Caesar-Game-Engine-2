@@ -18,4 +18,13 @@ public:
 	 std::shared_ptr<Object> info;
 };
 
+class DeleteInfoMessgae : public Message
+{
+public:
+	DeleteInfoMessgae(const std::string& inputObjectID, const std::string& inputInfoID);
+	virtual Message::Status Work();
+	std::string objectID;
+	std::string infoID;
+};
+
 #endif //__UpdateObjectMessage__

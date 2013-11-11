@@ -8,12 +8,9 @@ skyBoxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]      
                                       [Keys["BasicDrawable"]["Antialiasedline"]]  = true,
                                       [Keys["BasicDrawable"]["MultisampleEnable"]]= true,});
 
-skyBoxTexture = BasicTexture(5, "Assets/Texture/Sky/Sky.dds");
+skyBoxTexture = BasicTexture("Assets/Texture/Sky/Sky.dds");
 
-
-skyBoxObject = Object();
-skyBoxObject.Scale = Vector4(2000.0, 2000.0, 2000.0);
-skyBoxObject:SetGraphic(skyBoxDrawable);
-skyBoxObject:SetTexture(skyBoxTexture);
-
+skyBoxObject = Object({[Keys["ObjectInfo"]["Scale"]]            = Vector4(2000.0, 2000.0, 2000.0),
+                       [Keys["ObjectInfo"]["DrawableObj"]]      = skyBoxDrawable,
+                       [Keys["ObjectInfo"]["TextureObj"] .. 5]  = skyBoxTexture,});
 return SkyBox

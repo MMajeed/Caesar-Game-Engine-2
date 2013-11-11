@@ -18,7 +18,7 @@ cbuffer cbInfo : register( b1 )
 	float4 eye;
 };
 
-static const int numOfLights = 10;
+static const int numOfLights = 25;
 
 cbuffer cbLight : register( b2 )
 {

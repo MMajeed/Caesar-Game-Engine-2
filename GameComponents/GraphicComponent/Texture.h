@@ -4,18 +4,17 @@
 #include "Linker.h"
 
 #include <Converter.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include "TypedefObject.h"
 
 class Texture
 {
 public:
 	Texture(const std::string& inputID) : ID(inputID){}
-	virtual void Init()				                       = 0;
-	virtual void Destory()			                       = 0;
-	virtual void Update(double realTime, double deltaTime) = 0;
-	virtual void SettupTexture()	                       = 0;
-	virtual void CleanupTexture()                          = 0;
+	virtual void Init()												= 0;
+	virtual void Destory()											= 0;
+	virtual void Update(double realTime, double deltaTime)			= 0;
+	virtual void SettupTexture(TypedefObject::ObjectInfo& object)	= 0;
+	virtual void CleanupTexture(TypedefObject::ObjectInfo& object)	= 0;
 	virtual ~Texture(){}
 
 	const std::string	ID;

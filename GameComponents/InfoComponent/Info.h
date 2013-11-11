@@ -19,6 +19,8 @@ public:
 
 	bool Retrieve(std::string key, std::shared_ptr<Object>& value) const;
 
+	void Erase(std::string key);
+
 	bool Exist(std::string key) const;
 
 	std::string ID() const;

@@ -36,9 +36,6 @@
     <ClInclude Include="DirectLight.h">
       <Filter>Light\DirectLight</Filter>
     </ClInclude>
-    <ClInclude Include="DepthTexture.h">
-      <Filter>Texture\DepthTexture</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -97,9 +94,6 @@
     </Filter>
     <Filter Include="Light\DirectLight">
       <UniqueIdentifier>{0217d582-611d-4dfd-917f-b715c41066ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Texture\DepthTexture">
-      <UniqueIdentifier>{1cb44b3b-308c-458e-a0d9-5ba995eb82f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

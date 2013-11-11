@@ -16,3 +16,17 @@ Message::Status UpdateObjectMessage::Work()
 
 	return Message::Status::Complete;
 }
+
+DeleteInfoMessgae::DeleteInfoMessgae(const std::string& inputObjectID, const std::string& inputInfoID)
+{
+	this->objectID = inputObjectID;
+	this->infoID = inputInfoID;
+}
+Message::Status DeleteInfoMessgae::Work()
+{
+	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
+
+	InfoManager::GetInstance().DeleteInfo(this->objectID, this->infoID);
+
+	return Message::Status::Complete;
+}

@@ -18,7 +18,7 @@ LuaCamera::LuaCamera(luabind::object const& table)
 
 	CHL::Vec4 eye;	eye(0) = 0.0; eye(1) = 0.0; eye(2) = 0.0; eye(3) = 0.0;
 	CHL::Vec4 TM;	TM(0) = 0.0; TM(1) = 0.0; TM(2) = 1.0; TM(3) = 0.0;
-	CHL::Vec4 up;	TM(0) = 0.0; TM(1) = 0.0; TM(2) = 0.0; TM(3) = 0.0;
+	CHL::Vec4 up;	up(0) = 0.0; up(1) = 1.0; up(2) = 0.0; up(3) = 0.0;
 	double roll = 0.0;	double pitch = 0.0;		double yaw = 0.0;
 
 	for (luabind::iterator it(table);
@@ -140,13 +140,13 @@ void LuaCamera::Register(lua_State *lua)
 {
 	luabind::module(lua) [
 		luabind::class_<LuaCamera>("Camera")
-		  .def(luabind::constructor<luabind::object const&>())
-		  .property("Eye", &LuaCamera::GetEye, &LuaCamera::SetEye)
-		  .property("TargetMagintude", &LuaCamera::GetTargetMagintude, &LuaCamera::SetTargetMagintude)
-		  .property("Up", &LuaCamera::GetUp, &LuaCamera::SetUp)
-		  .property("Roll", &LuaCamera::GetRoll, &LuaCamera::SetRoll)
-		  .property("Pitch", &LuaCamera::GetPitch, &LuaCamera::SetPitch)
-		  .property("Yaw", &LuaCamera::GetYaw, &LuaCamera::SetYaw)
-		  .def("MoveFroward", &LuaCamera::MoveFroward)
+			.def(luabind::constructor<luabind::object const&>())
+			.property("Eye", &LuaCamera::GetEye, &LuaCamera::SetEye)
+			.property("TargetMagintude", &LuaCamera::GetTargetMagintude, &LuaCamera::SetTargetMagintude)
+			.property("Up", &LuaCamera::GetUp, &LuaCamera::SetUp)
+			.property("Roll", &LuaCamera::GetRoll, &LuaCamera::SetRoll)
+			.property("Pitch", &LuaCamera::GetPitch, &LuaCamera::SetPitch)
+			.property("Yaw", &LuaCamera::GetYaw, &LuaCamera::SetYaw)
+			.def("MoveFroward", &LuaCamera::MoveFroward)
 	  ];
 }

@@ -304,7 +304,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 		iterObj != objects.end();
 		++iterObj)
 	{
-		auto graphicIDIter = iterObj->find(Keys::BasicDrawable::GRAPHICDRAWABLEID);
+		auto graphicIDIter = iterObj->find(Keys::BasicDrawable::DRAWABLEOBJ);
 		if(graphicIDIter == iterObj->cend() )
 		{
 			continue;
@@ -321,7 +321,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 
 		auto textures = iterObj->Where([](const TypedefObject::ObjectInfo::const_iterator iterObj)
 						{ 
-							return (iterObj->first.compare(0, Keys::BasicTexture::TEXTUREFILE.size(), Keys::BasicTexture::TEXTUREFILE) == 0);
+							return (iterObj->first.compare(0, Keys::BasicTexture::TEXTUREOBJ.size(), Keys::BasicTexture::TEXTUREOBJ) == 0);
 						});
 
 		for(auto iterTexture = textures.cbegin();
@@ -333,7 +333,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 		
 			if(texture != this->textures.cend())
 			{
-				texture->second->SettupTexture();
+				texture->second->SettupTexture(*iterObj);
 			}
 		}
 
@@ -348,7 +348,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 
 			if(texture != this->textures.cend())
 			{
-				texture->second->CleanupTexture();
+				texture->second->CleanupTexture(*iterObj);
 			}
 		}
 	}

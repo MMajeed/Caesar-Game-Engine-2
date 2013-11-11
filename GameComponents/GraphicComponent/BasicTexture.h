@@ -15,14 +15,13 @@ public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
-	virtual void SettupTexture();
-	virtual void CleanupTexture();
+	virtual void SettupTexture(TypedefObject::ObjectInfo& object);
+	virtual void CleanupTexture(TypedefObject::ObjectInfo& object);
 	
-	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, int slot, const std::string& fileName);
+	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, const std::string& fileName);
 
 	struct
 	{
-		int							slot;
 		std::string					textureFileName;
 		ID3D11ShaderResourceView*	pTexture;
 	} D3DInfo;
