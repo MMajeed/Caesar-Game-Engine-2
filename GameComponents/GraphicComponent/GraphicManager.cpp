@@ -10,6 +10,7 @@
 #include "Buffers.h"
 #include "SpotLight.h"
 #include "DirectLight.h"
+#include <algorithm>
 
 GraphicManager::GraphicManager()
 {
@@ -159,17 +160,18 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	double pitch;	double yaw;	double roll;
 
 	TypedefObject::ObjectVector::const_iterator cameraIter;
-	cameraIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
-			{ 
-				auto classTypeIter = objIter->find(Keys::Class);
-				if(classTypeIter != objIter->end())
-				{
-					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-					return (classID == Keys::ClassType::Camera); 
-				}
-				else
-					return false;
-			}); // Find Camera
+	cameraIter = std::find_if(objects.begin(), objects.end(),
+						[](const TypedefObject::ObjectInfo& obj)
+						{
+							auto classTypeIter = obj.find(Keys::Class);
+							if(classTypeIter != obj.end())
+							{
+								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+								return (classID == Keys::ClassType::Camera);
+							}
+							else
+								return false;
+						}); // Find Camera
 	if(cameraIter != objects.cend()) // if camera found
 	{
 		TypedefObject::ObjectInfo camera = *cameraIter;
@@ -198,17 +200,18 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	double nearZ;
 	double farZ;
 
-	prespectiveIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
-			{ 
-				auto classTypeIter = objIter->find(Keys::Class);
-				if(classTypeIter != objIter->end())
-				{
-					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-					return (classID == Keys::ClassType::Prespective); 
-				}
-				else
-					return false;
-			}); // Find prespective]
+	prespectiveIter = std::find_if(objects.begin(), objects.end(),
+						[](const TypedefObject::ObjectInfo& obj)
+						{
+							auto classTypeIter = obj.find(Keys::Class);
+							if(classTypeIter != obj.end())
+							{
+								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+								return (classID == Keys::ClassType::Prespective);
+							}
+							else
+								return false;
+						});
 
 	if(prespectiveIter != objects.cend()) // if prespective found
 	{
@@ -222,17 +225,18 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	else
 	{
 		TypedefObject::ObjectVector::const_iterator windowInfoIter;
-		windowInfoIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
-				{ 
-					auto classTypeIter = objIter->find(Keys::Class);
-					if(classTypeIter != objIter->end())
-					{
-						std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-						return (classID == Keys::ClassType::WindowInfo); 
-					}
-					else
-						return false;
-				}); // Find WindoInfo
+		windowInfoIter = std::find_if(objects.begin(), objects.end(),
+						[](const TypedefObject::ObjectInfo& obj)
+						{
+							auto classTypeIter = obj.find(Keys::Class);
+							if(classTypeIter != obj.end())
+							{
+								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+								return (classID == Keys::ClassType::WindowInfo); 
+							}
+							else
+								return false;
+						});
 
 		if(windowInfoIter == objects.cend())
 		{
@@ -254,17 +258,18 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 	CHL::Vec4 vEye;
 
 	TypedefObject::ObjectVector::const_iterator cameraIter;
-	cameraIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
-			{ 
-				auto classTypeIter = objIter->find(Keys::Class);
-				if(classTypeIter != objIter->end())
-				{
-					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-					return (classID == Keys::ClassType::Camera); 
-				}
-				else
-					return false;
-			}); // Find Camera
+	cameraIter = std::find_if(objects.begin(), objects.end(),
+						[](const TypedefObject::ObjectInfo& obj)
+						{
+							auto classTypeIter = obj.find(Keys::Class);
+							if(classTypeIter != obj.end())
+							{
+								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+								return (classID == Keys::ClassType::Camera);
+							}
+							else
+								return false;
+						}); // Find Camera
 
 	if(cameraIter != objects.cend()) // if camera found
 	{
@@ -319,10 +324,16 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 			continue;
 		}// If it didn't fine then continue
 
-		auto textures = iterObj->Where([](const TypedefObject::ObjectInfo::const_iterator iterObj)
-						{ 
-							return (iterObj->first.compare(0, Keys::BasicTexture::TEXTUREOBJ.size(), Keys::BasicTexture::TEXTUREOBJ) == 0);
-						});
+		TypedefObject::ObjectInfo textures;
+		for (auto iterObjInfo = iterObj->begin();
+			iterObjInfo != iterObj->end();
+			++iterObjInfo)
+		{
+			if (iterObjInfo->first.compare(0, Keys::BasicTexture::TEXTUREOBJ.size(), Keys::BasicTexture::TEXTUREOBJ) == 0)
+			{
+				textures.insert(*iterObjInfo);
+			}
+		}
 
 		for(auto iterTexture = textures.cbegin();
 			iterTexture != textures.cend();
@@ -358,11 +369,12 @@ void GraphicManager::Present(TypedefObject::ObjectVector& objects)
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->direct3d.pSwapChain->Present( 0, 0 );
 }
+
 void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
 {
 	this->objectDrawables[obj->ID] = obj;
 }
-const CHL::MapQ<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
+const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
 {
 	return this->objectDrawables;
 }
@@ -371,7 +383,7 @@ void GraphicManager::InsertTexture(std::shared_ptr<Texture> obj)
 {
 	this->textures[obj->ID] = obj;
 }
-const CHL::MapQ<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
+const std::hash_map<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
 {
 	return this->textures;
 }
@@ -381,18 +393,19 @@ void GraphicManager::InitDevice()
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
 	TypedefObject::ObjectVector::const_iterator windowInfoIter;
-	windowInfoIter = objects.First([](TypedefObject::ObjectVector::const_iterator objIter)
-			{ 
-				auto classTypeIter = objIter->find(Keys::Class);
-				if(classTypeIter != objIter->end())
-				{
-					std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-					return (classID == Keys::ClassType::WindowInfo); 
-				}
-				else
-					return false;
-			}); // Find WindoInfo
-
+	windowInfoIter = std::find_if(objects.begin(), objects.end(),
+						[](const TypedefObject::ObjectInfo& obj)
+						{
+							auto classTypeIter = obj.find(Keys::Class);
+							if(classTypeIter != obj.end())
+							{
+								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+								return (classID == Keys::ClassType::WindowInfo); 
+							}
+							else
+								return false;
+						});
+		
 	if(windowInfoIter == objects.cend())
 	{
 		throw std::exception("Failed to find windows info");

@@ -4,17 +4,17 @@
 #include <InfoManager.h>
 #include <Keys.h>
 
-void FuncInsert(CHL::MapQ<std::string, Info>::const_iterator startIter,
-				CHL::MapQ<std::string, Info>::const_iterator endIter,
+void FuncInsert(std::hash_map<std::string, Info>::const_iterator startIter,
+				std::hash_map<std::string, Info>::const_iterator endIter,
 					   std::size_t start,
-					   CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>>* convertedVec)
+					   std::vector<std::hash_map<std::string, std::shared_ptr<Object>>>* convertedVec)
 {
 	int i = start;
 	for(auto objIter = startIter;
 		objIter != endIter;
 		++objIter)
 	{
-		CHL::MapQ<std::string, std::shared_ptr<Object>> newInfo;
+		std::hash_map<std::string, std::shared_ptr<Object>> newInfo;
 		newInfo.reserve( objIter->second.info.size());
 		for(auto infoIter = objIter->second.info.cbegin();
 			infoIter != objIter->second.info.cend();
@@ -27,13 +27,13 @@ void FuncInsert(CHL::MapQ<std::string, Info>::const_iterator startIter,
 	}
 }
 
-CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutput::GetAllObjects()
+std::vector<std::hash_map<std::string, std::shared_ptr<Object>>> ObjectManagerOutput::GetAllObjects()
 {
 	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
 	
-	const CHL::MapQ<std::string, Info>&  allObjects = InfoManager::GetInstance().AllObjects();
+	const std::hash_map<std::string, Info>&  allObjects = InfoManager::GetInstance().AllObjects();
 
-	CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> convertedVec;
+	std::vector<std::hash_map<std::string, std::shared_ptr<Object>>> convertedVec;
 
 	convertedVec.resize(allObjects.size());
 		
@@ -45,8 +45,8 @@ CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutpu
 	std::vector<std::shared_ptr<std::thread>> threads;
 	threads.reserve(numberOfThreads);
 
-	CHL::MapQ<std::string, Info>::const_iterator startIter = allObjects.cbegin();
-	CHL::MapQ<std::string, Info>::const_iterator endIter = allObjects.cbegin();
+	std::hash_map<std::string, Info>::const_iterator startIter = allObjects.cbegin();
+	std::hash_map<std::string, Info>::const_iterator endIter = allObjects.cbegin();
 	std::size_t currentEndLoc = 0;
 
 	for(int i = 0; i < numberOfThreads; ++i)
@@ -94,11 +94,11 @@ CHL::VectorQ<CHL::MapQ<std::string, std::shared_ptr<Object>>> ObjectManagerOutpu
 	return convertedVec;
 }
 
-CHL::MapQ<std::string, std::shared_ptr<Object>> ObjectManagerOutput::GetObject(std::string id)
+std::hash_map<std::string, std::shared_ptr<Object>> ObjectManagerOutput::GetObject(std::string id)
 {
 	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
 
-	CHL::MapQ<std::string, std::shared_ptr<Object>> returnValue;
+	std::hash_map<std::string, std::shared_ptr<Object>> returnValue;
 
 	auto objIter = InfoManager::GetInstance().GetObjectInfo(id);
 	returnValue.reserve( objIter.info.size() );

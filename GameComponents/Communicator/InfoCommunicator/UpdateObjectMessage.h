@@ -3,7 +3,7 @@
 
 #include "Linker.h"
 
-#include <Queryable.h>
+#include <vector>
 #include <string>
 #include <Object.h>
 #include <Message.h>

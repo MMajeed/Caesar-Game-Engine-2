@@ -80,7 +80,7 @@ LuaObject::LuaObject(luabind::object const& table)
 		}
 	}
 
-	CHL::MapQ<std::string, std::shared_ptr<Object>> objectInfo;
+	std::hash_map<std::string, std::shared_ptr<Object>> objectInfo;
 	objectInfo[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Object);
 	objectInfo[Keys::ObjectInfo::LOCATION] = GenericObject<CHL::Vec4>::CreateNew(loc);
 	objectInfo[Keys::ObjectInfo::ROTATION] = GenericObject<CHL::Vec4>::CreateNew(rot);

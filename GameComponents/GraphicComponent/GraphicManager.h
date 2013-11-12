@@ -7,7 +7,7 @@
 #include <Matrix.h>
 #include <d3d11.h>
 #include <Singleton.h>
-#include <Queryable.h>
+#include <vector>
 #include <Object.h>
 #include <Interface.h>
 #include "Drawable.h"
@@ -32,10 +32,10 @@ public:
 	virtual void Present(TypedefObject::ObjectVector& objects);
 
 	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
-	const CHL::MapQ<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
+	const std::hash_map<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
 
 	void InsertTexture(std::shared_ptr<Texture> obj);
-	const CHL::MapQ<std::string, std::shared_ptr<Texture>> AllTexture();
+	const std::hash_map<std::string, std::shared_ptr<Texture>> AllTexture();
 
 	// DirectX stuff
 	struct
@@ -56,8 +56,8 @@ public:
 
 	
 protected:
-	CHL::MapQ<std::string, std::shared_ptr<Drawable>> objectDrawables;
-	CHL::MapQ<std::string, std::shared_ptr<Texture>> textures;
+	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
+	std::hash_map<std::string, std::shared_ptr<Texture>> textures;
 
 	virtual void InitDevice();
 public:

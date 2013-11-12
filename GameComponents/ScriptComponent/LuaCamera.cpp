@@ -35,7 +35,7 @@ LuaCamera::LuaCamera(luabind::object const& table)
 		else if (key == Keys::Camera::RADIANYAW)		{ yaw = luabind::object_cast<double>(*it); }
 	}
 
-	CHL::MapQ<std::string, std::shared_ptr<Object>> camera;
+	std::hash_map<std::string, std::shared_ptr<Object>> camera;
 	camera[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Camera);
 	camera[Keys::Camera::EYE] = GenericObject<CHL::Vec4>::CreateNew(eye);
 	camera[Keys::Camera::TARGETMAGNITUDE] = GenericObject<CHL::Vec4>::CreateNew(TM);

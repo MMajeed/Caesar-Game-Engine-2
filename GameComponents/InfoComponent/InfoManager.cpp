@@ -45,7 +45,7 @@ void InfoManager::Insert(const Info& obj)
 	this->objects[obj.ID()] = obj;
 }
 
-const CHL::MapQ<std::string, Info>& InfoManager::AllObjects()
+const std::hash_map<std::string, Info>& InfoManager::AllObjects()
 {
 	return this->objects;
 }

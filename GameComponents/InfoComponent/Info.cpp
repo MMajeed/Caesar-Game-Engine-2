@@ -11,7 +11,7 @@ Info::Info()
 	std::shared_ptr<GenericObject<std::string>> obj(new GenericObject<std::string>(CHL::ToString(boost::uuids::random_generator()())));
 	this->Store(Keys::ID, obj);
 }
-Info::Info(const CHL::MapQ<std::string, std::shared_ptr<Object>>& input)
+Info::Info(const std::hash_map<std::string, std::shared_ptr<Object>>& input)
 	: info(input)
 {
 	std::shared_ptr<GenericObject<std::string>> obj(new GenericObject<std::string>(CHL::ToString(boost::uuids::random_generator()())));

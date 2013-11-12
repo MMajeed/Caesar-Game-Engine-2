@@ -4,11 +4,9 @@
 #include "Linker.h"
 
 #include <Interface.h>
-
 #include "KeyStatus.h"
-
 #include <Singleton.h>
-#include <Queryable.h>
+#include <hash_map>
 #include <memory>
 
 class InputManager : public Interface, public CHL::Singelton<InputManager>
@@ -23,9 +21,9 @@ public:
 
 	void UpdateKeyStatus(unsigned int, KeyStatus::Status);
 
-	const CHL::MapQ<unsigned int, KeyStatus> AllObjects();
+	const std::hash_map<unsigned int, KeyStatus> AllObjects();
 protected:
-	CHL::MapQ<unsigned int, KeyStatus> objects;
+	std::hash_map<unsigned int, KeyStatus> objects;
 
 	friend CHL::Singelton<InputManager>;
 };

@@ -2,7 +2,7 @@
 #define __AddObjectMessage__
 
 #include "Linker.h"
-#include <Queryable.h>
+#include <hash_map>
 #include <string>
 #include <Object.h>
 
@@ -11,9 +11,9 @@
 class AddObjectMessage : public Message
 {
 public:
-	AddObjectMessage(const CHL::MapQ<std::string, std::shared_ptr<Object>>& info);
+	AddObjectMessage(const std::hash_map<std::string, std::shared_ptr<Object>>& info);
 	virtual Message::Status Work();
-	CHL::MapQ<std::string, std::shared_ptr<Object>> messageInfo;
+	std::hash_map<std::string, std::shared_ptr<Object>> messageInfo;
 	std::string ID;
 };
 

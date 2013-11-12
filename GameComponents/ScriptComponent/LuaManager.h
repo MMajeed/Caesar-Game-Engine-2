@@ -6,7 +6,7 @@
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 #include <Singleton.h>
-#include <Queryable.h>
+#include <vector>
 #include <memory>
 
 #include <Interface.h>
@@ -27,7 +27,7 @@ public:
 
 	virtual void SubmitProcesses(std::shared_ptr<LuaProcesses> process);
 protected:
-	CHL::VectorQ<std::shared_ptr<LuaProcesses>> allProcesses;
+	std::vector<std::shared_ptr<LuaProcesses>> allProcesses;
 
 	friend CHL::Singelton<LuaManager>;
 };

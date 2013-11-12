@@ -3,13 +3,13 @@
 
 GetKeyStatus::Key GetKeyStatus::GetKey(unsigned int keyID)
 {
-	CHL::MapQ<unsigned int, KeyStatus> keys;
+	std::hash_map<unsigned int, KeyStatus> keys;
 
 	{std::lock_guard<std::mutex> lock(InputManager::GetInstance().mutex);
 		keys = InputManager::GetInstance().AllObjects();
 	}
 
-	CHL::MapQ<unsigned int, KeyStatus>::const_iterator key = keys.find(keyID);
+	std::hash_map<unsigned int, KeyStatus>::const_iterator key = keys.find(keyID);
 
 	GetKeyStatus::Key returnValue;
 

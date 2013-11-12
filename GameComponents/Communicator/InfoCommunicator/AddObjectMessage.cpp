@@ -6,7 +6,7 @@
 #include <InfoManager.h>
 #include <Keys.h>
 
-AddObjectMessage::AddObjectMessage(const CHL::MapQ<std::string, std::shared_ptr<Object>>& info)
+AddObjectMessage::AddObjectMessage(const std::hash_map<std::string, std::shared_ptr<Object>>& info)
 {
 	this->messageInfo = info;
 }

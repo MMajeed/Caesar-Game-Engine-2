@@ -32,7 +32,7 @@ void InputManager::UpdateKeyStatus(unsigned int key, KeyStatus::Status status)
 	this->objects[key].UpdateStatus(status);
 }
 
-const CHL::MapQ<unsigned int, KeyStatus> InputManager::AllObjects()
+const std::hash_map<unsigned int, KeyStatus> InputManager::AllObjects()
 {
 	return this->objects;
 }
