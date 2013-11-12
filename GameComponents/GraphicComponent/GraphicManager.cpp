@@ -11,7 +11,7 @@
 #include "SpotLight.h"
 #include "DirectLight.h"
 #include <algorithm>
-
+#include <iostream>
 GraphicManager::GraphicManager()
 {
 	this->direct3d.pd3dDevice			= 0;
@@ -38,6 +38,7 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
+	std::cout << this->timer.AbsoluteTime << "\n";
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
 	this->SetupLight(objects);

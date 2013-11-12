@@ -14,15 +14,13 @@ void FuncInsert(std::hash_map<std::string, Info>::const_iterator startIter,
 		objIter != endIter;
 		++objIter)
 	{
-		std::hash_map<std::string, std::shared_ptr<Object>> newInfo;
-		newInfo.reserve( objIter->second.info.size());
+		(*convertedVec)[i].reserve(objIter->second.info.size());
 		for(auto infoIter = objIter->second.info.cbegin();
 			infoIter != objIter->second.info.cend();
 			++infoIter)
 		{
-			newInfo[infoIter->first] = infoIter->second->Clone();
+			(*convertedVec)[i][infoIter->first] = infoIter->second->Clone();
 		}
-		(*convertedVec)[i] = newInfo;
 		++i;
 	}
 }
