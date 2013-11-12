@@ -1,6 +1,6 @@
 #include "LuaGraphic.h"
 #include "LuaManager.h"
-#include <GraphicCommunicator\ClearScreenMessage.h>
+#include <GraphicCommunicator\SetGraphicSettings.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 
 void LuaGraphic::ClearScreen::Action(double x, double y, double z)

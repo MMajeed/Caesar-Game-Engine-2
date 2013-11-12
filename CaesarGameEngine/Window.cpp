@@ -10,6 +10,7 @@
 #include <InfoCommunicator\InfoCommunicator.h>
 #include <InputCommunicator\UpdateKey.h>
 #include <InfoCommunicator\AddObjectMessage.h>
+#include <InfoCommunicator\UpdateObjectMessage.h>
 #include <Keys.h>
 #include <Converter.h>
 #include <Error.h>
@@ -79,6 +80,7 @@ void Window::Init()
 	InfoCommunicator::GetComponent()->ProccessMessages();
 
 	msg->WaitTillProcccesed();
+	this->window.windowsInfoID = msg->ID;
 
 	for(auto iter = this->vInterfaces.begin();
 		iter != this->vInterfaces.end();
@@ -160,6 +162,29 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	{
 		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, false));
 		InputCommunicator::SubmitMessage(keyMessage);
+		break;
+	}
+	case WM_SIZE:
+	{
+		int width;
+		int height;
+		RECT rect;
+		if (GetWindowRect(Window::GetInstance().window.hWnd, &rect))
+		{
+			width = rect.right - rect.left;
+			height = rect.bottom - rect.top;
+		}
+
+		std::shared_ptr<Object> widthObj = GenericObject<int>::CreateNew(width);
+		std::shared_ptr<UpdateObjectMessage> msg1(
+			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::WIDTH, widthObj));
+		InfoCommunicator::SubmitMessage(msg1);
+
+		std::shared_ptr<Object> heightObj = GenericObject<int>::CreateNew(height);
+		std::shared_ptr<UpdateObjectMessage> msg2(
+			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::HEIGHT, heightObj));
+		InfoCommunicator::SubmitMessage(msg2);
+
 		break;
 	}
 	case WM_TIMER:

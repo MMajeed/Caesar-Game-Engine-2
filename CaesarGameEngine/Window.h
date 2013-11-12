@@ -27,10 +27,10 @@ public:
 		UINT		width;
 		UINT		height;
 		double		AbsoluteTime;
+		std::string windowsInfoID;
 	} window;
 
 	static LRESULT CALLBACK WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam );
-
 protected:
 	std::map<std::string, Interface*> vInterfaces;
 	std::vector<std::shared_ptr<std::thread>> vThreads;

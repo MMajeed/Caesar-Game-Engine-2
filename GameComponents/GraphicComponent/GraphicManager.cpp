@@ -11,7 +11,7 @@
 #include "SpotLight.h"
 #include "DirectLight.h"
 #include <algorithm>
-#include <iostream>
+
 GraphicManager::GraphicManager()
 {
 	this->direct3d.pd3dDevice			= 0;
@@ -38,9 +38,9 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
-	std::cout << this->timer.AbsoluteTime << "\n";
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
+	this->CheckWindow(objects);
 	this->SetupLight(objects);
 	this->SetupCameraNPrespective(objects);
 	this->SetupConstantBuffer(objects);
@@ -54,6 +54,67 @@ void GraphicManager::Shutdown()
 
 }
 
+void GraphicManager::CheckWindow(TypedefObject::ObjectVector& objects)
+{
+	TypedefObject::ObjectVector::const_iterator windowInfoIter;
+	windowInfoIter = std::find_if(objects.begin(), objects.end(),
+						[](const TypedefObject::ObjectInfo& obj)
+						{
+							auto classTypeIter = obj.find(Keys::Class);
+							if (classTypeIter != obj.end())
+							{
+								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
+								return (classID == Keys::ClassType::WindowInfo);
+							}
+							else
+								return false;
+						});
+
+	if (windowInfoIter == objects.cend())
+	{
+		throw std::exception("Failed to find windows info");
+	}
+	TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
+
+	int Width = GenericObject<int>::GetValue(windowInfo[Keys::Window::WIDTH]);
+	int Height = GenericObject<int>::GetValue(windowInfo[Keys::Window::HEIGHT]);
+
+	if (Width != this->direct3d.vp.Width || Height != this->direct3d.vp.Height)
+	{
+		this->direct3d.pImmediateContext->OMSetRenderTargets(0, 0, 0);
+
+		// Release all outstanding references to the swap chain's buffers.
+		this->direct3d.pRenderTargetView->Release();
+
+		HRESULT hr;
+		// Preserve the existing buffer count and format.
+		// Automatically choose the width and height to match the client rect for HWNDs.
+		hr = this->direct3d.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+		if (FAILED(hr))
+			throw std::exception("Failed at resizing swap chain buffer");
+
+		ID3D11Texture2D* pBuffer = NULL;
+		hr = this->direct3d.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
+		if (FAILED(hr))
+			throw std::exception("Failed at creating back buffer");
+
+		hr = this->direct3d.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &this->direct3d.pRenderTargetView);
+		if (FAILED(hr))
+			throw std::exception("Failed at creating Render Target view");
+		pBuffer->Release();
+
+		this->direct3d.pImmediateContext->OMSetRenderTargets(1, &this->direct3d.pRenderTargetView, NULL);
+
+		// Setup the viewport
+		this->direct3d.vp.Width = (FLOAT)Width;
+		this->direct3d.vp.Height = (FLOAT)Height;
+		this->direct3d.vp.MinDepth = 0.0f;
+		this->direct3d.vp.MaxDepth = 1.0f;
+		this->direct3d.vp.TopLeftX = 0;
+		this->direct3d.vp.TopLeftY = 0;
+		this->direct3d.pImmediateContext->RSSetViewports(1, &(this->direct3d.vp));
+	}
+}
 void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 {
 	std::vector<cBuffer::CLightDesc> vecLightBuffer;
@@ -113,7 +174,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		{
 			light = SpotLight::GetInstance().GetLightDesc(*iterObj);
 			
-			if (GenericObject<bool>::GetValue(iterObj->find(Keys::Light::HASHADOW)->second) == true)
+			/*if (GenericObject<bool>::GetValue(iterObj->find(Keys::Light::HASHADOW)->second) == true)
 			{
 				SpotLight::GetInstance().GenerateShadowTexture(*iterObj, objects);
 
@@ -126,7 +187,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 				light.lightView = viewMatrix;
 				light.lightProject = presMatrix;
 				light.hasShadow = true;
-			}
+			}*/
 		}
 
 		vecLightBuffer.push_back(light);
@@ -156,63 +217,55 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 {
 	// Camera
 	CHL::Vec4 vEye;
+	vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0;
 	CHL::Vec4 vTM;
+	vTM(0) = 0.0;	vTM(1) = 0.0;	vTM(2) = 1.0;	vTM(3) = 0.0;
 	CHL::Vec4 vUp;
-	double pitch;	double yaw;	double roll;
+	vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
+	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
-	TypedefObject::ObjectVector::const_iterator cameraIter;
-	cameraIter = std::find_if(objects.begin(), objects.end(),
-						[](const TypedefObject::ObjectInfo& obj)
-						{
-							auto classTypeIter = obj.find(Keys::Class);
-							if(classTypeIter != obj.end())
+	if (!this->CameraKey.empty())
+	{
+		TypedefObject::ObjectVector::const_iterator cameraIter;
+		cameraIter = std::find_if(objects.begin(), objects.end(),
+							[this](const TypedefObject::ObjectInfo& obj)
 							{
-								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-								return (classID == Keys::ClassType::Camera);
-							}
-							else
-								return false;
-						}); // Find Camera
-	if(cameraIter != objects.cend()) // if camera found
-	{
-		TypedefObject::ObjectInfo camera = *cameraIter;
-		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
-		vTM = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::TARGETMAGNITUDE]);
-		vUp = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::UP]);
-		pitch = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANPITCH]);
-		yaw = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANYAW]);
-		roll = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANROLL]);
-	}
-	else
-	{
-		vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0; 
-		vTM(0) = 0.0;	vTM(1) = 0.0;	vTM(2) = 1.0;	vTM(3) = 0.0; 
-		vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0; 
-		pitch = 0;	yaw = 0;	roll = 0;	
+								auto idIter = obj.find(Keys::ID);
+								std::string ID = GenericObject<std::string>::GetValue(idIter->second);
+								return (ID == this->CameraKey);
+							}); // Find Camera
+		if(cameraIter != objects.cend()) // if camera found
+		{
+			TypedefObject::ObjectInfo camera = *cameraIter;
+			vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
+			vTM = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::TARGETMAGNITUDE]);
+			vUp = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::UP]);
+			pitch = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANPITCH]);
+			yaw = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANYAW]);
+			roll = GenericObject<double>::GetValue(camera[Keys::Camera::RADIANROLL]);
+		}
 	}
 
 	this->CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 
 	// Prespective
-	TypedefObject::ObjectVector::const_iterator prespectiveIter;
+	TypedefObject::ObjectVector::const_iterator prespectiveIter = objects.cend();
 
 	double FovAngleY; 
 	double height; double width;
 	double nearZ;
 	double farZ;
 
-	prespectiveIter = std::find_if(objects.begin(), objects.end(),
-						[](const TypedefObject::ObjectInfo& obj)
-						{
-							auto classTypeIter = obj.find(Keys::Class);
-							if(classTypeIter != obj.end())
+	if (!this->PrespectiveKey.empty())
+	{
+		prespectiveIter = std::find_if(objects.begin(), objects.end(),
+							[this](const TypedefObject::ObjectInfo& obj)
 							{
-								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-								return (classID == Keys::ClassType::Prespective);
-							}
-							else
-								return false;
-						});
+								auto idIter = obj.find(Keys::ID);
+								std::string ID = GenericObject<std::string>::GetValue(idIter->second);
+								return (ID == this->PrespectiveKey);
+							}); // Find Prespectiveera
+	}
 
 	if(prespectiveIter != objects.cend()) // if prespective found
 	{
@@ -257,29 +310,24 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 {
 	CHL::Vec4 vEye;
+	vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0;
 
 	TypedefObject::ObjectVector::const_iterator cameraIter;
-	cameraIter = std::find_if(objects.begin(), objects.end(),
-						[](const TypedefObject::ObjectInfo& obj)
-						{
-							auto classTypeIter = obj.find(Keys::Class);
-							if(classTypeIter != obj.end())
+	if (!this->CameraKey.empty())
+	{
+		TypedefObject::ObjectVector::const_iterator cameraIter;
+		cameraIter = std::find_if(objects.begin(), objects.end(),
+							[this](const TypedefObject::ObjectInfo& obj)
 							{
-								std::string classID = GenericObject<std::string>::GetValue(classTypeIter->second);
-								return (classID == Keys::ClassType::Camera);
-							}
-							else
-								return false;
-						}); // Find Camera
-
-	if(cameraIter != objects.cend()) // if camera found
-	{
-		TypedefObject::ObjectInfo camera = *cameraIter;
-		vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
-	}
-	else
-	{
-		vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0; 
+								auto idIter = obj.find(Keys::ID);
+								std::string ID = GenericObject<std::string>::GetValue(idIter->second);
+								return (ID == this->CameraKey);
+							}); // Find Camera
+		if(cameraIter != objects.cend()) // if camera found
+		{
+			TypedefObject::ObjectInfo camera = *cameraIter;
+			vEye = GenericObject<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
+		}
 	}
 
 	cBuffer::cbInfo cbInfo;
@@ -387,6 +435,14 @@ void GraphicManager::InsertTexture(std::shared_ptr<Texture> obj)
 const std::hash_map<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
 {
 	return this->textures;
+}
+void GraphicManager::SetCamera(std::string key)
+{
+	this->CameraKey = key;
+}
+void GraphicManager::SetPrespective(std::string key)
+{
+	this->PrespectiveKey = key;
 }
 
 void GraphicManager::InitDevice()

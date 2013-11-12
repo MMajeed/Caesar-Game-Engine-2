@@ -24,6 +24,7 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
+	virtual void CheckWindow(TypedefObject::ObjectVector& objects);
 	virtual void SetupLight(TypedefObject::ObjectVector& objects);
 	virtual void SetupCameraNPrespective(TypedefObject::ObjectVector& objects);
 	virtual void SetupConstantBuffer(TypedefObject::ObjectVector& objects);
@@ -36,7 +37,8 @@ public:
 
 	void InsertTexture(std::shared_ptr<Texture> obj);
 	const std::hash_map<std::string, std::shared_ptr<Texture>> AllTexture();
-
+	void SetCamera(std::string key);
+	void SetPrespective(std::string key);
 	// DirectX stuff
 	struct
 	{
@@ -58,7 +60,8 @@ public:
 protected:
 	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
 	std::hash_map<std::string, std::shared_ptr<Texture>> textures;
-
+	std::string CameraKey;
+	std::string PrespectiveKey;
 	virtual void InitDevice();
 public:
 	CHL::Vec4 ClearColour;

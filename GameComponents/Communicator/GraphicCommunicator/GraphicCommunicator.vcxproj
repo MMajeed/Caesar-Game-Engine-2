@@ -88,14 +88,14 @@
   <ItemGroup>
     <ClInclude Include="BasicDrawableConfig.h" />
     <ClInclude Include="AddBasicTexture.h" />
-    <ClInclude Include="ClearScreenMessage.h" />
+    <ClInclude Include="SetGraphicSettings.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="GraphicCommunicator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDrawableConfig.cpp" />
     <ClCompile Include="AddBasicTexture.cpp" />
-    <ClCompile Include="ClearScreenMessage.cpp" />
+    <ClCompile Include="SetGraphicSettings.cpp" />
     <ClCompile Include="GraphicCommunicator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

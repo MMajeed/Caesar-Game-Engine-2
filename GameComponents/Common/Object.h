@@ -24,8 +24,8 @@ public:
 	std::shared_ptr<Object> Clone()  const{ return std::make_shared<GenericObject<T>>(*this); }
 
 	static std::shared_ptr<GenericObject<T>> CreateNew(const T& value){ return std::make_shared<GenericObject<T>>(value); }
-	static T& GetValue(std::shared_ptr<Object> value){ return GenericObject<T>::Cast(value)->item; }
-	static std::shared_ptr<GenericObject<T>> Cast(std::shared_ptr<Object> value)
+	static T& GetValue(const std::shared_ptr<Object>& value){ return GenericObject<T>::Cast(value)->item; }
+	static std::shared_ptr<GenericObject<T>> Cast(const std::shared_ptr<Object>& value)
 	{
 #ifdef _DEBUG
 		std::shared_ptr<GenericObject<T>> obj = std::dynamic_pointer_cast<GenericObject<T>>(value);

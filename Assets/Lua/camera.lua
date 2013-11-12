@@ -6,6 +6,7 @@ cam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0
               [Keys["Camera"]["RadianRoll"]]      = 0.0,
               [Keys["Camera"]["RadianPitch"]]     = 0.0,
               [Keys["Camera"]["RadianYaw"]]       = 0.0,}); 
+cam:SetAsMain();
 
 CamLeftButton   = false;    CamRightButton  = false;
 CamUpButton     = false;    CamDownButton   = false;

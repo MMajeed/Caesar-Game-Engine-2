@@ -9,6 +9,8 @@
 #include <InfoCommunicator\UpdateObjectMessage.h>
 #include <InfoCommunicator\ObjectManagerOutput.h>
 #include <InfoCommunicator\InfoCommunicator.h>
+#include <GraphicCommunicator\SetGraphicSettings.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Keys.h>
 
 LuaCamera::LuaCamera(luabind::object const& table)
@@ -49,7 +51,8 @@ LuaCamera::LuaCamera(luabind::object const& table)
 }
 void LuaCamera::SetAsMain()
 {
-
+	std::shared_ptr<SetCameraIDMessage> msg(new SetCameraIDMessage(this->ID));
+	GraphicCommunicator::SubmitMessage(msg);
 }
 		
 void LuaCamera::MoveFroward(double distance)
@@ -148,5 +151,6 @@ void LuaCamera::Register(lua_State *lua)
 			.property("Pitch", &LuaCamera::GetPitch, &LuaCamera::SetPitch)
 			.property("Yaw", &LuaCamera::GetYaw, &LuaCamera::SetYaw)
 			.def("MoveFroward", &LuaCamera::MoveFroward)
+			.def("SetAsMain", &LuaCamera::SetAsMain)
 	  ];
 }
