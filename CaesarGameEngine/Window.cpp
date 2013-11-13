@@ -11,6 +11,7 @@
 #include <InputCommunicator\UpdateKey.h>
 #include <InfoCommunicator\AddObjectMessage.h>
 #include <InfoCommunicator\UpdateObjectMessage.h>
+#include <GraphicCommunicator\OnResize.h>
 #include <Keys.h>
 #include <Converter.h>
 #include <Error.h>
@@ -22,8 +23,8 @@ Window::Window()
 void Window::Init()
 {
 	this->window.hInst = GetModuleHandle(NULL);
-	this->window.height = 1024;
-	this->window.width = 768; 
+	this->window.height = 768;
+	this->window.width = 1024;
 
 	// Register class
     WNDCLASSEX wcex;
@@ -47,7 +48,7 @@ void Window::Init()
 
     // Create window
     this->window.hInst = this->window.hInst;
-    RECT rc = { 0, 0, this->window.height, this->window.width };
+	RECT rc = { 0, 0, this->window.width, this->window.height };
     AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
 	this->window.hWnd = 0;
     this->window.hWnd = CreateWindow( L"DirectX11Basic", L"Caesar Game Engine", WS_OVERLAPPEDWINDOW,
@@ -184,6 +185,9 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		std::shared_ptr<UpdateObjectMessage> msg2(
 			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::HEIGHT, heightObj));
 		InfoCommunicator::SubmitMessage(msg2);
+
+		std::shared_ptr<OnResize> msg(new OnResize(width, height));
+		GraphicCommunicator::SubmitMessage(msg);
 
 		break;
 	}

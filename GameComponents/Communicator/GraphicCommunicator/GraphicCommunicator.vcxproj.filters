@@ -14,6 +14,9 @@
     <ClInclude Include="SetGraphicSettings.h">
       <Filter>SetGraphicSettings</Filter>
     </ClInclude>
+    <ClInclude Include="OnResize.h">
+      <Filter>OnResize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicTexture.cpp">
@@ -28,6 +31,9 @@
     <ClCompile Include="SetGraphicSettings.cpp">
       <Filter>SetGraphicSettings</Filter>
     </ClCompile>
+    <ClCompile Include="OnResize.cpp">
+      <Filter>OnResize</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AddBasicTexture">
@@ -41,6 +47,9 @@
     </Filter>
     <Filter Include="SetGraphicSettings">
       <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OnResize">
+      <UniqueIdentifier>{e8a764f3-a017-40aa-8466-998177228759}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

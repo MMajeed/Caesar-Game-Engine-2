@@ -21,6 +21,7 @@ GraphicManager::GraphicManager()
 	this->direct3d.pDepthStencilBuffer	= 0;
 	this->direct3d.pDepthStencilState	= 0;
 	this->direct3d.pDepthStencilView	= 0;
+	this->direct3d.IsInitialized	    = false;
 
 	this->ClearColour(0) = 0.5;
 	this->ClearColour(1) = 0.5;
@@ -40,7 +41,6 @@ void GraphicManager::Work()
 {
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
-	this->CheckWindow(objects);
 	this->SetupLight(objects);
 	this->SetupCameraNPrespective(objects);
 	this->SetupConstantBuffer(objects);
@@ -54,67 +54,6 @@ void GraphicManager::Shutdown()
 
 }
 
-void GraphicManager::CheckWindow(TypedefObject::ObjectVector& objects)
-{
-	TypedefObject::ObjectVector::const_iterator windowInfoIter;
-	windowInfoIter = std::find_if(objects.begin(), objects.end(),
-						[](const TypedefObject::ObjectInfo& obj)
-						{
-							auto classTypeIter = obj.find(Keys::Class);
-							if (classTypeIter != obj.end())
-							{
-								std::string classID = GenericObj<std::string>::GetValue(classTypeIter->second);
-								return (classID == Keys::ClassType::WindowInfo);
-							}
-							else
-								return false;
-						});
-
-	if (windowInfoIter == objects.cend())
-	{
-		throw std::exception("Failed to find windows info");
-	}
-	TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
-
-	int Width = GenericObj<int>::GetValue(windowInfo[Keys::Window::WIDTH]);
-	int Height = GenericObj<int>::GetValue(windowInfo[Keys::Window::HEIGHT]);
-
-	if (Width != this->direct3d.vp.Width || Height != this->direct3d.vp.Height)
-	{
-		this->direct3d.pImmediateContext->OMSetRenderTargets(0, 0, 0);
-
-		// Release all outstanding references to the swap chain's buffers.
-		this->direct3d.pRenderTargetView->Release();
-
-		HRESULT hr;
-		// Preserve the existing buffer count and format.
-		// Automatically choose the width and height to match the client rect for HWNDs.
-		hr = this->direct3d.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
-		if (FAILED(hr))
-			throw std::exception("Failed at resizing swap chain buffer");
-
-		ID3D11Texture2D* pBuffer = NULL;
-		hr = this->direct3d.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
-		if (FAILED(hr))
-			throw std::exception("Failed at creating back buffer");
-
-		hr = this->direct3d.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &this->direct3d.pRenderTargetView);
-		if (FAILED(hr))
-			throw std::exception("Failed at creating Render Target view");
-		pBuffer->Release();
-
-		this->direct3d.pImmediateContext->OMSetRenderTargets(1, &this->direct3d.pRenderTargetView, NULL);
-
-		// Setup the viewport
-		this->direct3d.vp.Width = (FLOAT)Width;
-		this->direct3d.vp.Height = (FLOAT)Height;
-		this->direct3d.vp.MinDepth = 0.0f;
-		this->direct3d.vp.MaxDepth = 1.0f;
-		this->direct3d.vp.TopLeftX = 0;
-		this->direct3d.vp.TopLeftY = 0;
-		this->direct3d.pImmediateContext->RSSetViewports(1, &(this->direct3d.vp));
-	}
-}
 void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 {
 	std::vector<cBuffer::CLightDesc> vecLightBuffer;
@@ -278,34 +217,14 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	}
 	else
 	{
-		TypedefObject::ObjectVector::const_iterator windowInfoIter;
-		windowInfoIter = std::find_if(objects.begin(), objects.end(),
-						[](const TypedefObject::ObjectInfo& obj)
-						{
-							auto classTypeIter = obj.find(Keys::Class);
-							if(classTypeIter != obj.end())
-							{
-								std::string classID = GenericObj<std::string>::GetValue(classTypeIter->second);
-								return (classID == Keys::ClassType::WindowInfo); 
-							}
-							else
-								return false;
-						});
-
-		if(windowInfoIter == objects.cend())
-		{
-			throw std::exception("Failed to find windows info");
-		}
-		TypedefObject::ObjectInfo windowInfo = *windowInfoIter;
-
-		width = GenericObj<int>::GetValue(windowInfo[Keys::Window::WIDTH]);
-		height = GenericObj<int>::GetValue(windowInfo[Keys::Window::HEIGHT]);
+		width = this->direct3d.vp.Width;
+		height = this->direct3d.vp.Height;
 		FovAngleY = 0.785398163;
 		nearZ = 0.01;
 		farZ = 5000.0;
 	}
 
-	this->PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, height/width, nearZ, farZ);
+	this->PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 }
 void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 {
@@ -559,7 +478,6 @@ void GraphicManager::InitDevice()
 
 	// Initialize the description of the stencil state.
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
 
 	// Set up the description of the stencil state.
@@ -593,6 +511,7 @@ void GraphicManager::InitDevice()
 	// Set the depth stencil state.
 	this->direct3d.pImmediateContext->OMSetDepthStencilState(this->direct3d.pDepthStencilState, 1);
 
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	// Initialize the depth stencil view.
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
 
@@ -629,4 +548,6 @@ void GraphicManager::InitDevice()
 	{
 		throw std::exception(CHL::ToString(error).c_str());
 	}
+
+	this->direct3d.IsInitialized = true;
 }

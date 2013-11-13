@@ -24,7 +24,6 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
-	virtual void CheckWindow(TypedefObject::ObjectVector& objects);
 	virtual void SetupLight(TypedefObject::ObjectVector& objects);
 	virtual void SetupCameraNPrespective(TypedefObject::ObjectVector& objects);
 	virtual void SetupConstantBuffer(TypedefObject::ObjectVector& objects);
@@ -54,6 +53,7 @@ public:
 		D3D11_VIEWPORT				vp;
 		ID3D11Buffer*				pCBInfo;
 		ID3D11Buffer*				pCBLight;
+		bool						IsInitialized;
 	} direct3d;
 
 	
