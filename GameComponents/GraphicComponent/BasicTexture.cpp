@@ -34,7 +34,7 @@ void BasicTexture::SettupTexture(TypedefObject::ObjectInfo& object)
 	iterKey = object.find(Keys::ObjectInfo::TEXTURESLOT + this->ID);
 	if (iterKey != object.end())
 	{
-		slot = GenericObject<int>::GetValue(iterKey->second);
+		slot = GenericObj<int>::GetValue(iterKey->second);
 	}
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
@@ -49,7 +49,7 @@ void BasicTexture::CleanupTexture(TypedefObject::ObjectInfo& object)
 	iterKey = object.find(Keys::ObjectInfo::TEXTURESLOT + this->ID);
 	if (iterKey != object.end())
 	{
-		slot = GenericObject<int>::GetValue(iterKey->second);
+		slot = GenericObj<int>::GetValue(iterKey->second);
 	}
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;

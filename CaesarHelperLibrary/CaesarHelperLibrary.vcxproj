@@ -15,6 +15,7 @@
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Queryable.h" />
     <ClInclude Include="Converter.h" />

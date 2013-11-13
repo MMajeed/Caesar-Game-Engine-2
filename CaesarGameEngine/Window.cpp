@@ -69,10 +69,10 @@ void Window::Init()
 
 	std::hash_map<std::string, std::shared_ptr<Object>> camera;
 
-	camera[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::WindowInfo);
-	camera[Keys::Window::HEIGHT] = GenericObject<int>::CreateNew(this->window.height);
-	camera[Keys::Window::WIDTH] = GenericObject<int>::CreateNew(this->window.width);
-	camera[Keys::Window::HWND] = GenericObject<HWND>::CreateNew(this->window.hWnd);
+	camera[Keys::Class] = GenericObj<std::string>::CreateNew(Keys::ClassType::WindowInfo);
+	camera[Keys::Window::HEIGHT] = GenericObj<int>::CreateNew(this->window.height);
+	camera[Keys::Window::WIDTH] = GenericObj<int>::CreateNew(this->window.width);
+	camera[Keys::Window::HWND] = GenericObj<HWND>::CreateNew(this->window.hWnd);
 
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
 
@@ -175,12 +175,12 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 			height = rect.bottom - rect.top;
 		}
 
-		std::shared_ptr<Object> widthObj = GenericObject<int>::CreateNew(width);
+		std::shared_ptr<Object> widthObj = GenericObj<int>::CreateNew(width);
 		std::shared_ptr<UpdateObjectMessage> msg1(
 			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::WIDTH, widthObj));
 		InfoCommunicator::SubmitMessage(msg1);
 
-		std::shared_ptr<Object> heightObj = GenericObject<int>::CreateNew(height);
+		std::shared_ptr<Object> heightObj = GenericObj<int>::CreateNew(height);
 		std::shared_ptr<UpdateObjectMessage> msg2(
 			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::HEIGHT, heightObj));
 		InfoCommunicator::SubmitMessage(msg2);

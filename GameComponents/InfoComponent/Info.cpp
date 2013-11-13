@@ -8,13 +8,13 @@
 
 Info::Info()
 {
-	std::shared_ptr<GenericObject<std::string>> obj(new GenericObject<std::string>(CHL::ToString(boost::uuids::random_generator()())));
+	std::shared_ptr<GenericObj<std::string>> obj(new GenericObj<std::string>(CHL::ToString(boost::uuids::random_generator()())));
 	this->Store(Keys::ID, obj);
 }
 Info::Info(const std::hash_map<std::string, std::shared_ptr<Object>>& input)
 	: info(input)
 {
-	std::shared_ptr<GenericObject<std::string>> obj(new GenericObject<std::string>(CHL::ToString(boost::uuids::random_generator()())));
+	std::shared_ptr<GenericObj<std::string>> obj(new GenericObj<std::string>(CHL::ToString(boost::uuids::random_generator()())));
 	this->Store(Keys::ID, obj);
 }
 
@@ -51,5 +51,5 @@ std::string Info::ID() const
 {
 	std::shared_ptr<Object> idObj;
 	this->Retrieve(Keys::ID, idObj);
-	return GenericObject<std::string>::GetValue(idObj);
+	return GenericObj<std::string>::GetValue(idObj);
 }

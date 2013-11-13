@@ -264,7 +264,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ObjectInfo::LOCATION);
 	if(iterKey != object.end())
 	{
-		location = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
+		location = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -275,7 +275,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ObjectInfo::ROTATION);
 	if(iterKey != object.end())
 	{
-		rotation = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
+		rotation = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -285,7 +285,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ObjectInfo::SCALE);
 	if(iterKey != object.end())
 	{
-		scale = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
+		scale = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -295,7 +295,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ObjectInfo::DIFFUSE);
 	if(iterKey != object.end())
 	{
-		diffuse = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
+		diffuse = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -305,7 +305,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ObjectInfo::AMBIENT);
 	if(iterKey != object.end())
 	{
-		ambient = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
+		ambient = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{
@@ -315,7 +315,7 @@ void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
 	iterKey = object.find(Keys::ObjectInfo::SPECULAR);
 	if(iterKey != object.end())
 	{
-		spec = GenericObject<CHL::Vec4>::GetValue(iterKey->second);
+		spec = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
 	}
 	else
 	{

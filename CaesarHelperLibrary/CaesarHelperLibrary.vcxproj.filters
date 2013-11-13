@@ -28,6 +28,9 @@
     <Filter Include="3DMath\3DMath">
       <UniqueIdentifier>{c3e9a25e-be88-4225-8a4a-80f83c17f02c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{322ab1bb-52e9-4cc4-b05c-72b526dece4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
@@ -54,6 +57,9 @@
     </ClInclude>
     <ClInclude Include="3DMath.h">
       <Filter>3DMath\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

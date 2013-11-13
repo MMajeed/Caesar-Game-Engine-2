@@ -81,7 +81,7 @@ std::vector<std::hash_map<std::string, std::shared_ptr<Object>>> ObjectManagerOu
 		++iter, ++i)
 	{
 		std::string id1 = iter->first;
-		std::string id2 = GenericObject<std::string>::GetValue(convertedVec[i][Keys::ID]);
+		std::string id2 = GenericObj<std::string>::GetValue(convertedVec[i][Keys::ID]);
 
 		if (id1 != id2)
 		{

@@ -16,7 +16,7 @@ Message::Status AddObjectMessage::Work()
 
 	std::shared_ptr<Object> idObj;
 	obj.Retrieve(Keys::ID, idObj);
-	this->ID = GenericObject<std::string>::GetValue(idObj);
+	this->ID = GenericObj<std::string>::GetValue(idObj);
 
 	{
 		std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);

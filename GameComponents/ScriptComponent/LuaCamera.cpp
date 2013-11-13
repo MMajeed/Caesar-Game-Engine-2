@@ -38,13 +38,13 @@ LuaCamera::LuaCamera(luabind::object const& table)
 	}
 
 	std::hash_map<std::string, std::shared_ptr<Object>> camera;
-	camera[Keys::Class] = GenericObject<std::string>::CreateNew(Keys::ClassType::Camera);
-	camera[Keys::Camera::EYE] = GenericObject<CHL::Vec4>::CreateNew(eye);
-	camera[Keys::Camera::TARGETMAGNITUDE] = GenericObject<CHL::Vec4>::CreateNew(TM);
-	camera[Keys::Camera::UP] = GenericObject<CHL::Vec4>::CreateNew(up);
-	camera[Keys::Camera::RADIANROLL] = GenericObject<double>::CreateNew(roll);
-	camera[Keys::Camera::RADIANPITCH] = GenericObject<double>::CreateNew(pitch);
-	camera[Keys::Camera::RADIANYAW] = GenericObject<double>::CreateNew(yaw);
+	camera[Keys::Class] = GenericObj<std::string>::CreateNew(Keys::ClassType::Camera);
+	camera[Keys::Camera::EYE] = GenericObj<CHL::Vec4>::CreateNew(eye);
+	camera[Keys::Camera::TARGETMAGNITUDE] = GenericObj<CHL::Vec4>::CreateNew(TM);
+	camera[Keys::Camera::UP] = GenericObj<CHL::Vec4>::CreateNew(up);
+	camera[Keys::Camera::RADIANROLL] = GenericObj<double>::CreateNew(roll);
+	camera[Keys::Camera::RADIANPITCH] = GenericObj<double>::CreateNew(pitch);
+	camera[Keys::Camera::RADIANYAW] = GenericObj<double>::CreateNew(yaw);
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
 	InfoCommunicator::SubmitMessage(msg);
 	this->ID = msg->ID;
@@ -69,74 +69,74 @@ void LuaCamera::MoveFroward(double distance)
 
 void LuaCamera::SetEye(LuaMath::Vector4 eye)
 {
-	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(eye.vector);
+	std::shared_ptr<Object> obj = GenericObj<CHL::Vec4>::CreateNew(eye.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Camera::EYE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaMath::Vector4 LuaCamera::GetEye()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::Camera::EYE];
-	return GenericObject<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::SetTargetMagintude(LuaMath::Vector4 targetMagintude)
 {	
-	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(targetMagintude.vector);
+	std::shared_ptr<Object> obj = GenericObj<CHL::Vec4>::CreateNew(targetMagintude.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Camera::TARGETMAGNITUDE, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaMath::Vector4 LuaCamera::GetTargetMagintude()
 {	
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::Camera::TARGETMAGNITUDE];
-	return GenericObject<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::SetUp(LuaMath::Vector4 up)
 {	
-	std::shared_ptr<Object> obj = GenericObject<CHL::Vec4>::CreateNew(up.vector);
+	std::shared_ptr<Object> obj = GenericObj<CHL::Vec4>::CreateNew(up.vector);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Camera::UP, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 LuaMath::Vector4 LuaCamera::GetUp()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID)[Keys::Camera::UP];
-	return GenericObject<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::SetRoll(double roll)
 {	
-	std::shared_ptr<Object> obj = GenericObject<double>::CreateNew(roll);
+	std::shared_ptr<Object> obj = GenericObj<double>::CreateNew(roll);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Camera::RADIANROLL, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 double LuaCamera::GetRoll()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
-	return GenericObject<double>::GetValue(obj[Keys::Camera::RADIANROLL]);
+	return GenericObj<double>::GetValue(obj[Keys::Camera::RADIANROLL]);
 }
 
 void LuaCamera::SetPitch(double pitch)
 {
-	std::shared_ptr<Object> obj = GenericObject<double>::CreateNew(pitch);
+	std::shared_ptr<Object> obj = GenericObj<double>::CreateNew(pitch);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Camera::RADIANPITCH, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 double LuaCamera::GetPitch()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
-	return GenericObject<double>::GetValue(obj[Keys::Camera::RADIANPITCH]);
+	return GenericObj<double>::GetValue(obj[Keys::Camera::RADIANPITCH]);
 }
 
 void LuaCamera::SetYaw(double yaw)
 {
-	std::shared_ptr<Object> obj = GenericObject<double>::CreateNew(yaw);
+	std::shared_ptr<Object> obj = GenericObj<double>::CreateNew(yaw);
 	std::shared_ptr<UpdateObjectMessage> msg(new UpdateObjectMessage(this->ID, Keys::Camera::RADIANYAW, obj));
 	InfoCommunicator::SubmitMessage(msg);
 }
 double LuaCamera::GetYaw()
 {
 	auto obj = ObjectManagerOutput::GetObject(this->ID);
-	return GenericObject<double>::GetValue(obj[Keys::Camera::RADIANYAW]);
+	return GenericObj<double>::GetValue(obj[Keys::Camera::RADIANYAW]);
 }
 
 void LuaCamera::Register(lua_State *lua)
