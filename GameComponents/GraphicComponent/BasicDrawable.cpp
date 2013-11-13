@@ -161,7 +161,6 @@ void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 }
 void BasicDrawable::InitInputLayout(ID3D11Device* device)
 {
-	std::wstring error;
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -170,35 +169,18 @@ void BasicDrawable::InitInputLayout(ID3D11Device* device)
 	};
 	UINT numElements = ARRAYSIZE( layout );
 
-	if(!DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo.FileName, 
-										this->D3DInfo.VertexShaderInfo.EntryPoint,
-										this->D3DInfo.VertexShaderInfo.Model, 
-										device, layout, numElements, &(this->D3DInfo.pInputLayout), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo.FileName, 
+									device, layout, numElements, &(this->D3DInfo.pInputLayout));
 }
 void BasicDrawable::InitVertexShader(ID3D11Device* device)
 {
-	std::wstring error;
-	if(!DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo.FileName, 
-										this->D3DInfo.VertexShaderInfo.EntryPoint,
-										this->D3DInfo.VertexShaderInfo.Model, 
-										device, &(this->D3DInfo.pVertexShader), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo.FileName, 
+										device, &(this->D3DInfo.pVertexShader));
 }
 void BasicDrawable::InitPixelShader(ID3D11Device* device)
 {
-	std::wstring error;
-	if(!DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo.FileName, 
-										this->D3DInfo.PixelShaderInfo.EntryPoint,
-										this->D3DInfo.PixelShaderInfo.Model, 
-										device, &(this->D3DInfo.pPixelShader), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo.FileName, 
+										device, &(this->D3DInfo.pPixelShader));
 }
 void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {

@@ -5,8 +5,8 @@ require("LightSetup")
 ClearScreen(0.5, 0.5, 0.5);
 
 boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Box.ply",
-                                   [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.fx",
-                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_3_LightNTexture.fx",});
+                                   [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_3_LightNTexture.cso",});
 
 tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
 
@@ -19,8 +19,8 @@ box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
                [Keys["ObjectInfo"]["TextureObj"]]  = tilesTexture,});
 
 sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
-                                      [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.fx",
-                                      [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_2_Light.fx",});
+                                      [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+                                      [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_2_Light.cso",});
 
 
 for i = 1, 10, 1 do
@@ -34,7 +34,7 @@ for i = 1, 10, 1 do
                                  [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
 end
 
-for i = 1, 10000, 1 do
+for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
     local y = 2;
     local z = 20;

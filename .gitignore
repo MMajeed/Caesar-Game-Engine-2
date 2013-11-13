@@ -36,3 +36,5 @@
 
 Lib/*.lib
 Lib/*.bsc
+
+*.cso

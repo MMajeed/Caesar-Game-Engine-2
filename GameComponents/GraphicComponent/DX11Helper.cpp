@@ -4,147 +4,105 @@
 #include <d3dcompiler.h>
 #include <D3DX11async.h>
 #include <Converter.h>
+#include <fstream>
 
-HRESULT DX11Helper::CompileShaderFromFile( std::wstring shaderFileName, std::wstring entryPoint, std::wstring shaderModel, ID3DBlob** ppBlobOut, std::wstring &error )
+void DX11Helper::CompileShaderFromFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, ID3DBlob** ppBlobOut)
 {
 	HRESULT hr = S_OK;
 
-    DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
-	#if defined( DEBUG ) || defined( _DEBUG )
-		// Set the D3DCOMPILE_DEBUG flag to embed debug information in the shaders.
-		// Setting this flag improves the shader debugging experience, but still allows 
-		// the shaders to be optimized and to run exactly the way they will run in 
-		// the release configuration of this program.
-		dwShaderFlags |= D3DCOMPILE_DEBUG;
-	#endif
+	DWORD dwShaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;
+#if defined( DEBUG ) || defined( _DEBUG )
+	// Set the D3DCOMPILE_DEBUG flag to embed debug information in the shaders.
+	// Setting this flag improves the shader debugging experience, but still allows 
+	// the shaders to be optimized and to run exactly the way they will run in 
+	// the release configuration of this program.
+	dwShaderFlags |= D3DCOMPILE_DEBUG;
+#endif
 
-    ID3DBlob* pErrorBlob = NULL;
-	std::string ASCIIentryPoint = CHL::ToString( entryPoint);
-	std::string ASCIIshaderModel = CHL::ToString( shaderModel);
-    hr = D3DX11CompileFromFile( shaderFileName.c_str(), NULL, NULL, 
-								ASCIIentryPoint.c_str(), 
-								ASCIIshaderModel.c_str(), 
-								dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL );
-    if( FAILED(hr) )
-    {
-        if( pErrorBlob != NULL )
+	ID3DBlob* pErrorBlob = NULL;
+	std::string ASCIIentryPoint = vsEntryPoint;
+	std::string ASCIIshaderModel = vsModel;
+	hr = D3DX11CompileFromFile(CHL::ToWString(shaderFileName).c_str(), NULL, NULL,
+		ASCIIentryPoint.c_str(),
+		ASCIIshaderModel.c_str(),
+		dwShaderFlags, 0, NULL, ppBlobOut, &pErrorBlob, NULL);
+
+	if (FAILED(hr))
+	{
+		if (pErrorBlob != NULL)
 		{
-            //OutputDebugStringA( (char*)pErrorBlob->GetBufferPointer() );
-			std::string ASCIIerror( (char*)pErrorBlob->GetBufferPointer() );
-			error = CHL::ToWString( ASCIIerror );
+			std::string ASCIIerror((char*)pErrorBlob->GetBufferPointer());
+			pErrorBlob->Release();
+			throw std::exception(ASCIIerror.c_str());
 		}
-        if( pErrorBlob ) pErrorBlob->Release();
-        return false;
-    }
-	// Release the blob if was OK
-    if( pErrorBlob ) pErrorBlob->Release();
-
-	return true;
-}
-HRESULT DX11Helper::LoadInputLayoutFile( std::string vsFileName, std::string vsEntryPoint, std::string vsModel, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut, std::wstring &error )
-{
-	std::wstring wVSFileName = std::wstring(vsFileName.begin(), vsFileName.end());
-	std::wstring wVSEntryPoint = std::wstring(vsEntryPoint.begin(), vsEntryPoint.end());
-	std::wstring wVSModel = std::wstring(vsModel.begin(), vsModel.end());
-
-	return DX11Helper::LoadInputLayoutFile(wVSFileName, wVSEntryPoint, wVSModel, device, layout, numElements, ilOut, error);
-}
-HRESULT DX11Helper::LoadInputLayoutFile( std::wstring vsFileName, std::wstring vsEntryPoint, std::wstring vsModel, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut, std::wstring &error )
-{
-	HRESULT hr = S_OK;
-
-	ID3DBlob* pVSBlob;
-
-	if ( !CompileShaderFromFile( vsFileName, vsEntryPoint, vsModel, &pVSBlob, error ) )
-    {
-		std::wstringstream ssError;
-		ssError << L"VS ERROR: Could not compile the " << vsFileName 
-			<< L" (" << vsEntryPoint << L")." << std::endl
-			<< error << std::endl
-			<< L"Sorry it didn't work out.";
-		error = ssError.str();
-        return false;
-    }
-
-	hr = device->CreateInputLayout( layout, numElements, pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), ilOut );
-	pVSBlob->Release();	// Don't need this any more
-	if ( FAILED( hr ) )
-	{
-		error = L"ERROR: Could not set the vertex buffer layout.";
-		return false;
+		throw std::exception((shaderFileName + " could not be found or complied").c_str());
 	}
-
-	return true;
 }
-HRESULT DX11Helper::LoadVertexShaderFile( std::string vsFileName, std::string vsEntryPoint, std::string vsModel, ID3D11Device* device, ID3D11VertexShader** vsOut, std::wstring &error )
+void DX11Helper::LoadShaderFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, std::vector<char>& fileBytes)
 {
-	std::wstring wVSFileName = std::wstring(vsFileName.begin(), vsFileName.end());
-	std::wstring wVSEntryPoint = std::wstring(vsEntryPoint.begin(), vsEntryPoint.end());
-	std::wstring wVSModel = std::wstring(vsModel.begin(), vsModel.end());
+	if (shaderFileName.substr(shaderFileName.find_last_of(".") + 1) == "fx") {
+		ID3DBlob* blob;
+		DX11Helper::CompileShaderFromFile(shaderFileName, vsEntryPoint, vsModel, &blob);
 
-	return DX11Helper::LoadVertexShaderFile(wVSFileName, wVSEntryPoint, wVSModel, device, vsOut, error);
+		fileBytes.resize(blob->GetBufferSize());
+		memcpy(fileBytes.data(), blob->GetBufferPointer(), blob->GetBufferSize());
+	}
+	else {
+		std::ifstream fin(shaderFileName, std::ios::binary);
+
+		fin.seekg(0, std::ios_base::end);
+		int size = (int)fin.tellg();
+		fin.seekg(0, std::ios_base::beg);
+		fileBytes.resize(size);
+
+		fin.read(fileBytes.data(), size);
+		fin.close();
+	}
 }
-HRESULT DX11Helper::LoadVertexShaderFile( std::wstring vsFileName, std::wstring vsEntryPoint, std::wstring vsModel, ID3D11Device* device, ID3D11VertexShader** vsOut, std::wstring &error )
+void DX11Helper::LoadInputLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut)
 {
-	HRESULT hr = S_OK;
+	std::vector<char> fileBytes;
 
-	ID3DBlob* pVSBlob;
-
-	if ( !CompileShaderFromFile( vsFileName, vsEntryPoint, vsModel, &pVSBlob, error ) )
-    {
-		std::wstringstream ssError;
-		ssError << L"VS ERROR: Could not compile the " << vsFileName 
-			<< L" (" << vsEntryPoint << L")." << std::endl
-			<< error 
-			<< L"Sorry it didn't work out.";
-		error = ssError.str();
-        return false;
-    }
+	DX11Helper::LoadShaderFile(vsFileName, "VS", "vs_4_1", fileBytes);
 
 	// Now pass this compiled vertex shader to the device so it can be used
-	hr = device->CreateVertexShader( pVSBlob->GetBufferPointer(), pVSBlob->GetBufferSize(), NULL, vsOut );
+	HRESULT hr = device->CreateInputLayout(layout, numElements, fileBytes.data(), fileBytes.size(), ilOut);
+
 	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
-	if ( FAILED( hr ) )
+	if (FAILED(hr))
 	{
-		pVSBlob->Release();
-		error = L"ERROR: Could not assign compiled vertex shader to device.";
-		return false;
+		throw std::exception("ERROR: Could not assign compiled vertex shader to device.");
 	}
-	
-	return true;
 }
-HRESULT DX11Helper::LoadPixelShaderFile( std::string psFileName, std::string psEntryPoint, std::string psModel, ID3D11Device* device, ID3D11PixelShader** pxOut, std::wstring &error  )
+void DX11Helper::LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut)
 {
-	std::wstring wPSFileName = std::wstring(psFileName.begin(), psFileName.end());
-	std::wstring wPSEntryPoint = std::wstring(psEntryPoint.begin(), psEntryPoint.end());
-	std::wstring wPSModel = std::wstring(psModel.begin(), psModel.end());
+	std::vector<char> fileBytes;
 
-	return DX11Helper::LoadPixelShaderFile(wPSFileName, wPSEntryPoint, wPSModel, device, pxOut, error);
-}
-HRESULT DX11Helper::LoadPixelShaderFile( std::wstring psFileName, std::wstring psEntryPoint, std::wstring psModel, ID3D11Device* device, ID3D11PixelShader** pxOut, std::wstring &error  )
-{
-	ID3DBlob* pPSBlob = NULL;
-	if ( !CompileShaderFromFile( psFileName, psEntryPoint, psModel, &pPSBlob, error ) )
-	{
-		std::wstringstream ssError;
-		ssError << L"VS ERROR: Could not compile the " << psFileName 
-			<< L" (" << psEntryPoint << L")." << std::endl
-			<< error 
-			<< L"Sorry it didn't work out.";		
-		error = ssError.str();
-        return false;
-    }
+	DX11Helper::LoadShaderFile(vsFileName, "VS", "vs_4_1", fileBytes);
 
 	// Now pass this compiled vertex shader to the device so it can be used
-	auto hr = device->CreatePixelShader( pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), NULL, pxOut );
-	pPSBlob->Release();
-	if ( FAILED( hr ) )
-	{
-		error = L"ERROR: Could not assign compiled pixel shader to device.";
-		return false;
-	}
+	HRESULT hr = device->CreateVertexShader(fileBytes.data(), fileBytes.size(), NULL, vsOut);
 
-	return true;
+	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
+	if (FAILED(hr))
+	{
+		throw std::exception("ERROR: Could not assign compiled vertex shader to device.");
+	}
+}
+void DX11Helper::LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut)
+{
+	std::vector<char> fileBytes;
+
+	DX11Helper::LoadShaderFile(psFileName, "PS", "ps_4_1", fileBytes);
+
+	// Now pass this compiled vertex shader to the device so it can be used
+	HRESULT hr = device->CreatePixelShader(fileBytes.data(), fileBytes.size(), NULL, pxOut);
+
+	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
+	if (FAILED(hr))
+	{
+		throw std::exception("ERROR: Could not assign compiled pixel shader to device.");
+	}
 }
 HRESULT DX11Helper::LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut, std::wstring &error )
 {

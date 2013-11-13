@@ -4,7 +4,7 @@ float4 PS( PS_INPUT input ) : SV_Target
 {
 	float4 finalLightColour = float4(0.0, 0.0, 0.0, 0.0);
 
-	for ( int index = 0; index < numOfLights; index++ )
+	for (unsigned int index = 0; index < numOfLights; index++ )
 	{
 		if( lightArray[index].Type == 0 )
 		{			
@@ -12,19 +12,19 @@ float4 PS( PS_INPUT input ) : SV_Target
 		}
 		else if( lightArray[index].Type == 1 ) // Parallel light
 		{
-			float3 toEyeW = normalize(eye - input.PosWorld);
+			float4 toEyeW = normalize(eye - input.PosWorld);
 			finalLightColour += ComputeDirectionalLight( objectMaterial, lightArray[index],
 														 input.NormalWorld, toEyeW );	
 		}
 		else if( lightArray[index].Type == 2 ) // Point
 		{
-			float3 toEyeW = normalize(eye - input.PosWorld);
+			float4 toEyeW = normalize(eye - input.PosWorld);
 			finalLightColour += ComputePointLight( objectMaterial, lightArray[index],
 													input.PosWorld, input.NormalWorld, toEyeW );	
 		}
 		else if( lightArray[index].Type == 3 ) // Spot
 		{
-			float3 toEyeW = normalize(eye - input.PosWorld);
+			float4 toEyeW = normalize(eye - input.PosWorld);
 			finalLightColour += ComputeSpotLight( objectMaterial, lightArray[index],
 												  input.PosWorld, input.NormalWorld, toEyeW );	
 		}

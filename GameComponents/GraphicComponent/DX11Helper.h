@@ -8,23 +8,21 @@
 #include <xnamath.h>
 #include <vector>
 
-class DX11Helper 
+namespace DX11Helper 
 {
-public:
-	static HRESULT CompileShaderFromFile( std::wstring shaderFileName, std::wstring entryPoint, std::wstring shaderModel, ID3DBlob** ppBlobOut, std::wstring &error );
-	static HRESULT LoadVertexShaderFile( std::string vsFileName, std::string vsEntryPoint, std::string vsModel, ID3D11Device* device, ID3D11VertexShader** vsOut, std::wstring &error );
-	static HRESULT LoadVertexShaderFile( std::wstring vsFileName, std::wstring vsEntryPoint, std::wstring vsModel, ID3D11Device* device, ID3D11VertexShader** vsOut, std::wstring &error );
-	static HRESULT LoadInputLayoutFile( std::string vsFileName, std::string vsEntryPoint, std::string vsModel, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut, std::wstring &error );
-	static HRESULT LoadInputLayoutFile( std::wstring vsFileName, std::wstring vsEntryPoint, std::wstring vsModel, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut, std::wstring &error );
-	static HRESULT LoadPixelShaderFile( std::string psFileName, std::string psEntryPoint, std::string psModel, ID3D11Device* device, ID3D11PixelShader** pxOut, std::wstring &error  );
-	static HRESULT LoadPixelShaderFile( std::wstring psFileName, std::wstring psEntryPoint, std::wstring psModel, ID3D11Device* device, ID3D11PixelShader** pxOut, std::wstring &error  );
-	static HRESULT LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut, std::wstring &error );
-	static HRESULT LoadTextureFile( std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut, std::wstring &error  );	
-	static HRESULT LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU,D3D11_TEXTURE_ADDRESS_MODE addressV,  D3D11_TEXTURE_ADDRESS_MODE addressw, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut, std::wstring &error  );	
-	static HRESULT LoadTransparent( ID3D11Device* device, ID3D11BlendState** bsOut, std::wstring &error  );	
+	void CompileShaderFromFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, ID3DBlob** ppBlobOut);
+	void LoadShaderFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, std::vector<char>& fileBytes);
+	void LoadInputLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut);
+	void LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut);
+	void LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut);
+
+	HRESULT LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut, std::wstring &error );
+	HRESULT LoadTextureFile( std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut, std::wstring &error  );	
+	HRESULT LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU,D3D11_TEXTURE_ADDRESS_MODE addressV,  D3D11_TEXTURE_ADDRESS_MODE addressw, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut, std::wstring &error  );	
+	HRESULT LoadTransparent( ID3D11Device* device, ID3D11BlendState** bsOut, std::wstring &error  );	
 
 	template<typename T>
-	static HRESULT LoadVertexBuffer(ID3D11Device* device, T* pVertex, std::size_t numElements, ID3D11Buffer** bOut, std::wstring& error)
+	HRESULT LoadVertexBuffer(ID3D11Device* device, T* pVertex, std::size_t numElements, ID3D11Buffer** bOut, std::wstring& error)
 	{
 		HRESULT hr = S_OK ;
 
@@ -48,7 +46,7 @@ public:
 	}
 
 	template<typename T>
-	static HRESULT LoadIndexBuffer(ID3D11Device* device, T* pIndice, std::size_t numElements, ID3D11Buffer** bOut, std::wstring& error)
+	HRESULT LoadIndexBuffer(ID3D11Device* device, T* pIndice, std::size_t numElements, ID3D11Buffer** bOut, std::wstring& error)
 	{	
 		HRESULT hr = S_OK ;
 
@@ -73,7 +71,7 @@ public:
 	}
 
 	template<typename T>
-	static HRESULT LoadBuffer( ID3D11Device* device, ID3D11Buffer** cbOut, std::wstring &error )
+	HRESULT LoadBuffer( ID3D11Device* device, ID3D11Buffer** cbOut, std::wstring &error )
 	{
 		HRESULT hr = S_OK ;
 
