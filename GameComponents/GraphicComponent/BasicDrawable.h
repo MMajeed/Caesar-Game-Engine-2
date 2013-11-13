@@ -5,7 +5,6 @@
 
 #include "Drawable.h"
 #include "Vertex.h"
-#include "D3DShaderInfo.h"
 #include <Model.h>
 #include <string>
 #include <D3D11.h>
@@ -20,15 +19,11 @@ public:
 	virtual void Draw(TypedefObject::ObjectInfo& object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
-	struct SpawnInfo
-	{
-
-	};
 	static std::shared_ptr<BasicDrawable> Spawn(const std::string& inputID,
 												const std::vector<Vertex>&	vectorVertices,
 												const std::vector<WORD>&	vectorIndices,
-												D3DShaderInfo				vertexFile,
-												D3DShaderInfo				pixelFile,
+												const std::string&			vertexFile,
+												const std::string&			pixelFile,
 												D3D11_CULL_MODE				cullMode,
 												D3D11_FILL_MODE				fillMode,
 												bool						bAntialiasedLine,
@@ -40,9 +35,9 @@ public:
 		ID3D11Buffer*				pIndexBuffer;
 		ID3D11Buffer*				pConstantBuffer;
 		ID3D11InputLayout*			pInputLayout;
-		D3DShaderInfo				VertexShaderInfo;
+		std::string					VertexShaderInfo;
 		ID3D11VertexShader*			pVertexShader;
-		D3DShaderInfo				PixelShaderInfo;
+		std::string					PixelShaderInfo;
 		ID3D11PixelShader*			pPixelShader;
 		ID3D11RasterizerState*		pRastersizerState;
 		std::vector<Vertex>			vertices;

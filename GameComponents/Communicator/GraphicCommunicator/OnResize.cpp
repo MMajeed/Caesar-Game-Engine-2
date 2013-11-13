@@ -11,24 +11,25 @@ Message::Status OnResize::Work()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	if (graphic.direct3d.IsInitialized == true)
+	//if (graphic.D3DStuff.IsInitialized == true)
+	if(false)
 	{
-		graphic.direct3d.pRenderTargetView->Release();
-		graphic.direct3d.pDepthStencilBuffer->Release();
-		graphic.direct3d.pDepthStencilView->Release();
+		graphic.D3DStuff.pRenderTargetView->Release();
+		graphic.D3DStuff.pDepthStencilBuffer->Release();
+		graphic.D3DStuff.pDepthStencilView->Release();
 
 
 		// Resize the swap chain and recreate the render target view.
-		HRESULT hr = graphic.direct3d.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+		HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
 		if (FAILED(hr))
 			throw std::exception("Failed at resizing swap chain buffer");
 
 		ID3D11Texture2D* pBuffer = NULL;
-		hr = graphic.direct3d.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
+		hr = graphic.D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
 		if (FAILED(hr))
 			throw std::exception("Failed at creating back buffer");
 
-		hr = graphic.direct3d.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &graphic.direct3d.pRenderTargetView);
+		hr = graphic.D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &graphic.D3DStuff.pRenderTargetView);
 		if (FAILED(hr))
 			throw std::exception("Failed at creating Render Target view");
 	
@@ -52,7 +53,7 @@ Message::Status OnResize::Work()
 		depthBufferDesc.MiscFlags = 0;
 
 		// Create the texture for the depth buffer using the filled out description.
-		hr = graphic.direct3d.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &graphic.direct3d.pDepthStencilBuffer);
+		hr = graphic.D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &graphic.D3DStuff.pDepthStencilBuffer);
 		if (FAILED(hr))
 		{
 			throw std::exception("Failed at creating dept buffer");
@@ -69,25 +70,25 @@ Message::Status OnResize::Work()
 		depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 		// Create the depth stencil view.
-		hr = graphic.direct3d.pd3dDevice->CreateDepthStencilView(graphic.direct3d.pDepthStencilBuffer, &depthStencilViewDesc, &graphic.direct3d.pDepthStencilView);
+		hr = graphic.D3DStuff.pd3dDevice->CreateDepthStencilView(graphic.D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &graphic.D3DStuff.pDepthStencilView);
 		if (FAILED(hr))
 		{
 			throw std::exception("Failed at creating depth stencil view");
 		}
 
-		graphic.direct3d.pImmediateContext->OMSetRenderTargets(1, &graphic.direct3d.pRenderTargetView, graphic.direct3d.pDepthStencilView);
+		graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &graphic.D3DStuff.pRenderTargetView, graphic.D3DStuff.pDepthStencilView);
 
 
 		// Set the viewport transform.
 
 		// Setup the viewport
-		graphic.direct3d.vp.Width = (FLOAT)this->width;
-		graphic.direct3d.vp.Height = (FLOAT)this->height;
-		graphic.direct3d.vp.MinDepth = 0.0f;
-		graphic.direct3d.vp.MaxDepth = 1.0f;
-		graphic.direct3d.vp.TopLeftX = 0;
-		graphic.direct3d.vp.TopLeftY = 0;
-		graphic.direct3d.pImmediateContext->RSSetViewports(1, &(graphic.direct3d.vp));
+		graphic.D3DStuff.vp.Width = (FLOAT)this->width;
+		graphic.D3DStuff.vp.Height = (FLOAT)this->height;
+		graphic.D3DStuff.vp.MinDepth = 0.0f;
+		graphic.D3DStuff.vp.MaxDepth = 1.0f;
+		graphic.D3DStuff.vp.TopLeftX = 0;
+		graphic.D3DStuff.vp.TopLeftY = 0;
+		graphic.D3DStuff.pImmediateContext->RSSetViewports(1, &(graphic.D3DStuff.vp));
 
 	}
 	return Message::Status::Complete;

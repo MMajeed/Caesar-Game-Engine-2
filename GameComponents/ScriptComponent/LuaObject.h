@@ -20,7 +20,7 @@ public:
 
 	void SetTexture(LuaBasicTexture texture);
 	void SetTextureAndSlot(LuaBasicTexture texture, int slot);
-	void RemoveTexture(LuaBasicTexture texture);
+	void RemoveTexture(int textureSlot);
 
 	void SetLocation(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetLocation();

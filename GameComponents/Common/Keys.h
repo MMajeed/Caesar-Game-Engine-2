@@ -95,6 +95,15 @@ namespace Keys
 		const static std::string TEXTURESLOT = "TextureSlot";
 	};
 
+	namespace BasicScreenCapture
+	{
+		const static std::string SCREENCAPTUREOBJ = "ScreenCaptureObj";
+		const static std::string WIDTH = "Width";
+		const static std::string HEIGHT = "Height";
+		const static std::string CAMERAOBJ = "CameraObj";
+		const static std::string PRESPECTIVEOBJ = "PrespectiveObj";
+	};
+
 };
 
 #endif //__Keys__

@@ -13,7 +13,7 @@ public:
 	virtual void Init()										= 0;
 	virtual void Destory()									= 0;
 	virtual void Update(double realTime, double deltaTime)  = 0;
-	virtual void Draw(TypedefObject::ObjectInfo& object)	= 0;
+	virtual void Draw(TypedefObject::ObjectInfo& object)    = 0;
 	virtual std::shared_ptr<Drawable>clone() const			= 0;
 	virtual ~Drawable(){}
 

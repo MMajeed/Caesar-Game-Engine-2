@@ -60,7 +60,6 @@
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt-d</TargetName>
     <CustomBuildAfterTargets>
-      CopyToIncludeFiles
     </CustomBuildAfterTargets>
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>

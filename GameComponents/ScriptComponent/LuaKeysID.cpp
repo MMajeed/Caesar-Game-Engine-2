@@ -88,7 +88,13 @@ void LuaKeysID::Register(lua_State *lua)
 		ObjectInfoTable[Keys::ObjectInfo::TEXTURESLOT] = Keys::ObjectInfo::TEXTURESLOT;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
-
+	luabind::object BasicScreenCapture = luabind::newtable(lua);
+		BasicScreenCapture[Keys::BasicScreenCapture::CAMERAOBJ]      = Keys::BasicScreenCapture::CAMERAOBJ;
+		BasicScreenCapture[Keys::BasicScreenCapture::WIDTH]          = Keys::BasicScreenCapture::WIDTH;
+		BasicScreenCapture[Keys::BasicScreenCapture::HEIGHT]         = Keys::BasicScreenCapture::HEIGHT;
+		BasicScreenCapture[Keys::BasicScreenCapture::PRESPECTIVEOBJ] = Keys::BasicScreenCapture::PRESPECTIVEOBJ;
+		BasicScreenCapture[Keys::BasicScreenCapture::CAMERAOBJ]      = Keys::BasicScreenCapture::CAMERAOBJ;
+	luaKeyTable["BasicScreenCapture"] = BasicScreenCapture;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;
 }

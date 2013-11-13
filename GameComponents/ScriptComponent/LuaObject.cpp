@@ -93,11 +93,9 @@ LuaObject::LuaObject(luabind::object const& table)
 		iter != textures.end();
 		++iter)
 	{
-		std::string textureIDKey = Keys::ObjectInfo::TEXTUREOBJ + iter->first;
-		std::string texutureSlotKey = Keys::ObjectInfo::TEXTURESLOT + iter->first;
+		std::string textureIDKey = Keys::ObjectInfo::TEXTUREOBJ + CHL::ToString(iter->second);
 
-		objectInfo[textureIDKey] = GenericObj<std::string>::CreateNew(iter->first);
-		objectInfo[texutureSlotKey] = GenericObj<int>::CreateNew(iter->second);
+		objectInfo[textureIDKey] = GenericObj<std::pair<std::string, int>>::CreateNew(*iter);
 	}
 	
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(objectInfo));
@@ -119,37 +117,28 @@ void LuaObject::RemoveGraphic()
 
 void LuaObject::SetTexture(LuaBasicTexture texture)
 {
-	std::shared_ptr<Object> objTexture = GenericObj<std::string>::CreateNew(texture.ID);
-	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + texture.ID;
+	std::pair<std::string, int> newValue(texture.ID, 0);
+	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + CHL::ToString(newValue.second);
+
+	std::shared_ptr<Object> objTexture = GenericObj<std::pair<std::string, int>>::CreateNew(newValue);
 	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, textureID, objTexture));
 	InfoCommunicator::SubmitMessage(msg1);
 
-	std::shared_ptr<Object> objSlot = GenericObj<int>::CreateNew(0);
-	std::string textureSlotID = Keys::ObjectInfo::TEXTURESLOT + texture.ID;
-	std::shared_ptr<UpdateObjectMessage> msg2(new UpdateObjectMessage(this->ID, textureSlotID, objSlot));
-	InfoCommunicator::SubmitMessage(msg2);
 }
 void LuaObject::SetTextureAndSlot(LuaBasicTexture texture, int slot)
 {
-	std::shared_ptr<Object> objTexture = GenericObj<std::string>::CreateNew(texture.ID);
-	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + texture.ID;
+	std::pair<std::string, int> newValue(texture.ID, slot);
+	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + CHL::ToString(newValue.second);
+
+	std::shared_ptr<Object> objTexture = GenericObj<std::pair<std::string, int>>::CreateNew(newValue);
 	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, textureID, objTexture));
 	InfoCommunicator::SubmitMessage(msg1);
-
-	std::shared_ptr<Object> objSlot = GenericObj<int>::CreateNew(slot);
-	std::string textureSlotID = Keys::ObjectInfo::TEXTURESLOT + texture.ID;
-	std::shared_ptr<UpdateObjectMessage> msg2(new UpdateObjectMessage(this->ID, textureSlotID, objSlot));
-	InfoCommunicator::SubmitMessage(msg2);
 }
-void LuaObject::RemoveTexture(LuaBasicTexture texture)
+void LuaObject::RemoveTexture(int textureSlot)
 {
-	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + texture.ID;
+	std::string textureID = Keys::ObjectInfo::TEXTUREOBJ + CHL::ToString(textureSlot);
 	std::shared_ptr<DeleteInfoMessgae> msg1(new DeleteInfoMessgae(this->ID, textureID));
 	InfoCommunicator::SubmitMessage(msg1);
-
-	std::string textureSlot = Keys::ObjectInfo::TEXTURESLOT + texture.ID;
-	std::shared_ptr<DeleteInfoMessgae> msg(new DeleteInfoMessgae(this->ID, textureSlot));
-	InfoCommunicator::SubmitMessage(msg);
 }
 
 void LuaObject::SetLocation(LuaMath::Vector4 vec)

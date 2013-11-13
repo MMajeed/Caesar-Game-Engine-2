@@ -97,13 +97,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BasicDrawable.h" />
+    <ClInclude Include="BasicScreenCapture.h" />
     <ClInclude Include="Buffers.h" />
-    <ClInclude Include="D3DShaderInfo.h" />
     <ClInclude Include="DirectLight.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Drawable.h" />
     <ClInclude Include="DX11Helper.h" />
     <ClInclude Include="GraphicManager.h" />
+    <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="BasicTexture.h" />
@@ -112,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDrawable.cpp" />
+    <ClCompile Include="BasicScreenCapture.cpp" />
     <ClCompile Include="DirectLight.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GraphicManager.cpp" />

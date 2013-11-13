@@ -104,7 +104,7 @@ void DX11Helper::LoadPixelShaderFile(std::string psFileName, ID3D11Device* devic
 		throw std::exception("ERROR: Could not assign compiled pixel shader to device.");
 	}
 }
-HRESULT DX11Helper::LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut, std::wstring &error )
+void DX11Helper::LoadRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut)
 {
 	// Additional stuff...
 	D3D11_RASTERIZER_DESC RSDesc;
@@ -116,15 +116,12 @@ HRESULT DX11Helper::LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MO
 
 
 	HRESULT hr = device->CreateRasterizerState( &RSDesc, rsOut );
-	if( FAILED( hr ) )
+	if(FAILED(hr))
 	{
-		error = L"ERROR: Can't create rasterizer state";
-		return false;
+		throw std::exception("ERROR: Can't create rasterizer state");
 	}
-
-	return true;
 }
-HRESULT DX11Helper::LoadTextureFile( std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut, std::wstring &error  )
+void DX11Helper::LoadTextureFile(std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut)
 {
 	HRESULT hr  = D3DX11CreateShaderResourceViewFromFile( device,
 					txFileName.c_str(),
@@ -132,16 +129,12 @@ HRESULT DX11Helper::LoadTextureFile( std::wstring txFileName, ID3D11Device* devi
 					NULL,			// Used to load texture in other thread
 					pxOut, 
 					NULL );
-
-	if ( FAILED(hr) )
+	if(FAILED(hr))
 	{
-		error = L"ERROR: Can't create texture " + txFileName;
-		return false;
+		throw std::exception(std::string("ERROR: Can't create texture " + CHL::ToString(txFileName)).c_str());
 	}
-
-	return true;
 }
-HRESULT DX11Helper::LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU, D3D11_TEXTURE_ADDRESS_MODE addressV, D3D11_TEXTURE_ADDRESS_MODE addressW, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut, std::wstring &error  )
+void DX11Helper::LoadSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU, D3D11_TEXTURE_ADDRESS_MODE addressV, D3D11_TEXTURE_ADDRESS_MODE addressW, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut)
 {
 	D3D11_SAMPLER_DESC sampDesc;
     ZeroMemory( &sampDesc, sizeof(sampDesc) );
@@ -153,15 +146,12 @@ HRESULT DX11Helper::LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS
     sampDesc.MinLOD = minLOD;
     sampDesc.MaxLOD = maxLod;
     HRESULT hr = device->CreateSamplerState( &sampDesc, ssOut );
-    if ( FAILED(hr) )
+	if(FAILED(hr))
 	{
-		error = L"ERROR: Can't create Sampler State";
-		return false;
+		throw std::exception("ERROR: Can't create Sampler State");
 	}
-
-	return true;
 }
-HRESULT DX11Helper::LoadTransparent( ID3D11Device* device, ID3D11BlendState** bsOut, std::wstring &error  )
+void DX11Helper::LoadTransparent(ID3D11Device* device, ID3D11BlendState** bsOut)
 {
 	D3D11_BLEND_DESC transparentDesc = {0};
 	transparentDesc.AlphaToCoverageEnable = false;
@@ -176,10 +166,9 @@ HRESULT DX11Helper::LoadTransparent( ID3D11Device* device, ID3D11BlendState** bs
 	transparentDesc.RenderTarget[0].BlendOpAlpha   = D3D11_BLEND_OP_ADD;
 	transparentDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 	HRESULT hr = device->CreateBlendState(&transparentDesc, bsOut );
-    if ( FAILED(hr) )
+
+	if(FAILED(hr))
 	{
-		error = L"ERROR: Can't create Sampler State";
-		return false;
+		throw std::exception("ERROR: Can't create Sampler State");
 	}
-	return true;
 }

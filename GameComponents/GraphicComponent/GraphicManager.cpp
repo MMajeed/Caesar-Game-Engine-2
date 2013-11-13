@@ -14,14 +14,14 @@
 
 GraphicManager::GraphicManager()
 {
-	this->direct3d.pd3dDevice			= 0;
-	this->direct3d.pImmediateContext	= 0;
-	this->direct3d.pSwapChain			= 0;
-	this->direct3d.pRenderTargetView	= 0;
-	this->direct3d.pDepthStencilBuffer	= 0;
-	this->direct3d.pDepthStencilState	= 0;
-	this->direct3d.pDepthStencilView	= 0;
-	this->direct3d.IsInitialized	    = false;
+	this->D3DStuff.pd3dDevice			= 0;
+	this->D3DStuff.pImmediateContext	= 0;
+	this->D3DStuff.pSwapChain			= 0;
+	this->D3DStuff.pRenderTargetView	= 0;
+	this->D3DStuff.pDepthStencilBuffer	= 0;
+	this->D3DStuff.pDepthStencilState	= 0;
+	this->D3DStuff.pDepthStencilView	= 0;
+	this->D3DStuff.IsInitialized	    = false;
 
 	this->ClearColour(0) = 0.5;
 	this->ClearColour(1) = 0.5;
@@ -146,11 +146,11 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 		memcpy(&lightBuffer.lights, &vecLightBuffer.front(), totalSize);
 	}
 
-	ID3D11DeviceContext* pImmediateContext = this->direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = this->D3DStuff.pImmediateContext;
 
-	pImmediateContext->UpdateSubresource( this->direct3d.pCBLight, 0, NULL, &lightBuffer, 0, 0 );
-	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->direct3d.pCBLight) );
-	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->direct3d.pCBLight) );
+	pImmediateContext->UpdateSubresource( this->D3DStuff.pCBLight, 0, NULL, &lightBuffer, 0, 0 );
+	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->D3DStuff.pCBLight) );
+	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->D3DStuff.pCBLight) );
 }
 void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& objects)
 {
@@ -163,7 +163,7 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
-	if (!this->CameraKey.empty())
+	if (!this->CameraKeyID.empty())
 	{
 		TypedefObject::ObjectVector::const_iterator cameraIter;
 		cameraIter = std::find_if(objects.begin(), objects.end(),
@@ -171,7 +171,7 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 							{
 								auto idIter = obj.find(Keys::ID);
 								std::string ID = GenericObj<std::string>::GetValue(idIter->second);
-								return (ID == this->CameraKey);
+								return (ID == this->CameraKeyID);
 							}); // Find Camera
 		if(cameraIter != objects.cend()) // if camera found
 		{
@@ -195,14 +195,14 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	double nearZ;
 	double farZ;
 
-	if (!this->PrespectiveKey.empty())
+	if (!this->PrespectiveKeyID.empty())
 	{
 		prespectiveIter = std::find_if(objects.begin(), objects.end(),
 							[this](const TypedefObject::ObjectInfo& obj)
 							{
 								auto idIter = obj.find(Keys::ID);
 								std::string ID = GenericObj<std::string>::GetValue(idIter->second);
-								return (ID == this->PrespectiveKey);
+								return (ID == this->PrespectiveKeyID);
 							}); // Find Prespectiveera
 	}
 
@@ -217,8 +217,8 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	}
 	else
 	{
-		width = this->direct3d.vp.Width;
-		height = this->direct3d.vp.Height;
+		width = this->D3DStuff.vp.Width;
+		height = this->D3DStuff.vp.Height;
 		FovAngleY = 0.785398163;
 		nearZ = 0.01;
 		farZ = 5000.0;
@@ -232,7 +232,7 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 	vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0;
 
 	TypedefObject::ObjectVector::const_iterator cameraIter;
-	if (!this->CameraKey.empty())
+	if (!this->CameraKeyID.empty())
 	{
 		TypedefObject::ObjectVector::const_iterator cameraIter;
 		cameraIter = std::find_if(objects.begin(), objects.end(),
@@ -240,7 +240,7 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 							{
 								auto idIter = obj.find(Keys::ID);
 								std::string ID = GenericObj<std::string>::GetValue(idIter->second);
-								return (ID == this->CameraKey);
+								return (ID == this->CameraKeyID);
 							}); // Find Camera
 		if(cameraIter != objects.cend()) // if camera found
 		{
@@ -258,18 +258,18 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 	cbInfo.proj = XMLoadFloat4x4(&proj4x4);
 	cbInfo.eye = XMFLOAT4((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
 
-	ID3D11DeviceContext* pImmediateContext = this->direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = this->D3DStuff.pImmediateContext;
 
-	pImmediateContext->UpdateSubresource( this->direct3d.pCBInfo, 0, NULL, &cbInfo, 0, 0 );
-	pImmediateContext->VSSetConstantBuffers( 1, 1, &(this->direct3d.pCBInfo) );
-	pImmediateContext->PSSetConstantBuffers( 1, 1, &(this->direct3d.pCBInfo) );
+	pImmediateContext->UpdateSubresource( this->D3DStuff.pCBInfo, 0, NULL, &cbInfo, 0, 0 );
+	pImmediateContext->VSSetConstantBuffers( 1, 1, &(this->D3DStuff.pCBInfo) );
+	pImmediateContext->PSSetConstantBuffers( 1, 1, &(this->D3DStuff.pCBInfo) );
 }
 void GraphicManager::ClearScreen(TypedefObject::ObjectVector& objects)
 {
 	// Clear the back buffer 
 	float ClearColor[4] = { (float)this->ClearColour(0), (float)this->ClearColour(1), (float)this->ClearColour(2), 1.0f }; // red,green,blue,alpha
-	this->direct3d.pImmediateContext->ClearRenderTargetView( this->direct3d.pRenderTargetView, ClearColor );
-	this->direct3d.pImmediateContext->ClearDepthStencilView( this->direct3d.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	this->D3DStuff.pImmediateContext->ClearRenderTargetView( this->D3DStuff.pRenderTargetView, ClearColor );
+	this->D3DStuff.pImmediateContext->ClearDepthStencilView( this->D3DStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 {
@@ -307,12 +307,12 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 			iterTexture != textures.cend();
 			++iterTexture)
 		{
-			std::string textureID = GenericObj<std::string>::GetValue(iterTexture->second);
-			auto texture = this->textures.find(textureID);
+			std::pair<std::string, int> textureInfo = GenericObj<std::pair<std::string, int>>::GetValue(iterTexture->second);
+			auto texture = this->textures.find(textureInfo.first);
 		
 			if(texture != this->textures.cend())
 			{
-				texture->second->SettupTexture(*iterObj);
+				texture->second->SettupTexture(textureInfo.second);
 			}
 		}
 
@@ -322,12 +322,12 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 			iterTexture != textures.cend();
 			++iterTexture)
 		{
-			std::string textureID = GenericObj<std::string>::GetValue(iterTexture->second);
-			auto texture = this->textures.find(textureID);
+			std::pair<std::string, int> textureInfo = GenericObj<std::pair<std::string, int>>::GetValue(iterTexture->second);
+			auto texture = this->textures.find(textureInfo.first);
 
 			if(texture != this->textures.cend())
 			{
-				texture->second->CleanupTexture(*iterObj);
+				texture->second->CleanupTexture(textureInfo.second);
 			}
 		}
 	}
@@ -335,7 +335,7 @@ void GraphicManager::DrawObjects(TypedefObject::ObjectVector& objects)
 void GraphicManager::Present(TypedefObject::ObjectVector& objects)
 {
 	// Present the information rendered to the back buffer to the front buffer (the screen)
-	this->direct3d.pSwapChain->Present( 0, 0 );
+	this->D3DStuff.pSwapChain->Present( 0, 0 );
 }
 
 void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
@@ -355,13 +355,23 @@ const std::hash_map<std::string, std::shared_ptr<Texture>> GraphicManager::AllTe
 {
 	return this->textures;
 }
+
+void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
+{
+	this->ScreenCaptures[obj->ID] = obj;
+}
+const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
+{
+	return this->ScreenCaptures;
+}
+
 void GraphicManager::SetCamera(std::string key)
 {
-	this->CameraKey = key;
+	this->CameraKeyID = key;
 }
 void GraphicManager::SetPrespective(std::string key)
 {
-	this->PrespectiveKey = key;
+	this->PrespectiveKeyID = key;
 }
 
 void GraphicManager::InitDevice()
@@ -431,9 +441,9 @@ void GraphicManager::InitDevice()
 
 	for( UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++ )
 	{
-		this->direct3d.driverType = driverTypes[driverTypeIndex];
-		hr = D3D11CreateDeviceAndSwapChain( NULL, this->direct3d.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
-			D3D11_SDK_VERSION, &sd, &this->direct3d.pSwapChain, &this->direct3d.pd3dDevice, &this->direct3d.featureLevel, &this->direct3d.pImmediateContext );
+		this->D3DStuff.driverType = driverTypes[driverTypeIndex];
+		hr = D3D11CreateDeviceAndSwapChain( NULL, this->D3DStuff.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
+			D3D11_SDK_VERSION, &sd, &this->D3DStuff.pSwapChain, &this->D3DStuff.pd3dDevice, &this->D3DStuff.featureLevel, &this->D3DStuff.pImmediateContext );
 		if( SUCCEEDED( hr ) )
 			break;
 	}
@@ -442,11 +452,11 @@ void GraphicManager::InitDevice()
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
-	hr = this->direct3d.pSwapChain->GetBuffer( 0, __uuidof( ID3D11Texture2D ), ( LPVOID* )&pBackBuffer );
+	hr = this->D3DStuff.pSwapChain->GetBuffer( 0, __uuidof( ID3D11Texture2D ), ( LPVOID* )&pBackBuffer );
 	if( FAILED( hr ) )
 		throw std::exception("Failed at creating back buffer");
 
-	hr = this->direct3d.pd3dDevice->CreateRenderTargetView( pBackBuffer, NULL, &this->direct3d.pRenderTargetView );
+	hr = this->D3DStuff.pd3dDevice->CreateRenderTargetView( pBackBuffer, NULL, &this->D3DStuff.pRenderTargetView );
 	pBackBuffer->Release();
 	if( FAILED( hr ) )
 		throw std::exception("Failed at creating Render Target view");
@@ -470,7 +480,7 @@ void GraphicManager::InitDevice()
 	depthBufferDesc.MiscFlags = 0;
 
 	// Create the texture for the depth buffer using the filled out description.
-	hr = this->direct3d.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &this->direct3d.pDepthStencilBuffer);
+	hr = this->D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &this->D3DStuff.pDepthStencilBuffer);
 	if(FAILED(hr))
 	{
 		throw std::exception("Failed at creating dept buffer");
@@ -502,14 +512,14 @@ void GraphicManager::InitDevice()
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
 	// Create the depth stencil state.
-	hr = this->direct3d.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &this->direct3d.pDepthStencilState);
+	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &this->D3DStuff.pDepthStencilState);
 	if(FAILED(hr)) 
 	{
 		throw std::exception("Failed at creating Dept stencil State");
 	}
 
 	// Set the depth stencil state.
-	this->direct3d.pImmediateContext->OMSetDepthStencilState(this->direct3d.pDepthStencilState, 1);
+	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	// Initialize the depth stencil view.
@@ -521,33 +531,26 @@ void GraphicManager::InitDevice()
 	depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 	// Create the depth stencil view.
-	hr = this->direct3d.pd3dDevice->CreateDepthStencilView(this->direct3d.pDepthStencilBuffer, &depthStencilViewDesc, &this->direct3d.pDepthStencilView);
+	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilView(this->D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &this->D3DStuff.pDepthStencilView);
 	if(FAILED(hr))
 	{
 		throw std::exception("Failed at creating depth stencil view");
 	}
 
-	this->direct3d.pImmediateContext->OMSetRenderTargets( 1, &this->direct3d.pRenderTargetView, this->direct3d.pDepthStencilView );
+	this->D3DStuff.pImmediateContext->OMSetRenderTargets( 1, &this->D3DStuff.pRenderTargetView, this->D3DStuff.pDepthStencilView );
 	
 	// Setup the viewport
-	this->direct3d.vp.Width = (FLOAT)Width;
-	this->direct3d.vp.Height = (FLOAT)Height;
-	this->direct3d.vp.MinDepth = 0.0f;
-	this->direct3d.vp.MaxDepth = 1.0f;
-	this->direct3d.vp.TopLeftX = 0;
-	this->direct3d.vp.TopLeftY = 0;
-	this->direct3d.pImmediateContext->RSSetViewports( 1, &(this->direct3d.vp) );
+	this->D3DStuff.vp.Width = (FLOAT)Width;
+	this->D3DStuff.vp.Height = (FLOAT)Height;
+	this->D3DStuff.vp.MinDepth = 0.0f;
+	this->D3DStuff.vp.MaxDepth = 1.0f;
+	this->D3DStuff.vp.TopLeftX = 0;
+	this->D3DStuff.vp.TopLeftY = 0;
+	this->D3DStuff.pImmediateContext->RSSetViewports( 1, &(this->D3DStuff.vp) );
 
-	std::wstring error;
-	if(!DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->direct3d.pd3dDevice, &(this->direct3d.pCBInfo), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
 
-	if(!DX11Helper::LoadBuffer<cBuffer::cbLight>(this->direct3d.pd3dDevice, &(this->direct3d.pCBLight), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
 
-	this->direct3d.IsInitialized = true;
+	this->D3DStuff.IsInitialized = true;
 }

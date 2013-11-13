@@ -16,13 +16,13 @@ namespace DX11Helper
 	void LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut);
 	void LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut);
 
-	HRESULT LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut, std::wstring &error );
-	HRESULT LoadTextureFile( std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut, std::wstring &error  );	
-	HRESULT LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU,D3D11_TEXTURE_ADDRESS_MODE addressV,  D3D11_TEXTURE_ADDRESS_MODE addressw, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut, std::wstring &error  );	
-	HRESULT LoadTransparent( ID3D11Device* device, ID3D11BlendState** bsOut, std::wstring &error  );	
+	void LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut);
+	void LoadTextureFile( std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut);	
+	void LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU,D3D11_TEXTURE_ADDRESS_MODE addressV,  D3D11_TEXTURE_ADDRESS_MODE addressw, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut);	
+	void LoadTransparent( ID3D11Device* device, ID3D11BlendState** bsOut);	
 
 	template<typename T>
-	HRESULT LoadVertexBuffer(ID3D11Device* device, T* pVertex, std::size_t numElements, ID3D11Buffer** bOut, std::wstring& error)
+	void LoadVertexBuffer(ID3D11Device* device, T* pVertex, std::size_t numElements, ID3D11Buffer** bOut)
 	{
 		HRESULT hr = S_OK ;
 
@@ -39,14 +39,12 @@ namespace DX11Helper
 		hr = device->CreateBuffer( &bd, &InitData, bOut );
 		if( FAILED( hr ) )
 		{
-			error = L"Failed at creating vertex buffer";
-			return false;
+			throw std::exception("Failed at creating vertex buffer");
 		}
-		return true;
 	}
 
 	template<typename T>
-	HRESULT LoadIndexBuffer(ID3D11Device* device, T* pIndice, std::size_t numElements, ID3D11Buffer** bOut, std::wstring& error)
+	void LoadIndexBuffer(ID3D11Device* device, T* pIndice, std::size_t numElements, ID3D11Buffer** bOut)
 	{	
 		HRESULT hr = S_OK ;
 
@@ -61,17 +59,14 @@ namespace DX11Helper
 		ZeroMemory( &InitData, sizeof(InitData) );
 		InitData.pSysMem = pIndice;
 		hr = device->CreateBuffer( &bd, &InitData, bOut );
-		if( FAILED( hr ) )
+		if(FAILED(hr))
 		{
-			error = L"Failed at creating vertex buffer";
-			return false;
+			throw std::exception("Failed at creating index buffer");
 		}
-
-		return true;
 	}
 
 	template<typename T>
-	HRESULT LoadBuffer( ID3D11Device* device, ID3D11Buffer** cbOut, std::wstring &error )
+	void LoadBuffer(ID3D11Device* device, ID3D11Buffer** cbOut)
 	{
 		HRESULT hr = S_OK ;
 
@@ -82,13 +77,11 @@ namespace DX11Helper
 		bd.ByteWidth = sizeof(T);
 		bd.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bd.CPUAccessFlags = 0;
-		hr = device->CreateBuffer( &bd, NULL, cbOut );
-		if( FAILED( hr ) )
+		hr = device->CreateBuffer(&bd, NULL, cbOut);
+		if(FAILED(hr))
 		{
-			error = L"Failed at creating constant buffer buffer";
-			return false;
+			throw std::exception("Failed at creating constant buffer");
 		}
-		return true;
 	}
 };
 

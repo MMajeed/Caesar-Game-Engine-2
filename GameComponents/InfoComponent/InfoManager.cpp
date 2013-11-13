@@ -35,9 +35,14 @@ void InfoManager::DeleteInfo(std::string ID, std::string infoID)
 	this->objects[ID].Erase(infoID);
 }
 
-Info InfoManager::GetObjectInfo(std::string ID)
+const Info& InfoManager::GetObjectInfo(std::string ID)
 {
-	return this->objects[ID];
+	auto iter = this->objects.find(ID);
+	if (iter == this->objects.end())
+	{
+		throw std::exception(("Failed to find the object with the ID" + ID).c_str());
+	}
+	return iter->second;
 }
 
 void InfoManager::Insert(const Info& obj)

@@ -23,7 +23,7 @@ public:
 	void UpdateObject(std::string ID, std::string infoID, std::shared_ptr<Object> info);
 	void DeleteInfo(std::string ID, std::string infoID);
 	const std::hash_map<std::string, Info>& AllObjects();
-	Info GetObjectInfo(std::string ID);
+	const Info& GetObjectInfo(std::string ID);
 protected:	
 	std::hash_map<std::string, Info> objects;
 

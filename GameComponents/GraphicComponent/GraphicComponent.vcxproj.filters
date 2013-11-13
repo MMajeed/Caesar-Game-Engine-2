@@ -11,9 +11,6 @@
     <ClInclude Include="Buffers.h">
       <Filter>D3D Tools\Buffers</Filter>
     </ClInclude>
-    <ClInclude Include="D3DShaderInfo.h">
-      <Filter>D3D Tools\D3dShaderInfo</Filter>
-    </ClInclude>
     <ClInclude Include="DX11Helper.h">
       <Filter>D3D Tools\DX11Helper</Filter>
     </ClInclude>
@@ -36,6 +33,12 @@
     <ClInclude Include="DirectLight.h">
       <Filter>Light\DirectLight</Filter>
     </ClInclude>
+    <ClInclude Include="ScreenCapture.h">
+      <Filter>ScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicScreenCapture.h">
+      <Filter>ScreenCapture\BasicScreenCapture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -54,6 +57,9 @@
     <ClCompile Include="DirectLight.cpp">
       <Filter>Light\DirectLight</Filter>
     </ClCompile>
+    <ClCompile Include="BasicScreenCapture.cpp">
+      <Filter>ScreenCapture\BasicScreenCapture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Drawable">
@@ -67,9 +73,6 @@
     </Filter>
     <Filter Include="D3D Tools\Buffers">
       <UniqueIdentifier>{69747fe4-1464-495f-9fbd-495549793ef2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D Tools\D3dShaderInfo">
-      <UniqueIdentifier>{b1d50383-28bd-4e83-bdc5-73a368f0b155}</UniqueIdentifier>
     </Filter>
     <Filter Include="D3D Tools\DX11Helper">
       <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
@@ -94,6 +97,12 @@
     </Filter>
     <Filter Include="Light\DirectLight">
       <UniqueIdentifier>{0217d582-611d-4dfd-917f-b715c41066ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture">
+      <UniqueIdentifier>{f08569f7-3a68-4706-9360-f7df52b3b06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\BasicScreenCapture">
+      <UniqueIdentifier>{3b8f6676-409e-4e31-ad5b-53b77c5e31c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

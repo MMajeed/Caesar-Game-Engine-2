@@ -8,6 +8,7 @@
 class LuaBasicTexture
 {
 public:
+	LuaBasicTexture(){};
 	LuaBasicTexture(std::string textureFile);
 
 	std::string ID;

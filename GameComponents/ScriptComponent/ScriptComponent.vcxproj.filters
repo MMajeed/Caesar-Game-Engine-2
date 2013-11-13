@@ -49,7 +49,10 @@
       <Filter>Lua Class/Function</Filter>
     </ClInclude>
     <ClInclude Include="LuaMath.h">
-      <Filter>Lua Class/Function\LuaUblas</Filter>
+      <Filter>Lua Class/Function\LuaMath</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaBasicScreenCapture.h">
+      <Filter>Lua Class/Function\LuaBasicScreenCapture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +97,10 @@
       <Filter>LuaError</Filter>
     </ClCompile>
     <ClCompile Include="LuaMath.cpp">
-      <Filter>Lua Class/Function\LuaUblas</Filter>
+      <Filter>Lua Class/Function\LuaMath</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaBasicScreenCapture.cpp">
+      <Filter>Lua Class/Function\LuaBasicScreenCapture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +128,6 @@
     <Filter Include="Lua Class/Function\LuaObject">
       <UniqueIdentifier>{7c157c13-425c-470f-971d-0dd4fc24e16a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaUblas">
-      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Processes\LuaKeyAction">
       <UniqueIdentifier>{066781f6-0fc4-46de-8fae-591dcdbacb65}</UniqueIdentifier>
     </Filter>
@@ -145,6 +148,12 @@
     </Filter>
     <Filter Include="LuaError">
       <UniqueIdentifier>{0068221f-3e77-415c-a28c-d60079bcd49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaMath">
+      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaBasicScreenCapture">
+      <UniqueIdentifier>{bae8b22f-6f8f-4a48-aab5-0c19c0f3f28f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

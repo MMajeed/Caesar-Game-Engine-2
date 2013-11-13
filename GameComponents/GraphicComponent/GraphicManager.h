@@ -12,6 +12,7 @@
 #include <Interface.h>
 #include "Drawable.h"
 #include "Texture.h"
+#include "ScreenCapture.h"
 #include "TypedefObject.h"
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
@@ -36,6 +37,10 @@ public:
 
 	void InsertTexture(std::shared_ptr<Texture> obj);
 	const std::hash_map<std::string, std::shared_ptr<Texture>> AllTexture();
+
+	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
+	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
+
 	void SetCamera(std::string key);
 	void SetPrespective(std::string key);
 	// DirectX stuff
@@ -54,14 +59,14 @@ public:
 		ID3D11Buffer*				pCBInfo;
 		ID3D11Buffer*				pCBLight;
 		bool						IsInitialized;
-	} direct3d;
+	} D3DStuff;
 
-	
-protected:
+
 	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
 	std::hash_map<std::string, std::shared_ptr<Texture>> textures;
-	std::string CameraKey;
-	std::string PrespectiveKey;
+	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
+	std::string CameraKeyID;
+	std::string PrespectiveKeyID;
 	virtual void InitDevice();
 public:
 	CHL::Vec4 ClearColour;

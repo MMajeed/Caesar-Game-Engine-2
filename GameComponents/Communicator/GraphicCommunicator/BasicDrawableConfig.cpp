@@ -1,6 +1,5 @@
 #include "BasicDrawableConfig.h"
 #include <Vertex.h>
-#include <D3DShaderInfo.h>
 #include <BasicDrawable.h>
 #include <GraphicManager.h>
 #include <Converter.h>
@@ -27,16 +26,6 @@ BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const Mode
 
 Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 {
-	D3DShaderInfo vertexFile;
-	vertexFile.FileName		= vertexFileName;
-	vertexFile.EntryPoint	= "VS";
-	vertexFile.Model		= "vs_4_1";
-
-	D3DShaderInfo pixelFile;
-	pixelFile.FileName		= pixelFileName;
-	pixelFile.EntryPoint	= "PS";
-	pixelFile.Model			= "ps_4_1";
-
 	auto vectorFaces = model.Faces();
 	std::vector<WORD> vectorIndices;
 	vectorIndices.reserve(vectorFaces.size());
@@ -86,8 +75,8 @@ Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 		BasicDrawable::Spawn(this->ID,
 							vectorVertices,
 							vectorIndices,
-							vertexFile,
-							pixelFile,
+							vertexFileName,
+							pixelFileName,
 							static_cast<D3D11_CULL_MODE>(this->cullMode),
 							static_cast<D3D11_FILL_MODE>(this->fillMode),
 							this->antialiasedLine,

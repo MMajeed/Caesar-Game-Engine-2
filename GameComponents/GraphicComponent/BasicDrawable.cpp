@@ -29,7 +29,7 @@ BasicDrawable::BasicDrawable(const std::string& inputID)
 
 void BasicDrawable::Init()
 {
-	ID3D11Device* device = GraphicManager::GetInstance().direct3d.pd3dDevice;
+	ID3D11Device* device = GraphicManager::GetInstance().D3DStuff.pd3dDevice;
 	this->InitVertexBuffer(device);
 	this->InitIndexBuffer(device);
 	this->InitInputLayout(device);
@@ -90,7 +90,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& obj
 	cbCEF.colour.ambient = CHL::ConvertVec4(ambient);
 	cbCEF.colour.specular = CHL::ConvertVec4(spec);
 
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	pImmediateContext->UpdateSubresource( this->D3DInfo.pConstantBuffer, 0, NULL, &cbCEF, 0, 0 );
 	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
@@ -98,7 +98,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& obj
 }
 void BasicDrawable::SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& object)
 {	
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	UINT stride = sizeof( Vertex );
 	UINT offset = 0;
@@ -108,7 +108,7 @@ void BasicDrawable::SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& objec
 }
 void BasicDrawable::SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& object)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	// Set the input layout
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
@@ -116,48 +116,34 @@ void BasicDrawable::SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& 
 }
 void BasicDrawable::SetupDrawPixelShader(const TypedefObject::ObjectInfo& object)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
 void BasicDrawable::SetupDrawRasterizeShader(const TypedefObject::ObjectInfo& object)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
 void BasicDrawable::DrawObject(const TypedefObject::ObjectInfo& object)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
 void BasicDrawable::CleanupAfterDraw(const TypedefObject::ObjectInfo& object)	
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().direct3d.pImmediateContext;
 
-	ID3D11ShaderResourceView* tab = NULL;
-
-	pImmediateContext->PSSetShaderResources(0,1,&tab);
 }
 
 void BasicDrawable::InitVertexBuffer(ID3D11Device* device)
 {
-	std::wstring error;
-
-	if(!DX11Helper::LoadVertexBuffer<Vertex>(device, &(this->D3DInfo.vertices.front()), this->D3DInfo.vertices.size(), &(this->D3DInfo.pVertexBuffer), error ))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadVertexBuffer<Vertex>(device, &(this->D3DInfo.vertices.front()), this->D3DInfo.vertices.size(), &(this->D3DInfo.pVertexBuffer));
 }
 void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 {
-	std::wstring error;
-
-	if(!DX11Helper::LoadIndexBuffer<WORD>(device, &(this->D3DInfo.indices.front()), this->D3DInfo.indices.size(), &(this->D3DInfo.pIndexBuffer), error ))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadIndexBuffer<WORD>(device, &(this->D3DInfo.indices.front()), this->D3DInfo.indices.size(), &(this->D3DInfo.pIndexBuffer));
 }
 void BasicDrawable::InitInputLayout(ID3D11Device* device)
 {
@@ -169,38 +155,30 @@ void BasicDrawable::InitInputLayout(ID3D11Device* device)
 	};
 	UINT numElements = ARRAYSIZE( layout );
 
-	DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo.FileName, 
+	DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo, 
 									device, layout, numElements, &(this->D3DInfo.pInputLayout));
 }
 void BasicDrawable::InitVertexShader(ID3D11Device* device)
 {
-	DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo.FileName, 
+	DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo, 
 										device, &(this->D3DInfo.pVertexShader));
 }
 void BasicDrawable::InitPixelShader(ID3D11Device* device)
 {
-	DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo.FileName, 
+	DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo, 
 										device, &(this->D3DInfo.pPixelShader));
 }
 void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {
-	std::wstring error;
-	if (!DX11Helper::LoadRasterizerState(this->D3DInfo.cullMode, 
-										 this->D3DInfo.fillMode,
-										 this->D3DInfo.bAntialiasedLine,
-										 this->D3DInfo.bMultisampleEnable, 
-										 device, &(this->D3DInfo.pRastersizerState), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadRasterizerState(this->D3DInfo.cullMode, 
+									this->D3DInfo.fillMode,
+									this->D3DInfo.bAntialiasedLine,
+									this->D3DInfo.bMultisampleEnable, 
+									device, &(this->D3DInfo.pRastersizerState));
 }
 void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 {
-	std::wstring error;
-	if(!DX11Helper::LoadBuffer<cBuffer::cbObject>(device, &(this->D3DInfo.pConstantBuffer), error))
-	{
-		throw std::exception(CHL::ToString(error).c_str());
-	}
+	DX11Helper::LoadBuffer<cBuffer::cbObject>(device, &(this->D3DInfo.pConstantBuffer));
 }
 
 void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable)
@@ -215,15 +193,15 @@ void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_M
 		this->D3DInfo.pRastersizerState->Release();
 	}
 
-	ID3D11Device* pDevice = GraphicManager::GetInstance().direct3d.pd3dDevice;
+	ID3D11Device* pDevice = GraphicManager::GetInstance().D3DStuff.pd3dDevice;
 	this->InitRastersizerState(pDevice);
 }
 
 std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
-													const std::vector<Vertex>& vectorVertices,
+													const std::vector<Vertex>&	vectorVertices,
 													const std::vector<WORD>&	vectorIndices,
-													D3DShaderInfo				vertexFile,
-													D3DShaderInfo				pixelFile,
+													const std::string&			vertexFile,
+													const std::string&			pixelFile,
 													D3D11_CULL_MODE				cullMode,
 													D3D11_FILL_MODE				fillMode,
 													bool						bAntialiasedLine,
