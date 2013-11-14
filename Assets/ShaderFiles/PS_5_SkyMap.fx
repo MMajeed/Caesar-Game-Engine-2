@@ -11,7 +11,7 @@ float4 PS( PS_INPUT input ) : SV_Target
 		= reflect( directionToCamera, input.Normal );
 
 
-	finalLightColour = cubeTexture01.Sample( samLinear, directionOfReflection.xyz );
+	finalLightColour = cubeTexture01.Sample( samAnisotropic, directionOfReflection.xyz );
 
 	return finalLightColour;
 }

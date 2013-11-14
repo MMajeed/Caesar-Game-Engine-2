@@ -49,7 +49,7 @@ void DX11Helper::LoadShaderFile(std::string shaderFileName, std::string vsEntryP
 	}
 	else {
 		std::ifstream fin(shaderFileName, std::ios::binary);
-
+		if(!fin){	throw std::exception(std::string("Failed at loaded file " + shaderFileName).c_str());	}
 		fin.seekg(0, std::ios_base::end);
 		int size = (int)fin.tellg();
 		fin.seekg(0, std::ios_base::beg);

@@ -1,12 +1,12 @@
-#ifndef __BasicScreenCapture__
-#define __BasicScreenCapture__
+#ifndef __DepthScreenCapture__
+#define __DepthScreenCapture__
 
 #include "ScreenCapture.h"
 
-class BasicScreenCapture : public ScreenCapture
+class DepthScreenCapture : public ScreenCapture
 {
 public:
-	BasicScreenCapture(const std::string& inputID);
+	DepthScreenCapture(const std::string& inputID);
 
 	void Init();
 	void Destory();
@@ -17,12 +17,11 @@ public:
 	void TakeSnapShot(TypedefObject::ObjectVector& objects);
 	void CleanupSnapShot(TypedefObject::ObjectVector& objects);
 
-	static std::shared_ptr<BasicScreenCapture> Spawn(std::string id, unsigned int width, unsigned int height);
+	static std::shared_ptr<DepthScreenCapture> Spawn(std::string id, unsigned int width, unsigned int height);
 	std::shared_ptr<ScreenCapture> clone() const;
-	
+
 	struct
 	{
-		ID3D11RenderTargetView*		pColorMapRTV;
 		ID3D11DepthStencilView*		pDepthMapDSV;
 		D3D11_VIEWPORT              Viewport;
 		unsigned int				width;
@@ -31,4 +30,4 @@ public:
 };
 
 
-#endif //__iScreenCapture__
+#endif //__DepthScreenCapture__

@@ -44,7 +44,7 @@ float4 PS( PS_INPUT input ) : SV_Target
 		}
 	}
 
-	float4 texColour0 = texture00.Sample( samLinear, input.tex );
+	float4 texColour0 = texture00.Sample( samAnisotropic, input.tex );
 
 	float4 finalColor = texColour0 * finalLightColour;
 

@@ -21,16 +21,15 @@ public:
 	virtual std::shared_ptr<ScreenCapture> clone() const    = 0;
 	virtual ~ScreenCapture(){}
 
-	struct
+	ID3D11ShaderResourceView* GetScreenTexture()
 	{
-		ID3D11ShaderResourceView*	pColorMapSRV;
-		ID3D11RenderTargetView*		pColorMapRTV;
-		D3D11_VIEWPORT              Viewport;
-		unsigned int				width;
-		unsigned int				height;
-	} D3DInfo;
-
+		this->pScreenTexture->AddRef();
+		return this->pScreenTexture;
+	}
+	
 	const std::string ID;
+protected:
+	ID3D11ShaderResourceView*	pScreenTexture;
 };
 
 

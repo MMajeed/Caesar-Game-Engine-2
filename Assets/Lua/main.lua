@@ -6,7 +6,7 @@ ClearScreen(0.5, 0.5, 0.5);
 
 boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Box.ply",
                                    [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_3_LightNTexture.cso",});
+                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_1_Texture.cso",});
 
 tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
 
@@ -55,3 +55,11 @@ for i = 1, 10, 1 do
                                  [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
                                  [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
 end
+  
+OnKeyDown(string.byte("A"), 
+    function() 
+        myTexture = TakeScreenShot({[Keys["BasicScreenCapture"]["Width"]]    = 768,
+                                    [Keys["BasicScreenCapture"]["Height"]]   = 1024,});
+        box1:SetTexture(myTexture);
+    end
+);        

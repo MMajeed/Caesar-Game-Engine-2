@@ -8,8 +8,7 @@
 class LuaBasicScreenCapture
 {
 public:
-	LuaBasicScreenCapture(luabind::object const& table);
-	LuaBasicTexture LuaBasicScreenCapture::TakeSnapShot(luabind::object const& table);
+	static LuaBasicTexture TakeSnapShot(luabind::object const& table);
 
 	std::string ID;
 

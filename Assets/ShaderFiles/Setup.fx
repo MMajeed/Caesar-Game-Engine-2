@@ -50,9 +50,9 @@ struct PS_INPUT
 	float2 tex						: TEXCOORD0;
 };
 
-SamplerState samLinear
+SamplerState samAnisotropic
 {
-	Filter   = MIN_MAG_MIP_LINEAR;
+	Filter = MAXIMUM_ANISOTROPIC;
 	AddressU = Wrap;
 	AddressV = Wrap;
 	AddressW = Wrap;
@@ -65,16 +65,4 @@ SamplerState samShadow
 	AddressV = Border;
 	AddressW = Border;
 	BorderColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
-};
-
-
-SamplerComparisonState samShadowComparison
-{
-	Filter   = COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
-	AddressU = BORDER;
-	AddressV = BORDER;
-	AddressW = BORDER;
-	BorderColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
-
-    ComparisonFunc = LESS;
 };
