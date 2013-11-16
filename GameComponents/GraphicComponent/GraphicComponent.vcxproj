@@ -99,6 +99,7 @@
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="BasicScreenCapture.h" />
     <ClInclude Include="Buffers.h" />
+    <ClInclude Include="CubeScreenCapture.h" />
     <ClInclude Include="DepthScreenCapture.h" />
     <ClInclude Include="DirectLight.h" />
     <ClInclude Include="Linker.h" />
@@ -115,6 +116,7 @@
   <ItemGroup>
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="BasicScreenCapture.cpp" />
+    <ClCompile Include="CubeScreeCapture.cpp" />
     <ClCompile Include="DepthScreenCapture.cpp" />
     <ClCompile Include="DirectLight.cpp" />
     <ClCompile Include="DX11Helper.cpp" />

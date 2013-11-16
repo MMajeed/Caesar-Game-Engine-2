@@ -2,8 +2,10 @@
 #define __LuaMath__
 
 #include <Lua.hpp>
+#include <luabind\luabind.hpp>
 #include <string>
 #include <Vector.h>
+#include <Matrix.h>
 
 class LuaMath
 {
@@ -32,9 +34,29 @@ public:
 		static void Register(lua_State *lua);
 	};
 
+	class Matrix4x4
+	{
+	public:
+		Matrix4x4();
+		Matrix4x4(CHL::Matrix4x4 mat);
+		operator CHL::Matrix4x4();
+
+		double GetValue(int x, int y);
+		void SetValue(int x, int y, double value);
+		
+		CHL::Matrix4x4 matrix;
+		static void Register(lua_State *lua);
+	};
+
+	static Matrix4x4 LuaViewCalculation(Vector4 eye, Vector4 vTM, Vector4 vUp, double pitch, double yaw, double roll);
+
 	static inline void RegisterAllLuaFunction(lua_State *lua)
 	{
 		LuaMath::Vector4::Register(lua);
+		LuaMath::Matrix4x4::Register(lua);
+		luabind::module(lua)[
+			luabind::def("ViewCalculation", LuaMath::LuaViewCalculation)
+		];
 	}
 };
 

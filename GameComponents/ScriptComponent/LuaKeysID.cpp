@@ -89,12 +89,13 @@ void LuaKeysID::Register(lua_State *lua)
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenCapture = luabind::newtable(lua);
-		BasicScreenCapture[Keys::BasicScreenCapture::CAMERAOBJ]      = Keys::BasicScreenCapture::CAMERAOBJ;
-		BasicScreenCapture[Keys::BasicScreenCapture::WIDTH]          = Keys::BasicScreenCapture::WIDTH;
-		BasicScreenCapture[Keys::BasicScreenCapture::HEIGHT]         = Keys::BasicScreenCapture::HEIGHT;
-		BasicScreenCapture[Keys::BasicScreenCapture::PRESPECTIVEOBJ] = Keys::BasicScreenCapture::PRESPECTIVEOBJ;
-		BasicScreenCapture[Keys::BasicScreenCapture::CAMERAOBJ]      = Keys::BasicScreenCapture::CAMERAOBJ;
-	luaKeyTable["BasicScreenCapture"] = BasicScreenCapture;
+		BasicScreenCapture[Keys::ScreenCapture::SCREENCAPTUREOBJ]      = Keys::ScreenCapture::SCREENCAPTUREOBJ;
+		BasicScreenCapture[Keys::ScreenCapture::WIDTH] = Keys::ScreenCapture::WIDTH;
+		BasicScreenCapture[Keys::ScreenCapture::HEIGHT] = Keys::ScreenCapture::HEIGHT;
+		BasicScreenCapture[Keys::ScreenCapture::CAMERAMATRIX] = Keys::ScreenCapture::CAMERAMATRIX;
+		BasicScreenCapture[Keys::ScreenCapture::PRESPECTIVEMATRIX] = Keys::ScreenCapture::PRESPECTIVEMATRIX;
+		BasicScreenCapture[Keys::ScreenCapture::EYE] = Keys::ScreenCapture::EYE;
+	luaKeyTable["ScreenCapture"] = BasicScreenCapture;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;
 }

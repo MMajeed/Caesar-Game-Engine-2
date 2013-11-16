@@ -15,9 +15,7 @@ public:
 	virtual void Init()                                     = 0;
 	virtual void Destory()                                  = 0;
 	virtual void Update(double realTime, double deltaTime)  = 0;
-	virtual void Snap(TypedefObject::ObjectVector& objects,
-					  std::string cameraID = "",
-					  std::string prespectiveID = "")		= 0;
+	virtual void Snap(TypedefObject::ObjectVector& objects)	= 0;
 	virtual std::shared_ptr<ScreenCapture> clone() const    = 0;
 	virtual ~ScreenCapture(){}
 

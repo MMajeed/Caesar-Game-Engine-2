@@ -1,18 +1,8 @@
 #include "LuaMath.h"
+#include <3DMath.h>
 
-#include <luabind\luabind.hpp>
-
-LuaMath::Vector4::Vector4()
-{
-	this->vector(0) = 0.0;
-	this->vector(1) = 0.0;
-	this->vector(2) = 0.0;
-	this->vector(3) = 0.0;
-}
-LuaMath::Vector4::Vector4(CHL::Vec4 vecValue)
-{
-	this->vector = vecValue;
-}
+LuaMath::Vector4::Vector4(){}
+LuaMath::Vector4::Vector4(CHL::Vec4 vecValue){	this->vector = vecValue; }
 LuaMath::Vector4::Vector4(double xValue, double yValue, double zValue, double wValue)
 {
 	this->vector(0) = xValue;
@@ -20,10 +10,7 @@ LuaMath::Vector4::Vector4(double xValue, double yValue, double zValue, double wV
 	this->vector(2) = zValue;
 	this->vector(3) = wValue;
 }
-LuaMath::Vector4::operator CHL::Vec4()
-{
-	return this->vector;
-}
+LuaMath::Vector4::operator CHL::Vec4(){	return this->vector;}
 
 double LuaMath::Vector4::GetterX(){ return this->vector(0); }
 double LuaMath::Vector4::GetterY(){ return this->vector(1); }
@@ -46,4 +33,29 @@ void LuaMath::Vector4::Register(lua_State *lua)
 		  .property("Z", &LuaMath::Vector4::GetterZ, &LuaMath::Vector4::SetterZ)
 		  .property("W", &LuaMath::Vector4::GetterW, &LuaMath::Vector4::SetterW)
 	  ];
+}
+
+LuaMath::Matrix4x4::Matrix4x4(){}
+LuaMath::Matrix4x4::Matrix4x4(CHL::Matrix4x4 mat){	this->matrix = mat;	}
+
+LuaMath::Matrix4x4::operator CHL::Matrix4x4(){	return this->matrix; }
+
+double LuaMath::Matrix4x4::GetValue(int x, int y){ return this->matrix(x, y); }
+void LuaMath::Matrix4x4::SetValue(int x, int y, double value){ this->matrix(x, y) = value; }
+
+
+void LuaMath::Matrix4x4::Register(lua_State *lua)
+{
+	luabind::module(lua)[
+		luabind::class_<LuaMath::Matrix4x4>("Matrix4x4")
+			.def(luabind::constructor<>())
+			.def("GetValue", &LuaMath::Matrix4x4::GetValue)
+			.def("SetValue", &LuaMath::Matrix4x4::SetValue)
+	];
+}
+
+LuaMath::Matrix4x4 LuaMath::LuaViewCalculation
+	(LuaMath::Vector4 eye, LuaMath::Vector4 vTM, LuaMath::Vector4 vUp, double pitch, double yaw, double roll)
+{
+	return CHL::ViewCalculation(eye, vTM, vUp, pitch, yaw, roll);
 }

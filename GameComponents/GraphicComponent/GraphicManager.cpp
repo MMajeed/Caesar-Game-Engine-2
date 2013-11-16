@@ -23,9 +23,9 @@ GraphicManager::GraphicManager()
 	this->D3DStuff.pDepthStencilView	= 0;
 	this->D3DStuff.IsInitialized	    = false;
 
-	this->ClearColour(0) = 0.5;
-	this->ClearColour(1) = 0.5;
-	this->ClearColour(2) = 0.5;
+	this->SceneInfo.ClearColour(0) = 0.5;
+	this->SceneInfo.ClearColour(1) = 0.5;
+	this->SceneInfo.ClearColour(2) = 0.5;
 }
 
 void GraphicManager::Init()
@@ -42,7 +42,7 @@ void GraphicManager::Work()
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
 	this->SetupLight(objects);
-	this->SetupCameraNPrespective(objects);
+	this->SetupScene(objects);
 	this->SetupConstantBuffer(objects);
 	this->ClearScreen(objects);
 	this->DrawObjects(objects);
@@ -152,7 +152,7 @@ void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 	pImmediateContext->VSSetConstantBuffers( 2, 1, &(this->D3DStuff.pCBLight) );
 	pImmediateContext->PSSetConstantBuffers( 2, 1, &(this->D3DStuff.pCBLight) );
 }
-void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& objects)
+void GraphicManager::SetupScene(TypedefObject::ObjectVector& objects)
 {
 	// Camera
 	CHL::Vec4 vEye;
@@ -163,7 +163,7 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
-	if (!this->CameraKeyID.empty())
+	if(!this->SceneInfo.CameraKeyID.empty())
 	{
 		TypedefObject::ObjectVector::const_iterator cameraIter;
 		cameraIter = std::find_if(objects.begin(), objects.end(),
@@ -171,7 +171,7 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 							{
 								auto idIter = obj.find(Keys::ID);
 								std::string ID = GenericObj<std::string>::GetValue(idIter->second);
-								return (ID == this->CameraKeyID);
+								return (ID == this->SceneInfo.CameraKeyID);
 							}); // Find Camera
 		if(cameraIter != objects.cend()) // if camera found
 		{
@@ -185,7 +185,8 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 		}
 	}
 
-	this->CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	this->SceneInfo.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	this->SceneInfo.Eye = vEye;
 
 	// Prespective
 	TypedefObject::ObjectVector::const_iterator prespectiveIter = objects.cend();
@@ -195,14 +196,14 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 	double nearZ;
 	double farZ;
 
-	if (!this->PrespectiveKeyID.empty())
+	if(!this->SceneInfo.PrespectiveKeyID.empty())
 	{
 		prespectiveIter = std::find_if(objects.begin(), objects.end(),
 							[this](const TypedefObject::ObjectInfo& obj)
 							{
 								auto idIter = obj.find(Keys::ID);
 								std::string ID = GenericObj<std::string>::GetValue(idIter->second);
-								return (ID == this->PrespectiveKeyID);
+								return (ID == this->SceneInfo.PrespectiveKeyID);
 							}); // Find Prespectiveera
 	}
 
@@ -224,35 +225,16 @@ void GraphicManager::SetupCameraNPrespective(TypedefObject::ObjectVector& object
 		farZ = 5000.0;
 	}
 
-	this->PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
+	this->SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 }
 void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 {
-	CHL::Vec4 vEye;
-	vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0;
-
-	TypedefObject::ObjectVector::const_iterator cameraIter;
-	if (!this->CameraKeyID.empty())
-	{
-		TypedefObject::ObjectVector::const_iterator cameraIter;
-		cameraIter = std::find_if(objects.begin(), objects.end(),
-							[this](const TypedefObject::ObjectInfo& obj)
-							{
-								auto idIter = obj.find(Keys::ID);
-								std::string ID = GenericObj<std::string>::GetValue(idIter->second);
-								return (ID == this->CameraKeyID);
-							}); // Find Camera
-		if(cameraIter != objects.cend()) // if camera found
-		{
-			TypedefObject::ObjectInfo camera = *cameraIter;
-			vEye = GenericObj<CHL::Vec4>::GetValue(camera[Keys::Camera::EYE]);
-		}
-	}
+	CHL::Vec4 vEye = this->SceneInfo.Eye;
 
 	cBuffer::cbInfo cbInfo;
 	
-	XMFLOAT4X4 view4x4 = CHL::Convert4x4(this->CamerMatrix);;
-	XMFLOAT4X4 proj4x4 = CHL::Convert4x4(this->PrespectiveMatrix);;
+	XMFLOAT4X4 view4x4 = CHL::Convert4x4(this->SceneInfo.CamerMatrix);;
+	XMFLOAT4X4 proj4x4 = CHL::Convert4x4(this->SceneInfo.PrespectiveMatrix);;
 
 	cbInfo.view = XMLoadFloat4x4(&view4x4);
 	cbInfo.proj = XMLoadFloat4x4(&proj4x4);
@@ -267,7 +249,7 @@ void GraphicManager::SetupConstantBuffer(TypedefObject::ObjectVector& objects)
 void GraphicManager::ClearScreen(TypedefObject::ObjectVector& objects)
 {
 	// Clear the back buffer 
-	float ClearColor[4] = { (float)this->ClearColour(0), (float)this->ClearColour(1), (float)this->ClearColour(2), 1.0f }; // red,green,blue,alpha
+	float ClearColor[4] = {(float)this->SceneInfo.ClearColour(0), (float)this->SceneInfo.ClearColour(1), (float)this->SceneInfo.ClearColour(2), 1.0f}; // red,green,blue,alpha
 	this->D3DStuff.pImmediateContext->ClearRenderTargetView( this->D3DStuff.pRenderTargetView, ClearColor );
 	this->D3DStuff.pImmediateContext->ClearDepthStencilView( this->D3DStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
@@ -363,15 +345,6 @@ void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
 const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
 {
 	return this->ScreenCaptures;
-}
-
-void GraphicManager::SetCamera(std::string key)
-{
-	this->CameraKeyID = key;
-}
-void GraphicManager::SetPrespective(std::string key)
-{
-	this->PrespectiveKeyID = key;
 }
 
 void GraphicManager::InitDevice()

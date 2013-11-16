@@ -27,6 +27,9 @@
     <FxCompile Include="VS_0_Regular.fx">
       <Filter>VS</Filter>
     </FxCompile>
+    <FxCompile Include="PS_4_CubeMap.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="HLSL_Light.fx" />

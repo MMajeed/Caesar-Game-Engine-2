@@ -26,23 +26,12 @@ public:
 	virtual void Shutdown();
 	
 	virtual void SetupLight(TypedefObject::ObjectVector& objects);
-	virtual void SetupCameraNPrespective(TypedefObject::ObjectVector& objects);
+	virtual void SetupScene(TypedefObject::ObjectVector& objects);
 	virtual void SetupConstantBuffer(TypedefObject::ObjectVector& objects);
 	virtual void ClearScreen(TypedefObject::ObjectVector& objects);
 	virtual void DrawObjects(TypedefObject::ObjectVector& objects);
 	virtual void Present(TypedefObject::ObjectVector& objects);
 
-	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
-	const std::hash_map<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
-
-	void InsertTexture(std::shared_ptr<Texture> obj);
-	const std::hash_map<std::string, std::shared_ptr<Texture>> AllTexture();
-
-	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
-	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
-
-	void SetCamera(std::string key);
-	void SetPrespective(std::string key);
 	// DirectX stuff
 	struct
 	{
@@ -63,16 +52,31 @@ public:
 
 
 	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
-	std::hash_map<std::string, std::shared_ptr<Texture>> textures;
-	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
-	std::string CameraKeyID;
-	std::string PrespectiveKeyID;
-	virtual void InitDevice();
-public:
-	CHL::Vec4 ClearColour;
+	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
+	const std::hash_map<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
 
-	CHL::Matrix4x4 CamerMatrix;
-	CHL::Matrix4x4 PrespectiveMatrix;
+	std::hash_map<std::string, std::shared_ptr<Texture>> textures;
+	void InsertTexture(std::shared_ptr<Texture> obj);
+	const std::hash_map<std::string, std::shared_ptr<Texture>> AllTexture();
+
+	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
+	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
+	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
+	
+	virtual void InitDevice();
+
+
+	struct 
+	{
+		CHL::Vec4 ClearColour;
+		CHL::Vec4 Eye;
+		CHL::Matrix4x4 CamerMatrix;
+		CHL::Matrix4x4 PrespectiveMatrix;
+
+		std::string CameraKeyID;
+		std::string PrespectiveKeyID;
+	} SceneInfo;
+
 
 	friend CHL::Singelton<GraphicManager>;
 };

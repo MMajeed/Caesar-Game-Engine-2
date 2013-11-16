@@ -4,22 +4,26 @@
 #include <InfoManager.h>
 #include <Keys.h>
 
-void FuncInsert(std::hash_map<std::string, Info>::const_iterator startIter,
-				std::hash_map<std::string, Info>::const_iterator endIter,
-					   std::size_t start,
-					   std::vector<std::hash_map<std::string, std::shared_ptr<Object>>>* convertedVec)
+struct FuncInsertParam
 {
-	int i = start;
-	for(auto objIter = startIter;
-		objIter != endIter;
+	std::hash_map<std::string, Info>::const_iterator startIter;
+	std::hash_map<std::string, Info>::const_iterator endIter;
+	std::size_t start;
+	std::vector<std::hash_map<std::string, std::shared_ptr<Object>>>* convertedVec;
+};
+void FuncInsert(FuncInsertParam param)
+{
+	int i = param.start;
+	for(auto objIter = param.startIter;
+		objIter != param.endIter;
 		++objIter)
 	{
-		(*convertedVec)[i].reserve(objIter->second.info.size());
+		(*param.convertedVec)[i].reserve(objIter->second.info.size());
 		for(auto infoIter = objIter->second.info.cbegin();
 			infoIter != objIter->second.info.cend();
 			++infoIter)
 		{
-			(*convertedVec)[i][infoIter->first] = infoIter->second->Clone();
+			(*param.convertedVec)[i][infoIter->first] = infoIter->second->Clone();
 		}
 		++i;
 	}
@@ -62,8 +66,14 @@ std::vector<std::hash_map<std::string, std::shared_ptr<Object>>> ObjectManagerOu
 		std::advance(endIter, moveForward);
 		currentEndLoc = end;
 
+		FuncInsertParam param;
+		param.startIter = startIter;
+		param.endIter = endIter;
+		param.start = start;
+		param.convertedVec = &convertedVec;
+
 		std::shared_ptr<std::thread> thread = 
-			std::shared_ptr<std::thread>(new std::thread(std::bind(&FuncInsert, startIter, endIter, start, &convertedVec)));
+			std::shared_ptr<std::thread>(new std::thread(std::bind(&FuncInsert, param)));
 		
 		threads.push_back(thread);
 	}

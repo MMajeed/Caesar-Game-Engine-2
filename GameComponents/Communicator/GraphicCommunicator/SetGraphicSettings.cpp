@@ -9,9 +9,9 @@ ClearScreenMessage::ClearScreenMessage(const CHL::Vec4& input)
 
 Message::Status ClearScreenMessage::Work()
 {
-	GraphicManager::GetInstance().ClearColour(0) = this->colour(0);
-	GraphicManager::GetInstance().ClearColour(1) = this->colour(1);
-	GraphicManager::GetInstance().ClearColour(2) = this->colour(2);
+	GraphicManager::GetInstance().SceneInfo.ClearColour(0) = this->colour(0);
+	GraphicManager::GetInstance().SceneInfo.ClearColour(1) = this->colour(1);
+	GraphicManager::GetInstance().SceneInfo.ClearColour(2) = this->colour(2);
 
 	return Message::Status::Complete;
 }
@@ -23,7 +23,7 @@ SetCameraIDMessage::SetCameraIDMessage(const std::string& input)
 
 Message::Status SetCameraIDMessage::Work()
 {
-	GraphicManager::GetInstance().SetCamera(this->id);
+	GraphicManager::GetInstance().SceneInfo.CameraKeyID = this->id;
 	return Message::Status::Complete;
 }
 
@@ -34,6 +34,6 @@ SetPrespectiveIDMessage::SetPrespectiveIDMessage(const std::string& input)
 
 Message::Status SetPrespectiveIDMessage::Work()
 {
-	GraphicManager::GetInstance().SetPrespective(this->id);
+	GraphicManager::GetInstance().SceneInfo.PrespectiveKeyID = this->id;
 	return Message::Status::Complete;
 }

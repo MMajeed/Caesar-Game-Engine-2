@@ -104,6 +104,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
     </FxCompile>
+    <FxCompile Include="PS_4_CubeMap.fx">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.1</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">PS</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.1</ShaderModel>
+    </FxCompile>
     <FxCompile Include="PS_5_SkyMap.fx">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>

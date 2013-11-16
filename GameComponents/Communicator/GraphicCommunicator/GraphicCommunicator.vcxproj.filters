@@ -17,8 +17,8 @@
     <ClInclude Include="OnResize.h">
       <Filter>OnResize</Filter>
     </ClInclude>
-    <ClInclude Include="TakeBasicScreenShot.h">
-      <Filter>TakeBasicScreenShot</Filter>
+    <ClInclude Include="TakeScreenShot.h">
+      <Filter>TakeScreenShot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -37,8 +37,8 @@
     <ClCompile Include="OnResize.cpp">
       <Filter>OnResize</Filter>
     </ClCompile>
-    <ClCompile Include="TakeBasicScreenShot.cpp">
-      <Filter>TakeBasicScreenShot</Filter>
+    <ClCompile Include="TakeScreenShot.cpp">
+      <Filter>TakeScreenShot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +57,7 @@
     <Filter Include="OnResize">
       <UniqueIdentifier>{e8a764f3-a017-40aa-8466-998177228759}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TakeBasicScreenShot">
+    <Filter Include="TakeScreenShot">
       <UniqueIdentifier>{b5254899-5d92-4dba-89f6-c6c4ef75daa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

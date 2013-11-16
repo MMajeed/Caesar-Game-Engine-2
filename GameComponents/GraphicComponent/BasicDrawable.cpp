@@ -77,8 +77,8 @@ void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& obj
 	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(location, rotation, scale);
 
 	XMFLOAT4X4 worldMatrix = CHL::Convert4x4(mObjectFinal);
-	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().PrespectiveMatrix);
-	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(GraphicManager::GetInstance().CamerMatrix);
+	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.PrespectiveMatrix);
+	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.CamerMatrix);
 	
 	XMMATRIX finalMatrix = XMLoadFloat4x4(&prespectiveMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&worldMatrix);
 
@@ -231,72 +231,29 @@ std::shared_ptr<Drawable> BasicDrawable::clone() const
 }
 
 void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
-							CHL::Vec4& location,
-							CHL::Vec4& rotation,
-							CHL::Vec4& scale,
-							CHL::Vec4& diffuse,
-							CHL::Vec4& ambient,
-							CHL::Vec4& spec)
-{	
-	TypedefObject::ObjectInfo::const_iterator iterKey;
-	iterKey = object.find(Keys::ObjectInfo::LOCATION);
-	if(iterKey != object.end())
-	{
-		location = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
-	}
-	else
-	{
-		location(0) = 0.0f; location(1) = 0.0f; location(2) = 0.0f; location(3) = 1.0f; 
-	}
+	CHL::Vec4& location,
+	CHL::Vec4& rotation,
+	CHL::Vec4& scale,
+	CHL::Vec4& diffuse,
+	CHL::Vec4& ambient,
+	CHL::Vec4& spec)
+{
+	location(0) = 0.0f; location(1) = 0.0f; location(2) = 0.0f; location(3) = 1.0f;
+	rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f;
+	scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f;
+	diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f;
+	ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f;
+	spec(0) = 1.0f; spec(1) = 1.0f; spec(2) = 1.0f; spec(3) = 1.0f;
 
-	
-	iterKey = object.find(Keys::ObjectInfo::ROTATION);
-	if(iterKey != object.end())
+	for(auto objIter = object.cbegin();
+		objIter != object.cend();
+		++objIter)
 	{
-		rotation = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
-	}
-	else
-	{
-		rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f; 
-	}
-
-	iterKey = object.find(Keys::ObjectInfo::SCALE);
-	if(iterKey != object.end())
-	{
-		scale = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
-	}
-	else
-	{
-		scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f; 
-	}
-
-	iterKey = object.find(Keys::ObjectInfo::DIFFUSE);
-	if(iterKey != object.end())
-	{
-		diffuse = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
-	}
-	else
-	{
-		diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f; 
-	}
-
-	iterKey = object.find(Keys::ObjectInfo::AMBIENT);
-	if(iterKey != object.end())
-	{
-		ambient = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
-	}
-	else
-	{
-		ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f; 
-	}
-
-	iterKey = object.find(Keys::ObjectInfo::SPECULAR);
-	if(iterKey != object.end())
-	{
-		spec = GenericObj<CHL::Vec4>::GetValue(iterKey->second);
-	}
-	else
-	{
-		spec(0) = 1.0f; spec(1) = 1.0f; spec(2) = 1.0f; spec(3) = 1.0f; 
+		     if(objIter->first == Keys::ObjectInfo::LOCATION)	{ location = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
+		else if(objIter->first == Keys::ObjectInfo::ROTATION)	{ rotation = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
+		else if(objIter->first == Keys::ObjectInfo::SCALE)		{ scale = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
+		else if(objIter->first == Keys::ObjectInfo::DIFFUSE)	{ diffuse = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
+		else if(objIter->first == Keys::ObjectInfo::AMBIENT)	{ ambient = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
+		else if(objIter->first == Keys::ObjectInfo::SPECULAR)	{ spec = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
 	}
 }

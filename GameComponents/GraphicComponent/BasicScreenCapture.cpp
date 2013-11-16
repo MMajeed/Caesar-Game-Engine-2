@@ -102,24 +102,33 @@ void BasicScreenCapture::Update(double realTime, double deltaTime)
 {
 
 }
-void BasicScreenCapture::Snap(TypedefObject::ObjectVector& objects, std::string cameraID, std::string prespectiveID)
+void BasicScreenCapture::Snap(TypedefObject::ObjectVector& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	std::string currentCameraID = graphic.CameraKeyID;
-	std::string currentPrespectiveID = graphic.PrespectiveKeyID;
-	
-	if(!cameraID.empty()){	graphic.CameraKeyID = cameraID;	}
-	if(!prespectiveID.empty()){	graphic.PrespectiveKeyID = prespectiveID;	}
+	auto currentSene = graphic.SceneInfo;
 
+	this->SetupScene(objects);
 	this->SetupSnapShot(objects);
-	this->TakeSnapShot(objects);
+	this->TakeScreenSnapShot(objects);
 	this->CleanupSnapShot(objects);
 	
-	graphic.CameraKeyID = currentCameraID;
-	graphic.PrespectiveKeyID = currentPrespectiveID;
+	graphic.SceneInfo = currentSene;
 }
 
+void BasicScreenCapture::SetupScene(TypedefObject::ObjectVector& objects)
+{
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
+	graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
+	CHL::Vec4 eye; 
+	eye(0) = this->D3DInfo.cameraMatrix[0][3];
+	eye(0) = this->D3DInfo.cameraMatrix[1][3];
+	eye(0) = this->D3DInfo.cameraMatrix[2][3];
+	eye(0) = this->D3DInfo.cameraMatrix[3][3];
+	graphic.SceneInfo.Eye = eye;
+}
 void BasicScreenCapture::SetupSnapShot(TypedefObject::ObjectVector& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
@@ -134,12 +143,11 @@ void BasicScreenCapture::SetupSnapShot(TypedefObject::ObjectVector& objects)
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->D3DInfo.pColorMapRTV, black);
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void BasicScreenCapture::TakeSnapShot(TypedefObject::ObjectVector& objects)
+void BasicScreenCapture::TakeScreenSnapShot(TypedefObject::ObjectVector& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	graphic.SetupLight(objects);
-	graphic.SetupCameraNPrespective(objects);
 	graphic.SetupConstantBuffer(objects);
 	graphic.DrawObjects(objects);
 

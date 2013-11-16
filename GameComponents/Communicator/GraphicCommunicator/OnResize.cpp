@@ -11,8 +11,7 @@ Message::Status OnResize::Work()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	//if (graphic.D3DStuff.IsInitialized == true)
-	if(false)
+	if (graphic.D3DStuff.IsInitialized == true)
 	{
 		graphic.D3DStuff.pRenderTargetView->Release();
 		graphic.D3DStuff.pDepthStencilBuffer->Release();

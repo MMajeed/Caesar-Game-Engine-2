@@ -42,6 +42,9 @@
     <ClInclude Include="DepthScreenCapture.h">
       <Filter>ScreenCapture\DepthScreenCapture</Filter>
     </ClInclude>
+    <ClInclude Include="CubeScreenCapture.h">
+      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="DepthScreenCapture.cpp">
       <Filter>ScreenCapture\DepthScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScreeCapture.cpp">
+      <Filter>ScreenCapture\CubeScreenCapture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +118,9 @@
     </Filter>
     <Filter Include="ScreenCapture\DepthScreenCapture">
       <UniqueIdentifier>{fed37b2c-94a3-4884-8f65-d127d3b76693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\CubeScreenCapture">
+      <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
