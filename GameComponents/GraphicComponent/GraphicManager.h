@@ -13,6 +13,7 @@
 #include "Drawable.h"
 #include "Texture.h"
 #include "ScreenCapture.h"
+#include "ContinuousScreenShot.h"
 #include "TypedefObject.h"
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
@@ -25,6 +26,7 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
+	virtual void RunAllCapture(TypedefObject::ObjectVector& objects);
 	virtual void SetupLight(TypedefObject::ObjectVector& objects);
 	virtual void SetupScene(TypedefObject::ObjectVector& objects);
 	virtual void SetupConstantBuffer(TypedefObject::ObjectVector& objects);
@@ -62,6 +64,11 @@ public:
 	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
 	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
 	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
+	
+	std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> ContinuousScreenCaptures;
+	void InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj);
+	const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> AllContinuousScreenCapture();
+
 	
 	virtual void InitDevice();
 

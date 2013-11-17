@@ -41,6 +41,7 @@ void GraphicManager::Work()
 {
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
+	this->RunAllCapture(objects);
 	this->SetupLight(objects);
 	this->SetupScene(objects);
 	this->SetupConstantBuffer(objects);
@@ -54,6 +55,15 @@ void GraphicManager::Shutdown()
 
 }
 
+void GraphicManager::RunAllCapture(TypedefObject::ObjectVector& objects)
+{
+	for(auto iter = this->ContinuousScreenCaptures.begin();
+		iter != this->ContinuousScreenCaptures.end();
+		++iter)
+	{
+		iter->second->Snap(objects);
+	}
+}
 void GraphicManager::SetupLight(TypedefObject::ObjectVector& objects)
 {
 	std::vector<cBuffer::CLightDesc> vecLightBuffer;
@@ -320,51 +330,24 @@ void GraphicManager::Present(TypedefObject::ObjectVector& objects)
 	this->D3DStuff.pSwapChain->Present( 0, 0 );
 }
 
-void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
-{
-	this->objectDrawables[obj->ID] = obj;
-}
-const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
-{
-	return this->objectDrawables;
-}
-
-void GraphicManager::InsertTexture(std::shared_ptr<Texture> obj)
-{
-	this->textures[obj->ID] = obj;
-}
-const std::hash_map<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
-{
-	return this->textures;
-}
-
-void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
-{
-	this->ScreenCaptures[obj->ID] = obj;
-}
-const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
-{
-	return this->ScreenCaptures;
-}
-
 void GraphicManager::InitDevice()
 {
 	TypedefObject::ObjectVector objects = ObjectManagerOutput::GetAllObjects();
 
 	TypedefObject::ObjectVector::const_iterator windowInfoIter;
 	windowInfoIter = std::find_if(objects.begin(), objects.end(),
-						[](const TypedefObject::ObjectInfo& obj)
-						{
-							auto classTypeIter = obj.find(Keys::Class);
-							if(classTypeIter != obj.end())
-							{
-								std::string classID = GenericObj<std::string>::GetValue(classTypeIter->second);
-								return (classID == Keys::ClassType::WindowInfo); 
-							}
-							else
-								return false;
-						});
-		
+		[](const TypedefObject::ObjectInfo& obj)
+	{
+		auto classTypeIter = obj.find(Keys::Class);
+		if(classTypeIter != obj.end())
+		{
+			std::string classID = GenericObj<std::string>::GetValue(classTypeIter->second);
+			return (classID == Keys::ClassType::WindowInfo);
+		}
+		else
+			return false;
+	});
+
 	if(windowInfoIter == objects.cend())
 	{
 		throw std::exception("Failed to find windows info");
@@ -388,7 +371,7 @@ void GraphicManager::InitDevice()
 		D3D_DRIVER_TYPE_WARP,
 		D3D_DRIVER_TYPE_REFERENCE,
 	};
-	UINT numDriverTypes = ARRAYSIZE( driverTypes );
+	UINT numDriverTypes = ARRAYSIZE(driverTypes);
 
 	D3D_FEATURE_LEVEL featureLevels[] =
 	{
@@ -396,10 +379,10 @@ void GraphicManager::InitDevice()
 		D3D_FEATURE_LEVEL_10_1,
 		D3D_FEATURE_LEVEL_10_0,
 	};
-	UINT numFeatureLevels = ARRAYSIZE( featureLevels );
+	UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 
 	DXGI_SWAP_CHAIN_DESC sd;
-	ZeroMemory( &sd, sizeof( sd ) );
+	ZeroMemory(&sd, sizeof(sd));
 	sd.BufferCount = 1;
 	sd.BufferDesc.Width = Width;
 	sd.BufferDesc.Height = Height;
@@ -412,26 +395,26 @@ void GraphicManager::InitDevice()
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = TRUE;
 
-	for( UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++ )
+	for(UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
 	{
 		this->D3DStuff.driverType = driverTypes[driverTypeIndex];
-		hr = D3D11CreateDeviceAndSwapChain( NULL, this->D3DStuff.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
-			D3D11_SDK_VERSION, &sd, &this->D3DStuff.pSwapChain, &this->D3DStuff.pd3dDevice, &this->D3DStuff.featureLevel, &this->D3DStuff.pImmediateContext );
-		if( SUCCEEDED( hr ) )
+		hr = D3D11CreateDeviceAndSwapChain(NULL, this->D3DStuff.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
+			D3D11_SDK_VERSION, &sd, &this->D3DStuff.pSwapChain, &this->D3DStuff.pd3dDevice, &this->D3DStuff.featureLevel, &this->D3DStuff.pImmediateContext);
+		if(SUCCEEDED(hr))
 			break;
 	}
-	if( FAILED( hr ) )
+	if(FAILED(hr))
 		throw std::exception("Failed at creating device and SwapChain");
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
-	hr = this->D3DStuff.pSwapChain->GetBuffer( 0, __uuidof( ID3D11Texture2D ), ( LPVOID* )&pBackBuffer );
-	if( FAILED( hr ) )
+	hr = this->D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+	if(FAILED(hr))
 		throw std::exception("Failed at creating back buffer");
 
-	hr = this->D3DStuff.pd3dDevice->CreateRenderTargetView( pBackBuffer, NULL, &this->D3DStuff.pRenderTargetView );
+	hr = this->D3DStuff.pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &this->D3DStuff.pRenderTargetView);
 	pBackBuffer->Release();
-	if( FAILED( hr ) )
+	if(FAILED(hr))
 		throw std::exception("Failed at creating Render Target view");
 
 	// Set up depth & stencil buffer
@@ -486,7 +469,7 @@ void GraphicManager::InitDevice()
 
 	// Create the depth stencil state.
 	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &this->D3DStuff.pDepthStencilState);
-	if(FAILED(hr)) 
+	if(FAILED(hr))
 	{
 		throw std::exception("Failed at creating Dept stencil State");
 	}
@@ -510,8 +493,8 @@ void GraphicManager::InitDevice()
 		throw std::exception("Failed at creating depth stencil view");
 	}
 
-	this->D3DStuff.pImmediateContext->OMSetRenderTargets( 1, &this->D3DStuff.pRenderTargetView, this->D3DStuff.pDepthStencilView );
-	
+	this->D3DStuff.pImmediateContext->OMSetRenderTargets(1, &this->D3DStuff.pRenderTargetView, this->D3DStuff.pDepthStencilView);
+
 	// Setup the viewport
 	this->D3DStuff.vp.Width = (FLOAT)Width;
 	this->D3DStuff.vp.Height = (FLOAT)Height;
@@ -519,11 +502,49 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.vp.MaxDepth = 1.0f;
 	this->D3DStuff.vp.TopLeftX = 0;
 	this->D3DStuff.vp.TopLeftY = 0;
-	this->D3DStuff.pImmediateContext->RSSetViewports( 1, &(this->D3DStuff.vp) );
+	this->D3DStuff.pImmediateContext->RSSetViewports(1, &(this->D3DStuff.vp));
 
 	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
 
 	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
 
 	this->D3DStuff.IsInitialized = true;
+}
+
+
+void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
+{
+	this->objectDrawables[obj->ID] = obj;
+}
+const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
+{
+	return this->objectDrawables;
+}
+
+
+void GraphicManager::InsertTexture(std::shared_ptr<Texture> obj)
+{
+	this->textures[obj->ID] = obj;
+}
+const std::hash_map<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
+{
+	return this->textures;
+}
+
+void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
+{
+	this->ScreenCaptures[obj->ID] = obj;
+}
+const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
+{
+	return this->ScreenCaptures;
+}
+
+void GraphicManager::InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj)
+{
+	this->ContinuousScreenCaptures[obj->ID] = obj;
+}
+const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> GraphicManager::AllContinuousScreenCapture()
+{
+	return this->ContinuousScreenCaptures;
 }

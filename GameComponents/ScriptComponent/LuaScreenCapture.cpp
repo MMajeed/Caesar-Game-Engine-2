@@ -57,7 +57,7 @@ LuaBasicTexture LuaScreenCapture::TakeScreenSnapShot(luabind::object const& tabl
 	msg->WaitTillProcccesed();
 
 	returnValue.ID = msg->newTextureID;
-
+	
 	return returnValue;
 }
 
@@ -108,9 +108,7 @@ LuaBasicTexture LuaScreenCapture::TakeDepthSnapShot(luabind::object const& table
 		new TakeDepthScreenShot(width, height, camera, prespective));
 
 	GraphicCommunicator::SubmitMessage(msg);
-
 	msg->WaitTillProcccesed();
-
 	returnValue.ID = msg->newTextureID;
 
 	return returnValue;
@@ -141,9 +139,7 @@ LuaBasicTexture LuaScreenCapture::TakeCubeSnapShot(luabind::object const& table)
 	std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, eye));
 
 	GraphicCommunicator::SubmitMessage(msg);
-
 	msg->WaitTillProcccesed();
-
 	returnValue.ID = msg->newTextureID;
 
 	return returnValue;

@@ -26,7 +26,10 @@ void BasicTexture::SettupTexture(int slot)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
-	pImmediateContext->PSSetShaderResources(slot, 1, &(this->D3DInfo.pTexture));
+	if(this->D3DInfo.pTexture != 0)
+	{
+		pImmediateContext->PSSetShaderResources(slot, 1, &(this->D3DInfo.pTexture));
+	}
 }
 void BasicTexture::CleanupTexture(int slot)
 {
@@ -53,6 +56,13 @@ std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID, ID
 {
 	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));
 	newTexture->D3DInfo.pTexture = texture;
+	newTexture->Init();
+
+	return newTexture;
+}
+std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID)
+{
+	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));
 	newTexture->Init();
 
 	return newTexture;

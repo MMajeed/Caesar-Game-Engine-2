@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="LuaContinuousScreenCapture.h" />
     <ClInclude Include="LuaScreenCapture.h" />
     <ClInclude Include="LuaError.h" />
     <ClInclude Include="Linker.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="LuaRegisterAll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="LuaContinuousScreenCapture.cpp" />
     <ClCompile Include="LuaScreenCapture.cpp" />
     <ClCompile Include="LuaBasicDrawableObject.cpp" />
     <ClCompile Include="LuaCamera.cpp" />

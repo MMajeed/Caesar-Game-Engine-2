@@ -88,6 +88,9 @@
   <ItemGroup>
     <ClInclude Include="BasicDrawableConfig.h" />
     <ClInclude Include="AddBasicTexture.h" />
+    <ClInclude Include="ContinuousBasicScreenShotConfig.h" />
+    <ClInclude Include="ContinuousCubeScreenShotConfig.h" />
+    <ClInclude Include="ContinuousDepthScreenShotConfig.h" />
     <ClInclude Include="TakeScreenShot.h" />
     <ClInclude Include="OnResize.h" />
     <ClInclude Include="SetGraphicSettings.h" />
@@ -97,6 +100,9 @@
   <ItemGroup>
     <ClCompile Include="BasicDrawableConfig.cpp" />
     <ClCompile Include="AddBasicTexture.cpp" />
+    <ClCompile Include="ContinuousBasicScreenShotConfig.cpp" />
+    <ClCompile Include="ContinuousCubeScreenShotConfig.cpp" />
+    <ClCompile Include="ContinuousDepthScreenShotConfig.cpp" />
     <ClCompile Include="TakeScreenShot.cpp" />
     <ClCompile Include="OnResize.cpp" />
     <ClCompile Include="SetGraphicSettings.cpp" />

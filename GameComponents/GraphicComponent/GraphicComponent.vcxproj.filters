@@ -45,6 +45,18 @@
     <ClInclude Include="CubeScreenCapture.h">
       <Filter>ScreenCapture\CubeScreenCapture</Filter>
     </ClInclude>
+    <ClInclude Include="ContinuousScreenShot.h">
+      <Filter>ContinuousScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousBasicScreenShot.h">
+      <Filter>ContinuousScreenShot\ContinuousBasicScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousDepthScreenShot.h">
+      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousCubeScreenShot.h">
+      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -71,6 +83,15 @@
     </ClCompile>
     <ClCompile Include="CubeScreeCapture.cpp">
       <Filter>ScreenCapture\CubeScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousBasicScreenShot.cpp">
+      <Filter>ContinuousScreenShot\ContinuousBasicScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousDepthScreenShot.cpp">
+      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousCubeScreenShot.cpp">
+      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +142,18 @@
     </Filter>
     <Filter Include="ScreenCapture\CubeScreenCapture">
       <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot">
+      <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousBasicScreenShot">
+      <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousDepthScreenShot">
+      <UniqueIdentifier>{cd9f9fbb-8561-4930-b984-a51053aad11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousCubeScreenShot">
+      <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

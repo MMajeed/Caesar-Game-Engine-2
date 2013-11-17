@@ -1,6 +1,6 @@
 require("camera")
 require("SkyBox")
---require("LightSetup")
+require("LightSetup")
 
 ClearScreen(0.5, 0.5, 0.5);
 
@@ -45,7 +45,7 @@ for i = 1, 10, 1 do
                                  [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
 end
 
-for i = 1, 10000, 1 do
+for i = 1, 10, 1 do
     local x = ((i % 10) - 5) * 4;
     local y = 2;
     local z = -20;
@@ -77,11 +77,7 @@ OnKeyDown(string.byte("A"),
     end
 );
 
-OnKeyDown(string.byte("S"), 
-    function() 
-        myTexture = TakeCubeScreenShot({[Keys["ScreenCapture"]["Width"]]    = 1024,
-                                        [Keys["ScreenCapture"]["Height"]]   = 1024,
-                                        [Keys["ScreenCapture"]["Eye"]]      = mirrorSphere.Location, });
-        mirrorSphere:SetTextureAndSlot(myTexture, 5);
-    end
-);
+myTexture = CubeScreenCapture({[Keys["ScreenCapture"]["Width"]]    = 1024,
+                               [Keys["ScreenCapture"]["Height"]]   = 1024,
+                               [Keys["ScreenCapture"]["Eye"]]      = mirrorSphere.Location, });
+mirrorSphere:SetTextureAndSlot(myTexture:GetTexture(), 5);

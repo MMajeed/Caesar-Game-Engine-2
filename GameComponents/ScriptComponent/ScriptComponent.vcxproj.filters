@@ -54,6 +54,9 @@
     <ClInclude Include="LuaScreenCapture.h">
       <Filter>Lua Class/Function\LuaScreenCapture</Filter>
     </ClInclude>
+    <ClInclude Include="LuaContinuousScreenCapture.h">
+      <Filter>Lua Class/Function\LuaContinuousScreenCapture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaManager.cpp" />
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="LuaScreenCapture.cpp">
       <Filter>Lua Class/Function\LuaScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaContinuousScreenCapture.cpp">
+      <Filter>Lua Class/Function\LuaContinuousScreenCapture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +160,9 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaScreenCapture">
       <UniqueIdentifier>{bae8b22f-6f8f-4a48-aab5-0c19c0f3f28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaContinuousScreenCapture">
+      <UniqueIdentifier>{a919e6c6-e946-43f4-a988-e9aba7bd9fc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

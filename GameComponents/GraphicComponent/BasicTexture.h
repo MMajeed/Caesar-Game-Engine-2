@@ -18,6 +18,7 @@ public:
 	virtual void SettupTexture(int slot);
 	virtual void CleanupTexture(int slot);
 	
+	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID);
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, const std::string& fileName);
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, ID3D11ShaderResourceView*& fileName);
 

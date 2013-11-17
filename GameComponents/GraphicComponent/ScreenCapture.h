@@ -24,10 +24,9 @@ public:
 		this->pScreenTexture->AddRef();
 		return this->pScreenTexture;
 	}
+	ID3D11ShaderResourceView*	pScreenTexture;
 	
 	const std::string ID;
-protected:
-	ID3D11ShaderResourceView*	pScreenTexture;
 };
 
 

@@ -14,6 +14,7 @@
 #include "LuaBasicTexture.h"
 #include "LuaLight.h"
 #include "LuaScreenCapture.h"
+#include "LuaContinuousScreenCapture.h"
 
 void LuaRegisterAll(lua_State *lua)
 {
@@ -29,6 +30,7 @@ void LuaRegisterAll(lua_State *lua)
 	LuaBasicTexture::RegisterAllLuaFunction(lua);
 	LuaLight::RegisterAllLuaFunction(lua);
 	LuaScreenCapture::RegisterAllLuaFunction(lua);
+	LuaContinuousScreenCapture::RegisterAllLuaFunction(lua);
 }
 
 
