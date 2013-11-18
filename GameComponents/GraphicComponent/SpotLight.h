@@ -2,15 +2,12 @@
 #define __SPOTLIGHT__
 
 #include <Singleton.h>
-#include <D3D11.h>
-#include <Matrix.h>
-#include "TypedefObject.h"
 #include "Buffers.h"
+#include <SpotLightINFO.h>
 
-class SpotLight : public CHL::Singelton<SpotLight>
+namespace SpotLight
 {
-public:
-	virtual cBuffer::CLightDesc GetLightDesc(TypedefObject::ObjectInfo& lightInfo);
-};
+	cBuffer::CLightDesc GetLightDesc(std::shared_ptr<SpotLightINFO> lightInfo);
+}
 
 #endif //__SPOTLIGHT__

@@ -4,6 +4,7 @@
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 #include "LuaMath.h"
+#include "CameraINFO.h"
 
 class LuaCamera
 {
@@ -32,6 +33,9 @@ public:
 	double GetYaw();
 
 	std::string ID;
+
+	std::shared_ptr<CameraINFO> GetCameraINFO();
+
 	static void Register(lua_State *lua);
 
 	static inline void RegisterAllLuaFunction(lua_State *lua)

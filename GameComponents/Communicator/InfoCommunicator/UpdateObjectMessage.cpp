@@ -2,31 +2,19 @@
 
 #include <InfoManager.h>
 
-UpdateObjectMessage::UpdateObjectMessage(const std::string& inputObjectID, const std::string& inputInfoID,  std::shared_ptr<Object> inputInfo )
+UpdateObjectMessage::UpdateObjectMessage(const std::string& objectID, std::shared_ptr<INFO> info)
 {
-	this->objectID = inputObjectID;
-	this->infoID = inputInfoID;
-	this->info = inputInfo;
+	this->objectID = objectID;
+	this->info = info->Clone();
 }
 Message::Status UpdateObjectMessage::Work()
 {
 	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
 
-	InfoManager::GetInstance().UpdateObject(this->objectID, this->infoID, this->info);
+	auto iter = InfoManager::GetInstance().objects.find(this->objectID);
+	if(iter == InfoManager::GetInstance().objects.end()){ return Message::Status::Unvalid; }
 
-	return Message::Status::Complete;
-}
-
-DeleteInfoMessgae::DeleteInfoMessgae(const std::string& inputObjectID, const std::string& inputInfoID)
-{
-	this->objectID = inputObjectID;
-	this->infoID = inputInfoID;
-}
-Message::Status DeleteInfoMessgae::Work()
-{
-	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
-
-	InfoManager::GetInstance().DeleteInfo(this->objectID, this->infoID);
+	iter->second = this->info;
 
 	return Message::Status::Complete;
 }

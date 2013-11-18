@@ -15,6 +15,7 @@
 #include <Keys.h>
 #include <Converter.h>
 #include <Error.h>
+#include <WindowINFO.h>
 
 Window::Window()
 {
@@ -68,20 +69,13 @@ void Window::Init()
 	this->vInterfaces["Info Manager"] = InfoCommunicator::GetComponent();
 	this->vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
 
-	std::hash_map<std::string, std::shared_ptr<Object>> camera;
+	std::shared_ptr<WindowINFO> obj(new WindowINFO());
+	obj->Height = this->window.height;
+	obj->Width = this->window.width;
+	obj->HWND = this->window.hWnd;
 
-	camera[Keys::Class] = GenericObj<std::string>::CreateNew(Keys::ClassType::WindowInfo);
-	camera[Keys::Window::HEIGHT] = GenericObj<int>::CreateNew(this->window.height);
-	camera[Keys::Window::WIDTH] = GenericObj<int>::CreateNew(this->window.width);
-	camera[Keys::Window::HWND] = GenericObj<HWND>::CreateNew(this->window.hWnd);
-
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(camera));
-
-	InfoCommunicator::SubmitMessage(msg);	
-	InfoCommunicator::GetComponent()->ProccessMessages();
-
-	msg->WaitTillProcccesed();
-	this->window.windowsInfoID = msg->ID;
+	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
+	InfoCommunicator::SubmitMessage(msg);
 
 	for(auto iter = this->vInterfaces.begin();
 		iter != this->vInterfaces.end();
@@ -176,19 +170,13 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 			height = rect.bottom - rect.top;
 		}
 
-		std::shared_ptr<Object> widthObj = GenericObj<int>::CreateNew(width);
-		std::shared_ptr<UpdateObjectMessage> msg1(
-			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::WIDTH, widthObj));
-		InfoCommunicator::SubmitMessage(msg1);
+		std::shared_ptr<WindowINFO> obj(new WindowINFO());
+		obj->Height = height;
+		obj->Width = width;
+		obj->HWND = Window::GetInstance().window.hWnd;
 
-		std::shared_ptr<Object> heightObj = GenericObj<int>::CreateNew(height);
-		std::shared_ptr<UpdateObjectMessage> msg2(
-			new UpdateObjectMessage(Window::GetInstance().window.windowsInfoID, Keys::Window::HEIGHT, heightObj));
-		InfoCommunicator::SubmitMessage(msg2);
-
-		std::shared_ptr<OnResize> msg(new OnResize(width, height));
-		GraphicCommunicator::SubmitMessage(msg);
-
+		std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
+		InfoCommunicator::SubmitMessage(msg);
 		break;
 	}
 	case WM_TIMER:

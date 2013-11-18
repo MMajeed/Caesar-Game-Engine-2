@@ -3,11 +3,9 @@
 
 #include "Linker.h"
 #include <Interface.h>
-#include "Info.h"
-
 #include <Singleton.h>
-#include <vector>
-#include <memory>
+#include <INFO.h>
+#include <hash_map>
 
 class InfoManager : public Interface, public CHL::Singelton<InfoManager>
 {
@@ -19,13 +17,7 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 
-	void Insert(const Info& obj);
-	void UpdateObject(std::string ID, std::string infoID, std::shared_ptr<Object> info);
-	void DeleteInfo(std::string ID, std::string infoID);
-	const std::hash_map<std::string, Info>& AllObjects();
-	const Info& GetObjectInfo(std::string ID);
-protected:	
-	std::hash_map<std::string, Info> objects;
+	std::hash_map<std::string, SP_INFO> objects;
 
 	friend CHL::Singelton<InfoManager>;
 };

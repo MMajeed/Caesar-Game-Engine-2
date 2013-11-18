@@ -89,13 +89,13 @@
     <ClInclude Include="AddObjectMessage.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="InfoCommunicator.h" />
-    <ClInclude Include="ObjectManagerOutput.h" />
+    <ClInclude Include="GetObjectINFO.h" />
     <ClInclude Include="UpdateObjectMessage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddObjectMessage.cpp" />
     <ClCompile Include="InfoCommunicator.cpp" />
-    <ClCompile Include="ObjectManagerOutput.cpp" />
+    <ClCompile Include="GetObjectINFO.cpp" />
     <ClCompile Include="UpdateObjectMessage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

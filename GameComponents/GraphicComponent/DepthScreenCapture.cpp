@@ -71,7 +71,7 @@ void DepthScreenCapture::Update(double realTime, double deltaTime)
 {
 
 }
-void DepthScreenCapture::Snap(TypedefObject::ObjectVector& objects)
+void DepthScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -85,7 +85,7 @@ void DepthScreenCapture::Snap(TypedefObject::ObjectVector& objects)
 	graphic.SceneInfo = currentSene;
 }
 
-void DepthScreenCapture::SetupScene(TypedefObject::ObjectVector& objects)
+void DepthScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -98,7 +98,7 @@ void DepthScreenCapture::SetupScene(TypedefObject::ObjectVector& objects)
 	eye(0) = this->D3DInfo.cameraMatrix[3][3];
 	graphic.SceneInfo.Eye = eye;
 }
-void DepthScreenCapture::SetupSnapShot(TypedefObject::ObjectVector& objects)
+void DepthScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -111,7 +111,7 @@ void DepthScreenCapture::SetupSnapShot(TypedefObject::ObjectVector& objects)
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void DepthScreenCapture::TakeScreenSnapShot(TypedefObject::ObjectVector& objects)
+void DepthScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -119,7 +119,7 @@ void DepthScreenCapture::TakeScreenSnapShot(TypedefObject::ObjectVector& objects
 	graphic.SetupConstantBuffer(objects);
 	graphic.DrawObjects(objects);
 }
-void DepthScreenCapture::CleanupSnapShot(TypedefObject::ObjectVector& objects)
+void DepthScreenCapture::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;

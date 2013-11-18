@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DMath.h" />
+    <ClInclude Include="GenerateGUID.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Model.h" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ClCompile Include="3DMath.cpp" />
     <ClCompile Include="Converter.cpp" />
+    <ClCompile Include="GenerateGUID.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="XNAConverter.cpp" />
   </ItemGroup>

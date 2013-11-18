@@ -21,7 +21,7 @@ void ContinuousDepthScreenShot::Update(double realTime, double deltaTime)
 {
 
 }
-void ContinuousDepthScreenShot::Snap(TypedefObject::ObjectVector& objects)
+void ContinuousDepthScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	this->ScreenShot->D3DInfo.cameraMatrix = this->cameraMatrix;
 	this->ScreenShot->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;

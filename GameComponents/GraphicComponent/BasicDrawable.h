@@ -16,7 +16,7 @@ public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
-	virtual void Draw(TypedefObject::ObjectInfo& object);
+	virtual void Draw(std::shared_ptr<ObjectINFO> object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
 	static std::shared_ptr<BasicDrawable> Spawn(const std::string& inputID,
@@ -56,24 +56,15 @@ public:
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
-	virtual void SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& object);
-	virtual void SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& object);
-	virtual void SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& object);
-	virtual void SetupDrawPixelShader(const TypedefObject::ObjectInfo& object);
-	virtual void SetupDrawRasterizeShader(const TypedefObject::ObjectInfo& object);
-	virtual void DrawObject(const TypedefObject::ObjectInfo& object);
-	virtual void CleanupAfterDraw(const TypedefObject::ObjectInfo& object);
+	virtual void SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> object);
+	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO> object);
+	virtual void SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO> object);
+	virtual void SetupDrawPixelShader(const std::shared_ptr<ObjectINFO> object);
+	virtual void SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO> object);
+	virtual void DrawObject(const std::shared_ptr<ObjectINFO> object);
+	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO> object);
 
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable);
-protected:
-	virtual void GetInfo(const TypedefObject::ObjectInfo& objec,
-						 CHL::Vec4& location,
-						 CHL::Vec4& rotation,
-						 CHL::Vec4& scale,
-						 CHL::Vec4& diffuse,
-						 CHL::Vec4& ambient,
-						 CHL::Vec4& spec);
-
 };
 
 

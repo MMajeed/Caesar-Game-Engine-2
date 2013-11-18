@@ -24,9 +24,6 @@
     <ClInclude Include="BasicTexture.h">
       <Filter>Texture\BasicTexture</Filter>
     </ClInclude>
-    <ClInclude Include="TypedefObject.h">
-      <Filter>ObjectName</Filter>
-    </ClInclude>
     <ClInclude Include="SpotLight.h">
       <Filter>Light\SpotLight</Filter>
     </ClInclude>
@@ -56,6 +53,12 @@
     </ClInclude>
     <ClInclude Include="ContinuousCubeScreenShot.h">
       <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="SetupLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Light\PointLight</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +96,12 @@
     <ClCompile Include="ContinuousCubeScreenShot.cpp">
       <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
     </ClCompile>
+    <ClCompile Include="SetupLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Light\PointLight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Drawable">
@@ -118,9 +127,6 @@
     </Filter>
     <Filter Include="Texture\BasicTexture">
       <UniqueIdentifier>{5e802e12-8aba-4f8f-806d-e9dce2bdad79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ObjectName">
-      <UniqueIdentifier>{7b156573-8227-43ea-acac-ce8ec30c5b5d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Light">
       <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>
@@ -154,6 +160,9 @@
     </Filter>
     <Filter Include="ContinuousScreenShot\ContinuousCubeScreenShot">
       <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light\PointLight">
+      <UniqueIdentifier>{de21ae03-3721-427d-9d24-d9ef44206c8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

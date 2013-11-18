@@ -4,7 +4,7 @@
 #include "Linker.h"
 
 #include "Texture.h"
-
+#include <memory>
 #include <string>
 #include <D3D11.h>
 

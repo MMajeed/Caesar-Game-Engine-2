@@ -3,7 +3,8 @@
 
 #include "Linker.h"
 #include <string>
-#include "TypedefObject.h"
+#include <INFO.h>
+#include <hash_map>
 #include <memory>
 #include <D3D11.h>
 
@@ -15,7 +16,7 @@ public:
 	virtual void Init()                                     = 0;
 	virtual void Destory()                                  = 0;
 	virtual void Update(double realTime, double deltaTime)  = 0;
-	virtual void Snap(TypedefObject::ObjectVector& objects)	= 0;
+	virtual void Snap(std::hash_map<std::string, SP_INFO>& objects)	= 0;
 	virtual std::shared_ptr<ScreenCapture> clone() const    = 0;
 	virtual ~ScreenCapture(){}
 

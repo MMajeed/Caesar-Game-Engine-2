@@ -31,6 +31,9 @@
     <Filter Include="Object">
       <UniqueIdentifier>{322ab1bb-52e9-4cc4-b05c-72b526dece4b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GenerateGUID">
+      <UniqueIdentifier>{359a5b79-dd09-4bf0-b7c1-e45157e64076}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
@@ -61,6 +64,9 @@
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="GenerateGUID.h">
+      <Filter>GenerateGUID</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Converter.cpp">
@@ -74,6 +80,9 @@
     </ClCompile>
     <ClCompile Include="3DMath.cpp">
       <Filter>3DMath\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateGUID.cpp">
+      <Filter>GenerateGUID</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

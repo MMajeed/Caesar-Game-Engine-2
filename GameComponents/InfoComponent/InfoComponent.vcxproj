@@ -87,11 +87,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="Info.h" />
     <ClInclude Include="InfoManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Info.cpp" />
     <ClCompile Include="InfoManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

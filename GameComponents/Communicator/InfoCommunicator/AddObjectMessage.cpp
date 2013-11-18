@@ -1,27 +1,15 @@
 #include "AddObjectMessage.h"
-
-#include <memory>
-
-#include <Info.h>
 #include <InfoManager.h>
-#include <Keys.h>
 
-AddObjectMessage::AddObjectMessage(const std::hash_map<std::string, std::shared_ptr<Object>>& info)
+AddObjectMessage::AddObjectMessage(SP_INFO info)
 {
-	this->messageInfo = info;
+	this->infoToAdd = info;
 }
+
 Message::Status AddObjectMessage::Work()
 {
-	Info obj(this->messageInfo);
-
-	std::shared_ptr<Object> idObj;
-	obj.Retrieve(Keys::ID, idObj);
-	this->ID = GenericObj<std::string>::GetValue(idObj);
-
-	{
-		std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
-		InfoManager::GetInstance().Insert(obj);
-	}
+	std::lock_guard<std::mutex> lock(InfoManager::GetInstance().mutex);
+	InfoManager::GetInstance().objects[this->infoToAdd->ID] = this->infoToAdd;
 
 	return Message::Status::Complete;
 }

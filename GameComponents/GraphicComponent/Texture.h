@@ -4,7 +4,6 @@
 #include "Linker.h"
 
 #include <Converter.h>
-#include "TypedefObject.h"
 
 class Texture
 {

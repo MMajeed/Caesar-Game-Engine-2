@@ -129,7 +129,7 @@ void CubeScreenCapture::Update(double realTime, double deltaTime)
 {
 
 }
-void CubeScreenCapture::Snap(TypedefObject::ObjectVector& objects)
+void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -143,7 +143,7 @@ void CubeScreenCapture::Snap(TypedefObject::ObjectVector& objects)
 
 }
 
-void CubeScreenCapture::SetupScene(TypedefObject::ObjectVector& objects, std::size_t side)
+void CubeScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -209,7 +209,7 @@ void CubeScreenCapture::SetupScene(TypedefObject::ObjectVector& objects, std::si
 	graphic.SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 	graphic.SceneInfo.Eye = this->D3DInfo.Eye;
 }
-void CubeScreenCapture::SetupSnapShot(TypedefObject::ObjectVector& objects, std::size_t side)
+void CubeScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -223,7 +223,7 @@ void CubeScreenCapture::SetupSnapShot(TypedefObject::ObjectVector& objects, std:
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->D3DInfo.pColorMapRTV[side], black);
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void CubeScreenCapture::TakeScreenSnapShot(TypedefObject::ObjectVector& objects, std::size_t side)
+void CubeScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -233,7 +233,7 @@ void CubeScreenCapture::TakeScreenSnapShot(TypedefObject::ObjectVector& objects,
 
 	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
 }
-void CubeScreenCapture::CleanupSnapShot(TypedefObject::ObjectVector& objects, std::size_t side)
+void CubeScreenCapture::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;

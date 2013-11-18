@@ -24,7 +24,7 @@ void ContinuousBasicScreenShot::Update(double realTime, double deltaTime)
 {
 
 }
-void ContinuousBasicScreenShot::Snap(TypedefObject::ObjectVector& objects)
+void ContinuousBasicScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }

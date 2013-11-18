@@ -2,29 +2,17 @@
 #define __UpdateObjectMessage__
 
 #include "Linker.h"
-
-#include <vector>
-#include <string>
-#include <Object.h>
 #include <Message.h>
+#include <INFO.h>
 
 class UpdateObjectMessage : public Message
 {
 public:
-	UpdateObjectMessage(const std::string& inputObjectID, const std::string& inputInfoID, std::shared_ptr<Object> inputInfo );
+	UpdateObjectMessage(const std::string& objectID, std::shared_ptr<INFO> info);
 	virtual Message::Status Work();
-	std::string objectID;
-	std::string infoID;
-	 std::shared_ptr<Object> info;
-};
 
-class DeleteInfoMessgae : public Message
-{
-public:
-	DeleteInfoMessgae(const std::string& inputObjectID, const std::string& inputInfoID);
-	virtual Message::Status Work();
 	std::string objectID;
-	std::string infoID;
+	std::shared_ptr<INFO> info;
 };
 
 #endif //__UpdateObjectMessage__

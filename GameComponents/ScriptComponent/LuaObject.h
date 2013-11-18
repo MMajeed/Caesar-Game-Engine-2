@@ -6,6 +6,7 @@
 #include "LuaBasicDrawableObject.h"
 #include "LuaBasicTexture.h"
 #include "LuaMath.h"
+#include <ObjectINFO.h>
 
 class LuaObject
 {
@@ -39,6 +40,8 @@ public:
 
 	void SetSpecular(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetSpecular();
+
+	std::shared_ptr<ObjectINFO> GetObject();
 
 	static void Register(lua_State *lua);
 	static inline void RegisterAllLuaFunction(lua_State *lua)

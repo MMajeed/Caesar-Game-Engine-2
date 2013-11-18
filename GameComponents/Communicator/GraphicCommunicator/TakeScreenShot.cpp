@@ -5,7 +5,7 @@
 #include <GraphicManager.h>
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-#include <InfoCommunicator/ObjectManagerOutput.h>
+#include <InfoCommunicator/GetObjectINFO.h>
 #include <BasicTexture.h>
 
 TakeBasicScreenShot::TakeBasicScreenShot(unsigned int width, unsigned int height, const CHL::Matrix4x4& cameraMatrix, const CHL::Matrix4x4& prespectiveMatrix)
@@ -21,7 +21,7 @@ Message::Status TakeBasicScreenShot::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 	
-	auto allObjects = ObjectManagerOutput::GetAllObjects();
+	auto allObjects = GetObjectINFO::GetAllObjects();
 
 	std::shared_ptr<BasicScreenCapture> newBasicScreenCapture =
 		BasicScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
@@ -53,7 +53,7 @@ Message::Status TakeDepthScreenShot::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-	auto allObjects = ObjectManagerOutput::GetAllObjects();
+	auto allObjects = GetObjectINFO::GetAllObjects();
 
 	std::shared_ptr<DepthScreenCapture> newBasicScreenCapture =
 		DepthScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
@@ -83,7 +83,7 @@ Message::Status TakeCubeScreenShot::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-	auto allObjects = ObjectManagerOutput::GetAllObjects();
+	auto allObjects = GetObjectINFO::GetAllObjects();
 
 	std::shared_ptr<CubeScreenCapture> newBasicScreenCapture =
 		CubeScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);

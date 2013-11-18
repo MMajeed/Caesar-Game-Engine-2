@@ -14,7 +14,8 @@
 #include "Texture.h"
 #include "ScreenCapture.h"
 #include "ContinuousScreenShot.h"
-#include "TypedefObject.h"
+#include <INFO.h>
+#include <hash_map>
 
 class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
 {
@@ -26,13 +27,13 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
-	virtual void RunAllCapture(TypedefObject::ObjectVector& objects);
-	virtual void SetupLight(TypedefObject::ObjectVector& objects);
-	virtual void SetupScene(TypedefObject::ObjectVector& objects);
-	virtual void SetupConstantBuffer(TypedefObject::ObjectVector& objects);
-	virtual void ClearScreen(TypedefObject::ObjectVector& objects);
-	virtual void DrawObjects(TypedefObject::ObjectVector& objects);
-	virtual void Present(TypedefObject::ObjectVector& objects);
+	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void SetupScene(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void SetupConstantBuffer(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void ClearScreen(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void DrawObjects(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void Present(std::hash_map<std::string, SP_INFO>& objects);
 
 	// DirectX stuff
 	struct

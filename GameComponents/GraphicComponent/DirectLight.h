@@ -2,15 +2,12 @@
 #define __DIRECTLIGHT__
 
 #include <Singleton.h>
-#include <D3D11.h>
-#include <Matrix.h>
-#include "TypedefObject.h"
+#include <DirectionalLightINFO.h>
 #include "Buffers.h"
 
-class DirectLight : public CHL::Singelton<DirectLight>
+namespace DirectLight
 {
-public:
-	virtual cBuffer::CLightDesc GetLightDesc(TypedefObject::ObjectInfo& lightInfo);
-};
+	cBuffer::CLightDesc GetLightDesc(std::shared_ptr<DirectionalLightINFO> lightInfo);
+}
 
 #endif //__DIRECTLIGHT__

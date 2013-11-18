@@ -3,19 +3,8 @@
   <ItemGroup>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="InfoManager.h" />
-    <ClInclude Include="Info.h">
-      <Filter>Info</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InfoManager.cpp" />
-    <ClCompile Include="Info.cpp">
-      <Filter>Info</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Info">
-      <UniqueIdentifier>{c9feef3a-b1c7-4c62-8aa8-75ff5b99f2db}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

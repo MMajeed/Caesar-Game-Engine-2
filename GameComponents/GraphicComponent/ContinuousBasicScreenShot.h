@@ -12,7 +12,7 @@ public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
-	virtual void Snap(TypedefObject::ObjectVector& objects);
+	virtual void Snap(std::hash_map<std::string, SP_INFO>& objects);
 	virtual std::shared_ptr<ContinuousScreenShot> clone() const;
 	virtual ~ContinuousBasicScreenShot(){}
 

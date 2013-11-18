@@ -24,7 +24,7 @@ void ContinuousCubeScreenShot::Update(double realTime, double deltaTime)
 {
 
 }
-void ContinuousCubeScreenShot::Snap(TypedefObject::ObjectVector& objects)
+void ContinuousCubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }

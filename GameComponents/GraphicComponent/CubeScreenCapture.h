@@ -12,12 +12,12 @@ public:
 	void Init();
 	void Destory();
 	void Update(double realTime, double deltaTime);
-	void Snap(TypedefObject::ObjectVector& objects);
+	void Snap(std::hash_map<std::string, SP_INFO>& objects);
 
-	void SetupScene(TypedefObject::ObjectVector& objects, std::size_t side);
-	void SetupSnapShot(TypedefObject::ObjectVector& objects, std::size_t side);
-	void TakeScreenSnapShot(TypedefObject::ObjectVector& objects, std::size_t side);
-	void CleanupSnapShot(TypedefObject::ObjectVector& objects, std::size_t side);
+	void SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
+	void SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
+	void TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
+	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
 
 	static std::shared_ptr<CubeScreenCapture> Spawn(std::string id, unsigned int width, unsigned int height);
 	std::shared_ptr<ScreenCapture> clone() const;

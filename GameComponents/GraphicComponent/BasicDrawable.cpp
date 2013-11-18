@@ -55,7 +55,7 @@ void BasicDrawable::Update(double realTime, double deltaTime)
 
 }
 
-void BasicDrawable::Draw(TypedefObject::ObjectInfo& object)
+void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object)
 {
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
@@ -66,15 +66,9 @@ void BasicDrawable::Draw(TypedefObject::ObjectInfo& object)
 	this->CleanupAfterDraw(object);
 }
 
-void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& object)
+void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> object)
 {
-	CHL::Vec4 location;	CHL::Vec4 diffuse;
-	CHL::Vec4 rotation;	CHL::Vec4 ambient;
-	CHL::Vec4 scale;	CHL::Vec4 spec;
-
-	this->GetInfo(object, location, rotation, scale, diffuse, ambient, spec);	
-
-	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(location, rotation, scale);
+	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(object->Location, object->Rotation, object->Scale);
 
 	XMFLOAT4X4 worldMatrix = CHL::Convert4x4(mObjectFinal);
 	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.PrespectiveMatrix);
@@ -86,9 +80,9 @@ void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& obj
 	
 	cbCEF.world = XMLoadFloat4x4(&worldMatrix);
 	cbCEF.worldViewProj = finalMatrix;
-	cbCEF.colour.diffuse = CHL::ConvertVec4(diffuse);
-	cbCEF.colour.ambient = CHL::ConvertVec4(ambient);
-	cbCEF.colour.specular = CHL::ConvertVec4(spec);
+	cbCEF.colour.diffuse = CHL::ConvertVec4(object->Diffuse);
+	cbCEF.colour.ambient = CHL::ConvertVec4(object->Ambient);
+	cbCEF.colour.specular = CHL::ConvertVec4(object->Specular);
 
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -96,7 +90,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const TypedefObject::ObjectInfo& obj
 	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 }
-void BasicDrawable::SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& object)
+void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO> object)
 {	
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -106,7 +100,7 @@ void BasicDrawable::SetupDrawVertexBuffer(const TypedefObject::ObjectInfo& objec
 	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-void BasicDrawable::SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& object)
+void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -114,25 +108,25 @@ void BasicDrawable::SetupDrawInputVertexShader(const TypedefObject::ObjectInfo& 
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
 	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
 }
-void BasicDrawable::SetupDrawPixelShader(const TypedefObject::ObjectInfo& object)
+void BasicDrawable::SetupDrawPixelShader(const std::shared_ptr<ObjectINFO> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
-void BasicDrawable::SetupDrawRasterizeShader(const TypedefObject::ObjectInfo& object)
+void BasicDrawable::SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-void BasicDrawable::DrawObject(const TypedefObject::ObjectInfo& object)
+void BasicDrawable::DrawObject(const std::shared_ptr<ObjectINFO> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-void BasicDrawable::CleanupAfterDraw(const TypedefObject::ObjectInfo& object)	
+void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO> object)	
 {
 
 }
@@ -228,32 +222,4 @@ std::shared_ptr<Drawable> BasicDrawable::clone() const
 	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(""));
 
 	return std::dynamic_pointer_cast<Drawable>(newObject);
-}
-
-void BasicDrawable::GetInfo(const TypedefObject::ObjectInfo& object,
-	CHL::Vec4& location,
-	CHL::Vec4& rotation,
-	CHL::Vec4& scale,
-	CHL::Vec4& diffuse,
-	CHL::Vec4& ambient,
-	CHL::Vec4& spec)
-{
-	location(0) = 0.0f; location(1) = 0.0f; location(2) = 0.0f; location(3) = 1.0f;
-	rotation(0) = 0.0f; rotation(1) = 0.0f; rotation(2) = 0.0f; rotation(3) = 0.0f;
-	scale(0) = 1.0f; scale(1) = 1.0f; scale(2) = 1.0f; scale(3) = 1.0f;
-	diffuse(0) = 1.0f; diffuse(1) = 1.0f; diffuse(2) = 1.0f; diffuse(3) = 1.0f;
-	ambient(0) = 1.0f; ambient(1) = 1.0f; ambient(2) = 1.0f; ambient(3) = 1.0f;
-	spec(0) = 1.0f; spec(1) = 1.0f; spec(2) = 1.0f; spec(3) = 1.0f;
-
-	for(auto objIter = object.cbegin();
-		objIter != object.cend();
-		++objIter)
-	{
-		     if(objIter->first == Keys::ObjectInfo::LOCATION)	{ location = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
-		else if(objIter->first == Keys::ObjectInfo::ROTATION)	{ rotation = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
-		else if(objIter->first == Keys::ObjectInfo::SCALE)		{ scale = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
-		else if(objIter->first == Keys::ObjectInfo::DIFFUSE)	{ diffuse = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
-		else if(objIter->first == Keys::ObjectInfo::AMBIENT)	{ ambient = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
-		else if(objIter->first == Keys::ObjectInfo::SPECULAR)	{ spec = GenericObj<CHL::Vec4>::GetValue(objIter->second); }
-	}
 }
