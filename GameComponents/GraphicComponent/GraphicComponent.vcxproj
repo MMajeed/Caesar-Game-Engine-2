@@ -114,7 +114,6 @@
     <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="SetupLight.h" />
     <ClInclude Include="SpotLight.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>

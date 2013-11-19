@@ -3,10 +3,11 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include <Keys.h>
+#include <Converter.h>
 
 BasicTexture::BasicTexture(const std::string& inputID)
-	: Texture(inputID)
 {
+	this->ID = inputID;
 	this->D3DInfo.pTexture = 0;
 }
 void BasicTexture::Init()
@@ -21,23 +22,6 @@ void BasicTexture::Init()
 void BasicTexture::Destory()
 {
 	this->D3DInfo.pTexture->Release();
-}
-void BasicTexture::SettupTexture(int slot)
-{
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-	
-	if(this->D3DInfo.pTexture != 0)
-	{
-		pImmediateContext->PSSetShaderResources(slot, 1, &(this->D3DInfo.pTexture));
-	}
-}
-void BasicTexture::CleanupTexture(int slot)
-{
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-	
-	ID3D11ShaderResourceView* tab = NULL;
-	
-	pImmediateContext->PSSetShaderResources(slot, 1, &tab);
 }
 void BasicTexture::Update(double realTime, double deltaTime)
 {

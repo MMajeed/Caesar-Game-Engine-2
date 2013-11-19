@@ -10,7 +10,8 @@ skyBoxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]      
 
 skyBoxTexture = BasicTexture("Assets/Texture/Sky/Sky.dds");
 
-skyBoxObject = Object({[Keys["ObjectInfo"]["Scale"]]            = Vector4(2000.0, 2000.0, 2000.0),
-                       [Keys["ObjectInfo"]["DrawableObj"]]      = skyBoxDrawable,
-                       [Keys["ObjectInfo"]["TextureObj"] .. 5]  = skyBoxTexture,});
+skyBoxObject = Object({[Keys["ObjectInfo"]["Scale"]]          = Vector4(2000.0, 2000.0, 2000.0),
+                       [Keys["ObjectInfo"]["DrawableObj"]]    = skyBoxDrawable,
+                       [Keys["ObjectInfo"]["TextureCubeObj"]] = skyBoxTexture,
+                       [Keys["ObjectInfo"]["Light"]] = false,});
 return SkyBox

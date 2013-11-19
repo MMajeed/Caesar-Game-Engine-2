@@ -11,7 +11,7 @@
 #include <Object.h>
 #include <Interface.h>
 #include "Drawable.h"
-#include "Texture.h"
+#include "BasicTexture.h"
 #include "ScreenCapture.h"
 #include "ContinuousScreenShot.h"
 #include <INFO.h>
@@ -58,9 +58,9 @@ public:
 	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
 	const std::hash_map<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
 
-	std::hash_map<std::string, std::shared_ptr<Texture>> textures;
-	void InsertTexture(std::shared_ptr<Texture> obj);
-	const std::hash_map<std::string, std::shared_ptr<Texture>> AllTexture();
+	std::hash_map<std::string, std::shared_ptr<BasicTexture>> textures;
+	void InsertTexture(std::shared_ptr<BasicTexture> obj);
+	const std::hash_map<std::string, std::shared_ptr<BasicTexture>> AllTexture();
 
 	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
 	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);

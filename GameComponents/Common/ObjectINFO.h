@@ -4,7 +4,7 @@
 #include "Linker.h"
 #include "INFO.h"
 #include <Vector.h>
-#include <hash_map>
+#include <vector>
 
 class ObjectINFO : public INFO
 {
@@ -16,8 +16,11 @@ public:
 	CHL::Vec4 Ambient;
 	CHL::Vec4 Specular;
 	std::string DrawObjID;
-	std::hash_map<unsigned int, std::string> TextureVecs;
+	std::vector<std::string> Texture2DVecs;
+	std::vector<std::string> TextureCubeVecs;
+	bool Light;
 
+	ObjectINFO();
 	virtual std::shared_ptr<Object> Get(const std::string& ID);
 	virtual void Set(const std::string& ID, std::shared_ptr<Object> obj);
 	virtual std::shared_ptr<INFO> Clone();

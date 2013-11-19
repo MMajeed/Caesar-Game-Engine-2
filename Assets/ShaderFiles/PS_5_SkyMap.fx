@@ -1,4 +1,5 @@
 #include "Setup.fx"
+#include "CalculateTexture.fx"
 
 float4 PS( PS_INPUT input ) : SV_Target
 {
@@ -7,11 +8,9 @@ float4 PS( PS_INPUT input ) : SV_Target
 	float4 directionToCamera = input.PosWorld - eye;
 	normalize( directionToCamera );
 
-	float4 directionOfReflection 
-		= reflect( directionToCamera, input.Normal );
+	float4 directionOfReflection = reflect( directionToCamera, input.Normal );
 
-
-	finalLightColour = cubeTexture01.Sample( samAnisotropic, directionOfReflection.xyz );
+	finalLightColour = CalculateCubeTexture((float3)directionOfReflection);
 
 	return finalLightColour;
 }

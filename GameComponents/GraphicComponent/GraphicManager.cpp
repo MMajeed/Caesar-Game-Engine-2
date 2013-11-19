@@ -163,32 +163,7 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 		
 		if(drawableIter == this->objectDrawables.end()){ continue; }// If it didn't fine then continue
 
-		std::vector<std::pair<std::shared_ptr<Texture>, int>> textures;
-
-		for(auto iterObjInfo = objInfo->TextureVecs.begin();
-			iterObjInfo != objInfo->TextureVecs.end();
-			++iterObjInfo)
-		{
-			auto texture = this->textures.find(iterObjInfo->second);
-			if(texture == this->textures.end()){ continue; }// If it didn't fine then continue
-			textures.push_back(std::make_pair(texture->second, iterObjInfo->first));
-		}
-
-		for(auto iterTexture = textures.cbegin();
-			iterTexture != textures.cend();
-			++iterTexture)
-		{
-			iterTexture->first->SettupTexture(iterTexture->second);
-		}
-
 		drawableIter->second->Draw(objInfo);
-
-		for(auto iterTexture = textures.cbegin();
-			iterTexture != textures.cend();
-			++iterTexture)
-		{
-			iterTexture->first->CleanupTexture(iterTexture->second);
-		}
 	}
 }
 void GraphicManager::Present(std::hash_map<std::string, SP_INFO>& objects)
@@ -378,11 +353,11 @@ const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllO
 }
 
 
-void GraphicManager::InsertTexture(std::shared_ptr<Texture> obj)
+void GraphicManager::InsertTexture(std::shared_ptr<BasicTexture> obj)
 {
 	this->textures[obj->ID] = obj;
 }
-const std::hash_map<std::string, std::shared_ptr<Texture>> GraphicManager::AllTexture()
+const std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicManager::AllTexture()
 {
 	return this->textures;
 }

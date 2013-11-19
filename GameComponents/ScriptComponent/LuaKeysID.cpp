@@ -84,8 +84,9 @@ void LuaKeysID::Register(lua_State *lua)
 		ObjectInfoTable[Keys::ObjectInfo::AMBIENT]     = Keys::ObjectInfo::AMBIENT;
 		ObjectInfoTable[Keys::ObjectInfo::SPECULAR]    = Keys::ObjectInfo::SPECULAR;
 		ObjectInfoTable[Keys::ObjectInfo::DRAWABLEOBJ] = Keys::ObjectInfo::DRAWABLEOBJ;
-		ObjectInfoTable[Keys::ObjectInfo::TEXTUREOBJ]  = Keys::ObjectInfo::TEXTUREOBJ;
-		ObjectInfoTable[Keys::ObjectInfo::TEXTURESLOT] = Keys::ObjectInfo::TEXTURESLOT;
+		ObjectInfoTable[Keys::ObjectInfo::TEXTURE2DOBJ] = Keys::ObjectInfo::TEXTURE2DOBJ;
+		ObjectInfoTable[Keys::ObjectInfo::TEXTURECUBEOBJ] = Keys::ObjectInfo::TEXTURECUBEOBJ;
+		ObjectInfoTable[Keys::ObjectInfo::LIGHT] = Keys::ObjectInfo::LIGHT;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenCapture = luabind::newtable(lua);

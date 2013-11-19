@@ -18,12 +18,6 @@
       <Filter>D3D Tools\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="Texture.h">
-      <Filter>Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicTexture.h">
-      <Filter>Texture\BasicTexture</Filter>
-    </ClInclude>
     <ClInclude Include="SpotLight.h">
       <Filter>Light\SpotLight</Filter>
     </ClInclude>
@@ -60,6 +54,9 @@
     <ClInclude Include="PointLight.h">
       <Filter>Light\PointLight</Filter>
     </ClInclude>
+    <ClInclude Include="BasicTexture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -68,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="DX11Helper.cpp">
       <Filter>D3D Tools\DX11Helper</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicTexture.cpp">
-      <Filter>Texture\BasicTexture</Filter>
     </ClCompile>
     <ClCompile Include="SpotLight.cpp">
       <Filter>Light\SpotLight</Filter>
@@ -102,6 +96,9 @@
     <ClCompile Include="PointLight.cpp">
       <Filter>Light\PointLight</Filter>
     </ClCompile>
+    <ClCompile Include="BasicTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Drawable">
@@ -124,9 +121,6 @@
     </Filter>
     <Filter Include="Texture">
       <UniqueIdentifier>{eee8a27b-c3c2-4638-b09a-37f490eeae54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Texture\BasicTexture">
-      <UniqueIdentifier>{5e802e12-8aba-4f8f-806d-e9dce2bdad79}</UniqueIdentifier>
     </Filter>
     <Filter Include="Light">
       <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>

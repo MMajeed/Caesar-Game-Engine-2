@@ -1,14 +1,17 @@
 #include "HLSL_Light.fx"
 #include "Shadow.fx"
 
-//--------------------------------------------------------------------------------------
-// Constant Buffer Variables
-//--------------------------------------------------------------------------------------
+static const unsigned int numOfLights = 25;
+static const unsigned int NumberOfTextures = 10;
+
 cbuffer cbObject : register( b0 )
 {
 	matrix gWorld;
     matrix gWorldViewProj;
 	MaterialInfo objectMaterial;
+	unsigned int NumberOf2DTextures;
+	unsigned int NumberOfCubeTextures;
+	unsigned int HasLight;
 };
 
 cbuffer cbInfo : register( b1 )
@@ -18,27 +21,14 @@ cbuffer cbInfo : register( b1 )
 	float4 eye;
 };
 
-static const unsigned int numOfLights = 25;
-
 cbuffer cbLight : register( b2 )
 {
 	LightDesc lightArray[numOfLights];
 };
 
-Texture2D texture00 : register( t0 );
-Texture2D texture01 : register( t1 );
-Texture2D texture02 : register( t2 );
-Texture2D texture03 : register( t3 );
-Texture2D texture04 : register( t4 );
-TextureCube cubeTexture01 : register( t5 );
-TextureCube cubeTexture02 : register( t6 );
-TextureCube cubeTexture03 : register( t7 );
-TextureCube cubeTexture04 : register( t8 );
-TextureCube cubeTexture05 : register( t9 );
+Texture2D Textures2D[NumberOfTextures] : register(t0);
+TextureCube TexturesCube[NumberOfTextures] : register(t10);
 
-Texture2D Shadow : register( t10 );
-
-//--------------------------------------------------------------------------------------
 struct PS_INPUT
 {
     float4 PosWVP					: SV_POSITION;
@@ -48,21 +38,4 @@ struct PS_INPUT
 	float4 LightShadow[numOfLights] : LightMVP;
     float4 Color					: COLOR0;
 	float2 tex						: TEXCOORD0;
-};
-
-SamplerState samAnisotropic
-{
-	Filter = MAXIMUM_ANISOTROPIC;
-	AddressU = Wrap;
-	AddressV = Wrap;
-	AddressW = Wrap;
-};
-
-SamplerState samShadow
-{
-	Filter   = MIN_MAG_MIP_LINEAR;
-	AddressU = Border;
-	AddressV = Border;
-	AddressW = Border;
-	BorderColor = float4(0.0f, 0.0f, 0.0f, 0.0f);
 };

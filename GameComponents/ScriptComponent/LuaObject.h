@@ -19,9 +19,13 @@ public:
 	void SetGraphic(LuaBasicDrawableObject graphic);
 	void RemoveGraphic();
 
-	void SetTexture(LuaBasicTexture texture);
-	void SetTextureAndSlot(LuaBasicTexture texture, int slot);
-	void RemoveTexture(int textureSlot);
+	void Set2DTexture(LuaBasicTexture texture);
+	void Remove2DTexture(LuaBasicTexture texture);
+	void RemoveAll2DTexture();
+
+	void SetCubeTexture(LuaBasicTexture texture);
+	void RemoveCubeTexture(LuaBasicTexture texture);
+	void RemoveAllCubeTexture();
 
 	void SetLocation(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetLocation();
@@ -40,6 +44,9 @@ public:
 
 	void SetSpecular(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetSpecular();
+
+	void SetLight(bool vec);
+	bool GetLight();
 
 	std::shared_ptr<ObjectINFO> GetObject();
 

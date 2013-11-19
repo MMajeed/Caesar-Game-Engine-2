@@ -43,34 +43,25 @@ LuaObject::LuaObject(luabind::object const& table)
 	CHL::Vec4 amibent;	amibent(0) = 1.0; amibent(1) = 1.0; amibent(2) = 1.0; amibent(3) = 1.0;
 	CHL::Vec4 specular;	specular(0) = 1.0; specular(1) = 1.0; specular(2) = 1.0; specular(3) = 1.0;
 	std::string graphicDrawable;
-	std::hash_map<unsigned int, std::string>  textures;
-
+	std::vector<std::string>  textures2D;
+	std::vector<std::string>  texturesCube;
+	bool Light = true;
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
 	{
 		std::string key = luabind::object_cast<std::string>(it.key());
 
-			 if (key == Keys::ObjectInfo::LOCATION)		{ loc = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::ObjectInfo::ROTATION)		{ rot = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::ObjectInfo::SCALE)		{ sca = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::ObjectInfo::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::ObjectInfo::AMBIENT)		{ amibent = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::ObjectInfo::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject>(*it).ID; }
-		else if (key.compare(0, Keys::ObjectInfo::TEXTUREOBJ.size(), Keys::ObjectInfo::TEXTUREOBJ) == 0)
-		{
-			std::string textureID = luabind::object_cast<LuaBasicTexture>(*it).ID;
-			int textureSlot = 0;
-			std::string parse = key.substr(Keys::ObjectInfo::TEXTUREOBJ.size() );
-			if (!parse.empty())
-			{
-				std::stringstream ss;
-				ss << parse;
-				ss >> textureSlot;
-			}
-			textures[textureSlot] = textureID;
-		}
+			 if(key == Keys::ObjectInfo::LOCATION)		{ loc = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::ObjectInfo::ROTATION)		{ rot = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::ObjectInfo::SCALE)			{ sca = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::ObjectInfo::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::ObjectInfo::AMBIENT)		{ amibent = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::ObjectInfo::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject>(*it).ID; }
+		else if(key == Keys::ObjectInfo::TEXTURE2DOBJ)	{ textures2D.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
+		else if(key == Keys::ObjectInfo::TEXTURECUBEOBJ){ texturesCube.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
+		else if(key == Keys::ObjectInfo::LIGHT)			{ Light = luabind::object_cast<bool>(*it); }
 	}
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
@@ -81,8 +72,9 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->Ambient = amibent;
 	obj->Specular = specular;
 	obj->DrawObjID = graphicDrawable;
-	obj->TextureVecs = textures;
-
+	obj->Texture2DVecs = textures2D;
+	obj->TextureCubeVecs = texturesCube;
+	obj->Light = Light;
 	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
 	InfoCommunicator::SubmitMessage(msg);
 	this->ID = obj->ID;
@@ -105,27 +97,59 @@ void LuaObject::RemoveGraphic()
 	InfoCommunicator::SubmitMessage(msg1);
 }
 
-void LuaObject::SetTexture(LuaBasicTexture texture)
+void LuaObject::Set2DTexture(LuaBasicTexture texture)
 {
 	auto obj = this->GetObject();
-	obj->TextureVecs[0] = texture.ID;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
-
-}
-void LuaObject::SetTextureAndSlot(LuaBasicTexture texture, int slot)
-{
-	auto obj = this->GetObject();
-	obj->TextureVecs[slot] = texture.ID;
+	obj->Texture2DVecs.push_back(texture.ID);
 
 	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
 	InfoCommunicator::SubmitMessage(msg1);
 }
-void LuaObject::RemoveTexture(int textureSlot)
+void LuaObject::Remove2DTexture(LuaBasicTexture texture)
 {
 	auto obj = this->GetObject();
-	obj->TextureVecs.erase(textureSlot);
+	auto iter = std::find(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end(), texture.ID);
+	if(iter != obj->Texture2DVecs.end())
+	{
+		obj->Texture2DVecs.erase(iter);
+	}
+
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
+	InfoCommunicator::SubmitMessage(msg1);
+}
+void LuaObject::RemoveAll2DTexture()
+{
+	auto obj = this->GetObject();
+	obj->Texture2DVecs.erase(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end());
+
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
+	InfoCommunicator::SubmitMessage(msg1);
+}
+
+void LuaObject::SetCubeTexture(LuaBasicTexture texture)
+{
+	auto obj = this->GetObject();
+	obj->TextureCubeVecs.push_back(texture.ID);
+
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
+	InfoCommunicator::SubmitMessage(msg1);
+}
+void LuaObject::RemoveCubeTexture(LuaBasicTexture texture)
+{
+	auto obj = this->GetObject();
+	auto iter = std::find(obj->TextureCubeVecs.begin(), obj->TextureCubeVecs.end(), texture.ID);
+	if(iter != obj->TextureCubeVecs.end())
+	{
+		obj->TextureCubeVecs.erase(iter);
+	}
+
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
+	InfoCommunicator::SubmitMessage(msg1);
+}
+void LuaObject::RemoveAllCubeTexture()
+{
+	auto obj = this->GetObject();
+	obj->Texture2DVecs.erase(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end());
 
 	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
 	InfoCommunicator::SubmitMessage(msg1);
@@ -209,6 +233,18 @@ LuaMath::Vector4 LuaObject::GetSpecular()
 	return this->GetObject()->Specular;
 }
 
+void LuaObject::SetLight(bool vec)
+{
+	auto obj = this->GetObject();
+	obj->Light = vec;
+
+	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
+	InfoCommunicator::SubmitMessage(msg1);
+}
+bool LuaObject::GetLight()
+{
+	return this->GetObject()->Light;
+}
 std::shared_ptr<ObjectINFO> LuaObject::GetObject()
 {
 	std::shared_ptr<ObjectINFO> returnValue;
@@ -231,9 +267,12 @@ void LuaObject::Register(lua_State *lua)
 			.def_readonly("ID", &LuaObject::ID)
 			.def("SetGraphic", &LuaObject::SetGraphic)
 			.def("RemoveGraphic", &LuaObject::RemoveGraphic)
-			.def("SetTexture", &LuaObject::SetTexture)
-			.def("SetTextureAndSlot", &LuaObject::SetTextureAndSlot)
-			.def("RemoveTexture", &LuaObject::RemoveTexture)
+			.def("Set2DTexture", &LuaObject::Set2DTexture)
+			.def("Remove2DTexture", &LuaObject::Remove2DTexture)
+			.def("RemoveAll2DTexture", &LuaObject::RemoveAll2DTexture)
+			.def("SetCubeTexture", &LuaObject::SetCubeTexture)
+			.def("RemoveCubeTexture", &LuaObject::RemoveCubeTexture)
+			.def("RemoveAllCubeTexture", &LuaObject::RemoveAllCubeTexture)
 			.property("Location", &LuaObject::GetLocation, &LuaObject::SetLocation)
 			.property("Scale", &LuaObject::GetScale, &LuaObject::SetScale)
 			.property("Rotation", &LuaObject::GetRotation, &LuaObject::SetRotation)

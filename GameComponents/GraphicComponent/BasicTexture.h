@@ -3,20 +3,17 @@
 
 #include "Linker.h"
 
-#include "Texture.h"
 #include <memory>
 #include <string>
 #include <D3D11.h>
 
-class BasicTexture : public Texture
+class BasicTexture
 {
 public:
 	BasicTexture(const std::string& inputID);
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
-	virtual void SettupTexture(int slot);
-	virtual void CleanupTexture(int slot);
 	
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID);
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, const std::string& fileName);
@@ -27,6 +24,7 @@ public:
 		std::string					textureFileName;
 		ID3D11ShaderResourceView*	pTexture;
 	} D3DInfo;
+	std::string ID;
 };
 
 

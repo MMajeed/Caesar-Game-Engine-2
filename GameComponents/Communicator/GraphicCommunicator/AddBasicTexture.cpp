@@ -14,7 +14,7 @@ Message::Status AddBasicTexture::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-	std::shared_ptr<Texture> newObject =
+	std::shared_ptr<BasicTexture> newObject =
 		BasicTexture::Spawn(this->ID, this->TextureFileName);
 
 	GraphicManager::GetInstance().InsertTexture(newObject);
