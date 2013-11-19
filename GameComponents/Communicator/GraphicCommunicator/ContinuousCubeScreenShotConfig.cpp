@@ -1,7 +1,5 @@
 #include "ContinuousCubeScreenShotConfig.h"
-#include <Converter.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <GenerateGUID.h>
 #include <GraphicManager.h>
 #include <ContinuousCubeScreenShot.h>
 #include <BasicTexture.h>
@@ -12,8 +10,8 @@ ContinuousCubeScreenShotConfig::AddContinuousCubeScreenShot::AddContinuousCubeSc
 	this->width = width;
 	this->height = height;
 	this->eye = eye;
-	this->newTextureID = CHL::ToString(boost::uuids::random_generator()());
-	this->ID = CHL::ToString(boost::uuids::random_generator()());
+	this->newTextureID = CHL::GenerateGUID();
+	this->ID = CHL::GenerateGUID();
 }
 
 Message::Status ContinuousCubeScreenShotConfig::AddContinuousCubeScreenShot::Work()

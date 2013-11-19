@@ -1,7 +1,5 @@
 #include "ContinuousCubeScreenShot.h"
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-#include <Converter.h>
+#include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
@@ -12,8 +10,8 @@ ContinuousCubeScreenShot::ContinuousCubeScreenShot(const std::string& inputID)
 }
 void ContinuousCubeScreenShot::Init()
 {
-	this->ScreenShot[0] = CubeScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
-	this->ScreenShot[1] = CubeScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
+	this->ScreenShot[0] = CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot[1] = CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
 }
 void ContinuousCubeScreenShot::Destory()
 {

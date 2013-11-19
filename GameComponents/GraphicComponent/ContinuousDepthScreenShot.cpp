@@ -1,7 +1,5 @@
 #include "ContinuousDepthScreenShot.h"
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-#include <Converter.h>
+#include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
@@ -11,7 +9,7 @@ ContinuousDepthScreenShot::ContinuousDepthScreenShot(const std::string& inputID)
 }
 void ContinuousDepthScreenShot::Init()
 {
-	this->ScreenShot = DepthScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
+	this->ScreenShot = DepthScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
 }
 void ContinuousDepthScreenShot::Destory()
 {

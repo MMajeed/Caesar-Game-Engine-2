@@ -1,7 +1,5 @@
 #include "ContinuousDepthScreenShotConfig.h"
-#include <Converter.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <GenerateGUID.h>
 #include <GraphicManager.h>
 #include <ContinuousDepthScreenShot.h>
 #include <BasicTexture.h>
@@ -13,8 +11,8 @@ ContinuousDepthScreenShotConfig::AddContinuousDepthScreenShot::AddContinuousDept
 	this->height = height;
 	this->camerMatrix = cameraMatrix;
 	this->prespectiveMatrix = prespectiveMatrix;
-	this->newTextureID = CHL::ToString(boost::uuids::random_generator()());
-	this->ID = CHL::ToString(boost::uuids::random_generator()());
+	this->newTextureID = CHL::GenerateGUID();
+	this->ID = CHL::GenerateGUID();
 }
 
 Message::Status ContinuousDepthScreenShotConfig::AddContinuousDepthScreenShot::Work()

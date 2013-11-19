@@ -2,13 +2,11 @@
 
 #include <BasicTexture.h>
 #include <GraphicManager.h>
-#include <Converter.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <GenerateGUID.h>
 
 AddBasicTexture::AddBasicTexture(std::string texture)
 {
-	this->ID = CHL::ToString(boost::uuids::random_generator()());
+	this->ID = CHL::GenerateGUID();
 	this->TextureFileName = texture;
 }
 

@@ -1,7 +1,5 @@
 #include "ContinuousBasicScreenShot.h"
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-#include <Converter.h>
+#include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
@@ -12,8 +10,8 @@ ContinuousBasicScreenShot::ContinuousBasicScreenShot(const std::string& inputID)
 }
 void ContinuousBasicScreenShot::Init()
 {
-	this->ScreenShot[0] = BasicScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
-	this->ScreenShot[1] = BasicScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
+	this->ScreenShot[0] = BasicScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot[1] = BasicScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
 }
 void ContinuousBasicScreenShot::Destory()
 {

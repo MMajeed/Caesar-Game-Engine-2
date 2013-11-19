@@ -3,8 +3,7 @@
 #include <DepthScreenCapture.h>
 #include <CubeScreenCapture.h>
 #include <GraphicManager.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <GenerateGUID.h>
 #include <InfoCommunicator/GetObjectINFO.h>
 #include <BasicTexture.h>
 
@@ -12,7 +11,7 @@ TakeBasicScreenShot::TakeBasicScreenShot(unsigned int width, unsigned int height
 {
 	this->camerMatrix = cameraMatrix;
 	this->prespectiveMatrix = prespectiveMatrix;
-	this->newTextureID = CHL::ToString(boost::uuids::random_generator()());
+	this->newTextureID = CHL::GenerateGUID();
 	this->width = width;
 	this->height = height;
 }
@@ -24,7 +23,7 @@ Message::Status TakeBasicScreenShot::Work()
 	auto allObjects = GetObjectINFO::GetAllObjects();
 
 	std::shared_ptr<BasicScreenCapture> newBasicScreenCapture =
-		BasicScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
+		BasicScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
 	newBasicScreenCapture->D3DInfo.cameraMatrix = this->camerMatrix;
 	newBasicScreenCapture->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
 	newBasicScreenCapture->Snap(allObjects);
@@ -44,7 +43,7 @@ TakeDepthScreenShot::TakeDepthScreenShot(unsigned int width, unsigned int height
 {
 	this->camerMatrix = cameraMatrix;
 	this->prespectiveMatrix = prespectiveMatrix;
-	this->newTextureID = CHL::ToString(boost::uuids::random_generator()());
+	this->newTextureID = CHL::GenerateGUID();
 	this->width = width;
 	this->height = height;
 }
@@ -56,7 +55,7 @@ Message::Status TakeDepthScreenShot::Work()
 	auto allObjects = GetObjectINFO::GetAllObjects();
 
 	std::shared_ptr<DepthScreenCapture> newBasicScreenCapture =
-		DepthScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
+		DepthScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
 	newBasicScreenCapture->D3DInfo.cameraMatrix = this->camerMatrix;
 	newBasicScreenCapture->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
 	newBasicScreenCapture->Snap(allObjects);
@@ -86,7 +85,7 @@ Message::Status TakeCubeScreenShot::Work()
 	auto allObjects = GetObjectINFO::GetAllObjects();
 
 	std::shared_ptr<CubeScreenCapture> newBasicScreenCapture =
-		CubeScreenCapture::Spawn(CHL::ToString(boost::uuids::random_generator()()), this->width, this->height);
+		CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
 	newBasicScreenCapture->D3DInfo.Eye = this->eye;
 	newBasicScreenCapture->Snap(allObjects);
 

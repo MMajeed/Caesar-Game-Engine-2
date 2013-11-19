@@ -2,16 +2,13 @@
 #define __LuaProcesses__
 
 #include <string>
-
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
-#include <Converter.h>
+#include <GenerateGuid.h>
 #include <Lua.hpp>
 
 class LuaProcesses
 {
 public:
-	LuaProcesses(){this->ID = CHL::ToString(boost::uuids::random_generator()()); }
+	LuaProcesses(){ this->ID = CHL::GenerateGUID(); }
 
 	virtual void Update(double realTime, double deltaTime) = 0;
 

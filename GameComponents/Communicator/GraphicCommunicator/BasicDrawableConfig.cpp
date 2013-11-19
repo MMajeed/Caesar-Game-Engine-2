@@ -2,9 +2,7 @@
 #include <Vertex.h>
 #include <BasicDrawable.h>
 #include <GraphicManager.h>
-#include <Converter.h>
-#include <boost/uuid/uuid_generators.hpp> // generators
-#include <boost/uuid/uuid_io.hpp>         // streaming operators etc.
+#include <GenerateGUID.h>
 
 BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const Model& model,
 													std::string	vertexFileName,
@@ -15,7 +13,7 @@ BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const Mode
 													bool multisampleEnable)
 	: model(model)
 {
-	this->ID = CHL::ToString(boost::uuids::random_generator()());
+	this->ID = CHL::GenerateGUID();
 	this->vertexFileName    = vertexFileName;
 	this->pixelFileName     = pixelFileName;
 	this->cullMode          = cullMode;
