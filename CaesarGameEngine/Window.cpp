@@ -7,15 +7,14 @@
 #include <InputCommunicator\InputCommunicator.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
-#include <InfoCommunicator\InfoCommunicator.h>
+#include <EntityCommunicator\EntityConfig.h>
 #include <InputCommunicator\UpdateKey.h>
-#include <InfoCommunicator\AddObjectMessage.h>
-#include <InfoCommunicator\UpdateObjectMessage.h>
 #include <GraphicCommunicator\OnResize.h>
 #include <Keys.h>
 #include <Converter.h>
 #include <Error.h>
 #include <WindowINFO.h>
+#include <EntityCommunicator\ImportantIDConfig.h>
 
 Window::Window()
 {
@@ -66,16 +65,14 @@ void Window::Init()
 
 	this->vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
 	this->vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
-	this->vInterfaces["Info Manager"] = InfoCommunicator::GetComponent();
 	this->vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
 
 	std::shared_ptr<WindowINFO> obj(new WindowINFO());
 	obj->Height = this->window.height;
 	obj->Width = this->window.width;
 	obj->HWND = this->window.hWnd;
-
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-	InfoCommunicator::SubmitMessage(msg);
+	EntityConfig::SetEntity(obj);
+	WindowINFOID::Set(obj->ID);
 
 	for(auto iter = this->vInterfaces.begin();
 		iter != this->vInterfaces.end();
@@ -161,8 +158,8 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	}
 	case WM_SIZE:
 	{
-		int width;
-		int height;
+		int width = 0;
+		int height = 0;
 		RECT rect;
 		if (GetWindowRect(Window::GetInstance().window.hWnd, &rect))
 		{
@@ -170,13 +167,9 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 			height = rect.bottom - rect.top;
 		}
 
-		std::shared_ptr<WindowINFO> obj(new WindowINFO());
-		obj->Height = height;
-		obj->Width = width;
-		obj->HWND = Window::GetInstance().window.hWnd;
+		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::HEIGHT, GenericObj<int>::CreateNew(height));
+		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::WIDTH, GenericObj<int>::CreateNew(width));
 
-		std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-		InfoCommunicator::SubmitMessage(msg);
 		break;
 	}
 	case WM_TIMER:

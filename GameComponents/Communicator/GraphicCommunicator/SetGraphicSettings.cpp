@@ -15,25 +15,3 @@ Message::Status ClearScreenMessage::Work()
 
 	return Message::Status::Complete;
 }
-
-SetCameraIDMessage::SetCameraIDMessage(const std::string& input)
-: id(input)
-{
-}
-
-Message::Status SetCameraIDMessage::Work()
-{
-	GraphicManager::GetInstance().SceneInfo.CameraKeyID = this->id;
-	return Message::Status::Complete;
-}
-
-SetPrespectiveIDMessage::SetPrespectiveIDMessage(const std::string& input)
-: id(input)
-{
-}
-
-Message::Status SetPrespectiveIDMessage::Work()
-{
-	GraphicManager::GetInstance().SceneInfo.PrespectiveKeyID = this->id;
-	return Message::Status::Complete;
-}

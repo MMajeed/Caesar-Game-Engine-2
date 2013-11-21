@@ -4,7 +4,7 @@
 #include <CubeScreenCapture.h>
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
-#include <InfoCommunicator/GetObjectINFO.h>
+#include <EntityCommunicator/EntityConfig.h>
 #include <BasicTexture.h>
 
 TakeBasicScreenShot::TakeBasicScreenShot(unsigned int width, unsigned int height, const CHL::Matrix4x4& cameraMatrix, const CHL::Matrix4x4& prespectiveMatrix)
@@ -20,7 +20,7 @@ Message::Status TakeBasicScreenShot::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 	
-	auto allObjects = GetObjectINFO::GetAllObjects();
+	auto allObjects = EntityConfig::GetAllEntity();
 
 	std::shared_ptr<BasicScreenCapture> newBasicScreenCapture =
 		BasicScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
@@ -52,7 +52,7 @@ Message::Status TakeDepthScreenShot::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-	auto allObjects = GetObjectINFO::GetAllObjects();
+	auto allObjects = EntityConfig::GetAllEntity();
 
 	std::shared_ptr<DepthScreenCapture> newBasicScreenCapture =
 		DepthScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
@@ -82,7 +82,7 @@ Message::Status TakeCubeScreenShot::Work()
 {
 	std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-	auto allObjects = GetObjectINFO::GetAllObjects();
+	auto allObjects = EntityConfig::GetAllEntity();
 
 	std::shared_ptr<CubeScreenCapture> newBasicScreenCapture =
 		CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);

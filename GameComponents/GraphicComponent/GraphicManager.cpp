@@ -1,8 +1,7 @@
 #include "GraphicManager.h"
 
-#include <boost/numeric/ublas/io.hpp>
-#include <Converter.h>
-#include <InfoCommunicator\GetObjectINFO.h>
+#include <EntityCommunicator\EntityConfig.h>
+#include <EntityCommunicator\ImportantIDConfig.h>
 #include <Keys.h>
 #include <3DMath.h>
 #include <XNAConverter.h>
@@ -41,7 +40,7 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
-	std::hash_map<std::string, SP_INFO> objects = GetObjectINFO::GetAllObjects();
+	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
 	this->RunAllCapture(objects);
 	this->SetupLight(objects);
@@ -81,9 +80,11 @@ void GraphicManager::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 	vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
-	if(!this->SceneInfo.CameraKeyID.empty())
+	std::string cameraID = CameraID::Get();
+
+	if(!cameraID.empty())
 	{
-		std::hash_map<std::string, SP_INFO>::const_iterator cameraIter = objects.find(this->SceneInfo.CameraKeyID);
+		std::hash_map<std::string, SP_INFO>::const_iterator cameraIter = objects.find(cameraID);
 
 		if(cameraIter != objects.cend()) // if camera found
 		{
@@ -112,9 +113,10 @@ void GraphicManager::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 	double nearZ = 0.01;
 	double farZ = 5000.0;
 
-	if(!this->SceneInfo.PrespectiveKeyID.empty())
+	std::string prespective = PrespectiveID::Get();
+	if(!prespective.empty())
 	{
-		std::hash_map<std::string, SP_INFO>::const_iterator cameraIter = objects.find(this->SceneInfo.PrespectiveKeyID);
+		std::hash_map<std::string, SP_INFO>::const_iterator cameraIter = objects.find(prespective);
 
 		if(cameraIter != objects.cend()) // if prespective found
 		{
@@ -174,17 +176,16 @@ void GraphicManager::Present(std::hash_map<std::string, SP_INFO>& objects)
 
 void GraphicManager::InitDevice()
 {
-	std::hash_map<std::string, SP_INFO> objects = GetObjectINFO::GetAllObjects();
+	
+	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
-	std::shared_ptr<WindowINFO> windowInfo;
-	for(auto iter = objects.begin();
-		iter != objects.end();
-		++iter)
-	{
-		windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
-		if(windowInfo){ break; }
-	}
-
+	std::string window = WindowINFOID::Get();
+	if(window.empty()){ throw std::exception("Windows Information is not set"); }
+	
+	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
+	if(iter == objects.cend()) { throw std::exception("Could not find windows Info"); }
+	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
+	
 	int Width = windowInfo->Width;
 	int Height = windowInfo->Height;
 	HWND hwnd = windowInfo->HWND;

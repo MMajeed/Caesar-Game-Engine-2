@@ -80,9 +80,6 @@ public:
 		CHL::Vec4 Eye;
 		CHL::Matrix4x4 CamerMatrix;
 		CHL::Matrix4x4 PrespectiveMatrix;
-
-		std::string CameraKeyID;
-		std::string PrespectiveKeyID;
 	} SceneInfo;
 
 

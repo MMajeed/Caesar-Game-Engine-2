@@ -34,8 +34,6 @@ public:
 
 	std::string ID;
 
-	std::shared_ptr<CameraINFO> GetCameraINFO();
-
 	static void Register(lua_State *lua);
 
 	static inline void RegisterAllLuaFunction(lua_State *lua)

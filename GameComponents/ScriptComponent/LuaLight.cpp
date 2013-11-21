@@ -1,73 +1,43 @@
 #include "LuaLight.h"
 #include <Object.h>
-#include <InfoCommunicator\AddObjectMessage.h>
-#include <InfoCommunicator\UpdateObjectMessage.h>
-#include <InfoCommunicator\GetObjectINFO.h>
-#include <InfoCommunicator\InfoCommunicator.h>
+#include <EntityCommunicator\EntityConfig.h>
 #include <boost/numeric/ublas/vector.hpp>
 #include <Keys.h>
 
-//**********************************************************************//
 // Light Class
-//**********************************************************************//
 LuaMath::Vector4 LuaLight::Light::GetDiffuse()
 {
-	return this->GetGenericLightInfo()->Diffuse;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIFFUSE);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetDiffuse(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetGenericLightInfo();
-	obj->Diffuse = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::DIFFUSE, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 LuaMath::Vector4 LuaLight::Light::GetAmient()
 {
-	return this->GetGenericLightInfo()->Ambient;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::AMBIENT);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetAmbient(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetGenericLightInfo();
-	obj->Ambient = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::AMBIENT, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 LuaMath::Vector4 LuaLight::Light::GetSpecular()
 {
-	return this->GetGenericLightInfo()->Specular;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::SPECULAR);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetSpecular(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetGenericLightInfo();
-	obj->Specular = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::SPECULAR, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
-std::shared_ptr<LightINFO> LuaLight::Light::GetGenericLightInfo()
-{
-	std::shared_ptr<LightINFO> returnValue;
-
-	auto obj = GetObjectINFO::GetObject(this->ID);
-	if(obj)
-	{
-		returnValue = std::dynamic_pointer_cast<LightINFO>(obj);
-		if(!returnValue){ throw std::exception("Attempted to cast an Object to LightINFO and failed"); }
-	}
-	return returnValue;
-}
-//**********************************************************************//
 // Light Class End
-//**********************************************************************//
 
-//**********************************************************************//
 // DirectionalLight class
-//**********************************************************************//
 LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
@@ -94,35 +64,18 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	obj->Specular = specular;
 	obj->Direction = direction;
 
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-	InfoCommunicator::SubmitMessage(msg);
+	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
 		
 LuaMath::Vector4 LuaLight::DirectionalLight::GetDirection()
 {
-	return this->GetLightInfo()->Direction;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIRECTION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::DirectionalLight::SetDirection(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetLightInfo();
-	obj->Direction = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
-}
-
-std::shared_ptr<DirectionalLightINFO> LuaLight::DirectionalLight::GetLightInfo()
-{
-	std::shared_ptr<DirectionalLightINFO> returnValue;
-
-	auto obj = GetObjectINFO::GetObject(this->ID);
-	if(obj)
-	{
-		returnValue = std::dynamic_pointer_cast<DirectionalLightINFO>(obj);
-		if(!returnValue){ throw std::exception("Attempted to cast an Object to DirectionalLight and failed"); }
-	}
-	return returnValue;
+	EntityConfig::SetEntity(this->ID, Keys::Light::DIRECTION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::DirectionalLight::Register(lua_State *lua)
@@ -138,14 +91,9 @@ void LuaLight::DirectionalLight::Register(lua_State *lua)
 	];
 }
 
-
-//**********************************************************************//
 // DirectionalLight end
-//**********************************************************************//
 
-//**********************************************************************//
 // PointLight
-//**********************************************************************//
 LuaLight::PointLight::PointLight(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
@@ -175,62 +123,39 @@ LuaLight::PointLight::PointLight(luabind::object const& table)
 	obj->Position = position;
 	obj->Attenuation = att;
 	obj->Range = range;
-
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-	InfoCommunicator::SubmitMessage(msg);
+	
+	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
 
 LuaMath::Vector4 LuaLight::PointLight::GetPosition()
 {
-	return this->GetLightInfo()->Position;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::POSITION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::PointLight::SetPosition(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetLightInfo();
-	obj->Position = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::POSITION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 double LuaLight::PointLight::GetRange()
 {
-	return this->GetLightInfo()->Range;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::RANGE);
+	return GenericObj<double>::GetValue(obj);
 }
 void LuaLight::PointLight::SetRange(double val)
 {
-	auto obj = this->GetLightInfo();
-	obj->Range = val;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::RANGE, GenericObj<double>::CreateNew(val));
 }
 
 LuaMath::Vector4 LuaLight::PointLight::GetAttenuation()
 {
-	return this->GetLightInfo()->Attenuation;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::ATTENUATION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::PointLight::SetAttenuation(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetLightInfo();
-	obj->Attenuation = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
-}
-
-std::shared_ptr<PointLightINFO> LuaLight::PointLight::GetLightInfo()
-{
-	std::shared_ptr<PointLightINFO> returnValue;
-
-	auto obj = GetObjectINFO::GetObject(this->ID);
-	if(obj)
-	{
-		returnValue = std::dynamic_pointer_cast<PointLightINFO>(obj);
-		if(!returnValue){ throw std::exception("Attempted to cast an Object to PointLightINFO and failed"); }
-	}
-	return returnValue;
+	EntityConfig::SetEntity(this->ID, Keys::Light::ATTENUATION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::PointLight::Register(lua_State *lua)
@@ -248,13 +173,9 @@ void LuaLight::PointLight::Register(lua_State *lua)
 	];
 }
 
-//**********************************************************************//
 // PointLight end
-//**********************************************************************//
 
-//**********************************************************************//
 // SpotLight class
-//**********************************************************************//
 LuaLight::SpotLight::SpotLight(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
@@ -291,108 +212,58 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 	obj->Spot = spot;
 	obj->Range = range;
 
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-	InfoCommunicator::SubmitMessage(msg);
+	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
 
 LuaMath::Vector4 LuaLight::SpotLight::GetPosition()
 {
-	return this->GetLightInfo()->Position;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::POSITION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetPosition(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetLightInfo();
-	obj->Position = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::POSITION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 double LuaLight::SpotLight::GetRange()
 {
-	return this->GetLightInfo()->Range;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::RANGE);
+	return GenericObj<double>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetRange(double val)
 {
-	auto obj = this->GetLightInfo();
-	obj->Range = val;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::RANGE, GenericObj<double>::CreateNew(val));
 }
 
 LuaMath::Vector4 LuaLight::SpotLight::GetDirection()
 {
-	return this->GetLightInfo()->Direction;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIRECTION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetDirection(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetLightInfo();
-	obj->Direction = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::DIRECTION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 double LuaLight::SpotLight::GetSpot()
 {
-	return this->GetLightInfo()->Spot;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::SPOT);
+	return GenericObj<double>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetSpot(double val)
 {
-	auto obj = this->GetLightInfo();
-	obj->Spot = val;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::Light::SPOT, GenericObj<double>::CreateNew(val));
 }
 
 LuaMath::Vector4 LuaLight::SpotLight::GetAttenuation()
 {
-	return this->GetLightInfo()->Attenuation;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::ATTENUATION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetAttenuation(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetLightInfo();
-	obj->Attenuation = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
-}
-
-void LuaLight::SpotLight::ApplyShadow()
-{
-	auto obj = this->GetLightInfo();
-	obj->HasShadow = true;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
-}
-void LuaLight::SpotLight::RemoveShadow()
-{
-	auto obj = this->GetLightInfo();
-	obj->HasShadow = false;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
-}
-bool LuaLight::SpotLight::GetShadowState()
-{
-	return this->GetLightInfo()->HasShadow;
-}
-
-std::shared_ptr<SpotLightINFO> LuaLight::SpotLight::GetLightInfo()
-{
-	std::shared_ptr<SpotLightINFO> returnValue;
-
-	auto obj = GetObjectINFO::GetObject(this->ID);
-	if(obj)
-	{
-		returnValue = std::dynamic_pointer_cast<SpotLightINFO>(obj);
-		if(!returnValue){ throw std::exception("Attempted to cast an Object to SpotLightINFO and failed"); }
-	}
-	return returnValue;
+	EntityConfig::SetEntity(this->ID, Keys::Light::ATTENUATION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::SpotLight::Register(lua_State *lua)
@@ -409,12 +280,9 @@ void LuaLight::SpotLight::Register(lua_State *lua)
 			.property("Direction", &LuaLight::SpotLight::GetDirection, &LuaLight::SpotLight::SetDirection)
 			.property("Spot", &LuaLight::SpotLight::GetSpot, &LuaLight::SpotLight::SetSpot)
 			.property("Attenuation", &LuaLight::SpotLight::GetAttenuation, &LuaLight::SpotLight::SetAttenuation)
-			.property("ShadowState", &LuaLight::SpotLight::GetShadowState)
-			.def("ApplyShadow", &LuaLight::SpotLight::ApplyShadow)
-			.def("RemoveShadow", &LuaLight::SpotLight::RemoveShadow)
+			//.property("ShadowState", &LuaLight::SpotLight::GetShadowState)
+			//.def("ApplyShadow", &LuaLight::SpotLight::ApplyShadow)
+			//.def("RemoveShadow", &LuaLight::SpotLight::RemoveShadow)
 	];
 }
-//**********************************************************************//
 // SpotLight end
-//**********************************************************************//
-

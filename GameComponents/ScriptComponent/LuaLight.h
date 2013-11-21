@@ -24,8 +24,6 @@ public:
 		LuaMath::Vector4 GetSpecular();
 		void SetSpecular(LuaMath::Vector4 vec);
 
-		std::shared_ptr<LightINFO> GetGenericLightInfo();
-
 		std::string ID;
 	};
 
@@ -36,8 +34,6 @@ public:
 		
 		LuaMath::Vector4 GetDirection();
 		void SetDirection(LuaMath::Vector4 vec);
-
-		std::shared_ptr<DirectionalLightINFO> GetLightInfo();
 
 		static void Register(lua_State *lua);
 	};
@@ -55,8 +51,6 @@ public:
 
 		LuaMath::Vector4 GetAttenuation();
 		void SetAttenuation(LuaMath::Vector4 vec);
-
-		std::shared_ptr<PointLightINFO> GetLightInfo();
 
 		static void Register(lua_State *lua);
 	};
@@ -81,11 +75,9 @@ public:
 		LuaMath::Vector4 GetAttenuation();
 		void SetAttenuation(LuaMath::Vector4 vec);
 
-		void ApplyShadow();
-		void RemoveShadow();
-		bool GetShadowState();
-
-		std::shared_ptr<SpotLightINFO> GetLightInfo();
+		//void ApplyShadow();
+		//void RemoveShadow();
+		//bool GetShadowState();
 
 		static void Register(lua_State *lua);
 	};

@@ -4,10 +4,7 @@
 #include <string>
 #include <Converter.h>
 #include <Keys.h>
-#include <InfoCommunicator\AddObjectMessage.h>
-#include <InfoCommunicator\UpdateObjectMessage.h>
-#include <InfoCommunicator\GetObjectINFO.h>
-#include <InfoCommunicator\InfoCommunicator.h>
+#include <EntityCommunicator\EntityConfig.h>
 #include <ObjectINFO.h>
 
 LuaObject::LuaObject()
@@ -25,9 +22,7 @@ LuaObject::LuaObject()
 	obj->Ambient = col;
 	obj->Specular = col;
 
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-
-	InfoCommunicator::SubmitMessage(msg);
+	EntityConfig::SetEntity(obj);
 
 	this->ID = obj->ID;
 }
@@ -75,35 +70,24 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->Texture2DVecs = textures2D;
 	obj->TextureCubeVecs = texturesCube;
 	obj->Light = Light;
-	std::shared_ptr<AddObjectMessage> msg(new AddObjectMessage(obj));
-	InfoCommunicator::SubmitMessage(msg);
+	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
 
 void LuaObject::SetGraphic(LuaBasicDrawableObject graphic)
 {
-	auto obj = this->GetObject();
-	obj->DrawObjID = graphic.ID;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DRAWABLEOBJ, GenericObj<std::string>::CreateNew(graphic.ID));
 }
 void LuaObject::RemoveGraphic()
 {
-	auto obj = this->GetObject();
-	obj->DrawObjID = "";
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DRAWABLEOBJ, GenericObj<std::string>::CreateNew(""));
 }
 
 void LuaObject::Set2DTexture(LuaBasicTexture texture)
 {
 	auto obj = this->GetObject();
 	obj->Texture2DVecs.push_back(texture.ID);
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(obj);
 }
 void LuaObject::Remove2DTexture(LuaBasicTexture texture)
 {
@@ -113,26 +97,20 @@ void LuaObject::Remove2DTexture(LuaBasicTexture texture)
 	{
 		obj->Texture2DVecs.erase(iter);
 	}
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(obj);
 }
 void LuaObject::RemoveAll2DTexture()
 {
 	auto obj = this->GetObject();
 	obj->Texture2DVecs.erase(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end());
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(obj);;
 }
 
 void LuaObject::SetCubeTexture(LuaBasicTexture texture)
 {
 	auto obj = this->GetObject();
-	obj->TextureCubeVecs.push_back(texture.ID);
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	obj->TextureCubeVecs.push_back(texture.ID); 
+	EntityConfig::SetEntity(obj);
 }
 void LuaObject::RemoveCubeTexture(LuaBasicTexture texture)
 {
@@ -142,114 +120,90 @@ void LuaObject::RemoveCubeTexture(LuaBasicTexture texture)
 	{
 		obj->TextureCubeVecs.erase(iter);
 	}
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(obj);
 }
 void LuaObject::RemoveAllCubeTexture()
 {
 	auto obj = this->GetObject();
 	obj->Texture2DVecs.erase(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end());
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(obj);
 }
 
 void LuaObject::SetLocation(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetObject();
-	obj->Location = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::LOCATION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetLocation()
 {
-	return this->GetObject()->Location;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::LOCATION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetScale(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetObject();
-	obj->Scale = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::SCALE , GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetScale()
 {
-	return this->GetObject()->Scale;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::SCALE);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetRotation(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetObject();
-	obj->Rotation = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::ROTATION, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetRotation()
 {
-	return this->GetObject()->Rotation;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::ROTATION);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetDiffuse(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetObject();
-	obj->Diffuse = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DIFFUSE, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetDiffuse()
 {
-	return this->GetObject()->Diffuse;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::DIFFUSE);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetAmibent(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetObject();
-	obj->Ambient = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::AMBIENT, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetAmibent()
 {
-	return this->GetObject()->Ambient;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::AMBIENT);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetSpecular(LuaMath::Vector4 vec)
 {
-	auto obj = this->GetObject();
-	obj->Specular = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::SPECULAR, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetSpecular()
 {
-	return this->GetObject()->Specular;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::SPECULAR);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetLight(bool vec)
 {
-	auto obj = this->GetObject();
-	obj->Light = vec;
-
-	std::shared_ptr<UpdateObjectMessage> msg1(new UpdateObjectMessage(this->ID, obj));
-	InfoCommunicator::SubmitMessage(msg1);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::LIGHT, GenericObj<bool>::CreateNew(vec));
 }
 bool LuaObject::GetLight()
 {
-	return this->GetObject()->Light;
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::LIGHT);
+	return GenericObj<bool>::GetValue(obj);
 }
+
 std::shared_ptr<ObjectINFO> LuaObject::GetObject()
 {
 	std::shared_ptr<ObjectINFO> returnValue;
 
-	auto obj = GetObjectINFO::GetObject(this->ID);
+	auto obj = EntityConfig::GetEntity(this->ID);
 	if(obj)
 	{
 		returnValue = std::dynamic_pointer_cast<ObjectINFO>(obj);

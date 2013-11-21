@@ -20,7 +20,7 @@ spotLight = SpotLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 1.0),
                        [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
                        [Keys["Light"]["Spot"]]        = 0.5,
                        [Keys["Light"]["Range"]]       = 20,});
-spotLight:ApplyShadow();
+--spotLight:ApplyShadow();
 
 return LightSetup
 

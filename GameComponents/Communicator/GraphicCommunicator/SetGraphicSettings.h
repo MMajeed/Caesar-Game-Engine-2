@@ -14,22 +14,4 @@ protected:
 	CHL::Vec4 colour;
 };
 
-class SetCameraIDMessage : public Message
-{
-public:
-	SetCameraIDMessage(const std::string& input);
-	virtual Message::Status Work();
-protected:
-	std::string id;
-};
-
-class SetPrespectiveIDMessage : public Message
-{
-public:
-	SetPrespectiveIDMessage(const std::string& input);
-	virtual Message::Status Work();
-protected:
-	std::string id;
-};
-
 #endif //__SetGraphicSettings__

@@ -23,6 +23,7 @@ std::shared_ptr<Object> ObjectINFO::Get(const std::string& ID)
 		else if(ID == Keys::ObjectInfo::TEXTURE2DOBJ){ returnValue = GenericObj<std::vector<std::string>>::CreateNew(this->Texture2DVecs); }
 		else if(ID == Keys::ObjectInfo::TEXTURECUBEOBJ){ returnValue = GenericObj<std::vector<std::string>>::CreateNew(this->TextureCubeVecs); }
 		else if(ID == Keys::ObjectInfo::LIGHT){ returnValue = GenericObj<bool>::CreateNew(this->Light); }
+		else if(ID == Keys::ObjectInfo::SHADOW){ returnValue = GenericObj<bool>::CreateNew(this->Shadow); }
 	}
 
 	return returnValue;
@@ -43,6 +44,7 @@ void ObjectINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::ObjectInfo::TEXTURE2DOBJ){ this->Texture2DVecs = GenericObj<std::vector<std::string>>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::TEXTURECUBEOBJ){ this->TextureCubeVecs = GenericObj<std::vector<std::string>>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::LIGHT){ this->Light = GenericObj<bool>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::SHADOW){ this->Shadow = GenericObj<bool>::GetValue(obj); }
 	
 }
 

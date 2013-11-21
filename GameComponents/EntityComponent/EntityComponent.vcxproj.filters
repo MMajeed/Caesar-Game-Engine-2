@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="InfoManager.h" />
+    <ClInclude Include="EntityManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InfoManager.cpp" />
+    <ClCompile Include="EntityManager.cpp" />
   </ItemGroup>
 </Project>
