@@ -170,6 +170,9 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::HEIGHT, GenericObj<int>::CreateNew(height));
 		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::WIDTH, GenericObj<int>::CreateNew(width));
 
+		std::shared_ptr<OnResize> resize(new OnResize(width, height));
+		GraphicCommunicator::SubmitMessage(resize);
+
 		break;
 	}
 	case WM_TIMER:
