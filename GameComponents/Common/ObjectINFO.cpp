@@ -4,6 +4,7 @@
 ObjectINFO::ObjectINFO()
 {
 	this->Light = true;
+	this->Shadow = true;
 }
 
 std::shared_ptr<Object> ObjectINFO::Get(const std::string& ID)

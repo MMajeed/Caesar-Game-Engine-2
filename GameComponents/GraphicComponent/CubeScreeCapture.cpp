@@ -227,7 +227,6 @@ void CubeScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& 
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	graphic.SetupLight(objects);
 	graphic.SetupConstantBuffer(objects);
 	graphic.DrawObjects(objects);
 

@@ -60,11 +60,19 @@ myTexture = nil;
 OnKeyDown(string.byte("A"), 
     function() 
         
-        myTexture = TakeScreenShot({[Keys["ScreenCapture"]["Width"]]        = 1024,
+        myTexture = TakeDepthScreenShot({[Keys["ScreenCapture"]["Width"]]        = 1024,
                                     [Keys["ScreenCapture"]["Height"]]       = 1024,
                                     [Keys["ScreenCapture"]["CameraMatrix"]] = ViewCalculation(cam.Eye, cam.TargetMagintude, cam.Up, cam.Pitch, cam.Yaw, cam.Roll), });
         box1:RemoveAll2DTexture();
         box1:Set2DTexture(myTexture);
+        
+        
+pointLight = PointLight({[Keys["Light"]["Diffuse"]]     = Vector4(1.0, 1.0, 0.0),
+                         [Keys["Light"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
+                         [Keys["Light"]["Specular"]]    = Vector4(0.0, 0.0, 0.0),
+                         [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, -45.0),
+                         [Keys["Light"]["Range"]]       = 40,
+                         [Keys["Light"]["Attenuation"]] = Vector4(1.0, 0.0, 0.0),});
     end
 );
 

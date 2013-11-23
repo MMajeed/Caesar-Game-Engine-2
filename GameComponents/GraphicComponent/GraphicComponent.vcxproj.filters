@@ -57,6 +57,12 @@
     <ClInclude Include="BasicTexture.h">
       <Filter>Texture</Filter>
     </ClInclude>
+    <ClInclude Include="SceneFilter.h">
+      <Filter>SceneFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowFilter.h">
+      <Filter>SceneFilter\ShadowFilter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -98,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="BasicTexture.cpp">
       <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowFilter.cpp">
+      <Filter>SceneFilter\ShadowFilter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +166,12 @@
     </Filter>
     <Filter Include="Light\PointLight">
       <UniqueIdentifier>{de21ae03-3721-427d-9d24-d9ef44206c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFilter">
+      <UniqueIdentifier>{fac8230d-2ee1-45c5-86f2-2b49d40524ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFilter\ShadowFilter">
+      <UniqueIdentifier>{f888f210-0c24-4dbb-832b-e3cb55473b18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

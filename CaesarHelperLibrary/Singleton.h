@@ -1,19 +1,19 @@
-#ifndef __Singelton___
-#define __Singelton___
+#ifndef __Singleton___
+#define __Singleton___
 
 #include "Linker.h"
 
 namespace CHL
 {
 	template <class CWrappedClass>
-	class Singelton
+	class Singleton
 	{
 	protected:
 		static CWrappedClass* ms_instance;
 
-		Singelton(){}
-		Singelton(const Singelton& cs) {}
-		Singelton& operator = (const Singelton& cs) {return cs;}
+		Singleton(){}
+		Singleton(const Singleton& cs) {}
+		Singleton& operator = (const Singleton& cs) {return cs;}
 
 	public:
 		static CWrappedClass& GetInstance()
@@ -25,7 +25,7 @@ namespace CHL
 	};
 
 	template <class CWrappedClass>
-	CWrappedClass* Singelton<CWrappedClass>::ms_instance = 0;
+	CWrappedClass* Singleton<CWrappedClass>::ms_instance = 0;
 }
 
-#endif //__Singelton___
+#endif //__Singleton___

@@ -8,6 +8,8 @@
 class LightINFO : public INFO
 {
 public:
+	LightINFO();
+
 	CHL::Vec4 Diffuse;
 	CHL::Vec4 Ambient;
 	CHL::Vec4 Specular;

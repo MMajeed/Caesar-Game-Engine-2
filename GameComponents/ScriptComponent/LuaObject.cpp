@@ -21,7 +21,8 @@ LuaObject::LuaObject()
 	obj->Diffuse = col;
 	obj->Ambient = col;
 	obj->Specular = col;
-
+	obj->Light = true;
+	obj->Shadow = true;
 	EntityConfig::SetEntity(obj);
 
 	this->ID = obj->ID;
@@ -41,6 +42,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	std::vector<std::string>  textures2D;
 	std::vector<std::string>  texturesCube;
 	bool Light = true;
+	bool Shadow = true;
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
@@ -57,6 +59,7 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::TEXTURE2DOBJ)	{ textures2D.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
 		else if(key == Keys::ObjectInfo::TEXTURECUBEOBJ){ texturesCube.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
 		else if(key == Keys::ObjectInfo::LIGHT)			{ Light = luabind::object_cast<bool>(*it); }
+		else if(key == Keys::ObjectInfo::SHADOW)		{ Shadow = luabind::object_cast<bool>(*it); }
 	}
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
@@ -70,6 +73,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->Texture2DVecs = textures2D;
 	obj->TextureCubeVecs = texturesCube;
 	obj->Light = Light;
+	obj->Shadow = Shadow;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
@@ -195,7 +199,17 @@ void LuaObject::SetLight(bool vec)
 }
 bool LuaObject::GetLight()
 {
-	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::LIGHT);
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::SHADOW);
+	return GenericObj<bool>::GetValue(obj);
+}
+
+void LuaObject::SetShadow(bool vec)
+{
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::LIGHT, GenericObj<bool>::CreateNew(vec));
+}
+bool LuaObject::GetShadow()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::SHADOW);
 	return GenericObj<bool>::GetValue(obj);
 }
 
@@ -233,5 +247,7 @@ void LuaObject::Register(lua_State *lua)
 			.property("Diffuse", &LuaObject::GetDiffuse, &LuaObject::SetDiffuse)
 			.property("Amibent", &LuaObject::GetAmibent, &LuaObject::SetAmibent)
 			.property("Specular", &LuaObject::GetSpecular, &LuaObject::SetSpecular)
+			.property("Light", &LuaObject::GetLight, &LuaObject::SetLight)
+			.property("Shadow", &LuaObject::GetShadow, &LuaObject::SetShadow)
 	  ];
 }

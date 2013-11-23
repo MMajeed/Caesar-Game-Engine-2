@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <Singleton.h>
 
-class Error : public CHL::Singelton<Error>
+class Error : public CHL::Singleton<Error>
 {
 private:
 	std::exception_ptr eptr;

@@ -45,6 +45,7 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 direction;
+	bool hasShadow = true;
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -63,6 +64,7 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	obj->Ambient = ambient;
 	obj->Specular = specular;
 	obj->Direction = direction;
+	obj->HasShadow = hasShadow;
 
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
@@ -185,6 +187,7 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 position; CHL::Vec4 direction; CHL::Vec4 att;
 	double spot = 0.0;	double range = 0.0;
+	bool hasShadow = true;
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -211,7 +214,7 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 	obj->Attenuation = att;
 	obj->Spot = spot;
 	obj->Range = range;
-
+	obj->HasShadow = hasShadow;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }

@@ -12,7 +12,7 @@
 #include <Interface.h>
 #include "LuaProcesses.h"
 
-class LuaManager : public Interface, public CHL::Singelton<LuaManager>
+class LuaManager : public Interface, public CHL::Singleton<LuaManager>
 {
 protected:
 	LuaManager();
@@ -29,7 +29,7 @@ public:
 protected:
 	std::vector<std::shared_ptr<LuaProcesses>> allProcesses;
 
-	friend CHL::Singelton<LuaManager>;
+	friend CHL::Singleton<LuaManager>;
 };
 
 #endif //__LuaManager__

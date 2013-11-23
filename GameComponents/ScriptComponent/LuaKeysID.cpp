@@ -87,6 +87,7 @@ void LuaKeysID::Register(lua_State *lua)
 		ObjectInfoTable[Keys::ObjectInfo::TEXTURE2DOBJ] = Keys::ObjectInfo::TEXTURE2DOBJ;
 		ObjectInfoTable[Keys::ObjectInfo::TEXTURECUBEOBJ] = Keys::ObjectInfo::TEXTURECUBEOBJ;
 		ObjectInfoTable[Keys::ObjectInfo::LIGHT] = Keys::ObjectInfo::LIGHT;
+		ObjectInfoTable[Keys::ObjectInfo::SHADOW] = Keys::ObjectInfo::SHADOW;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenCapture = luabind::newtable(lua);

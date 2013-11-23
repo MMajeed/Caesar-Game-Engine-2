@@ -11,5 +11,6 @@ cBuffer::CLightDesc PointLight::GetLightDesc(std::shared_ptr<PointLightINFO> lig
 	light.range = (float)lightInfo->Range;
 	light.attenuation = CHL::ConvertVec4(lightInfo->Attenuation);
 	light.type = 2;
+	light.shadowNum = -1;
 	return light;
 }

@@ -9,7 +9,7 @@
 #include <hash_map>
 #include <memory>
 
-class InputManager : public Interface, public CHL::Singelton<InputManager>
+class InputManager : public Interface, public CHL::Singleton<InputManager>
 {
 protected:	
 	InputManager();
@@ -25,7 +25,7 @@ public:
 protected:
 	std::hash_map<unsigned int, KeyStatus> objects;
 
-	friend CHL::Singelton<InputManager>;
+	friend CHL::Singleton<InputManager>;
 };
 
 #endif //__InputManager__

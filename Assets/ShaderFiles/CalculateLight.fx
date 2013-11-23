@@ -1,4 +1,4 @@
-
+#include "Shadow.fx"
 
 float4 CalculateLight(PS_INPUT input)
 {
@@ -10,13 +10,15 @@ float4 CalculateLight(PS_INPUT input)
 
 		float shadow = 1.0f;
 
-
-		/*bool isInShadow = lightArray[index].HasShadow && IsInShadow(input.LightShadow[index], Shadow, samShadow);
-
-		if(isInShadow == true)
+		if(lightArray[index].ShadowNum >= 0)
 		{
-			shadow = 0.5f;
-		}*/
+			bool isInShadow = IsInShadow(input.LightShadow[index], lightArray[index]);
+
+			if(isInShadow == true)
+			{
+				shadow = 0.5f;
+			}
+		}
 
 		if(lightArray[index].Type == 1) // Parallel light
 		{

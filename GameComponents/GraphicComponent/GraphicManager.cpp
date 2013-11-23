@@ -67,7 +67,7 @@ void GraphicManager::RunAllCapture(std::hash_map<std::string, SP_INFO>& objects)
 }
 void GraphicManager::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 {
-	Light::SetupLight(objects);
+	Light::GetInstance().SetupLight(objects);
 }
 void GraphicManager::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
@@ -161,8 +161,17 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 		std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
 		if(!objInfo){ continue; }
 
+		bool fitsTheScene = true;
+		for(auto iterScene = this->sceneFilters.begin();
+			iterScene != this->sceneFilters.end();
+			++iterScene)
+		{
+			fitsTheScene = iterScene->second->Filter(iterObj->second);
+			if(fitsTheScene == false){ break; }
+		}
+		if(fitsTheScene == false){ continue; }
+
 		auto drawableIter = this->objectDrawables.find(objInfo->DrawObjID);
-		
 		if(drawableIter == this->objectDrawables.end()){ continue; }// If it didn't fine then continue
 
 		drawableIter->second->Draw(objInfo);
@@ -340,6 +349,8 @@ void GraphicManager::InitDevice()
 
 	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
 
+	Light::GetInstance().Init();
+
 	this->D3DStuff.IsInitialized = true;
 }
 
@@ -348,15 +359,22 @@ void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
 {
 	this->objectDrawables[obj->ID] = obj;
 }
+void GraphicManager::RemoveObjectDrawable(std::string ID)
+{
+	this->objectDrawables.erase(ID);
+}
 const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
 {
 	return this->objectDrawables;
 }
 
-
 void GraphicManager::InsertTexture(std::shared_ptr<BasicTexture> obj)
 {
 	this->textures[obj->ID] = obj;
+}
+void GraphicManager::RemoveTexture(std::string ID)
+{
+	this->textures.erase(ID);
 }
 const std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicManager::AllTexture()
 {
@@ -367,6 +385,10 @@ void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
 {
 	this->ScreenCaptures[obj->ID] = obj;
 }
+void GraphicManager::RemoveScreenCapture(std::string ID)
+{
+	this->ScreenCaptures.erase(ID);
+}
 const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
 {
 	return this->ScreenCaptures;
@@ -376,7 +398,25 @@ void GraphicManager::InsertContinuousScreenCapture(std::shared_ptr<ContinuousScr
 {
 	this->ContinuousScreenCaptures[obj->ID] = obj;
 }
+void GraphicManager::RemoveContinuousScreenCapture(std::string ID)
+{
+	this->ContinuousScreenCaptures.erase(ID);
+}
 const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> GraphicManager::AllContinuousScreenCapture()
 {
 	return this->ContinuousScreenCaptures;
+}
+
+
+void GraphicManager::InsertSceneFilter(std::shared_ptr<SceneFilter> obj)
+{
+	this->sceneFilters[obj->ID] = obj;
+}
+void GraphicManager::RemoveSceneFilter(std::string ID)
+{
+	this->sceneFilters.erase(ID);
+}
+const std::hash_map<std::string, std::shared_ptr<SceneFilter>> GraphicManager::AllSceneFilters()
+{
+	return this->sceneFilters;
 }

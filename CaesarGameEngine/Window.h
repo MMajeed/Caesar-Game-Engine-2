@@ -10,7 +10,7 @@
 
 class Interface;
 
-class Window : public CHL::Singelton<Window>
+class Window : public CHL::Singleton<Window>
 {
 public:
 	Window();

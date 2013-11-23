@@ -1,7 +1,6 @@
 #include "HLSL_Light.fx"
-#include "Shadow.fx"
 
-static const unsigned int numOfLights = 25;
+static const unsigned int numOfLights = 10;
 static const unsigned int NumberOfTextures = 10;
 
 cbuffer cbObject : register( b0 )
@@ -28,6 +27,8 @@ cbuffer cbLight : register( b2 )
 
 Texture2D Textures2D[NumberOfTextures] : register(t0);
 TextureCube TexturesCube[NumberOfTextures] : register(t10);
+
+Texture2DArray Shadow : register(t100);
 
 struct PS_INPUT
 {

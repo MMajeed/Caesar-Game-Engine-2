@@ -21,7 +21,7 @@ CHL::Matrix4x4 CHL::ViewCalculation(const CHL::Vec4& vEye, const CHL::Vec4& vTM,
 	XMVECTOR xmTM = XMVectorSet(  (float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3) );
 	XMVECTOR xmUp = XMVectorSet(  (float)vUp(0), (float)vUp(1), (float)vUp(2), (float)vUp(3) );
 
-	XMMATRIX RotationMatrix( XMMatrixRotationRollPitchYaw( (float)pitch, (float)yaw, (float)roll ));
+	XMMATRIX RotationMatrix = XMMatrixRotationRollPitchYaw((float)pitch, (float)yaw, (float)roll);
 
 	xmTM = XMVector3TransformCoord( xmTM, RotationMatrix );
     xmUp = XMVector3TransformCoord( xmUp, RotationMatrix );

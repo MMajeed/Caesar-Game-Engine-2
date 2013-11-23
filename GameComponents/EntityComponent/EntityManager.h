@@ -8,7 +8,7 @@
 #include <hash_map>
 #include <mutex>
 
-class EntityManager : public CHL::Singelton<EntityManager>
+class EntityManager : public CHL::Singleton<EntityManager>
 {
 protected:
 	EntityManager();
@@ -24,7 +24,7 @@ public:
 
 	std::mutex infoMutex;
 
-	friend CHL::Singelton<EntityManager>;
+	friend CHL::Singleton<EntityManager>;
 };
 
 #endif //__EntityManager__

@@ -13,5 +13,6 @@ skyBoxTexture = BasicTexture("Assets/Texture/Sky/Sky.dds");
 skyBoxObject = Object({[Keys["ObjectInfo"]["Scale"]]          = Vector4(2000.0, 2000.0, 2000.0),
                        [Keys["ObjectInfo"]["DrawableObj"]]    = skyBoxDrawable,
                        [Keys["ObjectInfo"]["TextureCubeObj"]] = skyBoxTexture,
-                       [Keys["ObjectInfo"]["Light"]] = false,});
+                       [Keys["ObjectInfo"]["Light"]] = false,
+                       [Keys["ObjectInfo"]["SHADOW"]] = false,});
 return SkyBox

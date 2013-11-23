@@ -20,6 +20,7 @@ public:
 	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects);
 
 	static std::shared_ptr<DepthScreenCapture> Spawn(std::string id, unsigned int width, unsigned int height);
+	static std::shared_ptr<DepthScreenCapture> Spawn(unsigned int width, unsigned int height, ID3D11Texture2D*& tex, unsigned int index, unsigned int arraySize);
 	std::shared_ptr<ScreenCapture> clone() const;
 
 	struct

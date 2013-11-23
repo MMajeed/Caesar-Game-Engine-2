@@ -1,6 +1,7 @@
 #include "DepthScreenCapture.h"
 #include "GraphicManager.h"
 #include <Object.h>
+#include <GenerateGUID.h>
 
 DepthScreenCapture::DepthScreenCapture(const std::string& inputID)
 : ScreenCapture(inputID)
@@ -32,15 +33,15 @@ void DepthScreenCapture::Init()
 
 	ID3D11Texture2D* depthMap = 0;
 	HRESULT hr = d3dStuff.pd3dDevice->CreateTexture2D(&texDesc, 0, &depthMap);
-	if(hr){throw std::exception("Error creating 2d texture for shadow");}
+	if(FAILED(hr)){throw std::exception("Error creating 2d texture for shadow");}
 
-	   D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 	dsvDesc.Flags = 0;
 	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 	dsvDesc.Texture2D.MipSlice = 0;
 	hr = d3dStuff.pd3dDevice->CreateDepthStencilView(depthMap, &dsvDesc, &this->D3DInfo.pDepthMapDSV);
-	if(hr){throw std::exception("Error creating 2d texture for shadow");}
+	if(FAILED(hr)){throw std::exception("Error creating 2d texture for shadow");}
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
 	srvDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
@@ -48,7 +49,7 @@ void DepthScreenCapture::Init()
 	srvDesc.Texture2D.MipLevels = texDesc.MipLevels;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	hr = d3dStuff.pd3dDevice->CreateShaderResourceView(depthMap, &srvDesc, &this->pScreenTexture);
-	if(hr){throw std::exception("Error creating 2d texture for shadow");}
+	if(FAILED(hr)){throw std::exception("Error creating 2d texture for shadow");}
 	
 	// View saves a reference to the texture so we can release our reference.
 	depthMap->Release();
@@ -115,7 +116,6 @@ void DepthScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>&
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	graphic.SetupLight(objects);
 	graphic.SetupConstantBuffer(objects);
 	graphic.DrawObjects(objects);
 }
@@ -139,7 +139,35 @@ std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(std::string id, un
 
 	return newObject;
 }
+std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(unsigned int width, unsigned int height, ID3D11Texture2D*& tex, unsigned int index, unsigned int arraySize)
+{
+	std::shared_ptr<DepthScreenCapture> newObject(new DepthScreenCapture(CHL::GenerateGUID()));
 
+	newObject->D3DInfo.width = width;
+	newObject->D3DInfo.height = height;
+	
+	GraphicManager& graphic = GraphicManager::GetInstance();
+	auto d3dStuff = graphic.D3DStuff;
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+	ZeroMemory(&dsvDesc, sizeof(dsvDesc));
+	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2DARRAY;
+	dsvDesc.Texture2DArray.ArraySize = 1;
+	dsvDesc.Texture2DArray.FirstArraySlice = index;
+	HRESULT hr = d3dStuff.pd3dDevice->CreateDepthStencilView(tex, &dsvDesc, &newObject->D3DInfo.pDepthMapDSV);
+	if(FAILED(hr)){ throw std::exception("Error creating 2d texture for shadow"); }
+
+
+	newObject->D3DInfo.Viewport.TopLeftX = 0.0f;
+	newObject->D3DInfo.Viewport.TopLeftY = 0.0f;
+	newObject->D3DInfo.Viewport.Width = (FLOAT)newObject->D3DInfo.width;
+	newObject->D3DInfo.Viewport.Height = (FLOAT)newObject->D3DInfo.height;
+	newObject->D3DInfo.Viewport.MinDepth = 0.0f;
+	newObject->D3DInfo.Viewport.MaxDepth = 1.0f;	
+
+	return newObject;
+}
 std::shared_ptr<ScreenCapture> DepthScreenCapture::clone() const
 {
 	std::shared_ptr<DepthScreenCapture> newObject(new DepthScreenCapture(*this));

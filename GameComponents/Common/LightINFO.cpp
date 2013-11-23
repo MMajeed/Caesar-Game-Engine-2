@@ -1,6 +1,10 @@
 #include "LightINFO.h"
 #include "Keys.h"
 
+LightINFO::LightINFO()
+{
+	this->HasShadow = false;
+}
 std::shared_ptr<Object> LightINFO::Get(const std::string& ID)
 {
 	std::shared_ptr<Object> returnValue;

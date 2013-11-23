@@ -15,7 +15,7 @@ struct LightDesc
 	float Spot;
 	float Range;
 	int Type;
-	int HasShadow;
+	int ShadowNum;
 	matrix lightView;
 	matrix lightProject;
 };

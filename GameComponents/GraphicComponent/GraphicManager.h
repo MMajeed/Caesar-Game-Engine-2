@@ -16,8 +16,9 @@
 #include "ContinuousScreenShot.h"
 #include <INFO.h>
 #include <hash_map>
+#include "SceneFilter.h"
 
-class GraphicManager : public Interface, public CHL::Singelton<GraphicManager>
+class GraphicManager : public Interface, public CHL::Singleton<GraphicManager>
 {
 protected:
 	GraphicManager();
@@ -56,20 +57,28 @@ public:
 
 	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
 	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
+	void RemoveObjectDrawable(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
-
+	
 	std::hash_map<std::string, std::shared_ptr<BasicTexture>> textures;
 	void InsertTexture(std::shared_ptr<BasicTexture> obj);
+	void RemoveTexture(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<BasicTexture>> AllTexture();
 
 	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
 	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
+	void RemoveScreenCapture(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
 	
 	std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> ContinuousScreenCaptures;
 	void InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj);
+	void RemoveContinuousScreenCapture(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> AllContinuousScreenCapture();
 
+	std::hash_map<std::string, std::shared_ptr<SceneFilter>> sceneFilters;
+	void InsertSceneFilter(std::shared_ptr<SceneFilter> obj);
+	void RemoveSceneFilter(std::string ID);
+	const std::hash_map<std::string, std::shared_ptr<SceneFilter>> AllSceneFilters();
 	
 	virtual void InitDevice();
 
@@ -83,7 +92,7 @@ public:
 	} SceneInfo;
 
 
-	friend CHL::Singelton<GraphicManager>;
+	friend CHL::Singleton<GraphicManager>;
 };
 
 #endif //__GraphicManager__
