@@ -34,9 +34,9 @@ LuaBasicTexture LuaScreenCapture::TakeScreenSnapShot(luabind::object const& tabl
 
 	if(cameraSet == false)
 	{
-		CHL::Vec4 eye;	eye(0) = 0.0; eye(1) = 0.0; eye(2) = 0.0; eye(3) = 0.0;
-		CHL::Vec4 TM;	TM(0) = 0.0; TM(1) = 0.0; TM(2) = 1.0; TM(3) = 0.0;
-		CHL::Vec4 up;	up(0) = 0.0; up(1) = 1.0; up(2) = 0.0; up(3) = 0.0;
+		CHL::Vec4 eye{0.0, 0.0, 0.0, 0.0};
+		CHL::Vec4 TM{0.0, 0.0, 1.0, 0.0};
+		CHL::Vec4 up{0.0, 1.0, 0.0, 0.0};
 		double roll = 0.0;	double pitch = 0.0;		double yaw = 0.0;
 
 		camera = CHL::ViewCalculation(eye, TM, up, pitch, yaw, roll);
@@ -89,9 +89,9 @@ LuaBasicTexture LuaScreenCapture::TakeDepthSnapShot(luabind::object const& table
 
 	if(cameraSet == false)
 	{
-		CHL::Vec4 eye;	eye(0) = 0.0; eye(1) = 0.0; eye(2) = 0.0; eye(3) = 0.0;
-		CHL::Vec4 TM;	TM(0) = 0.0; TM(1) = 0.0; TM(2) = 1.0; TM(3) = 0.0;
-		CHL::Vec4 up;	up(0) = 0.0; up(1) = 1.0; up(2) = 0.0; up(3) = 0.0;
+		CHL::Vec4 eye{0.0, 0.0, 0.0, 0.0};
+		CHL::Vec4 TM{0.0, 0.0, 1.0, 0.0};
+		CHL::Vec4 up{0.0, 1.0, 0.0, 0.0};
 		double roll = 0.0;	double pitch = 0.0;		double yaw = 0.0;
 
 		camera = CHL::ViewCalculation(eye, TM, up, pitch, yaw, roll);

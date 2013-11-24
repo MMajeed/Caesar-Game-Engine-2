@@ -122,11 +122,12 @@ void BasicScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects
 
 	graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
 	graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
-	CHL::Vec4 eye; 
-	eye(0) = this->D3DInfo.cameraMatrix[0][3];
-	eye(0) = this->D3DInfo.cameraMatrix[1][3];
-	eye(0) = this->D3DInfo.cameraMatrix[2][3];
-	eye(0) = this->D3DInfo.cameraMatrix[3][3];
+	double eyeX = this->D3DInfo.cameraMatrix[0][3] * -1.0;
+	double eyeY = this->D3DInfo.cameraMatrix[1][3] * -1.0;
+	double eyeZ = this->D3DInfo.cameraMatrix[2][3] * -1.0;
+	double eyeW = this->D3DInfo.cameraMatrix[3][3] * -1.0;
+
+	CHL::Vec4 eye{eyeX, eyeY, eyeZ, eyeW};
 	graphic.SceneInfo.Eye = eye;
 }
 void BasicScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)

@@ -24,9 +24,7 @@ GraphicManager::GraphicManager()
 	this->D3DStuff.pDepthStencilView	= 0;
 	this->D3DStuff.IsInitialized	    = false;
 
-	this->SceneInfo.ClearColour(0) = 0.5;
-	this->SceneInfo.ClearColour(1) = 0.5;
-	this->SceneInfo.ClearColour(2) = 0.5;
+	this->SceneInfo.ClearColour = {0.5, 0.5, 0.5, 0.5};
 }
 
 void GraphicManager::Init()
@@ -72,12 +70,9 @@ void GraphicManager::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 void GraphicManager::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
 	// Camera
-	CHL::Vec4 vEye;
-	vEye(0) = 0.0;	vEye(1) = 0.0;	vEye(2) = 0.0;	vEye(3) = 0.0;
-	CHL::Vec4 vTM;
-	vTM(0) = 0.0;	vTM(1) = 0.0;	vTM(2) = 1.0;	vTM(3) = 0.0;
-	CHL::Vec4 vUp;
-	vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
+	CHL::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
+	CHL::Vec4 vTM{0.0, 0.0, 1.0, 0.0};
+	CHL::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
 	std::string cameraID = CameraID::Get();

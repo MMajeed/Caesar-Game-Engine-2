@@ -1,78 +1,38 @@
 require("camera")
 require("SkyBox")
 require("LightSetup")
+require("floor")
 
 ClearScreen(0.5, 0.5, 0.5);
-
-boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Box.ply",
-                                   [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
-tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
-
-
-box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
-               [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5),
-               [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
-               [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
-               [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-               [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
 
 sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                       [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
-
-
-for i = 1, 10, 1 do
-    local x = ((i % 10) - 5) * 4;
-    local y = 2;
-    local z = 0;
-    local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
-                                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
-                                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
-                                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
-                                 [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
+for zIndex = 0, 2, 1 do
+    for xIndex = 1, 10, 1 do
+        local x = ((xIndex % 10) - 5) * 4;
+        local y = 2;
+        local z = -20 + (zIndex * 20);
+        local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
+                                     [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
+                                     [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                                     [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                                     [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
+    end
 end
 
-for i = 1, 10, 1 do
-    local x = ((i % 10) - 5) * 4;
-    local y = 2;
-    local z = 20;
-    local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
-                                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
-                                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
-                                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
-                                 [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
-end
-
-for i = 1, 10, 1 do
-    local x = ((i % 10) - 5) * 4;
-    local y = 2;
-    local z = -20;
-    local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
-                                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
-                                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
-                                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
-                                 [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
-end
-  
-myTexture = nil;
-                                 
-OnKeyDown(string.byte("A"), 
-    function() 
-        
-        myTexture = TakeDepthScreenShot({[Keys["ScreenCapture"]["Width"]]        = 1024,
-                                    [Keys["ScreenCapture"]["Height"]]       = 1024,
-                                    [Keys["ScreenCapture"]["CameraMatrix"]] = ViewCalculation(cam.Eye, cam.TargetMagintude, cam.Up, cam.Pitch, cam.Yaw, cam.Roll), });
-        box1:RemoveAll2DTexture();
-        box1:Set2DTexture(myTexture);
-        
-        
-pointLight = PointLight({[Keys["Light"]["Diffuse"]]     = Vector4(1.0, 1.0, 0.0),
-                         [Keys["Light"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
-                         [Keys["Light"]["Specular"]]    = Vector4(0.0, 0.0, 0.0),
-                         [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, -45.0),
-                         [Keys["Light"]["Range"]]       = 40,
-                         [Keys["Light"]["Attenuation"]] = Vector4(1.0, 0.0, 0.0),});
+lightPos = 10.0;
+OnKeyDown(string.byte("B"), 
+    function()       
+      SpotLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 1.0),
+                 [Keys["Light"]["Ambient"]]     = Vector4(0.1, 0.1, 1.0),
+                 [Keys["Light"]["Specular"]]    = Vector4(0.0, 0.0, 1.0),
+                 [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, lightPos),
+                 [Keys["Light"]["Direction"]]   = Vector4(0.7853, -3.14, -3.14),
+                 [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
+                 [Keys["Light"]["Spot"]]        = 0.5,
+                 [Keys["Light"]["Range"]]       = 20,});
+      lightPos = lightPos - 10.0;
     end
 );
 

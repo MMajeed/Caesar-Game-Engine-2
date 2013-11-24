@@ -5,10 +5,7 @@ LuaMath::Vector4::Vector4(){}
 LuaMath::Vector4::Vector4(CHL::Vec4 vecValue){	this->vector = vecValue; }
 LuaMath::Vector4::Vector4(double xValue, double yValue, double zValue, double wValue)
 {
-	this->vector(0) = xValue;
-	this->vector(1) = yValue;
-	this->vector(2) = zValue;
-	this->vector(3) = wValue;
+	this->vector = {xValue, yValue, zValue, wValue};
 }
 LuaMath::Vector4::operator CHL::Vec4(){	return this->vector;}
 
@@ -32,6 +29,10 @@ void LuaMath::Vector4::Register(lua_State *lua)
 		  .property("Y", &LuaMath::Vector4::GetterY, &LuaMath::Vector4::SetterY)
 		  .property("Z", &LuaMath::Vector4::GetterZ, &LuaMath::Vector4::SetterZ)
 		  .property("W", &LuaMath::Vector4::GetterW, &LuaMath::Vector4::SetterW)
+		  .property("x", &LuaMath::Vector4::GetterX, &LuaMath::Vector4::SetterX)
+		  .property("y", &LuaMath::Vector4::GetterY, &LuaMath::Vector4::SetterY)
+		  .property("z", &LuaMath::Vector4::GetterZ, &LuaMath::Vector4::SetterZ)
+		  .property("w", &LuaMath::Vector4::GetterW, &LuaMath::Vector4::SetterW)
 	  ];
 }
 

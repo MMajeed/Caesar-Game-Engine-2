@@ -27,7 +27,6 @@ XMFLOAT4 CHL::ConvertVec4(const CHL::Vec4& vector)
 }
 CHL::Vec4 CHL::ConvertVec4(const XMFLOAT4& xmVector)
 {
-	CHL::Vec4 vector;
-	vector(0) = xmVector.x; vector(1) = xmVector.y; vector(2) = xmVector.z; vector(3) = xmVector.w;
+	CHL::Vec4 vector{xmVector.x, xmVector.y, xmVector.z, xmVector.w};
 	return vector;
 }

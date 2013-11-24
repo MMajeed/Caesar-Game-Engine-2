@@ -9,10 +9,10 @@
 
 LuaObject::LuaObject()
 {
-	CHL::Vec4 loc;	loc(0) = 0;	loc(1) = 0;	loc(2) = 0;	loc(3) = 0;	
-	CHL::Vec4 rot;  rot(0) = 0;	rot(1) = 0;	rot(2) = 0;	rot(3) = 0;	
-	CHL::Vec4 sca;  sca(0) = 1.0;	sca(1) = 1.0;	sca(2) = 1.0;	sca(3) = 1.0;	
-	CHL::Vec4 col;  col(0) = 1.0;	col(1) = 1.0;	col(2) = 1.0;	col(3) = 1.0;
+	CHL::Vec4 loc{0.0, 0.0, 0.0, 1.0};
+	CHL::Vec4 rot{0.0, 0.0, 0.0, 1.0};
+	CHL::Vec4 sca{1.0, 1.0, 1.0, 1.0};
+	CHL::Vec4 col{1.0, 1.0, 1.0, 1.0};
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
 	obj->Location = loc;
@@ -32,12 +32,12 @@ LuaObject::LuaObject(luabind::object const& table)
 	if (luabind::type(table) != LUA_TTABLE)
 		throw std::exception("Wrong paramter for Camera, please send in a table");
 
-	CHL::Vec4 loc;	loc(0) = 0.0; loc(1) = 0.0; loc(2) = 0.0; loc(3) = 0.0;
-	CHL::Vec4 rot;	rot(0) = 0.0; rot(1) = 0.0; rot(2) = 0.0; rot(3) = 0.0;
-	CHL::Vec4 sca;	sca(0) = 1.0; sca(1) = 1.0; sca(2) = 1.0; sca(3) = 1.0;
-	CHL::Vec4 diffuse;	diffuse(0) = 1.0; diffuse(1) = 1.0; diffuse(2) = 1.0; diffuse(3) = 1.0;
-	CHL::Vec4 amibent;	amibent(0) = 1.0; amibent(1) = 1.0; amibent(2) = 1.0; amibent(3) = 1.0;
-	CHL::Vec4 specular;	specular(0) = 1.0; specular(1) = 1.0; specular(2) = 1.0; specular(3) = 1.0;
+	CHL::Vec4 loc{0.0, 0.0, 0.0, 1.0};
+	CHL::Vec4 rot{0.0, 0.0, 0.0, 1.0};
+	CHL::Vec4 sca{1.0, 1.0, 1.0, 1.0};
+	CHL::Vec4 diffuse{1.0, 1.0, 1.0, 1.0};
+	CHL::Vec4 amibent{1.0, 1.0, 1.0, 1.0};
+	CHL::Vec4 specular{1.0, 1.0, 1.0, 1.0};
 	std::string graphicDrawable;
 	std::vector<std::string>  textures2D;
 	std::vector<std::string>  texturesCube;

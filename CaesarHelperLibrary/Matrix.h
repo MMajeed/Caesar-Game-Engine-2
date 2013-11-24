@@ -7,9 +7,9 @@ namespace CHL
 	class Matrix
 	{
 	public:
-		Type vecArray[FArraySize][SArraySize];
+		Type arr[FArraySize][SArraySize];
 
-		Matrix(){ memset(&this->vecArray, 0, ( sizeof(Type) * FArraySize * SArraySize ) );	}
+		Matrix(){ memset(&this->arr, 0, ( sizeof(Type) * FArraySize * SArraySize ) );	}
 
 		template <typename T, unsigned int  FS, unsigned int SS> 
 		Matrix(const Matrix<T, FS, SS>& rhs)
@@ -18,18 +18,18 @@ namespace CHL
 			{
 				for(std::size_t x = 0; x < SS && x < SArraySize; ++x)
 				{
-					vecArray[i][x] = rhs(i, x);
+					arr[i][x] = rhs(i, x);
 				}
 				for(std::size_t x = SS; x < SArraySize; ++x)
 				{
-					vecArray[i][x] = 0.0;
+					arr[i][x] = 0.0;
 				}
 			}
 			for(std::size_t i = FS; i < FArraySize; ++i)
 			{
 				for(std::size_t x = 0; x < SArraySize; ++x)
 				{
-					vecArray[i][x] = 0.0;
+					arr[i][x] = 0.0;
 				}
 			}
 		}
@@ -62,10 +62,10 @@ namespace CHL
 
 		inline unsigned int FirstArraySize(){ return FArraySize; }
 		inline unsigned int SecondArraySize(){ return SArraySize; }
-		Type& operator()(unsigned int fIndex, unsigned int sIndex){ return this->vecArray[fIndex][sIndex]; }
-		Type operator()(unsigned int fIndex, unsigned int sIndex) const { return this->vecArray[fIndex][sIndex]; }
-		Type* operator[](unsigned int index){ return this->vecArray[index]; };
-		const Type* operator[](unsigned int index) const { return this->vecArray[index]; };
+		Type& operator()(unsigned int fIndex, unsigned int sIndex){ return this->arr[fIndex][sIndex]; }
+		Type operator()(unsigned int fIndex, unsigned int sIndex) const { return this->arr[fIndex][sIndex]; }
+		Type* operator[](unsigned int index){ return this->arr[index]; };
+		const Type* operator[](unsigned int index) const { return this->arr[index]; };
 	};
 
 	typedef Matrix<double, 4, 4> Matrix4x4;

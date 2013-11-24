@@ -172,29 +172,29 @@ void CubeScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects,
 	switch(side)
 	{
 	case X_POS:		// 0
-		vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
-		vTM(0) = 0.01;	vTM(1) = 0.0;	vTM(2) = 0.0;	vTM(3) = 0.0;
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {0.01, 0.0, 0.0, 0.0};
 		break;
 	case X_NEG:		// 1	
-		vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
-		vTM(0) = -0.01;	vTM(1) = 0.0;	vTM(2) = 0.0;	vTM(3) = 0.0;
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {-0.01, 0.0, 0.0, 0.0};
 		break;
-	case Y_POS:		// 2	
-		vUp(0) = 0.0;	vUp(1) = 0.0;	vUp(2) = 1.0;	vUp(3) = 0.0;
-		vTM(0) = 0.0;	vTM(1) = 0.01;	vTM(2) = 0.0;	vTM(3) = 0.0;
+	case Y_POS:		// 2
+		vUp = {0.0, 0.0, 1.0, 0.0};
+		vTM = {0.0, 0.01, 0.0, 0.0};
 		yaw = 3.14f;
 		break;
-	case Y_NEG:		// 3	
-		vUp(0) = 0.0;	vUp(1) = 0.0;	vUp(2) = 1.0;	vUp(3) = 0.0;
-		vTM(0) = 0.0;	vTM(1) = -0.01;	vTM(2) = 0.0;	vTM(3) = 0.0;
+	case Y_NEG:		// 3
+		vUp = {0.0, 0.0, 1.0, 0.0};
+		vTM = {0.0, -0.01, 0.0, 0.0};
 		break;
-	case Z_POS:		// 4	
-		vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
-		vTM(0) = 0.0;	vTM(1) = 0.0;	vTM(2) = 0.01;	vTM(3) = 0.0;
+	case Z_POS:		// 4
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {0.0, 0.0, 0.01, 0.0};
 		break;
 	case Z_NEG:		// 5
-		vUp(0) = 0.0;	vUp(1) = 1.0;	vUp(2) = 0.0;	vUp(3) = 0.0;
-		vTM(0) = 0.0;	vTM(1) = 0.0;	vTM(2) = -0.01;	vTM(3) = 0.0;
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {0.0, 0.0, -0.01, 0.0};
 		break;
 	}
 

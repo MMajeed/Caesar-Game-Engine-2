@@ -29,14 +29,12 @@ cBuffer::CLightDesc SpotLight::GetLightDesc(std::shared_ptr<SpotLightINFO> light
 
 CHL::Matrix4x4 SpotLight::CalculateViewMatrix(std::shared_ptr<SpotLightINFO> lightInfo)
 {
-	CHL::Vec4 vEye;
-	CHL::Vec4 vT;
-	CHL::Vec4 vUp;
+	CHL::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
+	CHL::Vec4 vT{0.0, 0.0, 1.0, 0.0};
+	CHL::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
 	double pitch; double yaw; double roll;
 
 	vEye = lightInfo->Position;
-	vT(0) = 0.0; vT(1) = 0.0; vT(2) = 1.0; vT(3) = 0.0;
-	vUp(0) = 0.0; vUp(1) = 1.0; vUp(2) = 0.0; vUp(3) = 0.0;
 
 	pitch = lightInfo->Direction(0);
 	yaw = lightInfo->Direction(1);

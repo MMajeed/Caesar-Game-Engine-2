@@ -1,25 +1,38 @@
 #ifndef __Vector__
 #define __Vector__
 
+#include <array>
+#include <algorithm>
+
 namespace CHL
 {
 	template<typename Type, unsigned int ArraySize>
 	class Vector
 	{
 	public:
-		Type vecArray[ArraySize];
-		Vector(){ memset(&this->vecArray, 0, ArraySize * sizeof(Type));	}
-
+		std::array<Type, ArraySize> arr;
+		Vector(){ std::fill(arr.begin(), arr.end(), 0);  }
+		Vector(std::initializer_list<Type> args)
+		{
+			std::copy(args.begin(), args.end(), this->arr.begin());
+			if(args.size() < ArraySize){ std::fill(arr.begin() + args.size(), arr.end(), 0); }
+		}
+		Vector& operator=(std::initializer_list<Type> args)
+		{
+			std::copy(args.begin(), args.end(), this->arr.begin());
+			if(args.size() < ArraySize){ std::fill(arr.begin() + args.size(), arr.end(), 0); }
+			return *this;
+		}
 		template <typename T, int S> 
 		Vector(const Vector<T, S>& rhs)
 		{
 			for(std::size_t i = 0; i < S && i < ArraySize; ++i)
 			{
-				vecArray[i] = rhs[i];
+				arr[i] = rhs[i];
 			}
 			for(std::size_t i = S; i < ArraySize; ++i)
 			{
-				vecArray[i] = 0;
+				arr[i] = 0;
 			}
 		}
 		template <typename T, int S> 
@@ -33,17 +46,17 @@ namespace CHL
 			}
 			for(std::size_t i = S; i < ArraySize; ++i)
 			{
-				vecArray[i] = 0;
+				arr[i] = 0;
 			}
 
 			return returnValue;
 		}
 
 		inline int Size(){ return ArraySize; }
-		Type& operator()(unsigned int index){ return this->vecArray[index]; };
-		Type operator()(unsigned int index) const { return this->vecArray[index]; };
-		Type& operator[](unsigned int index){ return this->vecArray[index]; };
-		Type operator[](unsigned int index) const { return this->vecArray[index]; };
+		Type& operator()(unsigned int index){ return this->arr[index]; };
+		Type operator()(unsigned int index) const { return this->arr[index]; };
+		Type& operator[](unsigned int index){ return this->arr[index]; };
+		Type operator[](unsigned int index) const { return this->arr[index]; };
 	};
 
 	typedef Vector<double, 2> Vec2;

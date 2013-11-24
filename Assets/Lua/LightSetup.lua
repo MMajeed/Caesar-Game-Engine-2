@@ -1,7 +1,7 @@
 local LightSetup = {}
 
 directionLight = DirectionalLight({[Keys["Light"]["Diffuse"]]   = Vector4(1.0, 1.0, 1.0),
-                                   [Keys["Light"]["Ambient"]]   = Vector4(0.8, 0.8, 0.8),
+                                   [Keys["Light"]["Ambient"]]   = Vector4(0.5, 0.5, 0.5),
                                    [Keys["Light"]["Specular"]]  = Vector4(0.3, 0.3, 0.3),
                                    [Keys["Light"]["Direction"]] = Vector4(0.0, 0.785, 0.1),});
 

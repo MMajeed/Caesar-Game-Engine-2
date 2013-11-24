@@ -77,7 +77,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 			{
 				vecLightBuffer.push_back(DirectLight::GetLightDesc(light));
 
-				if(light->HasShadow == true)
+				if(light->HasShadow == true && (shadowCounter < this->vecDepthShadow.size()))
 				{
 					this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = DirectLight::CalculateViewMatrix(light);
 					this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = DirectLight::CalculatePrespectiveMatrix(light);
@@ -97,7 +97,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 			{
 				vecLightBuffer.push_back(SpotLight::GetLightDesc(light));
 
-				if(light->HasShadow == true)
+				if(light->HasShadow == true && (shadowCounter < this->vecDepthShadow.size()))
 				{
 					this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = SpotLight::CalculateViewMatrix(light);
 					this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = SpotLight::CalculatePrespectiveMatrix(light);
