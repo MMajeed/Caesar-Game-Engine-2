@@ -1,7 +1,7 @@
 Caesar-Game-Engine-2
 ====================
 
-Caesar Game Engine allows you to develop Games using Lua.
+Caesar Game Engine allows you to develop 3D Games using Lua.
 
 Build Requirement
 ====================
