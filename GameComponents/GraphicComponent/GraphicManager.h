@@ -47,10 +47,12 @@ public:
 		ID3D11RenderTargetView*		pRenderTargetView;
 		ID3D11Texture2D*			pDepthStencilBuffer;
 		ID3D11DepthStencilState*	pDepthStencilState;
+		ID3D11DepthStencilState*	pDepthDisabledStencilState;
 		ID3D11DepthStencilView*		pDepthStencilView;
 		D3D11_VIEWPORT				vp;
 		ID3D11Buffer*				pCBInfo;
 		ID3D11Buffer*				pCBLight;
+		ID3D11BlendState*			pTransperency;
 		bool						IsInitialized;
 	} D3DStuff;
 

@@ -149,6 +149,9 @@ void GraphicManager::ClearScreen(std::hash_map<std::string, SP_INFO>& objects)
 }
 void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 {
+	std::vector<std::shared_ptr<ObjectINFO>> vecObjects;
+	vecObjects.reserve(objects.size());
+
 	for(auto iterObj = objects.begin();
 		iterObj != objects.end();
 		++iterObj)
@@ -166,11 +169,36 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 		}
 		if(fitsTheScene == false){ continue; }
 
-		auto drawableIter = this->objectDrawables.find(objInfo->DrawObjID);
+		vecObjects.push_back(objInfo);
+	}
+
+	CHL::Vec4 eye = this->SceneInfo.Eye;
+	std::sort(vecObjects.begin(), vecObjects.end(),
+		[eye](std::shared_ptr<ObjectINFO> a, std::shared_ptr<ObjectINFO> b) -> bool
+	{
+		float rankA = 0.0f; float rankB = 0.0f;
+
+		if(a->Diffuse[3] < 1.0){ rankA += CHL::Length(eye, a->Location); }
+		if(b->Diffuse[3] < 1.0){ rankB += CHL::Length(eye, b->Location); }
+
+		if(a->Depth == false) { rankA -= 10000.0f; }
+		if(b->Depth == false) { rankB -= 10000.0f; }
+
+		return rankA > rankB;
+	});
+
+	for(auto iterObj = vecObjects.begin();
+		iterObj != vecObjects.end();
+		++iterObj)
+	{
+
+		auto drawableIter = this->objectDrawables.find((*iterObj)->DrawObjID);
 		if(drawableIter == this->objectDrawables.end()){ continue; }// If it didn't fine then continue
 
-		drawableIter->second->Draw(objInfo);
+		drawableIter->second->Draw(*iterObj);
+
 	}
+
 }
 void GraphicManager::Present(std::hash_map<std::string, SP_INFO>& objects)
 {
@@ -310,6 +338,32 @@ void GraphicManager::InitDevice()
 		throw std::exception("Failed at creating Dept stencil State");
 	}
 
+	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
+	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+
+	// Set up the depth stencil view description.
+	depthDisabledStencilDesc.DepthEnable = false;
+	depthDisabledStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	depthDisabledStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	depthDisabledStencilDesc.StencilEnable = true;
+	depthDisabledStencilDesc.StencilReadMask = 0xFF;
+	depthDisabledStencilDesc.StencilWriteMask = 0xFF;
+	depthDisabledStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
+	depthDisabledStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+	depthDisabledStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
+	depthDisabledStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
+	depthDisabledStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+
+	// Create the depth stencil view.
+	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthDisabledStencilDesc, &this->D3DStuff.pDepthDisabledStencilState);
+	if(FAILED(hr))
+	{
+		throw std::exception("Failed at creating no depth state");
+	}
+
 	// Set the depth stencil state.
 	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
 
@@ -329,7 +383,30 @@ void GraphicManager::InitDevice()
 		throw std::exception("Failed at creating depth stencil view");
 	}
 
+	// Set the depth stencil state.
+	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
+
 	this->D3DStuff.pImmediateContext->OMSetRenderTargets(1, &this->D3DStuff.pRenderTargetView, this->D3DStuff.pDepthStencilView);
+
+	D3D11_BLEND_DESC transparentDesc = {0};
+	transparentDesc.AlphaToCoverageEnable = false;
+	transparentDesc.IndependentBlendEnable = false;
+
+	transparentDesc.RenderTarget[0].BlendEnable = true;
+	transparentDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	transparentDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	transparentDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	transparentDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	transparentDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	transparentDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	transparentDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	hr = this->D3DStuff.pd3dDevice->CreateBlendState(&transparentDesc, &(this->D3DStuff.pTransperency));
+	if(FAILED(hr))
+	{
+		throw std::exception("Failed at creating a transperency blend");
+	}
+	float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};
+	this->D3DStuff.pImmediateContext->OMSetBlendState(this->D3DStuff.pTransperency, blendFactor, 0xffffffff);
 
 	// Setup the viewport
 	this->D3DStuff.vp.Width = (FLOAT)Width;

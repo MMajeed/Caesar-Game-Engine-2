@@ -77,26 +77,27 @@ void LuaKeysID::Register(lua_State *lua)
 	luaKeyTable["BasicTexture"] = BasicTextureTable;
 
 	luabind::object ObjectInfoTable = luabind::newtable(lua);
-		ObjectInfoTable[Keys::ObjectInfo::LOCATION]    = Keys::ObjectInfo::LOCATION;
-		ObjectInfoTable[Keys::ObjectInfo::ROTATION]    = Keys::ObjectInfo::ROTATION;
-		ObjectInfoTable[Keys::ObjectInfo::SCALE]       = Keys::ObjectInfo::SCALE;
-		ObjectInfoTable[Keys::ObjectInfo::DIFFUSE]     = Keys::ObjectInfo::DIFFUSE;
-		ObjectInfoTable[Keys::ObjectInfo::AMBIENT]     = Keys::ObjectInfo::AMBIENT;
-		ObjectInfoTable[Keys::ObjectInfo::SPECULAR]    = Keys::ObjectInfo::SPECULAR;
-		ObjectInfoTable[Keys::ObjectInfo::DRAWABLEOBJ] = Keys::ObjectInfo::DRAWABLEOBJ;
-		ObjectInfoTable[Keys::ObjectInfo::TEXTURE2DOBJ] = Keys::ObjectInfo::TEXTURE2DOBJ;
+		ObjectInfoTable[Keys::ObjectInfo::LOCATION]       = Keys::ObjectInfo::LOCATION;
+		ObjectInfoTable[Keys::ObjectInfo::ROTATION]       = Keys::ObjectInfo::ROTATION;
+		ObjectInfoTable[Keys::ObjectInfo::SCALE]          = Keys::ObjectInfo::SCALE;
+		ObjectInfoTable[Keys::ObjectInfo::DIFFUSE]        = Keys::ObjectInfo::DIFFUSE;
+		ObjectInfoTable[Keys::ObjectInfo::AMBIENT]        = Keys::ObjectInfo::AMBIENT;
+		ObjectInfoTable[Keys::ObjectInfo::SPECULAR]       = Keys::ObjectInfo::SPECULAR;
+		ObjectInfoTable[Keys::ObjectInfo::DRAWABLEOBJ]    = Keys::ObjectInfo::DRAWABLEOBJ;
+		ObjectInfoTable[Keys::ObjectInfo::TEXTURE2DOBJ]   = Keys::ObjectInfo::TEXTURE2DOBJ;
 		ObjectInfoTable[Keys::ObjectInfo::TEXTURECUBEOBJ] = Keys::ObjectInfo::TEXTURECUBEOBJ;
-		ObjectInfoTable[Keys::ObjectInfo::LIGHT] = Keys::ObjectInfo::LIGHT;
-		ObjectInfoTable[Keys::ObjectInfo::SHADOW] = Keys::ObjectInfo::SHADOW;
+		ObjectInfoTable[Keys::ObjectInfo::LIGHT]          = Keys::ObjectInfo::LIGHT;
+		ObjectInfoTable[Keys::ObjectInfo::SHADOW]         = Keys::ObjectInfo::SHADOW;
+		ObjectInfoTable[Keys::ObjectInfo::DEPTH]          = Keys::ObjectInfo::DEPTH;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenCapture = luabind::newtable(lua);
 		BasicScreenCapture[Keys::ScreenCapture::SCREENCAPTUREOBJ]      = Keys::ScreenCapture::SCREENCAPTUREOBJ;
-		BasicScreenCapture[Keys::ScreenCapture::WIDTH] = Keys::ScreenCapture::WIDTH;
-		BasicScreenCapture[Keys::ScreenCapture::HEIGHT] = Keys::ScreenCapture::HEIGHT;
-		BasicScreenCapture[Keys::ScreenCapture::CAMERAMATRIX] = Keys::ScreenCapture::CAMERAMATRIX;
-		BasicScreenCapture[Keys::ScreenCapture::PRESPECTIVEMATRIX] = Keys::ScreenCapture::PRESPECTIVEMATRIX;
-		BasicScreenCapture[Keys::ScreenCapture::EYE] = Keys::ScreenCapture::EYE;
+		BasicScreenCapture[Keys::ScreenCapture::WIDTH]                 = Keys::ScreenCapture::WIDTH;
+		BasicScreenCapture[Keys::ScreenCapture::HEIGHT]                = Keys::ScreenCapture::HEIGHT;
+		BasicScreenCapture[Keys::ScreenCapture::CAMERAMATRIX]          = Keys::ScreenCapture::CAMERAMATRIX;
+		BasicScreenCapture[Keys::ScreenCapture::PRESPECTIVEMATRIX]     = Keys::ScreenCapture::PRESPECTIVEMATRIX;
+		BasicScreenCapture[Keys::ScreenCapture::EYE]                   = Keys::ScreenCapture::EYE;
 	luaKeyTable["ScreenCapture"] = BasicScreenCapture;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;

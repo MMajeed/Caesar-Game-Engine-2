@@ -94,7 +94,8 @@ namespace Keys
 		const static std::string TEXTURE2DOBJ = "Texture2DObj";
 		const static std::string TEXTURECUBEOBJ = "TextureCubeObj";
 		const static std::string LIGHT = "Light";
-		const static std::string SHADOW = "SHADOW";
+		const static std::string SHADOW = "Shadow";
+		const static std::string DEPTH = "Depth";
 	};
 
 	namespace ScreenCapture

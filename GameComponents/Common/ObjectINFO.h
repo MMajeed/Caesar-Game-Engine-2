@@ -20,6 +20,7 @@ public:
 	std::vector<std::string> TextureCubeVecs;
 	bool Light;
 	bool Shadow;
+	bool Depth;
 
 	ObjectINFO();
 	virtual std::shared_ptr<Object> Get(const std::string& ID);

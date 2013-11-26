@@ -51,6 +51,9 @@ public:
 	void SetShadow(bool vec);
 	bool GetShadow();
 
+	void SetDepth(bool vec);
+	bool GetDepth();
+
 	std::shared_ptr<ObjectINFO> GetObject();
 
 	static void Register(lua_State *lua);

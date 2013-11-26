@@ -14,6 +14,8 @@ namespace CHL
 	void Normalize(CHL::Matrix4x4& matrix);
 
 	CHL::Vec4 MoveForward(const CHL::Vec4& vEye, const CHL::Vec4& vTM, double pitch, double yaw, double roll, double distance);
+
+	float Length(const CHL::Vec4& a, const CHL::Vec4& b);
 };
 
 #endif //__3DMath__

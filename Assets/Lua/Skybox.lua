@@ -14,5 +14,5 @@ skyBoxObject = Object({[Keys["ObjectInfo"]["Scale"]]          = Vector4(2000.0, 
                        [Keys["ObjectInfo"]["DrawableObj"]]    = skyBoxDrawable,
                        [Keys["ObjectInfo"]["TextureCubeObj"]] = skyBoxTexture,
                        [Keys["ObjectInfo"]["Light"]]          = false,
-                       [Keys["ObjectInfo"]["SHADOW"]]         = false,});
+                       [Keys["ObjectInfo"]["Shadow"]]         = false,});
 return SkyBox

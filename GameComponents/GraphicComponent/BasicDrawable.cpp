@@ -57,6 +57,7 @@ void BasicDrawable::Update(double realTime, double deltaTime)
 
 void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object)
 {
+	this->SetupDepth(object);
 	this->SetupTexture(object);
 	this->SetupDrawConstantBuffer(object);
 	this->SetupDrawVertexBuffer(object);
@@ -68,6 +69,15 @@ void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object)
 	this->CleanupAfterDraw(object);
 }
 
+void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO> object)
+{
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	if(object->Depth == false)
+	{
+		graphic.D3DStuff.pImmediateContext->OMSetDepthStencilState(graphic.D3DStuff.pDepthDisabledStencilState, 1);
+	}
+}
 void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO> object)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
@@ -182,7 +192,12 @@ void BasicDrawable::CleanupTexture(const std::shared_ptr<ObjectINFO> object)
 }
 void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO> object)	
 {
+	GraphicManager& graphic = GraphicManager::GetInstance();
 
+	if(object->Depth == false)
+	{
+		graphic.D3DStuff.pImmediateContext->OMSetDepthStencilState(graphic.D3DStuff.pDepthStencilState, 1);
+	}
 }
 
 void BasicDrawable::InitVertexBuffer(ID3D11Device* device)

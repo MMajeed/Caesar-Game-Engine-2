@@ -94,3 +94,16 @@ CHL::Vec4 CHL::MoveForward(const CHL::Vec4& vEye, const CHL::Vec4& vTM, double p
 
 	return CHL::ConvertVec4(tempEye);
 }
+
+float CHL::Length(const CHL::Vec4& a, const CHL::Vec4& b)
+{
+	XMVECTOR vector1 = XMVectorSet((float)a(0), (float)a(1), (float)a(2), (float)a(3));
+	XMVECTOR vector2 = XMVectorSet((float)b(0), (float)b(1), (float)b(2), (float)b(3));
+	XMVECTOR vectorSub = XMVectorSubtract(vector1, vector2);
+	XMVECTOR length = XMVector4Length(vectorSub);
+
+	float distance = 0.0f;
+	XMStoreFloat(&distance, length);
+	return distance;
+
+}

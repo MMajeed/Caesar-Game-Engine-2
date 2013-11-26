@@ -56,6 +56,7 @@ public:
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
+	virtual void SetupDepth(const std::shared_ptr<ObjectINFO> object);
 	virtual void SetupTexture(const std::shared_ptr<ObjectINFO> object);
 	virtual void SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> object);
 	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO> object);

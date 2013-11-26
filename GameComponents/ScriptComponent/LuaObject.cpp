@@ -23,6 +23,7 @@ LuaObject::LuaObject()
 	obj->Specular = col;
 	obj->Light = true;
 	obj->Shadow = true;
+	obj->Depth = true;
 	EntityConfig::SetEntity(obj);
 
 	this->ID = obj->ID;
@@ -41,8 +42,10 @@ LuaObject::LuaObject(luabind::object const& table)
 	std::string graphicDrawable;
 	std::vector<std::string>  textures2D;
 	std::vector<std::string>  texturesCube;
-	bool Light = true;
-	bool Shadow = true;
+	bool light = true;
+	bool shadow = true;
+	bool depth = true;
+
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
@@ -58,8 +61,9 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject>(*it).ID; }
 		else if(key == Keys::ObjectInfo::TEXTURE2DOBJ)	{ textures2D.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
 		else if(key == Keys::ObjectInfo::TEXTURECUBEOBJ){ texturesCube.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
-		else if(key == Keys::ObjectInfo::LIGHT)			{ Light = luabind::object_cast<bool>(*it); }
-		else if(key == Keys::ObjectInfo::SHADOW)		{ Shadow = luabind::object_cast<bool>(*it); }
+		else if(key == Keys::ObjectInfo::LIGHT)			{ light = luabind::object_cast<bool>(*it); }
+		else if(key == Keys::ObjectInfo::SHADOW)		{ shadow = luabind::object_cast<bool>(*it); }
+		else if(key == Keys::ObjectInfo::DEPTH)			{ depth = luabind::object_cast<bool>(*it); }
 	}
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
@@ -72,8 +76,9 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->DrawObjID = graphicDrawable;
 	obj->Texture2DVecs = textures2D;
 	obj->TextureCubeVecs = texturesCube;
-	obj->Light = Light;
-	obj->Shadow = Shadow;
+	obj->Light = light;
+	obj->Shadow = shadow;
+	obj->Depth = depth;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
@@ -213,6 +218,17 @@ bool LuaObject::GetShadow()
 	return GenericObj<bool>::GetValue(obj);
 }
 
+void LuaObject::SetDepth(bool vec)
+{
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DEPTH, GenericObj<bool>::CreateNew(vec));
+}
+bool LuaObject::GetDepth()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::DEPTH);
+	return GenericObj<bool>::GetValue(obj);
+}
+
+
 std::shared_ptr<ObjectINFO> LuaObject::GetObject()
 {
 	std::shared_ptr<ObjectINFO> returnValue;
@@ -249,5 +265,6 @@ void LuaObject::Register(lua_State *lua)
 			.property("Specular", &LuaObject::GetSpecular, &LuaObject::SetSpecular)
 			.property("Light", &LuaObject::GetLight, &LuaObject::SetLight)
 			.property("Shadow", &LuaObject::GetShadow, &LuaObject::SetShadow)
+			.property("Depth", &LuaObject::GetDepth, &LuaObject::SetDepth)
 	  ];
 }
