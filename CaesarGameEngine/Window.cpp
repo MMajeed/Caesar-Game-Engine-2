@@ -123,7 +123,6 @@ void Window::Run()
 		long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 		this->window.AbsoluteTime = elapsedCount / tickInterval;
 
-		
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(15)));
 
 		Error::GetInstance().Check();

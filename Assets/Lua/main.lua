@@ -14,7 +14,7 @@ for zIndex = 0, 2, 1 do
         local y = 2;
         local z = -20 + (zIndex * 20);
         local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
-                                     [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
+                                     [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 0.5),
                                      [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
                                      [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
                                      [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
@@ -37,12 +37,12 @@ OnKeyDown(string.byte("B"),
 );
 
 
---mirrorSphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
---                                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
---                                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+mirrorSphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
+                                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+                                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
                                       
 --local mirrorSphere1 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
---                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
+--                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
 --                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
 --                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
 --                              [Keys["ObjectInfo"]["DrawableObj"]] = mirrorSphereDrawable,
@@ -55,7 +55,7 @@ OnKeyDown(string.byte("B"),
 --mirrorSphere1:SetCubeTexture(myTexture1:GetTexture());
 
 --local mirrorSphere2 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(-40, 20, 0),
---                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58),
+--                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
 --                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
 --                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
 --                              [Keys["ObjectInfo"]["DrawableObj"]] = mirrorSphereDrawable,
