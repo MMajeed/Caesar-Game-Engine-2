@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Queryable">
+      <UniqueIdentifier>{798ec669-2020-42a8-b3cf-3d468b766f35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singleton">
+      <UniqueIdentifier>{d557d784-7165-42b8-9f94-d03b8fb320ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Converter">
+      <UniqueIdentifier>{de555248-5730-4dfc-bd8f-f84803da9bac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath">
+      <UniqueIdentifier>{0b6c318e-d09a-4662-9504-8ebef3e7c8d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{6b25834a-e096-4951-931e-f79d6d0bb535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\Vector">
+      <UniqueIdentifier>{4daac0df-106c-4c6a-b117-150468900652}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\Matrix">
+      <UniqueIdentifier>{58100e33-3d80-482b-b5bc-ae8d8865e889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\XNAConverter">
+      <UniqueIdentifier>{a6dd602b-cd65-4516-a888-8596b5422531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\3DMath">
+      <UniqueIdentifier>{c3e9a25e-be88-4225-8a4a-80f83c17f02c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{322ab1bb-52e9-4cc4-b05c-72b526dece4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GenerateGUID">
+      <UniqueIdentifier>{359a5b79-dd09-4bf0-b7c1-e45157e64076}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="Singleton.h">
+      <Filter>Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="Converter.h">
+      <Filter>Converter</Filter>
+    </ClInclude>
+    <ClInclude Include="Queryable.h">
+      <Filter>Queryable</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>3DMath\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>3DMath\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="XNAConverter.h">
+      <Filter>3DMath\XNAConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMath.h">
+      <Filter>3DMath\3DMath</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateGUID.h">
+      <Filter>GenerateGUID</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Converter.cpp">
+      <Filter>Converter</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="XNAConverter.cpp">
+      <Filter>3DMath\XNAConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMath.cpp">
+      <Filter>3DMath\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateGUID.cpp">
+      <Filter>GenerateGUID</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

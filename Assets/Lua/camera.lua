@@ -1,0 +1,55 @@
+local camera = {}
+
+cam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0),
+              [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
+              [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
+              [Keys["Camera"]["RadianRoll"]]      = 0.0,
+              [Keys["Camera"]["RadianPitch"]]     = 0.0,
+              [Keys["Camera"]["RadianYaw"]]       = 0.0,}); 
+cam:SetAsMain();
+
+CamLeftButton   = false;    CamRightButton  = false;
+CamUpButton     = false;    CamDownButton   = false;
+CamPgUpButton   = false;    CamPgDownButton = false;
+
+function UpdateCamera()
+    if(CamLeftButton == true) then
+        cam.Yaw = cam.Yaw - 0.05;
+    end
+    if(CamRightButton == true) then
+        cam.Yaw = cam.Yaw + 0.05;
+    end
+    
+    if(CamPgUpButton == true) then
+        cam.Pitch = cam.Pitch - 0.05;
+    end
+    if(CamPgDownButton == true) then
+        cam.Pitch = cam.Pitch + 0.05;
+    end
+    
+    if(CamUpButton == true) then
+        cam:MoveFroward(1.0);
+    end
+    if(CamDownButton == true) then
+        cam:MoveFroward(-1.0);
+    end
+end
+
+LoopCall(16, UpdateCamera);
+
+OnKeyDown(37, function() CamLeftButton = true; end);-- Left
+OnKeyDown(39, function() CamRightButton = true; end);-- Right
+OnKeyDown(38, function() CamUpButton = true; end);-- Up
+OnKeyDown(40, function() CamDownButton = true; end);-- Down
+OnKeyDown(33, function() CamPgUpButton = true; end);-- Up
+OnKeyDown(34, function() CamPgDownButton = true; end);-- Down
+
+OnKeyUp(37, function() CamLeftButton = false; end);-- Left
+OnKeyUp(39, function() CamRightButton = false; end);-- Right
+OnKeyUp(38, function() CamUpButton = false; end);-- Up
+OnKeyUp(40, function() CamDownButton = false; end);-- Down
+OnKeyUp(33, function() CamPgUpButton = false; end);-- Up
+OnKeyUp(34, function() CamPgDownButton = false; end);-- Down
+
+return camera
+

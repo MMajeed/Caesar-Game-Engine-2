@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GraphicManager.h" />
+    <ClInclude Include="Drawable.h">
+      <Filter>Drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDrawable.h">
+      <Filter>Drawable\BasicDrawable</Filter>
+    </ClInclude>
+    <ClInclude Include="Buffers.h">
+      <Filter>D3D Tools\Buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11Helper.h">
+      <Filter>D3D Tools\DX11Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>D3D Tools\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="SpotLight.h">
+      <Filter>Light\SpotLight</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectLight.h">
+      <Filter>Light\DirectLight</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenCapture.h">
+      <Filter>ScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicScreenCapture.h">
+      <Filter>ScreenCapture\BasicScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthScreenCapture.h">
+      <Filter>ScreenCapture\DepthScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeScreenCapture.h">
+      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousScreenShot.h">
+      <Filter>ContinuousScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousBasicScreenShot.h">
+      <Filter>ContinuousScreenShot\ContinuousBasicScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousDepthScreenShot.h">
+      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousCubeScreenShot.h">
+      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="SetupLight.h">
+      <Filter>Light</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>Light\PointLight</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicTexture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFilter.h">
+      <Filter>SceneFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowFilter.h">
+      <Filter>SceneFilter\ShadowFilter</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GraphicManager.cpp" />
+    <ClCompile Include="BasicDrawable.cpp">
+      <Filter>Drawable\BasicDrawable</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11Helper.cpp">
+      <Filter>D3D Tools\DX11Helper</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>Light\SpotLight</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectLight.cpp">
+      <Filter>Light\DirectLight</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicScreenCapture.cpp">
+      <Filter>ScreenCapture\BasicScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthScreenCapture.cpp">
+      <Filter>ScreenCapture\DepthScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScreeCapture.cpp">
+      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousBasicScreenShot.cpp">
+      <Filter>ContinuousScreenShot\ContinuousBasicScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousDepthScreenShot.cpp">
+      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousCubeScreenShot.cpp">
+      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="SetupLight.cpp">
+      <Filter>Light</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>Light\PointLight</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicTexture.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowFilter.cpp">
+      <Filter>SceneFilter\ShadowFilter</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Drawable">
+      <UniqueIdentifier>{22ac4106-ee8b-4168-9dc3-462a360f8166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\BasicDrawable">
+      <UniqueIdentifier>{6ecccf77-6892-4631-b816-96f01f8ff2b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools">
+      <UniqueIdentifier>{454d39e7-3edc-445d-9a62-b7e0b96c73f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\Buffers">
+      <UniqueIdentifier>{69747fe4-1464-495f-9fbd-495549793ef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\DX11Helper">
+      <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\Vertex">
+      <UniqueIdentifier>{247a606b-cc65-4896-9752-f731be732ff2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{eee8a27b-c3c2-4638-b09a-37f490eeae54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light\SpotLight">
+      <UniqueIdentifier>{d147f29e-caed-400a-8896-c8cb7bf0938e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light\DirectLight">
+      <UniqueIdentifier>{0217d582-611d-4dfd-917f-b715c41066ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture">
+      <UniqueIdentifier>{f08569f7-3a68-4706-9360-f7df52b3b06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\BasicScreenCapture">
+      <UniqueIdentifier>{3b8f6676-409e-4e31-ad5b-53b77c5e31c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\DepthScreenCapture">
+      <UniqueIdentifier>{fed37b2c-94a3-4884-8f65-d127d3b76693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\CubeScreenCapture">
+      <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot">
+      <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousBasicScreenShot">
+      <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousDepthScreenShot">
+      <UniqueIdentifier>{cd9f9fbb-8561-4930-b984-a51053aad11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousCubeScreenShot">
+      <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light\PointLight">
+      <UniqueIdentifier>{de21ae03-3721-427d-9d24-d9ef44206c8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFilter">
+      <UniqueIdentifier>{fac8230d-2ee1-45c5-86f2-2b49d40524ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneFilter\ShadowFilter">
+      <UniqueIdentifier>{f888f210-0c24-4dbb-832b-e3cb55473b18}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

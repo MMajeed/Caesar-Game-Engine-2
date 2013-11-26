@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="AddBasicTexture.h">
+      <Filter>AddBasicTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicCommunicator.h">
+      <Filter>GraphicCommunicator</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicDrawableConfig.h">
+      <Filter>BasicDrawableConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="SetGraphicSettings.h">
+      <Filter>SetGraphicSettings</Filter>
+    </ClInclude>
+    <ClInclude Include="OnResize.h">
+      <Filter>OnResize</Filter>
+    </ClInclude>
+    <ClInclude Include="TakeScreenShot.h">
+      <Filter>TakeScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousBasicScreenShotConfig.h">
+      <Filter>ContinuousScreenShot\ContinuousBasicScreenShotConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousDepthScreenShotConfig.h">
+      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ContinuousCubeScreenShotConfig.h">
+      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AddBasicTexture.cpp">
+      <Filter>AddBasicTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicCommunicator.cpp">
+      <Filter>GraphicCommunicator</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicDrawableConfig.cpp">
+      <Filter>BasicDrawableConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="SetGraphicSettings.cpp">
+      <Filter>SetGraphicSettings</Filter>
+    </ClCompile>
+    <ClCompile Include="OnResize.cpp">
+      <Filter>OnResize</Filter>
+    </ClCompile>
+    <ClCompile Include="TakeScreenShot.cpp">
+      <Filter>TakeScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousBasicScreenShotConfig.cpp">
+      <Filter>ContinuousScreenShot\ContinuousBasicScreenShotConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousDepthScreenShotConfig.cpp">
+      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="ContinuousCubeScreenShotConfig.cpp">
+      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AddBasicTexture">
+      <UniqueIdentifier>{17e44715-c07d-4d19-8385-0f7100a45282}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicCommunicator">
+      <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BasicDrawableConfig">
+      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SetGraphicSettings">
+      <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OnResize">
+      <UniqueIdentifier>{e8a764f3-a017-40aa-8466-998177228759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TakeScreenShot">
+      <UniqueIdentifier>{b5254899-5d92-4dba-89f6-c6c4ef75daa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot">
+      <UniqueIdentifier>{e4a90b8a-8940-4e91-9a3a-51c289d2d228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousDepthScreenShot">
+      <UniqueIdentifier>{df29e589-500f-4eb0-ab77-05219a695413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousCubeScreenShot">
+      <UniqueIdentifier>{1dc12f30-a026-45f5-982e-a8f3a033317e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\ContinuousBasicScreenShotConfig">
+      <UniqueIdentifier>{98b44050-07e0-452a-b334-8730a42ab3be}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

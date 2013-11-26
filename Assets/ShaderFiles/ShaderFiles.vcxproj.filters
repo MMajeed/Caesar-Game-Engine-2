@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PS">
+      <UniqueIdentifier>{2ebee0bf-fb7d-4358-be1b-703dd345a13a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VS">
+      <UniqueIdentifier>{81c02b8a-1192-447f-b9b5-fa1f77eacfea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Light">
+      <UniqueIdentifier>{1717681a-7884-4a14-b2b5-67e2bde80e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CalculateTexture">
+      <UniqueIdentifier>{cf29e570-8928-4f1b-95fb-22e2928a0277}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="PS_5_SkyMap.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_0_Regular.fx">
+      <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_0_Generic.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Setup.fx" />
+    <None Include="HLSL_Light.fx">
+      <Filter>Light</Filter>
+    </None>
+    <None Include="Shadow.fx">
+      <Filter>Light</Filter>
+    </None>
+    <None Include="CalculateTexture.fx">
+      <Filter>CalculateTexture</Filter>
+    </None>
+    <None Include="CalculateLight.fx">
+      <Filter>Light</Filter>
+    </None>
+  </ItemGroup>
+</Project>
