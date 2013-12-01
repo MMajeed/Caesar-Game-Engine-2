@@ -23,8 +23,6 @@ BasicDrawable::BasicDrawable(const std::string& inputID)
 	this->D3DInfo.pRastersizerState = 0;
 	this->D3DInfo.cullMode = D3D11_CULL_BACK;
 	this->D3DInfo.fillMode = D3D11_FILL_SOLID;
-	this->D3DInfo.bAntialiasedLine = true;
-	this->D3DInfo.bMultisampleEnable = true;
 }
 
 void BasicDrawable::Init()
@@ -36,6 +34,7 @@ void BasicDrawable::Init()
 	this->InitVertexShader(device);
 	this->InitPixelShader(device);
 	this->InitRastersizerState(device);
+	this->InitShadowRastersizerState(device);
 	this->InitConstantBuffer(device);
 }
 
@@ -64,6 +63,21 @@ void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object)
 	this->SetupDrawInputVertexShader(object);
 	this->SetupDrawPixelShader(object);
 	this->SetupDrawRasterizeShader(object);
+	this->DrawObject(object);
+	this->CleanupTexture(object);
+	this->CleanupAfterDraw(object);
+}
+void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object)
+{
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
+
+	this->SetupDepth(object);
+	this->SetupTexture(object);
+	this->SetupDrawConstantBuffer(object);
+	this->SetupDrawVertexBuffer(object);
+	this->SetupDrawInputVertexShader(object);
+	this->SetupDrawPixelShader(object);	
+	pImmediateContext->RSSetState(this->D3DInfo.pShadowRastersizerState);	
 	this->DrawObject(object);
 	this->CleanupTexture(object);
 	this->CleanupAfterDraw(object);
@@ -235,21 +249,27 @@ void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {
 	DX11Helper::LoadRasterizerState(this->D3DInfo.cullMode, 
 									this->D3DInfo.fillMode,
-									this->D3DInfo.bAntialiasedLine,
-									this->D3DInfo.bMultisampleEnable, 
+									true,
+									true,
 									device, &(this->D3DInfo.pRastersizerState));
+}
+void BasicDrawable::InitShadowRastersizerState(ID3D11Device* device)
+{
+	DX11Helper::LoadRasterizerState(D3D11_CULL_FRONT,
+		D3D11_FILL_SOLID,
+		true,
+		true,
+		device, &(this->D3DInfo.pShadowRastersizerState));
 }
 void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
 {
 	DX11Helper::LoadBuffer<cBuffer::cbObject>(device, &(this->D3DInfo.pConstantBuffer));
 }
 
-void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable)
+void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode)
 {
 	this->D3DInfo.cullMode           = cullMode;
 	this->D3DInfo.fillMode           = fillMode;
-	this->D3DInfo.bAntialiasedLine   = bAntialiasedLine;
-	this->D3DInfo.bMultisampleEnable = bMultisampleEnable;
 
 	if (this->D3DInfo.pRastersizerState)
 	{
@@ -266,9 +286,7 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
 													const std::string&			vertexFile,
 													const std::string&			pixelFile,
 													D3D11_CULL_MODE				cullMode,
-													D3D11_FILL_MODE				fillMode,
-													bool						bAntialiasedLine,
-													bool						bMultisampleEnable)
+													D3D11_FILL_MODE				fillMode)
 {
 	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(inputID));
 
@@ -278,8 +296,6 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
 	newObject->D3DInfo.PixelShaderInfo = pixelFile;
 	newObject->D3DInfo.cullMode = cullMode;
 	newObject->D3DInfo.fillMode = fillMode;
-	newObject->D3DInfo.bAntialiasedLine = bAntialiasedLine;
-	newObject->D3DInfo.bMultisampleEnable = bMultisampleEnable;
 
 	newObject->Init();
 

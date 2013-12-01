@@ -63,6 +63,9 @@
     <ClInclude Include="ShadowFilter.h">
       <Filter>SceneFilter\ShadowFilter</Filter>
     </ClInclude>
+    <ClInclude Include="ShadowScreenCapture.h">
+      <Filter>ScreenCapture\ShadowScreenCapture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -107,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="ShadowFilter.cpp">
       <Filter>SceneFilter\ShadowFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowScreenCapture.cpp">
+      <Filter>ScreenCapture\ShadowScreenCapture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +178,9 @@
     </Filter>
     <Filter Include="SceneFilter\ShadowFilter">
       <UniqueIdentifier>{f888f210-0c24-4dbb-832b-e3cb55473b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\ShadowScreenCapture">
+      <UniqueIdentifier>{9c0a465f-98e0-46ce-a6b0-f62e01836c5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

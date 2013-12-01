@@ -8,9 +8,7 @@ BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const Mode
 													std::string	vertexFileName,
 													std::string	pixelFileName,
 													CULL_MODE cullMode,
-													FILL_MODE fillMode,
-													bool antialiasedLine,
-													bool multisampleEnable)
+													FILL_MODE fillMode)
 	: model(model)
 {
 	this->ID = CHL::GenerateGUID();
@@ -18,8 +16,6 @@ BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const Mode
 	this->pixelFileName     = pixelFileName;
 	this->cullMode          = cullMode;
 	this->fillMode          = fillMode;
-	this->antialiasedLine   = antialiasedLine;
-	this->multisampleEnable = multisampleEnable;
 }
 
 Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
@@ -76,9 +72,7 @@ Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 							vertexFileName,
 							pixelFileName,
 							static_cast<D3D11_CULL_MODE>(this->cullMode),
-							static_cast<D3D11_FILL_MODE>(this->fillMode),
-							this->antialiasedLine,
-							this->multisampleEnable);
+							static_cast<D3D11_FILL_MODE>(this->fillMode));
 
 	GraphicManager::GetInstance().InsertObjectDrawable(newObject);
 
@@ -87,14 +81,11 @@ Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 	return Message::Status::Complete;
 }
 
-BasicDrawableConfig::ChangeRastersizerState::ChangeRastersizerState
-	(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode, bool antialiasedLine, bool multisampleEnable)
+BasicDrawableConfig::ChangeRastersizerState::ChangeRastersizerState(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode)
 {
 	this->ID = ID;
 	this->cullMode = cullMode;
 	this->fillMode = fillMode;
-	this->antialiasedLine = antialiasedLine;
-	this->multisampleEnable = multisampleEnable;
 }
 
 Message::Status BasicDrawableConfig::ChangeRastersizerState::Work()
@@ -111,9 +102,7 @@ Message::Status BasicDrawableConfig::ChangeRastersizerState::Work()
 		if(bdObj)
 		{
 			bdObj->ChangeRasterizerState(static_cast<D3D11_CULL_MODE>(this->cullMode), 
-										 static_cast<D3D11_FILL_MODE>(this->fillMode), 
-										 this->antialiasedLine, 
-										 this->multisampleEnable);
+										 static_cast<D3D11_FILL_MODE>(this->fillMode));
 		}
 	}
 

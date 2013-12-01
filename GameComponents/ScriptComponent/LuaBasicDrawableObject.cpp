@@ -19,8 +19,6 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 	std::string pixelFileName = "";
 	int cullMode = 3 ;
 	int fillMode = 3;
-	bool antialiasedLine = true; 
-	bool multisampleEnable = true;
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -33,8 +31,6 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 		else if (key == Keys::BasicDrawable::PIXELSHADERFILE)	{ pixelFileName = luabind::object_cast<std::string>(*it); }
 		else if (key == Keys::BasicDrawable::CULLMODE)			{ cullMode = luabind::object_cast<int>(*it); }
 		else if (key == Keys::BasicDrawable::FILLMODE)			{ fillMode = luabind::object_cast<int>(*it); }
-		else if (key == Keys::BasicDrawable::ANTIALIASEDLINE)	{ antialiasedLine = luabind::object_cast<bool>(*it); }
-		else if (key == Keys::BasicDrawable::MULTISAMPLEENABLE)	{ multisampleEnable = luabind::object_cast<bool>(*it); }
 	}
 
 	if (fileName.empty()) throw std::exception( (Keys::BasicDrawable::MODELFILE + " value was missing for BasicDrawableObject ").c_str() );
@@ -48,24 +44,20 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 		new BasicDrawableConfig::AddBasicDrawableMessage
 				(m, vertexFileName, pixelFileName,
 				static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
-				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode),
-				antialiasedLine, 
-				multisampleEnable ));
+				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode)));
 
 	GraphicCommunicator::SubmitMessage(msg);
 
 	this->ID = msg->ID;
 }
 
-void LuaBasicDrawableObject::ChangeRastersizerState(int cullMode, int fillMode, bool antialiasedLine, bool multisampleEnable)
+void LuaBasicDrawableObject::ChangeRastersizerState(int cullMode, int fillMode)
 {	
 	std::shared_ptr<BasicDrawableConfig::ChangeRastersizerState> msg(
 		new BasicDrawableConfig::ChangeRastersizerState(
 				this->ID,
 				static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
-				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode),
-				antialiasedLine, 
-				multisampleEnable));
+				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode)));
 
 	GraphicCommunicator::SubmitMessage(msg);
 }

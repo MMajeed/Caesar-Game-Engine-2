@@ -40,7 +40,7 @@ void Light::Init()
 		iter != this->vecDepthShadow.end();
 		++iter)
 	{
-		(*iter) = DepthScreenCapture::Spawn(this->Width, this->Height, this->shadowTexture, counter, sTexDesc.ArraySize);
+		(*iter) = ShadowScreenCapture::Spawn(this->Width, this->Height, this->shadowTexture, counter, sTexDesc.ArraySize);
 		++counter;
 	}
 

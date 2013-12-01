@@ -72,8 +72,6 @@ namespace Keys
 		const static std::string PIXELSHADERFILE = "PixelShaderFile";
 		const static std::string CULLMODE = "CullMode";
 		const static std::string FILLMODE = "FillMode";
-		const static std::string ANTIALIASEDLINE = "Antialiasedline";
-		const static std::string MULTISAMPLEENABLE = "MultisampleEnable";
 	};
 
 	namespace BasicTexture

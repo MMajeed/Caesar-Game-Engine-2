@@ -7,7 +7,7 @@
 #include <Singleton.h>
 #include <memory>
 #include "Buffers.h"
-#include "DepthScreenCapture.h"
+#include "ShadowScreenCapture.h"
 #include "ShadowFilter.h"
 
 class Light : public CHL::Singleton<Light>
@@ -16,7 +16,7 @@ protected:
 	Light();
 public:
 	void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
-	std::vector<std::shared_ptr<DepthScreenCapture>> vecDepthShadow;
+	std::vector<std::shared_ptr<ShadowScreenCapture>> vecDepthShadow;
 
 	void Init();
 

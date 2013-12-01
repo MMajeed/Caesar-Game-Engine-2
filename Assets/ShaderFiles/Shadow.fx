@@ -5,8 +5,8 @@ SamplerState sam
 	AddressU = Wrap;
 	AddressV = Wrap;
 	AddressW = Wrap;
-};
 
+};
 
 static const float SMAP_SIZE = 2048.0f;
 static const float SMAP_DX = 1.0f / SMAP_SIZE;
@@ -34,11 +34,18 @@ float CalcShadowFactor(float4 shadowPosH, LightDesc L)
 	for(int i = 0; i < 9; ++i)
 	{
 		float2 loc = shadowPosH.xy + offsets[i];
-		float depthTexture = Shadow.Sample(sam, float3(loc, L.ShadowNum)).x;
-		bool inShadow = (shadowPosH.z - depthTexture) >= 0.01;
-		if(inShadow == true)
+		if(loc.x < 1.0f && loc.x > 0.0f
+			&& loc.y < 1.0f && loc.y > 0.0f)
 		{
-			sourcevals -= 0.08f;
+			float depthTexture = Shadow.Sample(sam, float3(loc, L.ShadowNum)).x;
+			if(depthTexture < 1.0f)
+			{
+				bool inShadow = (shadowPosH.z - depthTexture) >= 0.005;
+				if(inShadow == true)
+				{
+					sourcevals -= 0.08f;
+				}
+			}
 		}
 	}
 

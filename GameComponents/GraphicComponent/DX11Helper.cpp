@@ -114,7 +114,6 @@ void DX11Helper::LoadRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE f
 	RSDesc.MultisampleEnable = bMultisampleEnable;
 	RSDesc.CullMode = cullMode;	
 
-
 	HRESULT hr = device->CreateRasterizerState( &RSDesc, rsOut );
 	if(FAILED(hr))
 	{

@@ -1,13 +1,13 @@
-#ifndef __DepthScreenCapture__
-#define __DepthScreenCapture__
+#ifndef __ShadowScreenCapture__
+#define __ShadowScreenCapture__
 
 #include "ScreenCapture.h"
 #include <Matrix.h>
 
-class DepthScreenCapture : public ScreenCapture
+class ShadowScreenCapture : public ScreenCapture
 {
 public:
-	DepthScreenCapture(const std::string& inputID);
+	ShadowScreenCapture(const std::string& inputID);
 
 	void Init();
 	void Destory();
@@ -19,7 +19,7 @@ public:
 	void TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects);
 	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects);
 
-	static std::shared_ptr<DepthScreenCapture> Spawn(std::string id, unsigned int width, unsigned int height);
+	static std::shared_ptr<ShadowScreenCapture> Spawn(unsigned int width, unsigned int height, ID3D11Texture2D*& tex, unsigned int index, unsigned int arraySize);
 	std::shared_ptr<ScreenCapture> clone() const;
 
 	struct
@@ -34,4 +34,4 @@ public:
 };
 
 
-#endif //__DepthScreenCapture__
+#endif //__ShadowScreenCapture__

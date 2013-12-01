@@ -3,10 +3,8 @@ local SkyBox = {}
 skyBoxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                       [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_5_SkyMap.cso",
-                                      [Keys["BasicDrawable"]["CullMode"]]         = CullMode["None"],
-                                      [Keys["BasicDrawable"]["FillMode"]]         = FillMode["Solid"],
-                                      [Keys["BasicDrawable"]["Antialiasedline"]]  = true,
-                                      [Keys["BasicDrawable"]["MultisampleEnable"]]= true,});
+                                      [Keys["BasicDrawable"]["CullMode"]]         = CullMode["Front"],
+                                      [Keys["BasicDrawable"]["FillMode"]]         = FillMode["Solid"],});
 
 skyBoxTexture = BasicTexture("Assets/Texture/Sky/Sky.dds");
 

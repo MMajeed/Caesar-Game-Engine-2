@@ -115,6 +115,7 @@
     <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="SetupLight.h" />
     <ClInclude Include="ShadowFilter.h" />
+    <ClInclude Include="ShadowScreenCapture.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="Vertex.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SetupLight.cpp" />
     <ClCompile Include="ShadowFilter.cpp" />
+    <ClCompile Include="ShadowScreenCapture.cpp" />
     <ClCompile Include="SpotLight.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

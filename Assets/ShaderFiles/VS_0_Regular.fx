@@ -18,7 +18,7 @@ PS_INPUT VS(VS_INPUT input)
 	/*output.PosWVP = input.VertexPos;
 	output.PosWVP = mul(output.PosWVP, gWorld );
 	output.PosWVP = mul( output.PosWVP, lightArray[0].lightView );
-	output.PosWVP = mul( output.PosWVP, lightArray[0].lightProject );	*/
+	output.PosWVP = mul( output.PosWVP, lightArray[0].lightProject );*/
 
 	// Passed to the pixel shader for correct lighting:
 	output.PosWorld = mul(input.VertexPos, gWorld);

@@ -1,6 +1,6 @@
 #include "DirectLight.h"
 #include <XNAConverter.h>
-#include <DirectionalLightINFO.h>
+#include "GraphicManager.h"
 
 cBuffer::CLightDesc DirectLight::GetLightDesc(std::shared_ptr<DirectionalLightINFO> lightInfo)
 {
@@ -31,11 +31,12 @@ CHL::Matrix4x4 DirectLight::CalculateViewMatrix(std::shared_ptr<DirectionalLight
 	roll = lightInfo->Direction(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
-	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
+	CHL::Vec4 eye = GraphicManager::GetInstance().SceneInfo.Eye;
+	XMVECTOR center = XMVectorSet(eye(0), eye(1), eye(2), eye(3));
 
 	XMVECTOR lightDir = XMLoadFloat3(&dir);
-	XMVECTOR lightPos = DirectLight::radius * lightDir;
-	XMVECTOR targetPos = XMLoadFloat3(&center);
+	XMVECTOR lightPos = (DirectLight::radius * lightDir) + center;
+	XMVECTOR targetPos = center;
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
 	XMMATRIX V = XMMatrixLookAtLH(lightPos, targetPos, up);
@@ -54,11 +55,12 @@ CHL::Matrix4x4 DirectLight::CalculatePrespectiveMatrix(std::shared_ptr<Direction
 	roll = lightInfo->Direction(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
-	XMFLOAT3 center(0.0f, 0.0f, 0.0f);
+	CHL::Vec4 eye = GraphicManager::GetInstance().SceneInfo.Eye;
+	XMVECTOR center = XMVectorSet(eye(0), eye(1), eye(2), eye(3));
 
 	XMVECTOR lightDir = XMLoadFloat3(&dir);
-	XMVECTOR lightPos = DirectLight::radius*lightDir;
-	XMVECTOR targetPos = XMLoadFloat3(&center);
+	XMVECTOR lightPos = (DirectLight::radius * lightDir) + center;
+	XMVECTOR targetPos = center;
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
 	XMMATRIX V = XMMatrixLookAtLH(lightPos, targetPos, up);

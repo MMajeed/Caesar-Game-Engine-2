@@ -17,6 +17,7 @@ public:
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Draw(std::shared_ptr<ObjectINFO> object);
+	virtual void DrawShadow(std::shared_ptr<ObjectINFO> object);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
 	static std::shared_ptr<BasicDrawable> Spawn(const std::string& inputID,
@@ -25,9 +26,7 @@ public:
 												const std::string&			vertexFile,
 												const std::string&			pixelFile,
 												D3D11_CULL_MODE				cullMode,
-												D3D11_FILL_MODE				fillMode,
-												bool						bAntialiasedLine,
-												bool						bMultisampleEnable);
+												D3D11_FILL_MODE				fillMode);
 
 	struct
 	{
@@ -40,12 +39,11 @@ public:
 		std::string					PixelShaderInfo;
 		ID3D11PixelShader*			pPixelShader;
 		ID3D11RasterizerState*		pRastersizerState;
+		ID3D11RasterizerState*		pShadowRastersizerState;
 		std::vector<Vertex>			vertices;
 		std::vector<WORD>			indices;
 		D3D11_CULL_MODE				cullMode;
-		D3D11_FILL_MODE				fillMode; 
-		bool						bAntialiasedLine;
-		bool						bMultisampleEnable;
+		D3D11_FILL_MODE				fillMode;
 	} D3DInfo;
 
 	virtual void InitVertexBuffer(ID3D11Device* device);
@@ -54,6 +52,7 @@ public:
 	virtual void InitVertexShader(ID3D11Device* device);
 	virtual void InitPixelShader(ID3D11Device* device);
 	virtual void InitRastersizerState(ID3D11Device* device);
+	virtual void InitShadowRastersizerState(ID3D11Device* device);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
 	virtual void SetupDepth(const std::shared_ptr<ObjectINFO> object);
@@ -67,7 +66,7 @@ public:
 	virtual void CleanupTexture(const std::shared_ptr<ObjectINFO> object);
 	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO> object);
 
-	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable);
+	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
 };
 
 

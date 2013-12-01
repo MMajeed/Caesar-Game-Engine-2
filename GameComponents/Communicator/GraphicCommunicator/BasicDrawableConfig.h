@@ -19,9 +19,7 @@ namespace BasicDrawableConfig
 								std::string	vertexFileName,
 								std::string	pixelFileName,
 								CULL_MODE cullMode, 
-								FILL_MODE fillMode, 
-								bool antialiasedLine, 
-								bool multisampleEnable);
+								FILL_MODE fillMode);
 
 		virtual Message::Status Work();
 
@@ -30,8 +28,6 @@ namespace BasicDrawableConfig
 		std::string	pixelFileName;
 		CULL_MODE cullMode;
 		FILL_MODE fillMode;
-		bool antialiasedLine;
-		bool multisampleEnable;
 
 		std::string	ID;
 	};
@@ -42,10 +38,8 @@ namespace BasicDrawableConfig
 		std::string ID;
 		CULL_MODE cullMode;
 		FILL_MODE fillMode;
-		bool antialiasedLine;
-		bool multisampleEnable;
 
-		ChangeRastersizerState(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode, bool antialiasedLine, bool multisampleEnable);
+		ChangeRastersizerState(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode);
 
 		virtual Message::Status Work();
 	};
