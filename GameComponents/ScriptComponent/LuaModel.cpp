@@ -7,7 +7,7 @@
 void LuaModel::RegisterAllLuaFunction(lua_State *lua)
 {	
 	luabind::module(lua) [
-		luabind::class_<Model>("Model")
-		  .def(luabind::constructor<std::string>())
+		luabind::class_<CHL::Model>("Model")
+		  .def(luabind::constructor<>())
 	  ];
 }

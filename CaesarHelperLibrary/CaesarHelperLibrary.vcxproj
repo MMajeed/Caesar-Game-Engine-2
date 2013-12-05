@@ -100,6 +100,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="VecMath.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="XNAConverter.h" />
   </ItemGroup>

@@ -5,21 +5,28 @@
 #include <string>
 #include <vector>
 
-struct aiScene;
-
-class Model
+namespace CHL
 {
-public:
-	Model(std::string file);
+	class Model
+	{
+	public:
+		Model();
 
-	const aiScene* scene;
-	
-	std::vector<CHL::Vec4> Pos() const;
-	std::vector<CHL::Vec4> Normal() const;
-	std::vector<CHL::Vec2> Texture() const;
+		struct VerticesInfo
+		{
+			CHL::Vec3 Point;
+			CHL::Vec3 Normal;
+			CHL::Vec3 Texture;
+		};
+		std::vector<VerticesInfo> Vertices;
+		std::vector<unsigned int> Faces;
+		unsigned int NumberOfFaces;
 
-	std::vector<unsigned int> Faces()  const;
+		void NormalizeTheModel();
+		void TexturizeTheModel();
+	};
 
-};
+	std::vector<Model> LoadModels(std::string fileName);
+}
 
 #endif //__Model__

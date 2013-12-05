@@ -1,110 +1,109 @@
 #include "Model.h"
-
-// assimp include files. These three are usually needed.
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "VecMath.h"
 
-
-Model::Model(std::string file)
+namespace CHL
 {
-	this->scene = aiImportFile(file.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_TransformUVCoords);
-}
 
-std::vector<CHL::Vec4> Model::Pos() const
-{
-	std::vector<CHL::Vec4> vectorPos;
-
-	aiMesh* mesh = *(this->scene->mMeshes);
-
-	vectorPos.reserve(mesh->mNumVertices);
-
-	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
+	Model::Model()
 	{
-		CHL::Vec4 pos;
-
-		pos(0) = mesh->mVertices[i].x;
-		pos(1) = mesh->mVertices[i].y;
-		pos(2) = mesh->mVertices[i].z;
-		pos(3) = 1.0;
-
-		vectorPos.push_back(pos);
+		this->NumberOfFaces = 3;
 	}
 
-	return vectorPos;
-}
-std::vector<CHL::Vec4> Model::Normal() const
-{
-	std::vector<CHL::Vec4> vectorNormal;
-
-	aiMesh* mesh = *(this->scene->mMeshes);
-
-	vectorNormal.reserve(mesh->mNumVertices);
-
-	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
+	void Model::NormalizeTheModel()
 	{
-		CHL::Vec4 normal;
-
-		if(mesh->HasNormals())
+		for(std::size_t i = 0; i < this->Faces.size(); i += this->NumberOfFaces)
 		{
-			normal(0) = mesh->mNormals[i].x;
-			normal(1) = mesh->mNormals[i].y;
-			normal(2) = mesh->mNormals[i].z;
-			normal(3) = 1.0;
-		}
-		else
-		{
-			normal(0) = 0.0;
-			normal(1) = 0.0;
-			normal(2) = 0.0;
-			normal(3) = 1.0;
-		}
+			unsigned int faceA = this->Faces[i + 0];
+			unsigned int faceB = this->Faces[i + 1];
+			unsigned int faceC = this->Faces[i + 2];
 
-		vectorNormal.push_back(normal);
+			CHL::Vec3 vecA{this->Vertices[faceA].Point(0), this->Vertices[faceA].Point(1), this->Vertices[faceA].Point(2)};
+			CHL::Vec3 vecB{this->Vertices[faceB].Point(0), this->Vertices[faceB].Point(1), this->Vertices[faceB].Point(2)};
+			CHL::Vec3 vecC{this->Vertices[faceC].Point(0), this->Vertices[faceC].Point(1), this->Vertices[faceC].Point(2)};
+
+			CHL::Vec3 vecAB = vecB - vecA;
+			CHL::Vec3 vecBC = vecC - vecB;
+
+			CHL::Vec3 cross = CHL::CrossProduct(vecAB, vecBC);
+			CHL::Vec3 normal = CHL::Normalize(cross);
+
+			this->Vertices[faceA].Normal = this->Vertices[faceA].Normal + normal;
+			this->Vertices[faceB].Normal = this->Vertices[faceA].Normal + normal;
+			this->Vertices[faceC].Normal = this->Vertices[faceA].Normal + normal;
+		}
+		for(unsigned int i = 0; i < this->Vertices.size(); ++i)
+		{
+			this->Vertices[i].Normal = CHL::Normalize(this->Vertices[i].Normal);
+		}
 	}
-
-	return vectorNormal;
-}
-std::vector<CHL::Vec2> Model::Texture() const
-{
-	std::vector<CHL::Vec2> vectorTexture;
-
-	aiMesh* mesh = *(this->scene->mMeshes);
-
-	vectorTexture.reserve(mesh->mNumVertices);
-
-	for(std::size_t i = 0; i <  mesh->mNumVertices; ++i)
+	void Model::TexturizeTheModel()
 	{
-		CHL::Vec2 texture;
-		if(mesh->HasTextureCoords(0))
+		for(std::size_t i = 0; i < this->Vertices.size(); ++i)
 		{
-			texture(0) = mesh->mTextureCoords[0][i].x;
-			texture(1) = mesh->mTextureCoords[0][i].y;
-		}
-		else
-		{
-			texture(0) = 0.0;
-			texture(1) = 0.0;
-		}
-		vectorTexture.push_back(texture);
-	}
+			CHL::Vec4 tex = this->Vertices[i].Normal;
 
-	return vectorTexture;
-}
+			this->Vertices[i].Texture = CHL::Normalize(tex);
 
-std::vector<unsigned int> Model::Faces() const
-{
-	std::vector<unsigned int> vectorFaces;
-
-	aiMesh* mesh = *(this->scene->mMeshes);
-
-	for(std::size_t i = 0; i <  mesh->mNumFaces; ++i)
-	{
-		for(std::size_t x = 0; x < mesh->mFaces[i].mNumIndices; ++x)
-		{
-			vectorFaces.push_back(mesh->mFaces[i].mIndices[x]);
+			this->Vertices[i].Texture(0) = ((std::asin(tex(0)) / 3.14) + 0.5f) * 2.0f;
+			this->Vertices[i].Texture(1) = ((std::asin(tex(1)) / 3.14) + 0.5f) * 2.0f;
+			this->Vertices[i].Texture(2) = ((std::asin(tex(2)) / 3.14) + 0.5f) * 2.0f;
 		}
 	}
 
-	return vectorFaces;
+	std::vector<Model> LoadModels(std::string fileName)
+	{
+		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_TransformUVCoords );
+
+		std::vector<Model> models(scene->mNumMeshes);
+
+		for(unsigned int iModel = 0; iModel < models.size(); ++iModel)
+		{
+			aiMesh* mesh = scene->mMeshes[0];
+
+			models[iModel].NumberOfFaces = mesh->mFaces[0].mNumIndices;
+			models[iModel].Faces.reserve(mesh->mNumFaces * models[iModel].NumberOfFaces);
+			for(std::size_t i = 0; i < mesh->mNumFaces; ++i)
+			{
+				for(std::size_t x = 0; x < models[iModel].NumberOfFaces; ++x)
+				{
+					models[iModel].Faces.push_back(mesh->mFaces[i].mIndices[x]);
+				}
+			}
+
+			models[iModel].Vertices.resize(mesh->mNumVertices);
+			for(std::size_t i = 0; i < mesh->mNumVertices; ++i)
+			{
+				aiVector3D vec;
+
+				vec = mesh->mVertices[i];
+				models[iModel].Vertices[i].Point = CHL::Vec3{vec.x, vec.y, vec.z};
+
+				if(mesh->HasNormals())
+				{
+					vec = mesh->mNormals[i];
+					models[iModel].Vertices[i].Normal = CHL::Vec3{vec.x, vec.y, vec.z};
+				}
+
+				if(mesh->HasTextureCoords(0))
+				{
+					vec = mesh->mTextureCoords[0][i];
+					models[iModel].Vertices[i].Texture = CHL::Vec3{vec.x, vec.y, vec.z};
+				}
+			}
+
+			if(!mesh->HasNormals())
+			{
+				models[iModel].NormalizeTheModel();
+			}
+
+			if(!mesh->HasTextureCoords(0))
+			{
+				models[iModel].TexturizeTheModel();
+			}
+		}
+		return models;
+	}
 }

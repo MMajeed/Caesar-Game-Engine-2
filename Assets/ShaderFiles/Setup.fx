@@ -38,5 +38,5 @@ struct PS_INPUT
 	float4 NormalWorld				: NORMAL2;
 	float4 LightShadow[numOfLights] : LightMVP;
     float4 Color					: COLOR0;
-	float2 tex						: TEXCOORD0;
+	float3 tex						: TEXCOORD0;
 };

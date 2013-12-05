@@ -46,6 +46,9 @@
     <ClInclude Include="Singleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
+    <ClInclude Include="VecMath.h">
+      <Filter>3DMath\VecMath</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="3DMath">
@@ -77,6 +80,9 @@
     </Filter>
     <Filter Include="Singleton">
       <UniqueIdentifier>{76720ea5-0baa-4432-a4c7-16fdc3721f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DMath\VecMath">
+      <UniqueIdentifier>{1af1a089-3652-4174-8d57-5babc91141dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

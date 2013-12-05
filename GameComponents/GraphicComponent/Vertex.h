@@ -10,7 +10,7 @@ struct Vertex
 {
 	XMFLOAT4 Pos;
 	XMFLOAT4 Normal;
-	XMFLOAT2 Texture;   
+	XMFLOAT3 Texture;   
 };
 
 #endif //__Vertex__

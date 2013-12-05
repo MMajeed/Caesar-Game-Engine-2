@@ -15,7 +15,7 @@ namespace BasicDrawableConfig
 	class  AddBasicDrawableMessage : public Message
 	{
 	public:
-		AddBasicDrawableMessage(const Model& model,
+		AddBasicDrawableMessage(const CHL::Model& model,
 								std::string	vertexFileName,
 								std::string	pixelFileName,
 								CULL_MODE cullMode, 
@@ -23,7 +23,7 @@ namespace BasicDrawableConfig
 
 		virtual Message::Status Work();
 
-		Model model;
+		CHL::Model model;
 		std::string	vertexFileName;
 		std::string	pixelFileName;
 		CULL_MODE cullMode;

@@ -38,7 +38,7 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 	if (pixelFileName.empty()) throw std::exception((Keys::BasicDrawable::PIXELSHADERFILE + " value was missing for BasicDrawableObject").c_str());
 
 
-	Model m(fileName);
+	CHL::Model m = CHL::LoadModels(fileName).at(0);
 
 	std::shared_ptr<BasicDrawableConfig::AddBasicDrawableMessage> msg(
 		new BasicDrawableConfig::AddBasicDrawableMessage

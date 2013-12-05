@@ -4,7 +4,7 @@ struct VS_INPUT
 {
 	float4 VertexPos : POSITION;
 	float4 VertexNorm : NORMAL;
-	float2 tex : TEXCOORD0;
+	float3 tex : TEXCOORD0;
 };
 
 // Vertex Shader

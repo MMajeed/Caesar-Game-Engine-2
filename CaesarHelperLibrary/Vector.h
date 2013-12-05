@@ -36,7 +36,7 @@ namespace CHL
 			}
 		}
 		template <typename T, int S> 
-		const Vector<Type, ArraySize>& operator=(const Vector<T, S>& rhs)
+		Vector<Type, ArraySize> operator=(const Vector<T, S>& rhs)
 		{
 			Vector<Type, ArraySize> returnValue;
 
@@ -46,7 +46,7 @@ namespace CHL
 			}
 			for(std::size_t i = S; i < ArraySize; ++i)
 			{
-				arr[i] = 0;
+				returnValue[i] = 0;
 			}
 
 			return returnValue;

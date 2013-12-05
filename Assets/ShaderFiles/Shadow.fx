@@ -34,17 +34,16 @@ float CalcShadowFactor(float4 shadowPosH, LightDesc L)
 	for(int i = 0; i < 9; ++i)
 	{
 		float2 loc = shadowPosH.xy + offsets[i];
-		if(loc.x < 1.0f && loc.x > 0.0f
+		float depthTexture = Shadow.Sample(sam, float3(loc, L.ShadowNum)).x;
+
+		if (depthTexture < 1.0f
+			&& loc.x < 1.0f && loc.x > 0.0f
 			&& loc.y < 1.0f && loc.y > 0.0f)
 		{
-			float depthTexture = Shadow.Sample(sam, float3(loc, L.ShadowNum)).x;
-			if(depthTexture < 1.0f)
+			bool inShadow = (shadowPosH.z - depthTexture) >= 0.005;
+			if(inShadow == true)
 			{
-				bool inShadow = (shadowPosH.z - depthTexture) >= 0.005;
-				if(inShadow == true)
-				{
-					sourcevals -= 0.08f;
-				}
+				sourcevals -= 0.08f;
 			}
 		}
 	}
