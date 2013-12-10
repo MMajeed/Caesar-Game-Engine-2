@@ -92,8 +92,7 @@
     <ClInclude Include="ContinuousCubeScreenShotConfig.h" />
     <ClInclude Include="ContinuousDepthScreenShotConfig.h" />
     <ClInclude Include="TakeScreenShot.h" />
-    <ClInclude Include="OnResize.h" />
-    <ClInclude Include="SetGraphicSettings.h" />
+    <ClInclude Include="GraphicSettings.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="GraphicCommunicator.h" />
   </ItemGroup>
@@ -104,8 +103,7 @@
     <ClCompile Include="ContinuousCubeScreenShotConfig.cpp" />
     <ClCompile Include="ContinuousDepthScreenShotConfig.cpp" />
     <ClCompile Include="TakeScreenShot.cpp" />
-    <ClCompile Include="OnResize.cpp" />
-    <ClCompile Include="SetGraphicSettings.cpp" />
+    <ClCompile Include="GraphicSettings.cpp" />
     <ClCompile Include="GraphicCommunicator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

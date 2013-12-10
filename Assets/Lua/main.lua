@@ -5,7 +5,7 @@ require("floor")
 
 ClearScreen(0.5, 0.5, 0.5);
 
-sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
+sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/PlyFiles/Sphere_Smooth.ply"),
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                       [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 for zIndex = 0, 2, 1 do
@@ -32,7 +32,7 @@ OnKeyDown(string.byte("B"),
                  [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
                  [Keys["Light"]["Spot"]]        = 0.5,
                  [Keys["Light"]["Range"]]       = 20,});
-      lightPos = lightPos - 10.0;
+      lightPos = lightPos - 20.0;
     end
 );
 

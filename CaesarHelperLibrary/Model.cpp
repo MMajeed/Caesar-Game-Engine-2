@@ -57,11 +57,13 @@ namespace CHL
 	{
 		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_TransformUVCoords );
 
+		if(scene == 0){	throw std::invalid_argument("Error with loading model " + fileName);	}
+
 		std::vector<Model> models(scene->mNumMeshes);
 
 		for(unsigned int iModel = 0; iModel < models.size(); ++iModel)
 		{
-			aiMesh* mesh = scene->mMeshes[0];
+			aiMesh* mesh = scene->mMeshes[iModel];
 
 			models[iModel].NumberOfFaces = mesh->mFaces[0].mNumIndices;
 			models[iModel].Faces.reserve(mesh->mNumFaces * models[iModel].NumberOfFaces);
@@ -92,16 +94,6 @@ namespace CHL
 					vec = mesh->mTextureCoords[0][i];
 					models[iModel].Vertices[i].Texture = CHL::Vec3{vec.x, vec.y, vec.z};
 				}
-			}
-
-			if(!mesh->HasNormals())
-			{
-				models[iModel].NormalizeTheModel();
-			}
-
-			if(!mesh->HasTextureCoords(0))
-			{
-				models[iModel].TexturizeTheModel();
 			}
 		}
 		return models;

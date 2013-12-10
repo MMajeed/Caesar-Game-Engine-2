@@ -33,9 +33,9 @@ void DX11Helper::CompileShaderFromFile(std::string shaderFileName, std::string v
 		{
 			std::string ASCIIerror((char*)pErrorBlob->GetBufferPointer());
 			pErrorBlob->Release();
-			throw std::exception(ASCIIerror.c_str());
+			throw std::runtime_error(ASCIIerror);
 		}
-		throw std::exception((shaderFileName + " could not be found or complied").c_str());
+		throw std::runtime_error( shaderFileName + " could not be found or complied" );
 	}
 }
 void DX11Helper::LoadShaderFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, std::vector<char>& fileBytes)
@@ -49,7 +49,7 @@ void DX11Helper::LoadShaderFile(std::string shaderFileName, std::string vsEntryP
 	}
 	else {
 		std::ifstream fin(shaderFileName, std::ios::binary);
-		if(!fin){	throw std::exception(std::string("Failed at loaded file " + shaderFileName).c_str());	}
+		if(!fin){ throw std::runtime_error("Failed at loaded file " + shaderFileName); }
 		fin.seekg(0, std::ios_base::end);
 		int size = (int)fin.tellg();
 		fin.seekg(0, std::ios_base::beg);
@@ -71,7 +71,7 @@ void DX11Helper::LoadInputLayoutFile(std::string vsFileName, ID3D11Device* devic
 	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
 	if (FAILED(hr))
 	{
-		throw std::exception("ERROR: Could not assign compiled vertex shader to device.");
+		throw std::runtime_error("ERROR: Could not assign compiled vertex shader to device.");
 	}
 }
 void DX11Helper::LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut)
@@ -86,7 +86,7 @@ void DX11Helper::LoadVertexShaderFile(std::string vsFileName, ID3D11Device* devi
 	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
 	if (FAILED(hr))
 	{
-		throw std::exception("ERROR: Could not assign compiled vertex shader to device.");
+		throw std::runtime_error("ERROR: Could not assign compiled vertex shader to device.");
 	}
 }
 void DX11Helper::LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut)
@@ -101,7 +101,7 @@ void DX11Helper::LoadPixelShaderFile(std::string psFileName, ID3D11Device* devic
 	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
 	if (FAILED(hr))
 	{
-		throw std::exception("ERROR: Could not assign compiled pixel shader to device.");
+		throw std::runtime_error("ERROR: Could not assign compiled pixel shader to device.");
 	}
 }
 void DX11Helper::LoadRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut)
@@ -117,7 +117,7 @@ void DX11Helper::LoadRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE f
 	HRESULT hr = device->CreateRasterizerState( &RSDesc, rsOut );
 	if(FAILED(hr))
 	{
-		throw std::exception("ERROR: Can't create rasterizer state");
+		throw std::runtime_error("ERROR: Can't create rasterizer state");
 	}
 }
 void DX11Helper::LoadTextureFile(std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut)
@@ -130,7 +130,7 @@ void DX11Helper::LoadTextureFile(std::wstring txFileName, ID3D11Device* device, 
 					NULL );
 	if(FAILED(hr))
 	{
-		throw std::exception(std::string("ERROR: Can't create texture " + CHL::ToString(txFileName)).c_str());
+		throw std::runtime_error(std::string("ERROR: Can't create texture " + CHL::ToString(txFileName)).c_str());
 	}
 }
 void DX11Helper::LoadSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU, D3D11_TEXTURE_ADDRESS_MODE addressV, D3D11_TEXTURE_ADDRESS_MODE addressW, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut)
@@ -147,7 +147,7 @@ void DX11Helper::LoadSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MOD
     HRESULT hr = device->CreateSamplerState( &sampDesc, ssOut );
 	if(FAILED(hr))
 	{
-		throw std::exception("ERROR: Can't create Sampler State");
+		throw std::runtime_error("ERROR: Can't create Sampler State");
 	}
 }
 void DX11Helper::LoadTransparent(ID3D11Device* device, ID3D11BlendState** bsOut)
@@ -168,6 +168,6 @@ void DX11Helper::LoadTransparent(ID3D11Device* device, ID3D11BlendState** bsOut)
 
 	if(FAILED(hr))
 	{
-		throw std::exception("ERROR: Can't create Sampler State");
+		throw std::runtime_error("ERROR: Can't create Sampler State");
 	}
 }

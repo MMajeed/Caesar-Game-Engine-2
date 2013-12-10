@@ -6,6 +6,7 @@
 #include <Message.h>
 #include <Model.h>
 #include <string>
+#include <memory>
 
 namespace BasicDrawableConfig
 {
@@ -15,7 +16,7 @@ namespace BasicDrawableConfig
 	class  AddBasicDrawableMessage : public Message
 	{
 	public:
-		AddBasicDrawableMessage(const CHL::Model& model,
+		AddBasicDrawableMessage(std::shared_ptr<CHL::Model> model,
 								std::string	vertexFileName,
 								std::string	pixelFileName,
 								CULL_MODE cullMode, 
@@ -23,7 +24,7 @@ namespace BasicDrawableConfig
 
 		virtual Message::Status Work();
 
-		CHL::Model model;
+		std::shared_ptr<CHL::Model> model;
 		std::string	vertexFileName;
 		std::string	pixelFileName;
 		CULL_MODE cullMode;

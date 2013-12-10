@@ -32,7 +32,7 @@ void Light::Init()
 
 	HRESULT hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateTexture2D(&sTexDesc, NULL, &(this->shadowTexture));
 	if(FAILED(hr))
-		throw std::exception("Failed at creating texture array for shadows");
+		throw std::runtime_error("Failed at creating texture array for shadows");
 
 	this->vecDepthShadow.resize(this->NumberOfShadows);
 	unsigned int counter = 0;
@@ -52,7 +52,7 @@ void Light::Init()
 	srvDesc.Texture2DArray.FirstArraySlice = 0;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateShaderResourceView(this->shadowTexture, &srvDesc, &this->shaderShadowTexture);
-	if(FAILED(hr)){ throw std::exception("Error creating 2d texture for shadow"); }
+	if(FAILED(hr)){ throw std::runtime_error("Error creating 2d texture for shadow"); }
 
 	shadowFilter = ShadowFilter::Spawn(CHL::GenerateGUID());
 }

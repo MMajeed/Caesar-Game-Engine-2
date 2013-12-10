@@ -7,14 +7,15 @@
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Model.h>
 #include <Keys.h>
-
+#include "LuaModel.h"
+#include <stdexcept>
 
 LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
-		throw std::exception("Wrong paramter for AddBasicObject, please send in a table");
+		throw std::invalid_argument("Wrong paramter for AddBasicObject, please send in a table");
 
-	std::string fileName = "";
+	std::shared_ptr<CHL::Model> model;
 	std::string vertexFileName = "";
 	std::string pixelFileName = "";
 	int cullMode = 3 ;
@@ -26,23 +27,20 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 	{
 		std::string key = luabind::object_cast<std::string>(it.key());
 
-		     if (key == Keys::BasicDrawable::MODELFILE)			{ fileName = luabind::object_cast<std::string>(*it); }
+		     if (key == Keys::BasicDrawable::MODELFILE)			{ model = luabind::object_cast<LuaModel::Model>(*it); }
 		else if (key == Keys::BasicDrawable::VERTEXSHADERFILE)	{ vertexFileName = luabind::object_cast<std::string>(*it); }
 		else if (key == Keys::BasicDrawable::PIXELSHADERFILE)	{ pixelFileName = luabind::object_cast<std::string>(*it); }
 		else if (key == Keys::BasicDrawable::CULLMODE)			{ cullMode = luabind::object_cast<int>(*it); }
 		else if (key == Keys::BasicDrawable::FILLMODE)			{ fillMode = luabind::object_cast<int>(*it); }
 	}
 
-	if (fileName.empty()) throw std::exception( (Keys::BasicDrawable::MODELFILE + " value was missing for BasicDrawableObject ").c_str() );
-	if (vertexFileName.empty()) throw std::exception((Keys::BasicDrawable::VERTEXSHADERFILE + " value was missing for BasicDrawableObject").c_str());
-	if (pixelFileName.empty()) throw std::exception((Keys::BasicDrawable::PIXELSHADERFILE + " value was missing for BasicDrawableObject").c_str());
+	if(vertexFileName.empty()) throw std::invalid_argument(Keys::BasicDrawable::VERTEXSHADERFILE + " value was missing for BasicDrawableObject");
+	if(pixelFileName.empty()) throw std::invalid_argument(Keys::BasicDrawable::PIXELSHADERFILE + " value was missing for BasicDrawableObject");
 
-
-	CHL::Model m = CHL::LoadModels(fileName).at(0);
 
 	std::shared_ptr<BasicDrawableConfig::AddBasicDrawableMessage> msg(
 		new BasicDrawableConfig::AddBasicDrawableMessage
-				(m, vertexFileName, pixelFileName,
+				(model, vertexFileName, pixelFileName,
 				static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
 				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode)));
 

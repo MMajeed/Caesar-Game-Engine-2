@@ -11,12 +11,6 @@
     <ClInclude Include="BasicDrawableConfig.h">
       <Filter>BasicDrawableConfig</Filter>
     </ClInclude>
-    <ClInclude Include="SetGraphicSettings.h">
-      <Filter>SetGraphicSettings</Filter>
-    </ClInclude>
-    <ClInclude Include="OnResize.h">
-      <Filter>OnResize</Filter>
-    </ClInclude>
     <ClInclude Include="TakeScreenShot.h">
       <Filter>TakeScreenShot</Filter>
     </ClInclude>
@@ -29,6 +23,9 @@
     <ClInclude Include="ContinuousCubeScreenShotConfig.h">
       <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicSettings.h">
+      <Filter>GraphicSettings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddBasicTexture.cpp">
@@ -39,12 +36,6 @@
     </ClCompile>
     <ClCompile Include="BasicDrawableConfig.cpp">
       <Filter>BasicDrawableConfig</Filter>
-    </ClCompile>
-    <ClCompile Include="SetGraphicSettings.cpp">
-      <Filter>SetGraphicSettings</Filter>
-    </ClCompile>
-    <ClCompile Include="OnResize.cpp">
-      <Filter>OnResize</Filter>
     </ClCompile>
     <ClCompile Include="TakeScreenShot.cpp">
       <Filter>TakeScreenShot</Filter>
@@ -58,6 +49,9 @@
     <ClCompile Include="ContinuousCubeScreenShotConfig.cpp">
       <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicSettings.cpp">
+      <Filter>GraphicSettings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AddBasicTexture">
@@ -68,12 +62,6 @@
     </Filter>
     <Filter Include="BasicDrawableConfig">
       <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SetGraphicSettings">
-      <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OnResize">
-      <UniqueIdentifier>{e8a764f3-a017-40aa-8466-998177228759}</UniqueIdentifier>
     </Filter>
     <Filter Include="TakeScreenShot">
       <UniqueIdentifier>{b5254899-5d92-4dba-89f6-c6c4ef75daa3}</UniqueIdentifier>
@@ -89,6 +77,9 @@
     </Filter>
     <Filter Include="ContinuousScreenShot\ContinuousBasicScreenShotConfig">
       <UniqueIdentifier>{98b44050-07e0-452a-b334-8730a42ab3be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicSettings">
+      <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

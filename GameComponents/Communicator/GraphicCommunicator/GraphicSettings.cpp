@@ -1,5 +1,21 @@
-#include "OnResize.h"
+#include "GraphicSettings.h"
+
 #include <GraphicManager.h>
+
+ClearScreenMessage::ClearScreenMessage(const CHL::Vec4& input)
+	: colour(input)
+{
+}
+
+Message::Status ClearScreenMessage::Work()
+{
+	GraphicManager::GetInstance().SceneInfo.ClearColour(0) = this->colour(0);
+	GraphicManager::GetInstance().SceneInfo.ClearColour(1) = this->colour(1);
+	GraphicManager::GetInstance().SceneInfo.ClearColour(2) = this->colour(2);
+
+	return Message::Status::Complete;
+}
+
 
 OnResize::OnResize(unsigned int widthInput, unsigned int heightInput)
 {
@@ -21,17 +37,17 @@ Message::Status OnResize::Work()
 		// Resize the swap chain and recreate the render target view.
 		HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
 		if (FAILED(hr))
-			throw std::exception("Failed at resizing swap chain buffer");
+			throw std::runtime_error("Failed at resizing swap chain buffer");
 
 		ID3D11Texture2D* pBuffer = NULL;
 		hr = graphic.D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
 		if (FAILED(hr))
-			throw std::exception("Failed at creating back buffer");
+			throw std::runtime_error("Failed at creating back buffer");
 
 		hr = graphic.D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &graphic.D3DStuff.pRenderTargetView);
 		if (FAILED(hr))
-			throw std::exception("Failed at creating Render Target view");
-	
+			throw std::runtime_error("Failed at creating Render Target view");
+
 		pBuffer->Release();
 
 		// Create the depth/stencil buffer and view.
@@ -55,7 +71,7 @@ Message::Status OnResize::Work()
 		hr = graphic.D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &graphic.D3DStuff.pDepthStencilBuffer);
 		if (FAILED(hr))
 		{
-			throw std::exception("Failed at creating dept buffer");
+			throw std::runtime_error("Failed at creating dept buffer");
 		}
 
 
@@ -72,7 +88,7 @@ Message::Status OnResize::Work()
 		hr = graphic.D3DStuff.pd3dDevice->CreateDepthStencilView(graphic.D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &graphic.D3DStuff.pDepthStencilView);
 		if (FAILED(hr))
 		{
-			throw std::exception("Failed at creating depth stencil view");
+			throw std::runtime_error("Failed at creating depth stencil view");
 		}
 
 		graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &graphic.D3DStuff.pRenderTargetView, graphic.D3DStuff.pDepthStencilView);

@@ -24,11 +24,11 @@ void Interface::Run()
 		LARGE_INTEGER timerNow = { 0 };
 		LARGE_INTEGER timerWorked = { 0 };
 		if( !QueryPerformanceFrequency( &timerFrequency ) ) 
-			throw std::exception( "QueryPerformanceFrequency() failed to create a high-performance timer." );
+			throw std::runtime_error("QueryPerformanceFrequency() failed to create a high-performance timer.");
 		double tickInterval = static_cast<double>( timerFrequency.QuadPart );
 
 		if( !QueryPerformanceCounter( &timerBase ) )
-			throw std::exception( "QueryPerformanceCounter() failed to read the high-performance timer." );
+			throw std::runtime_error("QueryPerformanceCounter() failed to read the high-performance timer.");
 		timerLast = timerBase;
 
 		this->timer.FrameCount = 0;
@@ -37,7 +37,7 @@ void Interface::Run()
 		{
 			// update timer
 			if( !QueryPerformanceCounter( &timerNow ) )
-				throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
+				throw std::runtime_error("QueryPerformanceCounter() failed to update the high-performance timer.");
 			long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 			long long elapsedFrameCount = timerNow.QuadPart - timerLast.QuadPart;
 			this->timer.AbsoluteTime = elapsedCount / tickInterval;
@@ -61,7 +61,7 @@ void Interface::Run()
 
 			// update timer
 			if( !QueryPerformanceCounter( &timerWorked ) )
-				throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
+				throw std::runtime_error("QueryPerformanceCounter() failed to update the high-performance timer.");
 			elapsedFrameCount = timerWorked.QuadPart - timerNow.QuadPart ;
 			double timeWorked = elapsedFrameCount / tickInterval;;
 			timeWorked *= 1000;

@@ -9,7 +9,7 @@
 LuaCamera::LuaCamera(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
-		throw std::exception("Wrong paramter for Camera, please send in a table");
+		throw std::invalid_argument("Wrong paramter for Camera, please send in a table");
 
 	CHL::Vec4 eye{0.0, 0.0, 0.0, 0.0};
 	CHL::Vec4 TM{0.0, 0.0, 1.0, 0.0};

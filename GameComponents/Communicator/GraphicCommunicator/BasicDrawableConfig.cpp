@@ -4,23 +4,23 @@
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
 
-BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(const CHL::Model& model,
+BasicDrawableConfig::AddBasicDrawableMessage::AddBasicDrawableMessage(std::shared_ptr<CHL::Model> model,
 	std::string	vertexFileName,
 	std::string	pixelFileName,
 	CULL_MODE cullMode,
 	FILL_MODE fillMode)
-	: model(model)
 {
 	this->ID = CHL::GenerateGUID();
 	this->vertexFileName = vertexFileName;
 	this->pixelFileName = pixelFileName;
 	this->cullMode = cullMode;
 	this->fillMode = fillMode;
+	this->model = model;
 }
 
 Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 {
-	auto vectorFaces = model.Faces;
+	auto vectorFaces = model->Faces;
 	std::vector<WORD> vectorIndices;
 	vectorIndices.reserve(vectorFaces.size());
 	for(std::size_t i = 0; i < vectorFaces.size(); ++i)
@@ -28,7 +28,7 @@ Message::Status BasicDrawableConfig::AddBasicDrawableMessage::Work()
 		vectorIndices.push_back((WORD)vectorFaces[i]);
 	}
 
-	auto modelVertices = model.Vertices;
+	auto modelVertices = model->Vertices;
 	std::vector<Vertex> vectorVertices;
 	vectorVertices.reserve(modelVertices.size());
 

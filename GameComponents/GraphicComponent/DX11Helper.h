@@ -39,7 +39,7 @@ namespace DX11Helper
 		hr = device->CreateBuffer( &bd, &InitData, bOut );
 		if( FAILED( hr ) )
 		{
-			throw std::exception("Failed at creating vertex buffer");
+			throw std::runtime_error("Failed at creating vertex buffer");
 		}
 	}
 
@@ -61,7 +61,7 @@ namespace DX11Helper
 		hr = device->CreateBuffer( &bd, &InitData, bOut );
 		if(FAILED(hr))
 		{
-			throw std::exception("Failed at creating index buffer");
+			throw std::runtime_error("Failed at creating index buffer");
 		}
 	}
 
@@ -80,7 +80,7 @@ namespace DX11Helper
 		hr = device->CreateBuffer(&bd, NULL, cbOut);
 		if(FAILED(hr))
 		{
-			throw std::exception("Failed at creating constant buffer");
+			throw std::runtime_error("Failed at creating constant buffer");
 		}
 	}
 };

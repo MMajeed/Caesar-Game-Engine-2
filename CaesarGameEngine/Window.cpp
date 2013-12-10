@@ -9,7 +9,7 @@
 #include <ScriptCommunicator\ScriptCommunicator.h>
 #include <EntityCommunicator\EntityConfig.h>
 #include <InputCommunicator\UpdateKey.h>
-#include <GraphicCommunicator\OnResize.h>
+#include <GraphicCommunicator\GraphicSettings.h>
 #include <Keys.h>
 #include <Converter.h>
 #include <Error.h>
@@ -43,7 +43,7 @@ void Window::Init()
 	// Try a "register" this type of window... so that we can create it later
     if( !RegisterClassEx( &wcex ) )
 	{
-        throw std::exception("Failed at registering Window");
+		throw std::logic_error("Failed at registering Window");
 	}
 
     // Create window
@@ -58,7 +58,7 @@ void Window::Init()
 	// Try to create the window...
     if( !(this->window.hWnd) )
 	{
-        throw std::exception("Failed at creating window");
+		throw std::runtime_error("Failed at creating window");
 	}
 
     ShowWindow( this->window.hWnd, 10 );
@@ -102,10 +102,10 @@ void Window::Run()
 	LARGE_INTEGER timerNow = { 0 };
 	LARGE_INTEGER timerFrequency = { 0 };
 	if( !QueryPerformanceCounter( &timerBase ) )
-			throw std::exception( "QueryPerformanceCounter() failed to read the high-performance timer." );
+		throw std::runtime_error("QueryPerformanceCounter() failed to read the high-performance timer.");
 	if( !QueryPerformanceFrequency( &timerFrequency ) ) 
-			throw std::exception( "QueryPerformanceFrequency() failed to create a high-performance timer." );
-		double tickInterval = static_cast<double>( timerFrequency.QuadPart );
+		throw std::runtime_error("QueryPerformanceFrequency() failed to create a high-performance timer.");
+	double tickInterval = static_cast<double>( timerFrequency.QuadPart );
 
 	// Main message loop
 	MSG msg = {0};
@@ -119,7 +119,7 @@ void Window::Run()
 		
 		
 		if( !QueryPerformanceCounter( &timerNow ) )
-			throw std::exception( "QueryPerformanceCounter() failed to update the high-performance timer." );
+			throw std::runtime_error("QueryPerformanceCounter() failed to update the high-performance timer.");
 		long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 		this->window.AbsoluteTime = elapsedCount / tickInterval;
 

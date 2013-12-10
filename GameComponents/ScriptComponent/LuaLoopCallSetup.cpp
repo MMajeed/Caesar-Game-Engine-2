@@ -7,7 +7,7 @@ std::string LuaLoopCallSetup::Loop(double time, luabind::object const& function)
 {
 	if (luabind::type(function) != LUA_TFUNCTION)
     {	
-		throw std::exception("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
+		throw std::invalid_argument("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
     }
 
 	std::shared_ptr<LuaLoopCall> newKeyAction(new LuaLoopCall(time, function));

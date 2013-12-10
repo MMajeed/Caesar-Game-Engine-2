@@ -9,7 +9,7 @@ std::string LuaKeyActionSetup::OnKeyDown(unsigned int key, luabind::object funct
 {
 	if (luabind::type(function) != LUA_TFUNCTION)
     {	
-		throw std::exception("Wrong paramter for OnKeyDown, Please pass in the key and function");
+		throw std::invalid_argument("Wrong paramter for OnKeyDown, Please pass in the key and function");
     }
 
 	std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(key, LuaKeyAction::KeyStatWanted::KeyDown, function));
@@ -22,7 +22,7 @@ std::string LuaKeyActionSetup::OnKeyUp(unsigned int key, luabind::object const& 
 {
 	if (luabind::type(function) != LUA_TFUNCTION)
     {	
-		throw std::exception("Wrong paramter for OnKeyUp, Please pass in the key and function");
+		throw std::invalid_argument("Wrong paramter for OnKeyUp, Please pass in the key and function");
     }
 
 	std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(key, LuaKeyAction::KeyStatWanted::KeyUp, function));

@@ -41,7 +41,7 @@ void LuaLight::Light::SetSpecular(LuaMath::Vector4 vec)
 LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
-		throw std::exception("Wrong paramter for DirectionalLight, please send in a table");
+		throw std::invalid_argument("Wrong paramter for DirectionalLight, please send in a table");
 
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 direction;
@@ -99,7 +99,7 @@ void LuaLight::DirectionalLight::Register(lua_State *lua)
 LuaLight::PointLight::PointLight(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
-		throw std::exception("Wrong paramter for PointLight, please send in a table");
+		throw std::invalid_argument("Wrong paramter for PointLight, please send in a table");
 
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;	
 	CHL::Vec4 position;	CHL::Vec4 att; double range = 0.0;
@@ -181,7 +181,7 @@ void LuaLight::PointLight::Register(lua_State *lua)
 LuaLight::SpotLight::SpotLight(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
-		throw std::exception("Wrong paramter for SpotLight, please send in a table");
+		throw std::invalid_argument("Wrong paramter for SpotLight, please send in a table");
 
 	int slot = 0;
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;

@@ -31,7 +31,7 @@ LuaObject::LuaObject()
 LuaObject::LuaObject(luabind::object const& table)
 {
 	if (luabind::type(table) != LUA_TTABLE)
-		throw std::exception("Wrong paramter for Camera, please send in a table");
+		throw std::invalid_argument("Wrong paramter for Camera, please send in a table");
 
 	CHL::Vec4 loc{0.0, 0.0, 0.0, 1.0};
 	CHL::Vec4 rot{0.0, 0.0, 0.0, 1.0};
@@ -237,7 +237,7 @@ std::shared_ptr<ObjectINFO> LuaObject::GetObject()
 	if(obj)
 	{
 		returnValue = std::dynamic_pointer_cast<ObjectINFO>(obj);
-		if(!returnValue){ throw std::exception("Attempted to cast an Object to ObjectINFO and failed"); }
+		if(!returnValue){ throw std::invalid_argument("Attempted to cast an Object to ObjectINFO and failed"); }
 	}
 	return returnValue;
 }
