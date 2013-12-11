@@ -89,11 +89,10 @@ void DepthScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 void DepthScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-
 	graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
 	graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
 	CHL::Vec4 eye{this->D3DInfo.cameraMatrix[0][3], this->D3DInfo.cameraMatrix[1][3], this->D3DInfo.cameraMatrix[2][3], this->D3DInfo.cameraMatrix[3][3]};
-	graphic.SceneInfo.Eye = eye;
+
 }
 void DepthScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {

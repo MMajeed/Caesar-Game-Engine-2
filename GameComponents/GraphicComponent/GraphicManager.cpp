@@ -40,9 +40,9 @@ void GraphicManager::Work()
 {
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
-	this->RunAllCapture(objects);
-	this->SetupLight(objects);
 	this->SetupScene(objects);
+	this->SetupLight(objects);
+	this->RunAllCapture(objects);
 	this->SetupConstantBuffer(objects);
 	this->ClearScreen(objects);
 	this->DrawObjects(objects);
@@ -178,11 +178,14 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 	{
 		float rankA = 0.0f; float rankB = 0.0f;
 
-		if(a->Diffuse[3] < 1.0){ rankA += CHL::Length(eye, a->Location); }
-		if(b->Diffuse[3] < 1.0){ rankB += CHL::Length(eye, b->Location); }
+		if(a->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
+		else if(a->Diffuse[3] < 1.0) { rankA += CHL::Length(eye, a->Location); }
+		
+		if(b->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
+		else if(b->Diffuse[3] < 1.0) { rankB += CHL::Length(eye, b->Location); }
 
-		if(a->Depth == false) { rankA -= 10000.0f; }
-		if(b->Depth == false) { rankB -= 10000.0f; }
+		if(a->Depth == false) { rankA -= 1000000.0f; }
+		if(b->Depth == false) { rankB -= 1000000.0f; }
 
 		return rankA > rankB;
 	});

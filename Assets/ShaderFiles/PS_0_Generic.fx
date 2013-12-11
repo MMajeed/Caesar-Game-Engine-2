@@ -9,7 +9,7 @@ float4 PS( PS_INPUT input ) : SV_Target
 	finalColor += Calculate2DTexture(input.tex.xy);
 	finalColor = saturate(finalColor);
 
-	finalColor += CalculateCubeTexture(input.Normal.xyz);
+	finalColor += CalculateCubeTexture(input.tex.xyz);
 	finalColor = saturate(finalColor);
 
 	if(HasLight){ finalColor += CalculateLight(input);	}

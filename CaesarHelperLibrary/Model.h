@@ -1,6 +1,7 @@
 #ifndef __Model__
 #define __Model__
 
+#include "Linker.h"
 #include "Vector.h"
 #include <string>
 #include <vector>
@@ -21,6 +22,7 @@ namespace CHL
 		std::vector<VerticesInfo> Vertices;
 		std::vector<unsigned int> Faces;
 		unsigned int NumberOfFaces;
+		std::string name;
 
 		void NormalizeTheModel();
 		void TexturizeTheModel();

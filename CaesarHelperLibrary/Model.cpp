@@ -3,6 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "VecMath.h"
+#include <iostream>
 
 namespace CHL
 {
@@ -55,9 +56,10 @@ namespace CHL
 
 	std::vector<Model> LoadModels(std::string fileName)
 	{
-		const aiScene* scene = aiImportFile(fileName.c_str(), aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_TransformUVCoords );
-
-		if(scene == 0){	throw std::invalid_argument("Error with loading model " + fileName);	}
+		unsigned int pFlags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded & ( ~aiProcess_SplitLargeMeshes );
+		const aiScene* scene = aiImportFile(fileName.c_str(), pFlags);
+		
+		if(scene == 0){ throw std::invalid_argument("Error with loading model " + fileName + "\n" + aiGetErrorString()); }
 
 		std::vector<Model> models(scene->mNumMeshes);
 
@@ -65,6 +67,7 @@ namespace CHL
 		{
 			aiMesh* mesh = scene->mMeshes[iModel];
 
+			models[iModel].name = mesh->mName.C_Str();
 			models[iModel].NumberOfFaces = mesh->mFaces[0].mNumIndices;
 			models[iModel].Faces.reserve(mesh->mNumFaces * models[iModel].NumberOfFaces);
 			for(std::size_t i = 0; i < mesh->mNumFaces; ++i)
@@ -88,14 +91,25 @@ namespace CHL
 					vec = mesh->mNormals[i];
 					models[iModel].Vertices[i].Normal = CHL::Vec3{vec.x, vec.y, vec.z};
 				}
+				else
+				{
+					models[iModel].Vertices[i].Normal = CHL::Vec3{ 0.0, 0.0, 0.0 };
+				}
 
 				if(mesh->HasTextureCoords(0))
 				{
 					vec = mesh->mTextureCoords[0][i];
 					models[iModel].Vertices[i].Texture = CHL::Vec3{vec.x, vec.y, vec.z};
 				}
+				else
+				{
+					models[iModel].Vertices[i].Texture = models[iModel].Vertices[i].Normal;
+				}
 			}
 		}
+
+		aiReleaseImport(scene);
+
 		return models;
 	}
 }

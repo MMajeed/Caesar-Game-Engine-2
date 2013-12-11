@@ -4,8 +4,8 @@
 LuaMath::Vector4::Vector4(){}
 LuaMath::Vector4::Vector4(CHL::Vec4 vecValue){	this->vector = vecValue; }
 LuaMath::Vector4::Vector4(double xValue, double yValue, double zValue, double wValue)
+: vector({ xValue, yValue, zValue, wValue })
 {
-	this->vector = {xValue, yValue, zValue, wValue};
 }
 LuaMath::Vector4::operator CHL::Vec4(){	return this->vector;}
 

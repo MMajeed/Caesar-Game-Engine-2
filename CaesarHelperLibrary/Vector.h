@@ -11,7 +11,7 @@ namespace CHL
 	{
 	public:
 		std::array<Type, ArraySize> arr;
-		Vector(){ std::fill(arr.begin(), arr.end(), 0);  }
+		Vector(){ }
 		Vector(std::initializer_list<Type> args)
 		{
 			std::copy(args.begin(), args.end(), this->arr.begin());

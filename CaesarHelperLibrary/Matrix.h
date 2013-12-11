@@ -1,71 +1,101 @@
 #ifndef __Matrix__
 #define __Matrix__
 
+#include <array>
+#include <algorithm>
+#include "Vector.h"
+
 namespace CHL
 {
 	template<typename Type, unsigned int FArraySize, unsigned int SArraySize>
 	class Matrix
 	{
-	public:
-		Type arr[FArraySize][SArraySize];
-
-		Matrix(){ memset(&this->arr, 0, ( sizeof(Type) * FArraySize * SArraySize ) );	}
-
-		template <typename T, unsigned int  FS, unsigned int SS> 
+		public:
+		std::array<Vector<Type, SArraySize>, FArraySize> mat;
+		Matrix()
+		{
+			for(unsigned int i = 0; i < FArraySize; ++i)
+			{
+				for(unsigned int x = 0; x < SArraySize; ++x)
+				{
+					if(i != x){ mat[i][x] = 0; }
+					else{ mat[i][x] = 1; }
+				}
+			}
+		}
+		template <typename T, unsigned int  FS, unsigned int SS>
 		Matrix(const Matrix<T, FS, SS>& rhs)
 		{
 			for(std::size_t i = 0; i < FS && i < FArraySize; ++i)
 			{
 				for(std::size_t x = 0; x < SS && x < SArraySize; ++x)
 				{
-					arr[i][x] = rhs(i, x);
+					mat[i][x] = rhs(i, x);
 				}
 				for(std::size_t x = SS; x < SArraySize; ++x)
 				{
-					arr[i][x] = 0.0;
+					mat[i][x] = 0.0;
 				}
 			}
 			for(std::size_t i = FS; i < FArraySize; ++i)
 			{
 				for(std::size_t x = 0; x < SArraySize; ++x)
 				{
-					arr[i][x] = 0.0;
+					mat[i][x] = 0.0;
 				}
 			}
 		}
-		template <typename T, unsigned int  FS, unsigned int SS> 
-		const Matrix<Type, FArraySize, SArraySize>& operator=(const Matrix<T, FS, SS>& rhs)
+		template <typename T, unsigned int  FS, unsigned int SS>
+		const Matrix<Type, FArraySize, SArraySize>& operator=( const Matrix<T, FS, SS>& rhs )
 		{
-			Matrix<Type, FArraySize, SArraySize> returnValue;
-
 			for(std::size_t i = 0; i < FS && i < FArraySize; ++i)
 			{
-				for(std::size_t x = 0; x < SS && x < SArraySize; ++x)
-				{
-					returnValue(i, x) = rhs(i, x);
-				}
-				for(std::size_t x = SS; x < SArraySize; ++x)
-				{
-					returnValue(i, x) = 0.0;
-				}
+				std::copy(rhs[i].begin(), rhs[i].end(), this->mat[i].arr.begin());
+				if(SS < SArraySize){ std::fill(this->mat[i].arr.begin() + SS, this->mat[i].arr.end(), 0); }
 			}
-			for(std::size_t i = FS; i < FArraySize; ++i)
+			for(unsigned int i = FS; i < FArraySize; ++i)
 			{
-				for(std::size_t x = 0; x < SArraySize; ++x)
-				{
-					returnValue(i, x) = 0.0;
-				}
+				std::fill(this->mat[i].arr.begin(), this->mat[i].arr.end(), 0);
 			}
 
-			return returnValue;
+			return *this;
+		}
+		Matrix(std::initializer_list<std::initializer_list<Type>> args)
+		{
+			unsigned int i = 0;
+			for(auto argsIter : args)
+			{
+				std::copy(argsIter.begin(), argsIter.end(), this->mat[i].arr.begin());
+				if(argsIter.size() < SArraySize){ std::fill(this->mat[i].arr.begin() + argsIter.size(), this->mat[i].arr.end(), 0); }
+				++i;
+			}
+			for(unsigned int i = args.size(); i < FArraySize; ++i)
+			{
+				std::fill(this->mat[i].arr.begin(), this->mat[i].arr.end(), 0);
+			}
+		}
+		Matrix& operator=( std::initializer_list<std::initializer_list<Type>> args )
+		{
+			unsigned int i = 0;
+			for(auto argsIter : args)
+			{
+				std::copy(argsIter.begin(), argsIter.end(), this->mat[i].arr.begin());
+				if(argsIter.size() < SArraySize){ std::fill(this->mat[i].arr.begin() + argsIter.size(), this->mat[i].arr.end(), 0); }
+				++i;
+			}
+			for(unsigned int i = args.size(); i < FArraySize; ++i)
+			{
+				std::fill(this->mat[i].arr.begin(), this->mat[i].arr.end(), 0);
+			}
+			return *this;
 		}
 
 		inline unsigned int FirstArraySize(){ return FArraySize; }
 		inline unsigned int SecondArraySize(){ return SArraySize; }
-		Type& operator()(unsigned int fIndex, unsigned int sIndex){ return this->arr[fIndex][sIndex]; }
-		Type operator()(unsigned int fIndex, unsigned int sIndex) const { return this->arr[fIndex][sIndex]; }
-		Type* operator[](unsigned int index){ return this->arr[index]; };
-		const Type* operator[](unsigned int index) const { return this->arr[index]; };
+		Type& operator()(unsigned int fIndex, unsigned int sIndex){ return this->mat[fIndex][sIndex]; }
+		const Type operator()(unsigned int fIndex, unsigned int sIndex) const { return this->mat[fIndex][sIndex]; }
+		Vector<Type, SArraySize>& operator[](unsigned int index){ return this->mat[index]; };
+		const Vector<Type, SArraySize> operator[](unsigned int index) const { return this->mat[index]; };
 	};
 
 	typedef Matrix<double, 4, 4> Matrix4x4;

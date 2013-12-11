@@ -132,7 +132,7 @@ void CubeScreenCapture::Update(double realTime, double deltaTime)
 void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-
+	auto scene = graphic.SceneInfo;
 	for(std::size_t i = 0; i < 6; ++i)
 	{
 		this->SetupScene(objects, i);
@@ -140,7 +140,7 @@ void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 		this->TakeScreenSnapShot(objects, i);
 		this->CleanupSnapShot(objects, i);
 	}
-
+	graphic.SceneInfo = scene;
 }
 
 void CubeScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)

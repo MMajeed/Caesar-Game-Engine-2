@@ -5,6 +5,19 @@ require("floor")
 
 ClearScreen(0.5, 0.5, 0.5);
 
+local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/PlyFiles/Iron_Man_mark_4.obj"),
+                                          [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+                                          [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
+
+local ironMan = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.2, -15.0),
+                        [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.15, 0.15, 0.15, 1.0),
+                        [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
+                        [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.1),
+                        [Keys["ObjectInfo"]["DrawableObj"]] = ironManMesh,
+                        [Keys["ObjectInfo"]["Texture2DObj"]]= ironManTexture,
+                        });
+
 sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/PlyFiles/Sphere_Smooth.ply"),
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                       [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
@@ -37,32 +50,28 @@ OnKeyDown(string.byte("B"),
 );
 
 
---mirrorSphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = "Assets/PlyFiles/Sphere_Smooth.ply",
---                                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
---                                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
-                                      
---local mirrorSphere1 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
---                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
---                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["DrawableObj"]] = mirrorSphereDrawable,
---                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
---                              [Keys["ObjectInfo"]["Light"]]       = false,});
+local mirrorSphere1 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
+                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
+                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                              [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,
+                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
+                              [Keys["ObjectInfo"]["Light"]]       = false,});
 
---myTexture1 = CubeScreenCapture({[Keys["ScreenCapture"]["Width"]]   = 1024,
---                               [Keys["ScreenCapture"]["Height"]]   = 1024,
---                               [Keys["ScreenCapture"]["Eye"]]      = mirrorSphere1.Location, });
---mirrorSphere1:SetCubeTexture(myTexture1:GetTexture());
+myTexture1 = CubeScreenCapture({[Keys["ScreenCapture"]["Width"]]   = 1024,
+                               [Keys["ScreenCapture"]["Height"]]   = 1024,
+                               [Keys["ScreenCapture"]["Eye"]]      = mirrorSphere1.Location, });
+mirrorSphere1:SetCubeTexture(myTexture1:GetTexture());
 
---local mirrorSphere2 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(-40, 20, 0),
---                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
---                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["DrawableObj"]] = mirrorSphereDrawable,
---                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
---                              [Keys["ObjectInfo"]["Light"]]       = false,});
+local mirrorSphere2 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(-40, 20, 0),
+                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
+                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                              [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,
+                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
+                              [Keys["ObjectInfo"]["Light"]]       = false,});
 
---myTexture2 = CubeScreenCapture({[Keys["ScreenCapture"]["Width"]]   = 1024,
---                               [Keys["ScreenCapture"]["Height"]]   = 1024,
---                               [Keys["ScreenCapture"]["Eye"]]      = mirrorSphere2.Location, });
---mirrorSphere2:SetCubeTexture(myTexture2:GetTexture());
+myTexture2 = CubeScreenCapture({[Keys["ScreenCapture"]["Width"]]   = 1024,
+                               [Keys["ScreenCapture"]["Height"]]   = 1024,
+                               [Keys["ScreenCapture"]["Eye"]]      = mirrorSphere2.Location, });
+mirrorSphere2:SetCubeTexture(myTexture2:GetTexture());
