@@ -1,6 +1,6 @@
 local SkyBox = {}
 
-skyBoxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/PlyFiles/Sphere_Smooth.ply"),
+skyBoxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/Models/Sphere_Smooth.ply"),
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                       [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_5_SkyMap.cso",
                                       [Keys["BasicDrawable"]["CullMode"]]         = CullMode["Front"],
