@@ -1,7 +1,7 @@
 #include "TakeScreenShot.h"
-#include <BasicScreenCapture.h>
-#include <DepthScreenCapture.h>
-#include <CubeScreenCapture.h>
+#include <BasicScreenShot.h>
+#include <DepthScreenShot.h>
+#include <CubeScreenShot.h>
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
 #include <EntityCommunicator/EntityConfig.h>
@@ -22,18 +22,18 @@ Message::Status TakeBasicScreenShot::Work()
 	
 	auto allObjects = EntityConfig::GetAllEntity();
 
-	std::shared_ptr<BasicScreenCapture> newBasicScreenCapture =
-		BasicScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
-	newBasicScreenCapture->D3DInfo.cameraMatrix = this->camerMatrix;
-	newBasicScreenCapture->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
-	newBasicScreenCapture->Snap(allObjects);
+	std::shared_ptr<BasicScreenShot> newBasicScreenShot =
+		BasicScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	newBasicScreenShot->D3DInfo.cameraMatrix = this->camerMatrix;
+	newBasicScreenShot->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
+	newBasicScreenShot->Snap(allObjects);
 
-	auto texture = newBasicScreenCapture->GetScreenTexture();
+	auto texture = newBasicScreenShot->GetScreenTexture();
 	std::shared_ptr<BasicTexture> newTexture =
 		BasicTexture::Spawn(this->newTextureID, texture);
 	GraphicManager::GetInstance().InsertTexture(newTexture);
 
-	newBasicScreenCapture->Release();
+	newBasicScreenShot->Release();
 
 	return Message::Status::Complete;
 }
@@ -54,18 +54,18 @@ Message::Status TakeDepthScreenShot::Work()
 
 	auto allObjects = EntityConfig::GetAllEntity();
 
-	std::shared_ptr<DepthScreenCapture> newBasicScreenCapture =
-		DepthScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
-	newBasicScreenCapture->D3DInfo.cameraMatrix = this->camerMatrix;
-	newBasicScreenCapture->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
-	newBasicScreenCapture->Snap(allObjects);
+	std::shared_ptr<DepthScreenShot> newBasicScreenShot =
+		DepthScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	newBasicScreenShot->D3DInfo.cameraMatrix = this->camerMatrix;
+	newBasicScreenShot->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
+	newBasicScreenShot->Snap(allObjects);
 
-	auto texture = newBasicScreenCapture->GetScreenTexture();
+	auto texture = newBasicScreenShot->GetScreenTexture();
 	std::shared_ptr<BasicTexture> newTexture =
 		BasicTexture::Spawn(this->newTextureID, texture);
 	GraphicManager::GetInstance().InsertTexture(newTexture);
 
-	newBasicScreenCapture->Release();
+	newBasicScreenShot->Release();
 
 	return Message::Status::Complete;
 }
@@ -84,17 +84,17 @@ Message::Status TakeCubeScreenShot::Work()
 
 	auto allObjects = EntityConfig::GetAllEntity();
 
-	std::shared_ptr<CubeScreenCapture> newBasicScreenCapture =
-		CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
-	newBasicScreenCapture->D3DInfo.Eye = this->eye;
-	newBasicScreenCapture->Snap(allObjects);
+	std::shared_ptr<CubeScreenShot> newBasicScreenShot =
+		CubeScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	newBasicScreenShot->D3DInfo.Eye = this->eye;
+	newBasicScreenShot->Snap(allObjects);
 
-	auto texture = newBasicScreenCapture->GetScreenTexture();
+	auto texture = newBasicScreenShot->GetScreenTexture();
 	std::shared_ptr<BasicTexture> newTexture =
 		BasicTexture::Spawn(this->newTextureID, texture);
 	GraphicManager::GetInstance().InsertTexture(newTexture);
 
-	newBasicScreenCapture->Release();
+	newBasicScreenShot->Release();
 
 	return Message::Status::Complete;
 }

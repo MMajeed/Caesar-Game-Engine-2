@@ -51,11 +51,11 @@
     <ClInclude Include="LuaMath.h">
       <Filter>Lua Class/Function\LuaMath</Filter>
     </ClInclude>
+    <ClInclude Include="LuaScreenShot.h">
+      <Filter>Lua Class/Function\LuaScreenShot</Filter>
+    </ClInclude>
     <ClInclude Include="LuaScreenCapture.h">
       <Filter>Lua Class/Function\LuaScreenCapture</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaContinuousScreenCapture.h">
-      <Filter>Lua Class/Function\LuaContinuousScreenCapture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -102,11 +102,11 @@
     <ClCompile Include="LuaMath.cpp">
       <Filter>Lua Class/Function\LuaMath</Filter>
     </ClCompile>
+    <ClCompile Include="LuaScreenShot.cpp">
+      <Filter>Lua Class/Function\LuaScreenShot</Filter>
+    </ClCompile>
     <ClCompile Include="LuaScreenCapture.cpp">
       <Filter>Lua Class/Function\LuaScreenCapture</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaContinuousScreenCapture.cpp">
-      <Filter>Lua Class/Function\LuaContinuousScreenCapture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -158,10 +158,10 @@
     <Filter Include="Lua Class/Function\LuaMath">
       <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaScreenCapture">
+    <Filter Include="Lua Class/Function\LuaScreenShot">
       <UniqueIdentifier>{bae8b22f-6f8f-4a48-aab5-0c19c0f3f28f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaContinuousScreenCapture">
+    <Filter Include="Lua Class/Function\LuaScreenCapture">
       <UniqueIdentifier>{a919e6c6-e946-43f4-a988-e9aba7bd9fc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

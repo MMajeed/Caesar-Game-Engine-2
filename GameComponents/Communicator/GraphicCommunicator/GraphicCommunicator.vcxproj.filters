@@ -14,17 +14,17 @@
     <ClInclude Include="TakeScreenShot.h">
       <Filter>TakeScreenShot</Filter>
     </ClInclude>
-    <ClInclude Include="ContinuousBasicScreenShotConfig.h">
-      <Filter>ContinuousScreenShot\ContinuousBasicScreenShotConfig</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousDepthScreenShotConfig.h">
-      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousCubeScreenShotConfig.h">
-      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicSettings.h">
       <Filter>GraphicSettings</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthScreenCaptureConfig.h">
+      <Filter>ContinuousScreenShot\DepthScreenCaptureConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeScreenCaptureConfig.h">
+      <Filter>ContinuousScreenShot\CubeScreenCaptureConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicScreenCaptureConfig.h">
+      <Filter>ContinuousScreenShot\BasicScreenCaptureConfig</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -40,17 +40,17 @@
     <ClCompile Include="TakeScreenShot.cpp">
       <Filter>TakeScreenShot</Filter>
     </ClCompile>
-    <ClCompile Include="ContinuousBasicScreenShotConfig.cpp">
-      <Filter>ContinuousScreenShot\ContinuousBasicScreenShotConfig</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinuousDepthScreenShotConfig.cpp">
-      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinuousCubeScreenShotConfig.cpp">
-      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
-    </ClCompile>
     <ClCompile Include="GraphicSettings.cpp">
       <Filter>GraphicSettings</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthScreenCaptureConfig.cpp">
+      <Filter>ContinuousScreenShot\DepthScreenCaptureConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScreenCaptureConfig.cpp">
+      <Filter>ContinuousScreenShot\CubeScreenCaptureConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicScreenCaptureConfig.cpp">
+      <Filter>ContinuousScreenShot\BasicScreenCaptureConfig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -69,17 +69,17 @@
     <Filter Include="ContinuousScreenShot">
       <UniqueIdentifier>{e4a90b8a-8940-4e91-9a3a-51c289d2d228}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ContinuousScreenShot\ContinuousDepthScreenShot">
-      <UniqueIdentifier>{df29e589-500f-4eb0-ab77-05219a695413}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContinuousScreenShot\ContinuousCubeScreenShot">
-      <UniqueIdentifier>{1dc12f30-a026-45f5-982e-a8f3a033317e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContinuousScreenShot\ContinuousBasicScreenShotConfig">
-      <UniqueIdentifier>{98b44050-07e0-452a-b334-8730a42ab3be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GraphicSettings">
       <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\BasicScreenCaptureConfig">
+      <UniqueIdentifier>{98b44050-07e0-452a-b334-8730a42ab3be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\CubeScreenCaptureConfig">
+      <UniqueIdentifier>{1dc12f30-a026-45f5-982e-a8f3a033317e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ContinuousScreenShot\DepthScreenCaptureConfig">
+      <UniqueIdentifier>{df29e589-500f-4eb0-ab77-05219a695413}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

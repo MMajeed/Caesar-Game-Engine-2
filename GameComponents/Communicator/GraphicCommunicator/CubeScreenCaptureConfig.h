@@ -1,5 +1,5 @@
-#ifndef __ContinuousCubeScreenShotConfig__
-#define __ContinuousCubeScreenShotConfig__
+#ifndef __CubeScreenCaptureConfig__
+#define __CubeScreenCaptureConfig__
 
 #include "Linker.h"
 
@@ -8,12 +8,12 @@
 #include <Matrix.h>
 #include <Vector.h>
 
-namespace ContinuousCubeScreenShotConfig
+namespace CubeScreenCaptureConfig
 {
-	class AddContinuousCubeScreenShot : public Message
+	class AddCubeScreenCapture : public Message
 	{
 	public:
-		AddContinuousCubeScreenShot(unsigned int width, unsigned int height, const CHL::Vec4& eye);
+		AddCubeScreenCapture(unsigned int width, unsigned int height, const CHL::Vec4& eye);
 
 		Message::Status Work();
 
@@ -35,4 +35,4 @@ namespace ContinuousCubeScreenShotConfig
 	};
 };
 
-#endif //__ContinuousCubeScreenShotConfig__
+#endif //__CubeScreenCaptureConfig__

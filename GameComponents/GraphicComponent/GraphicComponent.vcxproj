@@ -97,14 +97,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BasicDrawable.h" />
-    <ClInclude Include="BasicScreenCapture.h" />
+    <ClInclude Include="BasicScreenShot.h" />
     <ClInclude Include="Buffers.h" />
-    <ClInclude Include="ContinuousBasicScreenShot.h" />
-    <ClInclude Include="ContinuousCubeScreenShot.h" />
-    <ClInclude Include="ContinuousDepthScreenShot.h" />
-    <ClInclude Include="ContinuousScreenShot.h" />
+    <ClInclude Include="BasicScreenCapture.h" />
     <ClInclude Include="CubeScreenCapture.h" />
     <ClInclude Include="DepthScreenCapture.h" />
+    <ClInclude Include="ScreenCapture.h" />
+    <ClInclude Include="CubeScreenShot.h" />
+    <ClInclude Include="DepthScreenShot.h" />
     <ClInclude Include="DirectLight.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Drawable.h" />
@@ -112,22 +112,22 @@
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="SceneFilter.h" />
-    <ClInclude Include="ScreenCapture.h" />
+    <ClInclude Include="ScreenShot.h" />
     <ClInclude Include="SetupLight.h" />
     <ClInclude Include="ShadowFilter.h" />
-    <ClInclude Include="ShadowScreenCapture.h" />
+    <ClInclude Include="ShadowScreenShot.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDrawable.cpp" />
+    <ClCompile Include="BasicScreenShot.cpp" />
     <ClCompile Include="BasicScreenCapture.cpp" />
-    <ClCompile Include="ContinuousBasicScreenShot.cpp" />
-    <ClCompile Include="ContinuousCubeScreenShot.cpp" />
-    <ClCompile Include="ContinuousDepthScreenShot.cpp" />
-    <ClCompile Include="CubeScreeCapture.cpp" />
+    <ClCompile Include="CubeScreenCapture.cpp" />
     <ClCompile Include="DepthScreenCapture.cpp" />
+    <ClCompile Include="CubeScreenShot.cpp" />
+    <ClCompile Include="DepthScreenShot.cpp" />
     <ClCompile Include="DirectLight.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
@@ -135,7 +135,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="SetupLight.cpp" />
     <ClCompile Include="ShadowFilter.cpp" />
-    <ClCompile Include="ShadowScreenCapture.cpp" />
+    <ClCompile Include="ShadowScreenShot.cpp" />
     <ClCompile Include="SpotLight.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

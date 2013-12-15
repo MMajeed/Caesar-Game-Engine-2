@@ -13,8 +13,8 @@
 #include "LuaBasicDrawableObject.h"
 #include "LuaBasicTexture.h"
 #include "LuaLight.h"
+#include "LuaScreenShot.h"
 #include "LuaScreenCapture.h"
-#include "LuaContinuousScreenCapture.h"
 
 void LuaRegisterAll(lua_State *lua)
 {
@@ -29,8 +29,8 @@ void LuaRegisterAll(lua_State *lua)
 	LuaBasicDrawableObject::RegisterAllLuaFunction(lua);
 	LuaBasicTexture::RegisterAllLuaFunction(lua);
 	LuaLight::RegisterAllLuaFunction(lua);
+	LuaScreenShot::RegisterAllLuaFunction(lua);
 	LuaScreenCapture::RegisterAllLuaFunction(lua);
-	LuaContinuousScreenCapture::RegisterAllLuaFunction(lua);
 }
 
 

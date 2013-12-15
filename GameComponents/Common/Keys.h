@@ -96,9 +96,9 @@ namespace Keys
 		const static std::string DEPTH = "Depth";
 	};
 
-	namespace ScreenCapture
+	namespace ScreenShot
 	{
-		const static std::string SCREENCAPTUREOBJ = "ScreenCaptureObj";
+		const static std::string ScreenShotOBJ = "ScreenShotObj";
 		const static std::string WIDTH = "Width";
 		const static std::string HEIGHT = "Height";
 		const static std::string CAMERAMATRIX = "CameraMatrix";

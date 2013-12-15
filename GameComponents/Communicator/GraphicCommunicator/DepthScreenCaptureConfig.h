@@ -1,5 +1,5 @@
-#ifndef __ContinuousBasicScreenShotConfig__
-#define __ContinuousBasicScreenShotConfig__
+#ifndef __DepthScreenCaptureConfig__
+#define __DepthScreenCaptureConfig__
 
 #include "Linker.h"
 
@@ -8,12 +8,12 @@
 #include <Matrix.h>
 #include <Vector.h>
 
-namespace ContinuousBasicScreenShotConfig
+namespace DepthScreenCaptureConfig
 {
-	class AddContinuousBasicScreenShot : public Message
+	class AddDepthScreenCapture : public Message
 	{
 	public:
-		AddContinuousBasicScreenShot(unsigned int width, unsigned int height, const CHL::Matrix4x4& cameraMatrix, const CHL::Matrix4x4& prespectiveMatrix);
+		AddDepthScreenCapture(unsigned int width, unsigned int height, const CHL::Matrix4x4& cameraMatrix, const CHL::Matrix4x4& prespectiveMatrix);
 
 		Message::Status Work();
 
@@ -47,4 +47,4 @@ namespace ContinuousBasicScreenShotConfig
 
 };
 
-#endif //__ContinuousBasicScreenShotConfig__
+#endif //__DepthScreenCaptureConfig__

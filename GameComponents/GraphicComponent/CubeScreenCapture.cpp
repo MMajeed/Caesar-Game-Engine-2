@@ -1,28 +1,28 @@
-#include "ContinuousCubeScreenShot.h"
+#include "CubeScreenCapture.h"
 #include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
-ContinuousCubeScreenShot::ContinuousCubeScreenShot(const std::string& inputID)
-:ContinuousScreenShot(inputID)
+CubeScreenCapture::CubeScreenCapture(const std::string& inputID)
+:ScreenCapture(inputID)
 {
 	this->current = 0;
 }
-void ContinuousCubeScreenShot::Init()
+void CubeScreenCapture::Init()
 {
-	this->ScreenShot[0] = CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
-	this->ScreenShot[1] = CubeScreenCapture::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot[0] = CubeScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot[1] = CubeScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
 }
-void ContinuousCubeScreenShot::Destory()
+void CubeScreenCapture::Destory()
 {
 	this->ScreenShot[0]->Release();
 	this->ScreenShot[1]->Release();
 }
-void ContinuousCubeScreenShot::Update(double realTime, double deltaTime)
+void CubeScreenCapture::Update(double realTime, double deltaTime)
 {
 
 }
-void ContinuousCubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
+void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }
@@ -41,21 +41,21 @@ void ContinuousCubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects
 		}
 	}
 }
-std::shared_ptr<ContinuousScreenShot> ContinuousCubeScreenShot::clone() const
+std::shared_ptr<ScreenCapture> CubeScreenCapture::clone() const
 {
-	std::shared_ptr<ContinuousScreenShot> newObject(new ContinuousCubeScreenShot(*this));
+	std::shared_ptr<ScreenCapture> newObject(new CubeScreenCapture(*this));
 	newObject->Init();
 	return newObject;
 
 }
 
-std::shared_ptr<ContinuousCubeScreenShot> ContinuousCubeScreenShot::Spawn(	const std::string& inputID,
+std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(	const std::string& inputID,
 																			const std::string& textureID,
 																			unsigned int width,
 																			unsigned int height,
 																			CHL::Vec4 eye)
 {
-	std::shared_ptr<ContinuousCubeScreenShot> newObject(new ContinuousCubeScreenShot(inputID));
+	std::shared_ptr<CubeScreenCapture> newObject(new CubeScreenCapture(inputID));
 
 	newObject->TextureID = textureID;
 	newObject->width = width;

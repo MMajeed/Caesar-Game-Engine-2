@@ -56,8 +56,8 @@ void GraphicManager::Shutdown()
 
 void GraphicManager::RunAllCapture(std::hash_map<std::string, SP_INFO>& objects)
 {
-	for(auto iter = this->ContinuousScreenCaptures.begin();
-		iter != this->ContinuousScreenCaptures.end();
+	for(auto iter = this->ScreenCaptures.begin();
+		iter != this->ScreenCaptures.end();
 		++iter)
 	{
 		iter->second->Snap(objects);
@@ -469,21 +469,21 @@ const std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicManager::
 	return this->textures;
 }
 
-void GraphicManager::InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj)
+void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
 {
-	this->ContinuousScreenCaptures[obj->ID] = obj;
+	this->ScreenCaptures[obj->ID] = obj;
 }
-void GraphicManager::RemoveContinuousScreenCapture(std::string ID)
+void GraphicManager::RemoveScreenCapture(std::string ID)
 {
-	auto iter = this->ContinuousScreenCaptures.find(ID);
-	if(iter != this->ContinuousScreenCaptures.end())
+	auto iter = this->ScreenCaptures.find(ID);
+	if(iter != this->ScreenCaptures.end())
 	{
-		this->ContinuousScreenCaptures.erase(iter);
+		this->ScreenCaptures.erase(iter);
 	}
 }
-const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> GraphicManager::AllContinuousScreenCapture()
+const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
 {
-	return this->ContinuousScreenCaptures;
+	return this->ScreenCaptures;
 }
 
 

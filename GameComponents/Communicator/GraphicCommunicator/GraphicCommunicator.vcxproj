@@ -88,9 +88,9 @@
   <ItemGroup>
     <ClInclude Include="BasicDrawableConfig.h" />
     <ClInclude Include="AddBasicTexture.h" />
-    <ClInclude Include="ContinuousBasicScreenShotConfig.h" />
-    <ClInclude Include="ContinuousCubeScreenShotConfig.h" />
-    <ClInclude Include="ContinuousDepthScreenShotConfig.h" />
+    <ClInclude Include="BasicScreenCaptureConfig.h" />
+    <ClInclude Include="CubeScreenCaptureConfig.h" />
+    <ClInclude Include="DepthScreenCaptureConfig.h" />
     <ClInclude Include="TakeScreenShot.h" />
     <ClInclude Include="GraphicSettings.h" />
     <ClInclude Include="Linker.h" />
@@ -99,9 +99,9 @@
   <ItemGroup>
     <ClCompile Include="BasicDrawableConfig.cpp" />
     <ClCompile Include="AddBasicTexture.cpp" />
-    <ClCompile Include="ContinuousBasicScreenShotConfig.cpp" />
-    <ClCompile Include="ContinuousCubeScreenShotConfig.cpp" />
-    <ClCompile Include="ContinuousDepthScreenShotConfig.cpp" />
+    <ClCompile Include="BasicScreenCaptureConfig.cpp" />
+    <ClCompile Include="CubeScreenCaptureConfig.cpp" />
+    <ClCompile Include="DepthScreenCaptureConfig.cpp" />
     <ClCompile Include="TakeScreenShot.cpp" />
     <ClCompile Include="GraphicSettings.cpp" />
     <ClCompile Include="GraphicCommunicator.cpp" />

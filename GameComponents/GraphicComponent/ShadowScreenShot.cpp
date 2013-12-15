@@ -1,16 +1,16 @@
-#include "ShadowScreenCapture.h"
+#include "ShadowScreenShot.h"
 #include "GraphicManager.h"
 #include <Object.h>
 #include <GenerateGUID.h>
 
-ShadowScreenCapture::ShadowScreenCapture(const std::string& inputID)
-: ScreenCapture(inputID)
+ShadowScreenShot::ShadowScreenShot(const std::string& inputID)
+: ScreenShot(inputID)
 {
 	this->D3DInfo.pDepthMapDSV = 0;
 	this->pScreenTexture = 0;
 }
 
-void ShadowScreenCapture::Init()
+void ShadowScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -61,18 +61,18 @@ void ShadowScreenCapture::Init()
 	this->D3DInfo.Viewport.MinDepth = 0.0f;
 	this->D3DInfo.Viewport.MaxDepth = 1.0f;
 }
-void ShadowScreenCapture::Release()
+void ShadowScreenShot::Release()
 {
 	if(this->D3DInfo.pDepthMapDSV != 0){ this->D3DInfo.pDepthMapDSV->Release(); }
 	if(this->pScreenTexture != 0){ this->pScreenTexture->Release(); }
 	this->D3DInfo.pDepthMapDSV = 0;
 	this->pScreenTexture = 0;
 }
-void ShadowScreenCapture::Update(double realTime, double deltaTime)
+void ShadowScreenShot::Update(double realTime, double deltaTime)
 {
 
 }
-void ShadowScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
+void ShadowScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -86,7 +86,7 @@ void ShadowScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	graphic.SceneInfo = currentSene;
 }
 
-void ShadowScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
+void ShadowScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -95,7 +95,7 @@ void ShadowScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	CHL::Vec4 eye{this->D3DInfo.cameraMatrix[0][3], this->D3DInfo.cameraMatrix[1][3], this->D3DInfo.cameraMatrix[2][3], this->D3DInfo.cameraMatrix[3][3]};
 	graphic.SceneInfo.Eye = eye;
 }
-void ShadowScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
+void ShadowScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -108,7 +108,7 @@ void ShadowScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& obj
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void ShadowScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
+void ShadowScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -140,7 +140,7 @@ void ShadowScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>
 	}
 	
 }
-void ShadowScreenCapture::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
+void ShadowScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -149,9 +149,9 @@ void ShadowScreenCapture::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& o
 	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 }
 
-std::shared_ptr<ShadowScreenCapture> ShadowScreenCapture::Spawn(unsigned int width, unsigned int height, ID3D11Texture2D*& tex, unsigned int index, unsigned int arraySize)
+std::shared_ptr<ShadowScreenShot> ShadowScreenShot::Spawn(unsigned int width, unsigned int height, ID3D11Texture2D*& tex, unsigned int index, unsigned int arraySize)
 {
-	std::shared_ptr<ShadowScreenCapture> newObject(new ShadowScreenCapture(CHL::GenerateGUID()));
+	std::shared_ptr<ShadowScreenShot> newObject(new ShadowScreenShot(CHL::GenerateGUID()));
 
 	newObject->D3DInfo.width = width;
 	newObject->D3DInfo.height = height;
@@ -178,9 +178,9 @@ std::shared_ptr<ShadowScreenCapture> ShadowScreenCapture::Spawn(unsigned int wid
 
 	return newObject;
 }
-std::shared_ptr<ScreenCapture> ShadowScreenCapture::clone() const
+std::shared_ptr<ScreenShot> ShadowScreenShot::clone() const
 {
-	std::shared_ptr<ShadowScreenCapture> newObject(new ShadowScreenCapture(*this));
+	std::shared_ptr<ShadowScreenShot> newObject(new ShadowScreenShot(*this));
 	newObject->Init();
 
 	return newObject;

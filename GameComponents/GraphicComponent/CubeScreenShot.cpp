@@ -1,11 +1,11 @@
-#include "CubeScreenCapture.h"
+#include "CubeScreenShot.h"
 #include "GraphicManager.h"
 #include <Keys.h>
 #include <Object.h>
 #include <3DMath.h>
 
-CubeScreenCapture::CubeScreenCapture(const std::string& inputID)
-	: ScreenCapture(inputID)
+CubeScreenShot::CubeScreenShot(const std::string& inputID)
+	: ScreenShot(inputID)
 {
 	this->D3DInfo.pDepthMapDSV = 0;
 	this->D3DInfo.pColorMapRTV[0] = 0;
@@ -17,7 +17,7 @@ CubeScreenCapture::CubeScreenCapture(const std::string& inputID)
 	this->pScreenTexture = 0;
 }
 
-void CubeScreenCapture::Init()
+void CubeScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -42,7 +42,7 @@ void CubeScreenCapture::Init()
 	HRESULT hr;
 	hr = d3dStuff.pd3dDevice->CreateTexture2D(&texDesc, 0, &colorMap);
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating the texture 2d for the BasicScreenCapture");
+		throw std::runtime_error("Failed at creating the texture 2d for the BasicScreenShot");
 
 	// Null description means to create a view to all mipmap levels
 	// using the format the texture was created with.
@@ -113,7 +113,7 @@ void CubeScreenCapture::Init()
 	this->D3DInfo.Viewport.MinDepth = 0.0f;
 	this->D3DInfo.Viewport.MaxDepth = 1.0f;
 }
-void CubeScreenCapture::Release()
+void CubeScreenShot::Release()
 {
 	if(this->D3DInfo.pDepthMapDSV != 0){ this->D3DInfo.pDepthMapDSV->Release(); }
 	if(this->pScreenTexture != 0){ this->pScreenTexture->Release(); }
@@ -125,11 +125,11 @@ void CubeScreenCapture::Release()
 	this->D3DInfo.pDepthMapDSV = 0;
 	this->pScreenTexture = 0;
 }
-void CubeScreenCapture::Update(double realTime, double deltaTime)
+void CubeScreenShot::Update(double realTime, double deltaTime)
 {
 
 }
-void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
+void CubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto scene = graphic.SceneInfo;
@@ -143,7 +143,7 @@ void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	graphic.SceneInfo = scene;
 }
 
-void CubeScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -209,7 +209,7 @@ void CubeScreenCapture::SetupScene(std::hash_map<std::string, SP_INFO>& objects,
 	graphic.SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 	graphic.SceneInfo.Eye = this->D3DInfo.Eye;
 }
-void CubeScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -223,7 +223,7 @@ void CubeScreenCapture::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objec
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->D3DInfo.pColorMapRTV[side], black);
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void CubeScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -232,7 +232,7 @@ void CubeScreenCapture::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& 
 
 	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
 }
-void CubeScreenCapture::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -242,9 +242,9 @@ void CubeScreenCapture::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& obj
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);
 }
 
-std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(std::string id, unsigned int width, unsigned int height)
+std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(std::string id, unsigned int width, unsigned int height)
 {
-	std::shared_ptr<CubeScreenCapture> newObject(new CubeScreenCapture(id));
+	std::shared_ptr<CubeScreenShot> newObject(new CubeScreenShot(id));
 
 	newObject->D3DInfo.width = width;
 	newObject->D3DInfo.height = height;
@@ -254,9 +254,9 @@ std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(std::string id, unsi
 	return newObject;
 }
 
-std::shared_ptr<ScreenCapture> CubeScreenCapture::clone() const
+std::shared_ptr<ScreenShot> CubeScreenShot::clone() const
 {
-	std::shared_ptr<CubeScreenCapture> newObject(new CubeScreenCapture(*this));
+	std::shared_ptr<CubeScreenShot> newObject(new CubeScreenShot(*this));
 	newObject->Init();
 
 	return newObject;

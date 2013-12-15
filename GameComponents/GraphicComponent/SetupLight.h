@@ -7,7 +7,7 @@
 #include <Singleton.h>
 #include <memory>
 #include "Buffers.h"
-#include "ShadowScreenCapture.h"
+#include "ShadowScreenShot.h"
 #include "ShadowFilter.h"
 
 class Light : public CHL::Singleton<Light>
@@ -20,7 +20,7 @@ public:
 	void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
 	void SetupShadow(unsigned int numberOfShadows);
 
-	std::vector<std::shared_ptr<ShadowScreenCapture>>	vecDepthShadow;
+	std::vector<std::shared_ptr<ShadowScreenShot>>	vecDepthShadow;
 	ID3D11Texture2D*									shadowTexture;
 	ID3D11ShaderResourceView*							shaderShadowTexture;
 	static const unsigned int Width = 2048;

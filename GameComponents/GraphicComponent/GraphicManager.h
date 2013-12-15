@@ -12,8 +12,8 @@
 #include <Interface.h>
 #include "Drawable.h"
 #include "BasicTexture.h"
+#include "ScreenShot.h"
 #include "ScreenCapture.h"
-#include "ContinuousScreenShot.h"
 #include <INFO.h>
 #include <hash_map>
 #include "SceneFilter.h"
@@ -70,10 +70,10 @@ public:
 	void RemoveTexture(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<BasicTexture>> AllTexture();
 
-	std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> ContinuousScreenCaptures;
-	void InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj);
-	void RemoveContinuousScreenCapture(std::string ID);
-	const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> AllContinuousScreenCapture();
+	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
+	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
+	void RemoveScreenCapture(std::string ID);
+	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
 
 	std::hash_map<std::string, std::shared_ptr<SceneFilter>> sceneFilters;
 	void InsertSceneFilter(std::shared_ptr<SceneFilter> obj);

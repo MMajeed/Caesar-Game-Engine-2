@@ -2,36 +2,32 @@
 #define __CubeScreenCapture__
 
 #include "ScreenCapture.h"
-#include <Vector.h>
+#include "CubeScreenShot.h"
 
 class CubeScreenCapture : public ScreenCapture
 {
 public:
 	CubeScreenCapture(const std::string& inputID);
 
-	void Init();
-	void Release();
-	void Update(double realTime, double deltaTime);
-	void Snap(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void Init();
+	virtual void Destory();
+	virtual void Update(double realTime, double deltaTime);
+	virtual void Snap(std::hash_map<std::string, SP_INFO>& objects);
+	virtual std::shared_ptr<ScreenCapture> clone() const;
+	virtual ~CubeScreenCapture(){}
 
-	void SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
-	void SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
-	void TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
-	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side);
+	static std::shared_ptr<CubeScreenCapture> Spawn(	const std::string& inputID,
+															const std::string& textureID,
+															unsigned int width,
+															unsigned int height,
+															CHL::Vec4 eye);
 
-	static std::shared_ptr<CubeScreenCapture> Spawn(std::string id, unsigned int width, unsigned int height);
-	std::shared_ptr<ScreenCapture> clone() const;
-
-	struct
-	{
-		ID3D11RenderTargetView*		pColorMapRTV[6];
-		ID3D11DepthStencilView*		pDepthMapDSV;
-		D3D11_VIEWPORT              Viewport;
-		unsigned int				width;
-		unsigned int				height;
-		CHL::Vec4					Eye;
-	} D3DInfo;
+	std::shared_ptr<CubeScreenShot>	ScreenShot[2];
+	CHL::Vec4							eye;
+	unsigned int						width;
+	unsigned int						height;
+	unsigned int						current;
 };
 
 
-#endif //__iScreenCapture__
+#endif //__CubeScreenCapture__

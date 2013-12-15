@@ -58,7 +58,7 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 		iter != this->vecDepthShadow.end();
 		++iter)
 	{
-		( *iter ) = ShadowScreenCapture::Spawn(this->Width, this->Height, this->shadowTexture, counter, sTexDesc.ArraySize);
+		( *iter ) = ShadowScreenShot::Spawn(this->Width, this->Height, this->shadowTexture, counter, sTexDesc.ArraySize);
 		++counter;
 	}
 

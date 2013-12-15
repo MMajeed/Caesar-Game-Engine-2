@@ -24,30 +24,6 @@
     <ClInclude Include="DirectLight.h">
       <Filter>Light\DirectLight</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenCapture.h">
-      <Filter>ScreenCapture</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicScreenCapture.h">
-      <Filter>ScreenCapture\BasicScreenCapture</Filter>
-    </ClInclude>
-    <ClInclude Include="DepthScreenCapture.h">
-      <Filter>ScreenCapture\DepthScreenCapture</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeScreenCapture.h">
-      <Filter>ScreenCapture\CubeScreenCapture</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousScreenShot.h">
-      <Filter>ContinuousScreenShot</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousBasicScreenShot.h">
-      <Filter>ContinuousScreenShot\ContinuousBasicScreenShot</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousDepthScreenShot.h">
-      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
-    </ClInclude>
-    <ClInclude Include="ContinuousCubeScreenShot.h">
-      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
-    </ClInclude>
     <ClInclude Include="SetupLight.h">
       <Filter>Light</Filter>
     </ClInclude>
@@ -63,8 +39,32 @@
     <ClInclude Include="ShadowFilter.h">
       <Filter>SceneFilter\ShadowFilter</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowScreenCapture.h">
-      <Filter>ScreenCapture\ShadowScreenCapture</Filter>
+    <ClInclude Include="ScreenShot.h">
+      <Filter>ScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowScreenShot.h">
+      <Filter>ScreenShot\ShadowScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthScreenShot.h">
+      <Filter>ScreenShot\DepthScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeScreenShot.h">
+      <Filter>ScreenShot\CubeScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicScreenShot.h">
+      <Filter>ScreenShot\BasicScreenShot</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenCapture.h">
+      <Filter>ScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthScreenCapture.h">
+      <Filter>ScreenCapture\DepthScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeScreenCapture.h">
+      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicScreenCapture.h">
+      <Filter>ScreenCapture\BasicScreenCapture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -81,24 +81,6 @@
     <ClCompile Include="DirectLight.cpp">
       <Filter>Light\DirectLight</Filter>
     </ClCompile>
-    <ClCompile Include="BasicScreenCapture.cpp">
-      <Filter>ScreenCapture\BasicScreenCapture</Filter>
-    </ClCompile>
-    <ClCompile Include="DepthScreenCapture.cpp">
-      <Filter>ScreenCapture\DepthScreenCapture</Filter>
-    </ClCompile>
-    <ClCompile Include="CubeScreeCapture.cpp">
-      <Filter>ScreenCapture\CubeScreenCapture</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinuousBasicScreenShot.cpp">
-      <Filter>ContinuousScreenShot\ContinuousBasicScreenShot</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinuousDepthScreenShot.cpp">
-      <Filter>ContinuousScreenShot\ContinuousDepthScreenShot</Filter>
-    </ClCompile>
-    <ClCompile Include="ContinuousCubeScreenShot.cpp">
-      <Filter>ContinuousScreenShot\ContinuousCubeScreenShot</Filter>
-    </ClCompile>
     <ClCompile Include="SetupLight.cpp">
       <Filter>Light</Filter>
     </ClCompile>
@@ -111,8 +93,26 @@
     <ClCompile Include="ShadowFilter.cpp">
       <Filter>SceneFilter\ShadowFilter</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowScreenCapture.cpp">
-      <Filter>ScreenCapture\ShadowScreenCapture</Filter>
+    <ClCompile Include="ShadowScreenShot.cpp">
+      <Filter>ScreenShot\ShadowScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthScreenShot.cpp">
+      <Filter>ScreenShot\DepthScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScreenShot.cpp">
+      <Filter>ScreenShot\CubeScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicScreenShot.cpp">
+      <Filter>ScreenShot\BasicScreenShot</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthScreenCapture.cpp">
+      <Filter>ScreenCapture\DepthScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScreenCapture.cpp">
+      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicScreenCapture.cpp">
+      <Filter>ScreenCapture\BasicScreenCapture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,30 +146,6 @@
     <Filter Include="Light\DirectLight">
       <UniqueIdentifier>{0217d582-611d-4dfd-917f-b715c41066ea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScreenCapture">
-      <UniqueIdentifier>{f08569f7-3a68-4706-9360-f7df52b3b06a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenCapture\BasicScreenCapture">
-      <UniqueIdentifier>{3b8f6676-409e-4e31-ad5b-53b77c5e31c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenCapture\DepthScreenCapture">
-      <UniqueIdentifier>{fed37b2c-94a3-4884-8f65-d127d3b76693}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenCapture\CubeScreenCapture">
-      <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContinuousScreenShot">
-      <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContinuousScreenShot\ContinuousBasicScreenShot">
-      <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContinuousScreenShot\ContinuousDepthScreenShot">
-      <UniqueIdentifier>{cd9f9fbb-8561-4930-b984-a51053aad11c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ContinuousScreenShot\ContinuousCubeScreenShot">
-      <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Light\PointLight">
       <UniqueIdentifier>{de21ae03-3721-427d-9d24-d9ef44206c8d}</UniqueIdentifier>
     </Filter>
@@ -179,8 +155,32 @@
     <Filter Include="SceneFilter\ShadowFilter">
       <UniqueIdentifier>{f888f210-0c24-4dbb-832b-e3cb55473b18}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScreenCapture\ShadowScreenCapture">
+    <Filter Include="ScreenShot">
+      <UniqueIdentifier>{f08569f7-3a68-4706-9360-f7df52b3b06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenShot\BasicScreenShot">
+      <UniqueIdentifier>{3b8f6676-409e-4e31-ad5b-53b77c5e31c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenShot\DepthScreenShot">
+      <UniqueIdentifier>{fed37b2c-94a3-4884-8f65-d127d3b76693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenShot\CubeScreenShot">
+      <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenShot\ShadowScreenShot">
       <UniqueIdentifier>{9c0a465f-98e0-46ce-a6b0-f62e01836c5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture">
+      <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\DepthScreenCapture">
+      <UniqueIdentifier>{cd9f9fbb-8561-4930-b984-a51053aad11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\CubeScreenCapture">
+      <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenCapture\BasicScreenCapture">
+      <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
