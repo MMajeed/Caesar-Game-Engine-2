@@ -1,6 +1,7 @@
 #include "DirectLight.h"
 #include <XNAConverter.h>
 #include "GraphicManager.h"
+#include <3DMath.h>
 
 cBuffer::CLightDesc DirectLight::GetLightDesc(std::shared_ptr<DirectionalLightINFO> lightInfo)
 {
@@ -16,8 +17,18 @@ cBuffer::CLightDesc DirectLight::GetLightDesc(std::shared_ptr<DirectionalLightIN
 	{
 		XMFLOAT4X4 view = CHL::Convert4x4(DirectLight::CalculateViewMatrix(lightInfo));
 		XMFLOAT4X4 pres = CHL::Convert4x4(DirectLight::CalculatePrespectiveMatrix(lightInfo));
-		light.lightView = XMLoadFloat4x4(&view);
-		light.lightPrespective = XMLoadFloat4x4(&pres);
+		XMMATRIX T(
+			0.5f, 0.0f, 0.0f, 0.0f,
+			0.0f, -0.5f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f);
+
+		XMMATRIX V = XMLoadFloat4x4(&view);
+		XMMATRIX P = XMLoadFloat4x4(&pres);
+
+		XMMATRIX VPT = V * P * T;
+		VPT = XMMatrixTranspose(VPT);
+		light.shadowMatrix = VPT;
 	}
 	return light;
 }
@@ -35,12 +46,11 @@ CHL::Matrix4x4 DirectLight::CalculateViewMatrix(std::shared_ptr<DirectionalLight
 	XMVECTOR center = XMVectorSet((float)eye(0), (float)eye(1), (float)eye(2), (float)eye(3));
 
 	XMVECTOR lightDir = XMLoadFloat3(&dir);
-	XMVECTOR lightPos = (DirectLight::radius * lightDir) + center;
+	XMVECTOR lightPos = ( DirectLight::radius * lightDir ) + center;
 	XMVECTOR targetPos = center;
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
 	XMMATRIX V = XMMatrixLookAtLH(lightPos, targetPos, up);
-	V = XMMatrixTranspose(V);
 
 	XMFLOAT4X4 vFloat4x4;
 	XMStoreFloat4x4(&vFloat4x4, V);
@@ -59,7 +69,7 @@ CHL::Matrix4x4 DirectLight::CalculatePrespectiveMatrix(std::shared_ptr<Direction
 	XMVECTOR center = XMVectorSet((float)eye(0), (float)eye(1), (float)eye(2), (float)eye(3));
 
 	XMVECTOR lightDir = XMLoadFloat3(&dir);
-	XMVECTOR lightPos = (DirectLight::radius * lightDir) + center;
+	XMVECTOR lightPos = ( DirectLight::radius * lightDir ) + center;
 	XMVECTOR targetPos = center;
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
@@ -77,8 +87,6 @@ CHL::Matrix4x4 DirectLight::CalculatePrespectiveMatrix(std::shared_ptr<Direction
 	float t = sphereCenterLS.y + DirectLight::radius;
 	float f = sphereCenterLS.z + DirectLight::radius;
 	XMMATRIX P = XMMatrixOrthographicOffCenterLH(l, r, b, t, n, f);
-
-	P = XMMatrixTranspose(P);
 
 	XMFLOAT4X4 pFloat4x4;
 	XMStoreFloat4x4(&pFloat4x4, P);

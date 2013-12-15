@@ -20,8 +20,18 @@ cBuffer::CLightDesc SpotLight::GetLightDesc(std::shared_ptr<SpotLightINFO> light
 	{
 		XMFLOAT4X4 view = CHL::Convert4x4(SpotLight::CalculateViewMatrix(lightInfo));
 		XMFLOAT4X4 pres = CHL::Convert4x4(SpotLight::CalculatePrespectiveMatrix(lightInfo));
-		light.lightView = XMLoadFloat4x4(&view);
-		light.lightPrespective = XMLoadFloat4x4(&pres);
+		XMMATRIX T(
+			0.5f, 0.0f, 0.0f, 0.0f,
+			0.0f, -0.5f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f,
+			0.5f, 0.5f, 0.0f, 1.0f);
+
+		XMMATRIX V = XMLoadFloat4x4(&view);
+		XMMATRIX P = XMLoadFloat4x4(&pres);
+
+		XMMATRIX VPT = V * P * T;
+		VPT = XMMatrixTranspose(VPT);
+		light.shadowMatrix = VPT;
 	}
 
 	return light;

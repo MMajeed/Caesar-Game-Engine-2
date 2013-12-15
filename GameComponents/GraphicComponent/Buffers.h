@@ -30,8 +30,7 @@ public:
 		float range;
 		int type;
 		int shadowNum;
-		XMMATRIX lightView;
-		XMMATRIX lightPrespective;
+		XMMATRIX shadowMatrix;
 	};
 
 	struct cbObject

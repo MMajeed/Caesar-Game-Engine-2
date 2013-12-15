@@ -7,6 +7,7 @@
 #include "PointLight.h"
 #include "GraphicManager.h"
 #include <GenerateGUID.h>
+#include <3DMath.h>
 
 cBuffer::cbLight LastLightInput;
 

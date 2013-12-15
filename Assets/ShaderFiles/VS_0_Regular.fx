@@ -34,19 +34,11 @@ PS_INPUT VS(VS_INPUT input)
 	[unroll]
 	for (unsigned int i = 0; i < numOfLights; ++i)
 	{
-		if(lightArray[i].ShadowNum >= 0 && lightArray[i].Type != 0)
+		if(lightArray[i].Type != 0 && lightArray[i].ShadowNum >= 0)
 		{
-			static const matrix T = matrix(
-				0.5f, 0.0f, 0.0f, 0.0f,
-				0.0f, -0.5f, 0.0f, 0.0f,
-				0.0f, 0.0f, 1.0f, 0.0f,
-				0.5f, 0.5f, 0.0f, 1.0f);
-
 			output.LightShadow[i] = input.VertexPos;
 			output.LightShadow[i] = mul(output.LightShadow[i], gWorld);
-			output.LightShadow[i] = mul(output.LightShadow[i], lightArray[i].lightView);
-			output.LightShadow[i] = mul(output.LightShadow[i], lightArray[i].lightProject);
-			output.LightShadow[i] = mul(output.LightShadow[i], T);
+			output.LightShadow[i] = mul(output.LightShadow[i], lightArray[i].shadowMatrix);
 		}
 	}
 

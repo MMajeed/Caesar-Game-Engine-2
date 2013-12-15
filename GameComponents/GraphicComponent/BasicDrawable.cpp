@@ -83,7 +83,7 @@ void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object)
 	this->CleanupAfterDraw(object);
 }
 
-void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO>& object)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -92,7 +92,7 @@ void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO> object)
 		graphic.D3DStuff.pImmediateContext->OMSetDepthStencilState(graphic.D3DStuff.pDepthDisabledStencilState, 1);
 	}
 }
-void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	{
@@ -128,7 +128,7 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO> object)
 		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(10, cBuffer::numOfTextures, pTexture);
 	}
 }
-void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object)
 {
 	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(object->Location, object->Rotation, object->Scale);
 
@@ -136,12 +136,12 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> ob
 	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.PrespectiveMatrix);
 	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.CamerMatrix);
 	
-	XMMATRIX finalMatrix = XMLoadFloat4x4(&prespectiveMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&worldMatrix);
+	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
 
 	cBuffer::cbObject cbCEF;
 	
-	cbCEF.world = XMLoadFloat4x4(&worldMatrix);
-	cbCEF.worldViewProj = finalMatrix;
+	cbCEF.world = XMMatrixTranspose(XMLoadFloat4x4(&worldMatrix));
+	cbCEF.worldViewProj = XMMatrixTranspose(finalMatrix);
 	cbCEF.colour.diffuse = CHL::ConvertVec4(object->Diffuse);
 	cbCEF.colour.ambient = CHL::ConvertVec4(object->Ambient);
 	cbCEF.colour.specular = CHL::ConvertVec4(object->Specular);
@@ -160,7 +160,7 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> ob
 	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
 }
-void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object)
 {	
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -170,7 +170,7 @@ void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO> obje
 	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -178,25 +178,25 @@ void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
 	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
 }
-void BasicDrawable::SetupDrawPixelShader(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupDrawPixelShader(const std::shared_ptr<ObjectINFO>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
 }
-void BasicDrawable::SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-void BasicDrawable::DrawObject(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::DrawObject(const std::shared_ptr<ObjectINFO>& object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-void BasicDrawable::CleanupTexture(const std::shared_ptr<ObjectINFO> object)
+void BasicDrawable::CleanupTexture(const std::shared_ptr<ObjectINFO>& object)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -204,7 +204,7 @@ void BasicDrawable::CleanupTexture(const std::shared_ptr<ObjectINFO> object)
 
 	graphic.D3DStuff.pImmediateContext->PSSetShaderResources(0, cBuffer::numOfTextures, pTexture);
 }
-void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO> object)	
+void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object)	
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 

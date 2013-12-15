@@ -5,8 +5,7 @@
 
 CHL::Matrix4x4 CHL::PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ)
 {
-	XMMATRIX xmPrespective =  XMMatrixPerspectiveFovLH( (float)FovAngleY, (float)AspectRatio, (float)NearZ, (float)FarZ);
-	xmPrespective = XMMatrixTranspose(xmPrespective);
+	XMMATRIX xmPrespective = XMMatrixPerspectiveFovLH( (float)FovAngleY, (float)AspectRatio, (float)NearZ, (float)FarZ);
 	XMFLOAT4X4 xmMatrixPrespective;
 	XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
 
@@ -29,7 +28,7 @@ CHL::Matrix4x4 CHL::ViewCalculation(const CHL::Vec4& vEye, const CHL::Vec4& vTM,
 	xmTM += xmEye;
 	
 	XMFLOAT4X4  xmView;
-	XMStoreFloat4x4(&xmView, XMMatrixTranspose(XMMatrixLookAtLH( xmEye, xmTM, xmUp )));
+	XMStoreFloat4x4(&xmView, XMMatrixLookAtLH( xmEye, xmTM, xmUp ));
 	
 	CHL::Matrix4x4 mView = CHL::Convert4x4(xmView);
 
@@ -57,7 +56,6 @@ CHL::Matrix4x4 CHL::ObjectCalculation( const CHL::Vec4& mLocation, const CHL::Ve
 	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
 	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
 	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
-	xmObjectFinal = XMMatrixTranspose(xmObjectFinal);
 
 	XMFLOAT4X4 xmFinal4x4;
 	XMStoreFloat4x4(&xmFinal4x4, xmObjectFinal);
@@ -65,15 +63,6 @@ CHL::Matrix4x4 CHL::ObjectCalculation( const CHL::Vec4& mLocation, const CHL::Ve
 	CHL::Matrix4x4 mObjectFinal = CHL::Convert4x4(xmFinal4x4);
 
 	return mObjectFinal;
-}
-
-void CHL::Normalize(CHL::Matrix4x4& matrix)
-{
-	XMMATRIX identiy = XMMatrixIdentity();
-
-	for (unsigned i = 0; i < 4; ++ i)
-        for (unsigned j = 0; j < 4; ++ j)
-            matrix(i, j) = identiy(i, j);
 }
 
 CHL::Vec4 CHL::MoveForward(const CHL::Vec4& vEye, const CHL::Vec4& vTM, double pitch, double yaw, double roll, double distance)

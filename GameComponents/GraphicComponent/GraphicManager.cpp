@@ -130,8 +130,8 @@ void GraphicManager::SetupConstantBuffer(std::hash_map<std::string, SP_INFO>& ob
 	XMFLOAT4X4 view4x4 = CHL::Convert4x4(this->SceneInfo.CamerMatrix);;
 	XMFLOAT4X4 proj4x4 = CHL::Convert4x4(this->SceneInfo.PrespectiveMatrix);;
 
-	cbInfo.view = XMLoadFloat4x4(&view4x4);
-	cbInfo.proj = XMLoadFloat4x4(&proj4x4);
+	cbInfo.view = XMMatrixTranspose(XMLoadFloat4x4(&view4x4));
+	cbInfo.proj = XMMatrixTranspose(XMLoadFloat4x4(&proj4x4));
 	cbInfo.eye = XMFLOAT4((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
 
 	ID3D11DeviceContext* pImmediateContext = this->D3DStuff.pImmediateContext;
@@ -174,21 +174,21 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 
 	CHL::Vec4 eye = this->SceneInfo.Eye;
 	std::sort(vecObjects.begin(), vecObjects.end(),
-		[eye](std::shared_ptr<ObjectINFO> a, std::shared_ptr<ObjectINFO> b) -> bool
-	{
-		float rankA = 0.0f; float rankB = 0.0f;
+			  [eye](std::shared_ptr<ObjectINFO> a, std::shared_ptr<ObjectINFO> b) -> bool
+			  {
+				float rankA = 0.0f; float rankB = 0.0f;
 
-		if(a->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
-		else if(a->Diffuse[3] < 1.0) { rankA += CHL::Length(eye, a->Location); }
+				if(a->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
+				else if(a->Diffuse[3] < 1.0) { rankA += CHL::Length(eye, a->Location); }
 		
-		if(b->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
-		else if(b->Diffuse[3] < 1.0) { rankB += CHL::Length(eye, b->Location); }
+				if(b->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
+				else if(b->Diffuse[3] < 1.0) { rankB += CHL::Length(eye, b->Location); }
 
-		if(a->Depth == false) { rankA -= 1000000.0f; }
-		if(b->Depth == false) { rankB -= 1000000.0f; }
+				if(a->Depth == false) { rankA -= 1000000.0f; }
+				if(b->Depth == false) { rankB -= 1000000.0f; }
 
-		return rankA > rankB;
-	});
+				return rankA > rankB;
+			 });
 
 	for(auto iterObj = vecObjects.begin();
 		iterObj != vecObjects.end();

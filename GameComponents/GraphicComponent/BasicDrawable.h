@@ -55,16 +55,16 @@ public:
 	virtual void InitShadowRastersizerState(ID3D11Device* device);
 	virtual void InitConstantBuffer(ID3D11Device* device);
 
-	virtual void SetupDepth(const std::shared_ptr<ObjectINFO> object);
-	virtual void SetupTexture(const std::shared_ptr<ObjectINFO> object);
-	virtual void SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO> object);
-	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO> object);
-	virtual void SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO> object);
-	virtual void SetupDrawPixelShader(const std::shared_ptr<ObjectINFO> object);
-	virtual void SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO> object);
-	virtual void DrawObject(const std::shared_ptr<ObjectINFO> object);
-	virtual void CleanupTexture(const std::shared_ptr<ObjectINFO> object);
-	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO> object);
+	virtual void SetupDepth(const std::shared_ptr<ObjectINFO>& object);
+	virtual void SetupTexture(const std::shared_ptr<ObjectINFO>& object);
+	virtual void SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object);
+	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object);
+	virtual void SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>& object);
+	virtual void SetupDrawPixelShader(const std::shared_ptr<ObjectINFO>& object);
+	virtual void SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO>& object);
+	virtual void DrawObject(const std::shared_ptr<ObjectINFO>& object);
+	virtual void CleanupTexture(const std::shared_ptr<ObjectINFO>& object);
+	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object);
 
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
 };
