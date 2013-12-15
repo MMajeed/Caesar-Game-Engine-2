@@ -1,4 +1,5 @@
 #include "Shadow.fx"
+#include "HLSL_Light.fx"
 
 float4 CalculateLight(PS_INPUT input)
 {

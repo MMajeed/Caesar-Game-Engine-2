@@ -44,7 +44,8 @@ OnKeyDown(string.byte("B"),
                  [Keys["Light"]["Direction"]]   = Vector4(0.7853, -3.14, -3.14),
                  [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
                  [Keys["Light"]["Spot"]]        = 0.5,
-                 [Keys["Light"]["Range"]]       = 20,});
+                 [Keys["Light"]["Range"]]       = 20,
+                 [Keys["Light"]["HasShadow"]]   = true,});
       lightPos = lightPos - 20.0;
     end
 );

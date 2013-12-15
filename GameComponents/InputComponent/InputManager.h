@@ -13,6 +13,8 @@ class InputManager : public Interface, public CHL::Singleton<InputManager>
 {
 protected:	
 	InputManager();
+	InputManager(const InputManager& that) = delete;
+	InputManager& operator=(const InputManager&) = delete;
 public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);

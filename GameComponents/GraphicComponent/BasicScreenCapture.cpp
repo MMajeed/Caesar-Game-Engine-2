@@ -89,7 +89,7 @@ void BasicScreenCapture::Init()
 	this->D3DInfo.Viewport.MinDepth = 0.0f;
 	this->D3DInfo.Viewport.MaxDepth = 1.0f;
 }
-void BasicScreenCapture::Destory()
+void BasicScreenCapture::Release()
 {
 	if(this->D3DInfo.pDepthMapDSV != 0){ this->D3DInfo.pDepthMapDSV->Release(); }
 	if(this->D3DInfo.pColorMapRTV != 0){ this->D3DInfo.pColorMapRTV->Release(); }

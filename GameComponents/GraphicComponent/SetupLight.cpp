@@ -13,16 +13,33 @@ cBuffer::cbLight LastLightInput;
 
 Light::Light()
 {
+	this->shaderShadowTexture = 0;
 	this->shadowTexture = 0;
 }
 
 void Light::Init()
 {
+	shadowFilter = ShadowFilter::Spawn(CHL::GenerateGUID());
+}
+
+void Light::SetupShadow(unsigned int numberOfShadows)
+{
+	for(auto iter = this->vecDepthShadow.begin();
+		iter != this->vecDepthShadow.end();
+		++iter)
+	{
+		(*iter)->Release();
+		(*iter) = nullptr;
+	}
+	if(this->shaderShadowTexture != 0){ this->shaderShadowTexture->Release(); }
+	if(this->shadowTexture != 0){ this->shadowTexture->Release(); }
+
+
 	D3D11_TEXTURE2D_DESC sTexDesc;
 	sTexDesc.Width = this->Width;
 	sTexDesc.Height = this->Height;
 	sTexDesc.MipLevels = 0;
-	sTexDesc.ArraySize = this->NumberOfShadows; 
+	sTexDesc.ArraySize = numberOfShadows;
 	sTexDesc.Format = DXGI_FORMAT_R24G8_TYPELESS;
 	sTexDesc.SampleDesc.Count = 1;
 	sTexDesc.SampleDesc.Quality = 0;
@@ -31,17 +48,17 @@ void Light::Init()
 	sTexDesc.CPUAccessFlags = 0;
 	sTexDesc.MiscFlags = 0;
 
-	HRESULT hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateTexture2D(&sTexDesc, NULL, &(this->shadowTexture));
+	HRESULT hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateTexture2D(&sTexDesc, NULL, &( this->shadowTexture ));
 	if(FAILED(hr))
 		throw std::runtime_error("Failed at creating texture array for shadows");
 
-	this->vecDepthShadow.resize(this->NumberOfShadows);
+	this->vecDepthShadow.resize(numberOfShadows);
 	unsigned int counter = 0;
 	for(auto iter = this->vecDepthShadow.begin();
 		iter != this->vecDepthShadow.end();
 		++iter)
 	{
-		(*iter) = ShadowScreenCapture::Spawn(this->Width, this->Height, this->shadowTexture, counter, sTexDesc.ArraySize);
+		( *iter ) = ShadowScreenCapture::Spawn(this->Width, this->Height, this->shadowTexture, counter, sTexDesc.ArraySize);
 		++counter;
 	}
 
@@ -54,8 +71,6 @@ void Light::Init()
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateShaderResourceView(this->shadowTexture, &srvDesc, &this->shaderShadowTexture);
 	if(FAILED(hr)){ throw std::runtime_error("Error creating 2d texture for shadow"); }
-
-	shadowFilter = ShadowFilter::Spawn(CHL::GenerateGUID());
 }
 
 void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
@@ -63,71 +78,106 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
 	graphicManager.InsertSceneFilter(this->shadowFilter);
 
-	std::vector<cBuffer::CLightDesc> vecLightBuffer;
-	unsigned int shadowCounter = 0;
-
+	std::vector<std::shared_ptr<LightINFO>> vecLights;
 	for(auto iterObj = objects.begin();
 		iterObj != objects.end();
 		++iterObj)
 	{
-		std::shared_ptr<LightINFO> light = std::dynamic_pointer_cast<LightINFO>(iterObj->second);
+		std::shared_ptr<LightINFO> light = std::dynamic_pointer_cast<LightINFO>( iterObj->second );
+		if(!light){ continue; }
 
-		if(light)
-		{
-			if(std::shared_ptr<DirectionalLightINFO> light = std::dynamic_pointer_cast<DirectionalLightINFO>(iterObj->second))
-			{
-				vecLightBuffer.push_back(DirectLight::GetLightDesc(light));
+		vecLights.push_back(light);
+	}
 
-				if(light->HasShadow == true && (shadowCounter < this->vecDepthShadow.size()))
-				{
-					this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = DirectLight::CalculateViewMatrix(light);
-					this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = DirectLight::CalculatePrespectiveMatrix(light);
+	
+	if(vecLights.size() > cBuffer::numOfLights)
+	{
+		CHL::Vec4 eye = graphicManager.SceneInfo.Eye;
+		std::sort(vecLights.begin(), vecLights.end(),
+				  [eye](const std::shared_ptr<LightINFO>& a, const std::shared_ptr<LightINFO>& b) -> bool
+					{
+						float rankA = 0.0f; float rankB = 0.0f;
 
-					this->vecDepthShadow[shadowCounter]->Snap(objects);
+						if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( a ))
+						{
+							rankA += CHL::Length(eye, light->Position);
+						}
+						else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( a ))
+						{
+							rankA += CHL::Length(eye, light->Position);
+						}
 
-					vecLightBuffer.back().shadowNum = shadowCounter;
+						if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( b ))
+						{
+							rankB += CHL::Length(eye, light->Position);
+						}
+						else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( b ))
+						{
+							rankB += CHL::Length(eye, light->Position);
+						}
 
-					++shadowCounter;
-				}
-			}
-			else if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>(iterObj->second))
-			{
-				vecLightBuffer.push_back(PointLight::GetLightDesc(light));
-			}
-			else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>(iterObj->second))
-			{
-				vecLightBuffer.push_back(SpotLight::GetLightDesc(light));
+						return rankA < rankB;
+					});
+		vecLights.resize(cBuffer::numOfLights);
+	}
 
-				if(light->HasShadow == true && (shadowCounter < this->vecDepthShadow.size()))
-				{
-					this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = SpotLight::CalculateViewMatrix(light);
-					this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = SpotLight::CalculatePrespectiveMatrix(light);
-
-					this->vecDepthShadow[shadowCounter]->Snap(objects);
-
-					vecLightBuffer.back().shadowNum = shadowCounter;
-
-					++shadowCounter;
-				}
-			}
-
-		}
+	unsigned int numberOfShadows = 0;
+	for(auto iterLight = vecLights.begin();
+		iterLight != vecLights.end();
+		++iterLight)
+	{
+		if((*iterLight)->HasShadow == true ){ ++numberOfShadows; }
+	}
+	if(numberOfShadows > this->vecDepthShadow.size())
+	{
+		this->SetupShadow(numberOfShadows);
 	}
 
 	cBuffer::cbLight lightBuffer;
-	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
-
-	std::size_t numberOfLights = vecLightBuffer.size();
-	if(numberOfLights > 0)
+	ZeroMemory(&lightBuffer, sizeof( cBuffer::cbLight )); 
+	unsigned int shadowCounter = 0;
+	unsigned int counter = 0;
+	for(auto iterLight = vecLights.begin();
+		iterLight != vecLights.end();
+		++iterLight, ++counter)
 	{
-		unsigned int totalSize = numberOfLights * sizeof(cBuffer::CLightDesc);
+		if(std::shared_ptr<DirectionalLightINFO> light = std::dynamic_pointer_cast<DirectionalLightINFO>( *iterLight ))
+		{
+			lightBuffer.lights[counter] = DirectLight::GetLightDesc(light);
 
-		if(totalSize > sizeof(cBuffer::cbLight))
-			totalSize = sizeof(cBuffer::cbLight);
+			if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
+			{
+				this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = DirectLight::CalculateViewMatrix(light);
+				this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = DirectLight::CalculatePrespectiveMatrix(light);
 
-		memcpy(&lightBuffer.lights, &vecLightBuffer.front(), totalSize);
+				this->vecDepthShadow[shadowCounter]->Snap(objects);
+
+				lightBuffer.lights[counter].shadowNum = shadowCounter;
+				++shadowCounter;
+			}
+		}
+		else if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( *iterLight ))
+		{
+			lightBuffer.lights[counter] = PointLight::GetLightDesc(light);
+		}
+		else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( *iterLight ))
+		{
+			lightBuffer.lights[counter] = SpotLight::GetLightDesc(light);
+
+			if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
+			{
+				this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = SpotLight::CalculateViewMatrix(light);
+				this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = SpotLight::CalculatePrespectiveMatrix(light);
+
+				this->vecDepthShadow[shadowCounter]->Snap(objects);
+
+				lightBuffer.lights[counter].shadowNum = shadowCounter;
+
+				++shadowCounter;
+			}
+		}
 	}
-
+	
 	int difference = memcmp(&lightBuffer, &LastLightInput, sizeof(cBuffer::cbLight));
 	if(difference != 0)
 	{

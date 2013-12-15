@@ -22,6 +22,8 @@ class GraphicManager : public Interface, public CHL::Singleton<GraphicManager>
 {
 protected:
 	GraphicManager();
+	GraphicManager(const GraphicManager& that) = delete;
+	GraphicManager& operator=(const GraphicManager&) = delete;
 public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
@@ -68,11 +70,6 @@ public:
 	void RemoveTexture(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<BasicTexture>> AllTexture();
 
-	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
-	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
-	void RemoveScreenCapture(std::string ID);
-	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
-	
 	std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> ContinuousScreenCaptures;
 	void InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj);
 	void RemoveContinuousScreenCapture(std::string ID);

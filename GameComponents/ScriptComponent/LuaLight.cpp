@@ -40,23 +40,24 @@ void LuaLight::Light::SetSpecular(LuaMath::Vector4 vec)
 // DirectionalLight class
 LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 {
-	if (luabind::type(table) != LUA_TTABLE)
+	if(luabind::type(table) != LUA_TTABLE)
 		throw std::invalid_argument("Wrong paramter for DirectionalLight, please send in a table");
 
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 direction;
-	bool hasShadow = true;
+	bool hasShadow = false;
 
-	for (luabind::iterator it(table);
+	for(luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
 	{
-		std::string key = luabind::object_cast<std::string>(it.key());
+		std::string key = luabind::object_cast<std::string>( it.key() );
 
-			 if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::DIRECTION)		{ direction = luabind::object_cast<LuaMath::Vector4>(*it); }
+			 if(key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::DIRECTION)		{ direction = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::HASHADOW)		{ hasShadow = luabind::object_cast<bool>( *it ); }
 	}
 
 	std::shared_ptr<DirectionalLightINFO> obj(new DirectionalLightINFO());
@@ -69,7 +70,7 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
-		
+
 LuaMath::Vector4 LuaLight::DirectionalLight::GetDirection()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIRECTION);
@@ -98,24 +99,24 @@ void LuaLight::DirectionalLight::Register(lua_State *lua)
 // PointLight
 LuaLight::PointLight::PointLight(luabind::object const& table)
 {
-	if (luabind::type(table) != LUA_TTABLE)
+	if(luabind::type(table) != LUA_TTABLE)
 		throw std::invalid_argument("Wrong paramter for PointLight, please send in a table");
 
-	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;	
+	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 position;	CHL::Vec4 att; double range = 0.0;
 
-	for (luabind::iterator it(table);
+	for(luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
 	{
-		std::string key = luabind::object_cast<std::string>(it.key());
+		std::string key = luabind::object_cast<std::string>( it.key() );
 
-			 if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::POSITION)		{ position = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::ATTENUATION)	{ att = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::RANGE)			{ range = luabind::object_cast<double>(*it); }
+			 if(key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::POSITION)		{ position = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::ATTENUATION)	{ att = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::RANGE)			{ range = luabind::object_cast<double>( *it ); }
 	}
 
 	std::shared_ptr<PointLightINFO> obj(new PointLightINFO());
@@ -125,7 +126,6 @@ LuaLight::PointLight::PointLight(luabind::object const& table)
 	obj->Position = position;
 	obj->Attenuation = att;
 	obj->Range = range;
-	
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
@@ -180,31 +180,32 @@ void LuaLight::PointLight::Register(lua_State *lua)
 // SpotLight class
 LuaLight::SpotLight::SpotLight(luabind::object const& table)
 {
-	if (luabind::type(table) != LUA_TTABLE)
+	if(luabind::type(table) != LUA_TTABLE)
 		throw std::invalid_argument("Wrong paramter for SpotLight, please send in a table");
 
 	int slot = 0;
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 position; CHL::Vec4 direction; CHL::Vec4 att;
 	double spot = 0.0;	double range = 0.0;
-	bool hasShadow = true;
+	bool hasShadow = false;
 
-	for (luabind::iterator it(table);
+	for(luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
 	{
-		std::string key = luabind::object_cast<std::string>(it.key());
+		std::string key = luabind::object_cast<std::string>( it.key() );
 
-			 if (key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::POSITION)		{ position = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::DIRECTION)		{ direction = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::ATTENUATION)	{ att = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if (key == Keys::Light::SPOT)			{ spot = luabind::object_cast<double>(*it); }
-		else if (key == Keys::Light::RANGE)			{ range = luabind::object_cast<double>(*it); }
+			 if(key == Keys::Light::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::AMBIENT)		{ ambient = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::POSITION)		{ position = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::DIRECTION)		{ direction = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::ATTENUATION)	{ att = luabind::object_cast<LuaMath::Vector4>( *it ); }
+		else if(key == Keys::Light::SPOT)			{ spot = luabind::object_cast<double>( *it ); }
+		else if(key == Keys::Light::RANGE)			{ range = luabind::object_cast<double>( *it ); }
+		else if(key == Keys::Light::HASHADOW)		{ hasShadow = luabind::object_cast<bool>( *it ); }
 	}
-	
+
 	std::shared_ptr<SpotLightINFO> obj(new SpotLightINFO());
 	obj->Diffuse = diffuse;
 	obj->Ambient = ambient;

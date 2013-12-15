@@ -15,8 +15,8 @@ void ContinuousBasicScreenShot::Init()
 }
 void ContinuousBasicScreenShot::Destory()
 {
-	this->ScreenShot[0]->Destory();
-	this->ScreenShot[1]->Destory();
+	this->ScreenShot[0]->Release();
+	this->ScreenShot[1]->Release();
 }
 void ContinuousBasicScreenShot::Update(double realTime, double deltaTime)
 {

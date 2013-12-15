@@ -33,7 +33,7 @@ Message::Status TakeBasicScreenShot::Work()
 		BasicTexture::Spawn(this->newTextureID, texture);
 	GraphicManager::GetInstance().InsertTexture(newTexture);
 
-	newBasicScreenCapture->Destory();
+	newBasicScreenCapture->Release();
 
 	return Message::Status::Complete;
 }
@@ -65,7 +65,7 @@ Message::Status TakeDepthScreenShot::Work()
 		BasicTexture::Spawn(this->newTextureID, texture);
 	GraphicManager::GetInstance().InsertTexture(newTexture);
 
-	newBasicScreenCapture->Destory();
+	newBasicScreenCapture->Release();
 
 	return Message::Status::Complete;
 }
@@ -94,7 +94,7 @@ Message::Status TakeCubeScreenShot::Work()
 		BasicTexture::Spawn(this->newTextureID, texture);
 	GraphicManager::GetInstance().InsertTexture(newTexture);
 
-	newBasicScreenCapture->Destory();
+	newBasicScreenCapture->Release();
 
 	return Message::Status::Complete;
 }

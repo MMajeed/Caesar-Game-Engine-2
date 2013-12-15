@@ -10,7 +10,7 @@ public:
 	CubeScreenCapture(const std::string& inputID);
 
 	void Init();
-	void Destory();
+	void Release();
 	void Update(double realTime, double deltaTime);
 	void Snap(std::hash_map<std::string, SP_INFO>& objects);
 

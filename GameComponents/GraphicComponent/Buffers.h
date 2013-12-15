@@ -22,9 +22,9 @@ public:
 
 	struct CLightDesc
 	{
+		MaterialInfo material;
 		XMFLOAT4 pos;		
 		XMFLOAT4 dir;		
-		MaterialInfo material;
 		XMFLOAT4 attenuation;	
 		float spot;
 		float range;

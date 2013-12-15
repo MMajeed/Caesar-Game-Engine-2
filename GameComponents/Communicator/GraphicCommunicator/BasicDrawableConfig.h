@@ -44,6 +44,15 @@ namespace BasicDrawableConfig
 
 		virtual Message::Status Work();
 	};
+
+	class ReleaseBasicDrawable : public Message
+	{
+	public:
+		std::string ID;
+		ReleaseBasicDrawable(std::string ID);
+
+		virtual Message::Status Work();
+	};
 };
 
 

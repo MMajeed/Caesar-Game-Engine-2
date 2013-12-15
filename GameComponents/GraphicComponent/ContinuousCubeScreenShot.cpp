@@ -15,8 +15,8 @@ void ContinuousCubeScreenShot::Init()
 }
 void ContinuousCubeScreenShot::Destory()
 {
-	this->ScreenShot[0]->Destory();
-	this->ScreenShot[1]->Destory();
+	this->ScreenShot[0]->Release();
+	this->ScreenShot[1]->Release();
 }
 void ContinuousCubeScreenShot::Update(double realTime, double deltaTime)
 {

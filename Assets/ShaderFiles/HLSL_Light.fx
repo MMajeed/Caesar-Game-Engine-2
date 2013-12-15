@@ -1,24 +1,3 @@
-// This is used to specify what the material property of the light and objects are
-struct MaterialInfo
-{
-    float4 Diffuse;
-	float4 Ambient;
-    float4 Specular;
-};
-
-struct LightDesc
-{
-	float4 Position;			// Only used with point and spot
-	float4 Direction;			// Only used with directional(parallel) and spot
-	MaterialInfo material;		// ambient, diffuse, spec
-	float4 Att;
-	float Spot;
-	float Range;
-	int Type;
-	int ShadowNum;
-	matrix shadowMatrix;
-};
-
 //---------------------------------------------------------------------------------------
 // Computes the ambient, diffuse, and specular terms in the lighting equation
 // from a directional light.  We need to output the terms separately because

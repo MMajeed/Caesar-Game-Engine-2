@@ -61,23 +61,21 @@ void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object)
 	this->SetupDrawPixelShader(object);
 	this->SetupDrawRasterizeShader(object);
 	this->DrawObject(object);
-	this->CleanupTexture(object);
 	this->CleanupAfterDraw(object);
 }
 void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-
-	this->SetupDepth(object);
-	this->SetupTexture(object);
-	this->SetupDrawConstantBuffer(object);
-	this->SetupDrawVertexBuffer(object);
-	this->SetupDrawInputVertexShader(object);
-	this->SetupDrawPixelShader(object);	
-	pImmediateContext->RSSetState(this->D3DInfo.pShadowRastersizerState);	
-	this->DrawObject(object);
-	this->CleanupTexture(object);
-	this->CleanupAfterDraw(object);
+	if(object->Depth == true)
+	{
+		this->SetupDrawConstantBuffer(object);
+		this->SetupDrawVertexBuffer(object);
+		this->SetupDrawInputVertexShader(object);
+		this->SetupDrawPixelShader(object);
+		pImmediateContext->RSSetState(this->D3DInfo.pShadowRastersizerState);
+		this->DrawObject(object);
+		this->CleanupAfterDraw(object);
+	}
 }
 
 void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO>& object)
@@ -92,6 +90,7 @@ void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO>& object)
 void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
+	if(object->Texture2DVecs.size() > 0)
 	{
 		ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
 
@@ -108,6 +107,7 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object)
 
 		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(0, cBuffer::numOfTextures, pTexture);
 	}
+	if(object->TextureCubeVecs.size() > 0)
 	{
 		ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
 
@@ -190,14 +190,6 @@ void BasicDrawable::DrawObject(const std::shared_ptr<ObjectINFO>& object)
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
-}
-void BasicDrawable::CleanupTexture(const std::shared_ptr<ObjectINFO>& object)
-{
-	GraphicManager& graphic = GraphicManager::GetInstance();
-
-	ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
-
-	graphic.D3DStuff.pImmediateContext->PSSetShaderResources(0, cBuffer::numOfTextures, pTexture);
 }
 void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object)	
 {

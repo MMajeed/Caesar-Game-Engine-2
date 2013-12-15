@@ -16,6 +16,8 @@ class LuaManager : public Interface, public CHL::Singleton<LuaManager>
 {
 protected:
 	LuaManager();
+	LuaManager(const LuaManager& that) = delete;
+	LuaManager& operator=(const LuaManager&) = delete;
 public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);

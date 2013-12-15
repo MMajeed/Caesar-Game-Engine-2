@@ -3,7 +3,8 @@ local LightSetup = {}
 directionLight = DirectionalLight({[Keys["Light"]["Diffuse"]]   = Vector4(1.0, 1.0, 1.0),
                                    [Keys["Light"]["Ambient"]]   = Vector4(0.5, 0.5, 0.5),
                                    [Keys["Light"]["Specular"]]  = Vector4(0.3, 0.3, 0.3),
-                                   [Keys["Light"]["Direction"]] = Vector4(0.0, 0.785, 0.1),});
+                                   [Keys["Light"]["Direction"]] = Vector4(0.0, 0.785, 0.1),
+                                   [Keys["Light"]["HasShadow"]] = true,});
 
 pointLight = PointLight({[Keys["Light"]["Diffuse"]]     = Vector4(1.0, 1.0, 0.0),
                          [Keys["Light"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
@@ -19,8 +20,8 @@ spotLight = SpotLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 1.0),
                        [Keys["Light"]["Direction"]]   = Vector4(0.7853, -3.14, -3.14),
                        [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
                        [Keys["Light"]["Spot"]]        = 0.5,
-                       [Keys["Light"]["Range"]]       = 20,});
---spotLight:ApplyShadow();
+                       [Keys["Light"]["Range"]]       = 20,
+                       [Keys["Light"]["HasShadow"]]   = true,});
 
 return LightSetup
 

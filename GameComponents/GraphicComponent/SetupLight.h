@@ -15,16 +15,17 @@ class Light : public CHL::Singleton<Light>
 protected:
 	Light();
 public:
-	void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
-	std::vector<std::shared_ptr<ShadowScreenCapture>> vecDepthShadow;
-
 	void Init();
 
-	ID3D11Texture2D* shadowTexture;
-	ID3D11ShaderResourceView*	shaderShadowTexture;
+	void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
+	void SetupShadow(unsigned int numberOfShadows);
+
+	std::vector<std::shared_ptr<ShadowScreenCapture>>	vecDepthShadow;
+	ID3D11Texture2D*									shadowTexture;
+	ID3D11ShaderResourceView*							shaderShadowTexture;
 	static const unsigned int Width = 2048;
 	static const unsigned int Height = 2048;
-	static const unsigned int NumberOfShadows = cBuffer::numOfLights;
+
 	std::shared_ptr<ShadowFilter> shadowFilter;
 
 	friend CHL::Singleton<Light>;

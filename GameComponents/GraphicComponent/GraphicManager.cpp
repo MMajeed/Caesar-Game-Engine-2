@@ -172,7 +172,7 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 
 	CHL::Vec4 eye = this->SceneInfo.Eye;
 	std::sort(vecObjects.begin(), vecObjects.end(),
-			  [eye](std::shared_ptr<ObjectINFO> a, std::shared_ptr<ObjectINFO> b) -> bool
+			  [eye](const std::shared_ptr<ObjectINFO>& a, const std::shared_ptr<ObjectINFO>& b) -> bool
 			  {
 				float rankA = 0.0f; float rankB = 0.0f;
 
@@ -209,7 +209,6 @@ void GraphicManager::Present(std::hash_map<std::string, SP_INFO>& objects)
 
 void GraphicManager::InitDevice()
 {
-	
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
 	std::string window = WindowINFOID::Get();
@@ -442,7 +441,11 @@ void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
 }
 void GraphicManager::RemoveObjectDrawable(std::string ID)
 {
-	this->objectDrawables.erase(ID);
+	auto iter = this->objectDrawables.find(ID);
+	if(iter != this->objectDrawables.end())
+	{
+		this->objectDrawables.erase(iter);
+	}
 }
 const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllObjectDrawables()
 {
@@ -455,24 +458,15 @@ void GraphicManager::InsertTexture(std::shared_ptr<BasicTexture> obj)
 }
 void GraphicManager::RemoveTexture(std::string ID)
 {
-	this->textures.erase(ID);
+	auto iter = this->textures.find(ID);
+	if(iter != this->textures.end())
+	{
+		this->textures.erase(iter);
+	}
 }
 const std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicManager::AllTexture()
 {
 	return this->textures;
-}
-
-void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
-{
-	this->ScreenCaptures[obj->ID] = obj;
-}
-void GraphicManager::RemoveScreenCapture(std::string ID)
-{
-	this->ScreenCaptures.erase(ID);
-}
-const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager::AllScreenCapture()
-{
-	return this->ScreenCaptures;
 }
 
 void GraphicManager::InsertContinuousScreenCapture(std::shared_ptr<ContinuousScreenShot> obj)
@@ -481,7 +475,11 @@ void GraphicManager::InsertContinuousScreenCapture(std::shared_ptr<ContinuousScr
 }
 void GraphicManager::RemoveContinuousScreenCapture(std::string ID)
 {
-	this->ContinuousScreenCaptures.erase(ID);
+	auto iter = this->ContinuousScreenCaptures.find(ID);
+	if(iter != this->ContinuousScreenCaptures.end())
+	{
+		this->ContinuousScreenCaptures.erase(iter);
+	}
 }
 const std::hash_map<std::string, std::shared_ptr<ContinuousScreenShot>> GraphicManager::AllContinuousScreenCapture()
 {
@@ -495,7 +493,11 @@ void GraphicManager::InsertSceneFilter(std::shared_ptr<SceneFilter> obj)
 }
 void GraphicManager::RemoveSceneFilter(std::string ID)
 {
-	this->sceneFilters.erase(ID);
+	auto iter = this->sceneFilters.find(ID);
+	if(iter != this->sceneFilters.end())
+	{
+		this->sceneFilters.erase(iter);
+	}
 }
 const std::hash_map<std::string, std::shared_ptr<SceneFilter>> GraphicManager::AllSceneFilters()
 {

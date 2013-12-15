@@ -113,7 +113,7 @@ void CubeScreenCapture::Init()
 	this->D3DInfo.Viewport.MinDepth = 0.0f;
 	this->D3DInfo.Viewport.MaxDepth = 1.0f;
 }
-void CubeScreenCapture::Destory()
+void CubeScreenCapture::Release()
 {
 	if(this->D3DInfo.pDepthMapDSV != 0){ this->D3DInfo.pDepthMapDSV->Release(); }
 	if(this->pScreenTexture != 0){ this->pScreenTexture->Release(); }

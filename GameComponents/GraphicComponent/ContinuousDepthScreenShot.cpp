@@ -13,7 +13,7 @@ void ContinuousDepthScreenShot::Init()
 }
 void ContinuousDepthScreenShot::Destory()
 {
-	this->ScreenShot->Destory();
+	this->ScreenShot->Release();
 }
 void ContinuousDepthScreenShot::Update(double realTime, double deltaTime)
 {
