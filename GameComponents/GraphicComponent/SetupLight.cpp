@@ -134,8 +134,6 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 		ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
 
 		graphicManager.D3DStuff.pImmediateContext->UpdateSubresource(graphicManager.D3DStuff.pCBLight, 0, NULL, &lightBuffer, 0, 0);
-		graphicManager.D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &(graphicManager.D3DStuff.pCBLight));
-		graphicManager.D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &(graphicManager.D3DStuff.pCBLight));
 
 		LastLightInput = lightBuffer;
 	}

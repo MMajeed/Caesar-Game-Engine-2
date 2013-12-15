@@ -137,8 +137,6 @@ void GraphicManager::SetupConstantBuffer(std::hash_map<std::string, SP_INFO>& ob
 	ID3D11DeviceContext* pImmediateContext = this->D3DStuff.pImmediateContext;
 
 	pImmediateContext->UpdateSubresource( this->D3DStuff.pCBInfo, 0, NULL, &cbInfo, 0, 0 );
-	pImmediateContext->VSSetConstantBuffers( 1, 1, &(this->D3DStuff.pCBInfo) );
-	pImmediateContext->PSSetConstantBuffers( 1, 1, &(this->D3DStuff.pCBInfo) );
 }
 void GraphicManager::ClearScreen(std::hash_map<std::string, SP_INFO>& objects)
 {
@@ -420,9 +418,17 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.vp.TopLeftY = 0;
 	this->D3DStuff.pImmediateContext->RSSetViewports(1, &(this->D3DStuff.vp));
 
-	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
+	DX11Helper::LoadBuffer<cBuffer::cbObject>(this->D3DStuff.pd3dDevice, &( this->D3DStuff.pCBObject ));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &( this->D3DStuff.pCBObject ));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &( this->D3DStuff.pCBObject ));
 
-	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
+	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &( this->D3DStuff.pCBInfo ));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(1, 1, &( this->D3DStuff.pCBInfo ));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(1, 1, &( this->D3DStuff.pCBInfo ));
+
+	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &( this->D3DStuff.pCBLight ));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &( this->D3DStuff.pCBLight ));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &( this->D3DStuff.pCBLight ));
 
 	Light::GetInstance().Init();
 

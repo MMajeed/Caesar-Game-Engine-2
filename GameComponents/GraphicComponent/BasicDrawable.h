@@ -32,7 +32,6 @@ public:
 	{
 		ID3D11Buffer*				pVertexBuffer;
 		ID3D11Buffer*				pIndexBuffer;
-		ID3D11Buffer*				pConstantBuffer;
 		ID3D11InputLayout*			pInputLayout;
 		std::string					VertexShaderInfo;
 		ID3D11VertexShader*			pVertexShader;
@@ -53,7 +52,6 @@ public:
 	virtual void InitPixelShader(ID3D11Device* device);
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitShadowRastersizerState(ID3D11Device* device);
-	virtual void InitConstantBuffer(ID3D11Device* device);
 
 	virtual void SetupDepth(const std::shared_ptr<ObjectINFO>& object);
 	virtual void SetupTexture(const std::shared_ptr<ObjectINFO>& object);

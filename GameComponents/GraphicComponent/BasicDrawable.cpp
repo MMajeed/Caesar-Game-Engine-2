@@ -16,7 +16,6 @@ BasicDrawable::BasicDrawable(const std::string& inputID)
 {
 	this->D3DInfo.pVertexBuffer = 0;
 	this->D3DInfo.pIndexBuffer = 0;
-	this->D3DInfo.pConstantBuffer = 0;
 	this->D3DInfo.pInputLayout = 0;
 	this->D3DInfo.pVertexShader = 0;
 	this->D3DInfo.pPixelShader = 0;
@@ -35,14 +34,12 @@ void BasicDrawable::Init()
 	this->InitPixelShader(device);
 	this->InitRastersizerState(device);
 	this->InitShadowRastersizerState(device);
-	this->InitConstantBuffer(device);
 }
 
 void BasicDrawable::Destory()
 {
 	this->D3DInfo.pVertexBuffer->Release();
 	this->D3DInfo.pIndexBuffer->Release();
-	this->D3DInfo.pConstantBuffer->Release();
 	this->D3DInfo.pInputLayout->Release();
 	this->D3DInfo.pVertexShader->Release();
 	this->D3DInfo.pPixelShader->Release();
@@ -154,11 +151,9 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& o
 		int breakpoint = 0;
 	}
 
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
+	auto d3dStuff = GraphicManager::GetInstance().D3DStuff;
 
-	pImmediateContext->UpdateSubresource( this->D3DInfo.pConstantBuffer, 0, NULL, &cbCEF, 0, 0 );
-	pImmediateContext->VSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
-	pImmediateContext->PSSetConstantBuffers( 0, 1, &(this->D3DInfo.pConstantBuffer) );
+	d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBObject, 0, NULL, &cbCEF, 0, 0);
 }
 void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object)
 {	
@@ -260,10 +255,6 @@ void BasicDrawable::InitShadowRastersizerState(ID3D11Device* device)
 									true,
 									true,
 									device, &(this->D3DInfo.pShadowRastersizerState));
-}
-void BasicDrawable::InitConstantBuffer(ID3D11Device* device)
-{
-	DX11Helper::LoadBuffer<cBuffer::cbObject>(device, &(this->D3DInfo.pConstantBuffer));
 }
 
 void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode)
