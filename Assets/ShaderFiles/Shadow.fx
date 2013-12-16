@@ -40,7 +40,7 @@ float CalcShadowFactor(float4 shadowPosH, LightDesc L)
 			&& loc.x < 1.0f && loc.x > 0.0f
 			&& loc.y < 1.0f && loc.y > 0.0f)
 		{
-			bool inShadow = ( shadowPosH.z - depthTexture ) >= 0.0025;
+			bool inShadow = ( shadowPosH.z - depthTexture ) >= 0.001;
 			if(inShadow == true)
 			{
 				sourcevals -= 0.1;

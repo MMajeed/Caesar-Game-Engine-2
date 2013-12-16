@@ -118,6 +118,12 @@ double LuaCamera::GetYaw()
 	return GenericObj<double>::GetValue(obj);
 }
 
+void LuaCamera::Release()
+{
+	EntityConfig::DeleteEntity(this->ID);
+	this->ID = "";
+}
+
 void LuaCamera::Register(lua_State *lua)
 {
 	luabind::module(lua) [
@@ -131,5 +137,6 @@ void LuaCamera::Register(lua_State *lua)
 			.property("Yaw", &LuaCamera::GetYaw, &LuaCamera::SetYaw)
 			.def("MoveFroward", &LuaCamera::MoveFroward)
 			.def("SetAsMain", &LuaCamera::SetAsMain)
+			.def("Release", &LuaCamera::Release)
 	  ];
 }

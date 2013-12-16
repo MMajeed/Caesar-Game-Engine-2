@@ -31,6 +31,4 @@ public:
 	friend CHL::Singleton<Light>;
 };
 
-extern cBuffer::cbLight LastLightInput;
-
 #endif //__SetupLight__

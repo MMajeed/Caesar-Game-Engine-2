@@ -19,7 +19,13 @@ struct LightDesc
 	float Range;
 	int Type;
 	int ShadowNum;
-	matrix shadowMatrix;
+};
+
+struct VS_INPUT
+{
+	float4 VertexPos : POSITION;
+	float4 VertexNorm : NORMAL;
+	float3 tex : TEXCOORD0;
 };
 
 struct PS_INPUT
@@ -53,6 +59,11 @@ cbuffer cbInfo : register( b1 )
 cbuffer cbLight : register( b2 )
 {
 	LightDesc lightArray[numOfLights];
+};
+
+cbuffer cbLight : register(b3)
+{
+	matrix shadowMatrix[numOfLights];
 };
 
 Texture2D Textures2D[NumberOfTextures] : register(t0);

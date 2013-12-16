@@ -16,6 +16,7 @@ namespace LuaScreenCapture
 		void SetCameraMatrix(LuaMath::Matrix4x4 mat);
 		void SetPrespectiveMatrix(LuaMath::Matrix4x4 mat);
 		LuaBasicTexture GetTexture();
+		void Release();
 
 		std::string ID;
 		std::string TextureID;
@@ -31,6 +32,7 @@ namespace LuaScreenCapture
 		void SetCameraMatrix(LuaMath::Matrix4x4 mat);
 		void SetPrespectiveMatrix(LuaMath::Matrix4x4 mat);
 		LuaBasicTexture GetTexture();
+		void Release();
 
 		std::string ID;
 		std::string TextureID;
@@ -45,6 +47,7 @@ namespace LuaScreenCapture
 		
 		void SetEye(LuaMath::Vector4 mat);
 		LuaBasicTexture GetTexture();
+		void Release();
 
 		std::string ID;
 		std::string TextureID;

@@ -1,7 +1,6 @@
 #include "LuaGraphic.h"
 #include "LuaManager.h"
 #include <GraphicCommunicator\GraphicSettings.h>
-#include <GraphicCommunicator\GraphicCommunicator.h>
 
 void LuaGraphic::ClearScreen::Action(double x, double y, double z)
 {
@@ -11,9 +10,7 @@ void LuaGraphic::ClearScreen::Action(double x, double y, double z)
 	newColour(1) = y;	// Get the 2 paramter
 	newColour(2) = z;	// Get the 3 paramter
 
-	std::shared_ptr<ClearScreenMessage> msg(new ClearScreenMessage(newColour));
-
-	GraphicCommunicator::SubmitMessage(msg);
+	GraphicSettings::ClearScreen(newColour);
 }
 
 void LuaGraphic::ClearScreen::Register(lua_State *lua)

@@ -2,8 +2,7 @@
 
 KeyStatus::KeyStatus()
 {
-	this->CurrentStatus = KeyStatus::Status::KeyDown;
-	this->duration = 0.0;
+	this->CurrentStatus = KeyStatus::Status::KeyUp;
 }
 
 void KeyStatus::UpdateStatus(Status status)
@@ -11,11 +10,5 @@ void KeyStatus::UpdateStatus(Status status)
 	if(this->CurrentStatus != status)
 	{
 		this->CurrentStatus = status;
-		this->duration = 0.0;
 	}
-}
-
-void KeyStatus::Update(double realTime)
-{
-	this->duration += realTime;
 }

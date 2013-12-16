@@ -1,22 +1,22 @@
 #include "LuaBasicTexture.h"
 
-#include <GraphicCommunicator\AddBasicTexture.h>
-#include <GraphicCommunicator\GraphicCommunicator.h>
+#include <GraphicCommunicator\BasicTextureConfig.h>
 
 LuaBasicTexture::LuaBasicTexture(std::string textureFile)
 {
-	std::shared_ptr<AddBasicTexture> msg(new AddBasicTexture(textureFile));
-
-	GraphicCommunicator::SubmitMessage(msg);
-
-	this->ID = msg->ID;
+	this->ID = BasicTextureConfig::Create(textureFile);
 }
-
+void LuaBasicTexture::Release()
+{
+	BasicTextureConfig::Release(this->ID);
+	this->ID = "";
+}
 void LuaBasicTexture::Register(lua_State *lua)
 {
 	luabind::module(lua) [
 		luabind::class_<LuaBasicTexture>("BasicTexture")
 		  .def(luabind::constructor<std::string>())
+		  .def("Release", &LuaBasicTexture::Release)
 		  .def_readonly("ID", &LuaBasicTexture::ID)
 	  ];
 }

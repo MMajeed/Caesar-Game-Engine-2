@@ -13,46 +13,17 @@ namespace BasicDrawableConfig
 	enum class CULL_MODE { CULL_NONE = 1, CULL_FRONT = 2, CULL_BACK = 3 };
 	enum class FILL_MODE { FILL_WIREFRAME = 2, FILL_SOLID = 3 };
 
-	class  AddBasicDrawableMessage : public Message
-	{
-	public:
-		AddBasicDrawableMessage(std::shared_ptr<CHL::Model> model,
-								std::string	vertexFileName,
-								std::string	pixelFileName,
-								CULL_MODE cullMode, 
-								FILL_MODE fillMode);
-
-		virtual Message::Status Work();
-
-		std::shared_ptr<CHL::Model> model;
-		std::string	vertexFileName;
-		std::string	pixelFileName;
-		CULL_MODE cullMode;
-		FILL_MODE fillMode;
-
-		std::string	ID;
-	};
-
-	class ChangeRastersizerState : public Message
-	{
-	public:
-		std::string ID;
-		CULL_MODE cullMode;
-		FILL_MODE fillMode;
-
-		ChangeRastersizerState(std::string ID, CULL_MODE cullMode, FILL_MODE fillMode);
-
-		virtual Message::Status Work();
-	};
-
-	class ReleaseBasicDrawable : public Message
-	{
-	public:
-		std::string ID;
-		ReleaseBasicDrawable(std::string ID);
-
-		virtual Message::Status Work();
-	};
+	std::string Create(std::shared_ptr<CHL::Model> model,
+					   std::string	vertexFileName,
+					   std::string	pixelFileName,
+					   BasicDrawableConfig::CULL_MODE cullMode,
+					   BasicDrawableConfig::FILL_MODE fillMode);
+	
+	void ChangeRastersizerState(std::string ID,
+								BasicDrawableConfig::CULL_MODE cullMode,
+								BasicDrawableConfig::FILL_MODE fillMode);
+	
+	void Release(std::string ID);
 };
 
 

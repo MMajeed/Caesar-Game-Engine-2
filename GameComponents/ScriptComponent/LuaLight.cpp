@@ -35,6 +35,11 @@ void LuaLight::Light::SetSpecular(LuaMath::Vector4 vec)
 	EntityConfig::SetEntity(this->ID, Keys::Light::SPECULAR, GenericObj<CHL::Vec4>::CreateNew(vec));
 }
 
+void LuaLight::Light::Release()
+{
+	EntityConfig::DeleteEntity(this->ID);
+	this->ID = "";
+}
 // Light Class End
 
 // DirectionalLight class
@@ -91,6 +96,7 @@ void LuaLight::DirectionalLight::Register(lua_State *lua)
 			.property("Ambient", &LuaLight::DirectionalLight::GetAmient, &LuaLight::DirectionalLight::SetAmbient)
 			.property("Specular", &LuaLight::DirectionalLight::GetSpecular, &LuaLight::DirectionalLight::SetSpecular)
 			.property("Direction", &LuaLight::DirectionalLight::GetDirection, &LuaLight::DirectionalLight::SetDirection)
+			.def("Release", &LuaLight::DirectionalLight::Release)
 	];
 }
 
@@ -172,6 +178,7 @@ void LuaLight::PointLight::Register(lua_State *lua)
 			.property("Position", &LuaLight::PointLight::GetPosition, &LuaLight::PointLight::SetPosition)
 			.property("Range", &LuaLight::PointLight::GetRange, &LuaLight::PointLight::SetRange)
 			.property("Attenuation", &LuaLight::PointLight::GetAttenuation, &LuaLight::PointLight::SetAttenuation)
+			.def("Release", &LuaLight::PointLight::Release)
 	];
 }
 
@@ -284,9 +291,7 @@ void LuaLight::SpotLight::Register(lua_State *lua)
 			.property("Direction", &LuaLight::SpotLight::GetDirection, &LuaLight::SpotLight::SetDirection)
 			.property("Spot", &LuaLight::SpotLight::GetSpot, &LuaLight::SpotLight::SetSpot)
 			.property("Attenuation", &LuaLight::SpotLight::GetAttenuation, &LuaLight::SpotLight::SetAttenuation)
-			//.property("ShadowState", &LuaLight::SpotLight::GetShadowState)
-			//.def("ApplyShadow", &LuaLight::SpotLight::ApplyShadow)
-			//.def("RemoveShadow", &LuaLight::SpotLight::RemoveShadow)
+			.def("Release", &LuaLight::SpotLight::Release)
 	];
 }
 // SpotLight end

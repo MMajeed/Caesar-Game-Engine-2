@@ -17,6 +17,12 @@ void CubeScreenCapture::Destory()
 {
 	this->ScreenShot[0]->Release();
 	this->ScreenShot[1]->Release();
+	auto& allTexture = GraphicManager::GetInstance().AllTexture();
+	auto textureIter = allTexture.find(this->TextureID);
+	if(textureIter != allTexture.end())
+	{
+		textureIter->second->Destory();
+	}
 }
 void CubeScreenCapture::Update(double realTime, double deltaTime)
 {

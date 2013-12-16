@@ -9,6 +9,15 @@ namespace EntityConfig
 		std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
 		EntityManager::GetInstance().entities[info->ID] = info;
 	}
+	void SetEntity(std::string ID, std::string keyID, std::shared_ptr<Object> obj)
+	{
+		std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
+		auto iter = EntityManager::GetInstance().entities.find(ID);
+		if(iter != EntityManager::GetInstance().entities.end())
+		{
+			iter->second->Set(keyID, obj);
+		}
+	}
 	SP_INFO GetEntity(std::string ID)
 	{
 		std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
@@ -32,15 +41,6 @@ namespace EntityConfig
 		}
 		return returnValue;
 	}
-	void SetEntity(std::string ID, std::string keyID, std::shared_ptr<Object> obj)
-	{
-		std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
-		auto iter = EntityManager::GetInstance().entities.find(ID);
-		if(iter != EntityManager::GetInstance().entities.end())
-		{
-			iter->second->Set(keyID, obj);
-		}
-	}
 	std::hash_map<std::string, SP_INFO> GetAllEntity()
 	{
 		std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
@@ -55,5 +55,15 @@ namespace EntityConfig
 		}
 
 		return returnValue;
+	}
+	void DeleteEntity(std::string ID)
+	{
+		std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
+
+		auto iter = EntityManager::GetInstance().entities.find(ID);
+		if(iter != EntityManager::GetInstance().entities.end())
+		{
+			EntityManager::GetInstance().entities.erase(iter);
+		}
 	}
 };

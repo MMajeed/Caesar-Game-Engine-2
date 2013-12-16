@@ -11,11 +11,11 @@ LuaKeyAction::LuaKeyAction(unsigned int inputKey, LuaKeyAction::KeyStatWanted in
 
 void LuaKeyAction::Action(lua_State *lua)
 {
-	GetKeyStatus::Key keyStatus = GetKeyStatus::GetKey(this->key);
+	GetKeyStatus::KeyState keyStatus = GetKeyStatus::GetKey(this->key);
 
-	if(this->currentKey != static_cast<LuaKeyAction::KeyStatWanted>(keyStatus.state)) // If it has changed
+	if(this->currentKey != static_cast<LuaKeyAction::KeyStatWanted>(keyStatus)) // If it has changed
 	{
-		this->currentKey = static_cast<LuaKeyAction::KeyStatWanted>(keyStatus.state);
+		this->currentKey = static_cast<LuaKeyAction::KeyStatWanted>(keyStatus);
 
 		if(this->wanted == this->currentKey)
 		{

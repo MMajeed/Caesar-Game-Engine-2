@@ -1,7 +1,6 @@
 #include "LuaScreenShot.h"
 #include <luabind\luabind.hpp>
-#include <GraphicCommunicator\TakeScreenShot.h>
-#include <GraphicCommunicator\GraphicCommunicator.h>
+#include <GraphicCommunicator\ScreenShotConfig.h>
 #include <Keys.h>
 #include "LuaMath.h"
 #include <3DMath.h>
@@ -26,7 +25,7 @@ LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 			std::string key = luabind::object_cast<std::string>(it.key());
 
 				 if(key == Keys::ScreenShot::WIDTH)				{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)				{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)			{ height = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::CAMERAMATRIX)		{ camera = luabind::object_cast<LuaMath::Matrix4x4>(*it);  cameraSet = true;  }
 			else if(key == Keys::ScreenShot::PRESPECTIVEMATRIX)	{ prespective = luabind::object_cast<LuaMath::Matrix4x4>(*it);  prespectiveSet = true; }
 		}
@@ -49,16 +48,10 @@ LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 		prespective = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 	}
 
-	std::shared_ptr<TakeBasicScreenShot> msg(
-		new TakeBasicScreenShot(width, height, camera, prespective));
-
-	GraphicCommunicator::SubmitMessage(msg);
-
-	msg->WaitTillProcccesed();
-
-	returnValue.ID = msg->newTextureID;
-	
-	return returnValue;
+	std::string textureID = ScreenShotConfig::Basic(width, height, camera, prespective);
+	LuaBasicTexture texture;
+	texture.ID = textureID;
+	return texture;
 }
 
 LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
@@ -104,14 +97,10 @@ LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
 		prespective = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 	}
 
-	std::shared_ptr<TakeDepthScreenShot> msg(
-		new TakeDepthScreenShot(width, height, camera, prespective));
-
-	GraphicCommunicator::SubmitMessage(msg);
-	msg->WaitTillProcccesed();
-	returnValue.ID = msg->newTextureID;
-
-	return returnValue;
+	std::string textureID = ScreenShotConfig::Depth(width, height, camera, prespective);
+	LuaBasicTexture texture;
+	texture.ID = textureID;
+	return texture;
 }
 
 LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
@@ -136,13 +125,10 @@ LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
 		}
 	}
 
-	std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, eye));
-
-	GraphicCommunicator::SubmitMessage(msg);
-	msg->WaitTillProcccesed();
-	returnValue.ID = msg->newTextureID;
-
-	return returnValue;
+	std::string textureID = ScreenShotConfig::Cube(width, height, eye);
+	LuaBasicTexture texture;
+	texture.ID = textureID;
+	return texture;
 }
 
 void LuaScreenShot::Register(lua_State *lua)

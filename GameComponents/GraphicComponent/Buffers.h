@@ -30,7 +30,6 @@ public:
 		float range;
 		int type;
 		int shadowNum;
-		XMMATRIX shadowMatrix;
 	};
 
 	struct cbObject
@@ -53,6 +52,11 @@ public:
 	struct cbLight
 	{
 		CLightDesc lights[numOfLights];
+	};
+
+	struct cbShadows
+	{
+		XMMATRIX shadows[numOfLights];
 	};
 };
 #endif //__Buffer__

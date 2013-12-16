@@ -1,12 +1,5 @@
 #include "Setup.fx"
 
-struct VS_INPUT
-{
-	float4 VertexPos : POSITION;
-	float4 VertexNorm : NORMAL;
-	float3 tex : TEXCOORD0;
-};
-
 // Vertex Shader
 PS_INPUT VS(VS_INPUT input)
 {
@@ -34,11 +27,12 @@ PS_INPUT VS(VS_INPUT input)
 	[unroll]
 	for (unsigned int i = 0; i < numOfLights; ++i)
 	{
-		if(lightArray[i].Type != 0 && lightArray[i].ShadowNum >= 0)
+		if(lightArray[i].Type == 0){ break; }
+		if(lightArray[i].ShadowNum >= 0)
 		{
 			output.LightShadow[i] = input.VertexPos;
 			output.LightShadow[i] = mul(output.LightShadow[i], gWorld);
-			output.LightShadow[i] = mul(output.LightShadow[i], lightArray[i].shadowMatrix);
+			output.LightShadow[i] = mul(output.LightShadow[i], shadowMatrix[i]);
 		}
 	}
 

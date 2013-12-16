@@ -5,11 +5,10 @@
 
 #include <Interface.h>
 
-class GraphicCommunicator
+namespace GraphicCommunicator
 {
-public:
-	static void SubmitMessage(std::shared_ptr<Message> msg);
-	static Interface* GetComponent();
+	void SubmitMessage(std::shared_ptr<Message> msg);
+	Interface* GetComponent();
 };
 
 #endif //__GraphicCommunicator__

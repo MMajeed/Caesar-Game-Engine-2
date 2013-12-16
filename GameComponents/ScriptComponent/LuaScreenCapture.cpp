@@ -3,7 +3,6 @@
 #include <GraphicCommunicator\DepthScreenCaptureConfig.h>
 #include <GraphicCommunicator\CubeScreenCaptureConfig.h>
 #include <GraphicCommunicator\BasicScreenCaptureConfig.h>
-#include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Keys.h>
 #include "LuaMath.h"
 #include <3DMath.h>
@@ -49,32 +48,28 @@ LuaScreenCapture::BasicScreenCapture::BasicScreenCapture(luabind::object const& 
 		prespective = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 	}
 
-	std::shared_ptr<BasicScreenCaptureConfig::AddBasicScreenCapture> msg(
-		new BasicScreenCaptureConfig::AddBasicScreenCapture(width, height, camera, prespective));
-
-	GraphicCommunicator::SubmitMessage(msg);
-
-	this->ID = msg->ID;
-	this->TextureID = msg->newTextureID;
+	BasicScreenCaptureConfig::Create(width, height, camera, prespective, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::BasicScreenCapture::SetCameraMatrix(LuaMath::Matrix4x4 mat)
 {
-	std::shared_ptr<BasicScreenCaptureConfig::ChangeCameraMatrix> msg(
-		new BasicScreenCaptureConfig::ChangeCameraMatrix(this->ID, mat));
-	GraphicCommunicator::SubmitMessage(msg);
+	BasicScreenCaptureConfig::SetCamera(this->ID, mat);
 }
 void LuaScreenCapture::BasicScreenCapture::SetPrespectiveMatrix(LuaMath::Matrix4x4 mat)
 {
-	std::shared_ptr<BasicScreenCaptureConfig::ChangePrespectiveMatrix> msg(
-		new BasicScreenCaptureConfig::ChangePrespectiveMatrix(this->ID, mat));
-	GraphicCommunicator::SubmitMessage(msg);
+	BasicScreenCaptureConfig::SetPrespective(this->ID, mat);
 }
 LuaBasicTexture LuaScreenCapture::BasicScreenCapture::GetTexture()
 {
 	LuaBasicTexture texture;
 	texture.ID = this->TextureID;
 	return texture;
+}
+void LuaScreenCapture::BasicScreenCapture::Release()
+{
+	BasicScreenCaptureConfig::Release(this->ID);	
+	this->ID = "";
+	this->TextureID = "";
 }
 
 void LuaScreenCapture::BasicScreenCapture::Register(lua_State *lua)
@@ -85,6 +80,7 @@ void LuaScreenCapture::BasicScreenCapture::Register(lua_State *lua)
 			.def("SetCamera", &LuaScreenCapture::BasicScreenCapture::SetCameraMatrix)
 			.def("SetPrespective", &LuaScreenCapture::BasicScreenCapture::SetPrespectiveMatrix)
 			.def("GetTexture", &LuaScreenCapture::BasicScreenCapture::GetTexture)
+			.def("Release", &LuaScreenCapture::BasicScreenCapture::Release)
 	];
 }
 
@@ -130,32 +126,28 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 		prespective = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
 	}
 
-	std::shared_ptr<DepthScreenCaptureConfig::AddDepthScreenCapture> msg(
-		new DepthScreenCaptureConfig::AddDepthScreenCapture(width, height, camera, prespective));
-
-	GraphicCommunicator::SubmitMessage(msg);
-
-	this->ID = msg->ID;
-	this->TextureID = msg->newTextureID;
+	DepthScreenCaptureConfig::Create(width, height, camera, prespective, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::DepthScreenCapture::SetCameraMatrix(LuaMath::Matrix4x4 mat)
 {
-	std::shared_ptr<DepthScreenCaptureConfig::ChangeCameraMatrix> msg(
-		new DepthScreenCaptureConfig::ChangeCameraMatrix(this->ID, mat));
-	GraphicCommunicator::SubmitMessage(msg);
+	DepthScreenCaptureConfig::SetCamera(this->ID, mat);
 }
 void LuaScreenCapture::DepthScreenCapture::SetPrespectiveMatrix(LuaMath::Matrix4x4 mat)
 {
-	std::shared_ptr<DepthScreenCaptureConfig::ChangePrespectiveMatrix> msg(
-		new DepthScreenCaptureConfig::ChangePrespectiveMatrix(this->ID, mat));
-	GraphicCommunicator::SubmitMessage(msg);
+	DepthScreenCaptureConfig::SetPrespective(this->ID, mat);
 }
 LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 {
 	LuaBasicTexture texture;
 	texture.ID = this->TextureID;
 	return texture;
+}
+void LuaScreenCapture::DepthScreenCapture::Release()
+{
+	DepthScreenCaptureConfig::Release(this->ID);
+	this->ID = "";
+	this->TextureID = "";
 }
 
 void LuaScreenCapture::DepthScreenCapture::Register(lua_State *lua)
@@ -166,6 +158,7 @@ void LuaScreenCapture::DepthScreenCapture::Register(lua_State *lua)
 			.def("SetCamera", &LuaScreenCapture::DepthScreenCapture::SetCameraMatrix)
 			.def("SetPrespective", &LuaScreenCapture::DepthScreenCapture::SetPrespectiveMatrix)
 			.def("GetTexture", &LuaScreenCapture::DepthScreenCapture::GetTexture)
+			.def("Release", &LuaScreenCapture::DepthScreenCapture::Release)
 	];
 }
 
@@ -190,26 +183,24 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 		}
 	}
 
-	std::shared_ptr<CubeScreenCaptureConfig::AddCubeScreenCapture> msg(
-		new CubeScreenCaptureConfig::AddCubeScreenCapture(width, height, eye));
-
-	GraphicCommunicator::SubmitMessage(msg);
-
-	this->ID = msg->ID;
-	this->TextureID = msg->newTextureID;
+	CubeScreenCaptureConfig::Create(width, height, eye, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::CubeScreenCapture::SetEye(LuaMath::Vector4 mat)
 {
-	std::shared_ptr<CubeScreenCaptureConfig::ChangeEye> msg(
-		new CubeScreenCaptureConfig::ChangeEye(this->ID, mat));
-	GraphicCommunicator::SubmitMessage(msg);
+	CubeScreenCaptureConfig::SetEye(this->ID, mat);
 }
 LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 {
 	LuaBasicTexture texture;
 	texture.ID = this->TextureID;
 	return texture;
+}
+void LuaScreenCapture::CubeScreenCapture::Release()
+{
+	CubeScreenCaptureConfig::Release(this->ID);
+	this->ID = "";
+	this->TextureID = "";
 }
 
 void LuaScreenCapture::CubeScreenCapture::Register(lua_State *lua)
@@ -219,5 +210,6 @@ void LuaScreenCapture::CubeScreenCapture::Register(lua_State *lua)
 			.def(luabind::constructor<luabind::object const&>())
 			.def("SetEye", &LuaScreenCapture::CubeScreenCapture::SetEye)
 			.def("GetTexture", &LuaScreenCapture::CubeScreenCapture::GetTexture)
+			.def("Release", &LuaScreenCapture::CubeScreenCapture::Release)
 	];
 }

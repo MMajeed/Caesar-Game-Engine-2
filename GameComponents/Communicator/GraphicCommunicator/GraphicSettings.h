@@ -6,24 +6,13 @@
 #include <Vector.h>
 #include <string>
 
-class ClearScreenMessage : public Message
+namespace GraphicSettings
 {
-public:
-	ClearScreenMessage(const CHL::Vec4& input);
-	virtual Message::Status Work();
-protected:
-	CHL::Vec4 colour;
-};
+	void ClearScreen(const CHL::Vec4& input);
+	void Resize(unsigned int widthInput, unsigned int heightInput);
+}
 
-class OnResize : public Message
-{
-public:
-	OnResize(unsigned int widthInput, unsigned int heightInput);
 
-	virtual Message::Status Work();
 
-	unsigned int width;
-	unsigned int height;
-};
 
 #endif //__GraphicSettings__

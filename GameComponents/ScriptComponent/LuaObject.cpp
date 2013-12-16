@@ -228,6 +228,11 @@ bool LuaObject::GetDepth()
 	return GenericObj<bool>::GetValue(obj);
 }
 
+void LuaObject::Release()
+{
+	EntityConfig::DeleteEntity(this->ID);
+	this->ID = "";
+}
 
 std::shared_ptr<ObjectINFO> LuaObject::GetObject()
 {
@@ -257,6 +262,7 @@ void LuaObject::Register(lua_State *lua)
 			.def("SetCubeTexture", &LuaObject::SetCubeTexture)
 			.def("RemoveCubeTexture", &LuaObject::RemoveCubeTexture)
 			.def("RemoveAllCubeTexture", &LuaObject::RemoveAllCubeTexture)
+			.def("Release", &LuaObject::Release)
 			.property("Location", &LuaObject::GetLocation, &LuaObject::SetLocation)
 			.property("Scale", &LuaObject::GetScale, &LuaObject::SetScale)
 			.property("Rotation", &LuaObject::GetRotation, &LuaObject::SetRotation)

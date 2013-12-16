@@ -147,8 +147,10 @@ void GraphicManager::ClearScreen(std::hash_map<std::string, SP_INFO>& objects)
 }
 void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 {
-	std::vector<std::shared_ptr<ObjectINFO>> vecObjects;
-	vecObjects.reserve(objects.size());
+	std::vector<std::shared_ptr<ObjectINFO>> vecSpecialObjects; // For transparency and depth
+	std::vector<std::shared_ptr<ObjectINFO>> vecRegularObjects;
+	vecSpecialObjects.reserve(objects.size());
+	vecRegularObjects.reserve(objects.size());
 
 	for(auto iterObj = objects.begin();
 		iterObj != objects.end();
@@ -167,20 +169,24 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 		}
 		if(fitsTheScene == false){ continue; }
 
-		vecObjects.push_back(objInfo);
+		if(objInfo->Diffuse[3] < 1.0f || objInfo->Depth == false)
+		{
+			vecSpecialObjects.push_back(objInfo);
+		}
+		else
+		{
+			vecRegularObjects.push_back(objInfo);
+		}
 	}
 
 	CHL::Vec4 eye = this->SceneInfo.Eye;
-	std::sort(vecObjects.begin(), vecObjects.end(),
+	std::sort(vecSpecialObjects.begin(), vecSpecialObjects.end(),
 			  [eye](const std::shared_ptr<ObjectINFO>& a, const std::shared_ptr<ObjectINFO>& b) -> bool
 			  {
 				float rankA = 0.0f; float rankB = 0.0f;
 
-				if(a->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
-				else if(a->Diffuse[3] < 1.0) { rankA += CHL::Length(eye, a->Location); }
-		
-				if(b->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
-				else if(b->Diffuse[3] < 1.0) { rankB += CHL::Length(eye, b->Location); }
+				rankA += CHL::Length(eye, a->Location);
+				rankB += CHL::Length(eye, b->Location);
 
 				if(a->Depth == false) { rankA -= 1000000.0f; }
 				if(b->Depth == false) { rankB -= 1000000.0f; }
@@ -188,8 +194,19 @@ void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
 				return rankA > rankB;
 			 });
 
-	for(auto iterObj = vecObjects.begin();
-		iterObj != vecObjects.end();
+	for(auto iterObj = vecRegularObjects.begin();
+		iterObj != vecRegularObjects.end();
+		++iterObj)
+	{
+
+		auto drawableIter = this->objectDrawables.find((*iterObj)->DrawObjID);
+		if(drawableIter == this->objectDrawables.end()){ continue; }// If it didn't fine then continue
+
+		drawableIter->second->Draw(*iterObj);
+
+	}
+	for(auto iterObj = vecSpecialObjects.begin();
+		iterObj != vecSpecialObjects.end();
 		++iterObj)
 	{
 
@@ -429,6 +446,10 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &( this->D3DStuff.pCBLight ));
 	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &( this->D3DStuff.pCBLight ));
 
+	DX11Helper::LoadBuffer<cBuffer::cbShadows>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBShadow));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
+
 	Light::GetInstance().Init();
 
 	this->D3DStuff.IsInitialized = true;
@@ -444,6 +465,7 @@ void GraphicManager::RemoveObjectDrawable(std::string ID)
 	auto iter = this->objectDrawables.find(ID);
 	if(iter != this->objectDrawables.end())
 	{
+		iter->second->Destory();
 		this->objectDrawables.erase(iter);
 	}
 }
@@ -461,6 +483,7 @@ void GraphicManager::RemoveTexture(std::string ID)
 	auto iter = this->textures.find(ID);
 	if(iter != this->textures.end())
 	{
+		iter->second->Destory();
 		this->textures.erase(iter);
 	}
 }
@@ -478,6 +501,7 @@ void GraphicManager::RemoveScreenCapture(std::string ID)
 	auto iter = this->ScreenCaptures.find(ID);
 	if(iter != this->ScreenCaptures.end())
 	{
+		iter->second->Destory();
 		this->ScreenCaptures.erase(iter);
 	}
 }

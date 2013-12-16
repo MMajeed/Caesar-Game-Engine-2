@@ -10,7 +10,7 @@ class LuaBasicTexture
 public:
 	LuaBasicTexture(){};
 	LuaBasicTexture(std::string textureFile);
-
+	void Release();
 	std::string ID;
 
 	static void Register(lua_State *lua);

@@ -17,6 +17,12 @@ void BasicScreenCapture::Destory()
 {
 	this->ScreenShot[0]->Release();
 	this->ScreenShot[1]->Release();
+	auto& allTexture = GraphicManager::GetInstance().AllTexture();
+	auto textureIter = allTexture.find(this->TextureID);
+	if(textureIter != allTexture.end())
+	{
+		textureIter->second->Destory();
+	}
 }
 void BasicScreenCapture::Update(double realTime, double deltaTime)
 {
@@ -31,7 +37,7 @@ void BasicScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	this->ScreenShot[this->current]->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
 	this->ScreenShot[this->current]->Snap(objects);
 
-	auto allTexture = GraphicManager::GetInstance().AllTexture();
+	auto& allTexture = GraphicManager::GetInstance().AllTexture();
 	auto textureIter = allTexture.find(this->TextureID);
 	if(textureIter != allTexture.end())
 	{

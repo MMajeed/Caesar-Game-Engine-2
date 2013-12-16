@@ -145,14 +145,12 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		break;
 	case WM_KEYDOWN:
 	{
-		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, true));
-		InputCommunicator::SubmitMessage(keyMessage);
+		UpdateKey((unsigned int)wParam, true);
 		break;
 	}
 	case WM_KEYUP:
 	{
-		std::shared_ptr<UpdateKey> keyMessage(new UpdateKey( (unsigned int)wParam, false));
-		InputCommunicator::SubmitMessage(keyMessage);
+		UpdateKey((unsigned int)wParam, false);
 		break;
 	}
 	case WM_SIZE:
@@ -168,10 +166,7 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 
 		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::HEIGHT, GenericObj<int>::CreateNew(height));
 		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::WIDTH, GenericObj<int>::CreateNew(width));
-
-		std::shared_ptr<OnResize> resize(new OnResize(width, height));
-		GraphicCommunicator::SubmitMessage(resize);
-
+		GraphicSettings::Resize(width, height);
 		break;
 	}
 	case WM_TIMER:

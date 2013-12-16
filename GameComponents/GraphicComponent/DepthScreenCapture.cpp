@@ -14,6 +14,12 @@ void DepthScreenCapture::Init()
 void DepthScreenCapture::Destory()
 {
 	this->ScreenShot->Release();
+	auto& allTexture = GraphicManager::GetInstance().AllTexture();
+	auto textureIter = allTexture.find(this->TextureID);
+	if(textureIter != allTexture.end())
+	{
+		textureIter->second->Destory();
+	}
 }
 void DepthScreenCapture::Update(double realTime, double deltaTime)
 {

@@ -10,6 +10,7 @@ class LuaBasicDrawableObject
 public:
 	LuaBasicDrawableObject(luabind::object const& table);
 	void ChangeRastersizerState(int cullMode, int fillMode);
+	void Release();
 	std::string ID;
 
 	static void Register(lua_State *lua);

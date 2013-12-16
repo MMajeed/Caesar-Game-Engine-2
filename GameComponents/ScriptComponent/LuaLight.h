@@ -24,6 +24,8 @@ public:
 		LuaMath::Vector4 GetSpecular();
 		void SetSpecular(LuaMath::Vector4 vec);
 
+		void Release();
+
 		std::string ID;
 	};
 

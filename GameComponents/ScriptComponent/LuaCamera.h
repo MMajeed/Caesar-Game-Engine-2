@@ -32,6 +32,8 @@ public:
 	void SetYaw(double yaw);
 	double GetYaw();
 
+	void Release();
+
 	std::string ID;
 
 	static void Register(lua_State *lua);

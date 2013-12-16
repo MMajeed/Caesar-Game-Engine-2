@@ -54,6 +54,8 @@ public:
 	void SetDepth(bool vec);
 	bool GetDepth();
 
+	void Release();
+
 	std::shared_ptr<ObjectINFO> GetObject();
 
 	static void Register(lua_State *lua);

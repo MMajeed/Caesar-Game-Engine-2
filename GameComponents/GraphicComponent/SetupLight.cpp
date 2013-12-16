@@ -8,8 +8,10 @@
 #include "GraphicManager.h"
 #include <GenerateGUID.h>
 #include <3DMath.h>
+#include <XNAConverter.h>
 
 cBuffer::cbLight LastLightInput;
+cBuffer::cbShadows LastShadowInput;
 
 Light::Light()
 {
@@ -134,7 +136,9 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 	}
 
 	cBuffer::cbLight lightBuffer;
-	ZeroMemory(&lightBuffer, sizeof( cBuffer::cbLight )); 
+	cBuffer::cbShadows shadows;
+	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
+	ZeroMemory(&shadows, sizeof(cBuffer::cbShadows));
 	unsigned int shadowCounter = 0;
 	unsigned int counter = 0;
 	for(auto iterLight = vecLights.begin();
@@ -153,6 +157,8 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 				this->vecDepthShadow[shadowCounter]->Snap(objects);
 
 				lightBuffer.lights[counter].shadowNum = shadowCounter;
+
+				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(DirectLight::CalculateShadowMatrix(light)));
 				++shadowCounter;
 			}
 		}
@@ -172,14 +178,15 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 				this->vecDepthShadow[shadowCounter]->Snap(objects);
 
 				lightBuffer.lights[counter].shadowNum = shadowCounter;
+				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(SpotLight::CalculateShadowMatrix(light)));
 
 				++shadowCounter;
 			}
 		}
 	}
 	
-	int difference = memcmp(&lightBuffer, &LastLightInput, sizeof(cBuffer::cbLight));
-	if(difference != 0)
+	int lightDifference = memcmp(&lightBuffer, &LastLightInput, sizeof(cBuffer::cbLight));
+	if(lightDifference != 0)
 	{
 		ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
 
@@ -187,7 +194,16 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 
 		LastLightInput = lightBuffer;
 	}
-	
+	int ShadowDifference = memcmp(&shadows, &LastShadowInput, sizeof(cBuffer::cbShadows));
+	if(ShadowDifference != 0)
+	{
+		ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
+
+		graphicManager.D3DStuff.pImmediateContext->UpdateSubresource(graphicManager.D3DStuff.pCBShadow, 0, NULL, &shadows, 0, 0);
+
+		LastShadowInput = shadows;
+	}
+
 	graphicManager.D3DStuff.pImmediateContext->PSSetShaderResources(100, 1, &(this->shaderShadowTexture));
 
 	graphicManager.RemoveSceneFilter(this->shadowFilter->ID);

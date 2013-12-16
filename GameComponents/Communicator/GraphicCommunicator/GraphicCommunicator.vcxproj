@@ -87,22 +87,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="BasicDrawableConfig.h" />
-    <ClInclude Include="AddBasicTexture.h" />
+    <ClInclude Include="BasicTextureConfig.h" />
     <ClInclude Include="BasicScreenCaptureConfig.h" />
     <ClInclude Include="CubeScreenCaptureConfig.h" />
     <ClInclude Include="DepthScreenCaptureConfig.h" />
-    <ClInclude Include="TakeScreenShot.h" />
+    <ClInclude Include="ScreenShotConfig.h" />
     <ClInclude Include="GraphicSettings.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="GraphicCommunicator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BasicDrawableConfig.cpp" />
-    <ClCompile Include="AddBasicTexture.cpp" />
+    <ClCompile Include="BasicTextureConfig.cpp" />
     <ClCompile Include="BasicScreenCaptureConfig.cpp" />
     <ClCompile Include="CubeScreenCaptureConfig.cpp" />
     <ClCompile Include="DepthScreenCaptureConfig.cpp" />
-    <ClCompile Include="TakeScreenShot.cpp" />
+    <ClCompile Include="ScreenShotConfig.cpp" />
     <ClCompile Include="GraphicSettings.cpp" />
     <ClCompile Include="GraphicCommunicator.cpp" />
   </ItemGroup>

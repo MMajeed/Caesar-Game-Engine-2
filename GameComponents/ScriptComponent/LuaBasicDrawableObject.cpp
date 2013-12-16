@@ -4,7 +4,6 @@
 #include <Converter.h>
 #include "LuaManager.h"
 #include <GraphicCommunicator\BasicDrawableConfig.h>
-#include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Model.h>
 #include <Keys.h>
 #include "LuaModel.h"
@@ -37,27 +36,23 @@ LuaBasicDrawableObject::LuaBasicDrawableObject(luabind::object const& table)
 	if(vertexFileName.empty()) throw std::invalid_argument(Keys::BasicDrawable::VERTEXSHADERFILE + " value was missing for BasicDrawableObject");
 	if(pixelFileName.empty()) throw std::invalid_argument(Keys::BasicDrawable::PIXELSHADERFILE + " value was missing for BasicDrawableObject");
 
-
-	std::shared_ptr<BasicDrawableConfig::AddBasicDrawableMessage> msg(
-		new BasicDrawableConfig::AddBasicDrawableMessage
-				(model, vertexFileName, pixelFileName,
-				static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
-				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode)));
-
-	GraphicCommunicator::SubmitMessage(msg);
-
-	this->ID = msg->ID;
+	this->ID =  BasicDrawableConfig::Create(model, 
+											vertexFileName, pixelFileName,
+											static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
+											static_cast<BasicDrawableConfig::FILL_MODE>(fillMode));
 }
 
 void LuaBasicDrawableObject::ChangeRastersizerState(int cullMode, int fillMode)
 {	
-	std::shared_ptr<BasicDrawableConfig::ChangeRastersizerState> msg(
-		new BasicDrawableConfig::ChangeRastersizerState(
-				this->ID,
-				static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
-				static_cast<BasicDrawableConfig::FILL_MODE>(fillMode)));
+	BasicDrawableConfig::ChangeRastersizerState(this->ID,
+												static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
+												static_cast<BasicDrawableConfig::FILL_MODE>(fillMode));
+}
 
-	GraphicCommunicator::SubmitMessage(msg);
+void LuaBasicDrawableObject::Release()
+{
+	BasicDrawableConfig::Release(this->ID);
+	this->ID = "";
 }
 
 void LuaBasicDrawableObject::Register(lua_State *lua)
@@ -67,6 +62,7 @@ void LuaBasicDrawableObject::Register(lua_State *lua)
 		  .def(luabind::constructor<luabind::object const&>())
 		  .def_readonly("ID", &LuaBasicDrawableObject::ID)
 		  .def("ChangeRastersizerState", &LuaBasicDrawableObject::ChangeRastersizerState)
+		  .def("Release", &LuaBasicDrawableObject::Release)
 	  ];
 
 	luabind::object cullMode = luabind::newtable(lua);	

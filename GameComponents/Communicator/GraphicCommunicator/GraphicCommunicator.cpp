@@ -2,12 +2,14 @@
 
 #include <GraphicManager.h>
 
-void GraphicCommunicator::SubmitMessage(std::shared_ptr<Message> msg)
+namespace GraphicCommunicator
 {
-	GraphicCommunicator::GetComponent()->SubmitMessage(msg);
-}
-
-Interface* GraphicCommunicator::GetComponent()
-{
-	return &GraphicManager::GetInstance();
-}
+	void SubmitMessage(std::shared_ptr<Message> msg)
+	{
+		GraphicCommunicator::GetComponent()->SubmitMessage(msg);
+	}
+	Interface* GetComponent()
+	{
+		return &GraphicManager::GetInstance();
+	}
+};

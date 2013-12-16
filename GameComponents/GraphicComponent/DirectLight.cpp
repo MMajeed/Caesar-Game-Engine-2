@@ -13,26 +13,29 @@ cBuffer::CLightDesc DirectLight::GetLightDesc(std::shared_ptr<DirectionalLightIN
 	light.type = 1;
 	light.shadowNum = -1;
 
-	if(lightInfo->HasShadow == true)
-	{
-		XMFLOAT4X4 view = CHL::Convert4x4(DirectLight::CalculateViewMatrix(lightInfo));
-		XMFLOAT4X4 pres = CHL::Convert4x4(DirectLight::CalculatePrespectiveMatrix(lightInfo));
-		XMMATRIX T(
-			0.5f, 0.0f, 0.0f, 0.0f,
-			0.0f, -0.5f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f,
-			0.5f, 0.5f, 0.0f, 1.0f);
-
-		XMMATRIX V = XMLoadFloat4x4(&view);
-		XMMATRIX P = XMLoadFloat4x4(&pres);
-
-		XMMATRIX VPT = V * P * T;
-		VPT = XMMatrixTranspose(VPT);
-		light.shadowMatrix = VPT;
-	}
+	
 	return light;
 }
+CHL::Matrix4x4 DirectLight::CalculateShadowMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo)
+{
+	XMFLOAT4X4 view = CHL::Convert4x4(DirectLight::CalculateViewMatrix(lightInfo));
+	XMFLOAT4X4 pres = CHL::Convert4x4(DirectLight::CalculatePrespectiveMatrix(lightInfo));
+	XMMATRIX T(
+		0.5f, 0.0f, 0.0f, 0.0f,
+		0.0f, -0.5f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.5f, 0.5f, 0.0f, 1.0f);
 
+	XMMATRIX V = XMLoadFloat4x4(&view);
+	XMMATRIX P = XMLoadFloat4x4(&pres);
+
+	XMMATRIX VPT = V * P * T;
+	VPT = XMMatrixTranspose(VPT);
+		
+	XMFLOAT4X4 shadowMatrix;
+	XMStoreFloat4x4(&shadowMatrix, VPT);
+	return CHL::Convert4x4(shadowMatrix);
+}
 CHL::Matrix4x4 DirectLight::CalculateViewMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo)
 {
 	double pitch; double yaw; double roll;

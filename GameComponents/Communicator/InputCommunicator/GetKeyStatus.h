@@ -3,18 +3,11 @@
 
 #include "Linker.h"
 
-class GetKeyStatus
+namespace GetKeyStatus
 {
-public:
-	struct Key
-	{
-		enum class KeyState{ KeyUp = 0, KeyDown = 1 };
-		KeyState state;
-		double duration;
-		unsigned int key;
-	};
+	enum class KeyState{ KeyUp = 0, KeyDown = 1 };
 
-	static GetKeyStatus::Key GetKey(unsigned int keyID);
-};
+	GetKeyStatus::KeyState GetKey(unsigned int keyID);
+}
 
 #endif //__GetKeyStatus__

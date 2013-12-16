@@ -12,9 +12,6 @@ public:
 
 	void UpdateStatus(Status status);
 
-	void Update(double realTime);
-
-	double duration;
 	Status CurrentStatus;
 };
 

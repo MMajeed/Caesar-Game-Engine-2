@@ -55,6 +55,7 @@ public:
 		ID3D11Buffer*				pCBObject;
 		ID3D11Buffer*				pCBInfo;
 		ID3D11Buffer*				pCBLight;
+		ID3D11Buffer*				pCBShadow;
 		ID3D11BlendState*			pTransperency;
 		bool						IsInitialized;
 	} D3DStuff;

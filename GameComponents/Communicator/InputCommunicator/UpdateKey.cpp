@@ -1,19 +1,32 @@
 #include "UpdateKey.h"
 #include <InputManager.h>
 
-UpdateKey::UpdateKey(unsigned int inputKey, bool keyStatus)
+void UpdateKey(unsigned int inputKey, bool keyStatus)
 {
-	this->currentStatus = keyStatus;
-	this->key = inputKey;
-}
+	class UpdateKeyMessage : public Message
+	{
+	public:
+		// false is up, true is down
+		UpdateKeyMessage(unsigned int inputKey, bool keyStatus)
+		{
+			this->currentStatus = keyStatus;
+			this->key = inputKey;
+		}
 
-Message::Status UpdateKey::Work() 
-{
-	std::lock_guard<std::mutex> lock(InputManager::GetInstance().mutex);
+		virtual Status Work()
+		{
+			std::lock_guard<std::mutex> lock(InputManager::GetInstance().mutex);
 
-	KeyStatus::Status status = this->currentStatus ? KeyStatus::Status::KeyDown : KeyStatus::Status::KeyUp;
+			KeyStatus::Status status = this->currentStatus ? KeyStatus::Status::KeyDown : KeyStatus::Status::KeyUp;
 
-	InputManager::GetInstance().UpdateKeyStatus(this->key, status);
+			InputManager::GetInstance().UpdateKeyStatus(this->key, status);
 
-	return Message::Status::Complete;
+			return Message::Status::Complete;
+		}
+
+		unsigned int key;
+		bool currentStatus;
+	};
+	std::shared_ptr<UpdateKeyMessage> msg(new UpdateKeyMessage(inputKey, keyStatus));
+	InputManager::GetInstance().SubmitMessage(msg);
 }
