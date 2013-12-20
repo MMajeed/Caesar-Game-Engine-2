@@ -1,3 +1,4 @@
+require("Text")
 require("camera")
 require("SkyBox")
 require("LightSetup")
@@ -27,7 +28,7 @@ for zIndex = 0, 2, 1 do
         local y = 2;
         local z = -20 + (zIndex * 20);
         local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
-                                     [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 0.5),
+                                     [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.5),
                                      [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
                                      [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
                                      [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});

@@ -61,18 +61,20 @@ void Window::Init()
 		throw std::runtime_error("Failed at creating window");
 	}
 
-    ShowWindow( this->window.hWnd, 10 );
-
-	this->vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
-	this->vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
-	this->vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
-
 	std::shared_ptr<WindowINFO> obj(new WindowINFO());
 	obj->Height = this->window.height;
 	obj->Width = this->window.width;
 	obj->HWND = this->window.hWnd;
 	EntityConfig::SetEntity(obj);
 	WindowINFOID::Set(obj->ID);
+
+	ShowWindow(this->window.hWnd, SW_SHOWNORMAL);
+
+	this->vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
+	this->vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
+	this->vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
+
+	
 
 	for(auto iter = this->vInterfaces.begin();
 		iter != this->vInterfaces.end();
@@ -158,7 +160,7 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		int width = 0;
 		int height = 0;
 		RECT rect;
-		if (GetWindowRect(Window::GetInstance().window.hWnd, &rect))
+		if(GetWindowRect(hWnd, &rect))
 		{
 			width = rect.right - rect.left;
 			height = rect.bottom - rect.top;

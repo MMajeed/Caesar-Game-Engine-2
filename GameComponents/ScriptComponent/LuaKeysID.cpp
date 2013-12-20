@@ -67,6 +67,7 @@ void LuaKeysID::Register(lua_State *lua)
 		BasicDrawableTable[Keys::BasicDrawable::PIXELSHADERFILE]   = Keys::BasicDrawable::PIXELSHADERFILE;
 		BasicDrawableTable[Keys::BasicDrawable::CULLMODE]          = Keys::BasicDrawable::CULLMODE;
 		BasicDrawableTable[Keys::BasicDrawable::FILLMODE]          = Keys::BasicDrawable::FILLMODE;
+		BasicDrawableTable[Keys::BasicDrawable::DIMENSION]		   = Keys::BasicDrawable::DIMENSION;
 	luaKeyTable["BasicDrawable"] = BasicDrawableTable;
 
 	luabind::object BasicTextureTable = luabind::newtable(lua);

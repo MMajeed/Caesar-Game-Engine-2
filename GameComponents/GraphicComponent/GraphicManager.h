@@ -90,6 +90,7 @@ public:
 		CHL::Vec4 Eye;
 		CHL::Matrix4x4 CamerMatrix;
 		CHL::Matrix4x4 PrespectiveMatrix;
+		CHL::Matrix4x4 OrthographicMatrix;
 	} SceneInfo;
 
 

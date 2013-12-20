@@ -38,18 +38,15 @@ namespace CHL
 		template <typename T, int S> 
 		Vector<Type, ArraySize> operator=(const Vector<T, S>& rhs)
 		{
-			Vector<Type, ArraySize> returnValue;
-
 			for(std::size_t i = 0; i < S && i < ArraySize; ++i)
 			{
-				returnValue[i] = rhs[i];
+				this->arr[i] = rhs[i];
 			}
 			for(std::size_t i = S; i < ArraySize; ++i)
 			{
-				returnValue[i] = 0;
+				this->arr[i] = 0;
 			}
-
-			return returnValue;
+			return *this;
 		}
 
 		inline int Size(){ return ArraySize; }

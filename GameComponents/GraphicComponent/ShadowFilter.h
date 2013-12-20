@@ -11,7 +11,7 @@ class ShadowFilter : public SceneFilter
 public:
 	ShadowFilter(const std::string& inputID);
 
-	virtual bool Filter(SP_INFO);
+	virtual bool Filter(const SP_INFO& );
 
 	static std::shared_ptr<ShadowFilter> Spawn(const std::string& inputID);
 };

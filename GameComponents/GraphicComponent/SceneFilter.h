@@ -11,7 +11,7 @@ class SceneFilter
 public:
 	SceneFilter(const std::string& inputID) : ID(inputID){};
 
-	virtual bool Filter(SP_INFO) = 0;
+	virtual bool Filter(const SP_INFO&) = 0;
 	
 	std::string ID;
 };

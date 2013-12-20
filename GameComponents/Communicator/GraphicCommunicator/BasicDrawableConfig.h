@@ -18,7 +18,13 @@ namespace BasicDrawableConfig
 					   std::string	pixelFileName,
 					   BasicDrawableConfig::CULL_MODE cullMode,
 					   BasicDrawableConfig::FILL_MODE fillMode);
+	std::string Create2D(std::shared_ptr<CHL::Model> model,
+						 std::string	vertexFileName,
+						 std::string	pixelFileName,
+						 BasicDrawableConfig::CULL_MODE cullMode,
+						 BasicDrawableConfig::FILL_MODE fillMode);
 	
+	void ChangeModel(std::string ID, std::shared_ptr<CHL::Model> model);
 	void ChangeRastersizerState(std::string ID,
 								BasicDrawableConfig::CULL_MODE cullMode,
 								BasicDrawableConfig::FILL_MODE fillMode);

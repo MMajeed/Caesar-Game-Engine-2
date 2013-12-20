@@ -53,6 +53,7 @@ public:
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitShadowRastersizerState(ID3D11Device* device);
 
+	virtual bool CheckIfValid(const std::shared_ptr<ObjectINFO>& object);
 	virtual void SetupDepth(const std::shared_ptr<ObjectINFO>& object);
 	virtual void SetupTexture(const std::shared_ptr<ObjectINFO>& object);
 	virtual void SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object);
@@ -63,7 +64,11 @@ public:
 	virtual void DrawObject(const std::shared_ptr<ObjectINFO>& object);
 	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object);
 
+	virtual void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4);
+
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
+	virtual void ChangeModel(const std::vector<Vertex>&	vectorVertices,
+							 const std::vector<WORD>&	vectorIndices);
 };
 
 

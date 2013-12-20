@@ -3,96 +3,109 @@
 #include <Windows.h>
 #include <xnamath.h>
 
-CHL::Matrix4x4 CHL::PerspectiveFovLHCalculation( double FovAngleY, double AspectRatio, double NearZ,  double FarZ)
+namespace CHL
 {
-	XMMATRIX xmPrespective = XMMatrixPerspectiveFovLH( (float)FovAngleY, (float)AspectRatio, (float)NearZ, (float)FarZ);
-	XMFLOAT4X4 xmMatrixPrespective;
-	XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
+	Matrix4x4 OrthographicLHCalculation(double width, double height, double NearZ, double FarZ)
+	{
+		XMMATRIX xmPrespective = XMMatrixOrthographicLH((float)width, (float)height, (float)NearZ, (float)FarZ);
+		XMFLOAT4X4 xmMatrixPrespective;
+		XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
 
-	CHL::Matrix4x4 mMatrixPrespective = CHL::Convert4x4(xmMatrixPrespective);
+		Matrix4x4 mMatrixPrespective = Convert4x4(xmMatrixPrespective);
 
-	return mMatrixPrespective;
-}
+		return mMatrixPrespective;
+	}
+	Matrix4x4 PerspectiveFovLHCalculation(double FovAngleY, double AspectRatio, double NearZ, double FarZ)
+	{
+		XMMATRIX xmPrespective = XMMatrixPerspectiveFovLH((float)FovAngleY, (float)AspectRatio, (float)NearZ, (float)FarZ);
+		XMFLOAT4X4 xmMatrixPrespective;
+		XMStoreFloat4x4(&xmMatrixPrespective, xmPrespective);
 
-CHL::Matrix4x4 CHL::ViewCalculation(const CHL::Vec4& vEye, const CHL::Vec4& vTM, const CHL::Vec4& vUp, double pitch, double yaw, double roll )
-{
-	XMVECTOR xmEye = XMVectorSet( (float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3) );
-	XMVECTOR xmTM = XMVectorSet(  (float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3) );
-	XMVECTOR xmUp = XMVectorSet(  (float)vUp(0), (float)vUp(1), (float)vUp(2), (float)vUp(3) );
+		Matrix4x4 mMatrixPrespective = Convert4x4(xmMatrixPrespective);
 
-	XMMATRIX RotationMatrix = XMMatrixRotationRollPitchYaw((float)pitch, (float)yaw, (float)roll);
+		return mMatrixPrespective;
+	}
 
-	xmTM = XMVector3TransformCoord( xmTM, RotationMatrix );
-    xmUp = XMVector3TransformCoord( xmUp, RotationMatrix );
-	
-	xmTM += xmEye;
-	
-	XMFLOAT4X4  xmView;
-	XMStoreFloat4x4(&xmView, XMMatrixLookAtLH( xmEye, xmTM, xmUp ));
-	
-	CHL::Matrix4x4 mView = CHL::Convert4x4(xmView);
+	Matrix4x4 ViewCalculation(const Vec4& vEye, const Vec4& vTM, const Vec4& vUp, double pitch, double yaw, double roll)
+	{
+		XMVECTOR xmEye = XMVectorSet((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
+		XMVECTOR xmTM = XMVectorSet((float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3));
+		XMVECTOR xmUp = XMVectorSet((float)vUp(0), (float)vUp(1), (float)vUp(2), (float)vUp(3));
 
-	return mView;
-}
+		XMMATRIX RotationMatrix = XMMatrixRotationRollPitchYaw((float)pitch, (float)yaw, (float)roll);
 
-CHL::Matrix4x4 CHL::ObjectCalculation( const CHL::Vec4& mLocation, const CHL::Vec4& mRotation, const CHL::Vec4& mScale)
-{
-	XMMATRIX xmTranslate = XMMatrixIdentity();
-	XMMATRIX xmRotateX = XMMatrixIdentity();	XMMATRIX xmRotateY = XMMatrixIdentity();	XMMATRIX xmRotateZ = XMMatrixIdentity();
-	XMMATRIX xmScaling = XMMatrixIdentity();
-	XMMATRIX xmObjectFinal = XMMatrixIdentity();
+		xmTM = XMVector3TransformCoord(xmTM, RotationMatrix);
+		xmUp = XMVector3TransformCoord(xmUp, RotationMatrix);
 
-	xmTranslate = XMMatrixTranslation( (float)mLocation(0), (float)mLocation(1), (float)mLocation(2));
+		xmTM += xmEye;
 
-	xmRotateX = XMMatrixRotationX((float)mRotation(0));
-	xmRotateY = XMMatrixRotationY((float)mRotation(1));
-	xmRotateZ = XMMatrixRotationZ((float)mRotation(2));
+		XMFLOAT4X4  xmView;
+		XMStoreFloat4x4(&xmView, XMMatrixLookAtLH(xmEye, xmTM, xmUp));
 
-	xmScaling = XMMatrixScaling((float)mScale(0), (float)mScale(1), (float)mScale(2));
+		Matrix4x4 mView = Convert4x4(xmView);
 
-	
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmScaling);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateX);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
+		return mView;
+	}
 
-	XMFLOAT4X4 xmFinal4x4;
-	XMStoreFloat4x4(&xmFinal4x4, xmObjectFinal);
+	Matrix4x4 ObjectCalculation(const Vec4& mLocation, const Vec4& mRotation, const Vec4& mScale)
+	{
+		XMMATRIX xmTranslate = XMMatrixIdentity();
+		XMMATRIX xmRotateX = XMMatrixIdentity();	XMMATRIX xmRotateY = XMMatrixIdentity();	XMMATRIX xmRotateZ = XMMatrixIdentity();
+		XMMATRIX xmScaling = XMMatrixIdentity();
+		XMMATRIX xmObjectFinal = XMMatrixIdentity();
 
-	CHL::Matrix4x4 mObjectFinal = CHL::Convert4x4(xmFinal4x4);
+		xmTranslate = XMMatrixTranslation((float)mLocation(0), (float)mLocation(1), (float)mLocation(2));
 
-	return mObjectFinal;
-}
+		xmRotateX = XMMatrixRotationX((float)mRotation(0));
+		xmRotateY = XMMatrixRotationY((float)mRotation(1));
+		xmRotateZ = XMMatrixRotationZ((float)mRotation(2));
 
-CHL::Vec4 CHL::MoveForward(const CHL::Vec4& vEye, const CHL::Vec4& vTM, double pitch, double yaw, double roll, double distance)
-{
-	XMVECTOR Eye = XMVectorSet( (float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3) );
-	XMVECTOR At = XMVectorSet(  (float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3) );
-	
-	At = XMVector4Normalize(At);
+		xmScaling = XMMatrixScaling((float)mScale(0), (float)mScale(1), (float)mScale(2));
 
-	XMMATRIX RotationMatrix( XMMatrixRotationRollPitchYaw( (float)pitch, (float)yaw, (float)roll ));
 
-	At = XMVector3TransformCoord( At, RotationMatrix );
-	At = XMVector4Normalize(At);
-	Eye += At * (float)distance;
+		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmScaling);
+		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateX);
+		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
+		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
+		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
 
-	XMFLOAT4 tempEye;
-	XMStoreFloat4(&tempEye, Eye);
+		XMFLOAT4X4 xmFinal4x4;
+		XMStoreFloat4x4(&xmFinal4x4, xmObjectFinal);
 
-	return CHL::ConvertVec4(tempEye);
-}
+		Matrix4x4 mObjectFinal = Convert4x4(xmFinal4x4);
 
-float CHL::Length(const CHL::Vec4& a, const CHL::Vec4& b)
-{
-	XMVECTOR vector1 = XMVectorSet((float)a(0), (float)a(1), (float)a(2), (float)a(3));
-	XMVECTOR vector2 = XMVectorSet((float)b(0), (float)b(1), (float)b(2), (float)b(3));
-	XMVECTOR vectorSub = XMVectorSubtract(vector1, vector2);
-	XMVECTOR length = XMVector4Length(vectorSub);
+		return mObjectFinal;
+	}
 
-	float distance = 0.0f;
-	XMStoreFloat(&distance, length);
-	return distance;
+	Vec4 MoveForward(const Vec4& vEye, const Vec4& vTM, double pitch, double yaw, double roll, double distance)
+	{
+		XMVECTOR Eye = XMVectorSet((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
+		XMVECTOR At = XMVectorSet((float)vTM(0), (float)vTM(1), (float)vTM(2), (float)vTM(3));
 
+		At = XMVector4Normalize(At);
+
+		XMMATRIX RotationMatrix(XMMatrixRotationRollPitchYaw((float)pitch, (float)yaw, (float)roll));
+
+		At = XMVector3TransformCoord(At, RotationMatrix);
+		At = XMVector4Normalize(At);
+		Eye += At * (float)distance;
+
+		XMFLOAT4 tempEye;
+		XMStoreFloat4(&tempEye, Eye);
+
+		return ConvertVec4(tempEye);
+	}
+
+	float Length(const Vec4& a, const Vec4& b)
+	{
+		XMVECTOR vector1 = XMVectorSet((float)a(0), (float)a(1), (float)a(2), (float)a(3));
+		XMVECTOR vector2 = XMVectorSet((float)b(0), (float)b(1), (float)b(2), (float)b(3));
+		XMVECTOR vectorSub = XMVectorSubtract(vector1, vector2);
+		XMVECTOR length = XMVector4Length(vectorSub);
+
+		float distance = 0.0f;
+		XMStoreFloat(&distance, length);
+		return distance;
+
+	}
 }

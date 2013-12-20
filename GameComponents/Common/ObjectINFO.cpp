@@ -49,7 +49,6 @@ void ObjectINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::ObjectInfo::LIGHT){ this->Light = GenericObj<bool>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::SHADOW){ this->Shadow = GenericObj<bool>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::DEPTH){ this->Depth = GenericObj<bool>::GetValue(obj); }
-	
 }
 
 std::shared_ptr<INFO> ObjectINFO::Clone()

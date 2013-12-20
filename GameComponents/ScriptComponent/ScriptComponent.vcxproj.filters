@@ -146,9 +146,6 @@
     <Filter Include="Lua Class/Function\LuaKeyActionSetup">
       <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaBasicTexture">
-      <UniqueIdentifier>{a2836dbb-cde0-4509-9d1e-dc50252e967e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Class/Function\LuaLight">
       <UniqueIdentifier>{99aafd94-0f2e-47fe-a6c5-083161a4eb45}</UniqueIdentifier>
     </Filter>
@@ -163,6 +160,9 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaScreenCapture">
       <UniqueIdentifier>{a919e6c6-e946-43f4-a988-e9aba7bd9fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaBasicTexture">
+      <UniqueIdentifier>{a2836dbb-cde0-4509-9d1e-dc50252e967e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

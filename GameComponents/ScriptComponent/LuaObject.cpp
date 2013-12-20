@@ -58,7 +58,7 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if(key == Keys::ObjectInfo::AMBIENT)		{ amibent = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if(key == Keys::ObjectInfo::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if(key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject>(*it).ID; }
+		else if(key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject::BasicDrawableObject>(*it).ID; }
 		else if(key == Keys::ObjectInfo::TEXTURE2DOBJ)	{ textures2D.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
 		else if(key == Keys::ObjectInfo::TEXTURECUBEOBJ){ texturesCube.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
 		else if(key == Keys::ObjectInfo::LIGHT)			{ light = luabind::object_cast<bool>(*it); }
@@ -83,7 +83,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	this->ID = obj->ID;
 }
 
-void LuaObject::SetGraphic(LuaBasicDrawableObject graphic)
+void LuaObject::SetGraphic(LuaBasicDrawableObject::BasicDrawableObject graphic)
 {
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DRAWABLEOBJ, GenericObj<std::string>::CreateNew(graphic.ID));
 }
@@ -228,6 +228,7 @@ bool LuaObject::GetDepth()
 	return GenericObj<bool>::GetValue(obj);
 }
 
+
 void LuaObject::Release()
 {
 	EntityConfig::DeleteEntity(this->ID);
@@ -273,4 +274,5 @@ void LuaObject::Register(lua_State *lua)
 			.property("Shadow", &LuaObject::GetShadow, &LuaObject::SetShadow)
 			.property("Depth", &LuaObject::GetDepth, &LuaObject::SetDepth)
 	  ];
+
 }

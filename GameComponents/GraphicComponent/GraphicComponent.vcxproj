@@ -96,6 +96,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Basic2DDrawable.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="BasicScreenShot.h" />
     <ClInclude Include="Buffers.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Basic2DDrawable.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="BasicScreenShot.cpp" />
     <ClCompile Include="BasicScreenCapture.cpp" />

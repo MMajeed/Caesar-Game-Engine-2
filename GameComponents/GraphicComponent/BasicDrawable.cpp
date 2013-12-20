@@ -1,15 +1,15 @@
 #include "BasicDrawable.h"
 
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/lexical_cast.hpp>
-#include <Converter.h>
-
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
 #include <XNAConverter.h>
 #include <Keys.h>
 #include <3DMath.h>
+#include <EntityCommunicator\EntityConfig.h>
+#include <EntityCommunicator\ImportantIDConfig.h>
+#include <WindowINFO.h>
+#include <VecMath.h>
 
 BasicDrawable::BasicDrawable(const std::string& inputID)
 	: Drawable(inputID)
@@ -53,20 +53,24 @@ void BasicDrawable::Update(double realTime, double deltaTime)
 
 void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object)
 {
-	this->SetupDepth(object);
-	this->SetupTexture(object);
-	this->SetupDrawConstantBuffer(object);
-	this->SetupDrawVertexBuffer(object);
-	this->SetupDrawInputVertexShader(object);
-	this->SetupDrawPixelShader(object);
-	this->SetupDrawRasterizeShader(object);
-	this->DrawObject(object);
-	this->CleanupAfterDraw(object);
+	if(this->CheckIfValid(object))
+	{
+		this->SetupDepth(object);
+		this->SetupTexture(object);
+		this->SetupDrawConstantBuffer(object);
+		this->SetupDrawVertexBuffer(object);
+		this->SetupDrawInputVertexShader(object);
+		this->SetupDrawPixelShader(object);
+		this->SetupDrawRasterizeShader(object);
+		this->DrawObject(object);
+		this->CleanupAfterDraw(object);
+	}
 }
 void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-	if(object->Depth == true)
+	
+	if(this->CheckIfValid(object))
 	{
 		this->SetupDrawConstantBuffer(object);
 		this->SetupDrawVertexBuffer(object);
@@ -78,6 +82,16 @@ void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object)
 	}
 }
 
+bool BasicDrawable::CheckIfValid(const std::shared_ptr<ObjectINFO>& object)
+{
+	if(this->D3DInfo.pVertexBuffer == 0) { return false; }
+	if(this->D3DInfo.pIndexBuffer == 0) { return false; }
+	if(this->D3DInfo.pInputLayout == 0) { return false; }
+	if(this->D3DInfo.pVertexShader == 0) { return false; }
+	if(this->D3DInfo.pPixelShader == 0) { return false; }
+	if(this->D3DInfo.pRastersizerState == 0) { return false; }
+	return true;
+}
 void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO>& object)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
@@ -127,18 +141,12 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object)
 }
 void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object)
 {
-	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(object->Location, object->Rotation, object->Scale);
-
-	XMFLOAT4X4 worldMatrix = CHL::Convert4x4(mObjectFinal);
-	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.PrespectiveMatrix);
-	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.CamerMatrix);
-	
-	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
-
+	XMFLOAT4X4 worldFloat4x4; XMFLOAT4X4 finalFloat4x4;
+	this->CalculateWVP(object, worldFloat4x4, finalFloat4x4);
 	cBuffer::cbObject cbCEF;
 	
-	cbCEF.world = XMMatrixTranspose(XMLoadFloat4x4(&worldMatrix));
-	cbCEF.worldViewProj = XMMatrixTranspose(finalMatrix);
+	cbCEF.world = XMMatrixTranspose(XMLoadFloat4x4(&worldFloat4x4));
+	cbCEF.worldViewProj = XMMatrixTranspose(XMLoadFloat4x4(&finalFloat4x4));
 	cbCEF.colour.diffuse = CHL::ConvertVec4(object->Diffuse);
 	cbCEF.colour.ambient = CHL::ConvertVec4(object->Ambient);
 	cbCEF.colour.specular = CHL::ConvertVec4(object->Specular);
@@ -201,36 +209,64 @@ void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object)
 	}
 }
 
+void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
+{
+	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(object->Location, object->Rotation, object->Scale);
+
+	worldFloat4x4 = CHL::Convert4x4(mObjectFinal);
+	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.PrespectiveMatrix);
+	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.CamerMatrix);
+
+	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
+
+	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);
+}
+
 void BasicDrawable::InitVertexBuffer(ID3D11Device* device)
 {
-	DX11Helper::LoadVertexBuffer<Vertex>(device, &(this->D3DInfo.vertices.front()), this->D3DInfo.vertices.size(), &(this->D3DInfo.pVertexBuffer));
+	if(this->D3DInfo.vertices.size() > 0)
+	{
+		DX11Helper::LoadVertexBuffer<Vertex>(device, this->D3DInfo.vertices.data(), this->D3DInfo.vertices.size(), &(this->D3DInfo.pVertexBuffer));
+	}
 }
 void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 {
-	DX11Helper::LoadIndexBuffer<WORD>(device, &(this->D3DInfo.indices.front()), this->D3DInfo.indices.size(), &(this->D3DInfo.pIndexBuffer));
+	if(this->D3DInfo.indices.size() > 0)
+	{
+		DX11Helper::LoadIndexBuffer<WORD>(device, this->D3DInfo.indices.data(), this->D3DInfo.indices.size(), &(this->D3DInfo.pIndexBuffer));
+	}
 }
 void BasicDrawable::InitInputLayout(ID3D11Device* device)
 {
-	D3D11_INPUT_ELEMENT_DESC layout[] =
+	if(this->D3DInfo.VertexShaderInfo.empty() == false)
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-	UINT numElements = ARRAYSIZE( layout );
+		D3D11_INPUT_ELEMENT_DESC layout[] =
+		{
+			{"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{"NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0},
+			{"TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		};
+		UINT numElements = ARRAYSIZE(layout);
 
-	DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo, 
-									device, layout, numElements, &(this->D3DInfo.pInputLayout));
+		DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo,
+										device, layout, numElements, &(this->D3DInfo.pInputLayout));
+	}
 }
 void BasicDrawable::InitVertexShader(ID3D11Device* device)
 {
-	DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo, 
-										device, &(this->D3DInfo.pVertexShader));
+	if(this->D3DInfo.VertexShaderInfo.empty() == false)
+	{
+		DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo,
+										 device, &(this->D3DInfo.pVertexShader));
+	}
 }
 void BasicDrawable::InitPixelShader(ID3D11Device* device)
 {
-	DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo, 
+	if(this->D3DInfo.VertexShaderInfo.empty() == false)
+	{
+		DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo,
 										device, &(this->D3DInfo.pPixelShader));
+	}
 }
 void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {
@@ -254,13 +290,32 @@ void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_M
 	this->D3DInfo.cullMode           = cullMode;
 	this->D3DInfo.fillMode           = fillMode;
 
-	if (this->D3DInfo.pRastersizerState)
+	if (this->D3DInfo.pRastersizerState != 0)
 	{
 		this->D3DInfo.pRastersizerState->Release();
 	}
 
 	ID3D11Device* pDevice = GraphicManager::GetInstance().D3DStuff.pd3dDevice;
 	this->InitRastersizerState(pDevice);
+}
+
+void  BasicDrawable::ChangeModel(const std::vector<Vertex>&	vectorVertices,
+								 const std::vector<WORD>&	vectorIndices)
+{
+	this->D3DInfo.vertices = vectorVertices;
+	this->D3DInfo.indices = vectorIndices;
+	if(this->D3DInfo.pVertexBuffer != 0)
+	{
+		this->D3DInfo.pVertexBuffer->Release();
+	}
+	if(this->D3DInfo.pIndexBuffer != 0)
+	{
+		this->D3DInfo.pIndexBuffer->Release();
+	}
+
+	ID3D11Device* pDevice = GraphicManager::GetInstance().D3DStuff.pd3dDevice;
+	this->InitVertexBuffer(pDevice);
+	this->InitIndexBuffer(pDevice);
 }
 
 std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,

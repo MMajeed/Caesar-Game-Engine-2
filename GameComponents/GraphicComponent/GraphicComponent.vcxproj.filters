@@ -66,6 +66,9 @@
     <ClInclude Include="BasicScreenCapture.h">
       <Filter>ScreenCapture\BasicScreenCapture</Filter>
     </ClInclude>
+    <ClInclude Include="Basic2DDrawable.h">
+      <Filter>Drawable\BasicDrawable\Basic2DDrawable</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -113,6 +116,9 @@
     </ClCompile>
     <ClCompile Include="BasicScreenCapture.cpp">
       <Filter>ScreenCapture\BasicScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="Basic2DDrawable.cpp">
+      <Filter>Drawable\BasicDrawable\Basic2DDrawable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +187,9 @@
     </Filter>
     <Filter Include="ScreenCapture\BasicScreenCapture">
       <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\BasicDrawable\Basic2DDrawable">
+      <UniqueIdentifier>{2e7d37dc-dad8-4b83-b768-8bb1cf8db8be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

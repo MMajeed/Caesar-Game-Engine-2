@@ -120,6 +120,8 @@ void GraphicManager::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 	}
 
 	this->SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
+	this->SceneInfo.OrthographicMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+
 }
 void GraphicManager::SetupConstantBuffer(std::hash_map<std::string, SP_INFO>& objects)
 {

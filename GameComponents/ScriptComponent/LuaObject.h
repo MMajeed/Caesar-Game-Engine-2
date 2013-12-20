@@ -16,7 +16,7 @@ public:
 
 	std::string ID;
 
-	void SetGraphic(LuaBasicDrawableObject graphic);
+	void SetGraphic(LuaBasicDrawableObject::BasicDrawableObject graphic);
 	void RemoveGraphic();
 
 	void Set2DTexture(LuaBasicTexture texture);
