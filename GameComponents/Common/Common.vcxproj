@@ -95,7 +95,6 @@
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="ObjectINFO.cpp" />
     <ClCompile Include="PointLightINFO.cpp" />
-    <ClCompile Include="PrespectiveINFO.cpp" />
     <ClCompile Include="SpotLightINFO.cpp" />
     <ClCompile Include="WindowINFO.cpp" />
   </ItemGroup>
@@ -111,7 +110,6 @@
     <ClInclude Include="INFO.h" />
     <ClInclude Include="ObjectINFO.h" />
     <ClInclude Include="PointLightINFO.h" />
-    <ClInclude Include="PrespectiveINFO.h" />
     <ClInclude Include="SpotLightINFO.h" />
     <ClInclude Include="WindowINFO.h" />
   </ItemGroup>

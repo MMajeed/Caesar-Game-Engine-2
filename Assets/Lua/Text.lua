@@ -107,13 +107,12 @@ FontDataTable["~"] 	= FontData(0.577148, 0.583984, 7);
 Text = class(function(self, text, location) 
                 self.Text = text;
                 self.SpriteModel = Model();
-                self.Location = location;
                 self.SpriteDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["Dimension"]]        = Dimension["2D"],
                                                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_1_Font.cso",
                                                           });
                 self.SpriteTexture = BasicTexture("Assets/Font/font.dds");
                 
-                self.SpriteObj = Object({[Keys["ObjectInfo"]["Location"]]     = self.Location,
+                self.SpriteObj = Object({[Keys["ObjectInfo"]["Location"]]     = location,
                                          [Keys["ObjectInfo"]["DrawableObj"]]  = self.SpriteDrawable,
                                          [Keys["ObjectInfo"]["Texture2DObj"]] = self.SpriteTexture,
                                          [Keys["ObjectInfo"]["Diffuse"]]      = Vector4(1.0, 1.0, 1.0, 1.0),
@@ -157,18 +156,31 @@ function Text:Set()
     end
     local faces = {};
     for i = -1, index do
-        faces[i] = i - 1;
+        table.insert(faces,i - 1);
     end
     
     local spriteModel = Model();
-
     spriteModel.Vertices = verticeArray;
     spriteModel.Faces = faces;
     self.SpriteDrawable:ChangeModel(spriteModel);
-    
 end
 
-helloWorld = Text("Hello World!",  Vector4(50.0, 50.0, 0.0));
+function Text:EditText(text)
+    self.Text = text;
+    self:Set();
+end
+
+function Text:EditLocation(loc)
+    self.SpriteObj.Location = loc;
+end
+
+function Text:Release()
+    self.SpriteDrawable:Release();
+    self.SpriteTexture:Release();    
+    self.SpriteObj:Release();
+end
+
+helloWorld = Text("Hello World! My Name is Mohammed! H",  Vector4(0.0, 0.0, 0.0));
 
 return Text
 

@@ -50,15 +50,11 @@ void LuaKeysID::Register(lua_State *lua)
 		cameraTable[Keys::Camera::RADIANROLL]      = Keys::Camera::RADIANROLL;
 		cameraTable[Keys::Camera::RADIANPITCH]     = Keys::Camera::RADIANPITCH;
 		cameraTable[Keys::Camera::RADIANYAW]       = Keys::Camera::RADIANYAW;
+		cameraTable[Keys::Camera::FOVANGLE]        = Keys::Camera::FOVANGLE;
+		cameraTable[Keys::Camera::NEARZ]           = Keys::Camera::NEARZ;
+		cameraTable[Keys::Camera::FARZ]            = Keys::Camera::FARZ;
+		cameraTable[Keys::Camera::CLEARCOLOR]      = Keys::Camera::CLEARCOLOR;
 	luaKeyTable["Camera"] = cameraTable;
-
-	luabind::object prespectiveTable = luabind::newtable(lua);
-		prespectiveTable[Keys::Prespective::FOVANGLE]     = Keys::Prespective::FOVANGLE;
-		prespectiveTable[Keys::Prespective::SCREENWIDTH]  = Keys::Prespective::SCREENWIDTH;
-		prespectiveTable[Keys::Prespective::SCREENHEIGHT] = Keys::Prespective::SCREENHEIGHT;
-		prespectiveTable[Keys::Prespective::MINVIEWABLE]  = Keys::Prespective::MINVIEWABLE;
-		prespectiveTable[Keys::Prespective::MAXVIEWABLE]  = Keys::Prespective::MAXVIEWABLE;
-	luaKeyTable["Prespective"] = prespectiveTable;
 
 	luabind::object BasicDrawableTable = luabind::newtable(lua);
 	BasicDrawableTable[Keys::BasicDrawable::DRAWABLEOBJ] = Keys::BasicDrawable::DRAWABLEOBJ;

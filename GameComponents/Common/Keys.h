@@ -52,17 +52,12 @@ namespace Keys
 		const static std::string RADIANROLL      = "RadianRoll";
 		const static std::string RADIANPITCH     = "RadianPitch";
 		const static std::string RADIANYAW       = "RadianYaw";
-	};
+		const static std::string FOVANGLE		 = "FovAngle";
+		const static std::string NEARZ			 = "NearZ";
+		const static std::string FARZ            = "FarZ";
+		const static std::string CLEARCOLOR      = "ClearColor";
 
-	namespace Prespective
-	{
-		const static std::string FOVANGLE     = "FovAngle";
-		const static std::string SCREENWIDTH  = "ScreenWidth";
-		const static std::string SCREENHEIGHT = "ScreenHeight";
-		const static std::string MINVIEWABLE  = "MinViewable";
-		const static std::string MAXVIEWABLE  = "MaxViewable";
 	};
-
 	
 	namespace BasicDrawable
 	{

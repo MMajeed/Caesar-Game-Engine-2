@@ -78,7 +78,7 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
-	graphicManager.InsertSceneFilter(this->shadowFilter);
+	//graphicManager.InsertSceneFilter(this->shadowFilter);
 
 	std::vector<std::shared_ptr<LightINFO>> vecLights;
 	for(auto iterObj = objects.begin();
@@ -94,7 +94,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 	
 	if(vecLights.size() > cBuffer::numOfLights)
 	{
-		CHL::Vec4 eye = graphicManager.SceneInfo.Eye;
+		/*CHL::Vec4 eye = graphicManager.SceneInfo.Eye;
 		std::sort(vecLights.begin(), vecLights.end(),
 				  [eye](const std::shared_ptr<LightINFO>& a, const std::shared_ptr<LightINFO>& b) -> bool
 					{
@@ -120,7 +120,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 
 						return rankA < rankB;
 					});
-		vecLights.resize(cBuffer::numOfLights);
+		vecLights.resize(cBuffer::numOfLights);*/
 	}
 
 	unsigned int numberOfShadows = 0;
@@ -206,5 +206,5 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 
 	graphicManager.D3DStuff.pImmediateContext->PSSetShaderResources(100, 1, &(this->shaderShadowTexture));
 
-	graphicManager.RemoveSceneFilter(this->shadowFilter->ID);
+	//graphicManager.RemoveSceneFilter(this->shadowFilter->ID);
 }

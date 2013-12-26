@@ -38,9 +38,9 @@ std::shared_ptr<Basic2DDrawable> Basic2DDrawable::Spawn(const std::string&			inp
 	return newObject;
 }
 
-void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
+void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
 {
-	auto window = EntityConfig::GetEntity(WindowINFOID::Get());
+	auto window = EntityConfig::GetEntity(ImportantIDConfig::WindowINFOID::Get());
 	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(window);
 
 	CHL::Vec4 loc = object->Location;
@@ -49,9 +49,9 @@ void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, XM
 	
 	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(loc, object->Rotation, object->Scale);
 
-	XMFLOAT4X4 worldMatrix = CHL::Convert4x4(mObjectFinal);
-	XMFLOAT4X4 orthMatrix = CHL::Convert4x4(GraphicManager::GetInstance().SceneInfo.OrthographicMatrix);
+	worldFloat4x4  = CHL::Convert4x4(mObjectFinal);
+	XMFLOAT4X4 orthMatrix = CHL::Convert4x4(si.TwoDimMatrix);
 
-	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&orthMatrix);
+	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&orthMatrix);
 	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);
 }

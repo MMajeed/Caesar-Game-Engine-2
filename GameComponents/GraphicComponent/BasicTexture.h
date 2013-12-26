@@ -17,7 +17,7 @@ public:
 	
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID);
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, const std::string& fileName);
-	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, ID3D11ShaderResourceView*& fileName);
+	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, ID3D11ShaderResourceView* fileName);
 
 	struct
 	{

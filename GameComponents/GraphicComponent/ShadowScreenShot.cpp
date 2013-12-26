@@ -13,7 +13,7 @@ ShadowScreenShot::ShadowScreenShot(const std::string& inputID)
 void ShadowScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = graphic.D3DStuff;
 
 	// Use typeless format because the DSV is going to interpret
 	// the bits as DXGI_FORMAT_D24_UNORM_S8_UINT, whereas the SRV is going to interpret
@@ -76,77 +76,77 @@ void ShadowScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	auto currentSene = graphic.SceneInfo;
+	/*auto currentSene = graphic.SceneInfo;
 
 	this->SetupScene(objects);
 	this->SetupSnapShot(objects);
 	this->TakeScreenSnapShot(objects);
 	this->CleanupSnapShot(objects);
 
-	graphic.SceneInfo = currentSene;
+	graphic.SceneInfo = currentSene;*/
 }
 
 void ShadowScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
 	graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
 	CHL::Vec4 eye{this->D3DInfo.cameraMatrix[0][3], this->D3DInfo.cameraMatrix[1][3], this->D3DInfo.cameraMatrix[2][3], this->D3DInfo.cameraMatrix[3][3]};
-	graphic.SceneInfo.Eye = eye;
+	graphic.SceneInfo.Eye = eye;*/
 }
 void ShadowScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	////GraphicManager& graphic = GraphicManager::GetInstance();
+	////auto& d3dStuff = graphic.D3DStuff;
 
-	d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport);
+	////d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport);
 
-	// Set null render target because we are only going to draw to depth buffer.
-	// Setting a null render target will disable color writes.
-	ID3D11RenderTargetView* renderTargets[1] = {0};
-	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
-	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	////// Set null render target because we are only going to draw to depth buffer.
+	////// Setting a null render target will disable color writes.
+	////ID3D11RenderTargetView* renderTargets[1] = {0};
+	////d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
+	////d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 void ShadowScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	//GraphicManager& graphic = GraphicManager::GetInstance();
 
-	graphic.SetupConstantBuffer(objects);
-	std::vector<std::shared_ptr<ObjectINFO>> vecObjects;
-	vecObjects.reserve(objects.size());
+	//graphic.SetupConstantBuffer(objects);
+	//std::vector<std::shared_ptr<ObjectINFO>> vecObjects;
+	//vecObjects.reserve(objects.size());
 
-	for(auto iterObj = objects.begin();
-		iterObj != objects.end();
-		++iterObj)
-	{
-		std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
-		if(!objInfo){ continue; }
+	//for(auto iterObj = objects.begin();
+	//	iterObj != objects.end();
+	//	++iterObj)
+	//{
+	//	std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
+	//	if(!objInfo){ continue; }
 
-		bool fitsTheScene = true;
-		for(auto iterScene = graphic.sceneFilters.begin();
-			iterScene != graphic.sceneFilters.end();
-			++iterScene)
-		{
-			fitsTheScene = iterScene->second->Filter(iterObj->second);
-			if(fitsTheScene == false){ break; }
-		}
-		if(fitsTheScene == false){ continue; }
+	//	bool fitsTheScene = true;
+	//	for(auto iterScene = graphic.sceneFilters.begin();
+	//		iterScene != graphic.sceneFilters.end();
+	//		++iterScene)
+	//	{
+	//		fitsTheScene = iterScene->second->Filter(iterObj->second);
+	//		if(fitsTheScene == false){ break; }
+	//	}
+	//	if(fitsTheScene == false){ continue; }
 
-		auto drawableIter = graphic.objectDrawables.find(objInfo->DrawObjID);
-		if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
+	//	auto drawableIter = graphic.objectDrawables.find(objInfo->DrawObjID);
+	//	if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
 
-		drawableIter->second->DrawShadow(objInfo);
-	}
+	//	//drawableIter->second->DrawShadow(objInfo);
+	//}
 	
 }
 void ShadowScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	auto& d3dStuff = graphic.D3DStuff;
 
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);
-	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
+	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);*/
 }
 
 std::shared_ptr<ShadowScreenShot> ShadowScreenShot::Spawn(unsigned int width, unsigned int height, ID3D11Texture2D*& tex, unsigned int index, unsigned int arraySize)
@@ -157,7 +157,7 @@ std::shared_ptr<ShadowScreenShot> ShadowScreenShot::Spawn(unsigned int width, un
 	newObject->D3DInfo.height = height;
 
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = graphic.D3DStuff;
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 	ZeroMemory(&dsvDesc, sizeof(dsvDesc));

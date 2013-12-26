@@ -32,11 +32,6 @@ public:
 	
 	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
 	virtual void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
-	virtual void SetupScene(std::hash_map<std::string, SP_INFO>& objects);
-	virtual void SetupConstantBuffer(std::hash_map<std::string, SP_INFO>& objects);
-	virtual void ClearScreen(std::hash_map<std::string, SP_INFO>& objects);
-	virtual void DrawObjects(std::hash_map<std::string, SP_INFO>& objects);
-	virtual void Present(std::hash_map<std::string, SP_INFO>& objects);
 
 	// DirectX stuff
 	struct
@@ -76,23 +71,7 @@ public:
 	void RemoveScreenCapture(std::string ID);
 	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
 
-	std::hash_map<std::string, std::shared_ptr<SceneFilter>> sceneFilters;
-	void InsertSceneFilter(std::shared_ptr<SceneFilter> obj);
-	void RemoveSceneFilter(std::string ID);
-	const std::hash_map<std::string, std::shared_ptr<SceneFilter>> AllSceneFilters();
-	
 	virtual void InitDevice();
-
-
-	struct 
-	{
-		CHL::Vec4 ClearColour;
-		CHL::Vec4 Eye;
-		CHL::Matrix4x4 CamerMatrix;
-		CHL::Matrix4x4 PrespectiveMatrix;
-		CHL::Matrix4x4 OrthographicMatrix;
-	} SceneInfo;
-
 
 	friend CHL::Singleton<GraphicManager>;
 };

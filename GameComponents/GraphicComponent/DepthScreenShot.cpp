@@ -13,7 +13,7 @@ DepthScreenShot::DepthScreenShot(const std::string& inputID)
 void DepthScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = graphic.D3DStuff;
 
 	// Use typeless format because the DSV is going to interpret
 	// the bits as DXGI_FORMAT_D24_UNORM_S8_UINT, whereas the SRV is going to interpret
@@ -74,7 +74,7 @@ void DepthScreenShot::Update(double realTime, double deltaTime)
 }
 void DepthScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	auto currentSene = graphic.SceneInfo;
 
@@ -83,44 +83,44 @@ void DepthScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	this->TakeScreenSnapShot(objects);
 	this->CleanupSnapShot(objects);
 
-	graphic.SceneInfo = currentSene;
+	graphic.SceneInfo = currentSene;*/
 }
 
 void DepthScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
-	graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
-	CHL::Vec4 eye{this->D3DInfo.cameraMatrix[0][3], this->D3DInfo.cameraMatrix[1][3], this->D3DInfo.cameraMatrix[2][3], this->D3DInfo.cameraMatrix[3][3]};
+	//GraphicManager& graphic = GraphicManager::GetInstance();
+	//graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
+	//graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
+	//CHL::Vec4 eye{this->D3DInfo.cameraMatrix[0][3], this->D3DInfo.cameraMatrix[1][3], this->D3DInfo.cameraMatrix[2][3], this->D3DInfo.cameraMatrix[3][3]};
 
 }
 void DepthScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	//GraphicManager& graphic = GraphicManager::GetInstance();
+	//auto& d3dStuff = graphic.D3DStuff;
 
-	d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport);
+	//d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport);
 
-	// Set null render target because we are only going to draw to depth buffer.
-	// Setting a null render target will disable color writes.
-	ID3D11RenderTargetView* renderTargets[1] = {0};
-	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
-	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	//// Set null render target because we are only going to draw to depth buffer.
+	//// Setting a null render target will disable color writes.
+	//ID3D11RenderTargetView* renderTargets[1] = {0};
+	//d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
+	//d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
 void DepthScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	graphic.SetupConstantBuffer(objects);
-	graphic.DrawObjects(objects);
+	graphic.DrawObjects(objects);*/
 }
 void DepthScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	auto& d3dStuff = graphic.D3DStuff;
 
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);
-	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
+	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);*/
 }
 
 std::shared_ptr<DepthScreenShot> DepthScreenShot::Spawn(std::string id, unsigned int width, unsigned int height)

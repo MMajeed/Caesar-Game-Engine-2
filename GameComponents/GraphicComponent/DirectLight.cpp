@@ -45,7 +45,7 @@ CHL::Matrix4x4 DirectLight::CalculateViewMatrix(std::shared_ptr<DirectionalLight
 	roll = lightInfo->Direction(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
-	CHL::Vec4 eye = GraphicManager::GetInstance().SceneInfo.Eye;
+	CHL::Vec4 eye;// = GraphicManager::GetInstance().SceneInfo.Eye;
 	XMVECTOR center = XMVectorSet((float)eye(0), (float)eye(1), (float)eye(2), (float)eye(3));
 
 	XMVECTOR lightDir = XMLoadFloat3(&dir);
@@ -68,7 +68,7 @@ CHL::Matrix4x4 DirectLight::CalculatePrespectiveMatrix(std::shared_ptr<Direction
 	roll = lightInfo->Direction(2);
 
 	XMFLOAT3 dir((float)pitch, (float)yaw, (float)roll);
-	CHL::Vec4 eye = GraphicManager::GetInstance().SceneInfo.Eye;
+	CHL::Vec4 eye;// = GraphicManager::GetInstance().SceneInfo.Eye;
 	XMVECTOR center = XMVectorSet((float)eye(0), (float)eye(1), (float)eye(2), (float)eye(3));
 
 	XMVECTOR lightDir = XMLoadFloat3(&dir);

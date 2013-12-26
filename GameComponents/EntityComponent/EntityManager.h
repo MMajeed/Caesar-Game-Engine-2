@@ -18,7 +18,6 @@ public:
 	struct
 	{
 		std::string CameraID;
-		std::string PrespectiveID;
 		std::string WindowINFOID;
 	}ImportantKeys;
 

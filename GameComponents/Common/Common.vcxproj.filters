@@ -34,9 +34,6 @@
     <ClCompile Include="PointLightINFO.cpp">
       <Filter>INFO\LightINFO\PointLightINFO</Filter>
     </ClCompile>
-    <ClCompile Include="PrespectiveINFO.cpp">
-      <Filter>INFO\PrespectiveINFO</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keys.h">
@@ -76,9 +73,6 @@
     <ClInclude Include="PointLightINFO.h">
       <Filter>INFO\LightINFO\PointLightINFO</Filter>
     </ClInclude>
-    <ClInclude Include="PrespectiveINFO.h">
-      <Filter>INFO\PrespectiveINFO</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Keys">
@@ -116,9 +110,6 @@
     </Filter>
     <Filter Include="INFO\LightINFO\SpotLightINFO">
       <UniqueIdentifier>{219946ce-fb25-423d-856e-1a63ebeda727}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\PrespectiveINFO">
-      <UniqueIdentifier>{73733eda-df5b-4b76-a022-32a6ab25c8a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

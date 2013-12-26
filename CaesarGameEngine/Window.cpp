@@ -66,7 +66,7 @@ void Window::Init()
 	obj->Width = this->window.width;
 	obj->HWND = this->window.hWnd;
 	EntityConfig::SetEntity(obj);
-	WindowINFOID::Set(obj->ID);
+	ImportantIDConfig::WindowINFOID::Set(obj->ID);
 
 	ShowWindow(this->window.hWnd, SW_SHOWNORMAL);
 
@@ -160,14 +160,14 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 		int width = 0;
 		int height = 0;
 		RECT rect;
-		if(GetWindowRect(hWnd, &rect))
+		if(GetClientRect(hWnd, &rect))
 		{
 			width = rect.right - rect.left;
 			height = rect.bottom - rect.top;
 		}
 
-		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::HEIGHT, GenericObj<int>::CreateNew(height));
-		EntityConfig::SetEntity(WindowINFOID::Get(), Keys::Window::WIDTH, GenericObj<int>::CreateNew(width));
+		EntityConfig::SetEntity(ImportantIDConfig::WindowINFOID::Get(), Keys::Window::HEIGHT, GenericObj<int>::CreateNew(height));
+		EntityConfig::SetEntity(ImportantIDConfig::WindowINFOID::Get(), Keys::Window::WIDTH, GenericObj<int>::CreateNew(width));
 		GraphicSettings::Resize(width, height);
 		break;
 	}

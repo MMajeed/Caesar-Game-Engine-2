@@ -103,6 +103,8 @@
     <ClInclude Include="BasicScreenCapture.h" />
     <ClInclude Include="CubeScreenCapture.h" />
     <ClInclude Include="DepthScreenCapture.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="CubeScreenShot.h" />
     <ClInclude Include="DepthScreenShot.h" />
@@ -135,6 +137,7 @@
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="BasicTexture.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SetupLight.cpp" />
     <ClCompile Include="ShadowFilter.cpp" />
     <ClCompile Include="ShadowScreenShot.cpp" />

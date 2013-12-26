@@ -12,7 +12,8 @@
 #include <CameraINFO.h>
 #include <ObjectINFO.h>
 #include <WindowINFO.h>
-
+#include "Scene.h"
+#include "SceneInfo.h"
 GraphicManager::GraphicManager()
 {
 	this->D3DStuff.pd3dDevice			= 0;
@@ -23,8 +24,6 @@ GraphicManager::GraphicManager()
 	this->D3DStuff.pDepthStencilState	= 0;
 	this->D3DStuff.pDepthStencilView	= 0;
 	this->D3DStuff.IsInitialized	    = false;
-
-	this->SceneInfo.ClearColour = {0.5, 0.5, 0.5, 0.5};
 }
 
 void GraphicManager::Init()
@@ -40,13 +39,25 @@ void GraphicManager::Work()
 {
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
-	this->SetupScene(objects);
-	this->SetupLight(objects);
-	this->RunAllCapture(objects);
-	this->SetupConstantBuffer(objects);
-	this->ClearScreen(objects);
-	this->DrawObjects(objects);
-	this->Present(objects);
+	std::string window = ImportantIDConfig::WindowINFOID::Get();
+	if(window.empty()){ throw std::invalid_argument("Windows Information is not set"); }
+	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
+	if(iter == objects.cend()) { throw std::invalid_argument("Could not find windows Info"); }
+	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
+
+	std::string camera = ImportantIDConfig::CameraID::Get();
+	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(camera);
+	std::shared_ptr<CameraINFO> cameraObj;
+	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
+	 
+	SceneInfo s = Scene::SetupScene(cameraObj, windowInfo->Width, windowInfo->Height);
+	Scene::SetupConstantBuffer(s);
+	Scene::ClearScreen(s);
+	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, s);
+	Scene::DrawObjects(vecObj, s);
+
+	// Present the information rendered to the back buffer to the front buffer (the screen)
+	this->D3DStuff.pSwapChain->Present(0, 0);
 }
 
 void GraphicManager::Shutdown()
@@ -67,170 +78,12 @@ void GraphicManager::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 {
 	Light::GetInstance().SetupLight(objects);
 }
-void GraphicManager::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
-{
-	// Camera
-	CHL::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
-	CHL::Vec4 vTM{0.0, 0.0, 1.0, 0.0};
-	CHL::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
-	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
-
-	std::string cameraID = CameraID::Get();
-
-	if(!cameraID.empty())
-	{
-		std::hash_map<std::string, SP_INFO>::const_iterator cameraIter = objects.find(cameraID);
-
-		if(cameraIter != objects.cend()) // if camera found
-		{
-			std::shared_ptr<CameraINFO> cam = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second);
-
-			if(cam)
-			{
-				vEye = cam->Eye;
-				vTM = cam->TargetMagnitude;
-				vUp = cam->Up;
-				pitch = cam->Pitch;
-				yaw = cam->Yaw;
-				roll = cam->Roll;
-			}
-		}
-	}
-
-	this->SceneInfo.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
-	this->SceneInfo.Eye = vEye;
-
-	// Prespective
-	std::hash_map<std::string, SP_INFO>::const_iterator prespectiveIter = objects.cend();
-
-	double FovAngleY = 0.785398163;
-	double height = this->D3DStuff.vp.Height; double width = this->D3DStuff.vp.Width;
-	double nearZ = 0.01;
-	double farZ = 5000.0;
-
-	std::string prespective = PrespectiveID::Get();
-	if(!prespective.empty())
-	{
-		std::hash_map<std::string, SP_INFO>::const_iterator cameraIter = objects.find(prespective);
-
-		if(cameraIter != objects.cend()) // if prespective found
-		{
-			// Fill in later
-		}
-	}
-
-	this->SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
-	this->SceneInfo.OrthographicMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
-
-}
-void GraphicManager::SetupConstantBuffer(std::hash_map<std::string, SP_INFO>& objects)
-{
-	CHL::Vec4 vEye = this->SceneInfo.Eye;
-
-	cBuffer::cbInfo cbInfo;
-	
-	XMFLOAT4X4 view4x4 = CHL::Convert4x4(this->SceneInfo.CamerMatrix);;
-	XMFLOAT4X4 proj4x4 = CHL::Convert4x4(this->SceneInfo.PrespectiveMatrix);;
-
-	cbInfo.view = XMMatrixTranspose(XMLoadFloat4x4(&view4x4));
-	cbInfo.proj = XMMatrixTranspose(XMLoadFloat4x4(&proj4x4));
-	cbInfo.eye = XMFLOAT4((float)vEye(0), (float)vEye(1), (float)vEye(2), (float)vEye(3));
-
-	ID3D11DeviceContext* pImmediateContext = this->D3DStuff.pImmediateContext;
-
-	pImmediateContext->UpdateSubresource( this->D3DStuff.pCBInfo, 0, NULL, &cbInfo, 0, 0 );
-}
-void GraphicManager::ClearScreen(std::hash_map<std::string, SP_INFO>& objects)
-{
-	// Clear the back buffer 
-	float ClearColor[4] = {(float)this->SceneInfo.ClearColour(0), (float)this->SceneInfo.ClearColour(1), (float)this->SceneInfo.ClearColour(2), 1.0f}; // red,green,blue,alpha
-	this->D3DStuff.pImmediateContext->ClearRenderTargetView( this->D3DStuff.pRenderTargetView, ClearColor );
-	this->D3DStuff.pImmediateContext->ClearDepthStencilView( this->D3DStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
-}
-void GraphicManager::DrawObjects(std::hash_map<std::string, SP_INFO>& objects)
-{
-	std::vector<std::shared_ptr<ObjectINFO>> vecSpecialObjects; // For transparency and depth
-	std::vector<std::shared_ptr<ObjectINFO>> vecRegularObjects;
-	vecSpecialObjects.reserve(objects.size());
-	vecRegularObjects.reserve(objects.size());
-
-	for(auto iterObj = objects.begin();
-		iterObj != objects.end();
-		++iterObj)
-	{
-		std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
-		if(!objInfo){ continue; }
-
-		bool fitsTheScene = true;
-		for(auto iterScene = this->sceneFilters.begin();
-			iterScene != this->sceneFilters.end();
-			++iterScene)
-		{
-			fitsTheScene = iterScene->second->Filter(iterObj->second);
-			if(fitsTheScene == false){ break; }
-		}
-		if(fitsTheScene == false){ continue; }
-
-		if(objInfo->Diffuse[3] < 1.0f || objInfo->Depth == false)
-		{
-			vecSpecialObjects.push_back(objInfo);
-		}
-		else
-		{
-			vecRegularObjects.push_back(objInfo);
-		}
-	}
-
-	CHL::Vec4 eye = this->SceneInfo.Eye;
-	std::sort(vecSpecialObjects.begin(), vecSpecialObjects.end(),
-			  [eye](const std::shared_ptr<ObjectINFO>& a, const std::shared_ptr<ObjectINFO>& b) -> bool
-			  {
-				float rankA = 0.0f; float rankB = 0.0f;
-
-				rankA += CHL::Length(eye, a->Location);
-				rankB += CHL::Length(eye, b->Location);
-
-				if(a->Depth == false) { rankA -= 1000000.0f; }
-				if(b->Depth == false) { rankB -= 1000000.0f; }
-
-				return rankA > rankB;
-			 });
-
-	for(auto iterObj = vecRegularObjects.begin();
-		iterObj != vecRegularObjects.end();
-		++iterObj)
-	{
-
-		auto drawableIter = this->objectDrawables.find((*iterObj)->DrawObjID);
-		if(drawableIter == this->objectDrawables.end()){ continue; }// If it didn't fine then continue
-
-		drawableIter->second->Draw(*iterObj);
-
-	}
-	for(auto iterObj = vecSpecialObjects.begin();
-		iterObj != vecSpecialObjects.end();
-		++iterObj)
-	{
-
-		auto drawableIter = this->objectDrawables.find((*iterObj)->DrawObjID);
-		if(drawableIter == this->objectDrawables.end()){ continue; }// If it didn't fine then continue
-
-		drawableIter->second->Draw(*iterObj);
-
-	}
-
-}
-void GraphicManager::Present(std::hash_map<std::string, SP_INFO>& objects)
-{
-	// Present the information rendered to the back buffer to the front buffer (the screen)
-	this->D3DStuff.pSwapChain->Present( 0, 0 );
-}
 
 void GraphicManager::InitDevice()
 {
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
-	std::string window = WindowINFOID::Get();
+	std::string window = ImportantIDConfig::WindowINFOID::Get();
 	if(window.empty()){	throw std::invalid_argument("Windows Information is not set");	}
 	
 	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
@@ -512,20 +365,3 @@ const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> GraphicManager:
 	return this->ScreenCaptures;
 }
 
-
-void GraphicManager::InsertSceneFilter(std::shared_ptr<SceneFilter> obj)
-{
-	this->sceneFilters[obj->ID] = obj;
-}
-void GraphicManager::RemoveSceneFilter(std::string ID)
-{
-	auto iter = this->sceneFilters.find(ID);
-	if(iter != this->sceneFilters.end())
-	{
-		this->sceneFilters.erase(iter);
-	}
-}
-const std::hash_map<std::string, std::shared_ptr<SceneFilter>> GraphicManager::AllSceneFilters()
-{
-	return this->sceneFilters;
-}

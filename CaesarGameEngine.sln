@@ -24,9 +24,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lua", "Lua", "{20C64F0E-7A31-448B-A8F9-462071C81651}"
 	ProjectSection(SolutionItems) = preProject
 		Assets\Lua\camera.lua = Assets\Lua\camera.lua
+		Assets\Lua\floor.lua = Assets\Lua\floor.lua
+		Assets\Lua\Helper.lua = Assets\Lua\Helper.lua
 		Assets\Lua\LightSetup.lua = Assets\Lua\LightSetup.lua
 		Assets\Lua\main.lua = Assets\Lua\main.lua
 		Assets\Lua\Skybox.lua = Assets\Lua\Skybox.lua
+		Assets\Lua\Text.lua = Assets\Lua\Text.lua
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Libraries", "2. Libraries", "{A23A83D9-9645-4158-A34F-8639D001FCD4}"

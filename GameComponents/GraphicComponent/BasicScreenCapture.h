@@ -17,11 +17,11 @@ public:
 	virtual ~BasicScreenCapture(){}
 
 	static std::shared_ptr<BasicScreenCapture> Spawn(const std::string& inputID,
-															const std::string& textureID,
-															unsigned int width, 
-															unsigned int height, 
-															CHL::Matrix4x4 cameraMatrix,
-															CHL::Matrix4x4 prespectiveMatrix);
+													const std::string& textureID,
+													unsigned int width, 
+													unsigned int height, 
+													CHL::Matrix4x4 cameraMatrix,
+													CHL::Matrix4x4 prespectiveMatrix);
 
 	std::shared_ptr<BasicScreenShot>	ScreenShot[2];
 	CHL::Matrix4x4						prespectiveMatrix;

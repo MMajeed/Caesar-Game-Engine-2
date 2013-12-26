@@ -20,7 +20,7 @@ CubeScreenShot::CubeScreenShot(const std::string& inputID)
 void CubeScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = graphic.D3DStuff;
 
 	ID3D11Texture2D* colorMap = 0;
 
@@ -131,7 +131,7 @@ void CubeScreenShot::Update(double realTime, double deltaTime)
 }
 void CubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 	auto scene = graphic.SceneInfo;
 	for(std::size_t i = 0; i < 6; ++i)
 	{
@@ -140,12 +140,12 @@ void CubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 		this->TakeScreenSnapShot(objects, i);
 		this->CleanupSnapShot(objects, i);
 	}
-	graphic.SceneInfo = scene;
+	graphic.SceneInfo = scene;*/
 }
 
 void CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	//GraphicManager& graphic = GraphicManager::GetInstance();
 
 	// This call needs to be called six times, for each direction of the camera.
 	// You set the back buffer to be the particular direction in the cube map
@@ -153,66 +153,66 @@ void CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, st
 	//	0 ==> +X	//	1 ==> -X
 	//	2 ==> +Y	//	3 ==> -Y
 	//	4 ==> +Z	//	5 ==> -Y
-	static enum enumCamDirection
-	{
-		X_POS = 0,
-		X_NEG,	// = 1
-		Y_POS,	// = 2
-		Y_NEG,	// = 3
-		Z_POS,	// = 4
-		Z_NEG	// = 5 
-	};
+	//static enum enumCamDirection
+	//{
+	//	X_POS = 0,
+	//	X_NEG,	// = 1
+	//	Y_POS,	// = 2
+	//	Y_NEG,	// = 3
+	//	Z_POS,	// = 4
+	//	Z_NEG	// = 5 
+	//};
 
-	CHL::Vec4 vEye;
-	CHL::Vec4 vTM;
-	CHL::Vec4 vUp;
-	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
+	//CHL::Vec4 vEye;
+	//CHL::Vec4 vTM;
+	//CHL::Vec4 vUp;
+	//double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
 	// Draw the scene with the exception of the center sphere to this cube map face.
-	switch(side)
-	{
-	case X_POS:		// 0
-		vUp = {0.0, 1.0, 0.0, 0.0};
-		vTM = {0.01, 0.0, 0.0, 0.0};
-		break;
-	case X_NEG:		// 1	
-		vUp = {0.0, 1.0, 0.0, 0.0};
-		vTM = {-0.01, 0.0, 0.0, 0.0};
-		break;
-	case Y_POS:		// 2
-		vUp = {0.0, 0.0, 1.0, 0.0};
-		vTM = {0.0, 0.01, 0.0, 0.0};
-		yaw = 3.14f;
-		break;
-	case Y_NEG:		// 3
-		vUp = {0.0, 0.0, 1.0, 0.0};
-		vTM = {0.0, -0.01, 0.0, 0.0};
-		break;
-	case Z_POS:		// 4
-		vUp = {0.0, 1.0, 0.0, 0.0};
-		vTM = {0.0, 0.0, 0.01, 0.0};
-		break;
-	case Z_NEG:		// 5
-		vUp = {0.0, 1.0, 0.0, 0.0};
-		vTM = {0.0, 0.0, -0.01, 0.0};
-		break;
-	}
+	//switch(side)
+	//{
+	//case X_POS:		// 0
+	//	vUp = {0.0, 1.0, 0.0, 0.0};
+	//	vTM = {0.01, 0.0, 0.0, 0.0};
+	//	break;
+	//case X_NEG:		// 1	
+	//	vUp = {0.0, 1.0, 0.0, 0.0};
+	//	vTM = {-0.01, 0.0, 0.0, 0.0};
+	//	break;
+	//case Y_POS:		// 2
+	//	vUp = {0.0, 0.0, 1.0, 0.0};
+	//	vTM = {0.0, 0.01, 0.0, 0.0};
+	//	yaw = 3.14f;
+	//	break;
+	//case Y_NEG:		// 3
+	//	vUp = {0.0, 0.0, 1.0, 0.0};
+	//	vTM = {0.0, -0.01, 0.0, 0.0};
+	//	break;
+	//case Z_POS:		// 4
+	//	vUp = {0.0, 1.0, 0.0, 0.0};
+	//	vTM = {0.0, 0.0, 0.01, 0.0};
+	//	break;
+	//case Z_NEG:		// 5
+	//	vUp = {0.0, 1.0, 0.0, 0.0};
+	//	vTM = {0.0, 0.0, -0.01, 0.0};
+	//	break;
+	//}
 
-	graphic.SceneInfo.CamerMatrix = CHL::ViewCalculation(this->D3DInfo.Eye, vTM, vUp, pitch, yaw, roll);
+	//graphic.SceneInfo.CamerMatrix = CHL::ViewCalculation(this->D3DInfo.Eye, vTM, vUp, pitch, yaw, roll);
 
-	double FovAngleY = 1.5707963267948966192313216916398;
-	double height = this->D3DInfo.height; 
-	double width = this->D3DInfo.width;
-	double nearZ = 0.01;
-	double farZ = 5000.0;
+	//double FovAngleY = 1.5707963267948966192313216916398;
+	//double height = this->D3DInfo.height; 
+	//double width = this->D3DInfo.width;
+	//double nearZ = 0.01;
+	//double farZ = 5000.0;
 
-	graphic.SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
-	graphic.SceneInfo.Eye = this->D3DInfo.Eye;
+	//graphic.SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
+	//graphic.SceneInfo.Eye = this->D3DInfo.Eye;
 }
 void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	auto& d3dStuff = graphic.D3DStuff;
 
 	ID3D11RenderTargetView* renderTargets[1] = {this->D3DInfo.pColorMapRTV[side]};
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
@@ -221,25 +221,25 @@ void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects,
 
 	float black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->D3DInfo.pColorMapRTV[side], black);
-	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
 }
 void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	graphic.SetupConstantBuffer(objects);
 	graphic.DrawObjects(objects);
 
-	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
+	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);*/
 }
 void CubeScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	auto& d3dStuff = graphic.D3DStuff;
 
 	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 
-	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);
+	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);*/
 }
 
 std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(std::string id, unsigned int width, unsigned int height)

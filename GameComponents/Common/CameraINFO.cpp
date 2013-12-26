@@ -14,7 +14,10 @@ std::shared_ptr<Object> CameraINFO::Get(const std::string& ID)
 		else if(ID == Keys::Camera::RADIANPITCH){ returnValue = GenericObj<double>::CreateNew(this->Pitch); }
 		else if(ID == Keys::Camera::RADIANYAW){ returnValue = GenericObj<double>::CreateNew(this->Yaw); }
 		else if(ID == Keys::Camera::RADIANROLL){ returnValue = GenericObj<double>::CreateNew(this->Roll); }
-		
+		else if(ID == Keys::Camera::FOVANGLE){ returnValue = GenericObj<double>::CreateNew(this->FovAngleY); }
+		else if(ID == Keys::Camera::NEARZ){ returnValue = GenericObj<double>::CreateNew(this->nearZ); }
+		else if(ID == Keys::Camera::FARZ){ returnValue = GenericObj<double>::CreateNew(this->farZ); }
+		else if(ID == Keys::Camera::CLEARCOLOR){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->ClearColor); }
 	}
 
 	return returnValue;
@@ -31,6 +34,10 @@ void CameraINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::Camera::RADIANPITCH){ this->Pitch = GenericObj<double>::GetValue(obj); }
 	else if(ID == Keys::Camera::RADIANYAW){ this->Yaw = GenericObj<double>::GetValue(obj); }
 	else if(ID == Keys::Camera::RADIANROLL){ this->Roll = GenericObj<double>::GetValue(obj); }
+	else if(ID == Keys::Camera::FOVANGLE){ this->FovAngleY = GenericObj<double>::GetValue(obj); }
+	else if(ID == Keys::Camera::NEARZ){ this->nearZ = GenericObj<double>::GetValue(obj); }
+	else if(ID == Keys::Camera::FARZ){ this->farZ = GenericObj<double>::GetValue(obj); }
+	else if(ID == Keys::Camera::CLEARCOLOR){ this->ClearColor = GenericObj<CHL::Vec4>::GetValue(obj); }
 
 }
 

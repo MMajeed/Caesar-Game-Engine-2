@@ -8,12 +8,22 @@
 class CameraINFO : public INFO
 {
 public:
+	//CameraINFO();
+
+	// Camera Stuff
 	CHL::Vec4 Eye;
 	CHL::Vec4 TargetMagnitude;
 	CHL::Vec4 Up;
 	double Roll;
 	double Pitch;
 	double Yaw;
+
+	// Prespective Stuff
+	double FovAngleY;
+	double nearZ;
+	double farZ;
+
+	CHL::Vec4 ClearColor;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);
 	virtual void Set(const std::string& ID, std::shared_ptr<Object> obj);

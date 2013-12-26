@@ -4,30 +4,6 @@
 
 namespace GraphicSettings
 {
-	void ClearScreen(const CHL::Vec4& input)
-	{
-		class ClearScreenMessage : public Message
-		{
-		public:
-			ClearScreenMessage(const CHL::Vec4& input)
-				: colour(input)
-			{
-			}
-			virtual Message::Status Work()
-			{
-				GraphicManager::GetInstance().SceneInfo.ClearColour(0) = this->colour(0);
-				GraphicManager::GetInstance().SceneInfo.ClearColour(1) = this->colour(1);
-				GraphicManager::GetInstance().SceneInfo.ClearColour(2) = this->colour(2);
-
-				return Message::Status::Complete;
-			}
-		protected:
-			CHL::Vec4 colour;
-		};
-
-		std::shared_ptr<ClearScreenMessage> msg(new ClearScreenMessage(input));
-		GraphicManager::GetInstance().SubmitMessage(msg);
-	}
 	void Resize(unsigned int widthInput, unsigned int heightInput)
 	{
 		class OnResize : public Message

@@ -5,24 +5,20 @@
 #include <Message.h>
 #include <string>
 
-namespace CameraID
+namespace ImportantIDConfig
 {
-	void Set(std::string newID);
-	std::string Get();
-}
+	namespace CameraID
+	{
+		void Set(std::string newID);
+		std::string Get();
+	}
 
-namespace PrespectiveID
-{
-	void Set(std::string newID);
-	std::string Get();
+	namespace WindowINFOID
+	{
+		void Set(std::string newID);
+		std::string Get();
+	}
 }
-
-namespace WindowINFOID
-{
-	void Set(std::string newID);
-	std::string Get();
-}
-
 
 
 #endif //__ImportantIDConfig__
