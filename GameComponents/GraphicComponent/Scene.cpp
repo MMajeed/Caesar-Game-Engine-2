@@ -32,23 +32,23 @@ namespace Scene
 			FovAngleY = camera->FovAngleY;
 			nearZ = camera->nearZ;
 			farZ = camera->farZ;
+			clearColor = camera->ClearColor;
 		}
 
 		SceneInfo returnValue;
 		returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 		returnValue.Eye = vEye;
 		if(FovAngleY > 0.0)
-		{
-			returnValue.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
-		}
+			returnValue.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
 		else
-		{
 			returnValue.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
-		}
+
 		returnValue.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
 		returnValue.width = width;
 		returnValue.height = height;
 		returnValue.ClearColour = clearColor;
+		returnValue.farZ = farZ;
+		returnValue.nearZ = nearZ;
 		return returnValue;
 	}
 	void SetupConstantBuffer(const SceneInfo& si)

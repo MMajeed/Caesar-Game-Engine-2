@@ -5,7 +5,7 @@
 #include <luabind\luabind.hpp>
 #include "LuaBasicTexture.h"
 #include "LuaMath.h"
-
+#include "LuaCamera.h"
 namespace LuaScreenCapture
 {
 	class BasicScreenCapture
@@ -13,8 +13,7 @@ namespace LuaScreenCapture
 	public:
 		BasicScreenCapture(luabind::object const& table);
 
-		void SetCameraMatrix(LuaMath::Matrix4x4 mat);
-		void SetPrespectiveMatrix(LuaMath::Matrix4x4 mat);
+		void SetCameraID(LuaCamera cameraID);
 		LuaBasicTexture GetTexture();
 		void Release();
 
@@ -28,9 +27,8 @@ namespace LuaScreenCapture
 	{
 	public:
 		DepthScreenCapture(luabind::object const& table);
-		
-		void SetCameraMatrix(LuaMath::Matrix4x4 mat);
-		void SetPrespectiveMatrix(LuaMath::Matrix4x4 mat);
+
+		void SetCameraID(LuaCamera cameraID);
 		LuaBasicTexture GetTexture();
 		void Release();
 
@@ -44,8 +42,8 @@ namespace LuaScreenCapture
 	{
 	public:
 		CubeScreenCapture(luabind::object const& table);
-		
-		void SetEye(LuaMath::Vector4 mat);
+
+		void SetCameraID(LuaCamera cameraID);
 		LuaBasicTexture GetTexture();
 		void Release();
 

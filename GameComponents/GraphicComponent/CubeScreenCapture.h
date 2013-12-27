@@ -7,7 +7,7 @@
 class CubeScreenCapture : public ScreenCapture
 {
 public:
-	CubeScreenCapture(const std::string& inputID);
+	CubeScreenCapture();
 
 	virtual void Init();
 	virtual void Destory();
@@ -16,17 +16,16 @@ public:
 	virtual std::shared_ptr<ScreenCapture> clone() const;
 	virtual ~CubeScreenCapture(){}
 
-	static std::shared_ptr<CubeScreenCapture> Spawn(	const std::string& inputID,
-															const std::string& textureID,
-															unsigned int width,
-															unsigned int height,
-															CHL::Vec4 eye);
+	static std::shared_ptr<CubeScreenCapture> Spawn(const std::string& textureID,
+													unsigned int width,
+													unsigned int height,
+													const std::string& cameraID);
 
 	std::shared_ptr<CubeScreenShot>	ScreenShot[2];
-	CHL::Vec4							eye;
-	unsigned int						width;
-	unsigned int						height;
-	unsigned int						current;
+	std::string						cameraID;
+	unsigned int					width;
+	unsigned int					height;
+	unsigned int					current;
 };
 
 

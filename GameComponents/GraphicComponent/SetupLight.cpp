@@ -21,7 +21,6 @@ Light::Light()
 
 void Light::Init()
 {
-	shadowFilter = ShadowFilter::Spawn(CHL::GenerateGUID());
 }
 
 void Light::SetupShadow(unsigned int numberOfShadows)
@@ -75,7 +74,7 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 	if(FAILED(hr)){ throw std::runtime_error("Error creating 2d texture for shadow"); }
 }
 
-void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
+void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::Vec4& eye)
 {
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
 	//graphicManager.InsertSceneFilter(this->shadowFilter);
@@ -94,7 +93,6 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 	
 	if(vecLights.size() > cBuffer::numOfLights)
 	{
-		/*CHL::Vec4 eye = graphicManager.SceneInfo.Eye;
 		std::sort(vecLights.begin(), vecLights.end(),
 				  [eye](const std::shared_ptr<LightINFO>& a, const std::shared_ptr<LightINFO>& b) -> bool
 					{
@@ -120,7 +118,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 
 						return rankA < rankB;
 					});
-		vecLights.resize(cBuffer::numOfLights);*/
+		vecLights.resize(cBuffer::numOfLights);
 	}
 
 	unsigned int numberOfShadows = 0;
@@ -151,14 +149,13 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 
 			if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
 			{
-				this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = DirectLight::CalculateViewMatrix(light);
-				this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = DirectLight::CalculatePrespectiveMatrix(light);
+				this->vecDepthShadow[shadowCounter]->D3DInfo.scene = DirectLight::GetScene(light, eye);
 
 				this->vecDepthShadow[shadowCounter]->Snap(objects);
 
 				lightBuffer.lights[counter].shadowNum = shadowCounter;
 
-				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(DirectLight::CalculateShadowMatrix(light)));
+				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(DirectLight::CalculateShadowMatrix(light, eye)));
 				++shadowCounter;
 			}
 		}
@@ -172,13 +169,12 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
 
 			if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
 			{
-				this->vecDepthShadow[shadowCounter]->D3DInfo.cameraMatrix = SpotLight::CalculateViewMatrix(light);
-				this->vecDepthShadow[shadowCounter]->D3DInfo.prespectiveMatrix = SpotLight::CalculatePrespectiveMatrix(light);
+				this->vecDepthShadow[shadowCounter]->D3DInfo.scene = SpotLight::GetScene(light, eye);
 
 				this->vecDepthShadow[shadowCounter]->Snap(objects);
 
 				lightBuffer.lights[counter].shadowNum = shadowCounter;
-				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(SpotLight::CalculateShadowMatrix(light)));
+				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(SpotLight::CalculateShadowMatrix(light, eye)));
 
 				++shadowCounter;
 			}

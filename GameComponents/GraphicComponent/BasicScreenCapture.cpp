@@ -3,15 +3,14 @@
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
-BasicScreenCapture::BasicScreenCapture(const std::string& inputID)
-	:ScreenCapture(inputID)
+BasicScreenCapture::BasicScreenCapture()
 {
 	this->current = 0;
 }
 void BasicScreenCapture::Init()
 {
-	this->ScreenShot[0] = BasicScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
-	this->ScreenShot[1] = BasicScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot[0] = BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
+	this->ScreenShot[1] = BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
 void BasicScreenCapture::Destory()
 {
@@ -33,8 +32,7 @@ void BasicScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }
 
-	this->ScreenShot[this->current]->D3DInfo.cameraMatrix = this->cameraMatrix;
-	this->ScreenShot[this->current]->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
+	this->ScreenShot[this->current]->D3DInfo.cameraID = this->cameraID;
 	this->ScreenShot[this->current]->Snap(objects);
 
 	auto& allTexture = GraphicManager::GetInstance().AllTexture();
@@ -56,20 +54,17 @@ std::shared_ptr<ScreenCapture> BasicScreenCapture::clone() const
 
 }
 
-std::shared_ptr<BasicScreenCapture> BasicScreenCapture::Spawn(const std::string& inputID,
-																		const std::string& textureID,
-																		unsigned int width,
-																		unsigned int height,
-																		CHL::Matrix4x4 cameraMatrix,
-																		CHL::Matrix4x4 prespectiveMatrix)
+std::shared_ptr<BasicScreenCapture> BasicScreenCapture::Spawn(const std::string& textureID,
+															  unsigned int width,
+															  unsigned int height,
+															  std::string CameraID)
 {
-	std::shared_ptr<BasicScreenCapture> newObject(new BasicScreenCapture(inputID));
+	std::shared_ptr<BasicScreenCapture> newObject(new BasicScreenCapture());
 
 	newObject->TextureID = textureID;
 	newObject->width = width;
 	newObject->height = height;
-	newObject->prespectiveMatrix = prespectiveMatrix;
-	newObject->cameraMatrix = cameraMatrix;
+	newObject->cameraID = CameraID;
 
 	newObject->Init();
 

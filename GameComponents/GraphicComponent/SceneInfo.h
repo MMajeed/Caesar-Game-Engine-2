@@ -16,6 +16,8 @@ struct SceneInfo
 	CHL::Matrix4x4 TwoDimMatrix;
 	double width;
 	double height;
+	double farZ;
+	double nearZ;
 };
 
 #endif //__SceneInfo__

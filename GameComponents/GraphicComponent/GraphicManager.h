@@ -16,7 +16,6 @@
 #include "ScreenCapture.h"
 #include <INFO.h>
 #include <hash_map>
-#include "SceneFilter.h"
 
 class GraphicManager : public Interface, public CHL::Singleton<GraphicManager>
 {
@@ -31,7 +30,6 @@ public:
 	virtual void Shutdown();
 	
 	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
-	virtual void SetupLight(std::hash_map<std::string, SP_INFO>& objects);
 
 	// DirectX stuff
 	struct
@@ -57,18 +55,18 @@ public:
 
 
 	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
-	void InsertObjectDrawable(std::shared_ptr<Drawable> obj);
-	void RemoveObjectDrawable(std::string ID);
+	void InsertObjectDrawable(const std::string& ID, std::shared_ptr<Drawable> obj);
+	void RemoveObjectDrawable(const std::string& ID);
 	const std::hash_map<std::string, std::shared_ptr<Drawable>> AllObjectDrawables();
 	
 	std::hash_map<std::string, std::shared_ptr<BasicTexture>> textures;
-	void InsertTexture(std::shared_ptr<BasicTexture> obj);
-	void RemoveTexture(std::string ID);
+	void InsertTexture(const std::string& ID, std::shared_ptr<BasicTexture> obj);
+	void RemoveTexture(const std::string& ID);
 	const std::hash_map<std::string, std::shared_ptr<BasicTexture>> AllTexture();
 
 	std::hash_map<std::string, std::shared_ptr<ScreenCapture>> ScreenCaptures;
-	void InsertScreenCapture(std::shared_ptr<ScreenCapture> obj);
-	void RemoveScreenCapture(std::string ID);
+	void InsertScreenCapture(const std::string& ID, std::shared_ptr<ScreenCapture> obj);
+	void RemoveScreenCapture(const std::string& ID);
 	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
 
 	virtual void InitDevice();

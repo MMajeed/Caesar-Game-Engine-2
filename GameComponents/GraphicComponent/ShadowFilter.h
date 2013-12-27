@@ -2,18 +2,11 @@
 #define __ShadowFilter__
 
 #include "Linker.h"
+#include <INFO.h>
 
-#include "SceneFilter.h"
-#include <memory>
-
-class ShadowFilter : public SceneFilter
+namespace ShadowFilter 
 {
-public:
-	ShadowFilter(const std::string& inputID);
-
-	virtual bool Filter(const SP_INFO& );
-
-	static std::shared_ptr<ShadowFilter> Spawn(const std::string& inputID);
+	bool Filter(const SP_INFO& object);
 };
 
 

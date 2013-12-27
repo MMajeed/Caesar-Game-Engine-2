@@ -87,12 +87,10 @@ void LuaKeysID::Register(lua_State *lua)
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenShot = luabind::newtable(lua);
-		BasicScreenShot[Keys::ScreenShot::ScreenShotOBJ]      = Keys::ScreenShot::ScreenShotOBJ;
-		BasicScreenShot[Keys::ScreenShot::WIDTH]                 = Keys::ScreenShot::WIDTH;
-		BasicScreenShot[Keys::ScreenShot::HEIGHT]                = Keys::ScreenShot::HEIGHT;
-		BasicScreenShot[Keys::ScreenShot::CAMERAMATRIX]          = Keys::ScreenShot::CAMERAMATRIX;
-		BasicScreenShot[Keys::ScreenShot::PRESPECTIVEMATRIX]     = Keys::ScreenShot::PRESPECTIVEMATRIX;
-		BasicScreenShot[Keys::ScreenShot::EYE]                   = Keys::ScreenShot::EYE;
+		BasicScreenShot[Keys::ScreenShot::ScreenShotOBJ] = Keys::ScreenShot::ScreenShotOBJ;
+		BasicScreenShot[Keys::ScreenShot::WIDTH]         = Keys::ScreenShot::WIDTH;
+		BasicScreenShot[Keys::ScreenShot::HEIGHT]        = Keys::ScreenShot::HEIGHT;
+		BasicScreenShot[Keys::ScreenShot::CAMERAID]		 = Keys::ScreenShot::CAMERAID;
 	luaKeyTable["ScreenShot"] = BasicScreenShot;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;

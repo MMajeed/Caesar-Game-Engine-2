@@ -33,9 +33,6 @@
     <ClInclude Include="BasicTexture.h">
       <Filter>Item Drawing\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="SceneFilter.h">
-      <Filter>Scene\SceneFilter</Filter>
-    </ClInclude>
     <ClInclude Include="ShadowFilter.h">
       <Filter>Scene\SceneFilter\ShadowFilter</Filter>
     </ClInclude>

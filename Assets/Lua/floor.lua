@@ -18,9 +18,9 @@ box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
 OnKeyDown(string.byte("A"), 
     function() 
         
-        myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]        = 1024,
-                                    [Keys["ScreenShot"]["Height"]]       = 1024,
-                                    [Keys["ScreenShot"]["CameraMatrix"]] = ViewCalculation(cam.Eye, cam.TargetMagintude, cam.Up, cam.Pitch, cam.Yaw, cam.Roll), });
+        myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]    = 1024,
+                                    [Keys["ScreenShot"]["Height"]]   = 1024,
+                                    [Keys["ScreenShot"]["CameraID"]] = cam, });
         box1:RemoveAll2DTexture();
         box1:Set2DTexture(myTexture);
     end

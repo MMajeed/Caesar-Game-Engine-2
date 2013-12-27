@@ -6,15 +6,13 @@
 #include <Keys.h>
 #include "LuaMath.h"
 #include <3DMath.h>
+#include "LuaCamera.h"
 
 LuaScreenCapture::BasicScreenCapture::BasicScreenCapture(luabind::object const& table)
 {
 	unsigned int width = 1028;
 	unsigned int height = 1028;
-	CHL::Matrix4x4 camera;
-	bool cameraSet = false;
-	CHL::Matrix4x4 prespective;
-	bool prespectiveSet = false;
+	std::string cameraID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -24,40 +22,18 @@ LuaScreenCapture::BasicScreenCapture::BasicScreenCapture(luabind::object const& 
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::ScreenShot::WIDTH)				{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)			{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAMATRIX)		{ camera = luabind::object_cast<LuaMath::Matrix4x4>(*it);  cameraSet = true; }
-			else if(key == Keys::ScreenShot::PRESPECTIVEMATRIX)	{ prespective = luabind::object_cast<LuaMath::Matrix4x4>(*it);  prespectiveSet = true; }
+				 if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<LuaCamera>(*it).ID; }
 		}
 	}
-
-	if(cameraSet == false)
-	{
-		CHL::Vec4 eye{0.0, 0.0, 0.0, 0.0};
-		CHL::Vec4 TM{0.0, 0.0, 1.0, 0.0};
-		CHL::Vec4 up{0.0, 1.0, 0.0, 0.0};
-		double roll = 0.0;	double pitch = 0.0;		double yaw = 0.0;
-
-		camera = CHL::ViewCalculation(eye, TM, up, pitch, yaw, roll);
-	}
-	if(prespectiveSet == false)
-	{
-		double FovAngleY = 0.785398163;
-		double nearZ = 0.01;
-		double farZ = 5000.0;
-		prespective = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
-	}
-
-	BasicScreenCaptureConfig::Create(width, height, camera, prespective, this->ID, this->TextureID);
+	
+	BasicScreenCaptureConfig::Create(width, height, cameraID, this->ID, this->TextureID);
 }
 
-void LuaScreenCapture::BasicScreenCapture::SetCameraMatrix(LuaMath::Matrix4x4 mat)
+void LuaScreenCapture::BasicScreenCapture::SetCameraID(LuaCamera cameraID)
 {
-	BasicScreenCaptureConfig::SetCamera(this->ID, mat);
-}
-void LuaScreenCapture::BasicScreenCapture::SetPrespectiveMatrix(LuaMath::Matrix4x4 mat)
-{
-	BasicScreenCaptureConfig::SetPrespective(this->ID, mat);
+	BasicScreenCaptureConfig::SetCameraID(this->ID, cameraID.ID);
 }
 LuaBasicTexture LuaScreenCapture::BasicScreenCapture::GetTexture()
 {
@@ -77,8 +53,7 @@ void LuaScreenCapture::BasicScreenCapture::Register(lua_State *lua)
 	luabind::module(lua)[
 		luabind::class_<LuaScreenCapture::BasicScreenCapture>("BasicScreenCapture")
 			.def(luabind::constructor<luabind::object const&>())
-			.def("SetCamera", &LuaScreenCapture::BasicScreenCapture::SetCameraMatrix)
-			.def("SetPrespective", &LuaScreenCapture::BasicScreenCapture::SetPrespectiveMatrix)
+			.def("SetCamera", &LuaScreenCapture::BasicScreenCapture::SetCameraID)
 			.def("GetTexture", &LuaScreenCapture::BasicScreenCapture::GetTexture)
 			.def("Release", &LuaScreenCapture::BasicScreenCapture::Release)
 	];
@@ -89,10 +64,7 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 {
 	unsigned int width = 1028;
 	unsigned int height = 1028;
-	CHL::Matrix4x4 camera;
-	bool cameraSet = false;
-	CHL::Matrix4x4 prespective;
-	bool prespectiveSet = false;
+	std::string cameraID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -102,40 +74,18 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-			if(key == Keys::ScreenShot::WIDTH)					{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)			{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAMATRIX)		{ camera = luabind::object_cast<LuaMath::Matrix4x4>(*it);  cameraSet = true; }
-			else if(key == Keys::ScreenShot::PRESPECTIVEMATRIX)	{ prespective = luabind::object_cast<LuaMath::Matrix4x4>(*it);  prespectiveSet = true; }
+				 if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<LuaCamera>(*it).ID; }
 		}
 	}
-
-	if(cameraSet == false)
-	{
-		CHL::Vec4 eye{0.0, 0.0, 0.0, 0.0};
-		CHL::Vec4 TM{0.0, 0.0, 1.0, 0.0};
-		CHL::Vec4 up{0.0, 1.0, 0.0, 0.0};
-		double roll = 0.0;	double pitch = 0.0;		double yaw = 0.0;
-
-		camera = CHL::ViewCalculation(eye, TM, up, pitch, yaw, roll);
-	}
-	if(prespectiveSet == false)
-	{
-		double FovAngleY = 0.785398163;
-		double nearZ = 0.01;
-		double farZ = 5000.0;
-		prespective = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
-	}
-
-	DepthScreenCaptureConfig::Create(width, height, camera, prespective, this->ID, this->TextureID);
+	
+	DepthScreenCaptureConfig::Create(width, height, cameraID, this->ID, this->TextureID);
 }
 
-void LuaScreenCapture::DepthScreenCapture::SetCameraMatrix(LuaMath::Matrix4x4 mat)
+void LuaScreenCapture::DepthScreenCapture::SetCameraID(LuaCamera cameraID)
 {
-	DepthScreenCaptureConfig::SetCamera(this->ID, mat);
-}
-void LuaScreenCapture::DepthScreenCapture::SetPrespectiveMatrix(LuaMath::Matrix4x4 mat)
-{
-	DepthScreenCaptureConfig::SetPrespective(this->ID, mat);
+	DepthScreenCaptureConfig::SetCameraID(this->ID, cameraID.ID);
 }
 LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 {
@@ -155,8 +105,7 @@ void LuaScreenCapture::DepthScreenCapture::Register(lua_State *lua)
 	luabind::module(lua)[
 		luabind::class_<LuaScreenCapture::DepthScreenCapture>("DepthScreenCapture")
 			.def(luabind::constructor<luabind::object const&>())
-			.def("SetCamera", &LuaScreenCapture::DepthScreenCapture::SetCameraMatrix)
-			.def("SetPrespective", &LuaScreenCapture::DepthScreenCapture::SetPrespectiveMatrix)
+			.def("SetCamera", &LuaScreenCapture::DepthScreenCapture::SetCameraID)
 			.def("GetTexture", &LuaScreenCapture::DepthScreenCapture::GetTexture)
 			.def("Release", &LuaScreenCapture::DepthScreenCapture::Release)
 	];
@@ -167,7 +116,7 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 {
 	unsigned int width = 1028;
 	unsigned int height = 1028;
-	CHL::Vec4 eye;
+	std::string cameraID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -179,16 +128,16 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 
 			if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::HEIGHT){ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::EYE)	{ eye = luabind::object_cast<LuaMath::Vector4>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<LuaCamera>(*it).ID; }
 		}
 	}
 
-	CubeScreenCaptureConfig::Create(width, height, eye, this->ID, this->TextureID);
+	CubeScreenCaptureConfig::Create(width, height, cameraID, this->ID, this->TextureID);
 }
 
-void LuaScreenCapture::CubeScreenCapture::SetEye(LuaMath::Vector4 mat)
+void LuaScreenCapture::CubeScreenCapture::SetCameraID(LuaCamera cameraID)
 {
-	CubeScreenCaptureConfig::SetEye(this->ID, mat);
+	CubeScreenCaptureConfig::SetCameraID(this->ID, cameraID.ID);
 }
 LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 {
@@ -208,7 +157,7 @@ void LuaScreenCapture::CubeScreenCapture::Register(lua_State *lua)
 	luabind::module(lua)[
 		luabind::class_<LuaScreenCapture::CubeScreenCapture>("CubeScreenCapture")
 			.def(luabind::constructor<luabind::object const&>())
-			.def("SetEye", &LuaScreenCapture::CubeScreenCapture::SetEye)
+			.def("SetCamera", &LuaScreenCapture::CubeScreenCapture::SetCameraID)
 			.def("GetTexture", &LuaScreenCapture::CubeScreenCapture::GetTexture)
 			.def("Release", &LuaScreenCapture::CubeScreenCapture::Release)
 	];

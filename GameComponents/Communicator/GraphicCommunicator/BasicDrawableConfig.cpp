@@ -59,17 +59,14 @@ namespace BasicDrawableConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicDrawable> newObject =
-					BasicDrawable::Spawn(this->ID,
-					vectorVertices,
-					vectorIndices,
-					vertexFileName,
-					pixelFileName,
-					static_cast<D3D11_CULL_MODE>(this->cullMode),
-					static_cast<D3D11_FILL_MODE>(this->fillMode));
+					BasicDrawable::Spawn(vectorVertices,
+										vectorIndices,
+										vertexFileName,
+										pixelFileName,
+										static_cast<D3D11_CULL_MODE>(this->cullMode),
+										static_cast<D3D11_FILL_MODE>(this->fillMode));
 
-				GraphicManager::GetInstance().InsertObjectDrawable(newObject);
-
-				this->ID = newObject->ID;
+				GraphicManager::GetInstance().InsertObjectDrawable(this->ID, newObject);
 
 				return Message::Status::Complete;
 			}
@@ -139,15 +136,14 @@ namespace BasicDrawableConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<Basic2DDrawable> newObject =
-					Basic2DDrawable::Spawn( this->ID,
-											vectorVertices,
+					Basic2DDrawable::Spawn( vectorVertices,
 											vectorIndices,
 											vertexFileName,
 											pixelFileName,
 											static_cast<D3D11_CULL_MODE>(this->cullMode),
 											static_cast<D3D11_FILL_MODE>(this->fillMode));
 
-				GraphicManager::GetInstance().InsertObjectDrawable(newObject);
+				GraphicManager::GetInstance().InsertObjectDrawable(this->ID, newObject);
 
 				return Message::Status::Complete;
 			}

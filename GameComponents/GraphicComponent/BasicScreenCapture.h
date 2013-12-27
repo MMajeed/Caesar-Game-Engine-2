@@ -7,7 +7,7 @@
 class BasicScreenCapture : public ScreenCapture
 {
 public:
-	BasicScreenCapture(const std::string& inputID);
+	BasicScreenCapture();
 
 	virtual void Init();
 	virtual void Destory();
@@ -16,16 +16,13 @@ public:
 	virtual std::shared_ptr<ScreenCapture> clone() const;
 	virtual ~BasicScreenCapture(){}
 
-	static std::shared_ptr<BasicScreenCapture> Spawn(const std::string& inputID,
-													const std::string& textureID,
+	static std::shared_ptr<BasicScreenCapture> Spawn(const std::string& textureID,
 													unsigned int width, 
-													unsigned int height, 
-													CHL::Matrix4x4 cameraMatrix,
-													CHL::Matrix4x4 prespectiveMatrix);
+													unsigned int height,
+													std::string CameraID);
 
 	std::shared_ptr<BasicScreenShot>	ScreenShot[2];
-	CHL::Matrix4x4						prespectiveMatrix;
-	CHL::Matrix4x4						cameraMatrix;
+	std::string							cameraID;
 	unsigned int						width;
 	unsigned int						height;
 	unsigned int						current;

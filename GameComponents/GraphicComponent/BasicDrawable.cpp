@@ -11,8 +11,7 @@
 #include <WindowINFO.h>
 #include <VecMath.h>
 
-BasicDrawable::BasicDrawable(const std::string& inputID)
-	: Drawable(inputID)
+BasicDrawable::BasicDrawable()
 {
 	this->D3DInfo.pVertexBuffer = 0;
 	this->D3DInfo.pIndexBuffer = 0;
@@ -318,15 +317,14 @@ void  BasicDrawable::ChangeModel(const std::vector<Vertex>&	vectorVertices,
 	this->InitIndexBuffer(pDevice);
 }
 
-std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
-													const std::vector<Vertex>&	vectorVertices,
+std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>&	vectorVertices,
 													const std::vector<WORD>&	vectorIndices,
 													const std::string&			vertexFile,
 													const std::string&			pixelFile,
 													D3D11_CULL_MODE				cullMode,
 													D3D11_FILL_MODE				fillMode)
 {
-	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(inputID));
+	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable());
 
 	newObject->D3DInfo.vertices = vectorVertices;
 	newObject->D3DInfo.indices = vectorIndices;
@@ -342,7 +340,7 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::string& inputID,
 
 std::shared_ptr<Drawable> BasicDrawable::clone() const
 {
-	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable(""));
+	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable());
 
 	return std::dynamic_pointer_cast<Drawable>(newObject);
 }

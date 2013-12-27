@@ -5,9 +5,8 @@
 #include <Keys.h>
 #include <Converter.h>
 
-BasicTexture::BasicTexture(const std::string& inputID)
+BasicTexture::BasicTexture()
 {
-	this->ID = inputID;
 	this->D3DInfo.pTexture = 0;
 }
 void BasicTexture::Init()
@@ -27,26 +26,26 @@ void BasicTexture::Update(double realTime, double deltaTime)
 {
 
 }
-std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID, const std::string& fileName)
+std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& fileName)
 {
-	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));
+	std::shared_ptr<BasicTexture> newTexture(new BasicTexture());
 	newTexture->D3DInfo.textureFileName = fileName;
 
 	newTexture->Init();
 
 	return newTexture;
 }
-std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID, ID3D11ShaderResourceView* texture)
+std::shared_ptr<BasicTexture> BasicTexture::Spawn(ID3D11ShaderResourceView* texture)
 {
-	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));
+	std::shared_ptr<BasicTexture> newTexture(new BasicTexture());
 	newTexture->D3DInfo.pTexture = texture;
 	newTexture->Init();
 
 	return newTexture;
 }
-std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& inputID)
+std::shared_ptr<BasicTexture> BasicTexture::Spawn()
 {
-	std::shared_ptr<BasicTexture> newTexture(new BasicTexture(inputID));
+	std::shared_ptr<BasicTexture> newTexture(new BasicTexture());
 	newTexture->Init();
 
 	return newTexture;

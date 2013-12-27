@@ -11,13 +11,11 @@
 namespace DepthScreenCaptureConfig
 {
 	void Create(unsigned int width,
-					   unsigned int height,
-					   const CHL::Matrix4x4& cameraMatrix,
-					   const CHL::Matrix4x4& prespectiveMatrix,
-					   std::string& ID,
-					   std::string& textureID);
-	void SetCamera(const std::string& id, const CHL::Matrix4x4& camera);
-	void SetPrespective(const std::string& id, const CHL::Matrix4x4& prespective);
+				unsigned int height,
+				const std::string& cameraID,
+				std::string& ID,
+				std::string& textureID);
+	void SetCameraID(const std::string& id, const std::string& cameraID);
 	void Release(std::string ID);
 };
 

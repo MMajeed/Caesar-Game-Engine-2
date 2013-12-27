@@ -10,21 +10,20 @@
 class BasicTexture
 {
 public:
-	BasicTexture(const std::string& inputID);
+	BasicTexture();
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
 	
-	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID);
-	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, const std::string& fileName);
-	static std::shared_ptr<BasicTexture> Spawn(const std::string& inputID, ID3D11ShaderResourceView* fileName);
+	static std::shared_ptr<BasicTexture> Spawn();
+	static std::shared_ptr<BasicTexture> Spawn(const std::string& fileName);
+	static std::shared_ptr<BasicTexture> Spawn(ID3D11ShaderResourceView* fileName);
 
 	struct
 	{
 		std::string					textureFileName;
 		ID3D11ShaderResourceView*	pTexture;
 	} D3DInfo;
-	std::string ID;
 };
 
 

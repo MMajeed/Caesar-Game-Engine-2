@@ -10,21 +10,19 @@
 #include <WindowINFO.h>
 #include <VecMath.h>
 
-Basic2DDrawable::Basic2DDrawable(const std::string& inputID)
-: BasicDrawable(inputID)
+Basic2DDrawable::Basic2DDrawable()
 {
 
 }
 
-std::shared_ptr<Basic2DDrawable> Basic2DDrawable::Spawn(const std::string&			inputID,
-														const std::vector<Vertex>&	vectorVertices,
+std::shared_ptr<Basic2DDrawable> Basic2DDrawable::Spawn(const std::vector<Vertex>&	vectorVertices,
 														const std::vector<WORD>&	vectorIndices,
 														const std::string&			vertexFile,
 														const std::string&			pixelFile,
 														D3D11_CULL_MODE				cullMode,
 														D3D11_FILL_MODE				fillMode)
 {
-	std::shared_ptr<Basic2DDrawable> newObject(new Basic2DDrawable(inputID));
+	std::shared_ptr<Basic2DDrawable> newObject(new Basic2DDrawable());
 
 	newObject->D3DInfo.vertices = vectorVertices;
 	newObject->D3DInfo.indices = vectorIndices;
@@ -40,12 +38,9 @@ std::shared_ptr<Basic2DDrawable> Basic2DDrawable::Spawn(const std::string&			inp
 
 void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
 {
-	auto window = EntityConfig::GetEntity(ImportantIDConfig::WindowINFOID::Get());
-	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(window);
-
 	CHL::Vec4 loc = object->Location;
 	loc(1) = -loc(1);
-	loc = loc - CHL::Vec4({(windowInfo->Width / 2.0), -(windowInfo->Height / 2.0), 0.0, 0.0});
+	loc = loc - CHL::Vec4({(si.width / 2.0), -(si.height / 2.0), 0.0, 0.0});
 	
 	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(loc, object->Rotation, object->Scale);
 

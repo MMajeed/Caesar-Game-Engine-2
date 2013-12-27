@@ -11,19 +11,16 @@ namespace ScreenShotConfig
 {
 	std::string Basic(unsigned int width,
 					  unsigned int height,
-					  const CHL::Matrix4x4& cameraMatrix,
-					  const CHL::Matrix4x4& prespectiveMatrix)
+					  const std::string& cameraID)
 	{
 		class TakeBasicScreenShot : public Message
 		{
 		public:
 			TakeBasicScreenShot(unsigned int width,
 								unsigned int height,
-								const CHL::Matrix4x4& cameraMatrix,
-								const CHL::Matrix4x4& prespectiveMatrix)
+								const std::string& cameraID)
 			{
-				this->camerMatrix = cameraMatrix;
-				this->prespectiveMatrix = prespectiveMatrix;
+				this->cameraID = cameraID;
 				this->newTextureID = CHL::GenerateGUID();
 				this->width = width;
 				this->height = height;
@@ -36,48 +33,42 @@ namespace ScreenShotConfig
 				auto allObjects = EntityConfig::GetAllEntity();
 
 				std::shared_ptr<BasicScreenShot> newBasicScreenShot =
-					BasicScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
-				newBasicScreenShot->D3DInfo.cameraMatrix = this->camerMatrix;
-				newBasicScreenShot->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
+					BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
 				newBasicScreenShot->Snap(allObjects);
 
 				auto texture = newBasicScreenShot->GetScreenTexture();
 				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn(this->newTextureID, texture);
-				GraphicManager::GetInstance().InsertTexture(newTexture);
+					BasicTexture::Spawn(texture);
+				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
 
 				newBasicScreenShot->Release();
 
 				return Message::Status::Complete;
 			}
 
-			CHL::Matrix4x4 camerMatrix;
-			CHL::Matrix4x4 prespectiveMatrix;
 			std::string newTextureID;
 			unsigned int width;
 			unsigned int height;
+			std::string cameraID;
 		};
 
-		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, cameraMatrix, prespectiveMatrix));
+		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		msg->WaitTillProcccesed();
 		return msg->newTextureID;
 	}
 	std::string Depth(unsigned int width,
 					  unsigned int height,
-					  const CHL::Matrix4x4& cameraMatrix,
-					  const CHL::Matrix4x4& prespectiveMatrix)
+					  const std::string& cameraID)
 	{
 		class TakeDepthScreenShot : public Message
 		{
 		public:
 			TakeDepthScreenShot(unsigned int width,
 								unsigned int height,
-								const CHL::Matrix4x4& cameraMatrix,
-								const CHL::Matrix4x4& prespectiveMatrix)
+								const std::string& cameraID)
 			{
-				this->camerMatrix = cameraMatrix;
-				this->prespectiveMatrix = prespectiveMatrix;
+				this->cameraID = cameraID;
 				this->newTextureID = CHL::GenerateGUID();
 				this->width = width;
 				this->height = height;
@@ -90,29 +81,26 @@ namespace ScreenShotConfig
 				auto allObjects = EntityConfig::GetAllEntity();
 
 				std::shared_ptr<DepthScreenShot> newBasicScreenShot =
-					DepthScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
-				newBasicScreenShot->D3DInfo.cameraMatrix = this->camerMatrix;
-				newBasicScreenShot->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
+					DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
 				newBasicScreenShot->Snap(allObjects);
 
 				auto texture = newBasicScreenShot->GetScreenTexture();
 				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn(this->newTextureID, texture);
-				GraphicManager::GetInstance().InsertTexture(newTexture);
+					BasicTexture::Spawn(texture);
+				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
 
 				newBasicScreenShot->Release();
 
 				return Message::Status::Complete;
 			}
 
-			CHL::Matrix4x4 camerMatrix;
-			CHL::Matrix4x4 prespectiveMatrix;
-			std::string newTextureID;
 			unsigned int width;
 			unsigned int height;
+			std::string newTextureID;
+			std::string cameraID;
 		};
 
-		std::shared_ptr<TakeDepthScreenShot> msg(new TakeDepthScreenShot(width, height, cameraMatrix, prespectiveMatrix));
+		std::shared_ptr<TakeDepthScreenShot> msg(new TakeDepthScreenShot(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		msg->WaitTillProcccesed();
 		return msg->newTextureID;
@@ -120,16 +108,16 @@ namespace ScreenShotConfig
 
 	std::string Cube(unsigned int width,
 					 unsigned int height,
-					 const CHL::Vec4& eye)
+					 const std::string& cameraID)
 	{
 		class TakeCubeScreenShot : public Message
 		{
 		public:
-			TakeCubeScreenShot(unsigned int width, unsigned int height, const CHL::Vec4& eye)
+			TakeCubeScreenShot(unsigned int width, unsigned int height, const std::string& cameraID)
 			{
 				this->width = width;
 				this->height = height;
-				this->eye = eye;
+				this->cameraID = cameraID;
 			}
 
 			Message::Status Work()
@@ -139,27 +127,26 @@ namespace ScreenShotConfig
 				auto allObjects = EntityConfig::GetAllEntity();
 
 				std::shared_ptr<CubeScreenShot> newBasicScreenShot =
-					CubeScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
-				newBasicScreenShot->D3DInfo.Eye = this->eye;
+					CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
 				newBasicScreenShot->Snap(allObjects);
 
 				auto texture = newBasicScreenShot->GetScreenTexture();
 				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn(this->newTextureID, texture);
-				GraphicManager::GetInstance().InsertTexture(newTexture);
+					BasicTexture::Spawn(texture);
+				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
 
 				newBasicScreenShot->Release();
 
 				return Message::Status::Complete;
 			}
 
-			CHL::Vec4 eye;
-			std::string newTextureID;
 			unsigned int width;
 			unsigned int height;
+			std::string newTextureID;
+			std::string cameraID;
 		};
 
-		std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, eye));
+		std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		msg->WaitTillProcccesed();
 		return msg->newTextureID;

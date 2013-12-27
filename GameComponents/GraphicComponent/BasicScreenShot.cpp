@@ -2,9 +2,9 @@
 #include "GraphicManager.h"
 #include <Keys.h>
 #include <Object.h>
+#include "Scene.h"
 
-BasicScreenShot::BasicScreenShot(const std::string& inputID)
-: ScreenShot(inputID)
+BasicScreenShot::BasicScreenShot()
 {
 	this->D3DInfo.pDepthMapDSV = 0;
 	this->D3DInfo.pColorMapRTV = 0;
@@ -103,69 +103,55 @@ void BasicScreenShot::Update(double realTime, double deltaTime)
 }
 void BasicScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	auto currentSene = graphic.SceneInfo;
+	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(this->D3DInfo.cameraID);
+	std::shared_ptr<CameraINFO> cameraObj;
+	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
 
-	this->SetupScene(objects);
-	this->SetupSnapShot(objects);
-	this->TakeScreenSnapShot(objects);
-	this->CleanupSnapShot(objects);
-	
-	graphic.SceneInfo = currentSene;*/
+	SceneInfo si = Scene::SetupScene(cameraObj, this->D3DInfo.width, this->D3DInfo.height);
+	this->SetupSnapShot(objects, si);
+	this->TakeScreenSnapShot(objects, si);
+	this->CleanupSnapShot(objects, si);
 }
 
-void BasicScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects)
+void BasicScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
-
-	graphic.SceneInfo.CamerMatrix = this->D3DInfo.cameraMatrix;
-	graphic.SceneInfo.PrespectiveMatrix = this->D3DInfo.prespectiveMatrix;
-	double eyeX = this->D3DInfo.cameraMatrix[3][0] * -1.0;
-	double eyeY = this->D3DInfo.cameraMatrix[3][1] * -1.0;
-	double eyeZ = this->D3DInfo.cameraMatrix[3][2] * -1.0;
-	double eyeW = this->D3DInfo.cameraMatrix[3][3] * -1.0;
-
-	CHL::Vec4 eye{eyeX, eyeY, eyeZ, eyeW};
-	graphic.SceneInfo.Eye = eye;*/
-}
-void BasicScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
-{
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
 	ID3D11RenderTargetView* renderTargets[1] = {this->D3DInfo.pColorMapRTV};
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->D3DInfo.pDepthMapDSV);
 
-	d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport);
-
-	float black[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
+	d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport); 
+	
+	float black[4] = {(float)si.ClearColour(0), (float)si.ClearColour(1), (float)si.ClearColour(2), 1.0f};
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->D3DInfo.pColorMapRTV, black);
-	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
+	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void BasicScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
+void BasicScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	graphic.SetupConstantBuffer(objects);
-	graphic.DrawObjects(objects);
-
-	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);*/
+	Scene::SetupConstantBuffer(si);
+	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, si);
+	Scene::DrawObjects(vecObj, si);
+	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
 }
-void BasicScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
+void BasicScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 	
 	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 	
-	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);*/
+	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);
 }
 
-std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(std::string id, unsigned int width, unsigned int height)
+std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(unsigned int width, unsigned int height, const std::string& cameraID)
 {
-	std::shared_ptr<BasicScreenShot> newObject(new BasicScreenShot(id));
-
+	std::shared_ptr<BasicScreenShot> newObject(new BasicScreenShot());
+	newObject->D3DInfo.cameraID = cameraID;
 	newObject->D3DInfo.width = width;
 	newObject->D3DInfo.height = height;
 

@@ -22,11 +22,9 @@ namespace BasicTextureConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicTexture> newObject =
-					BasicTexture::Spawn(this->ID, this->TextureFileName);
+					BasicTexture::Spawn(this->TextureFileName);
 
-				GraphicManager::GetInstance().InsertTexture(newObject);
-
-				this->ID = newObject->ID;
+				GraphicManager::GetInstance().InsertTexture(this->ID, newObject);
 
 				return Message::Status::Complete;
 			}

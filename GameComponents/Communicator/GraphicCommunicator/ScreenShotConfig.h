@@ -12,15 +12,13 @@ namespace ScreenShotConfig
 {
 	std::string Basic(unsigned int width,
 					  unsigned int height,
-					  const CHL::Matrix4x4& cameraMatrix,
-					  const CHL::Matrix4x4& prespectiveMatrix);
+					  const std::string& cameraID);
 	std::string Depth(unsigned int width,
 					  unsigned int height,
-					  const CHL::Matrix4x4& cameraMatrix,
-					  const CHL::Matrix4x4& prespectiveMatrix); 
+					  const std::string& cameraID);
 	std::string Cube(unsigned int width, 
-					 unsigned int height, 
-					 const CHL::Vec4& eye);
+					 unsigned int height,
+					 const std::string& cameraID);
 }
 
 

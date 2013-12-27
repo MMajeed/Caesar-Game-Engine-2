@@ -7,7 +7,7 @@
 class DepthScreenCapture : public ScreenCapture
 {
 public:
-	DepthScreenCapture(const std::string& inputID);
+	DepthScreenCapture();
 
 	virtual void Init();
 	virtual void Destory();
@@ -16,16 +16,14 @@ public:
 	virtual std::shared_ptr<ScreenCapture> clone() const;
 	virtual ~DepthScreenCapture(){}
 
-	static std::shared_ptr<DepthScreenCapture> Spawn(const std::string& inputID,
+	static std::shared_ptr<DepthScreenCapture> Spawn(
 		const std::string& textureID,
 		unsigned int width,
 		unsigned int height,
-		CHL::Matrix4x4 cameraMatrix,
-		CHL::Matrix4x4 prespectiveMatrix);
+		std::string CameraID);
 
 	std::shared_ptr<DepthScreenShot>	ScreenShot;
-	CHL::Matrix4x4						prespectiveMatrix;
-	CHL::Matrix4x4						cameraMatrix;
+	std::string							cameraID;
 	unsigned int						width;
 	unsigned int						height;
 };

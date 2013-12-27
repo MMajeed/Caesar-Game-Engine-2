@@ -8,10 +8,9 @@
 class Basic2DDrawable : public BasicDrawable
 {
 public:
-	Basic2DDrawable(const std::string& inputID);
+	Basic2DDrawable();
 
-	static std::shared_ptr<Basic2DDrawable> Spawn(const std::string& inputID,
-												  const std::vector<Vertex>&	vectorVertices,
+	static std::shared_ptr<Basic2DDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
 												  const std::vector<WORD>&	vectorIndices,
 												  const std::string&			vertexFile,
 												  const std::string&			pixelFile,

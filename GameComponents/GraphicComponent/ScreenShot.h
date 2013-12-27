@@ -11,8 +11,6 @@
 class ScreenShot
 {
 public:
-	ScreenShot(const std::string& inputID) : ID(inputID){}
-
 	virtual void Init()                                             = 0;
 	virtual void Release()                                          = 0;
 	virtual void Snap(std::hash_map<std::string, SP_INFO>& objects)	= 0;
@@ -25,8 +23,6 @@ public:
 		return this->pScreenTexture;
 	}
 	ID3D11ShaderResourceView*	pScreenTexture;
-	
-	const std::string ID;
 };
 
 

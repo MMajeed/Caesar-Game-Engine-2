@@ -8,20 +8,18 @@ namespace DepthScreenCaptureConfig
 {
 	void Create(unsigned int width,
 				unsigned int height,
-				const CHL::Matrix4x4& cameraMatrix,
-				const CHL::Matrix4x4& prespectiveMatrix,
+				const std::string& cameraID,
 				std::string& ID,
 				std::string& textureID)
 	{
 		class AddDepthScreenCapture : public Message
 		{
 		public:
-			AddDepthScreenCapture(unsigned int width, unsigned int height, const CHL::Matrix4x4& cameraMatrix, const CHL::Matrix4x4& prespectiveMatrix)
+			AddDepthScreenCapture(unsigned int width, unsigned int height, const std::string& cameraID)
 			{
 				this->width = width;
 				this->height = height;
-				this->camerMatrix = cameraMatrix;
-				this->prespectiveMatrix = prespectiveMatrix;
+				this->cameraID = cameraID;
 				this->newTextureID = CHL::GenerateGUID();
 				this->ID = CHL::GenerateGUID();
 			}
@@ -31,98 +29,66 @@ namespace DepthScreenCaptureConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn(this->newTextureID);
-				GraphicManager::GetInstance().InsertTexture(newTexture);
+					BasicTexture::Spawn();
+				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
 
 				std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
-					DepthScreenCapture::Spawn(this->ID, this->newTextureID, this->width, this->height, this->camerMatrix, this->prespectiveMatrix);
-				GraphicManager::GetInstance().InsertScreenCapture(newDepthScreenShot);
+					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
+				GraphicManager::GetInstance().InsertScreenCapture(this->ID, newDepthScreenShot);
 
 				return Message::Status::Complete;
 			}
 
 
-			CHL::Matrix4x4 camerMatrix;
-			CHL::Matrix4x4 prespectiveMatrix;
+			std::string cameraID;
 			std::string newTextureID;
 			std::string ID;
 			unsigned int width;
 			unsigned int height;
 		};
 		std::shared_ptr<AddDepthScreenCapture> msg
-			(new AddDepthScreenCapture(width, height, cameraMatrix, prespectiveMatrix));
+			(new AddDepthScreenCapture(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		ID = msg->ID;
 		textureID = msg->newTextureID;
 	}
-	void SetCamera(const std::string& id, const CHL::Matrix4x4& camera)
+	void SetCameraID(const std::string& id, const std::string& cameraID)
 	{
 		class ChangeCameraMatrix : public Message
 		{
 		public:
-			ChangeCameraMatrix(const std::string& id, const CHL::Matrix4x4& camera)
+			ChangeCameraMatrix(const std::string& id, const std::string& cameraID)
 			{
 				this->ID = id;
-				this->camerMatrix = camera;
+				this->cameraID = cameraID;
 			}
 
 			Message::Status Work()
 			{
-				auto allContinuous = GraphicManager::GetInstance().AllScreenCapture();
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto& allContinuous = GraphicManager::GetInstance().AllScreenCapture();
 				auto iter = allContinuous.find(this->ID);
 				if(iter != allContinuous.end())
 				{
 					std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(iter->second);
 					if(cast)
 					{
-						cast->cameraMatrix = this->camerMatrix;
+						cast->cameraID = this->cameraID;
 					}
 				}
 
 				return Message::Status::Complete;
 			}
 			std::string ID;
-			CHL::Matrix4x4 camerMatrix;
+			std::string cameraID;
 		};
 
 		std::shared_ptr<ChangeCameraMatrix> msg
-			(new ChangeCameraMatrix(id, camera));
+			(new ChangeCameraMatrix(id, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
-	void SetPrespective(const std::string& id, const CHL::Matrix4x4& prespective)
-	{
-		class ChangePrespectiveMatrix : public Message
-		{
-		public:
-			ChangePrespectiveMatrix(const std::string& id, const CHL::Matrix4x4& prespective)
-			{
-				this->ID = id;
-				this->prespective = prespective;
-			}
-
-			Message::Status Work()
-			{
-				auto allContinuous = GraphicManager::GetInstance().AllScreenCapture();
-				auto iter = allContinuous.find(this->ID);
-				if(iter != allContinuous.end())
-				{
-					std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(iter->second);
-					if(cast)
-					{
-						cast->prespectiveMatrix = this->prespective;
-					}
-				}
-
-				return Message::Status::Complete;
-			}
-			std::string ID;
-			CHL::Matrix4x4 prespective;
-		};
-
-		std::shared_ptr<ChangePrespectiveMatrix> msg
-			(new ChangePrespectiveMatrix(id, prespective));
-		GraphicManager::GetInstance().SubmitMessage(msg);
-	}
+	
 	void Release(std::string ID)
 	{
 		class ReleaseCapture : public Message

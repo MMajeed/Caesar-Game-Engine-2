@@ -3,13 +3,12 @@
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
-DepthScreenCapture::DepthScreenCapture(const std::string& inputID)
-:ScreenCapture(inputID)
+DepthScreenCapture::DepthScreenCapture()
 {
 }
 void DepthScreenCapture::Init()
 {
-	this->ScreenShot = DepthScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot = DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
 void DepthScreenCapture::Destory()
 {
@@ -27,8 +26,7 @@ void DepthScreenCapture::Update(double realTime, double deltaTime)
 }
 void DepthScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
-	this->ScreenShot->D3DInfo.cameraMatrix = this->cameraMatrix;
-	this->ScreenShot->D3DInfo.prespectiveMatrix = this->prespectiveMatrix;
+	this->ScreenShot->D3DInfo.cameraID = this->cameraID;
 	this->ScreenShot->Snap(objects);
 
 	auto allTexture = GraphicManager::GetInstance().AllTexture();
@@ -50,20 +48,17 @@ std::shared_ptr<ScreenCapture> DepthScreenCapture::clone() const
 
 }
 
-std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(const std::string& inputID,
-																			const std::string& textureID,
-																			unsigned int width,
-																			unsigned int height,
-																			CHL::Matrix4x4 cameraMatrix,
-																			CHL::Matrix4x4 prespectiveMatrix)
+std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(const std::string& textureID,
+															  unsigned int width,
+															  unsigned int height,
+															  std::string CameraID)
 {
-	std::shared_ptr<DepthScreenCapture> newObject(new DepthScreenCapture(inputID));
+	std::shared_ptr<DepthScreenCapture> newObject(new DepthScreenCapture());
 
 	newObject->TextureID = textureID;
 	newObject->width = width;
 	newObject->height = height;
-	newObject->prespectiveMatrix = prespectiveMatrix;
-	newObject->cameraMatrix = cameraMatrix;
+	newObject->cameraID = CameraID;
 
 	newObject->Init();
 

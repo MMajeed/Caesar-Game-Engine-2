@@ -43,14 +43,14 @@
     <ClCompile Include="CubeScreenCaptureConfig.cpp">
       <Filter>ScreenCaptureConfig\CubeScreenCaptureConfig</Filter>
     </ClCompile>
-    <ClCompile Include="BasicScreenCaptureConfig.cpp">
-      <Filter>ScreenCaptureConfig\BasicScreenCaptureConfig</Filter>
-    </ClCompile>
     <ClCompile Include="BasicTextureConfig.cpp">
       <Filter>BasicTextureConfig</Filter>
     </ClCompile>
     <ClCompile Include="ScreenShotConfig.cpp">
       <Filter>ScreenShotConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicScreenCaptureConfig.cpp">
+      <Filter>ScreenCaptureConfig\BasicScreenCaptureConfig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

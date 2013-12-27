@@ -30,7 +30,11 @@ LuaCamera::LuaCamera(luabind::object const& table)
 		else if (key == Keys::Camera::UP)				{ up = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if (key == Keys::Camera::RADIANROLL)		{ roll = luabind::object_cast<double>(*it); }
 		else if (key == Keys::Camera::RADIANPITCH)		{ pitch = luabind::object_cast<double>(*it); }
-		else if (key == Keys::Camera::RADIANYAW)		{ yaw = luabind::object_cast<double>(*it); }
+		else if(key == Keys::Camera::RADIANYAW)		    { yaw = luabind::object_cast<double>(*it); }
+		else if(key == Keys::Camera::FOVANGLE)		    { FovAngleY = luabind::object_cast<double>(*it); }
+		else if(key == Keys::Camera::NEARZ)		        { nearZ = luabind::object_cast<double>(*it); }
+		else if(key == Keys::Camera::FARZ)		        { farZ = luabind::object_cast<double>(*it); }
+		else if(key == Keys::Camera::CLEARCOLOR)        { ClearColor = luabind::object_cast<LuaMath::Vector4>(*it); }
 	}
 
 	std::shared_ptr<CameraINFO> obj(new CameraINFO());
@@ -115,14 +119,56 @@ double LuaCamera::GetPitch()
 	return GenericObj<double>::GetValue(obj);
 }
 
-void LuaCamera::SetYaw(double yaw)
+void LuaCamera::SetYaw(double val)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Camera::RADIANYAW, GenericObj<double>::CreateNew(yaw));
+	EntityConfig::SetEntity(this->ID, Keys::Camera::RADIANYAW, GenericObj<double>::CreateNew(val));
 }
 double LuaCamera::GetYaw()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::RADIANYAW);
 	return GenericObj<double>::GetValue(obj);
+}
+
+void LuaCamera::SetFovAngle(double val)
+{
+	EntityConfig::SetEntity(this->ID, Keys::Camera::FOVANGLE, GenericObj<double>::CreateNew(val));
+}
+double LuaCamera::GetFovAngle()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::FOVANGLE);
+	return GenericObj<double>::GetValue(obj);
+}
+
+void LuaCamera::SetNearZ(double val)
+{
+	EntityConfig::SetEntity(this->ID, Keys::Camera::NEARZ, GenericObj<double>::CreateNew(val));
+}
+double LuaCamera::GetNearZ()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::NEARZ);
+	return GenericObj<double>::GetValue(obj);
+}
+
+void LuaCamera::SetFarZ(double val)
+{
+
+	EntityConfig::SetEntity(this->ID, Keys::Camera::RADIANYAW, GenericObj<double>::CreateNew(val));
+}
+double LuaCamera::GetFarZ()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::FARZ);
+	return GenericObj<double>::GetValue(obj);
+}
+
+void LuaCamera::SetClearColor(LuaMath::Vector4 val)
+{
+
+	EntityConfig::SetEntity(this->ID, Keys::Camera::RADIANYAW, GenericObj<CHL::Vec4>::CreateNew(val));
+}
+LuaMath::Vector4 LuaCamera::GetClearColor()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::CLEARCOLOR);
+	return GenericObj<CHL::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::Release()

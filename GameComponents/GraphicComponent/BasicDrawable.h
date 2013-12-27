@@ -12,7 +12,7 @@
 class BasicDrawable : public Drawable
 {
 public:
-	BasicDrawable(const std::string& inputID);
+	BasicDrawable();
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
@@ -20,8 +20,7 @@ public:
 	virtual void DrawShadow(std::shared_ptr<ObjectINFO> object, const SceneInfo& si);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
-	static std::shared_ptr<BasicDrawable> Spawn(const std::string& inputID,
-												const std::vector<Vertex>&	vectorVertices,
+	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
 												const std::vector<WORD>&	vectorIndices,
 												const std::string&			vertexFile,
 												const std::string&			pixelFile,

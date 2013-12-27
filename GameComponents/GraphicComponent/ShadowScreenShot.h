@@ -3,11 +3,12 @@
 
 #include "ScreenShot.h"
 #include <Matrix.h>
+#include "SceneInfo.h"
 
 class ShadowScreenShot : public ScreenShot
 {
 public:
-	ShadowScreenShot(const std::string& inputID);
+	ShadowScreenShot();
 
 	void Init();
 	void Release();
@@ -28,8 +29,7 @@ public:
 		D3D11_VIEWPORT          Viewport;
 		unsigned int			width;
 		unsigned int			height;
-		CHL::Matrix4x4			prespectiveMatrix;
-		CHL::Matrix4x4			cameraMatrix;
+		SceneInfo				scene;
 	} D3DInfo;
 };
 

@@ -3,9 +3,9 @@
 #include <Keys.h>
 #include <Object.h>
 #include <3DMath.h>
+#include "Scene.h"
 
-CubeScreenShot::CubeScreenShot(const std::string& inputID)
-	: ScreenShot(inputID)
+CubeScreenShot::CubeScreenShot()
 {
 	this->D3DInfo.pDepthMapDSV = 0;
 	this->D3DInfo.pColorMapRTV[0] = 0;
@@ -131,21 +131,24 @@ void CubeScreenShot::Update(double realTime, double deltaTime)
 }
 void CubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
-	auto scene = graphic.SceneInfo;
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(this->D3DInfo.cameraID);
+	std::shared_ptr<CameraINFO> cameraObj;
+	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
+
 	for(std::size_t i = 0; i < 6; ++i)
 	{
-		this->SetupScene(objects, i);
-		this->SetupSnapShot(objects, i);
-		this->TakeScreenSnapShot(objects, i);
-		this->CleanupSnapShot(objects, i);
+		SceneInfo si = this->SetupScene(objects, i, cameraObj);
+		this->SetupSnapShot(objects, i, si);
+		this->TakeScreenSnapShot(objects, i, si);
 	}
-	graphic.SceneInfo = scene;*/
+	this->CleanupSnapShot(objects);
 }
 
-void CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const std::shared_ptr<CameraINFO>& cam)
 {
-	//GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	// This call needs to be called six times, for each direction of the camera.
 	// You set the back buffer to be the particular direction in the cube map
@@ -153,65 +156,76 @@ void CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, st
 	//	0 ==> +X	//	1 ==> -X
 	//	2 ==> +Y	//	3 ==> -Y
 	//	4 ==> +Z	//	5 ==> -Y
-	//static enum enumCamDirection
-	//{
-	//	X_POS = 0,
-	//	X_NEG,	// = 1
-	//	Y_POS,	// = 2
-	//	Y_NEG,	// = 3
-	//	Z_POS,	// = 4
-	//	Z_NEG	// = 5 
-	//};
+	static enum enumCamDirection
+	{
+		X_POS = 0,
+		X_NEG,	// = 1
+		Y_POS,	// = 2
+		Y_NEG,	// = 3
+		Z_POS,	// = 4
+		Z_NEG	// = 5 
+	};
 
-	//CHL::Vec4 vEye;
-	//CHL::Vec4 vTM;
-	//CHL::Vec4 vUp;
-	//double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
+	CHL::Vec4 vEye = cam->Eye;
+	CHL::Vec4 vTM;
+	CHL::Vec4 vUp;
+	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
 	// Draw the scene with the exception of the center sphere to this cube map face.
-	//switch(side)
-	//{
-	//case X_POS:		// 0
-	//	vUp = {0.0, 1.0, 0.0, 0.0};
-	//	vTM = {0.01, 0.0, 0.0, 0.0};
-	//	break;
-	//case X_NEG:		// 1	
-	//	vUp = {0.0, 1.0, 0.0, 0.0};
-	//	vTM = {-0.01, 0.0, 0.0, 0.0};
-	//	break;
-	//case Y_POS:		// 2
-	//	vUp = {0.0, 0.0, 1.0, 0.0};
-	//	vTM = {0.0, 0.01, 0.0, 0.0};
-	//	yaw = 3.14f;
-	//	break;
-	//case Y_NEG:		// 3
-	//	vUp = {0.0, 0.0, 1.0, 0.0};
-	//	vTM = {0.0, -0.01, 0.0, 0.0};
-	//	break;
-	//case Z_POS:		// 4
-	//	vUp = {0.0, 1.0, 0.0, 0.0};
-	//	vTM = {0.0, 0.0, 0.01, 0.0};
-	//	break;
-	//case Z_NEG:		// 5
-	//	vUp = {0.0, 1.0, 0.0, 0.0};
-	//	vTM = {0.0, 0.0, -0.01, 0.0};
-	//	break;
-	//}
+	switch(side)
+	{
+	case X_POS:		// 0
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {0.01, 0.0, 0.0, 0.0};
+		break;
+	case X_NEG:		// 1	
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {-0.01, 0.0, 0.0, 0.0};
+		break;
+	case Y_POS:		// 2
+		vUp = {0.0, 0.0, 1.0, 0.0};
+		vTM = {0.0, 0.01, 0.0, 0.0};
+		yaw = 3.14f;
+		break;
+	case Y_NEG:		// 3
+		vUp = {0.0, 0.0, 1.0, 0.0};
+		vTM = {0.0, -0.01, 0.0, 0.0};
+		break;
+	case Z_POS:		// 4
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {0.0, 0.0, 0.01, 0.0};
+		break;
+	case Z_NEG:		// 5
+		vUp = {0.0, 1.0, 0.0, 0.0};
+		vTM = {0.0, 0.0, -0.01, 0.0};
+		break;
+	}
 
-	//graphic.SceneInfo.CamerMatrix = CHL::ViewCalculation(this->D3DInfo.Eye, vTM, vUp, pitch, yaw, roll);
+	double FovAngleY = 1.5707963267948966192313216916398;
+	double height = this->D3DInfo.height; 
+	double width = this->D3DInfo.width;
+	double nearZ = cam->nearZ;
+	double farZ = cam->farZ;
 
-	//double FovAngleY = 1.5707963267948966192313216916398;
-	//double height = this->D3DInfo.height; 
-	//double width = this->D3DInfo.width;
-	//double nearZ = 0.01;
-	//double farZ = 5000.0;
+	SceneInfo returnValue;
+	returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	returnValue.Eye = vEye;
+	if(FovAngleY > 0.0)
+		returnValue.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
+	else
+		returnValue.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
 
-	//graphic.SceneInfo.PrespectiveMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, width / height, nearZ, farZ);
-	//graphic.SceneInfo.Eye = this->D3DInfo.Eye;
+	returnValue.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+	returnValue.width = width;
+	returnValue.height = height;
+	returnValue.ClearColour = cam->ClearColor;
+	returnValue.farZ = farZ;
+	returnValue.nearZ = nearZ;
+	return returnValue;
 }
-void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
 	ID3D11RenderTargetView* renderTargets[1] = {this->D3DInfo.pColorMapRTV[side]};
@@ -219,33 +233,34 @@ void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects,
 
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->D3DInfo.Viewport);
 
-	float black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
+	float black[4] = {(float)si.ClearColour(0), (float)si.ClearColour(1), (float)si.ClearColour(2), 1.0f};
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->D3DInfo.pColorMapRTV[side], black);
-	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);*/
+	d3dStuff.pImmediateContext->ClearDepthStencilView(this->D3DInfo.pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	graphic.SetupConstantBuffer(objects);
-	graphic.DrawObjects(objects);
+	Scene::SetupConstantBuffer(si);
+	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, si);
+	Scene::DrawObjects(vecObj, si);
 
-	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);*/
+	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
 }
-void CubeScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side)
+void CubeScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
-	/*GraphicManager& graphic = GraphicManager::GetInstance();
+	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
 	d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 
-	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);*/
+	d3dStuff.pImmediateContext->OMSetRenderTargets(1, &(d3dStuff.pRenderTargetView), d3dStuff.pDepthStencilView);
 }
 
-std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(std::string id, unsigned int width, unsigned int height)
+std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(unsigned int width, unsigned int height, const std::string& cameraID)
 {
-	std::shared_ptr<CubeScreenShot> newObject(new CubeScreenShot(id));
-
+	std::shared_ptr<CubeScreenShot> newObject(new CubeScreenShot());
+	newObject->D3DInfo.cameraID = cameraID;
 	newObject->D3DInfo.width = width;
 	newObject->D3DInfo.height = height;
 

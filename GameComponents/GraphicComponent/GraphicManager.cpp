@@ -51,6 +51,8 @@ void GraphicManager::Work()
 	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
 	 
 	SceneInfo s = Scene::SetupScene(cameraObj, windowInfo->Width, windowInfo->Height);
+	Light::GetInstance().SetupLight(objects, s.Eye);
+	this->RunAllCapture(objects);
 	Scene::SetupConstantBuffer(s);
 	Scene::ClearScreen(s);
 	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, s);
@@ -73,10 +75,6 @@ void GraphicManager::RunAllCapture(std::hash_map<std::string, SP_INFO>& objects)
 	{
 		iter->second->Snap(objects);
 	}
-}
-void GraphicManager::SetupLight(std::hash_map<std::string, SP_INFO>& objects)
-{
-	Light::GetInstance().SetupLight(objects);
 }
 
 void GraphicManager::InitDevice()
@@ -311,11 +309,11 @@ void GraphicManager::InitDevice()
 }
 
 
-void GraphicManager::InsertObjectDrawable(std::shared_ptr<Drawable> obj)
+void GraphicManager::InsertObjectDrawable(const std::string& ID, std::shared_ptr<Drawable> obj)
 {
-	this->objectDrawables[obj->ID] = obj;
+	this->objectDrawables[ID] = obj;
 }
-void GraphicManager::RemoveObjectDrawable(std::string ID)
+void GraphicManager::RemoveObjectDrawable(const std::string& ID)
 {
 	auto iter = this->objectDrawables.find(ID);
 	if(iter != this->objectDrawables.end())
@@ -329,11 +327,11 @@ const std::hash_map<std::string, std::shared_ptr<Drawable>> GraphicManager::AllO
 	return this->objectDrawables;
 }
 
-void GraphicManager::InsertTexture(std::shared_ptr<BasicTexture> obj)
+void GraphicManager::InsertTexture(const std::string& ID, std::shared_ptr<BasicTexture> obj)
 {
-	this->textures[obj->ID] = obj;
+	this->textures[ID] = obj;
 }
-void GraphicManager::RemoveTexture(std::string ID)
+void GraphicManager::RemoveTexture(const std::string& ID)
 {
 	auto iter = this->textures.find(ID);
 	if(iter != this->textures.end())
@@ -347,11 +345,11 @@ const std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicManager::
 	return this->textures;
 }
 
-void GraphicManager::InsertScreenCapture(std::shared_ptr<ScreenCapture> obj)
+void GraphicManager::InsertScreenCapture(const std::string& ID, std::shared_ptr<ScreenCapture> obj)
 {
-	this->ScreenCaptures[obj->ID] = obj;
+	this->ScreenCaptures[ID] = obj;
 }
-void GraphicManager::RemoveScreenCapture(std::string ID)
+void GraphicManager::RemoveScreenCapture(const std::string& ID)
 {
 	auto iter = this->ScreenCaptures.find(ID);
 	if(iter != this->ScreenCaptures.end())

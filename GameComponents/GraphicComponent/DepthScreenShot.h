@@ -3,23 +3,23 @@
 
 #include "ScreenShot.h"
 #include <Matrix.h>
+#include "SceneInfo.h"
 
 class DepthScreenShot : public ScreenShot
 {
 public:
-	DepthScreenShot(const std::string& inputID);
+	DepthScreenShot();
 
 	void Init();
 	void Release();
 	void Update(double realTime, double deltaTime);
 	void Snap(std::hash_map<std::string, SP_INFO>& objects);
 
-	void SetupScene(std::hash_map<std::string, SP_INFO>& objects);
-	void SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects);
-	void TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects);
-	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects);
+	void SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si);
+	void TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si);
+	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si);
 
-	static std::shared_ptr<DepthScreenShot> Spawn(std::string id, unsigned int width, unsigned int height);
+	static std::shared_ptr<DepthScreenShot> Spawn(unsigned int width, unsigned int height, const std::string& cameraID);
 	std::shared_ptr<ScreenShot> clone() const;
 
 	struct
@@ -28,8 +28,7 @@ public:
 		D3D11_VIEWPORT          Viewport;
 		unsigned int			width;
 		unsigned int			height;
-		CHL::Matrix4x4			prespectiveMatrix;
-		CHL::Matrix4x4			cameraMatrix;
+		std::string				cameraID;
 	} D3DInfo;
 };
 

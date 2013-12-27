@@ -5,7 +5,12 @@ cam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0
               [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
               [Keys["Camera"]["RadianRoll"]]      = 0.0,
               [Keys["Camera"]["RadianPitch"]]     = 0.0,
-              [Keys["Camera"]["RadianYaw"]]       = 0.0,}); 
+              [Keys["Camera"]["RadianYaw"]]       = 0.0,
+              [Keys["Camera"]["FovAngle"]]        = 0.785398163,
+              [Keys["Camera"]["NearZ"]]           = 0.01,              
+              [Keys["Camera"]["FarZ"]]            = 5000.0,
+              [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
+                }); 
 cam:SetAsMain();
 
 CamLeftButton   = false;    CamRightButton  = false;

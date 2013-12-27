@@ -12,10 +12,10 @@ namespace CubeScreenCaptureConfig
 {
 	void Create(unsigned int width,
 				unsigned int height,
-				const CHL::Vec4& eye,
+				const std::string& cameraID,
 				std::string& ID,
 				std::string& textureID);
-	void SetEye(const std::string& id, const CHL::Vec4& eye);
+	void SetCameraID(const std::string& id, const std::string& cameraID);
 	void Release(std::string ID);
 };
 

@@ -12,12 +12,10 @@ namespace BasicScreenCaptureConfig
 {
 	void Create(unsigned int width,
 				unsigned int height,
-				const CHL::Matrix4x4& cameraMatrix,
-				const CHL::Matrix4x4& prespectiveMatrix,
+				const std::string& cameraID,
 				std::string& ID,
 				std::string& textureID);
-	void SetCamera(const std::string& id, const CHL::Matrix4x4& camera);
-	void SetPrespective(const std::string& id, const CHL::Matrix4x4& prespective);
+	void SetCameraID(const std::string& id, const std::string& cameraid);
 	void Release(std::string ID);
 };
 

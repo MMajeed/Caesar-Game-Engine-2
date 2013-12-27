@@ -3,15 +3,14 @@
 #include "GraphicManager.h"
 #include "BasicTexture.h"
 
-CubeScreenCapture::CubeScreenCapture(const std::string& inputID)
-:ScreenCapture(inputID)
+CubeScreenCapture::CubeScreenCapture()
 {
 	this->current = 0;
 }
 void CubeScreenCapture::Init()
 {
-	this->ScreenShot[0] = CubeScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
-	this->ScreenShot[1] = CubeScreenShot::Spawn(CHL::GenerateGUID(), this->width, this->height);
+	this->ScreenShot[0] = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
+	this->ScreenShot[1] = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
 void CubeScreenCapture::Destory()
 {
@@ -33,7 +32,7 @@ void CubeScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }
 
-	this->ScreenShot[this->current]->D3DInfo.Eye = this->eye;
+	this->ScreenShot[this->current]->D3DInfo.cameraID = this->cameraID;
 	this->ScreenShot[this->current]->Snap(objects);
 
 	auto allTexture = GraphicManager::GetInstance().AllTexture();
@@ -55,18 +54,17 @@ std::shared_ptr<ScreenCapture> CubeScreenCapture::clone() const
 
 }
 
-std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(	const std::string& inputID,
-																			const std::string& textureID,
-																			unsigned int width,
-																			unsigned int height,
-																			CHL::Vec4 eye)
+std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(const std::string& textureID,
+															unsigned int width,
+															unsigned int height,
+															const std::string& cameraID)
 {
-	std::shared_ptr<CubeScreenCapture> newObject(new CubeScreenCapture(inputID));
+	std::shared_ptr<CubeScreenCapture> newObject(new CubeScreenCapture());
 
 	newObject->TextureID = textureID;
 	newObject->width = width;
 	newObject->height = height;
-	newObject->eye = eye;
+	newObject->cameraID = cameraID;
 
 	newObject->Init();
 

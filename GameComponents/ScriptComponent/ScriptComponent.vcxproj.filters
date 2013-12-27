@@ -21,13 +21,13 @@
       <Filter>Lua Class/Function\LuaObject</Filter>
     </ClInclude>
     <ClInclude Include="LuaProcesses.h">
-      <Filter>Lua Processes</Filter>
+      <Filter>Lua Class/Function\Lua Processes</Filter>
     </ClInclude>
     <ClInclude Include="LuaKeyAction.h">
-      <Filter>Lua Processes\LuaKeyAction</Filter>
+      <Filter>Lua Class/Function\Lua Processes\LuaKeyAction</Filter>
     </ClInclude>
     <ClInclude Include="LuaLoopCall.h">
-      <Filter>Lua Processes\LuaLoopCall</Filter>
+      <Filter>Lua Class/Function\Lua Processes\LuaLoopCall</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaBasicDrawableObject.h">
@@ -79,10 +79,10 @@
       <Filter>Lua Class/Function\LuaObject</Filter>
     </ClCompile>
     <ClCompile Include="LuaKeyAction.cpp">
-      <Filter>Lua Processes\LuaKeyAction</Filter>
+      <Filter>Lua Class/Function\Lua Processes\LuaKeyAction</Filter>
     </ClCompile>
     <ClCompile Include="LuaLoopCall.cpp">
-      <Filter>Lua Processes\LuaLoopCall</Filter>
+      <Filter>Lua Class/Function\Lua Processes\LuaLoopCall</Filter>
     </ClCompile>
     <ClCompile Include="LuaBasicDrawableObject.cpp">
       <Filter>Lua Class/Function\LuaBasicDrawableObject</Filter>
@@ -113,9 +113,6 @@
     <Filter Include="Lua Class/Function">
       <UniqueIdentifier>{951c548c-e607-4ef5-988b-fe49eabdc9ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Processes">
-      <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Class/Function\LuaCamera">
       <UniqueIdentifier>{d1199bf0-fb1c-44e4-bee8-7e4f1ad705c7}</UniqueIdentifier>
     </Filter>
@@ -133,12 +130,6 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaObject">
       <UniqueIdentifier>{7c157c13-425c-470f-971d-0dd4fc24e16a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Processes\LuaKeyAction">
-      <UniqueIdentifier>{066781f6-0fc4-46de-8fae-591dcdbacb65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Processes\LuaLoopCall">
-      <UniqueIdentifier>{12120ca4-4311-4d8b-95d6-baf25a7e4c90}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lua Class/Function\LuaBasicDrawableObject">
       <UniqueIdentifier>{2a8d88a6-f3e0-4249-be15-e4c81b3ae5fb}</UniqueIdentifier>
@@ -163,6 +154,15 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaBasicTexture">
       <UniqueIdentifier>{a2836dbb-cde0-4509-9d1e-dc50252e967e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua Processes">
+      <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua Processes\LuaKeyAction">
+      <UniqueIdentifier>{066781f6-0fc4-46de-8fae-591dcdbacb65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua Processes\LuaLoopCall">
+      <UniqueIdentifier>{12120ca4-4311-4d8b-95d6-baf25a7e4c90}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -97,8 +97,7 @@ namespace Keys
 		const static std::string ScreenShotOBJ     = "ScreenShotObj";
 		const static std::string WIDTH             = "Width";
 		const static std::string HEIGHT            = "Height";
-		const static std::string CAMERAMATRIX      = "CameraMatrix";
-		const static std::string PRESPECTIVEMATRIX = "PrespectiveMatrix";
+		const static std::string CAMERAID          = "CameraID";
 		const static std::string EYE               = "Eye";
 	};
 

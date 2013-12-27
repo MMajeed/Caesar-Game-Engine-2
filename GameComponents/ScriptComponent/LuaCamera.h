@@ -32,6 +32,18 @@ public:
 	void SetYaw(double yaw);
 	double GetYaw();
 
+	void SetFovAngle(double val);
+	double GetFovAngle();
+
+	void SetNearZ(double val);
+	double GetNearZ();
+
+	void SetFarZ(double val);
+	double GetFarZ();
+
+	void SetClearColor(LuaMath::Vector4 val);
+	LuaMath::Vector4 GetClearColor();
+
 	void Release();
 
 	std::string ID;
