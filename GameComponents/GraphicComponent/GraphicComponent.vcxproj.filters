@@ -72,6 +72,9 @@
     <ClInclude Include="SceneInfo.h">
       <Filter>Scene\SceneInfo</Filter>
     </ClInclude>
+    <ClInclude Include="Process2D.h">
+      <Filter>Scene\SceneFilter\Process2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Process2D.cpp">
+      <Filter>Scene\SceneFilter\Process2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +211,9 @@
     </Filter>
     <Filter Include="Scene\SceneFilter\ShadowFilter">
       <UniqueIdentifier>{f888f210-0c24-4dbb-832b-e3cb55473b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\SceneFilter\Process2D">
+      <UniqueIdentifier>{0349d70a-1c60-4ed8-b7ae-b639907f6c14}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -54,6 +54,7 @@ void LuaKeysID::Register(lua_State *lua)
 		cameraTable[Keys::Camera::NEARZ]           = Keys::Camera::NEARZ;
 		cameraTable[Keys::Camera::FARZ]            = Keys::Camera::FARZ;
 		cameraTable[Keys::Camera::CLEARCOLOR]      = Keys::Camera::CLEARCOLOR;
+		cameraTable[Keys::Camera::PROCESS2D]	   = Keys::Camera::PROCESS2D;
 	luaKeyTable["Camera"] = cameraTable;
 
 	luabind::object BasicDrawableTable = luabind::newtable(lua);

@@ -19,6 +19,8 @@ LuaCamera::LuaCamera(luabind::object const& table)
 	double nearZ = 0.01;
 	double farZ = 5000.0;
 	CHL::Vec4 ClearColor{0.5, 0.5, 0.5, 1.0};
+	bool process2D = true;
+
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
 		++it)
@@ -35,6 +37,7 @@ LuaCamera::LuaCamera(luabind::object const& table)
 		else if(key == Keys::Camera::NEARZ)		        { nearZ = luabind::object_cast<double>(*it); }
 		else if(key == Keys::Camera::FARZ)		        { farZ = luabind::object_cast<double>(*it); }
 		else if(key == Keys::Camera::CLEARCOLOR)        { ClearColor = luabind::object_cast<LuaMath::Vector4>(*it); }
+		else if(key == Keys::Camera::PROCESS2D)         { process2D = luabind::object_cast<bool>(*it); }
 	}
 
 	std::shared_ptr<CameraINFO> obj(new CameraINFO());
@@ -48,6 +51,7 @@ LuaCamera::LuaCamera(luabind::object const& table)
 	obj->nearZ = nearZ;
 	obj->farZ = farZ;
 	obj->ClearColor = ClearColor;
+	obj->process2D = process2D;
 
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;

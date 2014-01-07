@@ -6,6 +6,16 @@
 #include <Vector.h>
 #include <Matrix.h>
 
+class ObjectINFO;
+class Drawable;
+
+struct DrawableObject
+{
+	DrawableObject(){}
+	DrawableObject(std::shared_ptr<ObjectINFO> ObjInfo, std::shared_ptr<Drawable> Drawable) : ObjInfo(ObjInfo), Drawable(Drawable){}
+	std::shared_ptr<ObjectINFO> ObjInfo;
+	std::shared_ptr<Drawable> Drawable;
+};
 
 struct SceneInfo
 {
@@ -18,6 +28,7 @@ struct SceneInfo
 	double height;
 	double farZ;
 	double nearZ;
+	bool process2D;
 };
 
 #endif //__SceneInfo__

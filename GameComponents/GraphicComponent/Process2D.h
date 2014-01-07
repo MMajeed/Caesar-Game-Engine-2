@@ -1,10 +1,10 @@
 #ifndef __ShadowFilter__
 #define __ShadowFilter__
 
-#include <ObjectINFO.h>
-#include "SceneInfo.h" 
+#include <INFO.h>
+#include "SceneInfo.h"
 
-namespace ShadowFilter 
+namespace Process2D
 {
 	bool Filter(const DrawableObject& obj);
 };

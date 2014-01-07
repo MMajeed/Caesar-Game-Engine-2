@@ -55,7 +55,7 @@ void GraphicManager::Work()
 	this->RunAllCapture(objects);
 	Scene::SetupConstantBuffer(s);
 	Scene::ClearScreen(s);
-	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, s);
+	auto vecObj = Scene::FilterScene(objects, s);
 	Scene::DrawObjects(vecObj, s);
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)

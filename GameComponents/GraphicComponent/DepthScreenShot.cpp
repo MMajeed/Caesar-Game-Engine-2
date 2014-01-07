@@ -105,7 +105,7 @@ void DepthScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& ob
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::SetupConstantBuffer(si);
-	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, si);
+	auto vecObj = Scene::FilterScene(objects, si);
 	Scene::DrawObjects(vecObj, si);
 }
 void DepthScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)

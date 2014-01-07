@@ -206,7 +206,7 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	double width = this->D3DInfo.width;
 	double nearZ = cam->nearZ;
 	double farZ = cam->farZ;
-
+	bool proccess2D = cam->process2D;
 	SceneInfo returnValue;
 	returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 	returnValue.Eye = vEye;
@@ -221,6 +221,7 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	returnValue.ClearColour = cam->ClearColor;
 	returnValue.farZ = farZ;
 	returnValue.nearZ = nearZ;
+	returnValue.process2D = proccess2D;
 	return returnValue;
 }
 void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si)
@@ -242,7 +243,7 @@ void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& obj
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::SetupConstantBuffer(si);
-	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, si);
+	auto vecObj = Scene::FilterScene(objects, si);
 	Scene::DrawObjects(vecObj, si);
 
 	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);

@@ -4,6 +4,7 @@
 #include "GraphicManager.h"
 #include "Buffers.h"
 #include <XNAConverter.h>
+#include "Process2D.h"
 
 namespace Scene
 {
@@ -20,6 +21,7 @@ namespace Scene
 		double nearZ = 0.01;
 		double farZ = 5000.0;
 		CHL::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
+		bool process2D = true;
 
 		if(camera)
 		{
@@ -33,6 +35,7 @@ namespace Scene
 			nearZ = camera->nearZ;
 			farZ = camera->farZ;
 			clearColor = camera->ClearColor;
+			process2D = camera->process2D;
 		}
 
 		SceneInfo returnValue;
@@ -49,6 +52,7 @@ namespace Scene
 		returnValue.ClearColour = clearColor;
 		returnValue.farZ = farZ;
 		returnValue.nearZ = nearZ;
+		returnValue.process2D = process2D;
 		return returnValue;
 	}
 	void SetupConstantBuffer(const SceneInfo& si)
@@ -77,10 +81,12 @@ namespace Scene
 		d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, ClearColor);
 		d3dStuff.pImmediateContext->ClearDepthStencilView(d3dStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-	std::vector<std::shared_ptr<ObjectINFO>> FilterScene(const std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)
+	std::vector<DrawableObject> FilterScene(const std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)
 	{
-		std::vector<std::shared_ptr<ObjectINFO>> vecSpecialObjects; // For transparency and depth
-		std::vector<std::shared_ptr<ObjectINFO>> vecRegularObjects;
+		GraphicManager& graphic = GraphicManager::GetInstance();
+
+		std::vector<DrawableObject> vecSpecialObjects; // For transparency and depth
+		std::vector<DrawableObject> vecRegularObjects;
 		vecSpecialObjects.reserve(objects.size());
 		vecRegularObjects.reserve(objects.size());
 
@@ -91,52 +97,52 @@ namespace Scene
 			std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
 			if(!objInfo){ continue; }
 
+			auto drawableIter = graphic.objectDrawables.find(objInfo->DrawObjID);
+			if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
+
 			if(objInfo->Diffuse[3] != 1.0f || objInfo->Depth == false)
 			{
-				vecSpecialObjects.push_back(objInfo);
+				vecSpecialObjects.push_back({objInfo, drawableIter->second});
 			}
 			else
 			{
-				vecRegularObjects.push_back(objInfo);
+				vecRegularObjects.push_back({objInfo, drawableIter->second});
 			}
 		}
 
 		const CHL::Vec4& eye = si.Eye;
 		std::sort(vecSpecialObjects.begin(), vecSpecialObjects.end(),
-				  [eye](const std::shared_ptr<ObjectINFO>& a, const std::shared_ptr<ObjectINFO>& b) -> bool
+				  [eye](const DrawableObject& a, const DrawableObject& b) -> bool
 		{
 			float rankA = 0.0f; float rankB = 0.0f;
 
-			rankA += CHL::Length(eye, a->Location);
-			rankB += CHL::Length(eye, b->Location);
+			rankA += CHL::Length(eye, a.ObjInfo->Location);
+			rankB += CHL::Length(eye, b.ObjInfo->Location);
 
-			if(a->Depth == false) { rankA -= 1000000.0f; }
-			if(b->Depth == false) { rankB -= 1000000.0f; }
+			if(a.ObjInfo->Depth == false) { rankA -= 1000000.0f; }
+			if(b.ObjInfo->Depth == false) { rankB -= 1000000.0f; }
 
 			return rankA > rankB;
 		});
 
 
-		std::vector<std::shared_ptr<ObjectINFO>> returnValue;
+		std::vector<DrawableObject> returnValue;
 		returnValue.reserve(vecSpecialObjects.size() + vecRegularObjects.size()); // preallocate memory
 		returnValue.insert(returnValue.end(), vecRegularObjects.begin(), vecRegularObjects.end());
 		returnValue.insert(returnValue.end(), vecSpecialObjects.begin(), vecSpecialObjects.end());
 		return returnValue;
 	}
-	void DrawObjects(const std::vector<std::shared_ptr<ObjectINFO>>& objects, const SceneInfo& si)
+	void DrawObjects(const std::vector<DrawableObject>& objects, const SceneInfo& si)
 	{
-		GraphicManager& graphic = GraphicManager::GetInstance();
-
 		for(auto iterObj = objects.begin();
 			iterObj != objects.end();
 			++iterObj)
 		{
-
-			auto drawableIter = graphic.objectDrawables.find((*iterObj)->DrawObjID);
-			if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
-
-			drawableIter->second->Draw(*iterObj, si);
-
+			if(si.process2D == false)
+			{
+				if(Process2D::Filter(*iterObj)){ continue; } 
+			}
+			iterObj->Drawable->Draw(iterObj->ObjInfo, si);
 		}
 	}
 };

@@ -50,10 +50,11 @@ OnKeyDown(string.byte("B"),
 );
 
 
-mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        =  Vector4(0, 20, 0),
+mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        =  Vector4(40, 20, 0),
                            [Keys["Camera"]["NearZ"]]      = 0.01,              
                            [Keys["Camera"]["FarZ"]]       = 5000.0,
                            [Keys["Camera"]["ClearColor"]] = Vector4(0.5, 0.5, 0.5, 1.0),
+                           [Keys["Camera"]["Process2D"]]  = false,
                             });
                 
 mirrorSphereSC = CubeScreenCapture({[Keys["ScreenShot"]["Width"]]   = 1024,

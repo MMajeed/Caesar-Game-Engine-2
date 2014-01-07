@@ -56,7 +56,7 @@ namespace Keys
 		const static std::string NEARZ			 = "NearZ";
 		const static std::string FARZ            = "FarZ";
 		const static std::string CLEARCOLOR      = "ClearColor";
-
+		const static std::string PROCESS2D		 = "Process2D";
 	};
 	
 	namespace BasicDrawable

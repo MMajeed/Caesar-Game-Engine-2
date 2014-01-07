@@ -8,7 +8,7 @@
 class CameraINFO : public INFO
 {
 public:
-	//CameraINFO();
+	CameraINFO();
 
 	// Camera Stuff
 	CHL::Vec4 Eye;
@@ -24,6 +24,8 @@ public:
 	double farZ;
 
 	CHL::Vec4 ClearColor;
+
+	bool process2D;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);
 	virtual void Set(const std::string& ID, std::shared_ptr<Object> obj);

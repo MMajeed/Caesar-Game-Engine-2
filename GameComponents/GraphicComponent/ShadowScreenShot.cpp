@@ -101,17 +101,14 @@ void ShadowScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& o
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::SetupConstantBuffer(this->D3DInfo.scene);
-	std::vector<std::shared_ptr<ObjectINFO>> vecObj = Scene::FilterScene(objects, this->D3DInfo.scene);
+	auto vecObj = Scene::FilterScene(objects, this->D3DInfo.scene);
 	for(auto iter = vecObj.begin();
 		iter != vecObj.end();
 		++iter)
 	{
 		if(ShadowFilter::Filter(*iter))
 		{
-			auto drawableIter = graphic.objectDrawables.find((*iter)->DrawObjID);
-			if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
-
-			drawableIter->second->DrawShadow(*iter, this->D3DInfo.scene);
+			iter->Drawable->DrawShadow(iter->ObjInfo, this->D3DInfo.scene);
 		}
 	}
 }

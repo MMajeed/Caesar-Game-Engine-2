@@ -1,6 +1,11 @@
 #include "CameraINFO.h"
 #include "Keys.h"
 
+CameraINFO::CameraINFO()
+{
+
+}
+
 std::shared_ptr<Object> CameraINFO::Get(const std::string& ID)
 {
 	std::shared_ptr<Object> returnValue;
@@ -18,6 +23,7 @@ std::shared_ptr<Object> CameraINFO::Get(const std::string& ID)
 		else if(ID == Keys::Camera::NEARZ){ returnValue = GenericObj<double>::CreateNew(this->nearZ); }
 		else if(ID == Keys::Camera::FARZ){ returnValue = GenericObj<double>::CreateNew(this->farZ); }
 		else if(ID == Keys::Camera::CLEARCOLOR){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->ClearColor); }
+		else if(ID == Keys::Camera::PROCESS2D){ returnValue = GenericObj<bool>::CreateNew(this->process2D); }
 	}
 
 	return returnValue;
@@ -38,7 +44,7 @@ void CameraINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::Camera::NEARZ){ this->nearZ = GenericObj<double>::GetValue(obj); }
 	else if(ID == Keys::Camera::FARZ){ this->farZ = GenericObj<double>::GetValue(obj); }
 	else if(ID == Keys::Camera::CLEARCOLOR){ this->ClearColor = GenericObj<CHL::Vec4>::GetValue(obj); }
-
+	else if(ID == Keys::Camera::PROCESS2D){ this->process2D = GenericObj<bool>::GetValue(obj); }
 }
 
 std::shared_ptr<INFO> CameraINFO::Clone()
