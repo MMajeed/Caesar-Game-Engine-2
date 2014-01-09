@@ -19,6 +19,7 @@ std::shared_ptr<Basic2DDrawable> Basic2DDrawable::Spawn(const std::vector<Vertex
 														const std::vector<WORD>&	vectorIndices,
 														const std::string&			vertexFile,
 														const std::string&			pixelFile,
+														const std::string&			geometryFile,
 														D3D11_CULL_MODE				cullMode,
 														D3D11_FILL_MODE				fillMode)
 {
@@ -26,8 +27,9 @@ std::shared_ptr<Basic2DDrawable> Basic2DDrawable::Spawn(const std::vector<Vertex
 
 	newObject->D3DInfo.vertices = vectorVertices;
 	newObject->D3DInfo.indices = vectorIndices;
-	newObject->D3DInfo.VertexShaderInfo = vertexFile;
-	newObject->D3DInfo.PixelShaderInfo = pixelFile;
+	newObject->D3DInfo.VertexShaderFileName = vertexFile;
+	newObject->D3DInfo.PixelShaderFileName = pixelFile;
+	newObject->D3DInfo.GeometryShaderFileName = geometryFile;
 	newObject->D3DInfo.cullMode = cullMode;
 	newObject->D3DInfo.fillMode = fillMode;
 

@@ -16,11 +16,13 @@ namespace BasicDrawableConfig
 	std::string Create(std::shared_ptr<CHL::Model> model,
 					   std::string	vertexFileName,
 					   std::string	pixelFileName,
+					   std::string	GeometryFileName,
 					   BasicDrawableConfig::CULL_MODE cullMode,
 					   BasicDrawableConfig::FILL_MODE fillMode);
 	std::string Create2D(std::shared_ptr<CHL::Model> model,
 						 std::string	vertexFileName,
 						 std::string	pixelFileName,
+						 std::string	GeometryFileName,
 						 BasicDrawableConfig::CULL_MODE cullMode,
 						 BasicDrawableConfig::FILL_MODE fillMode);
 	

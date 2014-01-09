@@ -24,6 +24,7 @@ public:
 												const std::vector<WORD>&	vectorIndices,
 												const std::string&			vertexFile,
 												const std::string&			pixelFile,
+												const std::string&			geometryFile,
 												D3D11_CULL_MODE				cullMode,
 												D3D11_FILL_MODE				fillMode);
 
@@ -32,10 +33,12 @@ public:
 		ID3D11Buffer*				pVertexBuffer;
 		ID3D11Buffer*				pIndexBuffer;
 		ID3D11InputLayout*			pInputLayout;
-		std::string					VertexShaderInfo;
+		std::string					VertexShaderFileName;
 		ID3D11VertexShader*			pVertexShader;
-		std::string					PixelShaderInfo;
+		std::string					PixelShaderFileName;
 		ID3D11PixelShader*			pPixelShader;
+		std::string					GeometryShaderFileName;
+		ID3D11GeometryShader*		pGeometryShader;
 		ID3D11RasterizerState*		pRastersizerState;
 		ID3D11RasterizerState*		pShadowRastersizerState;
 		std::vector<Vertex>			vertices;
@@ -48,6 +51,7 @@ public:
 	virtual void InitIndexBuffer(ID3D11Device* device);
 	virtual void InitInputLayout(ID3D11Device* device);
 	virtual void InitVertexShader(ID3D11Device* device);
+	virtual void InitGeometryShader(ID3D11Device* device);
 	virtual void InitPixelShader(ID3D11Device* device);
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitShadowRastersizerState(ID3D11Device* device);
@@ -59,6 +63,7 @@ public:
 	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 	virtual void SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 	virtual void SetupDrawPixelShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
+	virtual void SetupDrawGeometryShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 	virtual void SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 	virtual void DrawObject(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);

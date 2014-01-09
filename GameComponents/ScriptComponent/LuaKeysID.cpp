@@ -58,13 +58,14 @@ void LuaKeysID::Register(lua_State *lua)
 	luaKeyTable["Camera"] = cameraTable;
 
 	luabind::object BasicDrawableTable = luabind::newtable(lua);
-	BasicDrawableTable[Keys::BasicDrawable::DRAWABLEOBJ] = Keys::BasicDrawable::DRAWABLEOBJ;
-		BasicDrawableTable[Keys::BasicDrawable::MODELFILE]         = Keys::BasicDrawable::MODELFILE;
-		BasicDrawableTable[Keys::BasicDrawable::VERTEXSHADERFILE]  = Keys::BasicDrawable::VERTEXSHADERFILE;
-		BasicDrawableTable[Keys::BasicDrawable::PIXELSHADERFILE]   = Keys::BasicDrawable::PIXELSHADERFILE;
-		BasicDrawableTable[Keys::BasicDrawable::CULLMODE]          = Keys::BasicDrawable::CULLMODE;
-		BasicDrawableTable[Keys::BasicDrawable::FILLMODE]          = Keys::BasicDrawable::FILLMODE;
-		BasicDrawableTable[Keys::BasicDrawable::DIMENSION]		   = Keys::BasicDrawable::DIMENSION;
+	BasicDrawableTable[Keys::BasicDrawable::DRAWABLEOBJ]            = Keys::BasicDrawable::DRAWABLEOBJ;
+		BasicDrawableTable[Keys::BasicDrawable::MODELFILE]          = Keys::BasicDrawable::MODELFILE;
+		BasicDrawableTable[Keys::BasicDrawable::VERTEXSHADERFILE]   = Keys::BasicDrawable::VERTEXSHADERFILE;
+		BasicDrawableTable[Keys::BasicDrawable::PIXELSHADERFILE]    = Keys::BasicDrawable::PIXELSHADERFILE;
+		BasicDrawableTable[Keys::BasicDrawable::GEOMETRYSHADERFILE] = Keys::BasicDrawable::GEOMETRYSHADERFILE;
+		BasicDrawableTable[Keys::BasicDrawable::CULLMODE]           = Keys::BasicDrawable::CULLMODE;
+		BasicDrawableTable[Keys::BasicDrawable::FILLMODE]           = Keys::BasicDrawable::FILLMODE;
+		BasicDrawableTable[Keys::BasicDrawable::DIMENSION]		    = Keys::BasicDrawable::DIMENSION;
 	luaKeyTable["BasicDrawable"] = BasicDrawableTable;
 
 	luabind::object BasicTextureTable = luabind::newtable(lua);

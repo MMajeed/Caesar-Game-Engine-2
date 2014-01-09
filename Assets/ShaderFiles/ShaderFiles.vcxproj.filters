@@ -13,6 +13,9 @@
     <Filter Include="CalculateTexture">
       <UniqueIdentifier>{cf29e570-8928-4f1b-95fb-22e2928a0277}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GS">
+      <UniqueIdentifier>{70225a4c-6157-498a-a30c-cc687d04f506}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="PS_5_SkyMap.fx">
@@ -26,6 +29,9 @@
     </FxCompile>
     <FxCompile Include="PS_1_Font.fx">
       <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="GS_0_Generic.fx">
+      <Filter>GS</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

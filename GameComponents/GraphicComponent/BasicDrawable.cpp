@@ -18,6 +18,7 @@ BasicDrawable::BasicDrawable()
 	this->D3DInfo.pInputLayout = 0;
 	this->D3DInfo.pVertexShader = 0;
 	this->D3DInfo.pPixelShader = 0;
+	this->D3DInfo.pGeometryShader = 0;
 	this->D3DInfo.pRastersizerState = 0;
 	this->D3DInfo.cullMode = D3D11_CULL_BACK;
 	this->D3DInfo.fillMode = D3D11_FILL_SOLID;
@@ -30,6 +31,7 @@ void BasicDrawable::Init()
 	this->InitIndexBuffer(device);
 	this->InitInputLayout(device);
 	this->InitVertexShader(device);
+	this->InitGeometryShader(device);
 	this->InitPixelShader(device);
 	this->InitRastersizerState(device);
 	this->InitShadowRastersizerState(device);
@@ -60,6 +62,7 @@ void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object, const SceneInfo& si
 		this->SetupDrawVertexBuffer(object, si);
 		this->SetupDrawInputVertexShader(object, si);
 		this->SetupDrawPixelShader(object, si);
+		this->SetupDrawGeometryShader(object, si);
 		this->SetupDrawRasterizeShader(object, si);
 		this->DrawObject(object, si);
 		this->CleanupAfterDraw(object, si);
@@ -75,6 +78,7 @@ void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object, const SceneIn
 		this->SetupDrawVertexBuffer(object, si);
 		this->SetupDrawInputVertexShader(object, si);
 		this->SetupDrawPixelShader(object, si);
+		this->SetupDrawGeometryShader(object, si);
 		pImmediateContext->RSSetState(this->D3DInfo.pShadowRastersizerState);
 		this->DrawObject(object, si);
 		this->CleanupAfterDraw(object, si);
@@ -183,8 +187,21 @@ void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>
 void BasicDrawable::SetupDrawPixelShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-	
-	pImmediateContext->PSSetShader( this->D3DInfo.pPixelShader, NULL, 0 );	
+
+	pImmediateContext->PSSetShader(this->D3DInfo.pPixelShader, NULL, 0);
+}
+void BasicDrawable::SetupDrawGeometryShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+{
+	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
+
+	if(this->D3DInfo.pGeometryShader != 0)
+	{
+		pImmediateContext->GSSetShader(this->D3DInfo.pGeometryShader, NULL, 0);
+	}
+	else
+	{
+		pImmediateContext->GSSetShader(NULL, NULL, 0);
+	}
 }
 void BasicDrawable::SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
 {
@@ -237,7 +254,7 @@ void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 }
 void BasicDrawable::InitInputLayout(ID3D11Device* device)
 {
-	if(this->D3DInfo.VertexShaderInfo.empty() == false)
+	if(this->D3DInfo.VertexShaderFileName.empty() == false)
 	{
 		D3D11_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -247,23 +264,31 @@ void BasicDrawable::InitInputLayout(ID3D11Device* device)
 		};
 		UINT numElements = ARRAYSIZE(layout);
 
-		DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderInfo,
+		DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderFileName,
 										device, layout, numElements, &(this->D3DInfo.pInputLayout));
 	}
 }
 void BasicDrawable::InitVertexShader(ID3D11Device* device)
 {
-	if(this->D3DInfo.VertexShaderInfo.empty() == false)
+	if(this->D3DInfo.VertexShaderFileName.empty() == false)
 	{
-		DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderInfo,
+		DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderFileName,
 										 device, &(this->D3DInfo.pVertexShader));
+	}
+}
+void BasicDrawable::InitGeometryShader(ID3D11Device* device)
+{
+	if(this->D3DInfo.GeometryShaderFileName.empty() == false)
+	{
+		DX11Helper::LoadGeometryShaderFile(this->D3DInfo.GeometryShaderFileName,
+										   device, &(this->D3DInfo.pGeometryShader));
 	}
 }
 void BasicDrawable::InitPixelShader(ID3D11Device* device)
 {
-	if(this->D3DInfo.VertexShaderInfo.empty() == false)
+	if(this->D3DInfo.VertexShaderFileName.empty() == false)
 	{
-		DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderInfo,
+		DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderFileName,
 										device, &(this->D3DInfo.pPixelShader));
 	}
 }
@@ -321,6 +346,7 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>&	v
 													const std::vector<WORD>&	vectorIndices,
 													const std::string&			vertexFile,
 													const std::string&			pixelFile,
+													const std::string&			geometryFile,
 													D3D11_CULL_MODE				cullMode,
 													D3D11_FILL_MODE				fillMode)
 {
@@ -328,8 +354,9 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>&	v
 
 	newObject->D3DInfo.vertices = vectorVertices;
 	newObject->D3DInfo.indices = vectorIndices;
-	newObject->D3DInfo.VertexShaderInfo = vertexFile;
-	newObject->D3DInfo.PixelShaderInfo = pixelFile;
+	newObject->D3DInfo.VertexShaderFileName = vertexFile;
+	newObject->D3DInfo.PixelShaderFileName = pixelFile;
+	newObject->D3DInfo.GeometryShaderFileName = geometryFile;
 	newObject->D3DInfo.cullMode = cullMode;
 	newObject->D3DInfo.fillMode = fillMode;
 

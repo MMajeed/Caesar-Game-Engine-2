@@ -89,6 +89,21 @@ void DX11Helper::LoadVertexShaderFile(std::string vsFileName, ID3D11Device* devi
 		throw std::runtime_error("ERROR: Could not assign compiled vertex shader to device.");
 	}
 }
+void DX11Helper::LoadGeometryShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11GeometryShader** vsOut)
+{
+	std::vector<char> fileBytes;
+
+	DX11Helper::LoadShaderFile(vsFileName, "VS", "vs_4_1", fileBytes);
+
+	// Now pass this compiled vertex shader to the device so it can be used
+	HRESULT hr = device->CreateGeometryShader(fileBytes.data(), fileBytes.size(), NULL, vsOut);
+
+	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
+	if(FAILED(hr))
+	{
+		throw std::runtime_error("ERROR: Could not assign compiled vertex shader to device.");
+	}
+}
 void DX11Helper::LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut)
 {
 	std::vector<char> fileBytes;

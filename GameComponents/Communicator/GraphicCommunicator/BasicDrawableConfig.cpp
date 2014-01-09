@@ -11,6 +11,7 @@ namespace BasicDrawableConfig
 	std::string Create(std::shared_ptr<CHL::Model> model,
 					   std::string	vertexFileName,
 					   std::string	pixelFileName,
+					   std::string	GeometryFileName,
 					   BasicDrawableConfig::CULL_MODE cullMode,
 					   BasicDrawableConfig::FILL_MODE fillMode)
 	{
@@ -20,12 +21,14 @@ namespace BasicDrawableConfig
 			AddBasicDrawableMessage(std::shared_ptr<CHL::Model> model,
 									std::string	vertexFileName,
 									std::string	pixelFileName,
+									std::string	GeometryFileName,
 									BasicDrawableConfig::CULL_MODE cullMode,
 									BasicDrawableConfig::FILL_MODE fillMode)
 			{
 				this->ID = CHL::GenerateGUID();
 				this->vertexFileName = vertexFileName;
 				this->pixelFileName = pixelFileName;
+				this->geometryFileName = GeometryFileName;
 				this->cullMode = cullMode;
 				this->fillMode = fillMode;
 				this->model = model;
@@ -61,8 +64,9 @@ namespace BasicDrawableConfig
 				std::shared_ptr<BasicDrawable> newObject =
 					BasicDrawable::Spawn(vectorVertices,
 										vectorIndices,
-										vertexFileName,
-										pixelFileName,
+										this->vertexFileName,
+										this->pixelFileName,
+										this->geometryFileName,
 										static_cast<D3D11_CULL_MODE>(this->cullMode),
 										static_cast<D3D11_FILL_MODE>(this->fillMode));
 
@@ -74,6 +78,7 @@ namespace BasicDrawableConfig
 			std::shared_ptr<CHL::Model> model;
 			std::string	vertexFileName;
 			std::string	pixelFileName;
+			std::string	geometryFileName;
 			BasicDrawableConfig::CULL_MODE cullMode;
 			BasicDrawableConfig::FILL_MODE fillMode;
 
@@ -81,13 +86,14 @@ namespace BasicDrawableConfig
 		};
 
 		std::shared_ptr<AddBasicDrawableMessage> msg
-			(new AddBasicDrawableMessage(model, vertexFileName, pixelFileName, cullMode, fillMode));
+			(new AddBasicDrawableMessage(model, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}
 	std::string Create2D(std::shared_ptr<CHL::Model> model,
 						 std::string	vertexFileName,
 						 std::string	pixelFileName,
+						 std::string	GeometryFileName,
 						 BasicDrawableConfig::CULL_MODE cullMode,
 						 BasicDrawableConfig::FILL_MODE fillMode)
 	{
@@ -97,12 +103,14 @@ namespace BasicDrawableConfig
 			AddBasicDrawableMessage(std::shared_ptr<CHL::Model> model,
 									std::string	vertexFileName,
 									std::string	pixelFileName,
+									std::string	GeometryFileName,
 									BasicDrawableConfig::CULL_MODE cullMode,
 									BasicDrawableConfig::FILL_MODE fillMode)
 			{
 				this->ID = CHL::GenerateGUID();
 				this->vertexFileName = vertexFileName;
 				this->pixelFileName = pixelFileName;
+				this->geometryFileName = GeometryFileName;
 				this->cullMode = cullMode;
 				this->fillMode = fillMode;
 				this->model = model;
@@ -138,8 +146,9 @@ namespace BasicDrawableConfig
 				std::shared_ptr<Basic2DDrawable> newObject =
 					Basic2DDrawable::Spawn( vectorVertices,
 											vectorIndices,
-											vertexFileName,
-											pixelFileName,
+											this->vertexFileName,
+											this->pixelFileName,
+											this->geometryFileName,
 											static_cast<D3D11_CULL_MODE>(this->cullMode),
 											static_cast<D3D11_FILL_MODE>(this->fillMode));
 
@@ -151,6 +160,7 @@ namespace BasicDrawableConfig
 			std::shared_ptr<CHL::Model> model;
 			std::string	vertexFileName;
 			std::string	pixelFileName;
+			std::string	geometryFileName;
 			BasicDrawableConfig::CULL_MODE cullMode;
 			BasicDrawableConfig::FILL_MODE fillMode;
 
@@ -158,7 +168,7 @@ namespace BasicDrawableConfig
 		};
 
 		std::shared_ptr<AddBasicDrawableMessage> msg
-			(new AddBasicDrawableMessage(model, vertexFileName, pixelFileName, cullMode, fillMode));
+			(new AddBasicDrawableMessage(model, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}

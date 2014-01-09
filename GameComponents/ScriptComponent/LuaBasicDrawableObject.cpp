@@ -18,6 +18,7 @@ namespace LuaBasicDrawableObject
 		std::shared_ptr<CHL::Model> model;
 		std::string vertexFileName = "Assets/ShaderFiles/VS_0_Regular.cso";
 		std::string pixelFileName = "Assets/ShaderFiles/PS_0_Generic.cso";
+		std::string geometryFileName = "";
 		int cullMode = 3;
 		int fillMode = 3;
 		int dimension = 3;
@@ -32,6 +33,7 @@ namespace LuaBasicDrawableObject
 				 if(key == Keys::BasicDrawable::MODELFILE)			{ model = luabind::object_cast<LuaModel::Model>(*it); }
 			else if(key == Keys::BasicDrawable::VERTEXSHADERFILE)	{ vertexFileName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::BasicDrawable::PIXELSHADERFILE)	{ pixelFileName = luabind::object_cast<std::string>(*it); }
+			else if(key == Keys::BasicDrawable::GEOMETRYSHADERFILE)	{ geometryFileName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::BasicDrawable::CULLMODE)			{ cullMode = luabind::object_cast<int>(*it); }
 			else if(key == Keys::BasicDrawable::FILLMODE)			{ fillMode = luabind::object_cast<int>(*it); }
 			else if(key == Keys::BasicDrawable::DIMENSION)			{ dimension = luabind::object_cast<int>(*it); }
@@ -42,14 +44,14 @@ namespace LuaBasicDrawableObject
 		if(dimension == 3)
 		{
 			this->ID = BasicDrawableConfig::Create(model,
-												   vertexFileName, pixelFileName,
+												   vertexFileName, pixelFileName, geometryFileName,
 												   static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
 												   static_cast<BasicDrawableConfig::FILL_MODE>(fillMode));
 		}
 		else if(dimension == 2)
 		{
 			this->ID = BasicDrawableConfig::Create2D(model,
-													 vertexFileName, pixelFileName,
+													 vertexFileName, pixelFileName, geometryFileName,
 													 static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
 													 static_cast<BasicDrawableConfig::FILL_MODE>(fillMode));
 		}

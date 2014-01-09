@@ -100,6 +100,12 @@ namespace Scene
 			auto drawableIter = graphic.objectDrawables.find(objInfo->DrawObjID);
 			if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
 
+
+			if(si.process2D == false)
+			{
+				if(Process2D::Filter({objInfo, drawableIter->second})){ continue; }
+			}
+
 			if(objInfo->Diffuse[3] != 1.0f || objInfo->Depth == false)
 			{
 				vecSpecialObjects.push_back({objInfo, drawableIter->second});
@@ -138,10 +144,6 @@ namespace Scene
 			iterObj != objects.end();
 			++iterObj)
 		{
-			if(si.process2D == false)
-			{
-				if(Process2D::Filter(*iterObj)){ continue; } 
-			}
 			iterObj->Drawable->Draw(iterObj->ObjInfo, si);
 		}
 	}

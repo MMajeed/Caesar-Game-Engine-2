@@ -61,13 +61,14 @@ namespace Keys
 	
 	namespace BasicDrawable
 	{
-		const static std::string DRAWABLEOBJ      = "DrawableObj";
-		const static std::string MODELFILE        = "ModelFile";
-		const static std::string VERTEXSHADERFILE = "VertexShaderFile";
-		const static std::string PIXELSHADERFILE  = "PixelShaderFile";
-		const static std::string CULLMODE         = "CullMode";
-		const static std::string FILLMODE         = "FillMode";
-		const static std::string DIMENSION		  = "Dimension";
+		const static std::string DRAWABLEOBJ         = "DrawableObj";
+		const static std::string MODELFILE           = "ModelFile";
+		const static std::string VERTEXSHADERFILE    = "VertexShaderFile";
+		const static std::string PIXELSHADERFILE     = "PixelShaderFile";
+		const static std::string GEOMETRYSHADERFILE  = "GeometryShaderFile";
+		const static std::string CULLMODE            = "CullMode";
+		const static std::string FILLMODE            = "FillMode";
+		const static std::string DIMENSION		     = "Dimension";
 	};
 
 	namespace BasicTexture

@@ -14,6 +14,7 @@ public:
 												  const std::vector<WORD>&	vectorIndices,
 												  const std::string&			vertexFile,
 												  const std::string&			pixelFile,
+												  const std::string&			geometryFile,
 												  D3D11_CULL_MODE				cullMode,
 												  D3D11_FILL_MODE				fillMode);
 

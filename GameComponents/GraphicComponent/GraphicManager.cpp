@@ -16,14 +16,14 @@
 #include "SceneInfo.h"
 GraphicManager::GraphicManager()
 {
-	this->D3DStuff.pd3dDevice			= 0;
-	this->D3DStuff.pImmediateContext	= 0;
-	this->D3DStuff.pSwapChain			= 0;
-	this->D3DStuff.pRenderTargetView	= 0;
-	this->D3DStuff.pDepthStencilBuffer	= 0;
-	this->D3DStuff.pDepthStencilState	= 0;
-	this->D3DStuff.pDepthStencilView	= 0;
-	this->D3DStuff.IsInitialized	    = false;
+	this->D3DStuff.pd3dDevice = 0;
+	this->D3DStuff.pImmediateContext = 0;
+	this->D3DStuff.pSwapChain = 0;
+	this->D3DStuff.pRenderTargetView = 0;
+	this->D3DStuff.pDepthStencilBuffer = 0;
+	this->D3DStuff.pDepthStencilState = 0;
+	this->D3DStuff.pDepthStencilView = 0;
+	this->D3DStuff.IsInitialized = false;
 }
 
 void GraphicManager::Init()
@@ -49,7 +49,7 @@ void GraphicManager::Work()
 	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(camera);
 	std::shared_ptr<CameraINFO> cameraObj;
 	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
-	 
+
 	SceneInfo s = Scene::SetupScene(cameraObj, windowInfo->Width, windowInfo->Height);
 	Light::GetInstance().SetupLight(objects, s.Eye);
 	this->RunAllCapture(objects);
@@ -82,12 +82,12 @@ void GraphicManager::InitDevice()
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
 	std::string window = ImportantIDConfig::WindowINFOID::Get();
-	if(window.empty()){	throw std::invalid_argument("Windows Information is not set");	}
-	
+	if(window.empty()){ throw std::invalid_argument("Windows Information is not set"); }
+
 	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
 	if(iter == objects.cend()) { throw std::invalid_argument("Could not find windows Info"); }
 	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
-	
+
 	int Width = windowInfo->Width;
 	int Height = windowInfo->Height;
 	HWND hwnd = windowInfo->HWND;
@@ -133,7 +133,7 @@ void GraphicManager::InitDevice()
 	{
 		this->D3DStuff.driverType = driverTypes[driverTypeIndex];
 		hr = D3D11CreateDeviceAndSwapChain(NULL, this->D3DStuff.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
-			D3D11_SDK_VERSION, &sd, &this->D3DStuff.pSwapChain, &this->D3DStuff.pd3dDevice, &this->D3DStuff.featureLevel, &this->D3DStuff.pImmediateContext);
+										   D3D11_SDK_VERSION, &sd, &this->D3DStuff.pSwapChain, &this->D3DStuff.pd3dDevice, &this->D3DStuff.featureLevel, &this->D3DStuff.pImmediateContext);
 		if(SUCCEEDED(hr))
 			break;
 	}
@@ -287,21 +287,25 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.vp.TopLeftY = 0;
 	this->D3DStuff.pImmediateContext->RSSetViewports(1, &(this->D3DStuff.vp));
 
-	DX11Helper::LoadBuffer<cBuffer::cbObject>(this->D3DStuff.pd3dDevice, &( this->D3DStuff.pCBObject ));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &( this->D3DStuff.pCBObject ));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &( this->D3DStuff.pCBObject ));
+	DX11Helper::LoadBuffer<cBuffer::cbObject>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBObject));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
 
-	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &( this->D3DStuff.pCBInfo ));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(1, 1, &( this->D3DStuff.pCBInfo ));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(1, 1, &( this->D3DStuff.pCBInfo ));
+	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
 
-	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &( this->D3DStuff.pCBLight ));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &( this->D3DStuff.pCBLight ));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &( this->D3DStuff.pCBLight ));
+	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
 
 	DX11Helper::LoadBuffer<cBuffer::cbShadows>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBShadow));
 	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
 	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
 
 	Light::GetInstance().Init();
 

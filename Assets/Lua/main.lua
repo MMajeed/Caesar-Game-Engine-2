@@ -49,26 +49,37 @@ OnKeyDown(string.byte("B"),
     end
 );
 
+local smokeDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]           = LoadModel("Assets/Models/Sphere_Smooth.ply"),
+                                           [Keys["BasicDrawable"]["VertexShaderFile"]]    = "Assets/ShaderFiles/VS_0_Regular.cso",
+                                           [Keys["BasicDrawable"]["PixelShaderFile"]]     = "Assets/ShaderFiles/PS_0_Generic.cso",
+                                           [Keys["BasicDrawable"]["GeometryShaderFile"]]  = "Assets/ShaderFiles/GS_0_Generic.cso",
+                                          });
+local smoke = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
+                      [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
+                      [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+                      [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+                      [Keys["ObjectInfo"]["DrawableObj"]] = smokeDrawable,
+                      [Keys["ObjectInfo"]["Scale"]]       = Vector4(1.0, 1.0, 1.0),});
 
-mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        =  Vector4(40, 20, 0),
-                           [Keys["Camera"]["NearZ"]]      = 0.01,              
-                           [Keys["Camera"]["FarZ"]]       = 5000.0,
-                           [Keys["Camera"]["ClearColor"]] = Vector4(0.5, 0.5, 0.5, 1.0),
-                           [Keys["Camera"]["Process2D"]]  = false,
-                            });
+--mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        = Vector4(40, 20, 0),
+--                           [Keys["Camera"]["NearZ"]]      = 0.01,              
+--                           [Keys["Camera"]["FarZ"]]       = 5000.0,
+--                           [Keys["Camera"]["ClearColor"]] = Vector4(0.5, 0.5, 0.5, 1.0),
+--                           [Keys["Camera"]["Process2D"]]  = false,
+--                            });
                 
-mirrorSphereSC = CubeScreenCapture({[Keys["ScreenShot"]["Width"]]   = 1024,
-                                    [Keys["ScreenShot"]["Height"]]   = 1024,
-                                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
+--mirrorSphereSC = CubeScreenCapture({[Keys["ScreenShot"]["Width"]]   = 1024,
+--                                    [Keys["ScreenShot"]["Height"]]   = 1024,
+--                                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
                                
-local mirrorSphere1 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
-                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
-                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
-                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
-                              [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,
-                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
-                              [Keys["ObjectInfo"]["Light"]]       = false,});
-mirrorSphere1:SetCubeTexture(mirrorSphereSC:GetTexture());
+--local mirrorSphere1 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
+--                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
+--                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
+--                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
+--                              [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,
+--                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
+--                              [Keys["ObjectInfo"]["Light"]]       = false,});
+--mirrorSphere1:SetCubeTexture(mirrorSphereSC:GetTexture());
 
 --local mirrorSphere2 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(-40, 20, 0),
 --                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
