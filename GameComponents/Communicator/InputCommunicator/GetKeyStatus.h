@@ -2,12 +2,11 @@
 #define __GetKeyStatus__
 
 #include "Linker.h"
+#include <InputKeysEnum.h>
 
 namespace GetKeyStatus
 {
-	enum class KeyState{ KeyUp = 0, KeyDown = 1 };
-
-	GetKeyStatus::KeyState GetKey(unsigned int keyID);
+	InputKeysEnum::KeyStatus GetKey(InputKeysEnum::KeyCode keyID);
 }
 
 #endif //__GetKeyStatus__

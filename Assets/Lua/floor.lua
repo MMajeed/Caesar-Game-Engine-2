@@ -15,7 +15,7 @@ box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
 
                                  
-OnKeyDown(string.byte("A"), 
+OnKeyDown(KeyCode["A"], 
     function() 
         
         myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]    = 1024,
@@ -26,7 +26,7 @@ OnKeyDown(string.byte("A"),
     end
 );
 
-OnKeyDown(string.byte("S"), 
+OnKeyDown(KeyCode["S"], 
     function() 
         box1:RemoveAll2DTexture();
         box1:Set2DTexture(tilesTexture);

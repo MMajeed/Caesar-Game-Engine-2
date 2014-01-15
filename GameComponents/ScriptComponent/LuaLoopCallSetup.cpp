@@ -2,6 +2,7 @@
 
 #include "LuaLoopCall.h"
 #include "LuaManager.h"
+#include "ProcessMessage.h"
 
 std::string LuaLoopCallSetup::Loop(double time, luabind::object const& function)
 {
@@ -12,9 +13,9 @@ std::string LuaLoopCallSetup::Loop(double time, luabind::object const& function)
 
 	std::shared_ptr<LuaLoopCall> newKeyAction(new LuaLoopCall(time, function));
 
-	LuaManager::GetInstance().SubmitProcesses(newKeyAction);
+	std::string id = ProcessMessage::Add(newKeyAction);
 
-	return newKeyAction->ID;
+	return id;
 }
 void LuaLoopCallSetup::Register(lua_State *lua)
 {

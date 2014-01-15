@@ -3,6 +3,7 @@ require("camera")
 require("SkyBox")
 require("LightSetup")
 require("floor")
+require("mouse")
 
 local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/Models/Iron_Man_mark_4.obj"),
                                           [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
@@ -34,7 +35,7 @@ for zIndex = 0, 2, 1 do
 end
 
 lightPos = 10.0;
-OnKeyDown(string.byte("B"), 
+OnKeyDown(KeyCode["B"], 
     function()       
       SpotLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 1.0),
                  [Keys["Light"]["Ambient"]]     = Vector4(0.1, 0.1, 1.0),
@@ -49,17 +50,6 @@ OnKeyDown(string.byte("B"),
     end
 );
 
-local smokeDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]           = LoadModel("Assets/Models/Sphere_Smooth.ply"),
-                                           [Keys["BasicDrawable"]["VertexShaderFile"]]    = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                           [Keys["BasicDrawable"]["PixelShaderFile"]]     = "Assets/ShaderFiles/PS_0_Generic.cso",
-                                           [Keys["BasicDrawable"]["GeometryShaderFile"]]  = "Assets/ShaderFiles/GS_0_Generic.cso",
-                                          });
-local smoke = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
-                      [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
-                      [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
-                      [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
-                      [Keys["ObjectInfo"]["DrawableObj"]] = smokeDrawable,
-                      [Keys["ObjectInfo"]["Scale"]]       = Vector4(1.0, 1.0, 1.0),});
 
 --mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        = Vector4(40, 20, 0),
 --                           [Keys["Camera"]["NearZ"]]      = 0.01,              

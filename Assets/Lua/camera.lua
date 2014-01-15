@@ -10,7 +10,7 @@ cam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0
               [Keys["Camera"]["NearZ"]]           = 0.01,              
               [Keys["Camera"]["FarZ"]]            = 5000.0,
               [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
-                }); 
+            }); 
 cam:SetAsMain();
 
 CamLeftButton   = false;    CamRightButton  = false;
@@ -42,19 +42,19 @@ end
 
 LoopCall(16, UpdateCamera);
 
-OnKeyDown(37, function() CamLeftButton = true; end);-- Left
-OnKeyDown(39, function() CamRightButton = true; end);-- Right
-OnKeyDown(38, function() CamUpButton = true; end);-- Up
-OnKeyDown(40, function() CamDownButton = true; end);-- Down
-OnKeyDown(33, function() CamPgUpButton = true; end);-- Up
-OnKeyDown(34, function() CamPgDownButton = true; end);-- Down
+OnKeyDown(KeyCode["LEFT"], function() CamLeftButton = true; end);-- Left
+OnKeyDown(KeyCode["RIGHT"], function() CamRightButton = true; end);-- Right
+OnKeyDown(KeyCode["UP"], function() CamUpButton = true; end);-- Up
+OnKeyDown(KeyCode["DOWN"], function() CamDownButton = true; end);-- Down
+OnKeyDown(KeyCode["PRIOR"], function() CamPgUpButton = true; end);-- Up
+OnKeyDown(KeyCode["NEXT"], function() CamPgDownButton = true; end);-- Down
 
-OnKeyUp(37, function() CamLeftButton = false; end);-- Left
-OnKeyUp(39, function() CamRightButton = false; end);-- Right
-OnKeyUp(38, function() CamUpButton = false; end);-- Up
-OnKeyUp(40, function() CamDownButton = false; end);-- Down
-OnKeyUp(33, function() CamPgUpButton = false; end);-- Up
-OnKeyUp(34, function() CamPgDownButton = false; end);-- Down
+OnKeyUp(KeyCode["LEFT"], function() CamLeftButton = false; end);-- Left
+OnKeyUp(KeyCode["RIGHT"], function() CamRightButton = false; end);-- Right
+OnKeyUp(KeyCode["UP"], function() CamUpButton = false; end);-- Up
+OnKeyUp(KeyCode["DOWN"], function() CamDownButton = false; end);-- Down
+OnKeyUp(KeyCode["PRIOR"], function() CamPgUpButton = false; end);-- Up
+OnKeyUp(KeyCode["NEXT"], function() CamPgDownButton = false; end);-- Down
 
 return camera
 

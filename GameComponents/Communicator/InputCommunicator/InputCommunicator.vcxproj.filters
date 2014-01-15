@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="UpdateKey.h">
-      <Filter>UpdateKey</Filter>
-    </ClInclude>
     <ClInclude Include="GetKeyStatus.h">
       <Filter>GetKeyStatus</Filter>
     </ClInclude>
@@ -11,27 +8,30 @@
     <ClInclude Include="InputCommunicator.h">
       <Filter>InputCommunicator</Filter>
     </ClInclude>
+    <ClInclude Include="GetMouseStatus.h">
+      <Filter>GetMouseStatus</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UpdateKey.cpp">
-      <Filter>UpdateKey</Filter>
-    </ClCompile>
     <ClCompile Include="GetKeyStatus.cpp">
       <Filter>GetKeyStatus</Filter>
     </ClCompile>
     <ClCompile Include="InputCommunicator.cpp">
       <Filter>InputCommunicator</Filter>
     </ClCompile>
+    <ClCompile Include="GetMouseStatus.cpp">
+      <Filter>GetMouseStatus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GetKeyStatus">
       <UniqueIdentifier>{77ef6950-fcd9-4597-9247-5f627b95b600}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UpdateKey">
-      <UniqueIdentifier>{f76766e7-9c25-42bf-a4a3-553f08f42867}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InputCommunicator">
       <UniqueIdentifier>{f229f551-5f4b-4cd8-9084-0b75d21a9e89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GetMouseStatus">
+      <UniqueIdentifier>{1700d89e-714e-435d-b2dd-ca304e5d8b02}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

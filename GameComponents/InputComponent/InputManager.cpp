@@ -1,4 +1,9 @@
 #include "InputManager.h"
+#include <Windows.h>
+
+#include <EntityCommunicator\EntityConfig.h>
+#include <EntityCommunicator\ImportantIDConfig.h>
+#include <WindowINFO.h>
 
 InputManager::InputManager()
 {
@@ -22,12 +27,26 @@ void InputManager::Shutdown()
 
 }
 
-void InputManager::UpdateKeyStatus(unsigned int key, KeyStatus::Status status)
+InputKeysEnum::KeyStatus InputManager::GetCurrentKeyState(InputKeysEnum::KeyCode key)
 {
-	this->objects[key].UpdateStatus(status);
+	short state = GetAsyncKeyState(static_cast<int>(key));
+	if(state < 0)
+	{
+		return InputKeysEnum::KeyStatus::KeyDown;
+	}
+	else 
+	{
+		return InputKeysEnum::KeyStatus::KeyUp;
+	}
 }
 
-const std::hash_map<unsigned int, KeyStatus> InputManager::AllObjects()
+
+std::pair<long, long> InputManager::CursorPosition()
 {
-	return this->objects;
+	std::shared_ptr<INFO> windowInfo = EntityConfig::GetEntity(ImportantIDConfig::WindowINFOID::Get());
+	
+	POINT p;
+	GetCursorPos(&p);
+	return std::make_pair(p.x, p.y);
+
 }

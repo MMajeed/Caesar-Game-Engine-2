@@ -7,7 +7,7 @@
 #include "LuaObject.h"
 #include "LuaMath.h"
 #include "LuaKeysID.h"
-#include "LuaKeyActionSetup.h"
+#include "LuaInputKeyActionSetup.h"
 #include "LuaCamera.h"
 #include "LuaLoopCallSetup.h"
 #include "LuaBasicDrawableObject.h"
@@ -15,6 +15,7 @@
 #include "LuaLight.h"
 #include "LuaScreenShot.h"
 #include "LuaScreenCapture.h"
+#include "LuaMouse.h"
 
 void LuaRegisterAll(lua_State *lua)
 {
@@ -23,7 +24,7 @@ void LuaRegisterAll(lua_State *lua)
 	LuaMath::RegisterAllLuaFunction(lua);
 	LuaObject::RegisterAllLuaFunction(lua);
 	LuaKeysID::RegisterAllLuaFunction(lua);
-	LuaKeyActionSetup::RegisterAllLuaFunction(lua);
+	LuaInputKeyActionSetup::RegisterAllLuaFunction(lua);
 	LuaCamera::RegisterAllLuaFunction(lua);
 	LuaLoopCallSetup::RegisterAllLuaFunction(lua);
 	LuaBasicDrawableObject::RegisterAllLuaFunction(lua);
@@ -31,6 +32,7 @@ void LuaRegisterAll(lua_State *lua)
 	LuaLight::RegisterAllLuaFunction(lua);
 	LuaScreenShot::RegisterAllLuaFunction(lua);
 	LuaScreenCapture::RegisterAllLuaFunction(lua);
+	LuaMouse::RegisterAllLuaFunction(lua);
 }
 
 

@@ -4,30 +4,24 @@
 #include "Linker.h"
 
 #include <Interface.h>
-#include "KeyStatus.h"
 #include <Singleton.h>
-#include <hash_map>
-#include <memory>
+#include <InputKeysEnum.h>
 
 class InputManager : public Interface, public CHL::Singleton<InputManager>
 {
 protected:	
 	InputManager();
-	InputManager(const InputManager& that) = delete;
+	InputManager(const InputManager&) = delete;
 	InputManager& operator=(const InputManager&) = delete;
+	friend CHL::Singleton<InputManager>;
 public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Work();
 	virtual void Shutdown();
 
-	void UpdateKeyStatus(unsigned int, KeyStatus::Status);
-
-	const std::hash_map<unsigned int, KeyStatus> AllObjects();
-protected:
-	std::hash_map<unsigned int, KeyStatus> objects;
-
-	friend CHL::Singleton<InputManager>;
+	InputKeysEnum::KeyStatus GetCurrentKeyState(InputKeysEnum::KeyCode key);
+	std::pair<long, long> CursorPosition();
 };
 
 #endif //__InputManager__

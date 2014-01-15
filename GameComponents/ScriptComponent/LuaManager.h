@@ -6,7 +6,7 @@
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 #include <Singleton.h>
-#include <vector>
+#include <hash_map>
 #include <memory>
 
 #include <Interface.h>
@@ -18,6 +18,7 @@ protected:
 	LuaManager();
 	LuaManager(const LuaManager& that) = delete;
 	LuaManager& operator=(const LuaManager&) = delete;
+	friend CHL::Singleton<LuaManager>;
 public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
@@ -27,11 +28,10 @@ public:
 	lua_State *lua;
 	bool FileRun;
 
-	virtual void SubmitProcesses(std::shared_ptr<LuaProcesses> process);
+	virtual void SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process);
+	virtual void RemoveProcesses(std::string ID);
 protected:
-	std::vector<std::shared_ptr<LuaProcesses>> allProcesses;
-
-	friend CHL::Singleton<LuaManager>;
+	std::hash_map<std::string, std::shared_ptr<LuaProcesses>> allProcesses;
 };
 
 #endif //__LuaManager__

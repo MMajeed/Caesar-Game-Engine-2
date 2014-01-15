@@ -73,6 +73,9 @@
     <ClInclude Include="PointLightINFO.h">
       <Filter>INFO\LightINFO\PointLightINFO</Filter>
     </ClInclude>
+    <ClInclude Include="InputKeysEnum.h">
+      <Filter>InputKeysEnum</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Keys">
@@ -110,6 +113,9 @@
     </Filter>
     <Filter Include="INFO\LightINFO\SpotLightINFO">
       <UniqueIdentifier>{219946ce-fb25-423d-856e-1a63ebeda727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="InputKeysEnum">
+      <UniqueIdentifier>{699fa837-8bdb-4586-b9c8-5a625a7d7ea0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

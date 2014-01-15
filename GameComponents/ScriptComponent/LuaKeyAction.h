@@ -4,22 +4,20 @@
 #include "LuaProcesses.h"
 #include <string>
 #include <luabind\luabind.hpp>
+#include <InputKeysEnum.h>
 
 class LuaKeyAction : public LuaProcesses
 {
 public:
-	enum class KeyStatWanted{ KeyUp = 0, KeyDown = 1 };
-
-	LuaKeyAction(unsigned int inputKey, KeyStatWanted inputWanted, luabind::object inputFunction);
+	LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeyStatus inputWanted, luabind::object inputFunction);
 
 	virtual void Update(double realTime, double deltaTime);
 	virtual void Action(lua_State *lua);
 
-	unsigned int key;
-	KeyStatWanted wanted;
+	InputKeysEnum::KeyCode key;
+	InputKeysEnum::KeyStatus wanted;
 	luabind::object function;
-
-	KeyStatWanted currentKey;
+	InputKeysEnum::KeyStatus lastKeyState;
 };
 
 

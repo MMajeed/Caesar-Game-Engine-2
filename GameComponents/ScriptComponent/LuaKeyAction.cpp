@@ -2,22 +2,23 @@
 #include "LuaError.h"
 #include <InputCommunicator\GetKeyStatus.h>
 
-LuaKeyAction::LuaKeyAction(unsigned int inputKey, LuaKeyAction::KeyStatWanted inputWanted, luabind::object inputFunction)
+LuaKeyAction::LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeyStatus inputWanted, luabind::object inputFunction)
 {
 	this->key = inputKey;
 	this->wanted = inputWanted;
 	this->function = inputFunction;
+	this->lastKeyState = GetKeyStatus::GetKey(this->key);
 }
 
 void LuaKeyAction::Action(lua_State *lua)
 {
-	GetKeyStatus::KeyState keyStatus = GetKeyStatus::GetKey(this->key);
+	InputKeysEnum::KeyStatus keyStatus = GetKeyStatus::GetKey(this->key);
 
-	if(this->currentKey != static_cast<LuaKeyAction::KeyStatWanted>(keyStatus)) // If it has changed
+	if(this->lastKeyState != keyStatus) // If it has changed
 	{
-		this->currentKey = static_cast<LuaKeyAction::KeyStatWanted>(keyStatus);
+		this->lastKeyState = keyStatus;
 
-		if(this->wanted == this->currentKey)
+		if(this->wanted == this->lastKeyState)
 		{
 			try
 			{

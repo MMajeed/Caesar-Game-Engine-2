@@ -21,20 +21,17 @@
       <Filter>Lua Class/Function\LuaObject</Filter>
     </ClInclude>
     <ClInclude Include="LuaProcesses.h">
-      <Filter>Lua Class/Function\Lua Processes</Filter>
+      <Filter>Lua Processes</Filter>
     </ClInclude>
     <ClInclude Include="LuaKeyAction.h">
-      <Filter>Lua Class/Function\Lua Processes\LuaKeyAction</Filter>
+      <Filter>Lua Processes\LuaKeyAction</Filter>
     </ClInclude>
     <ClInclude Include="LuaLoopCall.h">
-      <Filter>Lua Class/Function\Lua Processes\LuaLoopCall</Filter>
+      <Filter>Lua Processes\LuaLoopCall</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaBasicDrawableObject.h">
       <Filter>Lua Class/Function\LuaBasicDrawableObject</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaKeyActionSetup.h">
-      <Filter>Lua Class/Function\LuaKeyActionSetup</Filter>
     </ClInclude>
     <ClInclude Include="LuaBasicTexture.h">
       <Filter>Lua Class/Function\LuaBasicTexture</Filter>
@@ -56,6 +53,15 @@
     </ClInclude>
     <ClInclude Include="LuaScreenCapture.h">
       <Filter>Lua Class/Function\LuaScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaInputKeyActionSetup.h">
+      <Filter>Lua Class/Function\LuaInputKeyActionSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessMessage.h">
+      <Filter>AddProcessMessage</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaMouse.h">
+      <Filter>Lua Class/Function\LuaMouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -79,16 +85,13 @@
       <Filter>Lua Class/Function\LuaObject</Filter>
     </ClCompile>
     <ClCompile Include="LuaKeyAction.cpp">
-      <Filter>Lua Class/Function\Lua Processes\LuaKeyAction</Filter>
+      <Filter>Lua Processes\LuaKeyAction</Filter>
     </ClCompile>
     <ClCompile Include="LuaLoopCall.cpp">
-      <Filter>Lua Class/Function\Lua Processes\LuaLoopCall</Filter>
+      <Filter>Lua Processes\LuaLoopCall</Filter>
     </ClCompile>
     <ClCompile Include="LuaBasicDrawableObject.cpp">
       <Filter>Lua Class/Function\LuaBasicDrawableObject</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaKeyActionSetup.cpp">
-      <Filter>Lua Class/Function\LuaKeyActionSetup</Filter>
     </ClCompile>
     <ClCompile Include="LuaBasicTexture.cpp">
       <Filter>Lua Class/Function\LuaBasicTexture</Filter>
@@ -107,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="LuaScreenCapture.cpp">
       <Filter>Lua Class/Function\LuaScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaInputKeyActionSetup.cpp">
+      <Filter>Lua Class/Function\LuaInputKeyActionSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessMessage.cpp">
+      <Filter>AddProcessMessage</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMouse.cpp">
+      <Filter>Lua Class/Function\LuaMouse</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +146,6 @@
     <Filter Include="Lua Class/Function\LuaBasicDrawableObject">
       <UniqueIdentifier>{2a8d88a6-f3e0-4249-be15-e4c81b3ae5fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaKeyActionSetup">
-      <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Class/Function\LuaLight">
       <UniqueIdentifier>{99aafd94-0f2e-47fe-a6c5-083161a4eb45}</UniqueIdentifier>
     </Filter>
@@ -155,14 +164,23 @@
     <Filter Include="Lua Class/Function\LuaBasicTexture">
       <UniqueIdentifier>{a2836dbb-cde0-4509-9d1e-dc50252e967e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua Processes">
+    <Filter Include="Lua Class/Function\LuaInputKeyActionSetup">
+      <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AddProcessMessage">
+      <UniqueIdentifier>{e6a51519-be9d-4a9b-8d8e-6457a2a4667f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes">
       <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua Processes\LuaKeyAction">
+    <Filter Include="Lua Processes\LuaKeyAction">
       <UniqueIdentifier>{066781f6-0fc4-46de-8fae-591dcdbacb65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua Processes\LuaLoopCall">
+    <Filter Include="Lua Processes\LuaLoopCall">
       <UniqueIdentifier>{12120ca4-4311-4d8b-95d6-baf25a7e4c90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaMouse">
+      <UniqueIdentifier>{ee0b11df-a323-4da7-bf68-8f08247c493a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

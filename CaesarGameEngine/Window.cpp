@@ -8,7 +8,6 @@
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
 #include <EntityCommunicator\EntityConfig.h>
-#include <InputCommunicator\UpdateKey.h>
 #include <GraphicCommunicator\GraphicSettings.h>
 #include <Keys.h>
 #include <Converter.h>
@@ -145,16 +144,6 @@ LRESULT CALLBACK Window::WndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM
 	case WM_DESTROY:
 		PostQuitMessage( 0 );
 		break;
-	case WM_KEYDOWN:
-	{
-		UpdateKey((unsigned int)wParam, true);
-		break;
-	}
-	case WM_KEYUP:
-	{
-		UpdateKey((unsigned int)wParam, false);
-		break;
-	}
 	case WM_SIZE:
 	{
 		int width = 0;

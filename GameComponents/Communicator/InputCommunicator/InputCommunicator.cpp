@@ -2,12 +2,14 @@
 
 #include <InputManager.h>
 
-void InputCommunicator::SubmitMessage(std::shared_ptr<Message> msg)
+namespace InputCommunicator
 {
-	InputCommunicator::GetComponent()->SubmitMessage(msg);
-}
-
-Interface* InputCommunicator::GetComponent()
-{
-	return &InputManager::GetInstance();
-}
+	void SubmitMessage(std::shared_ptr<Message> msg)
+	{
+		InputCommunicator::GetComponent()->SubmitMessage(msg);
+	}
+	Interface* GetComponent()
+	{
+		return &InputManager::GetInstance();
+	}
+};

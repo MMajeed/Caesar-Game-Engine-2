@@ -104,7 +104,7 @@ FontDataTable["|"] 	= FontData(0.571289, 0.572266, 1);
 FontDataTable["}"] 	= FontData(0.573242, 0.576172, 3);
 FontDataTable["~"] 	= FontData(0.577148, 0.583984, 7);
 
-Text = class(function(self, text, location) 
+Text2D = class(function(self, text, location) 
                 self.Text = text;
                 self.SpriteModel = Model();
                 self.SpriteDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["Dimension"]]        = Dimension["2D"],
@@ -120,7 +120,7 @@ Text = class(function(self, text, location)
                 self:Set();
              end)
 
-function Text:Set()
+function Text2D:Set()
     local Length = string.len(self.Text)
     
     local verticeArray = {};
@@ -165,22 +165,20 @@ function Text:Set()
     self.SpriteDrawable:ChangeModel(spriteModel);
 end
 
-function Text:EditText(text)
+function Text2D:EditText(text)
     self.Text = text;
     self:Set();
 end
 
-function Text:EditLocation(loc)
+function Text2D:EditLocation(loc)
     self.SpriteObj.Location = loc;
 end
 
-function Text:Release()
+function Text2D:Release()
     self.SpriteDrawable:Release();
     self.SpriteTexture:Release();    
     self.SpriteObj:Release();
 end
-
-helloWorld = Text("Hello World! My Name is Mohammed! H",  Vector4(0.0, 0.0, 0.0));
 
 return Text
 

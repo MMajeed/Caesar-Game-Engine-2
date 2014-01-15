@@ -102,6 +102,7 @@
     <ClInclude Include="CameraINFO.h" />
     <ClInclude Include="DirectionalLightINFO.h" />
     <ClInclude Include="Error.h" />
+    <ClInclude Include="InputKeysEnum.h" />
     <ClInclude Include="LightINFO.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Interface.h" />

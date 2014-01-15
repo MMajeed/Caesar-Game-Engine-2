@@ -51,7 +51,7 @@ void LuaManager::Update(double realTime, double deltaTime)
 		iterProcesses != this->allProcesses.end();
 		++iterProcesses)
 	{
-		(*iterProcesses)->Update(realTime, deltaTime);
+		iterProcesses->second->Update(realTime, deltaTime);
 	}
 }
 
@@ -74,7 +74,7 @@ void LuaManager::Work()
 		iterProccessers !=  this->allProcesses.end();
 		++iterProccessers)
 	{
-		(*iterProccessers)->Action(this->lua);
+		iterProccessers->second->Action(this->lua);
 	}
 }
 
@@ -83,7 +83,12 @@ void LuaManager::Shutdown()
 
 }
 
-void LuaManager::SubmitProcesses(std::shared_ptr<LuaProcesses> process)
+void LuaManager::SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process)
 {
-	this->allProcesses.push_back(process);
+	this->allProcesses[ID] = process;
+}
+
+void LuaManager::RemoveProcesses(std::string ID)
+{
+	this->allProcesses.erase(ID);
 }

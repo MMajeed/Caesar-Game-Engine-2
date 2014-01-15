@@ -86,15 +86,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GetMouseStatus.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="InputCommunicator.h" />
     <ClInclude Include="GetKeyStatus.h" />
-    <ClInclude Include="UpdateKey.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GetMouseStatus.cpp" />
     <ClCompile Include="InputCommunicator.cpp" />
     <ClCompile Include="GetKeyStatus.cpp" />
-    <ClCompile Include="UpdateKey.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

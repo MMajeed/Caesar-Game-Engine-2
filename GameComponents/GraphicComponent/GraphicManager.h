@@ -23,6 +23,7 @@ protected:
 	GraphicManager();
 	GraphicManager(const GraphicManager& that) = delete;
 	GraphicManager& operator=(const GraphicManager&) = delete;
+	friend CHL::Singleton<GraphicManager>;
 public:
 	virtual void Init();
 	virtual void Update(double realTime, double deltaTime);
@@ -70,8 +71,6 @@ public:
 	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
 
 	virtual void InitDevice();
-
-	friend CHL::Singleton<GraphicManager>;
 };
 
 #endif //__GraphicManager__

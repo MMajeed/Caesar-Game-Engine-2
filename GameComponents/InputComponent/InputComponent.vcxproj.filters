@@ -2,20 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="KeyStatus.h">
-      <Filter>KeyStatus</Filter>
-    </ClInclude>
     <ClInclude Include="Linker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="KeyStatus.cpp">
-      <Filter>KeyStatus</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="KeyStatus">
-      <UniqueIdentifier>{3c578d92-a7bc-41a3-8b26-c057690c5ce3}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>
