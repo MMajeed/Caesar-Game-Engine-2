@@ -8,11 +8,15 @@
 class LuaProcesses
 {
 public:
-	LuaProcesses(){}
+	LuaProcesses(){ this->ID = CHL::GenerateGUID(); }
 
 	virtual void Update(double realTime, double deltaTime) = 0;
 
 	virtual void Action(lua_State *lua) = 0;
+
+	std::string ID;
+
+	virtual ~LuaProcesses(){}
 };
 
 

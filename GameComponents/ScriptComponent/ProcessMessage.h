@@ -11,7 +11,7 @@
 
 namespace ProcessMessage
 {
-	std::string Add(std::shared_ptr<LuaProcesses> process);
+	void Add(std::shared_ptr<LuaProcesses> process);
 	void Remove(std::string ID);
 }
 

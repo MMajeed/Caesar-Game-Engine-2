@@ -9,7 +9,7 @@
 #include "LuaKeysID.h"
 #include "LuaInputKeyActionSetup.h"
 #include "LuaCamera.h"
-#include "LuaLoopCallSetup.h"
+#include "LuaThreadSetup.h"
 #include "LuaBasicDrawableObject.h"
 #include "LuaBasicTexture.h"
 #include "LuaLight.h"
@@ -26,7 +26,7 @@ void LuaRegisterAll(lua_State *lua)
 	LuaKeysID::RegisterAllLuaFunction(lua);
 	LuaInputKeyActionSetup::RegisterAllLuaFunction(lua);
 	LuaCamera::RegisterAllLuaFunction(lua);
-	LuaLoopCallSetup::RegisterAllLuaFunction(lua);
+	LuaThreadSetup::RegisterAllLuaFunction(lua);
 	LuaBasicDrawableObject::RegisterAllLuaFunction(lua);
 	LuaBasicTexture::RegisterAllLuaFunction(lua);
 	LuaLight::RegisterAllLuaFunction(lua);

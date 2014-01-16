@@ -11,9 +11,6 @@
     <ClInclude Include="LuaKeysID.h">
       <Filter>Lua Class/Function\LuaKeysID</Filter>
     </ClInclude>
-    <ClInclude Include="LuaLoopCallSetup.h">
-      <Filter>Lua Class/Function\LuaLoopCallSetup</Filter>
-    </ClInclude>
     <ClInclude Include="LuaModel.h">
       <Filter>Lua Class/Function\LuaModel</Filter>
     </ClInclude>
@@ -58,10 +55,16 @@
       <Filter>Lua Class/Function\LuaInputKeyActionSetup</Filter>
     </ClInclude>
     <ClInclude Include="ProcessMessage.h">
-      <Filter>AddProcessMessage</Filter>
+      <Filter>ProcessMessage</Filter>
     </ClInclude>
     <ClInclude Include="LuaMouse.h">
       <Filter>Lua Class/Function\LuaMouse</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaSleep.h">
+      <Filter>Lua Processes\LuaSleep</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaThreadSetup.h">
+      <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="LuaKeysID.cpp">
       <Filter>Lua Class/Function\LuaKeysID</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaLoopCallSetup.cpp">
-      <Filter>Lua Class/Function\LuaLoopCallSetup</Filter>
     </ClCompile>
     <ClCompile Include="LuaModel.cpp">
       <Filter>Lua Class/Function\LuaModel</Filter>
@@ -115,10 +115,16 @@
       <Filter>Lua Class/Function\LuaInputKeyActionSetup</Filter>
     </ClCompile>
     <ClCompile Include="ProcessMessage.cpp">
-      <Filter>AddProcessMessage</Filter>
+      <Filter>ProcessMessage</Filter>
     </ClCompile>
     <ClCompile Include="LuaMouse.cpp">
       <Filter>Lua Class/Function\LuaMouse</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaSleep.cpp">
+      <Filter>Lua Processes\LuaSleep</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaThreadSetup.cpp">
+      <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +139,6 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaKeysID">
       <UniqueIdentifier>{fdcfefed-1638-4c58-9e66-0fef002d79f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaLoopCallSetup">
-      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lua Class/Function\LuaModel">
       <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
@@ -167,9 +170,6 @@
     <Filter Include="Lua Class/Function\LuaInputKeyActionSetup">
       <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AddProcessMessage">
-      <UniqueIdentifier>{e6a51519-be9d-4a9b-8d8e-6457a2a4667f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Processes">
       <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
     </Filter>
@@ -181,6 +181,15 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaMouse">
       <UniqueIdentifier>{ee0b11df-a323-4da7-bf68-8f08247c493a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes\LuaSleep">
+      <UniqueIdentifier>{38c7120f-8460-4a7a-a7de-7c2538a6749d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProcessMessage">
+      <UniqueIdentifier>{e6a51519-be9d-4a9b-8d8e-6457a2a4667f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaThreadSetup">
+      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -87,6 +87,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="LuaMouse.h" />
+    <ClInclude Include="LuaSleep.h" />
     <ClInclude Include="ProcessMessage.h" />
     <ClInclude Include="LuaScreenCapture.h" />
     <ClInclude Include="LuaScreenShot.h" />
@@ -100,7 +101,7 @@
     <ClInclude Include="LuaKeysID.h" />
     <ClInclude Include="LuaLight.h" />
     <ClInclude Include="LuaLoopCall.h" />
-    <ClInclude Include="LuaLoopCallSetup.h" />
+    <ClInclude Include="LuaThreadSetup.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="LuaObject.h" />
@@ -111,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaMouse.cpp" />
+    <ClCompile Include="LuaSleep.cpp" />
     <ClCompile Include="ProcessMessage.cpp" />
     <ClCompile Include="LuaScreenCapture.cpp" />
     <ClCompile Include="LuaScreenShot.cpp" />
@@ -123,7 +125,7 @@
     <ClCompile Include="LuaKeysID.cpp" />
     <ClCompile Include="LuaLight.cpp" />
     <ClCompile Include="LuaLoopCall.cpp" />
-    <ClCompile Include="LuaLoopCallSetup.cpp" />
+    <ClCompile Include="LuaThreadSetup.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaObject.cpp" />

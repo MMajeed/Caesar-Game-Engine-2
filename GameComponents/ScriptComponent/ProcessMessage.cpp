@@ -3,14 +3,39 @@
  
 namespace ProcessMessage
 {
-	std::string Add(std::shared_ptr<LuaProcesses> process)
+	void Add(std::shared_ptr<LuaProcesses> process)
 	{
 		class AdddProcessMessage : public Message
 		{
 		public:
 			AdddProcessMessage(std::shared_ptr<LuaProcesses> process)
 			{
-				this->ID = CHL::GenerateGUID();
+				this->item = process;
+			}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(LuaManager::GetInstance().mutex);
+
+				LuaManager::GetInstance().SubmitProcesses(this->item->ID, this->item);
+
+				return Message::Status::Complete;
+			}
+
+			std::shared_ptr<LuaProcesses> item;
+		};
+
+		std::shared_ptr<AdddProcessMessage> msg(new AdddProcessMessage(process));
+		LuaManager::GetInstance().SubmitMessage(msg);
+	}
+	void Add(std::shared_ptr<LuaProcesses> process, std::string ID)
+	{
+		class AdddProcessMessage : public Message
+		{
+		public:
+			AdddProcessMessage(std::shared_ptr<LuaProcesses> process, std::string ID)
+			{
+				this->ID = ID;
 				this->item = process;
 			}
 
@@ -27,11 +52,9 @@ namespace ProcessMessage
 			std::string ID;
 		};
 
-		std::shared_ptr<AdddProcessMessage> msg(new AdddProcessMessage(process));
+		std::shared_ptr<AdddProcessMessage> msg(new AdddProcessMessage(process, ID));
 		LuaManager::GetInstance().SubmitMessage(msg);
-		return msg->ID;
 	}
-
 	void Remove(std::string ID)
 	{
 		class RemoveProcessMessage : public Message

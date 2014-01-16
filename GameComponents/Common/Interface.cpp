@@ -54,6 +54,7 @@ void Interface::Run()
 			this->ProccessMessages();
 			this->Update(frameTime, deltaTime);
 			this->Work();
+			this->ProccessMessages();
 
 			// update fps
 			timerLast = timerNow;

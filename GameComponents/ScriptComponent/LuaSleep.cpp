@@ -1,18 +1,19 @@
-#include "LuaLoopCall.h"
+#include "LuaSleep.h"
 #include "LuaError.h"
+#include "ProcessMessage.h"
 
-LuaLoopCall::LuaLoopCall(double inputMilliseconds, luabind::object inputFunction)
+LuaSleep::LuaSleep(double inputMilliseconds, luabind::object inputFunction)
 {
 	this->milliseconds = inputMilliseconds;
 	this->function = inputFunction;
 	this->timeSinceLastCall = 0.0;
 }
 
-void LuaLoopCall::Update(double realTime, double deltaTime)
+void LuaSleep::Update(double realTime, double deltaTime)
 {
 	this->timeSinceLastCall += (realTime * 1000);
 }
-void LuaLoopCall::Action(lua_State *lua)
+void LuaSleep::Action(lua_State *lua)
 {
 	if(this->timeSinceLastCall >= this->milliseconds)
 	{
@@ -20,10 +21,10 @@ void LuaLoopCall::Action(lua_State *lua)
 		{
 			luabind::call_function<void>(this->function, this->timeSinceLastCall, this->ID);
 		}
-		catch (...)
+		catch(...)
 		{
 			throw LuaError(lua);
 		}
-		this->timeSinceLastCall = 0.0;
+		ProcessMessage::Remove(this->ID);
 	}
 }

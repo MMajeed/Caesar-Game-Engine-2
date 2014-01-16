@@ -22,7 +22,7 @@ void LuaKeyAction::Action(lua_State *lua)
 		{
 			try
 			{
-				luabind::call_function<void>(this->function);
+				luabind::call_function<void>(this->function, this->ID);
 			}
 			catch (...)
 			{

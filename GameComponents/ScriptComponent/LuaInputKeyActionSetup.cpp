@@ -16,8 +16,8 @@ namespace LuaInputKeyActionSetup
 		}
 
 		std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(static_cast<InputKeysEnum::KeyCode>(key), InputKeysEnum::KeyStatus::KeyDown, function));
-		std::string id = ProcessMessage::Add(newKeyAction);
-		return id;
+		ProcessMessage::Add(newKeyAction);
+		return newKeyAction->ID;
 	}
 	std::string OnKeyUp(int key, luabind::object const& function)
 	{
@@ -28,12 +28,8 @@ namespace LuaInputKeyActionSetup
 
 		std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(static_cast<InputKeysEnum::KeyCode>(key), InputKeysEnum::KeyStatus::KeyUp, function));
 
-		std::string id = ProcessMessage::Add(newKeyAction);
-		return id;
-	}
-	void RemoveInputAction(std::string ID)
-	{
-		ProcessMessage::Remove(ID);
+		ProcessMessage::Add(newKeyAction);
+		return newKeyAction->ID;
 	}
 	void Register(lua_State *lua)
 	{

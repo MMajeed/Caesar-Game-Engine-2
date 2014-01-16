@@ -174,6 +174,10 @@ function Text2D:EditLocation(loc)
     self.SpriteObj.Location = loc;
 end
 
+function Text2D:Scale(size)
+    self.SpriteObj.Scale = size;
+end;
+
 function Text2D:Release()
     self.SpriteDrawable:Release();
     self.SpriteTexture:Release();    
