@@ -4,6 +4,7 @@
 #include "Linker.h"
 
 #include <memory>
+#include "Logger.h"
 
 class Object
 {
@@ -31,7 +32,7 @@ public:
 		std::shared_ptr<GenericObj<T>> obj = std::dynamic_pointer_cast<GenericObj<T>>(value);
 		if (!obj)
 		{
-			throw std::invalid_argument("Attempting to access a wrong Generic Object in T& GetValue(std::shared_ptr<Object> value)");
+			Logger::LogError("Attempting to access a wrong Generic Object in T& GetValue(std::shared_ptr<Object> value)");
 		}
 		return obj;
 #else

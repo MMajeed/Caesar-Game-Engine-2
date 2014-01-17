@@ -7,9 +7,6 @@
     <ClCompile Include="Message.cpp">
       <Filter>Message</Filter>
     </ClCompile>
-    <ClCompile Include="Error.cpp">
-      <Filter>Error</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectINFO.cpp">
       <Filter>INFO\ObjectINFO</Filter>
     </ClCompile>
@@ -46,9 +43,6 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="Error.h">
-      <Filter>Error</Filter>
-    </ClInclude>
     <ClInclude Include="INFO.h">
       <Filter>INFO</Filter>
     </ClInclude>
@@ -86,9 +80,6 @@
     </Filter>
     <Filter Include="Message">
       <UniqueIdentifier>{9f928656-2491-4f9c-889a-a462f19ee5cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Error">
-      <UniqueIdentifier>{f62a7ced-a9a3-43a6-84b2-8b2b23647062}</UniqueIdentifier>
     </Filter>
     <Filter Include="INFO">
       <UniqueIdentifier>{9173c95d-de8b-4cec-82a6-47d0a3551630}</UniqueIdentifier>

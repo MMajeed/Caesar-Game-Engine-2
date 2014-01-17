@@ -1,6 +1,7 @@
 #include "LuaSleep.h"
 #include "LuaError.h"
 #include "ProcessMessage.h"
+#include <Logger.h>
 
 LuaSleep::LuaSleep(double inputMilliseconds, luabind::object inputFunction)
 {
@@ -23,7 +24,7 @@ void LuaSleep::Action(lua_State *lua)
 		}
 		catch(...)
 		{
-			throw LuaError(lua);
+			Logger::LogError(LuaError::GetLuaError(lua));
 		}
 		ProcessMessage::Remove(this->ID);
 	}

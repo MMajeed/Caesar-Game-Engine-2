@@ -51,12 +51,20 @@ OnKeyDown(KeyCode["B"],
 );
 
 
---mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        = Vector4(40, 20, 0),
---                           [Keys["Camera"]["NearZ"]]      = 0.01,              
---                           [Keys["Camera"]["FarZ"]]       = 5000.0,
---                           [Keys["Camera"]["ClearColor"]] = Vector4(0.5, 0.5, 0.5, 1.0),
---                           [Keys["Camera"]["Process2D"]]  = false,
---                            });
+Sleep(5000, function (time)
+    local textExample = Text2D("Hello!",  Vector4(50.0, 50.0, 0.0));
+    textExample:Scale(Vector4(5.0, 5.0, 5.0));
+    Sleep(5000, function (time)
+        textExample:Release();
+    end);
+end);
+
+mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        = Vector4(40, 20, 0),
+                           [Keys["Camera"]["NearZ"]]      = 0.01,              
+                           [Keys["Camera"]["FarZ"]]       = 5000.0,
+                           [Keys["Camera"]["ClearColor"]] = Vector4(0.5, 0.5, 0.5, 1.0),
+                           [Keys["Camera"]["Process2D"]]  = false,
+                            });
                 
 --mirrorSphereSC = CubeScreenCapture({[Keys["ScreenShot"]["Width"]]   = 1024,
 --                                    [Keys["ScreenShot"]["Height"]]   = 1024,

@@ -3,6 +3,7 @@
 #include "LuaManager.h"
 #include <Model.h>
 #include <string>
+#include <Logger.h>
 
 namespace LuaModel
 {
@@ -21,7 +22,7 @@ namespace LuaModel
 	void Model::SetVertices(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
-			throw std::invalid_argument("Wrong paramter for Model::SetVertices, please send in a table");
+			Logger::LogError("Wrong paramter for Model::SetVertices, please send in a table");
 
 		this->model->Vertices.clear();
 		for(luabind::iterator it(table);
@@ -47,7 +48,7 @@ namespace LuaModel
 	void Model::SeFaces(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
-			throw std::invalid_argument("Wrong paramter for Model::SeFaces, please send in a table");
+			Logger::LogError("Wrong paramter for Model::SeFaces, please send in a table");
 
 		this->model->Faces.clear();
 		for(luabind::iterator it(table);
@@ -90,7 +91,7 @@ namespace LuaModel
 	Vertices::Vertices(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
-			throw std::invalid_argument("Wrong paramter for Vertices, please send in a table");
+			Logger::LogError("Wrong paramter for Vertices, please send in a table");
 
 		this->Point = {0.0, 0.0, 0.0, 0.0};
 		this->Normal = {0.0, 0.0, 0.0, 0.0};

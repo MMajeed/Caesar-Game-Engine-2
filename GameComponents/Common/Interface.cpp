@@ -4,7 +4,7 @@
 #include <thread>
 #include <chrono>
 #include <Windows.h>
-#include "Error.h"
+#include "Logger.h"
 
 Interface::Interface()
 {
@@ -24,11 +24,11 @@ void Interface::Run()
 		LARGE_INTEGER timerNow = { 0 };
 		LARGE_INTEGER timerWorked = { 0 };
 		if( !QueryPerformanceFrequency( &timerFrequency ) ) 
-			throw std::runtime_error("QueryPerformanceFrequency() failed to create a high-performance timer.");
+			Logger::LogError("QueryPerformanceFrequency() failed to create a high-performance timer.");
 		double tickInterval = static_cast<double>( timerFrequency.QuadPart );
 
 		if( !QueryPerformanceCounter( &timerBase ) )
-			throw std::runtime_error("QueryPerformanceCounter() failed to read the high-performance timer.");
+			Logger::LogError("QueryPerformanceCounter() failed to read the high-performance timer.");
 		timerLast = timerBase;
 
 		this->timer.FrameCount = 0;
@@ -37,7 +37,7 @@ void Interface::Run()
 		{
 			// update timer
 			if( !QueryPerformanceCounter( &timerNow ) )
-				throw std::runtime_error("QueryPerformanceCounter() failed to update the high-performance timer.");
+				Logger::LogError("QueryPerformanceCounter() failed to update the high-performance timer.");
 			long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 			long long elapsedFrameCount = timerNow.QuadPart - timerLast.QuadPart;
 			this->timer.AbsoluteTime = elapsedCount / tickInterval;
@@ -62,7 +62,7 @@ void Interface::Run()
 
 			// update timer
 			if( !QueryPerformanceCounter( &timerWorked ) )
-				throw std::runtime_error("QueryPerformanceCounter() failed to update the high-performance timer.");
+				Logger::LogError("QueryPerformanceCounter() failed to update the high-performance timer.");
 			elapsedFrameCount = timerWorked.QuadPart - timerNow.QuadPart ;
 			double timeWorked = elapsedFrameCount / tickInterval;;
 			timeWorked *= 1000;
@@ -73,9 +73,9 @@ void Interface::Run()
 			}
 		}
 	}
-	catch( ... )
+	catch(const std::exception& ex)
 	{
-		Error::GetInstance().SetError(std::current_exception());
+		Logger::LogError(ex.what());
 	}
 }
 

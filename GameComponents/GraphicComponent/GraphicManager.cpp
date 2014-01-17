@@ -14,6 +14,8 @@
 #include <WindowINFO.h>
 #include "Scene.h"
 #include "SceneInfo.h"
+#include <Logger.h>
+
 GraphicManager::GraphicManager()
 {
 	this->D3DStuff.pd3dDevice = 0;
@@ -40,9 +42,9 @@ void GraphicManager::Work()
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
 	std::string window = ImportantIDConfig::WindowINFOID::Get();
-	if(window.empty()){ throw std::invalid_argument("Windows Information is not set"); }
+	if(window.empty()){ Logger::LogError("Windows Information is not set"); }
 	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
-	if(iter == objects.cend()) { throw std::invalid_argument("Could not find windows Info"); }
+	if(iter == objects.cend()) { Logger::LogError("Could not find windows Info"); }
 	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
 
 	std::string camera = ImportantIDConfig::CameraID::Get();
@@ -82,10 +84,10 @@ void GraphicManager::InitDevice()
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
 	std::string window = ImportantIDConfig::WindowINFOID::Get();
-	if(window.empty()){ throw std::invalid_argument("Windows Information is not set"); }
+	if(window.empty()){ Logger::LogError("Windows Information is not set"); }
 
 	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
-	if(iter == objects.cend()) { throw std::invalid_argument("Could not find windows Info"); }
+	if(iter == objects.cend()) { Logger::LogError("Could not find windows Info"); }
 	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
 
 	int Width = windowInfo->Width;
@@ -138,18 +140,18 @@ void GraphicManager::InitDevice()
 			break;
 	}
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating device and SwapChain");
+		Logger::LogError("Failed at creating device and SwapChain");
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
 	hr = this->D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating back buffer");
+		Logger::LogError("Failed at creating back buffer");
 
 	hr = this->D3DStuff.pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &this->D3DStuff.pRenderTargetView);
 	pBackBuffer->Release();
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating Render Target view");
+		Logger::LogError("Failed at creating Render Target view");
 
 	// Set up depth & stencil buffer
 	// Initialize the description of the depth buffer.
@@ -173,7 +175,7 @@ void GraphicManager::InitDevice()
 	hr = this->D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &this->D3DStuff.pDepthStencilBuffer);
 	if(FAILED(hr))
 	{
-		throw std::runtime_error("Failed at creating dept buffer");
+		Logger::LogError("Failed at creating dept buffer");
 	}
 
 	// Initialize the description of the stencil state.
@@ -205,7 +207,7 @@ void GraphicManager::InitDevice()
 	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &this->D3DStuff.pDepthStencilState);
 	if(FAILED(hr))
 	{
-		throw std::runtime_error("Failed at creating Dept stencil State");
+		Logger::LogError("Failed at creating Dept stencil State");
 	}
 
 	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
@@ -231,7 +233,7 @@ void GraphicManager::InitDevice()
 	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthDisabledStencilDesc, &this->D3DStuff.pDepthDisabledStencilState);
 	if(FAILED(hr))
 	{
-		throw std::runtime_error("Failed at creating no depth state");
+		Logger::LogError("Failed at creating no depth state");
 	}
 
 	// Set the depth stencil state.
@@ -250,7 +252,7 @@ void GraphicManager::InitDevice()
 	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilView(this->D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &this->D3DStuff.pDepthStencilView);
 	if(FAILED(hr))
 	{
-		throw std::runtime_error("Failed at creating depth stencil view");
+		Logger::LogError("Failed at creating depth stencil view");
 	}
 
 	// Set the depth stencil state.
@@ -273,7 +275,7 @@ void GraphicManager::InitDevice()
 	hr = this->D3DStuff.pd3dDevice->CreateBlendState(&transparentDesc, &(this->D3DStuff.pTransperency));
 	if(FAILED(hr))
 	{
-		throw std::runtime_error("Failed at creating a transperency blend");
+		Logger::LogError("Failed at creating a transperency blend");
 	}
 	float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};
 	this->D3DStuff.pImmediateContext->OMSetBlendState(this->D3DStuff.pTransperency, blendFactor, 0xffffffff);
@@ -311,7 +313,6 @@ void GraphicManager::InitDevice()
 
 	this->D3DStuff.IsInitialized = true;
 }
-
 
 void GraphicManager::InsertObjectDrawable(const std::string& ID, std::shared_ptr<Drawable> obj)
 {

@@ -1,5 +1,6 @@
 #include "LuaLoopCall.h"
 #include "LuaError.h"
+#include <Logger.h>
 
 LuaLoopCall::LuaLoopCall(double inputMilliseconds, luabind::object inputFunction)
 {
@@ -22,7 +23,7 @@ void LuaLoopCall::Action(lua_State *lua)
 		}
 		catch (...)
 		{
-			throw LuaError(lua);
+			Logger::LogError(LuaError::GetLuaError(lua));
 		}
 		this->timeSinceLastCall = 0.0;
 	}

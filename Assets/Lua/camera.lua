@@ -17,7 +17,7 @@ CamLeftButton   = false;    CamRightButton  = false;
 CamUpButton     = false;    CamDownButton   = false;
 CamPgUpButton   = false;    CamPgDownButton = false;
 
-function UpdateCamera()
+function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
         cam.Yaw = cam.Yaw - 0.05;
     end
@@ -40,7 +40,7 @@ function UpdateCamera()
     end
 end
 
-LoopCall(16, UpdateCamera);
+LoopCall(15, UpdateCamera);
 
 OnKeyDown(KeyCode["LEFT"], function() CamLeftButton = true; end);-- Left
 OnKeyDown(KeyCode["RIGHT"], function() CamRightButton = true; end);-- Right

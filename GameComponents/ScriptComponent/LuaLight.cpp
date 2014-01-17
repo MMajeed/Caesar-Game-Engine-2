@@ -3,6 +3,7 @@
 #include <EntityCommunicator\EntityConfig.h>
 #include <boost/numeric/ublas/vector.hpp>
 #include <Keys.h>
+#include <Logger.h>
 
 // Light Class
 LuaMath::Vector4 LuaLight::Light::GetDiffuse()
@@ -46,7 +47,7 @@ void LuaLight::Light::Release()
 LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 {
 	if(luabind::type(table) != LUA_TTABLE)
-		throw std::invalid_argument("Wrong paramter for DirectionalLight, please send in a table");
+		Logger::LogError("Wrong paramter for DirectionalLight, please send in a table");
 
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 direction;
@@ -106,7 +107,7 @@ void LuaLight::DirectionalLight::Register(lua_State *lua)
 LuaLight::PointLight::PointLight(luabind::object const& table)
 {
 	if(luabind::type(table) != LUA_TTABLE)
-		throw std::invalid_argument("Wrong paramter for PointLight, please send in a table");
+		Logger::LogError("Wrong paramter for PointLight, please send in a table");
 
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
 	CHL::Vec4 position;	CHL::Vec4 att; double range = 0.0;
@@ -188,7 +189,7 @@ void LuaLight::PointLight::Register(lua_State *lua)
 LuaLight::SpotLight::SpotLight(luabind::object const& table)
 {
 	if(luabind::type(table) != LUA_TTABLE)
-		throw std::invalid_argument("Wrong paramter for SpotLight, please send in a table");
+		Logger::LogError("Wrong paramter for SpotLight, please send in a table");
 
 	int slot = 0;
 	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;

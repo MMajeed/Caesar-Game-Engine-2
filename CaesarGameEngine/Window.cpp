@@ -11,7 +11,7 @@
 #include <GraphicCommunicator\GraphicSettings.h>
 #include <Keys.h>
 #include <Converter.h>
-#include <Error.h>
+#include <Logger.h>
 #include <WindowINFO.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
 
@@ -19,8 +19,21 @@ Window::Window()
 {
 }
 
+
+void MesageBoxError(std::string s)
+{
+	std::wstringstream wss;
+	wss << "Exception: Something went wrong: " << std::endl
+		<< s.c_str();
+	std::wstring wStringError = wss.str();
+
+	MessageBox(NULL, wStringError.c_str(), L"Exception", MB_ICONERROR);
+}
+
 void Window::Init()
 {
+	Logger::AddErrorLogger(MesageBoxError);
+
 	this->window.hInst = GetModuleHandle(NULL);
 	this->window.height = 768;
 	this->window.width = 1024;
@@ -42,7 +55,7 @@ void Window::Init()
 	// Try a "register" this type of window... so that we can create it later
     if( !RegisterClassEx( &wcex ) )
 	{
-		throw std::logic_error("Failed at registering Window");
+		Logger::LogError("Failed at registering Window");
 	}
 
     // Create window
@@ -57,7 +70,7 @@ void Window::Init()
 	// Try to create the window...
     if( !(this->window.hWnd) )
 	{
-		throw std::runtime_error("Failed at creating window");
+		Logger::LogError("Failed at creating window");
 	}
 
 	std::shared_ptr<WindowINFO> obj(new WindowINFO());
@@ -103,9 +116,9 @@ void Window::Run()
 	LARGE_INTEGER timerNow = { 0 };
 	LARGE_INTEGER timerFrequency = { 0 };
 	if( !QueryPerformanceCounter( &timerBase ) )
-		throw std::runtime_error("QueryPerformanceCounter() failed to read the high-performance timer.");
+		Logger::LogError("QueryPerformanceCounter() failed to read the high-performance timer.");
 	if( !QueryPerformanceFrequency( &timerFrequency ) ) 
-		throw std::runtime_error("QueryPerformanceFrequency() failed to create a high-performance timer.");
+		Logger::LogError("QueryPerformanceFrequency() failed to create a high-performance timer.");
 	double tickInterval = static_cast<double>( timerFrequency.QuadPart );
 
 	// Main message loop
@@ -120,13 +133,12 @@ void Window::Run()
 		
 		
 		if( !QueryPerformanceCounter( &timerNow ) )
-			throw std::runtime_error("QueryPerformanceCounter() failed to update the high-performance timer.");
+			Logger::LogError("QueryPerformanceCounter() failed to update the high-performance timer.");
 		long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
 		this->window.AbsoluteTime = elapsedCount / tickInterval;
 
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(15)));
 
-		Error::GetInstance().Check();
 	}
 
 	KillTimer( this->window.hWnd, FRAMERATE_UPDATE_TIMER );

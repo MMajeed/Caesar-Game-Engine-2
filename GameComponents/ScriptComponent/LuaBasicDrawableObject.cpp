@@ -6,6 +6,7 @@
 #include <GraphicCommunicator\BasicDrawableConfig.h>
 #include <Keys.h>
 #include <stdexcept>
+#include <Logger.h>
 
 namespace LuaBasicDrawableObject
 {
@@ -13,7 +14,7 @@ namespace LuaBasicDrawableObject
 	BasicDrawableObject::BasicDrawableObject(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
-			throw std::invalid_argument("Wrong paramter for AddBasicObject, please send in a table");
+			Logger::LogError("Wrong paramter for AddBasicObject, please send in a table");
 
 		std::shared_ptr<CHL::Model> model;
 		std::string vertexFileName = "Assets/ShaderFiles/VS_0_Regular.cso";

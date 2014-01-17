@@ -9,6 +9,7 @@
 #include <GenerateGUID.h>
 #include <3DMath.h>
 #include <XNAConverter.h>
+#include <Logger.h>
 
 cBuffer::cbLight LastLightInput;
 cBuffer::cbShadows LastShadowInput;
@@ -51,7 +52,7 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 
 	HRESULT hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateTexture2D(&sTexDesc, NULL, &( this->shadowTexture ));
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating texture array for shadows");
+		Logger::LogError("Failed at creating texture array for shadows");
 
 	this->vecDepthShadow.resize(numberOfShadows);
 	unsigned int counter = 0;
@@ -71,7 +72,7 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 	srvDesc.Texture2DArray.FirstArraySlice = 0;
 	srvDesc.Texture2D.MostDetailedMip = 0;
 	hr = GraphicManager::GetInstance().D3DStuff.pd3dDevice->CreateShaderResourceView(this->shadowTexture, &srvDesc, &this->shaderShadowTexture);
-	if(FAILED(hr)){ throw std::runtime_error("Error creating 2d texture for shadow"); }
+	if(FAILED(hr)){ Logger::LogError("ErrorException creating 2d texture for shadow"); }
 }
 
 void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::Vec4& eye)

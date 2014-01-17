@@ -4,6 +4,7 @@
 #include "LuaSleep.h"
 #include "LuaManager.h"
 #include "ProcessMessage.h"
+#include <Logger.h>
 
 namespace LuaThreadSetup
 {
@@ -11,7 +12,7 @@ namespace LuaThreadSetup
 	{
 		if(luabind::type(function) != LUA_TFUNCTION)
 		{
-			throw std::invalid_argument("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
+			Logger::LogError("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
 		}
 
 		std::shared_ptr<LuaLoopCall> newKeyAction(new LuaLoopCall(time, function));
@@ -24,7 +25,7 @@ namespace LuaThreadSetup
 	{
 		if(luabind::type(function) != LUA_TFUNCTION)
 		{
-			throw std::invalid_argument("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
+			Logger::LogError("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
 		}
 		std::string ID = CHL::GenerateGUID();
 		std::shared_ptr<LuaSleep> newKeyAction(new LuaSleep(time, function));

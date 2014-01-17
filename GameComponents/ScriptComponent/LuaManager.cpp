@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "LuaError.h"
 #include "LuaRegisterAll.h"
+#include <Logger.h>
 
 LuaManager::LuaManager()
 {
@@ -61,11 +62,11 @@ void LuaManager::Work()
 	{
 		static const char mainLua[] = "Assets/Lua/main.lua";
 
-		int error = luaL_loadfile(this->lua, mainLua);
-		if (error != 0)	throw LuaError(this->lua);
+		int ErrorException = luaL_loadfile(this->lua, mainLua);
+		if(ErrorException != 0) Logger::LogError(LuaError::GetLuaError(lua));
 
-		error = lua_pcall(this->lua, 0, 0, 0);
-		if (error != 0)	throw LuaError(this->lua);
+		ErrorException = lua_pcall(this->lua, 0, 0, 0);
+		if(ErrorException != 0)	Logger::LogError(LuaError::GetLuaError(lua));
 
 		this->FileRun = true;
 	}

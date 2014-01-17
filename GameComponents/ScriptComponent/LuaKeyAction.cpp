@@ -1,6 +1,7 @@
 #include "LuaKeyAction.h"
 #include "LuaError.h"
 #include <InputCommunicator\GetKeyStatus.h>
+#include <Logger.h>
 
 LuaKeyAction::LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeyStatus inputWanted, luabind::object inputFunction)
 {
@@ -26,7 +27,7 @@ void LuaKeyAction::Action(lua_State *lua)
 			}
 			catch (...)
 			{
-				throw LuaError(lua);
+				Logger::LogError(LuaError::GetLuaError(lua));
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 #include <Object.h>
 #include <3DMath.h>
 #include "Scene.h"
+#include <Logger.h>
 
 CubeScreenShot::CubeScreenShot()
 {
@@ -42,7 +43,7 @@ void CubeScreenShot::Init()
 	HRESULT hr;
 	hr = d3dStuff.pd3dDevice->CreateTexture2D(&texDesc, 0, &colorMap);
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating the texture 2d for the BasicScreenShot");
+		Logger::LogError("Failed at creating the texture 2d for the BasicScreenShot");
 
 	// Null description means to create a view to all mipmap levels
 	// using the format the texture was created with.
@@ -58,7 +59,7 @@ void CubeScreenShot::Init()
 		hr = d3dStuff.pd3dDevice->CreateRenderTargetView(colorMap, &rtvDesc, &this->D3DInfo.pColorMapRTV[i]);
 
 		if(FAILED(hr))
-			throw std::runtime_error("Failed at creating render target view");
+			Logger::LogError("Failed at creating render target view");
 	}
 	
 	// Create a shader resource view to the cube map.
@@ -70,7 +71,7 @@ void CubeScreenShot::Init()
 
 	hr = d3dStuff.pd3dDevice->CreateShaderResourceView(colorMap, &srvDesc, &(this->pScreenTexture));
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating shader resource view");
+		Logger::LogError("Failed at creating shader resource view");
 
 	// View saves a reference to the texture so we can release our reference.
 	colorMap->Release();
@@ -93,7 +94,7 @@ void CubeScreenShot::Init()
 
 	hr = d3dStuff.pd3dDevice->CreateTexture2D(&texDesc, 0, &depthMap);
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating shader resource view");
+		Logger::LogError("Failed at creating shader resource view");
 
 	D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc;
 
@@ -104,7 +105,7 @@ void CubeScreenShot::Init()
 
 	hr = d3dStuff.pd3dDevice->CreateDepthStencilView(depthMap, &dsvDesc, &this->D3DInfo.pDepthMapDSV);
 	if(FAILED(hr))
-		throw std::runtime_error("Failed at creating shader resource view");
+		Logger::LogError("Failed at creating shader resource view");
 
 	this->D3DInfo.Viewport.TopLeftX = 0.0f;
 	this->D3DInfo.Viewport.TopLeftY = 0.0f;

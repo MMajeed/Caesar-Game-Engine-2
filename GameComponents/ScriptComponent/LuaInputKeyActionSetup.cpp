@@ -5,6 +5,7 @@
 #include "LuaKeyAction.h"
 #include "LuaManager.h"
 #include "ProcessMessage.h"
+#include <Logger.h>
 
 namespace LuaInputKeyActionSetup
 {
@@ -12,7 +13,7 @@ namespace LuaInputKeyActionSetup
 	{
 		if(luabind::type(function) != LUA_TFUNCTION)
 		{
-			throw std::invalid_argument("Wrong paramter for OnKeyDown, Please pass in the key and function");
+			Logger::LogError("Wrong paramter for OnKeyDown, Please pass in the key and function");
 		}
 
 		std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(static_cast<InputKeysEnum::KeyCode>(key), InputKeysEnum::KeyStatus::KeyDown, function));
@@ -23,7 +24,7 @@ namespace LuaInputKeyActionSetup
 	{
 		if(luabind::type(function) != LUA_TFUNCTION)
 		{
-			throw std::invalid_argument("Wrong paramter for OnKeyUp, Please pass in the key and function");
+			Logger::LogError("Wrong paramter for OnKeyUp, Please pass in the key and function");
 		}
 
 		std::shared_ptr<LuaKeyAction> newKeyAction(new LuaKeyAction(static_cast<InputKeysEnum::KeyCode>(key), InputKeysEnum::KeyStatus::KeyUp, function));

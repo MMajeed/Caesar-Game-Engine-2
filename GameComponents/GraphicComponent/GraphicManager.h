@@ -32,6 +32,8 @@ public:
 	
 	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
 
+	virtual void InitDevice();
+
 	// DirectX stuff
 	struct
 	{
@@ -69,8 +71,6 @@ public:
 	void InsertScreenCapture(const std::string& ID, std::shared_ptr<ScreenCapture> obj);
 	void RemoveScreenCapture(const std::string& ID);
 	const std::hash_map<std::string, std::shared_ptr<ScreenCapture>> AllScreenCapture();
-
-	virtual void InitDevice();
 };
 
 #endif //__GraphicManager__

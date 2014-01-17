@@ -4,6 +4,7 @@
 #include <assimp/postprocess.h>
 #include "VecMath.h"
 #include <iostream>
+#include "Logger.h"
 
 namespace CHL
 {
@@ -59,7 +60,7 @@ namespace CHL
 		unsigned int pFlags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded & ( ~aiProcess_SplitLargeMeshes );
 		const aiScene* scene = aiImportFile(fileName.c_str(), pFlags);
 		
-		if(scene == 0){ throw std::invalid_argument("Error with loading model " + fileName + "\n" + aiGetErrorString()); }
+		if(scene == 0){ Logger::LogError("ErrorException with loading model " + fileName + "\n" + aiGetErrorString()); }
 
 		std::vector<Model> models(scene->mNumMeshes);
 

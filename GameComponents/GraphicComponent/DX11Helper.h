@@ -7,6 +7,7 @@
 #include <D3D11.h>
 #include <xnamath.h>
 #include <vector>
+#include <Logger.h>
 
 namespace DX11Helper 
 {
@@ -40,7 +41,7 @@ namespace DX11Helper
 		hr = device->CreateBuffer( &bd, &InitData, bOut );
 		if( FAILED( hr ) )
 		{
-			throw std::runtime_error("Failed at creating vertex buffer");
+			Logger::LogError("Failed at creating vertex buffer");
 		}
 	}
 
@@ -62,7 +63,7 @@ namespace DX11Helper
 		hr = device->CreateBuffer( &bd, &InitData, bOut );
 		if(FAILED(hr))
 		{
-			throw std::runtime_error("Failed at creating index buffer");
+			Logger::LogError("Failed at creating index buffer");
 		}
 	}
 
@@ -81,7 +82,7 @@ namespace DX11Helper
 		hr = device->CreateBuffer(&bd, NULL, cbOut);
 		if(FAILED(hr))
 		{
-			throw std::runtime_error("Failed at creating constant buffer");
+			Logger::LogError("Failed at creating constant buffer");
 		}
 	}
 };

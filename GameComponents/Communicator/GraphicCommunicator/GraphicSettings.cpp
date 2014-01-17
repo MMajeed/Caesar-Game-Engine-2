@@ -1,6 +1,7 @@
 #include "GraphicSettings.h"
 
 #include <GraphicManager.h>
+#include <Logger.h>
 
 namespace GraphicSettings
 {
@@ -29,16 +30,16 @@ namespace GraphicSettings
 					// Resize the swap chain and recreate the render target view.
 					HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
 					if(FAILED(hr))
-						throw std::runtime_error("Failed at resizing swap chain buffer");
+						Logger::LogError("Failed at resizing swap chain buffer");
 
 					ID3D11Texture2D* pBuffer = NULL;
 					hr = graphic.D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
 					if(FAILED(hr))
-						throw std::runtime_error("Failed at creating back buffer");
+						Logger::LogError("Failed at creating back buffer");
 
 					hr = graphic.D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &graphic.D3DStuff.pRenderTargetView);
 					if(FAILED(hr))
-						throw std::runtime_error("Failed at creating Render Target view");
+						Logger::LogError("Failed at creating Render Target view");
 
 					pBuffer->Release();
 
@@ -63,7 +64,7 @@ namespace GraphicSettings
 					hr = graphic.D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &graphic.D3DStuff.pDepthStencilBuffer);
 					if(FAILED(hr))
 					{
-						throw std::runtime_error("Failed at creating dept buffer");
+						Logger::LogError("Failed at creating dept buffer");
 					}
 
 
@@ -80,7 +81,7 @@ namespace GraphicSettings
 					hr = graphic.D3DStuff.pd3dDevice->CreateDepthStencilView(graphic.D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &graphic.D3DStuff.pDepthStencilView);
 					if(FAILED(hr))
 					{
-						throw std::runtime_error("Failed at creating depth stencil view");
+						Logger::LogError("Failed at creating depth stencil view");
 					}
 
 					graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &graphic.D3DStuff.pRenderTargetView, graphic.D3DStuff.pDepthStencilView);

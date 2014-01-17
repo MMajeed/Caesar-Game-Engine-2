@@ -88,7 +88,6 @@
   <ItemGroup>
     <ClCompile Include="CameraINFO.cpp" />
     <ClCompile Include="DirectionalLightINFO.cpp" />
-    <ClCompile Include="Error.cpp" />
     <ClCompile Include="INFO.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="LightINFO.cpp" />
@@ -101,7 +100,6 @@
   <ItemGroup>
     <ClInclude Include="CameraINFO.h" />
     <ClInclude Include="DirectionalLightINFO.h" />
-    <ClInclude Include="Error.h" />
     <ClInclude Include="InputKeysEnum.h" />
     <ClInclude Include="LightINFO.h" />
     <ClInclude Include="Linker.h" />
