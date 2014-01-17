@@ -106,6 +106,12 @@ void Interface::SubmitMessage(std::shared_ptr<Message> msg)
 	this->QueueMessages.push(msg);
 }
 
+void Interface::Start()
+{
+	this->Init();
+	this->Run();
+}
+
 Interface::~Interface()
 {
 

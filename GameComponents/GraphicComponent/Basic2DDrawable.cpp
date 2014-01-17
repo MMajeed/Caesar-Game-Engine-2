@@ -7,7 +7,6 @@
 #include <3DMath.h>
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
-#include <WindowINFO.h>
 #include <VecMath.h>
 
 Basic2DDrawable::Basic2DDrawable()

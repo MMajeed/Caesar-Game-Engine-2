@@ -4,38 +4,48 @@
 #include <sstream>
 #include <Converter.h>
 #include <Logger.h>
-#include "Window.h"
+#include <InputCommunicator\InputCommunicator.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
+#include <ScriptCommunicator\ScriptCommunicator.h>
+#include <thread>
+#include <map>
 
 void Print(std::string s)
 {
 	std::cout << s << "\n";
 }
+
+bool running = true;
+
 int main()
 {
-	try
-	{
-		#ifdef _DEBUG
-		Logger::AddInformationLogger(Print);
-		#endif
-		Logger::AddErrorLogger(Print);
-		Window::GetInstance().Init();
-		Window::GetInstance().Run();
-	}
-	catch(const std::exception& ex)
-	{
-		std::wstringstream wss;
-		wss << "Exception: Something went wrong" << std::endl
-			<< ex.what();
+	
+	#ifdef _DEBUG
+	Logger::AddInformationLogger(Print);
+	#endif
+	Logger::AddErrorLogger(Print);
 
-		OutputDebugStringA( CHL::ToString(wss.str()).c_str() );
-		MessageBox(NULL, wss.str().c_str(), L"Exception", MB_ICONERROR);
-		return EXIT_FAILURE;
-	}
-	catch( ... )
+	std::map<std::string, Interface*> vInterfaces;
+	std::vector<std::shared_ptr<std::thread>> vThreads;
+
+	vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
+	vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
+	vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
+
+
+	for(auto iter = vInterfaces.begin();
+		iter != vInterfaces.end();
+		++iter)
 	{
-		OutputDebugStringA( "Something went wrong" );
-		MessageBoxA( NULL, "An unknown exception has been caught" , "Exception", MB_ICONERROR );
-		return EXIT_FAILURE;
+		std::shared_ptr<std::thread> thread
+			= std::shared_ptr<std::thread>(new std::thread(std::bind(&Interface::Start, iter->second)));
+
+		vThreads.push_back(thread);
+	}
+
+	while(running == true)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds((int)(15)));
 	}
 
 	return 1;

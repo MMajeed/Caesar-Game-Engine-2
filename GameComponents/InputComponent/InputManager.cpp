@@ -3,7 +3,6 @@
 
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
-#include <WindowINFO.h>
 
 InputManager::InputManager()
 {
@@ -43,10 +42,7 @@ InputKeysEnum::KeyStatus InputManager::GetCurrentKeyState(InputKeysEnum::KeyCode
 
 std::pair<long, long> InputManager::CursorPosition()
 {
-	std::shared_ptr<INFO> windowInfo = EntityConfig::GetEntity(ImportantIDConfig::WindowINFOID::Get());
-	
 	POINT p;
 	GetCursorPos(&p);
 	return std::make_pair(p.x, p.y);
-
 }

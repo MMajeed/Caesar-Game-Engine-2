@@ -22,6 +22,8 @@ public:
 
 	virtual void SubmitMessage(std::shared_ptr<Message> msg);
 
+	virtual void Start();
+
 	virtual ~Interface();
 
 	// timer stuff

@@ -12,12 +12,6 @@ namespace ImportantIDConfig
 		void Set(std::string newID);
 		std::string Get();
 	}
-
-	namespace WindowINFOID
-	{
-		void Set(std::string newID);
-		std::string Get();
-	}
 }
 
 

@@ -16,18 +16,4 @@ namespace ImportantIDConfig
 			return EntityManager::GetInstance().ImportantKeys.CameraID;
 		}
 	}
-
-	namespace WindowINFOID
-	{
-		void Set(std::string newID)
-		{
-			std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
-			EntityManager::GetInstance().ImportantKeys.WindowINFOID = newID;
-		}
-		std::string Get()
-		{
-			std::lock_guard<std::mutex> lock(EntityManager::GetInstance().infoMutex);
-			return EntityManager::GetInstance().ImportantKeys.WindowINFOID;
-		}
-	}
 }

@@ -30,8 +30,10 @@ public:
 	virtual void Work();
 	virtual void Shutdown();
 	
+	virtual void ProcessDrawing();
 	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
 
+	virtual void InitWindow();
 	virtual void InitDevice();
 
 	// DirectX stuff
@@ -56,6 +58,17 @@ public:
 		bool						IsInitialized;
 	} D3DStuff;
 
+	// Windows stuff
+	struct
+	{
+		HINSTANCE	hInst;
+		HWND		hWnd;
+		UINT		width;
+		UINT		height;
+	} window;
+
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+	static void MesageBoxError(std::string s);
 
 	std::hash_map<std::string, std::shared_ptr<Drawable>> objectDrawables;
 	void InsertObjectDrawable(const std::string& ID, std::shared_ptr<Drawable> obj);

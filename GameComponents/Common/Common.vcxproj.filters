@@ -16,9 +16,6 @@
     <ClCompile Include="CameraINFO.cpp">
       <Filter>INFO\CameraINFO</Filter>
     </ClCompile>
-    <ClCompile Include="WindowINFO.cpp">
-      <Filter>INFO\WindowINFO</Filter>
-    </ClCompile>
     <ClCompile Include="LightINFO.cpp">
       <Filter>INFO\LightINFO</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     </ClInclude>
     <ClInclude Include="CameraINFO.h">
       <Filter>INFO\CameraINFO</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowINFO.h">
-      <Filter>INFO\WindowINFO</Filter>
     </ClInclude>
     <ClInclude Include="LightINFO.h">
       <Filter>INFO\LightINFO</Filter>
@@ -89,9 +83,6 @@
     </Filter>
     <Filter Include="INFO\CameraINFO">
       <UniqueIdentifier>{263ccd96-3cc0-462a-ac09-6b4fb46e4501}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\WindowINFO">
-      <UniqueIdentifier>{21cebd0f-7f1d-45c5-abb0-84e4c86feb96}</UniqueIdentifier>
     </Filter>
     <Filter Include="INFO\LightINFO">
       <UniqueIdentifier>{4f9fd283-ceff-4f85-b74c-a983dfd3106e}</UniqueIdentifier>

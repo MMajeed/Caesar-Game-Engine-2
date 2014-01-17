@@ -18,7 +18,6 @@ public:
 	struct
 	{
 		std::string CameraID;
-		std::string WindowINFOID;
 	}ImportantKeys;
 
 	std::mutex infoMutex;

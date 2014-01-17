@@ -2,6 +2,7 @@
 
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
+#include <GraphicCommunicator\GraphicSettings.h>
 #include <Keys.h>
 #include <3DMath.h>
 #include <XNAConverter.h>
@@ -11,10 +12,10 @@
 #include <algorithm>
 #include <CameraINFO.h>
 #include <ObjectINFO.h>
-#include <WindowINFO.h>
 #include "Scene.h"
 #include "SceneInfo.h"
 #include <Logger.h>
+#include <sstream>
 
 GraphicManager::GraphicManager()
 {
@@ -30,6 +31,7 @@ GraphicManager::GraphicManager()
 
 void GraphicManager::Init()
 {
+	this->InitWindow();
 	this->InitDevice();
 }
 
@@ -39,20 +41,36 @@ void GraphicManager::Update(double realTime, double deltaTime)
 
 void GraphicManager::Work()
 {
-	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
+	MSG msg = {0};
+	BOOL result = PeekMessage(&msg, this->window.hWnd, 0, 0, PM_REMOVE);
+	if(result == TRUE)
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
+	if(msg.message == WM_QUIT)
+	{
+		std::exit(0);
+	}
+	
+	this->ProcessDrawing();
+}
 
-	std::string window = ImportantIDConfig::WindowINFOID::Get();
-	if(window.empty()){ Logger::LogError("Windows Information is not set"); }
-	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
-	if(iter == objects.cend()) { Logger::LogError("Could not find windows Info"); }
-	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
+void GraphicManager::Shutdown()
+{
+
+}
+
+void GraphicManager::ProcessDrawing()
+{
+	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
 	std::string camera = ImportantIDConfig::CameraID::Get();
 	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(camera);
 	std::shared_ptr<CameraINFO> cameraObj;
 	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
 
-	SceneInfo s = Scene::SetupScene(cameraObj, windowInfo->Width, windowInfo->Height);
+	SceneInfo s = Scene::SetupScene(cameraObj, this->window.width, this->window.height);
 	Light::GetInstance().SetupLight(objects, s.Eye);
 	this->RunAllCapture(objects);
 	Scene::SetupConstantBuffer(s);
@@ -62,11 +80,6 @@ void GraphicManager::Work()
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->D3DStuff.pSwapChain->Present(0, 0);
-}
-
-void GraphicManager::Shutdown()
-{
-
 }
 
 void GraphicManager::RunAllCapture(std::hash_map<std::string, SP_INFO>& objects)
@@ -79,20 +92,58 @@ void GraphicManager::RunAllCapture(std::hash_map<std::string, SP_INFO>& objects)
 	}
 }
 
+void GraphicManager::InitWindow()
+{
+	Logger::AddErrorLogger(MesageBoxError);
+
+	this->window.hInst = GetModuleHandle(NULL);
+	this->window.height = 768;
+	this->window.width = 1024;
+
+	// Register class
+	WNDCLASSEX wcex;
+	wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = GraphicManager::WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = this->window.hInst;
+	wcex.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = NULL;
+	wcex.lpszClassName = L"DirectX11Basic";
+	wcex.hIconSm = LoadIcon(wcex.hInstance, (LPCTSTR)IDI_APPLICATION);
+	// Try a "register" this type of window... so that we can create it later
+	if(!RegisterClassEx(&wcex))
+	{
+		Logger::LogError("Failed at registering Window");
+	}
+
+	// Create window
+	this->window.hInst = this->window.hInst;
+	RECT rc = {0, 0, this->window.width, this->window.height};
+	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
+	this->window.hWnd = 0;
+	this->window.hWnd = CreateWindow(L"DirectX11Basic", L"Caesar Game Engine", WS_OVERLAPPEDWINDOW,
+									 CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, this->window.hInst,
+									 NULL);
+
+	// Try to create the window...
+	if(!(this->window.hWnd))
+	{
+		Logger::LogError("Failed at creating window");
+	}
+
+	ShowWindow(this->window.hWnd, SW_SHOWNORMAL);
+}
 void GraphicManager::InitDevice()
 {
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
-	std::string window = ImportantIDConfig::WindowINFOID::Get();
-	if(window.empty()){ Logger::LogError("Windows Information is not set"); }
-
-	std::hash_map<std::string, SP_INFO>::iterator iter = objects.find(window);
-	if(iter == objects.cend()) { Logger::LogError("Could not find windows Info"); }
-	std::shared_ptr<WindowINFO> windowInfo = std::dynamic_pointer_cast<WindowINFO>(iter->second);
-
-	int Width = windowInfo->Width;
-	int Height = windowInfo->Height;
-	HWND hwnd = windowInfo->HWND;
+	unsigned int& Width = this->window.width;
+	unsigned int& Height = this->window.height;
+	HWND& hwnd = this->window.hWnd;
 
 	HRESULT hr = S_OK;
 
@@ -312,6 +363,43 @@ void GraphicManager::InitDevice()
 	Light::GetInstance().Init();
 
 	this->D3DStuff.IsInitialized = true;
+}
+
+void GraphicManager::MesageBoxError(std::string s)
+{
+	std::wstringstream wss;
+	wss << "Exception: Something went wrong: " << std::endl
+		<< s.c_str();
+	std::wstring wStringError = wss.str();
+
+	MessageBox(NULL, wStringError.c_str(), L"Exception", MB_ICONERROR);
+}
+
+LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	switch(message)
+	{
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
+		case WM_SIZE:
+		{
+			int width = 0;
+			int height = 0;
+			RECT rect;
+			if(GetClientRect(hWnd, &rect))
+			{
+				width = rect.right - rect.left;
+				height = rect.bottom - rect.top;
+			}
+			GraphicSettings::Resize(width, height);
+			break;
+		}
+		default:
+			return DefWindowProc(hWnd, message, wParam, lParam);
+	}
+
+	return 0;
 }
 
 void GraphicManager::InsertObjectDrawable(const std::string& ID, std::shared_ptr<Drawable> obj)

@@ -95,7 +95,6 @@
     <ClCompile Include="ObjectINFO.cpp" />
     <ClCompile Include="PointLightINFO.cpp" />
     <ClCompile Include="SpotLightINFO.cpp" />
-    <ClCompile Include="WindowINFO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraINFO.h" />
@@ -110,7 +109,6 @@
     <ClInclude Include="ObjectINFO.h" />
     <ClInclude Include="PointLightINFO.h" />
     <ClInclude Include="SpotLightINFO.h" />
-    <ClInclude Include="WindowINFO.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
