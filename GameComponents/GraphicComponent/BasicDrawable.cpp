@@ -322,11 +322,35 @@ void BasicDrawable::ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_M
 	this->InitRastersizerState(pDevice);
 }
 
-void  BasicDrawable::ChangeModel(const std::vector<Vertex>&	vectorVertices,
-								 const std::vector<WORD>&	vectorIndices)
+void BasicDrawable::ProcessModel(std::shared_ptr<CHL::Model> model)
 {
-	this->D3DInfo.vertices = vectorVertices;
-	this->D3DInfo.indices = vectorIndices;
+	std::vector<unsigned int>& vectorFaces = model->Faces;
+	this->D3DInfo.indices.clear();
+	this->D3DInfo.indices.reserve(vectorFaces.size());
+	for(std::size_t i = 0; i < vectorFaces.size(); ++i)
+	{
+		this->D3DInfo.indices.push_back((WORD)vectorFaces[i]);
+	}
+
+	std::vector<CHL::Model::VerticesInfo>& modelVertices = model->Vertices;
+	this->D3DInfo.vertices.clear();
+	this->D3DInfo.vertices.reserve(modelVertices.size());
+
+	for(std::size_t i = 0; i < modelVertices.size(); ++i)
+	{
+		Vertex v;
+		auto ver = modelVertices[i];
+		v.Pos = XMFLOAT4((float)ver.Point(0), (float)ver.Point(1), (float)ver.Point(2), 1.0);
+		v.Normal = XMFLOAT4((float)ver.Normal(0), (float)ver.Normal(1), (float)ver.Normal(2), 1.0);
+		v.Texture = XMFLOAT3((float)ver.Texture(0), (float)ver.Texture(1), (float)ver.Texture(2));
+
+		this->D3DInfo.vertices.push_back(v);
+	}
+}
+
+void  BasicDrawable::ChangeModel(std::shared_ptr<CHL::Model> model)
+{
+	this->ProcessModel(model);
 	if(this->D3DInfo.pVertexBuffer != 0)
 	{
 		this->D3DInfo.pVertexBuffer->Release();
@@ -341,8 +365,7 @@ void  BasicDrawable::ChangeModel(const std::vector<Vertex>&	vectorVertices,
 	this->InitIndexBuffer(pDevice);
 }
 
-std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>&	vectorVertices,
-													const std::vector<WORD>&	vectorIndices,
+std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::shared_ptr<CHL::Model>	model,
 													const std::string&			vertexFile,
 													const std::string&			pixelFile,
 													const std::string&			geometryFile,
@@ -351,8 +374,7 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(const std::vector<Vertex>&	v
 {
 	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable());
 
-	newObject->D3DInfo.vertices = vectorVertices;
-	newObject->D3DInfo.indices = vectorIndices;
+	newObject->ProcessModel(model);
 	newObject->D3DInfo.VertexShaderFileName = vertexFile;
 	newObject->D3DInfo.PixelShaderFileName = pixelFile;
 	newObject->D3DInfo.GeometryShaderFileName = geometryFile;

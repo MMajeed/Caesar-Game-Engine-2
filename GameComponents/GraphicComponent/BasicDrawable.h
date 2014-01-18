@@ -8,6 +8,7 @@
 #include <Model.h>
 #include <string>
 #include <D3D11.h>
+#include <Model.h>
 
 class BasicDrawable : public Drawable
 {
@@ -20,8 +21,7 @@ public:
 	virtual void DrawShadow(std::shared_ptr<ObjectINFO> object, const SceneInfo& si);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
-	static std::shared_ptr<BasicDrawable> Spawn(const std::vector<Vertex>&	vectorVertices,
-												const std::vector<WORD>&	vectorIndices,
+	static std::shared_ptr<BasicDrawable> Spawn(std::shared_ptr<CHL::Model>	model,
 												const std::string&			vertexFile,
 												const std::string&			pixelFile,
 												const std::string&			geometryFile,
@@ -68,11 +68,11 @@ public:
 	virtual void DrawObject(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 
+	virtual void ProcessModel(std::shared_ptr<CHL::Model> model);
 	virtual void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4);
 
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
-	virtual void ChangeModel(const std::vector<Vertex>&	vectorVertices,
-							 const std::vector<WORD>&	vectorIndices);
+	virtual void ChangeModel(std::shared_ptr<CHL::Model> model);
 };
 
 

@@ -36,39 +36,15 @@ namespace BasicDrawableConfig
 
 			virtual Message::Status Work()
 			{
-				auto vectorFaces = model->Faces;
-				std::vector<WORD> vectorIndices;
-				vectorIndices.reserve(vectorFaces.size());
-				for(std::size_t i = 0; i < vectorFaces.size(); ++i)
-				{
-					vectorIndices.push_back((WORD)vectorFaces[i]);
-				}
-
-				auto modelVertices = model->Vertices;
-				std::vector<Vertex> vectorVertices;
-				vectorVertices.reserve(modelVertices.size());
-
-				for(std::size_t i = 0; i < modelVertices.size(); ++i)
-				{
-					Vertex v;
-					auto ver = modelVertices[i];
-					v.Pos = XMFLOAT4((float)ver.Point(0), (float)ver.Point(1), (float)ver.Point(2), 1.0);
-					v.Normal = XMFLOAT4((float)ver.Normal(0), (float)ver.Normal(1), (float)ver.Normal(2), 1.0);
-					v.Texture = XMFLOAT3((float)ver.Texture(0), (float)ver.Texture(1), (float)ver.Texture(2));
-
-					vectorVertices.push_back(v);
-				}
-
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicDrawable> newObject =
-					BasicDrawable::Spawn(vectorVertices,
-										vectorIndices,
-										this->vertexFileName,
-										this->pixelFileName,
-										this->geometryFileName,
-										static_cast<D3D11_CULL_MODE>(this->cullMode),
-										static_cast<D3D11_FILL_MODE>(this->fillMode));
+					BasicDrawable::Spawn(this->model,
+										 this->vertexFileName,
+										 this->pixelFileName,
+										 this->geometryFileName,
+										 static_cast<D3D11_CULL_MODE>(this->cullMode),
+										 static_cast<D3D11_FILL_MODE>(this->fillMode));
 
 				GraphicManager::GetInstance().InsertObjectDrawable(this->ID, newObject);
 
@@ -118,34 +94,10 @@ namespace BasicDrawableConfig
 
 			virtual Message::Status Work()
 			{
-				auto vectorFaces = model->Faces;
-				std::vector<WORD> vectorIndices;
-				vectorIndices.reserve(vectorFaces.size());
-				for(std::size_t i = 0; i < vectorFaces.size(); ++i)
-				{
-					vectorIndices.push_back((WORD)vectorFaces[i]);
-				}
-
-				auto modelVertices = model->Vertices;
-				std::vector<Vertex> vectorVertices;
-				vectorVertices.reserve(modelVertices.size());
-
-				for(std::size_t i = 0; i < modelVertices.size(); ++i)
-				{
-					Vertex v;
-					auto ver = modelVertices[i];
-					v.Pos = XMFLOAT4((float)ver.Point(0), (float)ver.Point(1), (float)ver.Point(2), 1.0);
-					v.Normal = XMFLOAT4((float)ver.Normal(0), (float)ver.Normal(1), (float)ver.Normal(2), 1.0);
-					v.Texture = XMFLOAT3((float)ver.Texture(0), (float)ver.Texture(1), (float)ver.Texture(2));
-
-					vectorVertices.push_back(v);
-				}
-
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<Basic2DDrawable> newObject =
-					Basic2DDrawable::Spawn( vectorVertices,
-											vectorIndices,
+					Basic2DDrawable::Spawn( this->model,
 											this->vertexFileName,
 											this->pixelFileName,
 											this->geometryFileName,
@@ -189,29 +141,6 @@ namespace BasicDrawableConfig
 
 			virtual Message::Status Work()
 			{
-				auto vectorFaces = model->Faces;
-				std::vector<WORD> vectorIndices;
-				vectorIndices.reserve(vectorFaces.size());
-				for(std::size_t i = 0; i < vectorFaces.size(); ++i)
-				{
-					vectorIndices.push_back((WORD)vectorFaces[i]);
-				}
-
-				auto modelVertices = model->Vertices;
-				std::vector<Vertex> vectorVertices;
-				vectorVertices.reserve(modelVertices.size());
-
-				for(std::size_t i = 0; i < modelVertices.size(); ++i)
-				{
-					Vertex v;
-					auto ver = modelVertices[i];
-					v.Pos = XMFLOAT4((float)ver.Point(0), (float)ver.Point(1), (float)ver.Point(2), 1.0);
-					v.Normal = XMFLOAT4((float)ver.Normal(0), (float)ver.Normal(1), (float)ver.Normal(2), 1.0);
-					v.Texture = XMFLOAT3((float)ver.Texture(0), (float)ver.Texture(1), (float)ver.Texture(2));
-
-					vectorVertices.push_back(v);
-				}
-
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
@@ -223,7 +152,7 @@ namespace BasicDrawableConfig
 
 					if(bdObj)
 					{
-						bdObj->ChangeModel(vectorVertices, vectorIndices);
+						bdObj->ChangeModel(this->model);
 					}
 				}
 

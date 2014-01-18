@@ -134,10 +134,10 @@ function Text2D:Set()
             verticeArray[index] = Vertice({["Point"] = Vector4(drawX, drawY, 0.0), 
                                            ["Texture"] = Vector4(fontChar.Left, 0.0, 0.0), });
             index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), (drawY - 16), 0.0), 
+            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), (drawY + 16), 0.0), 
                                            ["Texture"] = Vector4(fontChar.Right, 1.0, 0.0), });
             index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4(drawX, (drawY - 16), 0.0), 
+            verticeArray[index] = Vertice({["Point"] = Vector4(drawX, (drawY + 16), 0.0), 
                                            ["Texture"] = Vector4(fontChar.Left, 1.0, 0.0), });
             index = index + 1;
             verticeArray[index] = Vertice({["Point"] = Vector4(drawX, drawY, 0.0), 
@@ -146,7 +146,7 @@ function Text2D:Set()
             verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), drawY, 0.0), 
                                            ["Texture"] = Vector4(fontChar.Right, 0.0, 0.0), });
             index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), (drawY - 16), 0.0), 
+            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), (drawY + 16), 0.0), 
                                            ["Texture"] = Vector4(fontChar.Right, 1.0, 0.0), });
             index = index + 1;
             drawX = drawX + fontChar.Size + 1.0;
