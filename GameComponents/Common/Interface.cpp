@@ -87,22 +87,18 @@ void Interface::ProccessMessages()
 		std::shared_ptr<Message> msg;
 
 		{
-			std::lock_guard<std::mutex> lock(this->mutex);
+			std::lock_guard<std::mutex> lock(this->messageMutex);
 			msg = this->QueueMessages.front();
+			this->QueueMessages.pop();
 		}
 		
 		msg->Proccess();
-
-		{
-			std::lock_guard<std::mutex> lock(this->mutex);
-			this->QueueMessages.pop();
-		}
 	}
 }
 
 void Interface::SubmitMessage(std::shared_ptr<Message> msg)
 {
-    std::lock_guard<std::mutex> lock(this->mutex);
+	std::lock_guard<std::mutex> lock(this->messageMutex);
 	this->QueueMessages.push(msg);
 }
 

@@ -30,8 +30,7 @@ int main()
 
 	vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
 	vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
-	vInterfaces["Input Manager"] = InputCommunicator::GetComponent();
-
+	vInterfaces["Input"] = InputCommunicator::GetComponent();
 
 	for(auto iter = vInterfaces.begin();
 		iter != vInterfaces.end();

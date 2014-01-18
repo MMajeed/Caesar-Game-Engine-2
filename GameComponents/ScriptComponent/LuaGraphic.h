@@ -4,13 +4,22 @@
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 
-class LuaGraphic
+namespace LuaGraphic
 {
-public:
+	void ChangeWindowsTitle(std::string title);
+	void MoveWindow(unsigned int x, unsigned int y);
+	void ResizeWindow(unsigned int height, unsigned int width);
+	void ResizeClient(unsigned int height, unsigned int width);
+	void DiableResize();
+	void EnableResize();
+	void FullScreen();
+	void LeaveFullScreen();
+	bool IsFullScreen();
+	luabind::object GetClientsSize();
+	luabind::object GetWindowsSize();
+	luabind::object GetWindowsLoc();
 
-	static inline void RegisterAllLuaFunction(lua_State *lua)
-	{
-	}
+	void RegisterAllLuaFunction(lua_State *lua);
 };
 
 #endif //__LuaGraphic__

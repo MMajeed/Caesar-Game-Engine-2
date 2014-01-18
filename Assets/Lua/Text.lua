@@ -166,8 +166,10 @@ function Text2D:Set()
 end
 
 function Text2D:EditText(text)
-    self.Text = text;
-    self:Set();
+    if(self.Text ~= text) then
+        self.Text = text;
+        self:Set();
+    end
 end
 
 function Text2D:EditLocation(loc)

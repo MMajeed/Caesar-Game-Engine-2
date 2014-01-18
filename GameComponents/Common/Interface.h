@@ -34,6 +34,7 @@ public:
 	} timer;
 
 	std::mutex mutex;
+	std::mutex messageMutex;
 
 	bool running;	
 protected:

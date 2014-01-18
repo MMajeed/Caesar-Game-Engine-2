@@ -3,7 +3,7 @@ require("camera")
 require("SkyBox")
 require("LightSetup")
 require("floor")
-require("mouse")
+require("Information")
 
 local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/Models/Iron_Man_mark_4.obj"),
                                           [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
@@ -52,7 +52,7 @@ OnKeyDown(KeyCode["B"],
 
 
 Sleep(5000, function (time)
-    local textExample = Text2D("Hello!",  Vector4(50.0, 50.0, 0.0));
+    local textExample = Text2D("Hello!",  Vector4(50.0, 200.0, 0.0));
     textExample:Scale(Vector4(5.0, 5.0, 5.0));
     Sleep(5000, function (time)
         textExample:Release();

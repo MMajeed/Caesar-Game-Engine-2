@@ -48,10 +48,6 @@ void GraphicManager::Work()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	if(msg.message == WM_QUIT)
-	{
-		std::exit(0);
-	}
 	
 	this->ProcessDrawing();
 }
@@ -381,6 +377,7 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 	{
 		case WM_DESTROY:
 			PostQuitMessage(0);
+			std::exit(0);
 			break;
 		case WM_SIZE:
 		{
