@@ -3,14 +3,13 @@
 #include <iomanip>
 #include <thread>
 #include <chrono>
-#include <Windows.h>
 #include "Logger.h"
 
 Interface::Interface()
 {
 	this->running = true;
-	this->timer.AbsoluteTime = 0.0;
 	this->timer.FrameCount = 0;
+	this->timer.start = std::chrono::system_clock::now();
 }
 
 void Interface::Run()
@@ -18,31 +17,15 @@ void Interface::Run()
 	try
 	{
 		// setup the frame timer
-		LARGE_INTEGER timerFrequency = { 0 };
-		LARGE_INTEGER timerBase = { 0 };
-		LARGE_INTEGER timerLast = { 0 };
-		LARGE_INTEGER timerNow = { 0 };
-		LARGE_INTEGER timerWorked = { 0 };
-		if( !QueryPerformanceFrequency( &timerFrequency ) ) 
-			Logger::LogError("QueryPerformanceFrequency() failed to create a high-performance timer.");
-		double tickInterval = static_cast<double>( timerFrequency.QuadPart );
-
-		if( !QueryPerformanceCounter( &timerBase ) )
-			Logger::LogError("QueryPerformanceCounter() failed to read the high-performance timer.");
-		timerLast = timerBase;
-
-		this->timer.FrameCount = 0;
+		std::chrono::time_point<std::chrono::system_clock> start, end;
+		start = std::chrono::system_clock::now();
 
 		while( running == true )
 		{
 			// update timer
-			if( !QueryPerformanceCounter( &timerNow ) )
-				Logger::LogError("QueryPerformanceCounter() failed to update the high-performance timer.");
-			long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
-			long long elapsedFrameCount = timerNow.QuadPart - timerLast.QuadPart;
-			this->timer.AbsoluteTime = elapsedCount / tickInterval;
-			double frameTime = elapsedFrameCount / tickInterval;
-
+			end = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsed_seconds = end - start;
+			double frameTime = elapsed_seconds.count();
 			double deltaTime = frameTime;
 
 			const double MIN_TIMESTEP = 0.015;
@@ -57,19 +40,16 @@ void Interface::Run()
 			this->ProccessMessages();
 
 			// update fps
-			timerLast = timerNow;
+			start = end;
 			++(timer.FrameCount);
 
 			// update timer
-			if( !QueryPerformanceCounter( &timerWorked ) )
-				Logger::LogError("QueryPerformanceCounter() failed to update the high-performance timer.");
-			elapsedFrameCount = timerWorked.QuadPart - timerNow.QuadPart ;
-			double timeWorked = elapsedFrameCount / tickInterval;;
-			timeWorked *= 1000;
+			std::chrono::time_point<std::chrono::system_clock> afterProcessTime = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsedProcessTime = afterProcessTime - end;
 
-			if(timeWorked < 15)
+			if(elapsedProcessTime.count() < 15)
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds((int)(15 - timeWorked)));
+				std::this_thread::sleep_for(std::chrono::milliseconds((int)(15 - elapsedProcessTime.count())));
 			}
 		}
 	}

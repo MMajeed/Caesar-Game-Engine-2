@@ -70,7 +70,7 @@
       <Filter>Lua Class/Function\LuaComponentManager</Filter>
     </ClInclude>
     <ClInclude Include="LuaWaitForProcess.h">
-      <Filter>Lua Processes\LuaWaitToProcessGraphic</Filter>
+      <Filter>Lua Processes\LuaWaitForProcess</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -136,7 +136,7 @@
       <Filter>Lua Class/Function\LuaComponentManager</Filter>
     </ClCompile>
     <ClCompile Include="LuaWaitForProcess.cpp">
-      <Filter>Lua Processes\LuaWaitToProcessGraphic</Filter>
+      <Filter>Lua Processes\LuaWaitForProcess</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,11 +203,11 @@
     <Filter Include="Lua Class/Function\LuaThreadSetup">
       <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Processes\LuaWaitToProcessGraphic">
-      <UniqueIdentifier>{bef5f593-8f46-4f6e-b2e7-ae27cabc54f6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Class/Function\LuaComponentManager">
       <UniqueIdentifier>{e2115848-1c43-4918-aefc-b915acf94140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes\LuaWaitForProcess">
+      <UniqueIdentifier>{bef5f593-8f46-4f6e-b2e7-ae27cabc54f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

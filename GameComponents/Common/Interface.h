@@ -5,6 +5,7 @@
 #include <string>
 #include <memory>
 #include <mutex>
+#include <chrono>
 #include "Message.h"
 
 class Interface
@@ -29,7 +30,7 @@ public:
 	// timer stuff
 	struct
 	{
-		double 	  	AbsoluteTime;
+		std::chrono::time_point<std::chrono::system_clock> start;
 		long long	FrameCount;
 	} timer;
 

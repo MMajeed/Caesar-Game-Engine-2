@@ -16,6 +16,11 @@ namespace LuaComponentManager
 	void LogError(std::string message);
 	void Quit();
 
+	double GetTimeSinceStart();
+	double GetGraphicFrame();
+	double GetInputFrame();
+	double GetScriptFrame();
+
 	void RegisterAllLuaFunction(lua_State *lua);
 };
 
