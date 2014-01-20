@@ -10,6 +10,7 @@ cam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0
               [Keys["Camera"]["NearZ"]]           = 0.01,              
               [Keys["Camera"]["FarZ"]]            = 5000.0,
               [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
+              [Keys["Camera"]["GlobalUserData"]]  = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  },
             }); 
 cam:SetAsMain();
 
@@ -42,19 +43,19 @@ end
 
 LoopCall(15, UpdateCamera);
 
-OnKeyDown(KeyCode["LEFT"], function() CamLeftButton = true; end);-- Left
-OnKeyDown(KeyCode["RIGHT"], function() CamRightButton = true; end);-- Right
-OnKeyDown(KeyCode["UP"], function() CamUpButton = true; end);-- Up
-OnKeyDown(KeyCode["DOWN"], function() CamDownButton = true; end);-- Down
-OnKeyDown(KeyCode["PRIOR"], function() CamPgUpButton = true; end);-- Up
-OnKeyDown(KeyCode["NEXT"], function() CamPgDownButton = true; end);-- Down
+OnKeyDown(KeyCode["A"], function() CamLeftButton = true; end);-- Left
+OnKeyDown(KeyCode["D"], function() CamRightButton = true; end);-- Right
+OnKeyDown(KeyCode["W"], function() CamUpButton = true; end);-- Up
+OnKeyDown(KeyCode["S"], function() CamDownButton = true; end);-- Down
+OnKeyDown(KeyCode["Q"], function() CamPgUpButton = true; end);-- Up
+OnKeyDown(KeyCode["E"], function() CamPgDownButton = true; end);-- Down
 
-OnKeyUp(KeyCode["LEFT"], function() CamLeftButton = false; end);-- Left
-OnKeyUp(KeyCode["RIGHT"], function() CamRightButton = false; end);-- Right
-OnKeyUp(KeyCode["UP"], function() CamUpButton = false; end);-- Up
-OnKeyUp(KeyCode["DOWN"], function() CamDownButton = false; end);-- Down
-OnKeyUp(KeyCode["PRIOR"], function() CamPgUpButton = false; end);-- Up
-OnKeyUp(KeyCode["NEXT"], function() CamPgDownButton = false; end);-- Down
+OnKeyUp(KeyCode["A"], function() CamLeftButton = false; end);-- Left
+OnKeyUp(KeyCode["D"], function() CamRightButton = false; end);-- Right
+OnKeyUp(KeyCode["W"], function() CamUpButton = false; end);-- Up
+OnKeyUp(KeyCode["S"], function() CamDownButton = false; end);-- Down
+OnKeyUp(KeyCode["Q"], function() CamPgUpButton = false; end);-- Up
+OnKeyUp(KeyCode["E"], function() CamPgDownButton = false; end);-- Down
 
 return camera
 

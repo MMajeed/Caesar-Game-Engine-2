@@ -37,6 +37,8 @@ public:
 	std::mutex messageMutex;
 
 	bool running;	
+
+	bool AnyMessage();
 protected:
 	std::queue<std::shared_ptr<Message>> QueueMessages;	
 };

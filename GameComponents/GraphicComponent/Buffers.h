@@ -11,7 +11,7 @@ class cBuffer
 public:
 
 	static const unsigned int numOfLights = 10;
-	static const unsigned int numOfTextures = 10;
+	static const unsigned int numOfTextures = 5;
 
 	struct MaterialInfo
 	{
@@ -40,6 +40,7 @@ public:
 		unsigned int NumberOf2DTextures;
 		unsigned int NumberOfCubeTextures;
 		int HasLight;
+		XMMATRIX userData;
 	};
 
 	struct cbInfo
@@ -47,6 +48,8 @@ public:
 		XMMATRIX view;
 		XMMATRIX proj;
 		XMFLOAT4 eye;
+		unsigned int numberOfGlobal2DTexture;
+		XMMATRIX globalUserData;
 	};
 
 	struct cbLight

@@ -110,8 +110,8 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, cons
 	{
 		ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
 
-		unsigned int counter = 0;
-		for(std::size_t i = 0; i < object->Texture2DVecs.size() && i < cBuffer::numOfTextures; ++i)
+		std::size_t limit = object->Texture2DVecs.size() < cBuffer::numOfTextures ? object->Texture2DVecs.size() : cBuffer::numOfTextures;
+		for(std::size_t i = 0; i < limit; ++i)
 		{
 			std::string textureID = object->Texture2DVecs[i];
 			auto textureIter = graphic.textures.find(textureID);
@@ -121,14 +121,16 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, cons
 			}
 		}
 
-		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(0, cBuffer::numOfTextures, pTexture);
+		graphic.D3DStuff.pImmediateContext->VSSetShaderResources(50, limit, pTexture);
+		graphic.D3DStuff.pImmediateContext->GSSetShaderResources(50, limit, pTexture);
+		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(50, limit, pTexture);
 	}
 	if(object->TextureCubeVecs.size() > 0)
 	{
 		ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
 
-		unsigned int counter = 0;
-		for(std::size_t i = 0; i < object->TextureCubeVecs.size() && i < cBuffer::numOfTextures; ++i)
+		std::size_t limit = object->TextureCubeVecs.size() < cBuffer::numOfTextures ? object->TextureCubeVecs.size() : cBuffer::numOfTextures;
+		for(std::size_t i = 0; i < limit; ++i)
 		{
 			std::string textureID = object->TextureCubeVecs[i];
 			auto textureIter = graphic.textures.find(textureID);
@@ -137,8 +139,9 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, cons
 				pTexture[i] = textureIter->second->D3DInfo.pTexture;
 			}
 		}
-
-		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(10, cBuffer::numOfTextures, pTexture);
+		graphic.D3DStuff.pImmediateContext->VSSetShaderResources(55, limit, pTexture);
+		graphic.D3DStuff.pImmediateContext->GSSetShaderResources(55, limit, pTexture);
+		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(55, limit, pTexture);
 	}
 }
 void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
@@ -152,13 +155,22 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& o
 	cbCEF.colour.diffuse = CHL::ConvertVec4(object->Diffuse);
 	cbCEF.colour.ambient = CHL::ConvertVec4(object->Ambient);
 	cbCEF.colour.specular = CHL::ConvertVec4(object->Specular);
-	cbCEF.NumberOf2DTextures = object->Texture2DVecs.size();
-	cbCEF.NumberOfCubeTextures = object->TextureCubeVecs.size();
+	cbCEF.NumberOf2DTextures = object->Texture2DVecs.size() < cBuffer::numOfTextures ? object->Texture2DVecs.size() : cBuffer::numOfTextures;
+	cbCEF.NumberOfCubeTextures = object->TextureCubeVecs.size() < cBuffer::numOfTextures ? object->TextureCubeVecs.size() : cBuffer::numOfTextures;
 	cbCEF.HasLight = object->Light;
 
 	if(cbCEF.HasLight == false)
 	{
 		int breakpoint = 0;
+	}
+
+	for(unsigned int i = 0; i < 4; ++i)
+	{
+		int row = i * 4;
+		cbCEF.userData(i, 0) = object->UserData[row + 0];
+		cbCEF.userData(i, 1) = object->UserData[row + 1];
+		cbCEF.userData(i, 2) = object->UserData[row + 2];
+		cbCEF.userData(i, 3) = object->UserData[row + 3];
 	}
 
 	auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;

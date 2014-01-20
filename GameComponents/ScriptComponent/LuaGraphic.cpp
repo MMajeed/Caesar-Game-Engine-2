@@ -1,6 +1,7 @@
 #include "LuaGraphic.h"
 #include "LuaManager.h"
 #include <GraphicCommunicator\GraphicSettings.h>
+#include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Keys.h>
 
 namespace LuaGraphic

@@ -54,7 +54,6 @@ namespace ScreenShotConfig
 
 		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
-		msg->WaitTillProcccesed();
 		return msg->newTextureID;
 	}
 	std::string Depth(unsigned int width,
@@ -102,7 +101,6 @@ namespace ScreenShotConfig
 
 		std::shared_ptr<TakeDepthScreenShot> msg(new TakeDepthScreenShot(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
-		msg->WaitTillProcccesed();
 		return msg->newTextureID;
 	}
 
@@ -148,7 +146,6 @@ namespace ScreenShotConfig
 
 		std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
-		msg->WaitTillProcccesed();
 		return msg->newTextureID;
 	}
 }

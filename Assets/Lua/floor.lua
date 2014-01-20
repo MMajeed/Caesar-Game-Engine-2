@@ -15,21 +15,24 @@ box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
 
                                  
-OnKeyDown(KeyCode["A"], 
+OnKeyDown(KeyCode["Z"], 
     function() 
-        
-        myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]    = 1024,
-                                    [Keys["ScreenShot"]["Height"]]   = 1024,
-                                    [Keys["ScreenShot"]["CameraID"]] = cam, });
-        box1:RemoveAll2DTexture();
-        box1:Set2DTexture(myTexture);
+        local myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]    = 1024,
+                                          [Keys["ScreenShot"]["Height"]]   = 1024,
+                                          [Keys["ScreenShot"]["CameraID"]] = cam, });
+        WaitToProcessGraphic(
+            function()
+                box1.Texture2D = {};
+                box1.Texture2D = {myTexture};
+            end
+        );
     end
 );
 
-OnKeyDown(KeyCode["S"], 
+OnKeyDown(KeyCode["X"], 
     function() 
-        box1:RemoveAll2DTexture();
-        box1:Set2DTexture(tilesTexture);
+        box1.Texture2D = {};
+        box1:Add2DTexture(tilesTexture);
     end
 );
 

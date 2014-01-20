@@ -5,6 +5,7 @@
 #include <luabind\luabind.hpp>
 #include "LuaMath.h"
 #include "CameraINFO.h"
+#include "LuaBasicTexture.h"
 
 class LuaCamera
 {
@@ -43,6 +44,24 @@ public:
 
 	void SetClearColor(LuaMath::Vector4 val);
 	LuaMath::Vector4 GetClearColor();
+
+	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAll2DTextures();
+	void Add2dTexture(LuaBasicTexture texture);
+	void Remove2Texture(LuaBasicTexture texture);
+	void Set2DTexture(const luabind::object& textures );
+	luabind::object All2DTexture();
+	
+	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAllCubeTextures();
+	void AddCubeTexture(LuaBasicTexture texture);
+	void RemoveCubeTexture(LuaBasicTexture texture);
+	void SetCubeTexture(const luabind::object& textures);
+	luabind::object AllCubeTexture();
+
+	void SetGlobalUserData(const luabind::object& textures);
+	luabind::object GetGlobalUserData();
+
+	void SetProccess2D(bool val);
+	bool GetProccess2D();
 
 	void Release();
 

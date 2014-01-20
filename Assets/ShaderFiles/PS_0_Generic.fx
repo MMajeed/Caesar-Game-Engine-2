@@ -12,8 +12,11 @@ float4 PS( PS_INPUT input ) : SV_Target
 	finalColor += CalculateCubeTexture(input.tex.xyz);
 	finalColor = saturate(finalColor);
 
-	if(HasLight){ finalColor += CalculateLight(input);	}
-	finalColor = saturate(finalColor);
+	if(HasLight)
+	{ 
+		finalColor += CalculateLight(input);
+		finalColor = saturate(finalColor);
+	}
 
 	finalColor.w = objectMaterial.Diffuse.w;
 	return finalColor;

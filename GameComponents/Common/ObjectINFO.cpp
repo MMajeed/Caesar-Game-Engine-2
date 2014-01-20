@@ -27,6 +27,7 @@ std::shared_ptr<Object> ObjectINFO::Get(const std::string& ID)
 		else if(ID == Keys::ObjectInfo::LIGHT){ returnValue = GenericObj<bool>::CreateNew(this->Light); }
 		else if(ID == Keys::ObjectInfo::SHADOW){ returnValue = GenericObj<bool>::CreateNew(this->Shadow); }
 		else if(ID == Keys::ObjectInfo::DEPTH){ returnValue = GenericObj<bool>::CreateNew(this->Depth); }
+		else if(ID == Keys::ObjectInfo::OBJUSERDATA){ returnValue = GenericObj<std::array<float, USERDATASIZE>>::CreateNew(this->UserData); }
 	}
 
 	return returnValue;
@@ -49,6 +50,7 @@ void ObjectINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::ObjectInfo::LIGHT){ this->Light = GenericObj<bool>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::SHADOW){ this->Shadow = GenericObj<bool>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::DEPTH){ this->Depth = GenericObj<bool>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::OBJUSERDATA){ this->UserData = GenericObj<std::array<float, USERDATASIZE>>::GetValue(obj); }
 }
 
 std::shared_ptr<INFO> ObjectINFO::Clone()

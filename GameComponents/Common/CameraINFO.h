@@ -4,10 +4,13 @@
 #include "Linker.h"
 #include "INFO.h"
 #include <Vector.h>
+#include <array>
 
 class CameraINFO : public INFO
 {
 public:
+	static const unsigned int GLOBALUSERDATASIZE = 16;
+
 	CameraINFO();
 
 	// Camera Stuff
@@ -20,12 +23,17 @@ public:
 
 	// Prespective Stuff
 	double FovAngleY;
-	double nearZ;
-	double farZ;
+	double NearZ;
+	double FarZ;
 
 	CHL::Vec4 ClearColor;
 
-	bool process2D;
+	bool Process2D;
+
+	std::vector<std::string> Global2DTexture;
+	std::vector<std::string> GlobalCubeTexture;
+
+	std::array<float, GLOBALUSERDATASIZE> GlobalUserData;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);
 	virtual void Set(const std::string& ID, std::shared_ptr<Object> obj);

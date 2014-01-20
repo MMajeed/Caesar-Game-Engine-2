@@ -86,8 +86,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="LuaComponentManager.h" />
     <ClInclude Include="LuaMouse.h" />
     <ClInclude Include="LuaSleep.h" />
+    <ClInclude Include="LuaWaitForProcess.h" />
     <ClInclude Include="ProcessMessage.h" />
     <ClInclude Include="LuaScreenCapture.h" />
     <ClInclude Include="LuaScreenShot.h" />
@@ -113,6 +115,7 @@
   <ItemGroup>
     <ClCompile Include="LuaMouse.cpp" />
     <ClCompile Include="LuaSleep.cpp" />
+    <ClCompile Include="LuaWaitForProcess.cpp" />
     <ClCompile Include="ProcessMessage.cpp" />
     <ClCompile Include="LuaScreenCapture.cpp" />
     <ClCompile Include="LuaScreenShot.cpp" />
@@ -131,6 +134,7 @@
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="LuaBasicTexture.cpp" />
     <ClCompile Include="LuaMath.cpp" />
+    <ClCompile Include="LuaComponentManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

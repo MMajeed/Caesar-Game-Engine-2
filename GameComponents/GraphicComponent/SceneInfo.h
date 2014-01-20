@@ -2,9 +2,10 @@
 #define __SceneInfo__
 
 #include "Linker.h"
-
+#include <vector>
 #include <Vector.h>
 #include <Matrix.h>
+#include "Buffers.h"
 
 class ObjectINFO;
 class Drawable;
@@ -29,6 +30,9 @@ struct SceneInfo
 	double farZ;
 	double nearZ;
 	bool process2D;
+	std::vector<std::string> Global2DTexture;
+	std::vector<std::string> GlobalCubeTexture;
+	std::array<float, 16> GlobalUserData;
 };
 
 #endif //__SceneInfo__

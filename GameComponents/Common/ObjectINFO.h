@@ -9,6 +9,8 @@
 class ObjectINFO : public INFO
 {
 public:
+	static const unsigned int USERDATASIZE = 16;
+
 	CHL::Vec4 Location;
 	CHL::Vec4 Rotation;
 	CHL::Vec4 Scale;
@@ -21,6 +23,8 @@ public:
 	bool Light;
 	bool Shadow;
 	bool Depth;
+
+	std::array<float, USERDATASIZE> UserData;
 
 	ObjectINFO();
 	virtual std::shared_ptr<Object> Get(const std::string& ID);

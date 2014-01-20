@@ -70,6 +70,7 @@ void GraphicManager::ProcessDrawing()
 	Light::GetInstance().SetupLight(objects, s.Eye);
 	this->RunAllCapture(objects);
 	Scene::SetupConstantBuffer(s);
+	Scene::SetupGlobalTexture(s);
 	Scene::ClearScreen(s);
 	auto vecObj = Scene::FilterScene(objects, s);
 	Scene::DrawObjects(vecObj, s);

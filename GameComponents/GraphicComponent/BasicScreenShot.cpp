@@ -135,6 +135,7 @@ void BasicScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& ob
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::SetupConstantBuffer(si);
+	Scene::SetupGlobalTexture(si);
 	auto vecObj = Scene::FilterScene(objects, si);
 	Scene::DrawObjects(vecObj, si);
 	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);

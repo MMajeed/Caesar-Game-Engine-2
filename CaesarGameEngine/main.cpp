@@ -9,6 +9,7 @@
 #include <ScriptCommunicator\ScriptCommunicator.h>
 #include <thread>
 #include <map>
+#include <iomanip>
 
 void Print(std::string s)
 {
@@ -19,10 +20,7 @@ bool running = true;
 
 int main()
 {
-	
-	#ifdef _DEBUG
 	Logger::AddInformationLogger(Print);
-	#endif
 	Logger::AddErrorLogger(Print);
 
 	std::map<std::string, Interface*> vInterfaces;
@@ -42,9 +40,51 @@ int main()
 		vThreads.push_back(thread);
 	}
 
+
+	LARGE_INTEGER timerBase = {0};
+	LARGE_INTEGER timerNow = {0};
+	LARGE_INTEGER timerFrequency = {0};
+	if(!QueryPerformanceCounter(&timerBase))
+		Logger::LogError("QueryPerformanceCounter() failed to read the high-performance timer.");
+	if(!QueryPerformanceFrequency(&timerFrequency))
+		Logger::LogError("QueryPerformanceFrequency() failed to create a high-performance timer.");
+	double tickInterval = static_cast<double>(timerFrequency.QuadPart);
+
+	std::map<std::string, long long> vLastFrame;
+	vLastFrame["Graphic"] = 0;
+	vLastFrame["Lua"] = 0;
+	vLastFrame["Input"] = 0;
+	double lastAbsoluteTime = 0.0;
+
 	while(running == true)
 	{
-		std::this_thread::sleep_for(std::chrono::milliseconds((int)(15)));
+		std::this_thread::sleep_for(std::chrono::milliseconds((int)(5000)));
+
+		if(!QueryPerformanceCounter(&timerNow))
+			Logger::LogError("QueryPerformanceCounter() failed to update the high-performance timer.");
+		long long elapsedCount = timerNow.QuadPart - timerBase.QuadPart;
+		double AbsoluteTime = elapsedCount / tickInterval;
+
+		double timeDifference = AbsoluteTime - lastAbsoluteTime;
+
+		std::ostringstream fr;
+		fr << std::setprecision(2) << std::fixed;
+		fr << "Frame Rate: ";
+		for(auto interFaceIter = vInterfaces.begin();
+			interFaceIter != vInterfaces.end();
+			++interFaceIter)
+		{
+			long long frameDifference = interFaceIter->second->timer.FrameCount - vLastFrame[interFaceIter->first];
+			double frameTimer = frameDifference / timeDifference;
+
+			fr << interFaceIter->first.c_str() << " : ";
+			fr << frameTimer << ". ";
+
+			vLastFrame[interFaceIter->first] = interFaceIter->second->timer.FrameCount;
+		}
+		Logger::LogInformation(fr.str());
+
+		lastAbsoluteTime = AbsoluteTime;
 	}
 
 	return 1;

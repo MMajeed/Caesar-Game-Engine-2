@@ -205,9 +205,9 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	double FovAngleY = 1.5707963267948966192313216916398;
 	double height = this->D3DInfo.height; 
 	double width = this->D3DInfo.width;
-	double nearZ = cam->nearZ;
-	double farZ = cam->farZ;
-	bool proccess2D = cam->process2D;
+	double nearZ = cam->NearZ;
+	double farZ = cam->FarZ;
+	bool proccess2D = cam->Process2D;
 	SceneInfo returnValue;
 	returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 	returnValue.Eye = vEye;
@@ -223,6 +223,9 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	returnValue.farZ = farZ;
 	returnValue.nearZ = nearZ;
 	returnValue.process2D = proccess2D;
+	returnValue.Global2DTexture = cam->Global2DTexture;
+	returnValue.GlobalCubeTexture = cam->GlobalCubeTexture;
+	returnValue.GlobalUserData = cam->GlobalUserData;
 	return returnValue;
 }
 void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si)
@@ -244,6 +247,7 @@ void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& obj
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::SetupConstantBuffer(si);
+	Scene::SetupGlobalTexture(si);
 	auto vecObj = Scene::FilterScene(objects, si);
 	Scene::DrawObjects(vecObj, si);
 

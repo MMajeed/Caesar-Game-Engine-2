@@ -1,5 +1,5 @@
 static const unsigned int numOfLights = 10;
-static const unsigned int NumberOfTextures = 10;
+static const unsigned int NumberOfTextures = 5;
 
 // This is used to specify what the material property of the light and objects are
 struct MaterialInfo
@@ -47,6 +47,7 @@ cbuffer cbObject : register( b0 )
 	unsigned int NumberOf2DTextures;
 	unsigned int NumberOfCubeTextures;
 	unsigned int HasLight;
+	matrix UserData;
 };
 
 cbuffer cbInfo : register( b1 )
@@ -54,6 +55,8 @@ cbuffer cbInfo : register( b1 )
 	matrix gView;
 	matrix gProj;
 	float4 eye;
+	int NumberOfGlobal2DTexture;
+	matrix GlobalUserData;
 };
 
 cbuffer cbLight : register( b2 )
@@ -66,8 +69,10 @@ cbuffer cbLight : register(b3)
 	matrix shadowMatrix[numOfLights];
 };
 
-Texture2D Textures2D[NumberOfTextures] : register(t0);
-TextureCube TexturesCube[NumberOfTextures] : register(t10);
+Texture2D GlobalTextures2D[NumberOfTextures] : register(t0);
+TextureCube GlobalTexturesCube[NumberOfTextures] : register(t5);
+Texture2D ObjectTextures2D[NumberOfTextures] : register(t50);
+TextureCube ObjectTexturesCube[NumberOfTextures] : register(t55);
 
 Texture2DArray Shadow : register(t100);
 

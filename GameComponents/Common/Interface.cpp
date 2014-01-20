@@ -108,6 +108,11 @@ void Interface::Start()
 	this->Run();
 }
 
+bool Interface::AnyMessage()
+{
+	return this->QueueMessages.empty();
+}
+
 Interface::~Interface()
 {
 

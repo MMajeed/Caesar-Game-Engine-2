@@ -16,6 +16,7 @@ namespace Scene
 {
 	SceneInfo SetupScene(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height);
 	void SetupConstantBuffer(const SceneInfo& si);
+	void SetupGlobalTexture(const SceneInfo& si);
 	void ClearScreen(const SceneInfo& si);
 	std::vector<DrawableObject> FilterScene(const std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si);
 	void DrawObjects(const std::vector<DrawableObject>& objects, const SceneInfo& si);

@@ -19,13 +19,17 @@ public:
 	void SetGraphic(LuaBasicDrawableObject::BasicDrawableObject graphic);
 	void RemoveGraphic();
 
-	void Set2DTexture(LuaBasicTexture texture);
+	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAll2DTextures();
+	void Add2DTexture(LuaBasicTexture texture);
 	void Remove2DTexture(LuaBasicTexture texture);
-	void RemoveAll2DTexture();
+	void Set2DTexture(const luabind::object& textures);
+	luabind::object All2DTexture();
 
-	void SetCubeTexture(LuaBasicTexture texture);
+	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAllCubeTextures();
+	void AddCubeTexture(LuaBasicTexture texture);
 	void RemoveCubeTexture(LuaBasicTexture texture);
-	void RemoveAllCubeTexture();
+	void SetCubeTexture(const luabind::object& textures);
+	luabind::object AllCubeTexture();
 
 	void SetLocation(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetLocation();
@@ -53,6 +57,9 @@ public:
 
 	void SetDepth(bool vec);
 	bool GetDepth();
+
+	void SetUserData(const luabind::object& textures);
+	luabind::object GetUserData();
 
 	void Release();
 

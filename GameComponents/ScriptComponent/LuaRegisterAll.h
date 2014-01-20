@@ -16,7 +16,7 @@
 #include "LuaScreenShot.h"
 #include "LuaScreenCapture.h"
 #include "LuaMouse.h"
-
+#include "LuaComponentManager.h"
 void LuaRegisterAll(lua_State *lua)
 {
 	LuaGraphic::RegisterAllLuaFunction(lua);
@@ -33,6 +33,7 @@ void LuaRegisterAll(lua_State *lua)
 	LuaScreenShot::RegisterAllLuaFunction(lua);
 	LuaScreenCapture::RegisterAllLuaFunction(lua);
 	LuaMouse::RegisterAllLuaFunction(lua);
+	LuaComponentManager::RegisterAllLuaFunction(lua);
 }
 
 

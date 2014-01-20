@@ -13,7 +13,7 @@ float4 Calculate2DTexture(float2 texCoordinate)
 	[unroll]
 	for(unsigned int i = 0; i < NumberOf2DTextures; ++i)
 	{
-		returnColor += Textures2D[i].Sample(samAnisotropic, texCoordinate);
+		returnColor += ObjectTextures2D[i].Sample(samAnisotropic, texCoordinate);
 	}
 
 	return returnColor;
@@ -26,7 +26,7 @@ float4 CalculateCubeTexture(float3 texCoordinate)
 	[unroll]
 	for(unsigned int i = 0; i < NumberOfCubeTextures; ++i)
 	{
-		returnColor += TexturesCube[i].Sample(samAnisotropic, texCoordinate);
+		returnColor += ObjectTexturesCube[i].Sample(samAnisotropic, texCoordinate);
 	}
 
 	return returnColor;

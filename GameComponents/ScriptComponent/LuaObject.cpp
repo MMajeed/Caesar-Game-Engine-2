@@ -6,6 +6,7 @@
 #include <Keys.h>
 #include <EntityCommunicator\EntityConfig.h>
 #include <ObjectINFO.h>
+#include "LuaManager.h"
 
 LuaObject::LuaObject()
 {
@@ -45,6 +46,8 @@ LuaObject::LuaObject(luabind::object const& table)
 	bool light = true;
 	bool shadow = true;
 	bool depth = true;
+	std::array<float, ObjectINFO::USERDATASIZE> userData;
+	std::fill(userData.begin(), userData.end(), 0.0f);
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -64,6 +67,18 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::LIGHT)			{ light = luabind::object_cast<bool>(*it); }
 		else if(key == Keys::ObjectInfo::SHADOW)		{ shadow = luabind::object_cast<bool>(*it); }
 		else if(key == Keys::ObjectInfo::DEPTH)			{ depth = luabind::object_cast<bool>(*it); }
+		else if(key == Keys::ObjectInfo::OBJUSERDATA)
+		{
+			if(luabind::type(*it) != LUA_TTABLE)
+				Logger::LogError("Wrong paramter for Camera::SetGlobalUserData, please send in a table");
+			unsigned int iCounter = 0;
+			for(luabind::iterator it(*it);
+				it != luabind::iterator() && iCounter < ObjectINFO::USERDATASIZE;
+				++it, ++iCounter)
+			{
+				userData[iCounter] = luabind::object_cast<float>(*it);
+			}
+		}
 	}
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
@@ -79,6 +94,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->Light = light;
 	obj->Shadow = shadow;
 	obj->Depth = depth;
+	obj->UserData = userData;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
@@ -92,50 +108,104 @@ void LuaObject::RemoveGraphic()
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DRAWABLEOBJ, GenericObj<std::string>::CreateNew(""));
 }
 
-void LuaObject::Set2DTexture(LuaBasicTexture texture)
+std::shared_ptr<GenericObj<std::vector<std::string>>> LuaObject::GetRawAll2DTextures()
 {
-	auto obj = this->GetObject();
-	obj->Texture2DVecs.push_back(texture.ID);
-	EntityConfig::SetEntity(obj);
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ);
+	return GenericObj<std::vector<std::string>>::Cast(obj);
+}
+void LuaObject::Add2DTexture(LuaBasicTexture texture)
+{
+	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
+	textures->GetValue().push_back(texture.ID);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ, textures);
 }
 void LuaObject::Remove2DTexture(LuaBasicTexture texture)
 {
-	auto obj = this->GetObject();
-	auto iter = std::find(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end(), texture.ID);
-	if(iter != obj->Texture2DVecs.end())
+	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
+	auto iter = std::find(textures->GetValue().begin(), textures->GetValue().end(), texture.ID);
+	if(iter != textures->GetValue().end())
 	{
-		obj->Texture2DVecs.erase(iter);
+		textures->GetValue().erase(iter);
 	}
-	EntityConfig::SetEntity(obj);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ, textures);
 }
-void LuaObject::RemoveAll2DTexture()
+void LuaObject::Set2DTexture(const luabind::object& textures)
 {
-	auto obj = this->GetObject();
-	obj->Texture2DVecs.erase(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end());
-	EntityConfig::SetEntity(obj);;
+	std::vector<std::string> textureIDs;
+	if(luabind::type(textures) != LUA_TTABLE)
+		Logger::LogError("Wrong paramter for Object::Set2DTexture, please send in a table");
+	for(luabind::iterator it(textures);
+		it != luabind::iterator();
+		++it)
+	{
+		std::string texID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+		textureIDs.push_back(texID);
+	}
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ, GenericObj<std::vector<std::string>>::CreateNew(textureIDs));
+}
+luabind::object LuaObject::All2DTexture()
+{
+	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
+
+	luabind::object luaTextureVec = luabind::newtable(LuaManager::GetInstance().lua);
+	int keyCounter = 1;
+	for(auto iter = textures->GetValue().begin();
+		iter != textures->GetValue().end();
+		++iter, ++keyCounter)
+	{
+		luaTextureVec[keyCounter] = (*iter);
+	}
+	return luaTextureVec;
 }
 
-void LuaObject::SetCubeTexture(LuaBasicTexture texture)
+std::shared_ptr<GenericObj<std::vector<std::string>>> LuaObject::GetRawAllCubeTextures()
 {
-	auto obj = this->GetObject();
-	obj->TextureCubeVecs.push_back(texture.ID); 
-	EntityConfig::SetEntity(obj);
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ);
+	return GenericObj<std::vector<std::string>>::Cast(obj);
+}
+void LuaObject::AddCubeTexture(LuaBasicTexture texture)
+{
+	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
+	textures->GetValue().push_back(texture.ID);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ, textures);
 }
 void LuaObject::RemoveCubeTexture(LuaBasicTexture texture)
 {
-	auto obj = this->GetObject();
-	auto iter = std::find(obj->TextureCubeVecs.begin(), obj->TextureCubeVecs.end(), texture.ID);
-	if(iter != obj->TextureCubeVecs.end())
+	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
+	auto iter = std::find(textures->GetValue().begin(), textures->GetValue().end(), texture.ID);
+	if(iter != textures->GetValue().end())
 	{
-		obj->TextureCubeVecs.erase(iter);
+		textures->GetValue().erase(iter);
 	}
-	EntityConfig::SetEntity(obj);
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ, textures);
 }
-void LuaObject::RemoveAllCubeTexture()
+void LuaObject::SetCubeTexture(const luabind::object& textures)
 {
-	auto obj = this->GetObject();
-	obj->Texture2DVecs.erase(obj->Texture2DVecs.begin(), obj->Texture2DVecs.end());
-	EntityConfig::SetEntity(obj);
+	std::vector<std::string> textureIDs;
+	if(luabind::type(textures) != LUA_TTABLE)
+		Logger::LogError("Wrong paramter for Object::SetCubeTexture, please send in a table");
+	for(luabind::iterator it(textures);
+		it != luabind::iterator();
+		++it)
+	{
+		std::string texID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+		textureIDs.push_back(texID);
+	}
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ, GenericObj<std::vector<std::string>>::CreateNew(textureIDs));
+}
+luabind::object LuaObject::AllCubeTexture()
+{
+	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
+
+	luabind::object luaTextureVec = luabind::newtable(LuaManager::GetInstance().lua);
+	int keyCounter = 1;
+	for(auto iter = textures->GetValue().begin();
+		iter != textures->GetValue().end();
+		++iter, ++keyCounter)
+	{
+		luaTextureVec[keyCounter] = (*iter);
+	}
+	return luaTextureVec;
 }
 
 void LuaObject::SetLocation(LuaMath::Vector4 vec)
@@ -228,6 +298,32 @@ bool LuaObject::GetDepth()
 	return GenericObj<bool>::GetValue(obj);
 }
 
+void LuaObject::SetUserData(const luabind::object& textures)
+{
+	std::array<float, ObjectINFO::USERDATASIZE> userData;
+	if(luabind::type(textures) != LUA_TTABLE)
+		Logger::LogError("Wrong paramter for Camera::SetGlobalUserData, please send in a table");
+	unsigned int iCounter = 0;
+	for(luabind::iterator it(textures);
+		it != luabind::iterator() && iCounter < ObjectINFO::USERDATASIZE;
+		++it, ++iCounter)
+	{
+		userData[iCounter] = luabind::object_cast<float>(*it);
+	}
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::OBJUSERDATA, GenericObj<std::array<float, ObjectINFO::USERDATASIZE>>::CreateNew(userData));
+}
+luabind::object LuaObject::GetUserData()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::OBJUSERDATA);
+	std::array<float, ObjectINFO::USERDATASIZE> userData = GenericObj<std::array<float, ObjectINFO::USERDATASIZE>>::GetValue(obj);
+
+	luabind::object luaUserDataTable = luabind::newtable(LuaManager::GetInstance().lua);
+	for(unsigned int i = 0; i < ObjectINFO::USERDATASIZE; ++i)
+	{
+		luaUserDataTable[i + 1] = userData[i];
+	}
+	return luaUserDataTable;
+}
 
 void LuaObject::Release()
 {
@@ -257,12 +353,12 @@ void LuaObject::Register(lua_State *lua)
 			.def_readonly("ID", &LuaObject::ID)
 			.def("SetGraphic", &LuaObject::SetGraphic)
 			.def("RemoveGraphic", &LuaObject::RemoveGraphic)
-			.def("Set2DTexture", &LuaObject::Set2DTexture)
+			.property("Texture2D", &LuaObject::All2DTexture, &LuaObject::Set2DTexture)
+			.def("Add2DTexture", &LuaObject::Add2DTexture)
 			.def("Remove2DTexture", &LuaObject::Remove2DTexture)
-			.def("RemoveAll2DTexture", &LuaObject::RemoveAll2DTexture)
-			.def("SetCubeTexture", &LuaObject::SetCubeTexture)
+			.property("CubeTexture", &LuaObject::AllCubeTexture, &LuaObject::SetCubeTexture)
+			.def("AddCubeTexture", &LuaObject::AddCubeTexture)
 			.def("RemoveCubeTexture", &LuaObject::RemoveCubeTexture)
-			.def("RemoveAllCubeTexture", &LuaObject::RemoveAllCubeTexture)
 			.def("Release", &LuaObject::Release)
 			.property("Location", &LuaObject::GetLocation, &LuaObject::SetLocation)
 			.property("Scale", &LuaObject::GetScale, &LuaObject::SetScale)

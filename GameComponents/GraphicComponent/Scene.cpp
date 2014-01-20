@@ -22,7 +22,10 @@ namespace Scene
 		double farZ = 5000.0;
 		CHL::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
 		bool process2D = true;
-
+		std::vector<std::string> global2DTexture;
+		std::vector<std::string> globalCubeTexture;
+		std::array<float, 16> globalUserData;
+		std::fill(globalUserData.begin(), globalUserData.end(), 0.0f);
 		if(camera)
 		{
 			vEye = camera->Eye;
@@ -32,10 +35,13 @@ namespace Scene
 			yaw = camera->Yaw;
 			roll = camera->Roll;
 			FovAngleY = camera->FovAngleY;
-			nearZ = camera->nearZ;
-			farZ = camera->farZ;
+			nearZ = camera->NearZ;
+			farZ = camera->FarZ;
 			clearColor = camera->ClearColor;
-			process2D = camera->process2D;
+			process2D = camera->Process2D;
+			global2DTexture = camera->Global2DTexture;
+			globalCubeTexture = camera->GlobalCubeTexture;
+			globalUserData = camera->GlobalUserData;
 		}
 
 		SceneInfo returnValue;
@@ -53,6 +59,10 @@ namespace Scene
 		returnValue.farZ = farZ;
 		returnValue.nearZ = nearZ;
 		returnValue.process2D = process2D;
+		returnValue.Global2DTexture = global2DTexture;
+		returnValue.GlobalCubeTexture = globalCubeTexture;
+		returnValue.GlobalUserData = globalUserData;
+
 		return returnValue;
 	}
 	void SetupConstantBuffer(const SceneInfo& si)
@@ -68,8 +78,57 @@ namespace Scene
 		cbInfo.view = XMMatrixTranspose(XMLoadFloat4x4(&view4x4));
 		cbInfo.proj = XMMatrixTranspose(XMLoadFloat4x4(&proj4x4));
 		cbInfo.eye = CHL::ConvertVec4(si.Eye);
+		cbInfo.numberOfGlobal2DTexture = si.Global2DTexture.size() < cBuffer::numOfTextures ? si.Global2DTexture.size() : cBuffer::numOfTextures;
 		
+		for(unsigned int i = 0; i < 4; ++i)
+		{
+			int row = i * 4;
+			cbInfo.globalUserData(i, 0) = si.GlobalUserData[row + 0];
+			cbInfo.globalUserData(i, 1) = si.GlobalUserData[row + 1];
+			cbInfo.globalUserData(i, 2) = si.GlobalUserData[row + 2];
+			cbInfo.globalUserData(i, 3) = si.GlobalUserData[row + 3];
+		}
+
 		d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBInfo, 0, NULL, &cbInfo, 0, 0);
+	}
+	void SetupGlobalTexture(const SceneInfo& si)
+	{
+		GraphicManager& graphic = GraphicManager::GetInstance();
+		if(si.Global2DTexture.size() > 0)
+		{
+			ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
+			std::size_t limit = si.Global2DTexture.size() < cBuffer::numOfTextures ? si.Global2DTexture.size() : cBuffer::numOfTextures;
+			for(std::size_t i = 0; i < limit; ++i)
+			{
+				std::string textureID = si.Global2DTexture[i];
+				auto textureIter = graphic.textures.find(textureID);
+				if(textureIter != graphic.textures.end())
+				{
+					pTexture[i] = textureIter->second->D3DInfo.pTexture;
+				}
+			}
+			graphic.D3DStuff.pImmediateContext->VSSetShaderResources(0, limit, pTexture);
+			graphic.D3DStuff.pImmediateContext->GSSetShaderResources(0, limit, pTexture);
+			graphic.D3DStuff.pImmediateContext->PSSetShaderResources(0, limit, pTexture);
+		}
+
+		if(si.GlobalCubeTexture.size() > 0)
+		{
+			ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
+			std::size_t limit = si.GlobalCubeTexture.size() < cBuffer::numOfTextures ? si.GlobalCubeTexture.size() : cBuffer::numOfTextures;
+			for(std::size_t i = 0; i < limit; ++i)
+			{
+				std::string textureID = si.GlobalCubeTexture[i];
+				auto textureIter = graphic.textures.find(textureID);
+				if(textureIter != graphic.textures.end())
+				{
+					pTexture[i] = textureIter->second->D3DInfo.pTexture;
+				}
+			}
+			graphic.D3DStuff.pImmediateContext->VSSetShaderResources(5, limit, pTexture);
+			graphic.D3DStuff.pImmediateContext->GSSetShaderResources(5, limit, pTexture);
+			graphic.D3DStuff.pImmediateContext->PSSetShaderResources(5, limit, pTexture);
+		}
 	}
 	void ClearScreen(const SceneInfo& si)
 	{

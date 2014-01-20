@@ -44,17 +44,20 @@ void LuaKeysID::Register(lua_State *lua)
 	luaKeyTable["Window"] = windowTable;
 
 	luabind::object cameraTable = luabind::newtable(lua);
-		cameraTable[Keys::Camera::EYE]             = Keys::Camera::EYE;
-		cameraTable[Keys::Camera::TARGETMAGNITUDE] = Keys::Camera::TARGETMAGNITUDE;
-		cameraTable[Keys::Camera::UP]              = Keys::Camera::UP;
-		cameraTable[Keys::Camera::RADIANROLL]      = Keys::Camera::RADIANROLL;
-		cameraTable[Keys::Camera::RADIANPITCH]     = Keys::Camera::RADIANPITCH;
-		cameraTable[Keys::Camera::RADIANYAW]       = Keys::Camera::RADIANYAW;
-		cameraTable[Keys::Camera::FOVANGLE]        = Keys::Camera::FOVANGLE;
-		cameraTable[Keys::Camera::NEARZ]           = Keys::Camera::NEARZ;
-		cameraTable[Keys::Camera::FARZ]            = Keys::Camera::FARZ;
-		cameraTable[Keys::Camera::CLEARCOLOR]      = Keys::Camera::CLEARCOLOR;
-		cameraTable[Keys::Camera::PROCESS2D]	   = Keys::Camera::PROCESS2D;
+		cameraTable[Keys::Camera::EYE]               = Keys::Camera::EYE;
+		cameraTable[Keys::Camera::TARGETMAGNITUDE]   = Keys::Camera::TARGETMAGNITUDE;
+		cameraTable[Keys::Camera::UP]                = Keys::Camera::UP;
+		cameraTable[Keys::Camera::RADIANROLL]        = Keys::Camera::RADIANROLL;
+		cameraTable[Keys::Camera::RADIANPITCH]       = Keys::Camera::RADIANPITCH;
+		cameraTable[Keys::Camera::RADIANYAW]         = Keys::Camera::RADIANYAW;
+		cameraTable[Keys::Camera::FOVANGLE]          = Keys::Camera::FOVANGLE;
+		cameraTable[Keys::Camera::NEARZ]             = Keys::Camera::NEARZ;
+		cameraTable[Keys::Camera::FARZ]              = Keys::Camera::FARZ;
+		cameraTable[Keys::Camera::CLEARCOLOR]        = Keys::Camera::CLEARCOLOR;
+		cameraTable[Keys::Camera::PROCESS2D]	     = Keys::Camera::PROCESS2D;
+		cameraTable[Keys::Camera::GLOBAL2DTEXTURE]   = Keys::Camera::GLOBAL2DTEXTURE;
+		cameraTable[Keys::Camera::GLOBALCUBETEXTURE] = Keys::Camera::GLOBALCUBETEXTURE;
+		cameraTable[Keys::Camera::GLOBALUSERDATA]    = Keys::Camera::GLOBALUSERDATA;
 	luaKeyTable["Camera"] = cameraTable;
 
 	luabind::object BasicDrawableTable = luabind::newtable(lua);
@@ -86,6 +89,7 @@ void LuaKeysID::Register(lua_State *lua)
 		ObjectInfoTable[Keys::ObjectInfo::LIGHT]          = Keys::ObjectInfo::LIGHT;
 		ObjectInfoTable[Keys::ObjectInfo::SHADOW]         = Keys::ObjectInfo::SHADOW;
 		ObjectInfoTable[Keys::ObjectInfo::DEPTH]          = Keys::ObjectInfo::DEPTH;
+		ObjectInfoTable[Keys::ObjectInfo::OBJUSERDATA]    = Keys::ObjectInfo::OBJUSERDATA;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenShot = luabind::newtable(lua);
