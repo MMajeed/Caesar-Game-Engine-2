@@ -24,17 +24,5 @@ PS_INPUT VS(VS_INPUT input)
 	// Pass the texture coordinates to the pixel shader
 	output.tex = input.tex;
 
-	[unroll]
-	for (unsigned int i = 0; i < numOfLights; ++i)
-	{
-		if(lightArray[i].Type == 0){ break; }
-		if(lightArray[i].ShadowNum >= 0)
-		{
-			output.LightShadow[i] = input.VertexPos;
-			output.LightShadow[i] = mul(output.LightShadow[i], gWorld);
-			output.LightShadow[i] = mul(output.LightShadow[i], shadowMatrix[i]);
-		}
-	}
-
 	return output;
 }

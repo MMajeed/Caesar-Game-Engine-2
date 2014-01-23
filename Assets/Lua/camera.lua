@@ -36,7 +36,7 @@ regularCam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50
                      [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
                      [Keys["Camera"]["GlobalUserData"]]  = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  },
                      [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
-                     --[Keys["Camera"]["ObjectList"]]      = { Quad2D },
+                     [Keys["Camera"]["ObjectList"]]      = { Quad2D },
                    }); 
 regularCam:SetAsMain();
 
@@ -46,17 +46,17 @@ local CamPgUpButton   = false;    local CamPgDownButton = false;
 
 function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
-        regularCam.Yaw = cam.Yaw - 0.05;
+        regularCam.Yaw = regularCam.Yaw - 0.05;
     end
     if(CamRightButton == true) then
-        regularCam.Yaw = cam.Yaw + 0.05;
+        regularCam.Yaw = regularCam.Yaw + 0.05;
     end
     
     if(CamPgUpButton == true) then
-        regularCam.Pitch = cam.Pitch - 0.05;
+        regularCam.Pitch = regularCam.Pitch - 0.05;
     end
     if(CamPgDownButton == true) then
-        regularCam.Pitch = cam.Pitch + 0.05;
+        regularCam.Pitch = regularCam.Pitch + 0.05;
     end
     
     if(CamUpButton == true) then

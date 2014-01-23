@@ -13,7 +13,8 @@ float4 CalculateLight(PS_INPUT input)
 
 		if(lightArray[index].ShadowNum >= 0)
 		{
-			shadow = CalcShadowFactor(input.LightShadow[index], lightArray[index]);
+			float4 shadowPos = mul(input.PosWorld, shadowMatrix[index]);
+			shadow = CalcShadowFactor(shadowPos, lightArray[index]);
 		}
 
 		if(lightArray[index].Type == 1) // Parallel light
