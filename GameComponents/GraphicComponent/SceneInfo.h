@@ -3,6 +3,7 @@
 
 #include "Linker.h"
 #include <vector>
+#include <set>
 #include <Vector.h>
 #include <Matrix.h>
 #include "Buffers.h"
@@ -20,6 +21,8 @@ struct DrawableObject
 
 struct SceneInfo
 {
+	enum class InclusionType { Exclude = 0, Include = 1 };
+
 	CHL::Vec4 ClearColour;
 	CHL::Vec4 Eye;
 	CHL::Matrix4x4 CamerMatrix;
@@ -33,6 +36,9 @@ struct SceneInfo
 	std::vector<std::string> Global2DTexture;
 	std::vector<std::string> GlobalCubeTexture;
 	std::array<float, 16> GlobalUserData;
+
+	InclusionType InclusionState;
+	std::set<std::string> ObjectList;
 };
 
 #endif //__SceneInfo__

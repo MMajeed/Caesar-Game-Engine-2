@@ -58,6 +58,8 @@ void LuaKeysID::Register(lua_State *lua)
 		cameraTable[Keys::Camera::GLOBAL2DTEXTURE]   = Keys::Camera::GLOBAL2DTEXTURE;
 		cameraTable[Keys::Camera::GLOBALCUBETEXTURE] = Keys::Camera::GLOBALCUBETEXTURE;
 		cameraTable[Keys::Camera::GLOBALUSERDATA]    = Keys::Camera::GLOBALUSERDATA;
+		cameraTable[Keys::Camera::INCLUSIONSTATE]    = Keys::Camera::INCLUSIONSTATE;
+		cameraTable[Keys::Camera::OBJECTLIST]        = Keys::Camera::OBJECTLIST;
 	luaKeyTable["Camera"] = cameraTable;
 
 	luabind::object BasicDrawableTable = luabind::newtable(lua);

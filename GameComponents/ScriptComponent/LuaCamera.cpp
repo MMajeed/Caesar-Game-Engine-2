@@ -25,6 +25,8 @@ LuaCamera::LuaCamera(luabind::object const& table)
 	std::vector<std::string> globalCubeTexture;
 	std::array<float, CameraINFO::GLOBALUSERDATASIZE> globalUserData;
 	std::fill(globalUserData.begin(), globalUserData.end(), 0.0f);
+	int inclusionType = 0;
+	std::set<std::string> objList;
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -50,11 +52,24 @@ LuaCamera::LuaCamera(luabind::object const& table)
 			if(luabind::type(*it) != LUA_TTABLE)
 				Logger::LogError("Wrong paramter for Camera::SetGlobalUserData, please send in a table");
 			unsigned int iCounter = 0;
-			for(luabind::iterator it(*it);
-				it != luabind::iterator() && iCounter < CameraINFO::GLOBALUSERDATASIZE;
-				++it, ++iCounter)
+			for(luabind::iterator it2(*it);
+				it2 != luabind::iterator() && iCounter < CameraINFO::GLOBALUSERDATASIZE;
+				++it2, ++iCounter)
 			{
-				globalUserData[iCounter] = luabind::object_cast<float>(*it);
+				globalUserData[iCounter] = luabind::object_cast<float>(*it2);
+			}
+		}
+		else if(key == Keys::Camera::INCLUSIONSTATE) { inclusionType = luabind::object_cast<int>(*it); }
+		else if(key == Keys::Camera::OBJECTLIST)
+		{
+			if(luabind::type(*it) != LUA_TTABLE)
+				Logger::LogError("Wrong paramter for Camera::OBJECTLIST, please send in a table");
+			for(luabind::iterator it2(*it);
+				it2 != luabind::iterator();
+				++it2)
+			{
+				std::string objID = luabind::object_cast<LuaObject>(*it2).ID;
+				objList.insert(objID);
 			}
 		}
 	}
@@ -74,6 +89,8 @@ LuaCamera::LuaCamera(luabind::object const& table)
 	obj->Global2DTexture = global2DTexture;
 	obj->GlobalCubeTexture = globalCubeTexture;
 	obj->GlobalUserData = globalUserData;
+	obj->InclusionState = static_cast<CameraINFO::InclusionType>(inclusionType);
+	obj->ObjectList = objList;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }
@@ -241,7 +258,9 @@ luabind::object LuaCamera::All2DTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		luaTextureVec[keyCounter] = (*iter);
+		LuaBasicTexture texture;
+		texture.ID = (*iter);
+		luaTextureVec[keyCounter] = texture;
 	}
 	return luaTextureVec;
 }
@@ -291,7 +310,9 @@ luabind::object LuaCamera::AllCubeTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		luaTextureVec[keyCounter] = (*iter);
+		LuaBasicTexture texture; 
+		texture.ID = (*iter);
+		luaTextureVec[keyCounter] = texture;
 	}
 	return luaTextureVec;
 }
@@ -323,15 +344,79 @@ luabind::object LuaCamera::GetGlobalUserData()
 	return luaUserDataTable;
 }
 
-void  LuaCamera::SetProccess2D(bool val)
+void LuaCamera::SetProccess2D(bool val)
 {
-
 	EntityConfig::SetEntity(this->ID, Keys::Camera::PROCESS2D, GenericObj<bool>::CreateNew(val));
 }
 bool LuaCamera::GetProccess2D()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::PROCESS2D);
 	return GenericObj<bool>::GetValue(obj);
+}
+
+void LuaCamera::SetInclusionState(int type)
+{
+	CameraINFO::InclusionType inclusionType = static_cast<CameraINFO::InclusionType>(type);
+	EntityConfig::SetEntity(this->ID, Keys::Camera::INCLUSIONSTATE, GenericObj<CameraINFO::InclusionType>::CreateNew(inclusionType));
+}
+int LuaCamera::GetInclusionState()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::INCLUSIONSTATE);
+	CameraINFO::InclusionType inclusionType = GenericObj<CameraINFO::InclusionType >::GetValue(obj);
+	return static_cast<int>(inclusionType);;
+}
+
+std::shared_ptr<GenericObj<std::set<std::string>>> LuaCamera::GetRawObjectList()
+{
+	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::OBJECTLIST);
+	return GenericObj<std::set<std::string>>::Cast(obj);
+}
+void LuaCamera::AddObject(LuaObject obj)
+{
+	std::shared_ptr<GenericObj<std::set<std::string>>> objects = this->GetRawObjectList();
+	objects->GetValue().insert(obj.ID);
+	EntityConfig::SetEntity(this->ID, Keys::Camera::OBJECTLIST, objects);
+}
+void LuaCamera::RemoveObject(LuaObject obj)
+{
+	std::shared_ptr<GenericObj<std::set<std::string>>> objectList = this->GetRawObjectList();
+	auto iter = std::find(objectList->GetValue().begin(), objectList->GetValue().end(), obj.ID);
+	if(iter != objectList->GetValue().end())
+	{
+		objectList->GetValue().erase(iter);
+	}
+	EntityConfig::SetEntity(this->ID, Keys::Camera::OBJECTLIST, objectList);
+}
+void LuaCamera::SetObjectList(const luabind::object& obj)
+{
+	if(luabind::type(obj) != LUA_TTABLE)
+		Logger::LogError("Wrong paramter for Camera::SetObjectList, please send in a table");
+
+	std::set<std::string> objects;
+	for(luabind::iterator it(obj);
+		it != luabind::iterator();
+		++it)
+	{
+		std::string objID = luabind::object_cast<LuaObject>(*it).ID;
+		objects.insert(objID);
+	}
+	EntityConfig::SetEntity(this->ID, Keys::Camera::OBJECTLIST, GenericObj<std::set<std::string>>::CreateNew(objects));
+}
+luabind::object LuaCamera::GetObjectList()
+{
+	std::shared_ptr<GenericObj<std::set<std::string>>> objList = this->GetRawObjectList();
+
+	luabind::object luaObjVec = luabind::newtable(LuaManager::GetInstance().lua);
+	int keyCounter = 1;
+	for(auto iter = objList->GetValue().begin();
+		iter != objList->GetValue().end();
+		++iter, ++keyCounter)
+	{
+		LuaBasicDrawableObject::BasicDrawableObject obj;
+		obj.ID = (*iter);
+		luaObjVec[keyCounter] = obj;
+	}
+	return luaObjVec;
 }
 
 void LuaCamera::Release()
@@ -362,8 +447,16 @@ void LuaCamera::Register(lua_State *lua)
 			.def("AddGlobalCubeTexture", &LuaCamera::AddCubeTexture)
 			.def("RemoveGlobalCubeTexture", &LuaCamera::RemoveCubeTexture)
 			.property("GlobalUserData", &LuaCamera::GetGlobalUserData, &LuaCamera::SetGlobalUserData)
+			.property("ObjectList", &LuaCamera::GetObjectList, &LuaCamera::SetObjectList)
+			.def("AddObject", &LuaCamera::AddObject)
+			.def("RemoveObject", &LuaCamera::RemoveObject)
 			.def("MoveFroward", &LuaCamera::MoveFroward)
 			.def("SetAsMain", &LuaCamera::SetAsMain)
 			.def("Release", &LuaCamera::Release)
 	  ];
+
+	luabind::object inclusionType = luabind::newtable(lua);
+	inclusionType["Exclude"] = 0;
+	inclusionType["Include"] = 1;
+	luabind::globals(lua)["InclusionType"] = inclusionType;
 }

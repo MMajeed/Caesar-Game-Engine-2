@@ -33,6 +33,9 @@
     <FxCompile Include="GS_0_Generic.fx">
       <Filter>GS</Filter>
     </FxCompile>
+    <FxCompile Include="PS_2_Texture.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Setup.fx" />

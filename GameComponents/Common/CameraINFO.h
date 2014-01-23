@@ -5,11 +5,13 @@
 #include "INFO.h"
 #include <Vector.h>
 #include <array>
+#include <set>
 
 class CameraINFO : public INFO
 {
 public:
 	static const unsigned int GLOBALUSERDATASIZE = 16;
+	enum class InclusionType { Exclude = 0, Include = 1 };
 
 	CameraINFO();
 
@@ -34,6 +36,9 @@ public:
 	std::vector<std::string> GlobalCubeTexture;
 
 	std::array<float, GLOBALUSERDATASIZE> GlobalUserData;
+
+	InclusionType InclusionState;
+	std::set<std::string> ObjectList;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);
 	virtual void Set(const std::string& ID, std::shared_ptr<Object> obj);

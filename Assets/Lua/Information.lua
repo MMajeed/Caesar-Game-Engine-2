@@ -7,7 +7,7 @@ local mousePositionText = Text2D("",  Vector4(0.0, 0.0, 0.0));
 local windowPositionText = Text2D("",  Vector4(0.0, 20.0, 0.0));
 local windowSizeText = Text2D("",  Vector4(0.0, 40.0, 0.0));
 local clientSizeText = Text2D("",  Vector4(0.0, 60.0, 0.0));
-local frameCount = Text2D("",  Vector4(0.0, 80.0, 0.0));
+local frameRate = Text2D("",  Vector4(0.0, 80.0, 0.0));
 
 MoveWindow(200, 100);
 ReizeClient(768, 1024);
@@ -58,11 +58,11 @@ function UpdateFrameText()
     lastScriptFrameCheck =  scriptFrameCount;
     local scriptFrame = scriptFrameDifference / timeDifference;
     
-    local message = "Frame Count:" .. 
+    local message = "Frame Rate:" .. 
                     " Graphic: " .. string.format("%3.2f", graphicFrame) .. 
                     " Input: " .. string.format("%3.2f", inputFrame) .. 
                     " Script: " .. string.format("%3.2f", scriptFrame) ;
-    frameCount:EditText(message);
+    frameRate:EditText(message);
 end
 UpdateFrameText();
 LoopCall(1000, UpdateFrameText);

@@ -6,6 +6,8 @@
 #include "LuaMath.h"
 #include "CameraINFO.h"
 #include "LuaBasicTexture.h"
+#include "LuaObject.h"
+#include <set>
 
 class LuaCamera
 {
@@ -62,6 +64,15 @@ public:
 
 	void SetProccess2D(bool val);
 	bool GetProccess2D();
+
+	void SetInclusionState(int type);
+	int GetInclusionState();
+
+	std::shared_ptr<GenericObj<std::set<std::string>>> GetRawObjectList();
+	void AddObject(LuaObject obj);
+	void RemoveObject(LuaObject obj);
+	void SetObjectList(const luabind::object& obj);
+	luabind::object GetObjectList();
 
 	void Release();
 

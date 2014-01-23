@@ -8,24 +8,18 @@
 
 namespace Scene
 {
-	SceneInfo SetupScene(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height)
+	void SetupSceneCameraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si)
 	{
 		// Camera
 		CHL::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
 		CHL::Vec4 vTM{0.0, 0.0, 1.0, 0.0};
 		CHL::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
-		double pitch = 0.0;	
-		double yaw = 0.0;	
+		double pitch = 0.0;
+		double yaw = 0.0;
 		double roll = 0.0;
 		double FovAngleY = 0.785398163;
 		double nearZ = 0.01;
 		double farZ = 5000.0;
-		CHL::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
-		bool process2D = true;
-		std::vector<std::string> global2DTexture;
-		std::vector<std::string> globalCubeTexture;
-		std::array<float, 16> globalUserData;
-		std::fill(globalUserData.begin(), globalUserData.end(), 0.0f);
 		if(camera)
 		{
 			vEye = camera->Eye;
@@ -37,31 +31,58 @@ namespace Scene
 			FovAngleY = camera->FovAngleY;
 			nearZ = camera->NearZ;
 			farZ = camera->FarZ;
+		}
+
+		si.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+		si.Eye = vEye;
+		if(FovAngleY > 0.0)
+			si.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
+		else
+			si.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+
+		si.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+		si.width = width;
+		si.height = height;
+		si.farZ = farZ;
+		si.nearZ = nearZ;
+	}
+	void SetupSceneExtraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si)
+	{
+		CHL::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
+		bool process2D = true;
+		std::vector<std::string> global2DTexture;
+		std::vector<std::string> globalCubeTexture;
+		std::array<float, 16> globalUserData;
+		std::fill(globalUserData.begin(), globalUserData.end(), 0.0f);
+		SceneInfo::InclusionType inclusionState = SceneInfo::InclusionType::Exclude;
+		std::set<std::string> objList;
+		if(camera)
+		{
 			clearColor = camera->ClearColor;
 			process2D = camera->Process2D;
 			global2DTexture = camera->Global2DTexture;
 			globalCubeTexture = camera->GlobalCubeTexture;
 			globalUserData = camera->GlobalUserData;
+			inclusionState = static_cast<SceneInfo::InclusionType>(camera->InclusionState);
+			objList = camera->ObjectList;
 		}
 
+		si.width = width;
+		si.height = height;
+		si.ClearColour = clearColor;
+		si.process2D = process2D;
+		si.Global2DTexture = global2DTexture;
+		si.GlobalCubeTexture = globalCubeTexture;
+		si.GlobalUserData = globalUserData;
+		si.InclusionState = inclusionState;
+		si.ObjectList = objList;
+	}
+	SceneInfo SetupScene(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height)
+	{
 		SceneInfo returnValue;
-		returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
-		returnValue.Eye = vEye;
-		if(FovAngleY > 0.0)
-			returnValue.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
-		else
-			returnValue.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
 
-		returnValue.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
-		returnValue.width = width;
-		returnValue.height = height;
-		returnValue.ClearColour = clearColor;
-		returnValue.farZ = farZ;
-		returnValue.nearZ = nearZ;
-		returnValue.process2D = process2D;
-		returnValue.Global2DTexture = global2DTexture;
-		returnValue.GlobalCubeTexture = globalCubeTexture;
-		returnValue.GlobalUserData = globalUserData;
+		Scene::SetupSceneCameraInfo(camera, width, height, returnValue);
+		Scene::SetupSceneExtraInfo(camera, width, height, returnValue);
 
 		return returnValue;
 	}
@@ -144,15 +165,25 @@ namespace Scene
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
 
-		std::vector<DrawableObject> vecSpecialObjects; // For transparency and depth
-		std::vector<DrawableObject> vecRegularObjects;
-		vecSpecialObjects.reserve(objects.size());
-		vecRegularObjects.reserve(objects.size());
+		std::vector<DrawableObject> vecObjects;
+		vecObjects.reserve(objects.size());
 
+		
 		for(auto iterObj = objects.begin();
 			iterObj != objects.end();
 			++iterObj)
 		{
+			if(si.InclusionState == SceneInfo::InclusionType::Exclude)
+			{
+				auto iterSceneObj = si.ObjectList.find(iterObj->first);
+				if(iterSceneObj != si.ObjectList.end()){ continue; } // It is on the list, so exclude it
+			}
+			else if(si.InclusionState == SceneInfo::InclusionType::Include)
+			{
+				auto iterSceneObj = si.ObjectList.find(iterObj->first);
+				if(iterSceneObj == si.ObjectList.end()){ continue; } // It is not on the list, so don't include it
+			}
+
 			std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
 			if(!objInfo){ continue; }
 
@@ -165,24 +196,20 @@ namespace Scene
 				if(Process2D::Filter({objInfo, drawableIter->second})){ continue; }
 			}
 
-			if(objInfo->Diffuse[3] != 1.0f || objInfo->Depth == false)
-			{
-				vecSpecialObjects.push_back({objInfo, drawableIter->second});
-			}
-			else
-			{
-				vecRegularObjects.push_back({objInfo, drawableIter->second});
-			}
+			vecObjects.push_back({objInfo, drawableIter->second});
 		}
 
 		const CHL::Vec4& eye = si.Eye;
-		std::sort(vecSpecialObjects.begin(), vecSpecialObjects.end(),
+		std::sort(vecObjects.begin(), vecObjects.end(),
 				  [eye](const DrawableObject& a, const DrawableObject& b) -> bool
 		{
 			float rankA = 0.0f; float rankB = 0.0f;
 
-			rankA += CHL::Length(eye, a.ObjInfo->Location);
-			rankB += CHL::Length(eye, b.ObjInfo->Location);
+			if(a.ObjInfo->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
+			else if(a.ObjInfo->Diffuse[3] < 1.0) { rankA += CHL::Length(eye, a.ObjInfo->Location); }
+
+			if(b.ObjInfo->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
+			else if(b.ObjInfo->Diffuse[3] < 1.0) { rankB += CHL::Length(eye, b.ObjInfo->Location); }
 
 			if(a.ObjInfo->Depth == false) { rankA -= 1000000.0f; }
 			if(b.ObjInfo->Depth == false) { rankB -= 1000000.0f; }
@@ -191,11 +218,7 @@ namespace Scene
 		});
 
 
-		std::vector<DrawableObject> returnValue;
-		returnValue.reserve(vecSpecialObjects.size() + vecRegularObjects.size()); // preallocate memory
-		returnValue.insert(returnValue.end(), vecRegularObjects.begin(), vecRegularObjects.end());
-		returnValue.insert(returnValue.end(), vecSpecialObjects.begin(), vecSpecialObjects.end());
-		return returnValue;
+		return vecObjects;
 	}
 	void DrawObjects(const std::vector<DrawableObject>& objects, const SceneInfo& si)
 	{

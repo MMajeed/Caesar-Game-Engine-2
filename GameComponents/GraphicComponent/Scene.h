@@ -14,6 +14,8 @@
 
 namespace Scene
 {
+	void SetupSceneCameraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si);
+	void SetupSceneExtraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si);
 	SceneInfo SetupScene(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height);
 	void SetupConstantBuffer(const SceneInfo& si);
 	void SetupGlobalTexture(const SceneInfo& si);

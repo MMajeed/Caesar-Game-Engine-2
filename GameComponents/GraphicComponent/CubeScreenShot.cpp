@@ -207,7 +207,6 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	double width = this->D3DInfo.width;
 	double nearZ = cam->NearZ;
 	double farZ = cam->FarZ;
-	bool proccess2D = cam->Process2D;
 	SceneInfo returnValue;
 	returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 	returnValue.Eye = vEye;
@@ -217,15 +216,9 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 		returnValue.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
 
 	returnValue.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
-	returnValue.width = width;
-	returnValue.height = height;
-	returnValue.ClearColour = cam->ClearColor;
-	returnValue.farZ = farZ;
-	returnValue.nearZ = nearZ;
-	returnValue.process2D = proccess2D;
-	returnValue.Global2DTexture = cam->Global2DTexture;
-	returnValue.GlobalCubeTexture = cam->GlobalCubeTexture;
-	returnValue.GlobalUserData = cam->GlobalUserData;
+
+	Scene::SetupSceneExtraInfo(cam, this->D3DInfo.width, this->D3DInfo.height, returnValue);
+
 	return returnValue;
 }
 void CubeScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si)

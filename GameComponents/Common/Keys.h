@@ -60,6 +60,8 @@ namespace Keys
 		const static std::string GLOBALCUBETEXTURE = "GlobalCubeTexture";
 		const static std::string PROCESS2D		   = "Process2D";
 		const static std::string GLOBALUSERDATA    = "GlobalUserData";
+		const static std::string INCLUSIONSTATE    = "InclusionState";
+		const static std::string OBJECTLIST        = "ObjectList";
 	};
 	
 	namespace BasicDrawable

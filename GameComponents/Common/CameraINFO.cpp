@@ -27,6 +27,8 @@ std::shared_ptr<Object> CameraINFO::Get(const std::string& ID)
 		else if(ID == Keys::Camera::GLOBALCUBETEXTURE){ returnValue = GenericObj<std::vector<std::string>>::CreateNew(this->GlobalCubeTexture); }
 		else if(ID == Keys::Camera::PROCESS2D){ returnValue = GenericObj<bool>::CreateNew(this->Process2D); }
 		else if(ID == Keys::Camera::GLOBALUSERDATA){ returnValue = GenericObj<std::array<float, GLOBALUSERDATASIZE>>::CreateNew(this->GlobalUserData); }
+		else if(ID == Keys::Camera::INCLUSIONSTATE){ returnValue = GenericObj<CameraINFO::InclusionType>::CreateNew(this->InclusionState); }
+		else if(ID == Keys::Camera::OBJECTLIST){ returnValue = GenericObj<std::set<std::string>>::CreateNew(this->ObjectList); }
 	}
 
 	return returnValue;
@@ -50,6 +52,8 @@ void CameraINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::Camera::GLOBALCUBETEXTURE){ this->GlobalCubeTexture = GenericObj<std::vector<std::string>>::GetValue(obj); }
 	else if(ID == Keys::Camera::PROCESS2D){ this->Process2D = GenericObj<bool>::GetValue(obj); }
 	else if(ID == Keys::Camera::GLOBALUSERDATA){ this->GlobalUserData = GenericObj<std::array<float, GLOBALUSERDATASIZE>>::GetValue(obj); }
+	else if(ID == Keys::Camera::INCLUSIONSTATE){ this->InclusionState = GenericObj<CameraINFO::InclusionType>::GetValue(obj); }
+	else if(ID == Keys::Camera::OBJECTLIST){ this->ObjectList = GenericObj<std::set<std::string>>::GetValue(obj); }
 }
 
 std::shared_ptr<INFO> CameraINFO::Clone()

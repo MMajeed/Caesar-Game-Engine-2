@@ -153,7 +153,9 @@ luabind::object LuaObject::All2DTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		luaTextureVec[keyCounter] = (*iter);
+		LuaBasicTexture texture;
+		texture.ID = (*iter);
+		luaTextureVec[keyCounter] = texture;
 	}
 	return luaTextureVec;
 }
@@ -203,7 +205,9 @@ luabind::object LuaObject::AllCubeTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		luaTextureVec[keyCounter] = (*iter);
+		LuaBasicTexture texture;
+		texture.ID = (*iter);
+		luaTextureVec[keyCounter] = texture;
 	}
 	return luaTextureVec;
 }
