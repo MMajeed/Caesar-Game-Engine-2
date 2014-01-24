@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="AnimationCommunicator.h">
+      <Filter>AnimationCommunicator</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AnimationCommunicator">
+      <UniqueIdentifier>{9b6c322d-bf0e-4ec2-9916-275969b64a8b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AnimationCommunicator.cpp">
+      <Filter>AnimationCommunicator</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

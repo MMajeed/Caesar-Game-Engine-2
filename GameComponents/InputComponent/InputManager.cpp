@@ -1,9 +1,6 @@
 #include "InputManager.h"
 #include <Windows.h>
 
-#include <EntityCommunicator\EntityConfig.h>
-#include <EntityCommunicator\ImportantIDConfig.h>
-
 InputManager::InputManager()
 {
 
