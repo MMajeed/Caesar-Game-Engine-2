@@ -207,6 +207,120 @@ namespace BasicDrawableConfig
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 
+	void ChangeVS(std::string ID, std::string fileName)
+	{
+		class ChangeVSMessage : public Message
+		{
+		public:
+			std::string ID;
+			std::string fileName;
+
+			ChangeVSMessage(std::string ID, std::string fileName)
+			{
+				this->ID = ID;
+				this->fileName = fileName;
+			}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto iterObjDrawable = allObjects.find(this->ID);
+
+				if(iterObjDrawable != allObjects.end())
+				{
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+
+					if(bdObj)
+					{
+						bdObj->ChangeVS(this->fileName);
+					}
+				}
+
+				return Message::Status::Complete;
+			}
+		};
+		std::shared_ptr<ChangeVSMessage> msg
+			(new ChangeVSMessage(ID, fileName));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
+	void ChangeGS(std::string ID, std::string fileName)
+	{
+		class ChangeGSMessage : public Message
+		{
+		public:
+			std::string ID;
+			std::string fileName;
+
+			ChangeGSMessage(std::string ID, std::string fileName)
+			{
+				this->ID = ID;
+				this->fileName = fileName;
+			}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto iterObjDrawable = allObjects.find(this->ID);
+
+				if(iterObjDrawable != allObjects.end())
+				{
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+
+					if(bdObj)
+					{
+						bdObj->ChangeGS(this->fileName);
+					}
+				}
+
+				return Message::Status::Complete;
+			}
+		};
+		std::shared_ptr<ChangeGSMessage> msg
+			(new ChangeGSMessage(ID, fileName));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
+	void ChangePS(std::string ID, std::string fileName)
+	{
+		class ChangePSMessage : public Message
+		{
+		public:
+			std::string ID;
+			std::string fileName;
+
+			ChangePSMessage(std::string ID, std::string fileName)
+			{
+				this->ID = ID;
+				this->fileName = fileName;
+			}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto iterObjDrawable = allObjects.find(this->ID);
+
+				if(iterObjDrawable != allObjects.end())
+				{
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+
+					if(bdObj)
+					{
+						bdObj->ChangePS(this->fileName);
+					}
+				}
+
+				return Message::Status::Complete;
+			}
+		};
+		std::shared_ptr<ChangePSMessage> msg
+			(new ChangePSMessage(ID, fileName));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
 	void Release(std::string ID)
 	{
 		class ReleaseBasicDrawable : public Message

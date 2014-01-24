@@ -36,6 +36,9 @@
     <FxCompile Include="PS_2_Texture.fx">
       <Filter>PS</Filter>
     </FxCompile>
+    <FxCompile Include="PS_3_Sniper.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Setup.fx" />

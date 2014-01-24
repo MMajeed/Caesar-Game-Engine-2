@@ -67,6 +67,18 @@ namespace LuaBasicDrawableObject
 													static_cast<BasicDrawableConfig::CULL_MODE>(cullMode),
 													static_cast<BasicDrawableConfig::FILL_MODE>(fillMode));
 	}
+	void BasicDrawableObject::ChangeVS(std::string fileName)
+	{
+		BasicDrawableConfig::ChangeVS(this->ID, fileName);
+	}
+	void BasicDrawableObject::ChangeGS(std::string fileName)
+	{
+		BasicDrawableConfig::ChangeGS(this->ID, fileName);
+	}
+	void BasicDrawableObject::ChangePS(std::string fileName)
+	{
+		BasicDrawableConfig::ChangePS(this->ID, fileName);
+	}
 	void BasicDrawableObject::Release()
 	{
 		BasicDrawableConfig::Release(this->ID);
@@ -80,6 +92,9 @@ namespace LuaBasicDrawableObject
 				.def_readonly("ID", &BasicDrawableObject::ID)
 				.def("ChangeRastersizerState", &BasicDrawableObject::ChangeRastersizerState)
 				.def("ChangeModel", &BasicDrawableObject::ChangeModel)
+				.def("ChangeVS", &BasicDrawableObject::ChangeVS)
+				.def("ChangeGS", &BasicDrawableObject::ChangeGS)
+				.def("ChangePS", &BasicDrawableObject::ChangePS)
 				.def("Release", &BasicDrawableObject::Release)
 		];
 	}

@@ -360,7 +360,7 @@ void BasicDrawable::ProcessModel(std::shared_ptr<CHL::Model> model)
 	}
 }
 
-void  BasicDrawable::ChangeModel(std::shared_ptr<CHL::Model> model)
+void BasicDrawable::ChangeModel(std::shared_ptr<CHL::Model> model)
 {
 	this->ProcessModel(model);
 	if(this->D3DInfo.pVertexBuffer != 0)
@@ -375,6 +375,40 @@ void  BasicDrawable::ChangeModel(std::shared_ptr<CHL::Model> model)
 	ID3D11Device* pDevice = GraphicManager::GetInstance().D3DStuff.pd3dDevice;
 	this->InitVertexBuffer(pDevice);
 	this->InitIndexBuffer(pDevice);
+}
+
+void BasicDrawable::ChangeVS(std::string fileName)
+{
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	if(this->D3DInfo.pVertexShader != 0)
+	{
+		this->D3DInfo.pVertexShader->Release();
+	}
+	this->D3DInfo.VertexShaderFileName = fileName;
+	this->InitVertexShader(graphic.D3DStuff.pd3dDevice);
+}
+void BasicDrawable::ChangePS(std::string fileName)
+{
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	if(this->D3DInfo.pVertexShader != 0)
+	{
+		this->D3DInfo.pVertexShader->Release();
+	}
+	this->D3DInfo.PixelShaderFileName = fileName;
+	this->InitPixelShader(graphic.D3DStuff.pd3dDevice);
+}
+void BasicDrawable::ChangeGS(std::string fileName)
+{
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	if(this->D3DInfo.pGeometryShader != 0)
+	{
+		this->D3DInfo.pGeometryShader->Release();
+	}
+	this->D3DInfo.GeometryShaderFileName = fileName;
+	this->InitGeometryShader(graphic.D3DStuff.pd3dDevice);
 }
 
 std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::shared_ptr<CHL::Model>	model,

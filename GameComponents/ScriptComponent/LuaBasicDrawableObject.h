@@ -15,6 +15,9 @@ namespace LuaBasicDrawableObject
 		BasicDrawableObject(luabind::object const& table);
 		void ChangeModel(LuaModel::Model model);
 		void ChangeRastersizerState(int cullMode, int fillMode);
+		void ChangeVS(std::string fileName);
+		void ChangeGS(std::string fileName);
+		void ChangePS(std::string fileName);
 		void Release();
 		std::string ID;
 

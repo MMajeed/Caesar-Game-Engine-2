@@ -30,7 +30,10 @@ namespace BasicDrawableConfig
 	void ChangeRastersizerState(std::string ID,
 								BasicDrawableConfig::CULL_MODE cullMode,
 								BasicDrawableConfig::FILL_MODE fillMode);
-	
+	void ChangeVS(std::string ID, std::string fileName);
+	void ChangeGS(std::string ID, std::string fileName);
+	void ChangePS(std::string ID, std::string fileName);
+
 	void Release(std::string ID);
 };
 

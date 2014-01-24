@@ -73,6 +73,10 @@ public:
 
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
 	virtual void ChangeModel(std::shared_ptr<CHL::Model> model);
+	virtual void ChangeVS(std::string fileName);
+	virtual void ChangePS(std::string fileName);
+	virtual void ChangeGS(std::string fileName);
+
 };
 
 
