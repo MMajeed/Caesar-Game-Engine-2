@@ -10,11 +10,7 @@ void InputManager::Init()
 {
 
 }
-void InputManager::Update(double realTime, double deltaTime)
-{
-	
-}
-void InputManager::Work()
+void InputManager::Work(double realTime, double deltaTime)
 {
 
 }

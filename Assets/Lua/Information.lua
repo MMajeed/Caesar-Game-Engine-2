@@ -34,9 +34,9 @@ end
 LoopCall(50, UpdateText);
 
 local lastTimeCheck = 0.0;
-local lastGraphicFrameCheck = 0;
-local lastInputFrameCheck = 0;
-local lastScriptFrameCheck = 0;
+local lastGraphicFrameCheck = GetGraphicFrame();
+local lastInputFrameCheck = GetInputFrame();
+local lastScriptFrameCheck = GetScriptFrame();
 
 function UpdateFrameText()
     local currentTime = GetTimeSinceStart();

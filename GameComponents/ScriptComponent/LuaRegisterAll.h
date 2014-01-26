@@ -3,7 +3,7 @@
 
 #include <Lua.hpp>
 #include "LuaGraphic.h"
-#include "LuaModel.h"
+#include "Lua3DFile.h"
 #include "LuaObject.h"
 #include "LuaMath.h"
 #include "LuaKeysID.h"
@@ -20,7 +20,7 @@
 void LuaRegisterAll(lua_State *lua)
 {
 	LuaGraphic::RegisterAllLuaFunction(lua);
-	LuaModel::RegisterAllLuaFunction(lua);
+	Lua3DFile::RegisterAllLuaFunction(lua);
 	LuaMath::RegisterAllLuaFunction(lua);
 	LuaObject::RegisterAllLuaFunction(lua);
 	LuaKeysID::RegisterAllLuaFunction(lua);

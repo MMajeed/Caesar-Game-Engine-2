@@ -72,5 +72,5 @@ function class(base, init)
    return c
 end
 
-return Text
+return Helper
 

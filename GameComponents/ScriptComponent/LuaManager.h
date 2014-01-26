@@ -21,12 +21,10 @@ protected:
 	friend CHL::Singleton<LuaManager>;
 public:
 	virtual void Init();
-	virtual void Update(double realTime, double deltaTime);
-	virtual void Work();
+	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 
 	lua_State *lua;
-	bool FileRun;
 
 	virtual void SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process);
 	virtual void RemoveProcesses(std::string ID);

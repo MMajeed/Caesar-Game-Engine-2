@@ -16,8 +16,7 @@ protected:
 	friend CHL::Singleton<InputManager>;
 public:
 	virtual void Init();
-	virtual void Update(double realTime, double deltaTime);
-	virtual void Work();
+	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 
 	InputKeysEnum::KeyStatus GetCurrentKeyState(InputKeysEnum::KeyCode key);

@@ -105,7 +105,7 @@
     <ClInclude Include="LuaLoopCall.h" />
     <ClInclude Include="LuaThreadSetup.h" />
     <ClInclude Include="LuaManager.h" />
-    <ClInclude Include="LuaModel.h" />
+    <ClInclude Include="Lua3DFile.h" />
     <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaProcesses.h" />
     <ClInclude Include="LuaBasicTexture.h" />
@@ -130,7 +130,7 @@
     <ClCompile Include="LuaLoopCall.cpp" />
     <ClCompile Include="LuaThreadSetup.cpp" />
     <ClCompile Include="LuaManager.cpp" />
-    <ClCompile Include="LuaModel.cpp" />
+    <ClCompile Include="Lua3DFile.cpp" />
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="LuaBasicTexture.cpp" />
     <ClCompile Include="LuaMath.cpp" />

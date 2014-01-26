@@ -14,10 +14,16 @@
       <Filter>Converter</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>Model</Filter>
+      <Filter>3DFormat\Model</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>3DFormat\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="3DLoader.cpp">
+      <Filter>3DFormat\3DLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,7 +47,7 @@
       <Filter>Converter</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>Model</Filter>
+      <Filter>3DFormat\Model</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
@@ -54,6 +60,12 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>3DFormat\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="3DLoader.h">
+      <Filter>3DFormat\3DLoader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -78,9 +90,6 @@
     <Filter Include="Converter">
       <UniqueIdentifier>{6c9eeef4-8aa8-405b-9ad6-f5fe49bf8c36}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model">
-      <UniqueIdentifier>{fcfa1cf9-c5e5-473a-8a71-89ee81397d0e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{65a41925-eb1f-4f4c-ba46-337eca89c28a}</UniqueIdentifier>
     </Filter>
@@ -92,6 +101,18 @@
     </Filter>
     <Filter Include="Logger">
       <UniqueIdentifier>{d3d5a0ad-0867-44b8-bb82-6ddf8dfa1bc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DFormat">
+      <UniqueIdentifier>{6b2578e9-b5f4-4028-9721-35d10eae33f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DFormat\Model">
+      <UniqueIdentifier>{fcfa1cf9-c5e5-473a-8a71-89ee81397d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DFormat\Animation">
+      <UniqueIdentifier>{eca5a554-18d7-40dd-98c3-b34a258d54fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DFormat\3DLoader">
+      <UniqueIdentifier>{4a0e98b7-3b3a-4983-9034-7eb6ba254fa5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

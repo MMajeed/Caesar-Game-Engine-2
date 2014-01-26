@@ -86,17 +86,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="3DMath.cpp" />
+    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="GenerateGUID.cpp" />
+    <ClCompile Include="3DLoader.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="XNAConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DMath.h" />
+    <ClInclude Include="Animation.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="GenerateGUID.h" />
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="3DLoader.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Model.h" />

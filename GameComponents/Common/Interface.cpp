@@ -35,8 +35,7 @@ void Interface::Run()
 			}
 
 			this->ProccessMessages();
-			this->Update(frameTime, deltaTime);
-			this->Work();
+			this->Work(frameTime, deltaTime);
 			this->ProccessMessages();
 
 			// update fps

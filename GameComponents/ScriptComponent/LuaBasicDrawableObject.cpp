@@ -31,7 +31,7 @@ namespace LuaBasicDrawableObject
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::BasicDrawable::MODELFILE)			{ model = luabind::object_cast<LuaModel::Model>(*it); }
+				 if(key == Keys::BasicDrawable::MODEL)				{ model = luabind::object_cast<Lua3DFile::Model::Model>(*it); }
 			else if(key == Keys::BasicDrawable::VERTEXSHADERFILE)	{ vertexFileName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::BasicDrawable::PIXELSHADERFILE)	{ pixelFileName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::BasicDrawable::GEOMETRYSHADERFILE)	{ geometryFileName = luabind::object_cast<std::string>(*it); }
@@ -57,7 +57,7 @@ namespace LuaBasicDrawableObject
 													 static_cast<BasicDrawableConfig::FILL_MODE>(fillMode));
 		}
 	}
-	void BasicDrawableObject::ChangeModel(LuaModel::Model model)
+	void BasicDrawableObject::ChangeModel(Lua3DFile::Model::Model model)
 	{
 		BasicDrawableConfig::ChangeModel(this->ID, model.model);
 	}

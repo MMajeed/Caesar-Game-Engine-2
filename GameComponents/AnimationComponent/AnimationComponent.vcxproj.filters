@@ -7,4 +7,12 @@
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="AnimationPlayer">
+      <UniqueIdentifier>{8ffdf7a9-7fa3-47c6-8d05-82f4b96d54c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AnimationController">
+      <UniqueIdentifier>{1e3d4516-c1ee-4af7-85ec-1380fa35060f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
 </Project>

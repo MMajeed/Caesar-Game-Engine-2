@@ -35,11 +35,7 @@ void GraphicManager::Init()
 	this->InitDevice();
 }
 
-void GraphicManager::Update(double realTime, double deltaTime)
-{
-}
-
-void GraphicManager::Work()
+void GraphicManager::Work(double realTime, double deltaTime)
 {
 	MSG msg = {0};
 	BOOL result = PeekMessage(&msg, this->window.hWnd, 0, 0, PM_REMOVE);

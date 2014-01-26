@@ -67,7 +67,7 @@ namespace Keys
 	namespace BasicDrawable
 	{
 		const static std::string DRAWABLEOBJ         = "DrawableObj";
-		const static std::string MODELFILE           = "ModelFile";
+		const static std::string MODEL	             = "MODEL";
 		const static std::string VERTEXSHADERFILE    = "VertexShaderFile";
 		const static std::string PIXELSHADERFILE     = "PixelShaderFile";
 		const static std::string GEOMETRYSHADERFILE  = "GeometryShaderFile";

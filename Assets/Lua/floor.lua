@@ -1,7 +1,7 @@
 local floor = {}
 
 
-boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/Models/Box.ply"),
+boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Box.ply"),
                                    [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                    [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
@@ -19,7 +19,7 @@ OnKeyDown(KeyCode["Z"],
     function() 
         local myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]    = 1024,
                                           [Keys["ScreenShot"]["Height"]]   = 1024,
-                                          [Keys["ScreenShot"]["CameraID"]] = cam, });
+                                          [Keys["ScreenShot"]["CameraID"]] = regularCam, });
         WaitToProcessGraphic(
             function()
                 box1.Texture2D = {};

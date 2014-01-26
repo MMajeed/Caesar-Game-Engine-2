@@ -23,12 +23,14 @@ namespace CHL
 		std::vector<unsigned int> Faces;
 		unsigned int NumberOfFaces;
 		std::string name;
-
-		void NormalizeTheModel();
-		void TexturizeTheModel();
 	};
 
-	std::vector<Model> LoadModels(std::string fileName);
+	/*class Animation
+	{
+	public:
+		Animation();
+
+	};*/
 }
 
 #endif //__Model__

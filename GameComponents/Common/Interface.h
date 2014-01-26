@@ -18,8 +18,7 @@ public:
 	virtual void Shutdown() = 0;	
 
 	virtual void ProccessMessages();
-	virtual void Update(double realTime, double deltaTime) = 0;
-	virtual void Work() = 0;
+	virtual void Work(double realTime, double deltaTime) = 0;
 
 	virtual void SubmitMessage(std::shared_ptr<Message> msg);
 

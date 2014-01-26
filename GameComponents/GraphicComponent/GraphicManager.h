@@ -26,8 +26,7 @@ protected:
 	friend CHL::Singleton<GraphicManager>;
 public:
 	virtual void Init();
-	virtual void Update(double realTime, double deltaTime);
-	virtual void Work();
+	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 	
 	virtual void ProcessDrawing();

@@ -1,5 +1,8 @@
 local camera = {}
 
+local ScreenWidth = GetClientsSize()["Width"];
+local ScreenHeight = GetClientsSize()["Height"];
+
 local verticeArray = {};
 verticeArray[1] = Vertice({["Point"] = Vector4(0.0, 0.0, 0.0), 
                            ["Texture"] = Vector4(0.0, 0.0, 0.0), });
@@ -14,13 +17,13 @@ local faces = {0, 1, 2, 2, 1, 3};
 local spriteModel = Model();
 spriteModel.Vertices = verticeArray;
 spriteModel.Faces = faces;
-local Quad2DDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = spriteModel,
+local Quad2DDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = spriteModel,
                                             [Keys["BasicDrawable"]["Dimension"]]        = Dimension["2D"],
                                             [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                             [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_2_Texture.cso",
                                            });
 local Quad2D = Object({[Keys["ObjectInfo"]["DrawableObj"]]  = Quad2DDrawable,
-                       [Keys["ObjectInfo"]["Scale"]]        = Vector4(GetClientsSize()["Width"], GetClientsSize()["Height"], 1.0, 1.0),
+                       [Keys["ObjectInfo"]["Scale"]]        = Vector4(ScreenWidth, ScreenHeight, 1.0, 1.0),
                       });
 local sniperTexture = BasicTexture("Assets/Texture/Sniper2.png");
 
@@ -59,8 +62,8 @@ regularCam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50
                    }); 
 --regularCam:SetAsMain();
 
-local regularCapture = BasicScreenCapture({[Keys["ScreenShot"]["Width"]]    = GetClientsSize()["Width"],
-                                           [Keys["ScreenShot"]["Height"]]   = GetClientsSize()["Height"],
+local regularCapture = BasicScreenCapture({[Keys["ScreenShot"]["Width"]]    = ScreenWidth,
+                                           [Keys["ScreenShot"]["Height"]]   = ScreenHeight,
                                            [Keys["ScreenShot"]["CameraID"]] = regularCam, });
 
 Quad2D:Add2DTexture(regularCapture:GetTexture());
@@ -126,16 +129,21 @@ OnKeyUp(KeyCode["S"], function() CamDownButton = false; end);-- Down
 OnKeyUp(KeyCode["Q"], function() CamPgUpButton = false; end);-- Up
 OnKeyUp(KeyCode["E"], function() CamPgDownButton = false; end);-- Down
 
+LoopCall(1000, 
+    function() 
+        local clientSize = GetClientsSize();
+        if(clientSize["Width"] ~= ScreenWidth or clientSize["Height"] ~= ScreenHeight) then
+            ScreenWidth = clientSize["Width"];
+            ScreenHeight = clientSize["Height"];
+            Quad2D.Scale = Vector4(ScreenWidth, ScreenHeight, 1.0, 1.0);
+            regularCapture:Release();
+            regularCapture = BasicScreenCapture({[Keys["ScreenShot"]["Width"]]    = ScreenWidth,
+                                                 [Keys["ScreenShot"]["Height"]]   = ScreenHeight,
+                                                  [Keys["ScreenShot"]["CameraID"]] = regularCam, });
 
-sniperCam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -50.0, 0.0),
-                    [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
-                    [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
-                    [Keys["Camera"]["RadianRoll"]]      = 0.0,
-                    [Keys["Camera"]["RadianPitch"]]     = 0.0,
-                    [Keys["Camera"]["RadianYaw"]]       = 0.0,
-                    [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
-                    [Keys["Camera"]["GlobalUserData"]]  = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  },
-                   }); 
+            Quad2D.Texture2D = { regularCapture:GetTexture() };
+        end
+    end);
 
 return camera
 

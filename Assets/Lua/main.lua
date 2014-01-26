@@ -1,3 +1,4 @@
+require("File3DLoader")
 require("Text")
 require("camera")
 require("SkyBox")
@@ -5,7 +6,7 @@ require("LightSetup")
 require("floor")
 require("Information")
 
-local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/Models/Iron_Man_mark_4.obj"),
+local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"),
                                           [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                           [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
@@ -19,7 +20,7 @@ local ironMan = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.2, 
                         [Keys["ObjectInfo"]["UserData"]]    = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  },
                         });
 
-sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["ModelFile"]]        = LoadModel("Assets/Models/Sphere_Smooth.ply"),
+sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"),
                                       [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                       [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 for zIndex = 0, 2, 1 do

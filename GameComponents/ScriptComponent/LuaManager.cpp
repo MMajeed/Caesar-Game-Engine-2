@@ -11,7 +11,6 @@
 LuaManager::LuaManager()
 {
 	this->lua = 0;
-	this->FileRun = false;
 }
 
 
@@ -44,31 +43,25 @@ void LuaManager::Init()
 	luaL_dostring(this->lua, packagePath.c_str());	
 
 	LuaRegisterAll(this->lua);
+
+
+	static const char mainLua[] = "Assets/Lua/main.lua";
+
+	int ErrorException = luaL_loadfile(this->lua, mainLua);
+	if(ErrorException != 0) Logger::LogError(LuaError::GetLuaError(lua));
+
+	ErrorException = lua_pcall(this->lua, 0, 0, 0);
+	if(ErrorException != 0)	Logger::LogError(LuaError::GetLuaError(lua));
 }
 
-void LuaManager::Update(double realTime, double deltaTime)
+void LuaManager::Work(double realTime, double deltaTime)
 {
+
 	for(auto iterProcesses = this->allProcesses.begin();
 		iterProcesses != this->allProcesses.end();
 		++iterProcesses)
 	{
 		iterProcesses->second->Update(realTime, deltaTime);
-	}
-}
-
-void LuaManager::Work()
-{
-	if(this->FileRun == false)
-	{
-		static const char mainLua[] = "Assets/Lua/main.lua";
-
-		int ErrorException = luaL_loadfile(this->lua, mainLua);
-		if(ErrorException != 0) Logger::LogError(LuaError::GetLuaError(lua));
-
-		ErrorException = lua_pcall(this->lua, 0, 0, 0);
-		if(ErrorException != 0)	Logger::LogError(LuaError::GetLuaError(lua));
-
-		this->FileRun = true;
 	}
 
 	for(auto iterProccessers = this->allProcesses.begin();
