@@ -9,7 +9,7 @@
 class LuaWaitForProcess : public LuaProcesses
 {
 public:
-	enum class ProcessType { Graphic, Input, Script};
+	enum class ProcessType { Graphic, Input, Script, Animation};
 	LuaWaitForProcess(ProcessType type, luabind::object inputFunction);
 
 	virtual void Update(double realTime, double deltaTime);

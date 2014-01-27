@@ -3,16 +3,31 @@
   <ItemGroup>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="BasicAnimation.h">
+      <Filter>BasicAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationPlayer.h">
+      <Filter>AnimationPlayer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="BasicAnimation.cpp">
+      <Filter>BasicAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationPlayer.cpp">
+      <Filter>AnimationPlayer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="AnimationPlayer">
-      <UniqueIdentifier>{8ffdf7a9-7fa3-47c6-8d05-82f4b96d54c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AnimationController">
       <UniqueIdentifier>{1e3d4516-c1ee-4af7-85ec-1380fa35060f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BasicAnimation">
+      <UniqueIdentifier>{dfa18a0d-9814-4398-9271-9996697db43d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AnimationPlayer">
+      <UniqueIdentifier>{a2566583-c642-4f57-8fd4-0072ecfdb754}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

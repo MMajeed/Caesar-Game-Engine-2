@@ -4,7 +4,7 @@
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
 #include <string>
-#include "Lua3DFile.h"
+#include "LuaModel.h"
 
 namespace LuaBasicDrawableObject
 {
@@ -13,7 +13,7 @@ namespace LuaBasicDrawableObject
 	public:
 		BasicDrawableObject(){}
 		BasicDrawableObject(luabind::object const& table);
-		void ChangeModel(Lua3DFile::Model::Model model);
+		void ChangeModel(LuaModel::Model model);
 		void ChangeRastersizerState(int cullMode, int fillMode);
 		void ChangeVS(std::string fileName);
 		void ChangeGS(std::string fileName);

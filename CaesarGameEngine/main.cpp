@@ -6,6 +6,7 @@
 #include <InputCommunicator\InputCommunicator.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
+#include <AnimationCommunicator\AnimationCommunicator.h>
 #include <thread>
 #include <map>
 #include <iomanip>
@@ -28,6 +29,7 @@ int main()
 	vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
 	vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
 	vInterfaces["Input"] = InputCommunicator::GetComponent();
+	vInterfaces["Animation"] = AnimationCommunicator::GetComponent();
 
 	for(auto iter = vInterfaces.begin();
 		iter != vInterfaces.end();

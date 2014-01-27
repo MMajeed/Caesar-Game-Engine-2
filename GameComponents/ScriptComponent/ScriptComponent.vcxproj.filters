@@ -72,6 +72,18 @@
     <ClInclude Include="Lua3DFile.h">
       <Filter>Lua Class/Function\Lua3DFile</Filter>
     </ClInclude>
+    <ClInclude Include="LuaModel.h">
+      <Filter>Lua Class/Function\Lua3DFile\LuaModel</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaAnimation.h">
+      <Filter>Lua Class/Function\Lua3DFile\LuaAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaNode.h">
+      <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaBasicAnimationObject.h">
+      <Filter>Lua Class/Function\LuaBasicAnimationObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaManager.cpp" />
@@ -137,6 +149,21 @@
     </ClCompile>
     <ClCompile Include="Lua3DFile.cpp">
       <Filter>Lua Class/Function\Lua3DFile</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaModel.cpp">
+      <Filter>Lua Class/Function\Lua3DFile\LuaModel</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaAnimation.cpp">
+      <Filter>Lua Class/Function\Lua3DFile\LuaAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaNode.cpp">
+      <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaRegisterAll.cpp">
+      <Filter>Lua Class/Function</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaBasicAnimationObject.cpp">
+      <Filter>Lua Class/Function\LuaBasicAnimationObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +235,18 @@
     </Filter>
     <Filter Include="Lua Class/Function\Lua3DFile">
       <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile\LuaModel">
+      <UniqueIdentifier>{bac1abd7-c730-4fc6-8014-eb3bad3098b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile\LuaAnimation">
+      <UniqueIdentifier>{cf7b4cf0-e580-4498-b5ff-1d6f1035ac2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile\LuaNode">
+      <UniqueIdentifier>{36da53ef-19de-4967-9bec-01c699798f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaBasicAnimationObject">
+      <UniqueIdentifier>{de7a75a0-e35c-456d-a6a6-638195d79cf1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

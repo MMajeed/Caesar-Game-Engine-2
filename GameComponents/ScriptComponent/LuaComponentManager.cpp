@@ -6,6 +6,7 @@
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <InputCommunicator\InputCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
+#include <AnimationCommunicator\AnimationCommunicator.h>
 
 namespace LuaComponentManager
 {
@@ -24,6 +25,12 @@ namespace LuaComponentManager
 	void WaitToProcessScript(luabind::object const& function)
 	{
 		std::shared_ptr<LuaWaitForProcess> newKeyAction(new LuaWaitForProcess(LuaWaitForProcess::ProcessType::Script, function));
+
+		ProcessMessage::Add(newKeyAction);
+	}
+	void WaitToProcessAnimation(luabind::object const& function)
+	{
+		std::shared_ptr<LuaWaitForProcess> newKeyAction(new LuaWaitForProcess(LuaWaitForProcess::ProcessType::Animation, function));
 
 		ProcessMessage::Add(newKeyAction);
 	}
@@ -60,6 +67,10 @@ namespace LuaComponentManager
 	{
 		return (double)ScriptCommunicator::GetComponent()->timer.FrameCount;
 	}
+	double GetAnimationFrame()
+	{
+		return (double)AnimationCommunicator::GetComponent()->timer.FrameCount;
+	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
@@ -67,13 +78,15 @@ namespace LuaComponentManager
 			luabind::def("WaitToProcessGraphic", LuaComponentManager::WaitToProcessGraphic),
 			luabind::def("WaitToProcessInput", LuaComponentManager::WaitToProcessInput),
 			luabind::def("WaitToProcessScript", LuaComponentManager::WaitToProcessScript),
+			luabind::def("WaitToProcessAnimation", LuaComponentManager::WaitToProcessAnimation),
 			luabind::def("LogInformation", LuaComponentManager::LogInformation),
 			luabind::def("LogError", LuaComponentManager::LogError),
 			luabind::def("Quit", LuaComponentManager::Quit),
 			luabind::def("GetTimeSinceStart", LuaComponentManager::GetTimeSinceStart),
 			luabind::def("GetGraphicFrame", LuaComponentManager::GetGraphicFrame),
 			luabind::def("GetInputFrame", LuaComponentManager::GetInputFrame),
-			luabind::def("GetScriptFrame", LuaComponentManager::GetScriptFrame)
+			luabind::def("GetScriptFrame", LuaComponentManager::GetScriptFrame),
+			luabind::def("GetAnimationFrame", LuaComponentManager::GetAnimationFrame)
 		];
 	}
 };

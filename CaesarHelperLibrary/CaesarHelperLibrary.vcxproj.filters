@@ -25,6 +25,9 @@
     <ClCompile Include="3DLoader.cpp">
       <Filter>3DFormat\3DLoader</Filter>
     </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>3DFormat\Node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
@@ -66,6 +69,9 @@
     </ClInclude>
     <ClInclude Include="3DLoader.h">
       <Filter>3DFormat\3DLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>3DFormat\Node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +119,9 @@
     </Filter>
     <Filter Include="3DFormat\3DLoader">
       <UniqueIdentifier>{4a0e98b7-3b3a-4983-9034-7eb6ba254fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3DFormat\Node">
+      <UniqueIdentifier>{aeda1e4e-9d0f-4939-95b8-49ff68303b28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

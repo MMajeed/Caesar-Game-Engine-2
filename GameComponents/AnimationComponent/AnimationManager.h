@@ -5,7 +5,9 @@
 
 #include <Interface.h>
 #include <Singleton.h>
-#include <InputKeysEnum.h>
+#include <hash_map>
+#include "BasicAnimation.h"
+#include "AnimationPlayer.h"
 
 class AnimationManager : public Interface, public CHL::Singleton<AnimationManager>
 {
@@ -18,6 +20,16 @@ public:
 	virtual void Init();
 	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
+
+	std::hash_map<std::string, std::shared_ptr<BasicAnimation>> AnimationsContainer;
+	void InsertAnimation(const std::string& ID, std::shared_ptr<BasicAnimation> obj);
+	void RemoveAnimation(const std::string& ID);
+	const std::hash_map<std::string, std::shared_ptr<BasicAnimation>> AllAnimation();
+
+	std::hash_map<std::string, std::shared_ptr<AnimationPlayer>> AnimationsPlayerContainer;
+	void InsertAnimationPlayer(const std::string& ID, std::shared_ptr<AnimationPlayer> obj);
+	void RemoveAnimationPlayer(const std::string& ID);
+	const std::hash_map<std::string, std::shared_ptr<AnimationPlayer>> AllAnimationPlayer();
 };
 
 #endif //__AnimationManager__

@@ -5,15 +5,24 @@
     <ClInclude Include="AnimationCommunicator.h">
       <Filter>AnimationCommunicator</Filter>
     </ClInclude>
+    <ClInclude Include="BasicAnimationConfig.h">
+      <Filter>BasicAnimationConfig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="AnimationCommunicator">
       <UniqueIdentifier>{9b6c322d-bf0e-4ec2-9916-275969b64a8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BasicAnimationConfig">
+      <UniqueIdentifier>{acee04e1-383f-41ed-ba31-cc1ca1ac8083}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationCommunicator.cpp">
       <Filter>AnimationCommunicator</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicAnimationConfig.cpp">
+      <Filter>BasicAnimationConfig</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

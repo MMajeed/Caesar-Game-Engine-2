@@ -37,6 +37,7 @@ local lastTimeCheck = 0.0;
 local lastGraphicFrameCheck = GetGraphicFrame();
 local lastInputFrameCheck = GetInputFrame();
 local lastScriptFrameCheck = GetScriptFrame();
+local lastAnimationFrameCheck = GetAnimationFrame();
 
 function UpdateFrameText()
     local currentTime = GetTimeSinceStart();
@@ -58,10 +59,16 @@ function UpdateFrameText()
     lastScriptFrameCheck =  scriptFrameCount;
     local scriptFrame = scriptFrameDifference / timeDifference;
     
+    local animationFrameCount = GetAnimationFrame();
+    local animationFrameDifference =  animationFrameCount - lastAnimationFrameCheck;
+    lastAnimationFrameCheck =  animationFrameCount;
+    local animationFrame = animationFrameDifference / timeDifference;
+    
     local message = "Frame Rate:" .. 
                     " Graphic: " .. string.format("%3.2f", graphicFrame) .. 
                     " Input: " .. string.format("%3.2f", inputFrame) .. 
-                    " Script: " .. string.format("%3.2f", scriptFrame) ;
+                    " Script: " .. string.format("%3.2f", scriptFrame).. 
+                    " Animation: " .. string.format("%3.2f", animationFrame) ;
     frameRate:EditText(message);
 end
 UpdateFrameText();
