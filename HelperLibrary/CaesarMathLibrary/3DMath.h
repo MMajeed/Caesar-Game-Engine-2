@@ -3,6 +3,7 @@
 
 #include "Matrix.h"
 #include "Vector.h"
+#include "Linker.h"
 
 namespace CHL
 {

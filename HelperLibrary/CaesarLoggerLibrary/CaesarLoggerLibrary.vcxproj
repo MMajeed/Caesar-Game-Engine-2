@@ -10,10 +10,17 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Logger.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="Logger.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C7106E74-EADB-4BE7-A7D5-06B2CE6383EB}</ProjectGuid>
+    <ProjectGuid>{DD4CD8FB-64A4-48EB-80FC-97B345424CE3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GraphicCommunicator</RootNamespace>
+    <RootNamespace>CaesarLoggerLibrary</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -40,16 +47,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\GraphicComponent;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt-d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\GraphicComponent;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt</TargetName>
   </PropertyGroup>
@@ -59,8 +60,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRAPHICCOMMUNICATOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -75,8 +75,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GRAPHICCOMMUNICATOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,27 +84,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="BasicDrawableConfig.h" />
-    <ClInclude Include="BasicTextureConfig.h" />
-    <ClInclude Include="BasicScreenCaptureConfig.h" />
-    <ClInclude Include="CubeScreenCaptureConfig.h" />
-    <ClInclude Include="DepthScreenCaptureConfig.h" />
-    <ClInclude Include="ScreenShotConfig.h" />
-    <ClInclude Include="GraphicSettings.h" />
-    <ClInclude Include="Linker.h" />
-    <ClInclude Include="GraphicCommunicator.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="BasicDrawableConfig.cpp" />
-    <ClCompile Include="BasicTextureConfig.cpp" />
-    <ClCompile Include="BasicScreenCaptureConfig.cpp" />
-    <ClCompile Include="CubeScreenCaptureConfig.cpp" />
-    <ClCompile Include="DepthScreenCaptureConfig.cpp" />
-    <ClCompile Include="ScreenShotConfig.cpp" />
-    <ClCompile Include="GraphicSettings.cpp" />
-    <ClCompile Include="GraphicCommunicator.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

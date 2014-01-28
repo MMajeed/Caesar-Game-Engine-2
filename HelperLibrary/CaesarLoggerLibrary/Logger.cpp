@@ -3,7 +3,6 @@
 #include <thread>
 #include <Windows.h>
 #include <sstream>
-#include "Converter.h"
 
 void Logger::LogInformation(std::string message)
 {

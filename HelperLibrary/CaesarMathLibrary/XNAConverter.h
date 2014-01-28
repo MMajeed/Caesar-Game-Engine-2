@@ -1,6 +1,7 @@
 #ifndef __XNAConverter__
 #define __XNAConverter__
 
+#include "Linker.h"
 #include "Matrix.h"
 #include "Vector.h"
 #include <Windows.h>

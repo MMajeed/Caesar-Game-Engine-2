@@ -1,56 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="3DMath.cpp">
-      <Filter>3DMath\3DMath</Filter>
-    </ClCompile>
-    <ClCompile Include="XNAConverter.cpp">
-      <Filter>3DMath\XNAConverter</Filter>
-    </ClCompile>
     <ClCompile Include="GenerateGUID.cpp">
       <Filter>GenerateGUID</Filter>
     </ClCompile>
     <ClCompile Include="Converter.cpp">
       <Filter>Converter</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>3DFormat\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Logger.cpp">
-      <Filter>Logger</Filter>
-    </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>3DFormat\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="3DLoader.cpp">
-      <Filter>3DFormat\3DLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>3DFormat\Node</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="3DMath.h">
-      <Filter>3DMath\3DMath</Filter>
-    </ClInclude>
-    <ClInclude Include="XNAConverter.h">
-      <Filter>3DMath\XNAConverter</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector.h">
-      <Filter>3DMath\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix.h">
-      <Filter>3DMath\Matrix</Filter>
-    </ClInclude>
     <ClInclude Include="GenerateGUID.h">
       <Filter>GenerateGUID</Filter>
     </ClInclude>
     <ClInclude Include="Converter.h">
       <Filter>Converter</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>3DFormat\Model</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Object</Filter>
@@ -58,38 +22,8 @@
     <ClInclude Include="Singleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="VecMath.h">
-      <Filter>3DMath\VecMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Logger.h">
-      <Filter>Logger</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>3DFormat\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="3DLoader.h">
-      <Filter>3DFormat\3DLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>3DFormat\Node</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="3DMath">
-      <UniqueIdentifier>{fbc98ed2-e544-4cbb-9931-c77c010d1194}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DMath\3DMath">
-      <UniqueIdentifier>{6c7d06fc-a9c9-4c2f-9746-386dc8599315}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DMath\XNAConverter">
-      <UniqueIdentifier>{e85ee685-fdd6-4964-a8bc-6e88c76c7b39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DMath\Vector">
-      <UniqueIdentifier>{6bb9ab44-2abb-4979-8456-cacb23c2f9cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DMath\Matrix">
-      <UniqueIdentifier>{ce77f1f0-6ebb-4380-ab25-999d30f6684b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GenerateGUID">
       <UniqueIdentifier>{d55f687c-76ce-4a01-abc1-d51af923d7ff}</UniqueIdentifier>
     </Filter>
@@ -101,27 +35,6 @@
     </Filter>
     <Filter Include="Singleton">
       <UniqueIdentifier>{76720ea5-0baa-4432-a4c7-16fdc3721f7c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DMath\VecMath">
-      <UniqueIdentifier>{1af1a089-3652-4174-8d57-5babc91141dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Logger">
-      <UniqueIdentifier>{d3d5a0ad-0867-44b8-bb82-6ddf8dfa1bc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DFormat">
-      <UniqueIdentifier>{6b2578e9-b5f4-4028-9721-35d10eae33f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DFormat\Model">
-      <UniqueIdentifier>{fcfa1cf9-c5e5-473a-8a71-89ee81397d0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DFormat\Animation">
-      <UniqueIdentifier>{eca5a554-18d7-40dd-98c3-b34a258d54fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DFormat\3DLoader">
-      <UniqueIdentifier>{4a0e98b7-3b3a-4983-9034-7eb6ba254fa5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="3DFormat\Node">
-      <UniqueIdentifier>{aeda1e4e-9d0f-4939-95b8-49ff68303b28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

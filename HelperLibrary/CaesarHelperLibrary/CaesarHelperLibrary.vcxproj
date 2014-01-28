@@ -41,14 +41,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt-d</TargetName>
-    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt</TargetName>
-    <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -62,7 +62,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>assimp.lib;</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -81,36 +82,20 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>assimp.lib;</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3DMath.cpp" />
-    <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Converter.cpp" />
     <ClCompile Include="GenerateGUID.cpp" />
-    <ClCompile Include="3DLoader.cpp" />
-    <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Node.cpp" />
-    <ClCompile Include="XNAConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="3DMath.h" />
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="GenerateGUID.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="3DLoader.h" />
-    <ClInclude Include="Logger.h" />
-    <ClInclude Include="Matrix.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="VecMath.h" />
-    <ClInclude Include="Vector.h" />
-    <ClInclude Include="XNAConverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

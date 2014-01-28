@@ -1,5 +1,5 @@
-#ifndef __GUARD_linklib__
-#define __GUARD_linklib__
+#ifndef __CaesarHelperLibraryGUARD_linklib__
+#define __CaesarHelperLibraryGUARD_linklib__
 
 #if defined(_DEBUG)
 	#pragma comment (lib,"CaesarHelperLibrary-mt-d.lib")
