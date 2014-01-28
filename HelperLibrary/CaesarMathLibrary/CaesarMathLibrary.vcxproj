@@ -11,10 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CMLToEigen.h" />
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="MathFunctions.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="VecOperators.h" />
     <ClInclude Include="Vector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MathFunctions.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{242492B3-B2E0-458D-99E3-3ED7B62462BD}</ProjectGuid>
@@ -48,10 +53,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetName>$(ProjectName)-mt-d</TargetName>
     <OutDir>$(SolutionDir)Lib\</OutDir>
+    <IncludePath>$(SolutionDir)HelperLibrary\ForeignLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\ForeignLibrary;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

@@ -10,6 +10,12 @@
     <Filter Include="VecOperators">
       <UniqueIdentifier>{75afa63c-03b6-403d-aaad-33b74de55aaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CMLToEigen">
+      <UniqueIdentifier>{226ca4fe-537a-43ca-addb-f02fe62fae0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MathFunctions">
+      <UniqueIdentifier>{4f29b9e0-3a94-4dae-97ec-e57ff61b30ba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Matrix.h">
@@ -22,5 +28,16 @@
     <ClInclude Include="VecOperators.h">
       <Filter>VecOperators</Filter>
     </ClInclude>
+    <ClInclude Include="CMLToEigen.h">
+      <Filter>CMLToEigen</Filter>
+    </ClInclude>
+    <ClInclude Include="MathFunctions.h">
+      <Filter>MathFunctions</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MathFunctions.cpp">
+      <Filter>MathFunctions</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

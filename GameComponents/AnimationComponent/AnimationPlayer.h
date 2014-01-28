@@ -23,16 +23,14 @@ public:
 												  float animRate);
 
 	const std::hash_map<std::string, CML::Matrix4x4> JointsAnimatedTransformation() const;
-
-	const std::shared_ptr<BasicAnimation> GetAnimation() const;
 protected:
 	std::hash_map<std::string, CML::Matrix4x4> jointsAnimated;
-
-	double                   AnimTime;
-	double                   AnimRate;
-	std::size_t             CurrentFrame;
-	std::size_t             PreviousFrame;
-	std::string				AnimationID;
+	int		LastTranslationFrame;
+	int		LastRotationFrame;
+	int		LastScaleFrame;
+	double	AnimTime;
+	double	AnimRate;
+	std::weak_ptr<BasicAnimation>	Animation;
 };
 
 

@@ -9,6 +9,7 @@
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
 #include <VecOperators.h>
+#include <MathFunctions.h>
 
 BasicDrawable::BasicDrawable()
 {

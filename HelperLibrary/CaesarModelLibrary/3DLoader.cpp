@@ -3,6 +3,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "Logger.h"
+#include <MathFunctions.h>
 
 namespace CHL
 {
@@ -156,6 +157,7 @@ namespace CHL
 		AssimpLoadModels(scene, modelVec);
 		AssimpLoadAnimation(scene, animVec);
 		AssimpLoadNodes(scene, rootNode);
+
 		aiReleaseImport(scene);
 	}
 }

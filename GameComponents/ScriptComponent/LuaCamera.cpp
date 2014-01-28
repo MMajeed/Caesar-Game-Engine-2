@@ -4,6 +4,8 @@
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
 #include <Keys.h>
+#include <MathFunctions.h>
+#include <VecOperators.h>
 #include "LuaManager.h"
 
 LuaCamera::LuaCamera(luabind::object const& table)
@@ -100,14 +102,22 @@ void LuaCamera::SetAsMain()
 		
 void LuaCamera::MoveFroward(double distance)
 {
-	LuaMath::Vector4 eye = this->GetEye();
-	LuaMath::Vector4 target = this->GetTargetMagintude();
+	CML::Vec4 eye = this->GetEye();
+	CML::Vec4 target = this->GetTargetMagintude();
+	CML::Vec4 up = this->GetUp();
 	double pitch = this->GetPitch();
 	double yaw = this->GetYaw();
 	double roll = this->GetRoll();
 
-	//auto newEye = CHL::MoveForward(eye, target, pitch, yaw, roll, distance);
-	//this->SetEye(newEye);
+	CML::Matrix4x4 rotation = CML::RotationMatrix(pitch, yaw, roll);
+	target = CML::Normalize(target);
+
+	CML::Vec4 targetRotation = CML::Multiple(target, rotation);
+	targetRotation = CML::Normalize(targetRotation);
+
+	CML::Vec4 newEye = eye + (targetRotation * distance);
+	
+	this->SetEye(newEye);
 }
 
 void LuaCamera::SetEye(LuaMath::Vector4 eye)
