@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0CA0761B-575C-459B-83C9-9FFFB7EA5F7A}</ProjectGuid>
+    <RootNamespace>ForeignLibrary</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)Lib\</OutDir>
+    <TargetName>$(ProjectName)-mt-d</TargetName>
+    <IncludePath>$(SolutionDir)$(ProjectName);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)Lib\</OutDir>
+    <TargetName>$(ProjectName)-mt</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\$(ProjectName);$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="lua5.1.5\lapi.c" />
+    <ClCompile Include="lua5.1.5\lauxlib.c" />
+    <ClCompile Include="lua5.1.5\lbaselib.c" />
+    <ClCompile Include="lua5.1.5\lcode.c" />
+    <ClCompile Include="lua5.1.5\ldblib.c" />
+    <ClCompile Include="lua5.1.5\ldebug.c" />
+    <ClCompile Include="lua5.1.5\ldo.c" />
+    <ClCompile Include="lua5.1.5\ldump.c" />
+    <ClCompile Include="lua5.1.5\lfunc.c" />
+    <ClCompile Include="lua5.1.5\lgc.c" />
+    <ClCompile Include="lua5.1.5\linit.c" />
+    <ClCompile Include="lua5.1.5\liolib.c" />
+    <ClCompile Include="lua5.1.5\llex.c" />
+    <ClCompile Include="lua5.1.5\lmathlib.c" />
+    <ClCompile Include="lua5.1.5\lmem.c" />
+    <ClCompile Include="lua5.1.5\loadlib.c" />
+    <ClCompile Include="lua5.1.5\lobject.c" />
+    <ClCompile Include="lua5.1.5\lopcodes.c" />
+    <ClCompile Include="lua5.1.5\loslib.c" />
+    <ClCompile Include="lua5.1.5\lparser.c" />
+    <ClCompile Include="lua5.1.5\lstate.c" />
+    <ClCompile Include="lua5.1.5\lstring.c" />
+    <ClCompile Include="lua5.1.5\lstrlib.c" />
+    <ClCompile Include="lua5.1.5\ltable.c" />
+    <ClCompile Include="lua5.1.5\ltablib.c" />
+    <ClCompile Include="lua5.1.5\ltm.c" />
+    <ClCompile Include="lua5.1.5\lua.c" />
+    <ClCompile Include="lua5.1.5\luac.c" />
+    <ClCompile Include="lua5.1.5\lundump.c" />
+    <ClCompile Include="lua5.1.5\lvm.c" />
+    <ClCompile Include="lua5.1.5\lzio.c" />
+    <ClCompile Include="lua5.1.5\print.c" />
+    <ClCompile Include="luabind\src\class.cpp" />
+    <ClCompile Include="luabind\src\class_info.cpp" />
+    <ClCompile Include="luabind\src\class_registry.cpp" />
+    <ClCompile Include="luabind\src\class_rep.cpp" />
+    <ClCompile Include="luabind\src\create_class.cpp" />
+    <ClCompile Include="luabind\src\error.cpp" />
+    <ClCompile Include="luabind\src\exception_handler.cpp" />
+    <ClCompile Include="luabind\src\function.cpp" />
+    <ClCompile Include="luabind\src\inheritance.cpp" />
+    <ClCompile Include="luabind\src\link_compatibility.cpp" />
+    <ClCompile Include="luabind\src\object_rep.cpp" />
+    <ClCompile Include="luabind\src\open.cpp" />
+    <ClCompile Include="luabind\src\pcall.cpp" />
+    <ClCompile Include="luabind\src\scope.cpp" />
+    <ClCompile Include="luabind\src\stack_content_by_name.cpp" />
+    <ClCompile Include="luabind\src\weak_ref.cpp" />
+    <ClCompile Include="luabind\src\wrapper_base.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Eigen\Cholesky\LDLT.h" />
+    <ClInclude Include="Eigen\Cholesky\LLT.h" />
+    <ClInclude Include="Eigen\Cholesky\LLT_MKL.h" />
+    <ClInclude Include="Eigen\CholmodSupport\CholmodSupport.h" />
+    <ClInclude Include="Eigen\Core\arch\AltiVec\Complex.h" />
+    <ClInclude Include="Eigen\Core\arch\AltiVec\PacketMath.h" />
+    <ClInclude Include="Eigen\Core\arch\Default\Settings.h" />
+    <ClInclude Include="Eigen\Core\arch\NEON\Complex.h" />
+    <ClInclude Include="Eigen\Core\arch\NEON\PacketMath.h" />
+    <ClInclude Include="Eigen\Core\arch\SSE\Complex.h" />
+    <ClInclude Include="Eigen\Core\arch\SSE\MathFunctions.h" />
+    <ClInclude Include="Eigen\Core\arch\SSE\PacketMath.h" />
+    <ClInclude Include="Eigen\Core\Array.h" />
+    <ClInclude Include="Eigen\Core\ArrayBase.h" />
+    <ClInclude Include="Eigen\Core\ArrayWrapper.h" />
+    <ClInclude Include="Eigen\Core\Assign.h" />
+    <ClInclude Include="Eigen\Core\Assign_MKL.h" />
+    <ClInclude Include="Eigen\Core\BandMatrix.h" />
+    <ClInclude Include="Eigen\Core\Block.h" />
+    <ClInclude Include="Eigen\Core\BooleanRedux.h" />
+    <ClInclude Include="Eigen\Core\CommaInitializer.h" />
+    <ClInclude Include="Eigen\Core\CoreIterators.h" />
+    <ClInclude Include="Eigen\Core\CwiseBinaryOp.h" />
+    <ClInclude Include="Eigen\Core\CwiseNullaryOp.h" />
+    <ClInclude Include="Eigen\Core\CwiseUnaryOp.h" />
+    <ClInclude Include="Eigen\Core\CwiseUnaryView.h" />
+    <ClInclude Include="Eigen\Core\DenseBase.h" />
+    <ClInclude Include="Eigen\Core\DenseCoeffsBase.h" />
+    <ClInclude Include="Eigen\Core\DenseStorage.h" />
+    <ClInclude Include="Eigen\Core\Diagonal.h" />
+    <ClInclude Include="Eigen\Core\DiagonalMatrix.h" />
+    <ClInclude Include="Eigen\Core\DiagonalProduct.h" />
+    <ClInclude Include="Eigen\Core\Dot.h" />
+    <ClInclude Include="Eigen\Core\EigenBase.h" />
+    <ClInclude Include="Eigen\Core\Flagged.h" />
+    <ClInclude Include="Eigen\Core\ForceAlignedAccess.h" />
+    <ClInclude Include="Eigen\Core\Functors.h" />
+    <ClInclude Include="Eigen\Core\Fuzzy.h" />
+    <ClInclude Include="Eigen\Core\GeneralProduct.h" />
+    <ClInclude Include="Eigen\Core\GenericPacketMath.h" />
+    <ClInclude Include="Eigen\Core\GlobalFunctions.h" />
+    <ClInclude Include="Eigen\Core\IO.h" />
+    <ClInclude Include="Eigen\Core\Map.h" />
+    <ClInclude Include="Eigen\Core\MapBase.h" />
+    <ClInclude Include="Eigen\Core\MathFunctions.h" />
+    <ClInclude Include="Eigen\Core\Matrix.h" />
+    <ClInclude Include="Eigen\Core\MatrixBase.h" />
+    <ClInclude Include="Eigen\Core\NestByValue.h" />
+    <ClInclude Include="Eigen\Core\NoAlias.h" />
+    <ClInclude Include="Eigen\Core\NumTraits.h" />
+    <ClInclude Include="Eigen\Core\PermutationMatrix.h" />
+    <ClInclude Include="Eigen\Core\PlainObjectBase.h" />
+    <ClInclude Include="Eigen\Core\ProductBase.h" />
+    <ClInclude Include="Eigen\Core\products\CoeffBasedProduct.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralBlockPanelKernel.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrix.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrixTriangular.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrixTriangular_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrix_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixVector.h" />
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixVector_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\Parallelizer.h" />
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixMatrix.h" />
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixMatrix_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixVector.h" />
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixVector_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\SelfadjointProduct.h" />
+    <ClInclude Include="Eigen\Core\products\SelfadjointRank2Update.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixMatrix.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixMatrix_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixVector.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixVector_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularSolverMatrix.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularSolverMatrix_MKL.h" />
+    <ClInclude Include="Eigen\Core\products\TriangularSolverVector.h" />
+    <ClInclude Include="Eigen\Core\Random.h" />
+    <ClInclude Include="Eigen\Core\Redux.h" />
+    <ClInclude Include="Eigen\Core\Ref.h" />
+    <ClInclude Include="Eigen\Core\Replicate.h" />
+    <ClInclude Include="Eigen\Core\ReturnByValue.h" />
+    <ClInclude Include="Eigen\Core\Reverse.h" />
+    <ClInclude Include="Eigen\Core\Select.h" />
+    <ClInclude Include="Eigen\Core\SelfAdjointView.h" />
+    <ClInclude Include="Eigen\Core\SelfCwiseBinaryOp.h" />
+    <ClInclude Include="Eigen\Core\SolveTriangular.h" />
+    <ClInclude Include="Eigen\Core\StableNorm.h" />
+    <ClInclude Include="Eigen\Core\Stride.h" />
+    <ClInclude Include="Eigen\Core\Swap.h" />
+    <ClInclude Include="Eigen\Core\Transpose.h" />
+    <ClInclude Include="Eigen\Core\Transpositions.h" />
+    <ClInclude Include="Eigen\Core\TriangularMatrix.h" />
+    <ClInclude Include="Eigen\Core\util\BlasUtil.h" />
+    <ClInclude Include="Eigen\Core\util\Constants.h" />
+    <ClInclude Include="Eigen\Core\util\DisableStupidWarnings.h" />
+    <ClInclude Include="Eigen\Core\util\ForwardDeclarations.h" />
+    <ClInclude Include="Eigen\Core\util\Macros.h" />
+    <ClInclude Include="Eigen\Core\util\Memory.h" />
+    <ClInclude Include="Eigen\Core\util\Meta.h" />
+    <ClInclude Include="Eigen\Core\util\MKL_support.h" />
+    <ClInclude Include="Eigen\Core\util\NonMPL2.h" />
+    <ClInclude Include="Eigen\Core\util\ReenableStupidWarnings.h" />
+    <ClInclude Include="Eigen\Core\util\StaticAssert.h" />
+    <ClInclude Include="Eigen\Core\util\XprHelper.h" />
+    <ClInclude Include="Eigen\Core\VectorBlock.h" />
+    <ClInclude Include="Eigen\Core\VectorwiseOp.h" />
+    <ClInclude Include="Eigen\Core\Visitor.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Block.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Cwise.h" />
+    <ClInclude Include="Eigen\Eigen2Support\CwiseOperators.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\AlignedBox.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\All.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\AngleAxis.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Hyperplane.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\ParametrizedLine.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Quaternion.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Rotation2D.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\RotationBase.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Scaling.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Transform.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Translation.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Lazy.h" />
+    <ClInclude Include="Eigen\Eigen2Support\LeastSquares.h" />
+    <ClInclude Include="Eigen\Eigen2Support\LU.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Macros.h" />
+    <ClInclude Include="Eigen\Eigen2Support\MathFunctions.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Memory.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Meta.h" />
+    <ClInclude Include="Eigen\Eigen2Support\Minor.h" />
+    <ClInclude Include="Eigen\Eigen2Support\QR.h" />
+    <ClInclude Include="Eigen\Eigen2Support\SVD.h" />
+    <ClInclude Include="Eigen\Eigen2Support\TriangularSolver.h" />
+    <ClInclude Include="Eigen\Eigen2Support\VectorBlock.h" />
+    <ClInclude Include="Eigen\Eigenvalues\ComplexEigenSolver.h" />
+    <ClInclude Include="Eigen\Eigenvalues\ComplexSchur.h" />
+    <ClInclude Include="Eigen\Eigenvalues\ComplexSchur_MKL.h" />
+    <ClInclude Include="Eigen\Eigenvalues\EigenSolver.h" />
+    <ClInclude Include="Eigen\Eigenvalues\GeneralizedEigenSolver.h" />
+    <ClInclude Include="Eigen\Eigenvalues\GeneralizedSelfAdjointEigenSolver.h" />
+    <ClInclude Include="Eigen\Eigenvalues\HessenbergDecomposition.h" />
+    <ClInclude Include="Eigen\Eigenvalues\MatrixBaseEigenvalues.h" />
+    <ClInclude Include="Eigen\Eigenvalues\RealQZ.h" />
+    <ClInclude Include="Eigen\Eigenvalues\RealSchur.h" />
+    <ClInclude Include="Eigen\Eigenvalues\RealSchur_MKL.h" />
+    <ClInclude Include="Eigen\Eigenvalues\SelfAdjointEigenSolver.h" />
+    <ClInclude Include="Eigen\Eigenvalues\SelfAdjointEigenSolver_MKL.h" />
+    <ClInclude Include="Eigen\Eigenvalues\Tridiagonalization.h" />
+    <ClInclude Include="Eigen\Geometry\AlignedBox.h" />
+    <ClInclude Include="Eigen\Geometry\AngleAxis.h" />
+    <ClInclude Include="Eigen\Geometry\arch\Geometry_SSE.h" />
+    <ClInclude Include="Eigen\Geometry\EulerAngles.h" />
+    <ClInclude Include="Eigen\Geometry\Homogeneous.h" />
+    <ClInclude Include="Eigen\Geometry\Hyperplane.h" />
+    <ClInclude Include="Eigen\Geometry\OrthoMethods.h" />
+    <ClInclude Include="Eigen\Geometry\ParametrizedLine.h" />
+    <ClInclude Include="Eigen\Geometry\Quaternion.h" />
+    <ClInclude Include="Eigen\Geometry\Rotation2D.h" />
+    <ClInclude Include="Eigen\Geometry\RotationBase.h" />
+    <ClInclude Include="Eigen\Geometry\Scaling.h" />
+    <ClInclude Include="Eigen\Geometry\Transform.h" />
+    <ClInclude Include="Eigen\Geometry\Translation.h" />
+    <ClInclude Include="Eigen\Geometry\Umeyama.h" />
+    <ClInclude Include="Eigen\Householder\BlockHouseholder.h" />
+    <ClInclude Include="Eigen\Householder\Householder.h" />
+    <ClInclude Include="Eigen\Householder\HouseholderSequence.h" />
+    <ClInclude Include="Eigen\IterativeLinearSolvers\BasicPreconditioners.h" />
+    <ClInclude Include="Eigen\IterativeLinearSolvers\BiCGSTAB.h" />
+    <ClInclude Include="Eigen\IterativeLinearSolvers\ConjugateGradient.h" />
+    <ClInclude Include="Eigen\IterativeLinearSolvers\IncompleteLUT.h" />
+    <ClInclude Include="Eigen\IterativeLinearSolvers\IterativeSolverBase.h" />
+    <ClInclude Include="Eigen\Jacobi\Jacobi.h" />
+    <ClInclude Include="Eigen\LU\arch\Inverse_SSE.h" />
+    <ClInclude Include="Eigen\LU\Determinant.h" />
+    <ClInclude Include="Eigen\LU\FullPivLU.h" />
+    <ClInclude Include="Eigen\LU\Inverse.h" />
+    <ClInclude Include="Eigen\LU\PartialPivLU.h" />
+    <ClInclude Include="Eigen\LU\PartialPivLU_MKL.h" />
+    <ClInclude Include="Eigen\MetisSupport\MetisSupport.h" />
+    <ClInclude Include="Eigen\misc\blas.h" />
+    <ClInclude Include="Eigen\misc\Image.h" />
+    <ClInclude Include="Eigen\misc\Kernel.h" />
+    <ClInclude Include="Eigen\misc\Solve.h" />
+    <ClInclude Include="Eigen\misc\SparseSolve.h" />
+    <ClInclude Include="Eigen\OrderingMethods\Amd.h" />
+    <ClInclude Include="Eigen\OrderingMethods\Eigen_Colamd.h" />
+    <ClInclude Include="Eigen\OrderingMethods\Ordering.h" />
+    <ClInclude Include="Eigen\PardisoSupport\PardisoSupport.h" />
+    <ClInclude Include="Eigen\PaStiXSupport\PaStiXSupport.h" />
+    <ClInclude Include="Eigen\plugins\ArrayCwiseBinaryOps.h" />
+    <ClInclude Include="Eigen\plugins\ArrayCwiseUnaryOps.h" />
+    <ClInclude Include="Eigen\plugins\BlockMethods.h" />
+    <ClInclude Include="Eigen\plugins\CommonCwiseBinaryOps.h" />
+    <ClInclude Include="Eigen\plugins\CommonCwiseUnaryOps.h" />
+    <ClInclude Include="Eigen\plugins\MatrixCwiseBinaryOps.h" />
+    <ClInclude Include="Eigen\plugins\MatrixCwiseUnaryOps.h" />
+    <ClInclude Include="Eigen\QR\ColPivHouseholderQR.h" />
+    <ClInclude Include="Eigen\QR\ColPivHouseholderQR_MKL.h" />
+    <ClInclude Include="Eigen\QR\FullPivHouseholderQR.h" />
+    <ClInclude Include="Eigen\QR\HouseholderQR.h" />
+    <ClInclude Include="Eigen\QR\HouseholderQR_MKL.h" />
+    <ClInclude Include="Eigen\SparseCholesky\SimplicialCholesky.h" />
+    <ClInclude Include="Eigen\SparseCholesky\SimplicialCholesky_impl.h" />
+    <ClInclude Include="Eigen\SparseCore\AmbiVector.h" />
+    <ClInclude Include="Eigen\SparseCore\CompressedStorage.h" />
+    <ClInclude Include="Eigen\SparseCore\ConservativeSparseSparseProduct.h" />
+    <ClInclude Include="Eigen\SparseCore\MappedSparseMatrix.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseBlock.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseColEtree.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseCwiseBinaryOp.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseCwiseUnaryOp.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseDenseProduct.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseDiagonalProduct.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseDot.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseFuzzy.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseMatrix.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseMatrixBase.h" />
+    <ClInclude Include="Eigen\SparseCore\SparsePermutation.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseProduct.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseRedux.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseSelfAdjointView.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseSparseProductWithPruning.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseTranspose.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseTriangularView.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseUtil.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseVector.h" />
+    <ClInclude Include="Eigen\SparseCore\SparseView.h" />
+    <ClInclude Include="Eigen\SparseCore\TriangularSolver.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLUImpl.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_column_bmod.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_column_dfs.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_copy_to_ucol.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_gemm_kernel.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_heap_relax_snode.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_kernel_bmod.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_Memory.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_panel_bmod.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_panel_dfs.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_pivotL.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_pruneL.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_relax_snode.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_Structs.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_SupernodalMatrix.h" />
+    <ClInclude Include="Eigen\SparseLU\SparseLU_Utils.h" />
+    <ClInclude Include="Eigen\SparseQR\SparseQR.h" />
+    <ClInclude Include="Eigen\SPQRSupport\SuiteSparseQRSupport.h" />
+    <ClInclude Include="Eigen\StlSupport\details.h" />
+    <ClInclude Include="Eigen\StlSupport\StdDeque.h" />
+    <ClInclude Include="Eigen\StlSupport\StdList.h" />
+    <ClInclude Include="Eigen\StlSupport\StdVector.h" />
+    <ClInclude Include="Eigen\SuperLUSupport\SuperLUSupport.h" />
+    <ClInclude Include="Eigen\SVD\JacobiSVD.h" />
+    <ClInclude Include="Eigen\SVD\JacobiSVD_MKL.h" />
+    <ClInclude Include="Eigen\SVD\UpperBidiagonalization.h" />
+    <ClInclude Include="Eigen\UmfPackSupport\UmfPackSupport.h" />
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="Lua.hpp" />
+    <ClInclude Include="lua5.1.5\lapi.h" />
+    <ClInclude Include="lua5.1.5\lauxlib.h" />
+    <ClInclude Include="lua5.1.5\lcode.h" />
+    <ClInclude Include="lua5.1.5\ldebug.h" />
+    <ClInclude Include="lua5.1.5\ldo.h" />
+    <ClInclude Include="lua5.1.5\lfunc.h" />
+    <ClInclude Include="lua5.1.5\lgc.h" />
+    <ClInclude Include="lua5.1.5\llex.h" />
+    <ClInclude Include="lua5.1.5\llimits.h" />
+    <ClInclude Include="lua5.1.5\lmem.h" />
+    <ClInclude Include="lua5.1.5\lobject.h" />
+    <ClInclude Include="lua5.1.5\lopcodes.h" />
+    <ClInclude Include="lua5.1.5\lparser.h" />
+    <ClInclude Include="lua5.1.5\lstate.h" />
+    <ClInclude Include="lua5.1.5\lstring.h" />
+    <ClInclude Include="lua5.1.5\ltable.h" />
+    <ClInclude Include="lua5.1.5\ltm.h" />
+    <ClInclude Include="lua5.1.5\lua.h" />
+    <ClInclude Include="lua5.1.5\luaconf.h" />
+    <ClInclude Include="lua5.1.5\lualib.h" />
+    <ClInclude Include="lua5.1.5\lundump.h" />
+    <ClInclude Include="lua5.1.5\lvm.h" />
+    <ClInclude Include="lua5.1.5\lzio.h" />
+    <ClInclude Include="luabind\adopt_policy.hpp" />
+    <ClInclude Include="luabind\back_reference.hpp" />
+    <ClInclude Include="luabind\back_reference_fwd.hpp" />
+    <ClInclude Include="luabind\class.hpp" />
+    <ClInclude Include="luabind\class_info.hpp" />
+    <ClInclude Include="luabind\config.hpp" />
+    <ClInclude Include="luabind\container_policy.hpp" />
+    <ClInclude Include="luabind\copy_policy.hpp" />
+    <ClInclude Include="luabind\dependency_policy.hpp" />
+    <ClInclude Include="luabind\detail\calc_arity.hpp" />
+    <ClInclude Include="luabind\detail\call.hpp" />
+    <ClInclude Include="luabind\detail\call_function.hpp" />
+    <ClInclude Include="luabind\detail\call_member.hpp" />
+    <ClInclude Include="luabind\detail\call_operator_iterate.hpp" />
+    <ClInclude Include="luabind\detail\class_cache.hpp" />
+    <ClInclude Include="luabind\detail\class_registry.hpp" />
+    <ClInclude Include="luabind\detail\class_rep.hpp" />
+    <ClInclude Include="luabind\detail\compute_score.hpp" />
+    <ClInclude Include="luabind\detail\constructor.hpp" />
+    <ClInclude Include="luabind\detail\conversion_storage.hpp" />
+    <ClInclude Include="luabind\detail\convert_to_lua.hpp" />
+    <ClInclude Include="luabind\detail\debug.hpp" />
+    <ClInclude Include="luabind\detail\decorate_type.hpp" />
+    <ClInclude Include="luabind\detail\deduce_signature.hpp" />
+    <ClInclude Include="luabind\detail\enum_maker.hpp" />
+    <ClInclude Include="luabind\detail\format_signature.hpp" />
+    <ClInclude Include="luabind\detail\garbage_collector.hpp" />
+    <ClInclude Include="luabind\detail\has_get_pointer.hpp" />
+    <ClInclude Include="luabind\detail\inheritance.hpp" />
+    <ClInclude Include="luabind\detail\instance_holder.hpp" />
+    <ClInclude Include="luabind\detail\is_indirect_const.hpp" />
+    <ClInclude Include="luabind\detail\link_compatibility.hpp" />
+    <ClInclude Include="luabind\detail\make_instance.hpp" />
+    <ClInclude Include="luabind\detail\most_derived.hpp" />
+    <ClInclude Include="luabind\detail\object_call.hpp" />
+    <ClInclude Include="luabind\detail\object_funs.hpp" />
+    <ClInclude Include="luabind\detail\object_rep.hpp" />
+    <ClInclude Include="luabind\detail\open.hpp" />
+    <ClInclude Include="luabind\detail\operator_id.hpp" />
+    <ClInclude Include="luabind\detail\other.hpp" />
+    <ClInclude Include="luabind\detail\pcall.hpp" />
+    <ClInclude Include="luabind\detail\pointee_sizeof.hpp" />
+    <ClInclude Include="luabind\detail\pointee_typeid.hpp" />
+    <ClInclude Include="luabind\detail\policy.hpp" />
+    <ClInclude Include="luabind\detail\primitives.hpp" />
+    <ClInclude Include="luabind\detail\property.hpp" />
+    <ClInclude Include="luabind\detail\ref.hpp" />
+    <ClInclude Include="luabind\detail\signature_match.hpp" />
+    <ClInclude Include="luabind\detail\stack_utils.hpp" />
+    <ClInclude Include="luabind\detail\typetraits.hpp" />
+    <ClInclude Include="luabind\detail\yes_no.hpp" />
+    <ClInclude Include="luabind\discard_result_policy.hpp" />
+    <ClInclude Include="luabind\error.hpp" />
+    <ClInclude Include="luabind\exception_handler.hpp" />
+    <ClInclude Include="luabind\from_stack.hpp" />
+    <ClInclude Include="luabind\function.hpp" />
+    <ClInclude Include="luabind\get_main_thread.hpp" />
+    <ClInclude Include="luabind\get_pointer.hpp" />
+    <ClInclude Include="luabind\handle.hpp" />
+    <ClInclude Include="luabind\iterator_policy.hpp" />
+    <ClInclude Include="luabind\luabind.hpp" />
+    <ClInclude Include="luabind\lua_include.hpp" />
+    <ClInclude Include="luabind\make_function.hpp" />
+    <ClInclude Include="luabind\nil.hpp" />
+    <ClInclude Include="luabind\object.hpp" />
+    <ClInclude Include="luabind\open.hpp" />
+    <ClInclude Include="luabind\operator.hpp" />
+    <ClInclude Include="luabind\out_value_policy.hpp" />
+    <ClInclude Include="luabind\prefix.hpp" />
+    <ClInclude Include="luabind\raw_policy.hpp" />
+    <ClInclude Include="luabind\return_reference_to_policy.hpp" />
+    <ClInclude Include="luabind\scope.hpp" />
+    <ClInclude Include="luabind\shared_ptr_converter.hpp" />
+    <ClInclude Include="luabind\tag_function.hpp" />
+    <ClInclude Include="luabind\typeid.hpp" />
+    <ClInclude Include="luabind\value_wrapper.hpp" />
+    <ClInclude Include="luabind\version.hpp" />
+    <ClInclude Include="luabind\weak_ref.hpp" />
+    <ClInclude Include="luabind\wrapper_base.hpp" />
+    <ClInclude Include="luabind\yield_policy.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lua5.1.5\Makefile" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

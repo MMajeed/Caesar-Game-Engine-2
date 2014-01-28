@@ -49,7 +49,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)CaesarHelperLibrary;$(SolutionDir)ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\EntityComponent;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\EntityComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt</TargetName>

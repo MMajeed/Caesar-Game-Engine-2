@@ -1,0 +1,1357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Lua5.1.5">
+      <UniqueIdentifier>{6e43e832-de57-4ba0-b918-24903f1851ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaBind">
+      <UniqueIdentifier>{8c8d6ae0-5771-4002-a7a9-62e1cd28a3c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaBind\detail">
+      <UniqueIdentifier>{200261f3-cc22-4abc-9f40-50585a450700}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaBind\src">
+      <UniqueIdentifier>{2f7a56c2-318f-4ae7-812f-f8adb6db8cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen">
+      <UniqueIdentifier>{8aa4cecf-1592-4d8c-88be-6d684609dfa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Cholesky">
+      <UniqueIdentifier>{af18857a-1d67-4563-86cc-e102fb7c78ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\CholmodSupport">
+      <UniqueIdentifier>{1a919255-eb8d-4974-b9c1-d549b80b5631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core">
+      <UniqueIdentifier>{3f879748-f5e2-4b54-9b84-1987e49cdb3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Eigen2Support">
+      <UniqueIdentifier>{1fde0863-b0fd-47ed-a127-565cfc6c3c4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Eigenvalues">
+      <UniqueIdentifier>{fddd07a0-14a3-408b-b476-8eb93cce09d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Geometry">
+      <UniqueIdentifier>{e6a300a7-a5c9-471d-a709-78b6022d9332}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Householder">
+      <UniqueIdentifier>{43332560-1682-42db-ac00-72086355f14d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\IterativeLinearSolvers">
+      <UniqueIdentifier>{1c967353-7bae-4f8e-9f23-ab00545fe4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Jacobi">
+      <UniqueIdentifier>{021b9d32-b7bb-41fe-a4bb-48d52661da81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\LU">
+      <UniqueIdentifier>{d1192b3f-c632-4335-a03f-de82b98310ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\MetisSupport">
+      <UniqueIdentifier>{314c2a61-d511-4e6f-9f62-1e3dc124e6a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\misc">
+      <UniqueIdentifier>{3f03655c-96fa-4897-bbee-0874062356f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\OrderingMethods">
+      <UniqueIdentifier>{b3865155-cf0a-4bfe-b392-6429e95b57af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\PardisoSupport">
+      <UniqueIdentifier>{c435f6a3-763a-4d57-bd3c-e9edc9ee64a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\PaStiXSupport">
+      <UniqueIdentifier>{fe5db6a7-bff8-4016-8fbe-e69fb97e0ed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\plugins">
+      <UniqueIdentifier>{3162afc0-bff4-45f9-aa63-7ea60e999bca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\QR">
+      <UniqueIdentifier>{2664d3e8-d3ff-49e2-b1f5-4c5658fe6325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SparseCholesky">
+      <UniqueIdentifier>{3f1b2473-b7bb-43a1-ab29-489399c04a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SparseCore">
+      <UniqueIdentifier>{0bfce3f9-ec31-4632-b542-f32b04cc06f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SparseLU">
+      <UniqueIdentifier>{03965837-b383-42ec-8f2a-0bddf66bb2ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SparseQR">
+      <UniqueIdentifier>{8ee99a3e-f14d-44bf-94a6-50c285b1461d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SPQRSupport">
+      <UniqueIdentifier>{3f273a86-d52c-4ecb-802c-84280bea8e47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\StlSupport">
+      <UniqueIdentifier>{0694f67e-c593-4f51-808d-63a9200feb67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SuperLUSupport">
+      <UniqueIdentifier>{789d4add-4d72-4b30-8bd4-9b898cf84cb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\SVD">
+      <UniqueIdentifier>{5a661577-5bdc-465d-a6d9-0882262837c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\UmfPackSupport">
+      <UniqueIdentifier>{2b4cb0f8-508b-4db9-8b33-f1e6d3af8a68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\arch">
+      <UniqueIdentifier>{1b224232-b6d4-4878-b3e4-58cd6c774e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\products">
+      <UniqueIdentifier>{d6d9ec89-d69d-48d8-8c0a-412cc3c7a4c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\util">
+      <UniqueIdentifier>{25dd9166-037a-42e6-ab19-398a2cbc750c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\arch\AltiVec">
+      <UniqueIdentifier>{25accad2-bff0-400a-b50a-1b15e31c640a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\arch\Default">
+      <UniqueIdentifier>{9bb7ecf9-292c-4da3-b6df-69ae659567e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\arch\NEON">
+      <UniqueIdentifier>{d84f85bc-3e74-4971-acca-c42e3d0388a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Core\arch\SSE">
+      <UniqueIdentifier>{c0716a74-416e-4582-8505-d9d7ee702917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Eigen2Support\Geometry">
+      <UniqueIdentifier>{e07726eb-7dac-4a3b-85d4-0a6494dfb3bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\Geometry\arch">
+      <UniqueIdentifier>{85719d87-5ed6-4076-a5a6-8aadafecea6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Eigen\LU\arch">
+      <UniqueIdentifier>{770f887a-f24b-4025-a200-639ed5d878d4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="lua5.1.5\lapi.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lauxlib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lbaselib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lcode.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ldblib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ldebug.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ldo.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ldump.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lfunc.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lgc.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\linit.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\liolib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\llex.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lmathlib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lmem.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\loadlib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lobject.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lopcodes.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\loslib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lparser.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lstate.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lstring.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lstrlib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ltable.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ltablib.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\ltm.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lua.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\luac.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lundump.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lvm.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\lzio.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="lua5.1.5\print.c">
+      <Filter>Lua5.1.5</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\class.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\class_info.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\class_registry.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\class_rep.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\create_class.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\error.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\exception_handler.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\function.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\inheritance.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\link_compatibility.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\object_rep.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\open.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\pcall.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\scope.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\stack_content_by_name.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\weak_ref.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+    <ClCompile Include="luabind\src\wrapper_base.cpp">
+      <Filter>LuaBind\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lua5.1.5\lapi.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lauxlib.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lcode.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\ldebug.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\ldo.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lfunc.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lgc.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\llex.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\llimits.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lmem.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lobject.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lopcodes.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lparser.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lstate.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lstring.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\ltable.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\ltm.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lua.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\luaconf.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lualib.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lundump.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lvm.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="lua5.1.5\lzio.h">
+      <Filter>Lua5.1.5</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\adopt_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\back_reference.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\back_reference_fwd.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\class.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\class_info.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\config.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\container_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\copy_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\dependency_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\discard_result_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\error.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\exception_handler.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\from_stack.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\function.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\get_main_thread.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\get_pointer.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\handle.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\iterator_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\lua_include.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\luabind.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\make_function.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\nil.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\object.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\open.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\operator.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\out_value_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\prefix.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\raw_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\return_reference_to_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\scope.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\shared_ptr_converter.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\tag_function.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\typeid.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\value_wrapper.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\version.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\weak_ref.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\wrapper_base.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\yield_policy.hpp">
+      <Filter>LuaBind</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\calc_arity.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\call.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\call_function.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\call_member.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\call_operator_iterate.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\class_cache.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\class_registry.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\class_rep.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\compute_score.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\constructor.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\conversion_storage.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\convert_to_lua.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\debug.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\decorate_type.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\deduce_signature.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\enum_maker.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\format_signature.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\garbage_collector.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\has_get_pointer.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\inheritance.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\instance_holder.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\is_indirect_const.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\link_compatibility.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\make_instance.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\most_derived.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\object_call.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\object_funs.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\object_rep.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\open.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\operator_id.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\other.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\pcall.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\pointee_sizeof.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\pointee_typeid.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\policy.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\primitives.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\property.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\ref.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\signature_match.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\stack_utils.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\typetraits.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="luabind\detail\yes_no.hpp">
+      <Filter>LuaBind\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="Lua.hpp" />
+    <ClInclude Include="Eigen\Cholesky\LDLT.h">
+      <Filter>Eigen\Cholesky</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Cholesky\LLT.h">
+      <Filter>Eigen\Cholesky</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Cholesky\LLT_MKL.h">
+      <Filter>Eigen\Cholesky</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\CholmodSupport\CholmodSupport.h">
+      <Filter>Eigen\CholmodSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Array.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\ArrayBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\ArrayWrapper.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Assign.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Assign_MKL.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\BandMatrix.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Block.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\BooleanRedux.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\CommaInitializer.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\CoreIterators.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\CwiseBinaryOp.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\CwiseNullaryOp.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\CwiseUnaryOp.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\CwiseUnaryView.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\DenseBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\DenseCoeffsBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\DenseStorage.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Diagonal.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\DiagonalMatrix.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\DiagonalProduct.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Dot.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\EigenBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Flagged.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\ForceAlignedAccess.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Functors.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Fuzzy.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\GeneralProduct.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\GenericPacketMath.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\GlobalFunctions.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\IO.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Map.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\MapBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\MathFunctions.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Matrix.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\MatrixBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\NestByValue.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\NoAlias.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\NumTraits.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\PermutationMatrix.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\PlainObjectBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\ProductBase.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Random.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Redux.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Ref.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Replicate.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\ReturnByValue.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Reverse.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Select.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\SelfAdjointView.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\SelfCwiseBinaryOp.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\SolveTriangular.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\StableNorm.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Stride.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Swap.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Transpose.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Transpositions.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\TriangularMatrix.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\VectorBlock.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\VectorwiseOp.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\Visitor.h">
+      <Filter>Eigen\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\CoeffBasedProduct.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralBlockPanelKernel.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrix.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrix_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrixTriangular.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixMatrixTriangular_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixVector.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\GeneralMatrixVector_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\Parallelizer.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixMatrix.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixMatrix_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixVector.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\SelfadjointMatrixVector_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\SelfadjointProduct.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\SelfadjointRank2Update.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixMatrix.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixMatrix_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixVector.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularMatrixVector_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularSolverMatrix.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularSolverMatrix_MKL.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\products\TriangularSolverVector.h">
+      <Filter>Eigen\Core\products</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\BlasUtil.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\Constants.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\DisableStupidWarnings.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\ForwardDeclarations.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\Macros.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\Memory.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\Meta.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\MKL_support.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\NonMPL2.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\ReenableStupidWarnings.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\StaticAssert.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\util\XprHelper.h">
+      <Filter>Eigen\Core\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\AltiVec\Complex.h">
+      <Filter>Eigen\Core\arch\AltiVec</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\AltiVec\PacketMath.h">
+      <Filter>Eigen\Core\arch\AltiVec</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\Default\Settings.h">
+      <Filter>Eigen\Core\arch\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\NEON\Complex.h">
+      <Filter>Eigen\Core\arch\NEON</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\NEON\PacketMath.h">
+      <Filter>Eigen\Core\arch\NEON</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\SSE\Complex.h">
+      <Filter>Eigen\Core\arch\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\SSE\MathFunctions.h">
+      <Filter>Eigen\Core\arch\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Core\arch\SSE\PacketMath.h">
+      <Filter>Eigen\Core\arch\SSE</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Block.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Cwise.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\CwiseOperators.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Lazy.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\LeastSquares.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\LU.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Macros.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\MathFunctions.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Memory.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Meta.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Minor.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\QR.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\SVD.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\TriangularSolver.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\VectorBlock.h">
+      <Filter>Eigen\Eigen2Support</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\AlignedBox.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\All.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\AngleAxis.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Hyperplane.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\ParametrizedLine.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Quaternion.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Rotation2D.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\RotationBase.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Scaling.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Transform.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigen2Support\Geometry\Translation.h">
+      <Filter>Eigen\Eigen2Support\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\ComplexEigenSolver.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\ComplexSchur.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\ComplexSchur_MKL.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\EigenSolver.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\GeneralizedEigenSolver.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\GeneralizedSelfAdjointEigenSolver.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\HessenbergDecomposition.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\MatrixBaseEigenvalues.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\RealQZ.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\RealSchur.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\RealSchur_MKL.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\SelfAdjointEigenSolver.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\SelfAdjointEigenSolver_MKL.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Eigenvalues\Tridiagonalization.h">
+      <Filter>Eigen\Eigenvalues</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\AlignedBox.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\AngleAxis.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\EulerAngles.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Homogeneous.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Hyperplane.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\OrthoMethods.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\ParametrizedLine.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Quaternion.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Rotation2D.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\RotationBase.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Scaling.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Transform.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Translation.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\Umeyama.h">
+      <Filter>Eigen\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Geometry\arch\Geometry_SSE.h">
+      <Filter>Eigen\Geometry\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Householder\BlockHouseholder.h">
+      <Filter>Eigen\Householder</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Householder\Householder.h">
+      <Filter>Eigen\Householder</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Householder\HouseholderSequence.h">
+      <Filter>Eigen\Householder</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\IterativeLinearSolvers\BasicPreconditioners.h">
+      <Filter>Eigen\IterativeLinearSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\IterativeLinearSolvers\BiCGSTAB.h">
+      <Filter>Eigen\IterativeLinearSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\IterativeLinearSolvers\ConjugateGradient.h">
+      <Filter>Eigen\IterativeLinearSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\IterativeLinearSolvers\IncompleteLUT.h">
+      <Filter>Eigen\IterativeLinearSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\IterativeLinearSolvers\IterativeSolverBase.h">
+      <Filter>Eigen\IterativeLinearSolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\Jacobi\Jacobi.h">
+      <Filter>Eigen\Jacobi</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\LU\Determinant.h">
+      <Filter>Eigen\LU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\LU\FullPivLU.h">
+      <Filter>Eigen\LU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\LU\Inverse.h">
+      <Filter>Eigen\LU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\LU\PartialPivLU.h">
+      <Filter>Eigen\LU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\LU\PartialPivLU_MKL.h">
+      <Filter>Eigen\LU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\LU\arch\Inverse_SSE.h">
+      <Filter>Eigen\LU\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\MetisSupport\MetisSupport.h">
+      <Filter>Eigen\MetisSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\misc\blas.h">
+      <Filter>Eigen\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\misc\Image.h">
+      <Filter>Eigen\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\misc\Kernel.h">
+      <Filter>Eigen\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\misc\Solve.h">
+      <Filter>Eigen\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\misc\SparseSolve.h">
+      <Filter>Eigen\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\UmfPackSupport\UmfPackSupport.h">
+      <Filter>Eigen\UmfPackSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SVD\JacobiSVD.h">
+      <Filter>Eigen\SVD</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SVD\JacobiSVD_MKL.h">
+      <Filter>Eigen\SVD</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SVD\UpperBidiagonalization.h">
+      <Filter>Eigen\SVD</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SuperLUSupport\SuperLUSupport.h">
+      <Filter>Eigen\SuperLUSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\StlSupport\details.h">
+      <Filter>Eigen\StlSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\StlSupport\StdDeque.h">
+      <Filter>Eigen\StlSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\StlSupport\StdList.h">
+      <Filter>Eigen\StlSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\StlSupport\StdVector.h">
+      <Filter>Eigen\StlSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SPQRSupport\SuiteSparseQRSupport.h">
+      <Filter>Eigen\SPQRSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseQR\SparseQR.h">
+      <Filter>Eigen\SparseQR</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_column_bmod.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_column_dfs.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_copy_to_ucol.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_gemm_kernel.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_heap_relax_snode.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_kernel_bmod.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_Memory.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_panel_bmod.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_panel_dfs.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_pivotL.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_pruneL.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_relax_snode.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_Structs.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_SupernodalMatrix.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLU_Utils.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseLU\SparseLUImpl.h">
+      <Filter>Eigen\SparseLU</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\AmbiVector.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\CompressedStorage.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\ConservativeSparseSparseProduct.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\MappedSparseMatrix.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseBlock.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseColEtree.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseCwiseBinaryOp.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseCwiseUnaryOp.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseDenseProduct.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseDiagonalProduct.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseDot.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseFuzzy.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseMatrix.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseMatrixBase.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparsePermutation.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseProduct.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseRedux.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseSelfAdjointView.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseSparseProductWithPruning.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseTranspose.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseTriangularView.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseUtil.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseVector.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\SparseView.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCore\TriangularSolver.h">
+      <Filter>Eigen\SparseCore</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCholesky\SimplicialCholesky.h">
+      <Filter>Eigen\SparseCholesky</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\SparseCholesky\SimplicialCholesky_impl.h">
+      <Filter>Eigen\SparseCholesky</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\QR\ColPivHouseholderQR.h">
+      <Filter>Eigen\QR</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\QR\ColPivHouseholderQR_MKL.h">
+      <Filter>Eigen\QR</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\QR\FullPivHouseholderQR.h">
+      <Filter>Eigen\QR</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\QR\HouseholderQR.h">
+      <Filter>Eigen\QR</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\QR\HouseholderQR_MKL.h">
+      <Filter>Eigen\QR</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\ArrayCwiseBinaryOps.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\ArrayCwiseUnaryOps.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\BlockMethods.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\CommonCwiseBinaryOps.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\CommonCwiseUnaryOps.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\MatrixCwiseBinaryOps.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\plugins\MatrixCwiseUnaryOps.h">
+      <Filter>Eigen\plugins</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\PaStiXSupport\PaStiXSupport.h">
+      <Filter>Eigen\PaStiXSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\PardisoSupport\PardisoSupport.h">
+      <Filter>Eigen\PardisoSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\OrderingMethods\Amd.h">
+      <Filter>Eigen\OrderingMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\OrderingMethods\Eigen_Colamd.h">
+      <Filter>Eigen\OrderingMethods</Filter>
+    </ClInclude>
+    <ClInclude Include="Eigen\OrderingMethods\Ordering.h">
+      <Filter>Eigen\OrderingMethods</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lua5.1.5\Makefile">
+      <Filter>Lua5.1.5</Filter>
+    </None>
+  </ItemGroup>
+</Project>
