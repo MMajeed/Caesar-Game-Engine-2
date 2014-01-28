@@ -96,6 +96,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3DMath.h" />
     <ClInclude Include="Basic2DDrawable.h" />
     <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="BasicScreenShot.h" />
@@ -122,8 +123,10 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="XNAConverter.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3DMath.cpp" />
     <ClCompile Include="Basic2DDrawable.cpp" />
     <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="BasicScreenShot.cpp" />
@@ -143,6 +146,7 @@
     <ClCompile Include="ShadowFilter.cpp" />
     <ClCompile Include="ShadowScreenShot.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="XNAConverter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

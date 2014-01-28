@@ -22,11 +22,11 @@ public:
 												  float startPhase,
 												  float animRate);
 
-	const std::hash_map<std::string, CHL::Matrix4x4> JointsAnimatedTransformation() const;
+	const std::hash_map<std::string, CML::Matrix4x4> JointsAnimatedTransformation() const;
 
 	const std::shared_ptr<BasicAnimation> GetAnimation() const;
 protected:
-	std::hash_map<std::string, CHL::Matrix4x4> jointsAnimated;
+	std::hash_map<std::string, CML::Matrix4x4> jointsAnimated;
 
 	double                   AnimTime;
 	double                   AnimRate;

@@ -5,6 +5,7 @@
 #include <luabind\luabind.hpp>
 #include <string>
 #include <Vector.h>
+#include <Vector.h>
 #include <Matrix.h>
 
 class LuaMath
@@ -15,11 +16,11 @@ public:
 	public:
 		Vector4();
 		Vector4(double xValue, double yValue, double zValue, double wValue = 0.0);
-		Vector4(CHL::Vec4 vecValue);
+		Vector4(CML::Vec4 vecValue);
 
-		operator CHL::Vec4();
+		operator CML::Vec4();
 
-		CHL::Vec4 vector;
+		CML::Vec4 vector;
 
 		double GetterX();
 		double GetterY();
@@ -38,25 +39,20 @@ public:
 	{
 	public:
 		Matrix4x4();
-		Matrix4x4(CHL::Matrix4x4 mat);
-		operator CHL::Matrix4x4();
+		Matrix4x4(CML::Matrix4x4 mat);
+		operator CML::Matrix4x4();
 
 		double GetValue(int x, int y);
 		void SetValue(int x, int y, double value);
 		
-		CHL::Matrix4x4 matrix;
+		CML::Matrix4x4 matrix;
 		static void Register(lua_State *lua);
 	};
-
-	static Matrix4x4 LuaViewCalculation(Vector4 eye, Vector4 vTM, Vector4 vUp, double pitch, double yaw, double roll);
 
 	static inline void RegisterAllLuaFunction(lua_State *lua)
 	{
 		LuaMath::Vector4::Register(lua);
 		LuaMath::Matrix4x4::Register(lua);
-		luabind::module(lua)[
-			luabind::def("ViewCalculation", LuaMath::LuaViewCalculation)
-		];
 	}
 };
 

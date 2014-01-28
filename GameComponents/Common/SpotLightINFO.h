@@ -8,9 +8,9 @@
 class SpotLightINFO : public LightINFO
 {
 public:
-	CHL::Vec4 Position;
-	CHL::Vec4 Direction;
-	CHL::Vec4 Attenuation;
+	CML::Vec4 Position;
+	CML::Vec4 Direction;
+	CML::Vec4 Attenuation;
 	double Range;
 	double Spot;
 

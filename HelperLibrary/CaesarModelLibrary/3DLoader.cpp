@@ -2,7 +2,6 @@
 #include <assimp/cimport.h>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
-#include "VecMath.h"
 #include "Logger.h"
 
 namespace CHL
@@ -32,22 +31,22 @@ namespace CHL
 				aiVector3D vec;
 
 				vec = aiSceneModel->mVertices[i];
-				spCHLModel->Vertices[i].Point = CHL::Vec3{vec.x, vec.y, vec.z};
+				spCHLModel->Vertices[i].Point = CML::Vec3{vec.x, vec.y, vec.z};
 
 				if(aiSceneModel->HasNormals())
 				{
 					vec = aiSceneModel->mNormals[i];
-					spCHLModel->Vertices[i].Normal = CHL::Vec3{vec.x, vec.y, vec.z};
+					spCHLModel->Vertices[i].Normal = CML::Vec3{vec.x, vec.y, vec.z};
 				}
 				else
 				{
-					spCHLModel->Vertices[i].Normal = CHL::Vec3{0.0, 0.0, 0.0};
+					spCHLModel->Vertices[i].Normal = CML::Vec3{0.0, 0.0, 0.0};
 				}
 
 				if(aiSceneModel->HasTextureCoords(0))
 				{
 					vec = aiSceneModel->mTextureCoords[0][i];
-					spCHLModel->Vertices[i].Texture = CHL::Vec3{vec.x, vec.y, vec.z};
+					spCHLModel->Vertices[i].Texture = CML::Vec3{vec.x, vec.y, vec.z};
 				}
 				else
 				{

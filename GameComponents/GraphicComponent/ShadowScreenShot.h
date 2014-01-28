@@ -2,7 +2,7 @@
 #define __ShadowScreenShot__
 
 #include "ScreenShot.h"
-#include <Matrix.h>
+#include <Vector.h>
 #include "SceneInfo.h"
 
 class ShadowScreenShot : public ScreenShot

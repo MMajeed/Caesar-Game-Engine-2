@@ -689,7 +689,7 @@ union luai_Cast { double l_d; long l_l; };
 ** dynamic-library system for your platform (either Windows' DLL, Mac's
 ** dyld, or Unix's dlopen). If your system is some kind of Unix, there
 ** is a good chance that it has dlopen, so LUA_DL_DLOPEN will work for
-** it.  To use dlopen you also need to adapt the src/Makefile (probably
+** it.  To use dlopen you also need to adapt the Eigen/src/Makefile (probably
 ** adding -ldl to the linker options), so Lua does not select it
 ** automatically.  (When you change the makefile to add -ldl, you must
 ** also add -DLUA_USE_DLOPEN.)

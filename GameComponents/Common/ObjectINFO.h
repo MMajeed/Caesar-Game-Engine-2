@@ -5,18 +5,19 @@
 #include "INFO.h"
 #include <Vector.h>
 #include <vector>
+#include <array>
 
 class ObjectINFO : public INFO
 {
 public:
 	static const unsigned int USERDATASIZE = 16;
 
-	CHL::Vec4 Location;
-	CHL::Vec4 Rotation;
-	CHL::Vec4 Scale;
-	CHL::Vec4 Diffuse;
-	CHL::Vec4 Ambient;
-	CHL::Vec4 Specular;
+	CML::Vec4 Location;
+	CML::Vec4 Rotation;
+	CML::Vec4 Scale;
+	CML::Vec4 Diffuse;
+	CML::Vec4 Ambient;
+	CML::Vec4 Specular;
 	std::string DrawObjID;
 	std::vector<std::string> Texture2DVecs;
 	std::vector<std::string> TextureCubeVecs;

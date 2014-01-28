@@ -1,27 +1,27 @@
 #include "DirectLight.h"
-#include <XNAConverter.h>
+#include "XNAConverter.h"
 #include "GraphicManager.h"
-#include <3DMath.h>
+#include "3DMath.h"
 
 namespace DirectLight
 {
 	cBuffer::CLightDesc GetLightDesc(std::shared_ptr<DirectionalLightINFO> lightInfo)
 	{
 		cBuffer::CLightDesc light;
-		light.material.diffuse = CHL::ConvertVec4(lightInfo->Diffuse);
-		light.material.ambient = CHL::ConvertVec4(lightInfo->Ambient);
-		light.material.specular = CHL::ConvertVec4(lightInfo->Specular);
-		light.dir = CHL::ConvertVec4(lightInfo->Direction);
+		light.material.diffuse = ConvertVec4(lightInfo->Diffuse);
+		light.material.ambient = ConvertVec4(lightInfo->Ambient);
+		light.material.specular = ConvertVec4(lightInfo->Specular);
+		light.dir = ConvertVec4(lightInfo->Direction);
 		light.type = 1;
 		light.shadowNum = -1;
 
 
 		return light;
 	}
-	CHL::Matrix4x4 CalculateShadowMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CHL::Vec4 eye)
+	CML::Matrix4x4 CalculateShadowMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CML::Vec4 eye)
 	{
-		XMFLOAT4X4 view = CHL::Convert4x4(DirectLight::CalculateViewMatrix(lightInfo, eye));
-		XMFLOAT4X4 pres = CHL::Convert4x4(DirectLight::CalculatePrespectiveMatrix(lightInfo, eye));
+		XMFLOAT4X4 view = Convert4x4(DirectLight::CalculateViewMatrix(lightInfo, eye));
+		XMFLOAT4X4 pres = Convert4x4(DirectLight::CalculatePrespectiveMatrix(lightInfo, eye));
 		XMMATRIX T(
 			0.5f, 0.0f, 0.0f, 0.0f,
 			0.0f, -0.5f, 0.0f, 0.0f,
@@ -36,9 +36,9 @@ namespace DirectLight
 
 		XMFLOAT4X4 shadowMatrix;
 		XMStoreFloat4x4(&shadowMatrix, VPT);
-		return CHL::Convert4x4(shadowMatrix);
+		return Convert4x4(shadowMatrix);
 	}
-	CHL::Matrix4x4 CalculateViewMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CHL::Vec4 eye)
+	CML::Matrix4x4 CalculateViewMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CML::Vec4 eye)
 	{
 		double pitch; double yaw; double roll;
 
@@ -58,9 +58,9 @@ namespace DirectLight
 
 		XMFLOAT4X4 vFloat4x4;
 		XMStoreFloat4x4(&vFloat4x4, V);
-		return CHL::Convert4x4(vFloat4x4);
+		return Convert4x4(vFloat4x4);
 	}
-	CHL::Matrix4x4 CalculatePrespectiveMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CHL::Vec4 eye)
+	CML::Matrix4x4 CalculatePrespectiveMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CML::Vec4 eye)
 	{
 		double pitch; double yaw; double roll;
 
@@ -93,9 +93,9 @@ namespace DirectLight
 
 		XMFLOAT4X4 pFloat4x4;
 		XMStoreFloat4x4(&pFloat4x4, P);
-		return CHL::Convert4x4(pFloat4x4);
+		return Convert4x4(pFloat4x4);
 	}
-	SceneInfo GetScene(std::shared_ptr<DirectionalLightINFO> lightInfo, const CHL::Vec4 eye)
+	SceneInfo GetScene(std::shared_ptr<DirectionalLightINFO> lightInfo, const CML::Vec4 eye)
 	{
 		SceneInfo returnValue;
 		returnValue.Eye = eye;

@@ -8,8 +8,8 @@ std::shared_ptr<Object> PointLightINFO::Get(const std::string& ID)
 	returnValue = LightINFO::Get(ID);
 	if(!returnValue)
 	{
-			 if(ID == Keys::Light::POSITION){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Position); }
-		else if(ID == Keys::Light::ATTENUATION){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Attenuation); }
+			 if(ID == Keys::Light::POSITION){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Position); }
+		else if(ID == Keys::Light::ATTENUATION){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Attenuation); }
 		else if(ID == Keys::Light::RANGE){ returnValue = GenericObj<double>::CreateNew(this->Range); }
 	}
 
@@ -21,8 +21,8 @@ void PointLightINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 {
 	LightINFO::Set(ID, obj);
 
-		 if(ID == Keys::Light::POSITION){ this->Position = GenericObj<CHL::Vec4>::GetValue(obj); }
-	else if(ID == Keys::Light::ATTENUATION){ this->Attenuation = GenericObj<CHL::Vec4>::GetValue(obj); }
+		 if(ID == Keys::Light::POSITION){ this->Position = GenericObj<CML::Vec4>::GetValue(obj); }
+	else if(ID == Keys::Light::ATTENUATION){ this->Attenuation = GenericObj<CML::Vec4>::GetValue(obj); }
 	else if(ID == Keys::Light::RANGE){ this->Range = GenericObj<double>::GetValue(obj); }
 }
 

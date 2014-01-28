@@ -16,13 +16,13 @@ public:
 
 	struct Node
 	{
-		CHL::Matrix4x4 Transformation;
+		CML::Matrix4x4 Transformation;
 		std::shared_ptr<BasicAnimation::Node> Parent;
 		std::vector<std::shared_ptr<BasicAnimation::Node>> Childern;
 
 		struct Key
 		{
-			CHL::Vec3 Value;
+			CML::Vec3 Value;
 			double Time;
 		};
 		std::vector<Node::Key> Translation;

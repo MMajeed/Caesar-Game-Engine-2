@@ -16,9 +16,9 @@ public:
 	CameraINFO();
 
 	// Camera Stuff
-	CHL::Vec4 Eye;
-	CHL::Vec4 TargetMagnitude;
-	CHL::Vec4 Up;
+	CML::Vec4 Eye;
+	CML::Vec4 TargetMagnitude;
+	CML::Vec4 Up;
 	double Roll;
 	double Pitch;
 	double Yaw;
@@ -28,7 +28,7 @@ public:
 	double NearZ;
 	double FarZ;
 
-	CHL::Vec4 ClearColor;
+	CML::Vec4 ClearColor;
 
 	bool Process2D;
 

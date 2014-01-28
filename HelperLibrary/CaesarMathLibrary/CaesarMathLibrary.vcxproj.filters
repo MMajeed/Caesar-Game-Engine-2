@@ -1,46 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="3DMath">
-      <UniqueIdentifier>{ab2651a7-2483-4d33-9a04-a655afc514b5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Matrix">
       <UniqueIdentifier>{d5f6b1aa-6ea1-40d4-b312-25eaaee2c7e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="VecMath">
-      <UniqueIdentifier>{75afa63c-03b6-403d-aaad-33b74de55aaf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Vector">
       <UniqueIdentifier>{363a41db-7295-4378-8d01-1e1f7c59a89a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="XNAConverter">
-      <UniqueIdentifier>{8d35ab2a-e704-44fe-b622-f8a0890ffa85}</UniqueIdentifier>
+    <Filter Include="VecOperators">
+      <UniqueIdentifier>{75afa63c-03b6-403d-aaad-33b74de55aaf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3DMath.cpp">
-      <Filter>3DMath</Filter>
-    </ClCompile>
-    <ClCompile Include="XNAConverter.cpp">
-      <Filter>XNAConverter</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="3DMath.h">
-      <Filter>3DMath</Filter>
-    </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Matrix</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
       <Filter>Vector</Filter>
     </ClInclude>
-    <ClInclude Include="VecMath.h">
-      <Filter>VecMath</Filter>
-    </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="XNAConverter.h">
-      <Filter>XNAConverter</Filter>
+    <ClInclude Include="VecOperators.h">
+      <Filter>VecOperators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

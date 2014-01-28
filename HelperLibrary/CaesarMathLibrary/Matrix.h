@@ -5,7 +5,7 @@
 #include <algorithm>
 #include "Vector.h"
 
-namespace CHL
+namespace CML
 {
 	template<typename Type, unsigned int FArraySize, unsigned int SArraySize>
 	class Matrix

@@ -2,11 +2,11 @@
 #define __Nodes__
 
 #include "Linker.h"
-#include "Vector.h"
-#include "Matrix.h"
+#include <Vector.h>
 #include <string>
 #include <vector>
 #include <memory>
+#include <Matrix.h>
 
 namespace CHL
 {
@@ -14,7 +14,7 @@ namespace CHL
 	{
 	public:
 		std::string Name;
-		CHL::Matrix4x4 Transformation;
+		CML::Matrix4x4 Transformation;
 		std::shared_ptr<Node> Parent;
 		std::vector<std::shared_ptr<Node>> Childern;
 		std::vector<int> meshes;

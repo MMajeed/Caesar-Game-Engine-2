@@ -2,8 +2,7 @@
 #define __Animation__
 
 #include "Linker.h"
-#include "Vector.h"
-#include "Matrix.h"
+#include <Vector.h>
 #include <string>
 #include <hash_map>
 
@@ -16,7 +15,7 @@ namespace CHL
 		{
 			struct Key
 			{
-				CHL::Vec3 value;
+				CML::Vec3 value;
 				double time;
 			};
 			std::string name;

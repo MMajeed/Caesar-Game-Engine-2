@@ -1,5 +1,4 @@
 #include "Node.h"
-#include "3DMath.h"
 
 namespace CHL
 {

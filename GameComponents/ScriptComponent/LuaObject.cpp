@@ -10,10 +10,10 @@
 
 LuaObject::LuaObject()
 {
-	CHL::Vec4 loc{0.0, 0.0, 0.0, 1.0};
-	CHL::Vec4 rot{0.0, 0.0, 0.0, 1.0};
-	CHL::Vec4 sca{1.0, 1.0, 1.0, 1.0};
-	CHL::Vec4 col{1.0, 1.0, 1.0, 1.0};
+	CML::Vec4 loc{0.0, 0.0, 0.0, 1.0};
+	CML::Vec4 rot{0.0, 0.0, 0.0, 1.0};
+	CML::Vec4 sca{1.0, 1.0, 1.0, 1.0};
+	CML::Vec4 col{1.0, 1.0, 1.0, 1.0};
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
 	obj->Location = loc;
@@ -34,12 +34,12 @@ LuaObject::LuaObject(luabind::object const& table)
 	if (luabind::type(table) != LUA_TTABLE)
 		Logger::LogError("Wrong paramter for Camera, please send in a table");
 
-	CHL::Vec4 loc{0.0, 0.0, 0.0, 1.0};
-	CHL::Vec4 rot{0.0, 0.0, 0.0, 1.0};
-	CHL::Vec4 sca{1.0, 1.0, 1.0, 1.0};
-	CHL::Vec4 diffuse{1.0, 1.0, 1.0, 1.0};
-	CHL::Vec4 amibent{1.0, 1.0, 1.0, 1.0};
-	CHL::Vec4 specular{1.0, 1.0, 1.0, 1.0};
+	CML::Vec4 loc{0.0, 0.0, 0.0, 1.0};
+	CML::Vec4 rot{0.0, 0.0, 0.0, 1.0};
+	CML::Vec4 sca{1.0, 1.0, 1.0, 1.0};
+	CML::Vec4 diffuse{1.0, 1.0, 1.0, 1.0};
+	CML::Vec4 amibent{1.0, 1.0, 1.0, 1.0};
+	CML::Vec4 specular{1.0, 1.0, 1.0, 1.0};
 	std::string graphicDrawable;
 	std::vector<std::string>  textures2D;
 	std::vector<std::string>  texturesCube;
@@ -214,62 +214,62 @@ luabind::object LuaObject::AllCubeTexture()
 
 void LuaObject::SetLocation(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::LOCATION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::LOCATION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetLocation()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::LOCATION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetScale(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::SCALE , GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::SCALE , GenericObj<CML::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetScale()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::SCALE);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetRotation(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::ROTATION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::ROTATION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetRotation()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::ROTATION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetDiffuse(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DIFFUSE, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DIFFUSE, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetDiffuse()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::DIFFUSE);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetAmibent(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::AMBIENT, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::AMBIENT, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetAmibent()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::AMBIENT);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetSpecular(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::SPECULAR, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::SPECULAR, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 LuaMath::Vector4 LuaObject::GetSpecular()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::SPECULAR);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaObject::SetLight(bool vec)

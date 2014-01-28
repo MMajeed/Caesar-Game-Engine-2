@@ -4,7 +4,7 @@
 #include <array>
 #include <algorithm>
 
-namespace CHL
+namespace CML
 {
 	template<typename Type, unsigned int ArraySize>
 	class Vector

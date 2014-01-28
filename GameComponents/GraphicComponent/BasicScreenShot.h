@@ -2,7 +2,7 @@
 #define __BasicScreenShot__
 
 #include "ScreenShot.h"
-#include <Matrix.h>
+#include <Vector.h>
 #include "SceneInfo.h"
 
 class BasicScreenShot : public ScreenShot

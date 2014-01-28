@@ -1,6 +1,5 @@
 #include "LuaCamera.h"
 #include <Converter.h>
-#include <3DMath.h>
 #include <luabind\luabind.hpp>
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
@@ -12,14 +11,14 @@ LuaCamera::LuaCamera(luabind::object const& table)
 	if (luabind::type(table) != LUA_TTABLE)
 		Logger::LogError("Wrong paramter for Camera, please send in a table");
 
-	CHL::Vec4 eye{0.0, 0.0, 0.0, 0.0};
-	CHL::Vec4 TM{0.0, 0.0, 1.0, 0.0};
-	CHL::Vec4 up{0.0, 1.0, 0.0, 0.0};
+	CML::Vec4 eye{0.0, 0.0, 0.0, 0.0};
+	CML::Vec4 TM{0.0, 0.0, 1.0, 0.0};
+	CML::Vec4 up{0.0, 1.0, 0.0, 0.0};
 	double roll = 0.0;	double pitch = 0.0;		double yaw = 0.0;
 	double FovAngleY = 0.785398163;
 	double nearZ = 0.01;
 	double farZ = 5000.0;
-	CHL::Vec4 ClearColor{0.5, 0.5, 0.5, 1.0};
+	CML::Vec4 ClearColor{0.5, 0.5, 0.5, 1.0};
 	bool process2D = true;
 	std::vector<std::string> global2DTexture;
 	std::vector<std::string> globalCubeTexture;
@@ -107,38 +106,38 @@ void LuaCamera::MoveFroward(double distance)
 	double yaw = this->GetYaw();
 	double roll = this->GetRoll();
 
-	auto newEye = CHL::MoveForward(eye, target, pitch, yaw, roll, distance);
-	this->SetEye(newEye);
+	//auto newEye = CHL::MoveForward(eye, target, pitch, yaw, roll, distance);
+	//this->SetEye(newEye);
 }
 
 void LuaCamera::SetEye(LuaMath::Vector4 eye)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Camera::EYE, GenericObj<CHL::Vec4>::CreateNew(eye));
+	EntityConfig::SetEntity(this->ID, Keys::Camera::EYE, GenericObj<CML::Vec4>::CreateNew(eye));
 }
 LuaMath::Vector4 LuaCamera::GetEye()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::EYE);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::SetTargetMagintude(LuaMath::Vector4 targetMagintude)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Camera::TARGETMAGNITUDE, GenericObj<CHL::Vec4>::CreateNew(targetMagintude));
+	EntityConfig::SetEntity(this->ID, Keys::Camera::TARGETMAGNITUDE, GenericObj<CML::Vec4>::CreateNew(targetMagintude));
 }
 LuaMath::Vector4 LuaCamera::GetTargetMagintude()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::TARGETMAGNITUDE);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::SetUp(LuaMath::Vector4 up)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Camera::UP, GenericObj<CHL::Vec4>::CreateNew(up));
+	EntityConfig::SetEntity(this->ID, Keys::Camera::UP, GenericObj<CML::Vec4>::CreateNew(up));
 }
 LuaMath::Vector4 LuaCamera::GetUp()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::UP);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 void LuaCamera::SetRoll(double roll)
@@ -205,12 +204,12 @@ double LuaCamera::GetFarZ()
 void LuaCamera::SetClearColor(LuaMath::Vector4 val)
 {
 
-	EntityConfig::SetEntity(this->ID, Keys::Camera::RADIANYAW, GenericObj<CHL::Vec4>::CreateNew(val));
+	EntityConfig::SetEntity(this->ID, Keys::Camera::RADIANYAW, GenericObj<CML::Vec4>::CreateNew(val));
 }
 LuaMath::Vector4 LuaCamera::GetClearColor()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::CLEARCOLOR);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 
 std::shared_ptr<GenericObj<std::vector<std::string>>> LuaCamera::GetRawAll2DTextures()

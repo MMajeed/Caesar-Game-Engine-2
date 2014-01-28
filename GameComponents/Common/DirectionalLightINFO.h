@@ -8,7 +8,7 @@
 class DirectionalLightINFO : public LightINFO
 {
 public:
-	CHL::Vec4 Direction;
+	CML::Vec4 Direction;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);
 	virtual void Set(const std::string& ID, std::shared_ptr<Object> obj);

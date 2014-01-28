@@ -7,8 +7,8 @@
 #include "PointLight.h"
 #include "GraphicManager.h"
 #include <GenerateGUID.h>
-#include <3DMath.h>
-#include <XNAConverter.h>
+#include "3DMath.h"
+#include "XNAConverter.h"
 #include <Logger.h>
 
 cBuffer::cbLight LastLightInput;
@@ -75,7 +75,7 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 	if(FAILED(hr)){ Logger::LogError("ErrorException creating 2d texture for shadow"); }
 }
 
-void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::Vec4& eye)
+void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CML::Vec4& eye)
 {
 	GraphicManager& graphicManager = GraphicManager::GetInstance();
 	//graphicManager.InsertSceneFilter(this->shadowFilter);
@@ -101,20 +101,20 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::
 
 						if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( a ))
 						{
-							rankA += CHL::Length(eye, light->Position);
+							rankA += Length(eye, light->Position);
 						}
 						else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( a ))
 						{
-							rankA += CHL::Length(eye, light->Position);
+							rankA += Length(eye, light->Position);
 						}
 
 						if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( b ))
 						{
-							rankB += CHL::Length(eye, light->Position);
+							rankB += Length(eye, light->Position);
 						}
 						else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( b ))
 						{
-							rankB += CHL::Length(eye, light->Position);
+							rankB += Length(eye, light->Position);
 						}
 
 						return rankA < rankB;
@@ -156,7 +156,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::
 
 				lightBuffer.lights[counter].shadowNum = shadowCounter;
 
-				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(DirectLight::CalculateShadowMatrix(light, eye)));
+				shadows.shadows[counter] = XMLoadFloat4x4(&Convert4x4(DirectLight::CalculateShadowMatrix(light, eye)));
 				++shadowCounter;
 			}
 		}
@@ -175,7 +175,7 @@ void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::
 				this->vecDepthShadow[shadowCounter]->Snap(objects);
 
 				lightBuffer.lights[counter].shadowNum = shadowCounter;
-				shadows.shadows[counter] = XMLoadFloat4x4(&CHL::Convert4x4(SpotLight::CalculateShadowMatrix(light, eye)));
+				shadows.shadows[counter] = XMLoadFloat4x4(&Convert4x4(SpotLight::CalculateShadowMatrix(light, eye)));
 
 				++shadowCounter;
 			}

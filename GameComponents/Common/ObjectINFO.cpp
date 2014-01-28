@@ -15,12 +15,12 @@ std::shared_ptr<Object> ObjectINFO::Get(const std::string& ID)
 	returnValue = INFO::Get(ID);
 	if(!returnValue)
 	{
-			 if(ID == Keys::ObjectInfo::LOCATION){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Location); }
-		else if(ID == Keys::ObjectInfo::ROTATION){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Rotation); }
-		else if(ID == Keys::ObjectInfo::SCALE){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Scale); }
-		else if(ID == Keys::ObjectInfo::DIFFUSE){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Diffuse); }
-		else if(ID == Keys::ObjectInfo::AMBIENT){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Ambient); }
-		else if(ID == Keys::ObjectInfo::SPECULAR){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Specular); }
+			 if(ID == Keys::ObjectInfo::LOCATION){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Location); }
+		else if(ID == Keys::ObjectInfo::ROTATION){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Rotation); }
+		else if(ID == Keys::ObjectInfo::SCALE){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Scale); }
+		else if(ID == Keys::ObjectInfo::DIFFUSE){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Diffuse); }
+		else if(ID == Keys::ObjectInfo::AMBIENT){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Ambient); }
+		else if(ID == Keys::ObjectInfo::SPECULAR){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Specular); }
 		else if(ID == Keys::ObjectInfo::DRAWABLEOBJ){ returnValue = GenericObj<std::string>::CreateNew(this->DrawObjID); }
 		else if(ID == Keys::ObjectInfo::TEXTURE2DOBJ){ returnValue = GenericObj<std::vector<std::string>>::CreateNew(this->Texture2DVecs); }
 		else if(ID == Keys::ObjectInfo::TEXTURECUBEOBJ){ returnValue = GenericObj<std::vector<std::string>>::CreateNew(this->TextureCubeVecs); }
@@ -38,12 +38,12 @@ void ObjectINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 {
 	INFO::Set(ID, obj);
 	
-		 if(ID == Keys::ObjectInfo::LOCATION){ this->Location = GenericObj<CHL::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::ROTATION){ this->Rotation = GenericObj<CHL::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::SCALE){ this->Scale = GenericObj<CHL::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::DIFFUSE){ this->Diffuse = GenericObj<CHL::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::AMBIENT){ this->Ambient = GenericObj<CHL::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::SPECULAR){ this->Specular = GenericObj<CHL::Vec4>::GetValue(obj); }
+		 if(ID == Keys::ObjectInfo::LOCATION){ this->Location = GenericObj<CML::Vec4>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::ROTATION){ this->Rotation = GenericObj<CML::Vec4>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::SCALE){ this->Scale = GenericObj<CML::Vec4>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::DIFFUSE){ this->Diffuse = GenericObj<CML::Vec4>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::AMBIENT){ this->Ambient = GenericObj<CML::Vec4>::GetValue(obj); }
+	else if(ID == Keys::ObjectInfo::SPECULAR){ this->Specular = GenericObj<CML::Vec4>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::DRAWABLEOBJ){ this->DrawObjID = GenericObj<std::string>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::TEXTURE2DOBJ){ this->Texture2DVecs = GenericObj<std::vector<std::string>>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::TEXTURECUBEOBJ){ this->TextureCubeVecs = GenericObj<std::vector<std::string>>::GetValue(obj); }

@@ -16,7 +16,7 @@ protected:
 public:
 	void Init();
 
-	void SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CHL::Vec4& eye);
+	void SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CML::Vec4& eye);
 	void SetupShadow(unsigned int numberOfShadows);
 
 	std::vector<std::shared_ptr<ShadowScreenShot>>	vecDepthShadow;

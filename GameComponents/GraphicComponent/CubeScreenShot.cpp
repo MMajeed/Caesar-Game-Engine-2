@@ -2,7 +2,7 @@
 #include "GraphicManager.h"
 #include <Keys.h>
 #include <Object.h>
-#include <3DMath.h>
+#include "3DMath.h"
 #include "Scene.h"
 #include <Logger.h>
 
@@ -167,9 +167,9 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 		Z_NEG	// = 5 
 	};
 
-	CHL::Vec4 vEye = cam->Eye;
-	CHL::Vec4 vTM;
-	CHL::Vec4 vUp;
+	CML::Vec4 vEye = cam->Eye;
+	CML::Vec4 vTM;
+	CML::Vec4 vUp;
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
 
 	// Draw the scene with the exception of the center sphere to this cube map face.
@@ -208,14 +208,14 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	double nearZ = cam->NearZ;
 	double farZ = cam->FarZ;
 	SceneInfo returnValue;
-	returnValue.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+	returnValue.CamerMatrix = ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 	returnValue.Eye = vEye;
 	if(FovAngleY > 0.0)
-		returnValue.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
+		returnValue.ProjectionMatrix = PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
 	else
-		returnValue.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+		returnValue.ProjectionMatrix = OrthographicLHCalculation(width, height, nearZ, farZ);
 
-	returnValue.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+	returnValue.TwoDimMatrix = OrthographicLHCalculation(width, height, nearZ, farZ);
 
 	Scene::SetupSceneExtraInfo(cam, this->D3DInfo.width, this->D3DInfo.height, returnValue);
 

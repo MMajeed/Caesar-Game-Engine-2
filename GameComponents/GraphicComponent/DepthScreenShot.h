@@ -2,7 +2,7 @@
 #define __DepthScreenShot__
 
 #include "ScreenShot.h"
-#include <Matrix.h>
+#include <Vector.h>
 #include "SceneInfo.h"
 
 class DepthScreenShot : public ScreenShot

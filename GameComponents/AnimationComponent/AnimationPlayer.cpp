@@ -66,7 +66,7 @@ const std::shared_ptr<BasicAnimation> AnimationPlayer::GetAnimation() const
 	return returnValue;
 }
 
-const std::hash_map<std::string, CHL::Matrix4x4> AnimationPlayer::JointsAnimatedTransformation() const
+const std::hash_map<std::string, CML::Matrix4x4> AnimationPlayer::JointsAnimatedTransformation() const
 {
 	return this->jointsAnimated;
 }

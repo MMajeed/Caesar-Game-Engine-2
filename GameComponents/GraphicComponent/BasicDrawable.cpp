@@ -3,12 +3,12 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
-#include <XNAConverter.h>
+#include "XNAConverter.h"
 #include <Keys.h>
-#include <3DMath.h>
+#include "3DMath.h"
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
-#include <VecMath.h>
+#include <VecOperators.h>
 
 BasicDrawable::BasicDrawable()
 {
@@ -152,9 +152,9 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& o
 	
 	cbCEF.world = XMMatrixTranspose(XMLoadFloat4x4(&worldFloat4x4));
 	cbCEF.worldViewProj = XMMatrixTranspose(XMLoadFloat4x4(&finalFloat4x4));
-	cbCEF.colour.diffuse = CHL::ConvertVec4(object->Diffuse);
-	cbCEF.colour.ambient = CHL::ConvertVec4(object->Ambient);
-	cbCEF.colour.specular = CHL::ConvertVec4(object->Specular);
+	cbCEF.colour.diffuse = ConvertVec4(object->Diffuse);
+	cbCEF.colour.ambient = ConvertVec4(object->Ambient);
+	cbCEF.colour.specular = ConvertVec4(object->Specular);
 	cbCEF.NumberOf2DTextures = object->Texture2DVecs.size() < cBuffer::numOfTextures ? object->Texture2DVecs.size() : cBuffer::numOfTextures;
 	cbCEF.NumberOfCubeTextures = object->TextureCubeVecs.size() < cBuffer::numOfTextures ? object->TextureCubeVecs.size() : cBuffer::numOfTextures;
 	cbCEF.HasLight = object->Light;
@@ -238,11 +238,11 @@ void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, 
 
 void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
 {
-	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(object->Location, object->Rotation, object->Scale);
+	CML::Matrix4x4 mObjectFinal = ObjectCalculation(object->Location, object->Rotation, object->Scale);
 
-	worldFloat4x4 = CHL::Convert4x4(mObjectFinal);
-	XMFLOAT4X4 prespectiveMatrix = CHL::Convert4x4(si.ProjectionMatrix);
-	XMFLOAT4X4 viewMatrix = CHL::Convert4x4(si.CamerMatrix);
+	worldFloat4x4 = Convert4x4(mObjectFinal);
+	XMFLOAT4X4 prespectiveMatrix = Convert4x4(si.ProjectionMatrix);
+	XMFLOAT4X4 viewMatrix = Convert4x4(si.CamerMatrix);
 
 	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
 

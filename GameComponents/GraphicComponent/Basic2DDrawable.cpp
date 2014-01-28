@@ -2,12 +2,12 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
-#include <XNAConverter.h>
+#include "XNAConverter.h"
 #include <Keys.h>
-#include <3DMath.h>
+#include "3DMath.h"
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
-#include <VecMath.h>
+#include <VecOperators.h>
 
 Basic2DDrawable::Basic2DDrawable()
 {
@@ -63,14 +63,14 @@ void Basic2DDrawable::ProcessModel(std::shared_ptr<CHL::Model> model)
 
 void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
 {
-	CHL::Vec4 loc = object->Location;
+	CML::Vec4 loc = object->Location;
 	loc(1) = -loc(1);
-	loc = loc - CHL::Vec4({(si.width / 2.0), -(si.height / 2.0), 0.0, 0.0});
+	loc = loc - CML::Vec4({(si.width / 2.0), -(si.height / 2.0), 0.0, 0.0});
 	
-	CHL::Matrix4x4 mObjectFinal = CHL::ObjectCalculation(loc, object->Rotation, object->Scale);
+	CML::Matrix4x4 mObjectFinal = ObjectCalculation(loc, object->Rotation, object->Scale);
 
-	worldFloat4x4  = CHL::Convert4x4(mObjectFinal);
-	XMFLOAT4X4 orthMatrix = CHL::Convert4x4(si.TwoDimMatrix);
+	worldFloat4x4  = Convert4x4(mObjectFinal);
+	XMFLOAT4X4 orthMatrix = Convert4x4(si.TwoDimMatrix);
 
 	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&orthMatrix);
 	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);

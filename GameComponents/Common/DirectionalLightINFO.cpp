@@ -8,7 +8,7 @@ std::shared_ptr<Object> DirectionalLightINFO::Get(const std::string& ID)
 	returnValue = LightINFO::Get(ID);
 	if(!returnValue)
 	{
-		if(ID == Keys::Light::DIRECTION){ returnValue = GenericObj<CHL::Vec4>::CreateNew(this->Direction); }
+		if(ID == Keys::Light::DIRECTION){ returnValue = GenericObj<CML::Vec4>::CreateNew(this->Direction); }
 	}
 
 	return returnValue;
@@ -19,7 +19,7 @@ void DirectionalLightINFO::Set(const std::string& ID, std::shared_ptr<Object> ob
 {
 	LightINFO::Set(ID, obj);
 
-	if(ID == Keys::Light::DIRECTION){ this->Direction = GenericObj<CHL::Vec4>::GetValue(obj); }
+	if(ID == Keys::Light::DIRECTION){ this->Direction = GenericObj<CML::Vec4>::GetValue(obj); }
 }
 
 std::shared_ptr<INFO> DirectionalLightINFO::Clone()

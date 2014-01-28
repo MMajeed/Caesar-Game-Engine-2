@@ -8,8 +8,8 @@
 class PointLightINFO : public LightINFO
 {
 public:
-	CHL::Vec4 Position;
-	CHL::Vec4 Attenuation;
+	CML::Vec4 Position;
+	CML::Vec4 Attenuation;
 	double Range;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);

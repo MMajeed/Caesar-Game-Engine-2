@@ -1,29 +1,29 @@
 #include "SpotLight.h"
-#include <XNAConverter.h>
-#include <3DMath.h>
+#include "XNAConverter.h"
+#include "3DMath.h"
 
 namespace SpotLight
 {
 	cBuffer::CLightDesc GetLightDesc(std::shared_ptr<SpotLightINFO> lightInfo)
 	{
 		cBuffer::CLightDesc light;
-		light.material.diffuse = CHL::ConvertVec4(lightInfo->Diffuse);
-		light.material.ambient = CHL::ConvertVec4(lightInfo->Ambient);
-		light.material.specular = CHL::ConvertVec4(lightInfo->Specular);
-		light.pos = CHL::ConvertVec4(lightInfo->Position);
+		light.material.diffuse = ConvertVec4(lightInfo->Diffuse);
+		light.material.ambient = ConvertVec4(lightInfo->Ambient);
+		light.material.specular = ConvertVec4(lightInfo->Specular);
+		light.pos = ConvertVec4(lightInfo->Position);
 		light.range = (float)lightInfo->Range;
-		light.dir = CHL::ConvertVec4(lightInfo->Direction);
+		light.dir = ConvertVec4(lightInfo->Direction);
 		light.spot = (float)lightInfo->Spot;
-		light.attenuation = CHL::ConvertVec4(lightInfo->Attenuation);
+		light.attenuation = ConvertVec4(lightInfo->Attenuation);
 		light.type = 3;
 		light.shadowNum = -1;
 
 		return light;
 	}
-	CHL::Matrix4x4 CalculateShadowMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CHL::Vec4 eye)
+	CML::Matrix4x4 CalculateShadowMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye)
 	{
-		XMFLOAT4X4 view = CHL::Convert4x4(SpotLight::CalculateViewMatrix(lightInfo, eye));
-		XMFLOAT4X4 pres = CHL::Convert4x4(SpotLight::CalculatePrespectiveMatrix(lightInfo, eye));
+		XMFLOAT4X4 view = Convert4x4(SpotLight::CalculateViewMatrix(lightInfo, eye));
+		XMFLOAT4X4 pres = Convert4x4(SpotLight::CalculatePrespectiveMatrix(lightInfo, eye));
 		XMMATRIX T(
 			0.5f, 0.0f, 0.0f, 0.0f,
 			0.0f, -0.5f, 0.0f, 0.0f,
@@ -37,21 +37,21 @@ namespace SpotLight
 		VPT = XMMatrixTranspose(VPT);
 		XMFLOAT4X4 shadowMatrix;
 		XMStoreFloat4x4(&shadowMatrix, VPT);
-		return CHL::Convert4x4(shadowMatrix);
+		return Convert4x4(shadowMatrix);
 	}
-	CHL::Matrix4x4 CalculateViewMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CHL::Vec4 eye)
+	CML::Matrix4x4 CalculateViewMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye)
 	{
-		CHL::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
-		CHL::Vec4 vT{0.0, 0.0, 1.0, 0.0};
-		CHL::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
+		CML::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
+		CML::Vec4 vT{0.0, 0.0, 1.0, 0.0};
+		CML::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
 		double pitch = 0.0; double yaw = 0.0; double roll = 0.0;
 
 		vEye = lightInfo->Position;
 		vT = lightInfo->Direction;
 
-		return CHL::ViewCalculation(vEye, vT, vUp, pitch, yaw, roll);
+		return ViewCalculation(vEye, vT, vUp, pitch, yaw, roll);
 	}
-	CHL::Matrix4x4 CalculatePrespectiveMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CHL::Vec4 eye)
+	CML::Matrix4x4 CalculatePrespectiveMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye)
 	{
 		double FovAngleY = 1.570796327;
 		double height = 2048;
@@ -59,9 +59,9 @@ namespace SpotLight
 		double nearZ = 1.0;
 		double farZ = lightInfo->Range;
 
-		return CHL::PerspectiveFovLHCalculation(FovAngleY, height / width, nearZ, farZ);
+		return PerspectiveFovLHCalculation(FovAngleY, height / width, nearZ, farZ);
 	}
-	SceneInfo GetScene(std::shared_ptr<SpotLightINFO> lightInfo, const CHL::Vec4 eye)
+	SceneInfo GetScene(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye)
 	{
 		SceneInfo returnValue;
 		returnValue.Eye = lightInfo->Position;

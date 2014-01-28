@@ -5,7 +5,7 @@
 
 #include <Message.h>
 #include <string>
-#include <Matrix.h>
+#include <Vector.h>
 #include <Vector.h>
 
 namespace CubeScreenCaptureConfig

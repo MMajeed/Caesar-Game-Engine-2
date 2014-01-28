@@ -1,9 +1,9 @@
 #include "Scene.h"
 #include <EntityCommunicator\ImportantIDConfig.h>
-#include <3DMath.h>
+#include "3DMath.h"
 #include "GraphicManager.h"
 #include "Buffers.h"
-#include <XNAConverter.h>
+#include "XNAConverter.h"
 #include "Process2D.h"
 
 namespace Scene
@@ -11,9 +11,9 @@ namespace Scene
 	void SetupSceneCameraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si)
 	{
 		// Camera
-		CHL::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
-		CHL::Vec4 vTM{0.0, 0.0, 1.0, 0.0};
-		CHL::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
+		CML::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
+		CML::Vec4 vTM{0.0, 0.0, 1.0, 0.0};
+		CML::Vec4 vUp{0.0, 1.0, 0.0, 0.0};
 		double pitch = 0.0;
 		double yaw = 0.0;
 		double roll = 0.0;
@@ -33,14 +33,14 @@ namespace Scene
 			farZ = camera->FarZ;
 		}
 
-		si.CamerMatrix = CHL::ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
+		si.CamerMatrix = ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 		si.Eye = vEye;
 		if(FovAngleY > 0.0)
-			si.ProjectionMatrix = CHL::PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
+			si.ProjectionMatrix = PerspectiveFovLHCalculation(FovAngleY, (double)width / (double)height, nearZ, farZ);
 		else
-			si.ProjectionMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+			si.ProjectionMatrix = OrthographicLHCalculation(width, height, nearZ, farZ);
 
-		si.TwoDimMatrix = CHL::OrthographicLHCalculation(width, height, nearZ, farZ);
+		si.TwoDimMatrix = OrthographicLHCalculation(width, height, nearZ, farZ);
 		si.width = width;
 		si.height = height;
 		si.farZ = farZ;
@@ -48,7 +48,7 @@ namespace Scene
 	}
 	void SetupSceneExtraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si)
 	{
-		CHL::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
+		CML::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
 		bool process2D = true;
 		std::vector<std::string> global2DTexture;
 		std::vector<std::string> globalCubeTexture;
@@ -93,12 +93,12 @@ namespace Scene
 
 		cBuffer::cbInfo cbInfo;
 
-		XMFLOAT4X4 view4x4 = CHL::Convert4x4(si.CamerMatrix);;
-		XMFLOAT4X4 proj4x4 = CHL::Convert4x4(si.ProjectionMatrix);;
+		XMFLOAT4X4 view4x4 = Convert4x4(si.CamerMatrix);;
+		XMFLOAT4X4 proj4x4 = Convert4x4(si.ProjectionMatrix);;
 
 		cbInfo.view = XMMatrixTranspose(XMLoadFloat4x4(&view4x4));
 		cbInfo.proj = XMMatrixTranspose(XMLoadFloat4x4(&proj4x4));
-		cbInfo.eye = CHL::ConvertVec4(si.Eye);
+		cbInfo.eye = ConvertVec4(si.Eye);
 		cbInfo.numberOfGlobal2DTexture = si.Global2DTexture.size() < cBuffer::numOfTextures ? si.Global2DTexture.size() : cBuffer::numOfTextures;
 		
 		for(unsigned int i = 0; i < 4; ++i)
@@ -199,17 +199,17 @@ namespace Scene
 			vecObjects.push_back({objInfo, drawableIter->second});
 		}
 
-		const CHL::Vec4& eye = si.Eye;
+		const CML::Vec4& eye = si.Eye;
 		std::sort(vecObjects.begin(), vecObjects.end(),
 				  [eye](const DrawableObject& a, const DrawableObject& b) -> bool
 		{
 			float rankA = 0.0f; float rankB = 0.0f;
 
 			if(a.ObjInfo->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
-			else if(a.ObjInfo->Diffuse[3] < 1.0) { rankA += CHL::Length(eye, a.ObjInfo->Location); }
+			else if(a.ObjInfo->Diffuse[3] < 1.0) { rankA += Length(eye, a.ObjInfo->Location); }
 
 			if(b.ObjInfo->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
-			else if(b.ObjInfo->Diffuse[3] < 1.0) { rankB += CHL::Length(eye, b.ObjInfo->Location); }
+			else if(b.ObjInfo->Diffuse[3] < 1.0) { rankB += Length(eye, b.ObjInfo->Location); }
 
 			if(a.ObjInfo->Depth == false) { rankA -= 1000000.0f; }
 			if(b.ObjInfo->Depth == false) { rankB -= 1000000.0f; }

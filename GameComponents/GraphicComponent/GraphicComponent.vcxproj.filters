@@ -75,6 +75,12 @@
     <ClInclude Include="Process2D.h">
       <Filter>Scene\SceneFilter\Process2D</Filter>
     </ClInclude>
+    <ClInclude Include="XNAConverter.h">
+      <Filter>D3D Tools\XNAConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="3DMath.h">
+      <Filter>D3D Tools\3DMath</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -131,6 +137,12 @@
     </ClCompile>
     <ClCompile Include="Process2D.cpp">
       <Filter>Scene\SceneFilter\Process2D</Filter>
+    </ClCompile>
+    <ClCompile Include="XNAConverter.cpp">
+      <Filter>D3D Tools\XNAConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="3DMath.cpp">
+      <Filter>D3D Tools\3DMath</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +226,12 @@
     </Filter>
     <Filter Include="Scene\SceneFilter\Process2D">
       <UniqueIdentifier>{0349d70a-1c60-4ed8-b7ae-b639907f6c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\XNAConverter">
+      <UniqueIdentifier>{8d106226-d622-40e9-9d4a-c28273282255}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D3D Tools\3DMath">
+      <UniqueIdentifier>{014e0cba-67d4-447c-b2c7-f01494f9a965}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

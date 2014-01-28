@@ -4,8 +4,8 @@
 #include <EntityCommunicator\ImportantIDConfig.h>
 #include <GraphicCommunicator\GraphicSettings.h>
 #include <Keys.h>
-#include <3DMath.h>
-#include <XNAConverter.h>
+#include "3DMath.h"
+#include "XNAConverter.h"
 #include "DX11Helper.h"
 #include "Buffers.h"
 #include "SetupLight.h"

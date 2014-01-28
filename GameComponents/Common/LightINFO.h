@@ -10,9 +10,9 @@ class LightINFO : public INFO
 public:
 	LightINFO();
 
-	CHL::Vec4 Diffuse;
-	CHL::Vec4 Ambient;
-	CHL::Vec4 Specular;
+	CML::Vec4 Diffuse;
+	CML::Vec4 Ambient;
+	CML::Vec4 Specular;
 	bool HasShadow;
 
 	virtual std::shared_ptr<Object> Get(const std::string& ID);

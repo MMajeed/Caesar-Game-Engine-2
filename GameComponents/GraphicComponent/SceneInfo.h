@@ -5,8 +5,10 @@
 #include <vector>
 #include <set>
 #include <Vector.h>
-#include <Matrix.h>
+#include <Vector.h>
 #include "Buffers.h"
+#include <array>
+#include <Matrix.h>
 
 class ObjectINFO;
 class Drawable;
@@ -23,11 +25,11 @@ struct SceneInfo
 {
 	enum class InclusionType { Exclude = 0, Include = 1 };
 
-	CHL::Vec4 ClearColour;
-	CHL::Vec4 Eye;
-	CHL::Matrix4x4 CamerMatrix;
-	CHL::Matrix4x4 ProjectionMatrix;
-	CHL::Matrix4x4 TwoDimMatrix;
+	CML::Vec4 ClearColour;
+	CML::Vec4 Eye;
+	CML::Matrix4x4 CamerMatrix;
+	CML::Matrix4x4 ProjectionMatrix;
+	CML::Matrix4x4 TwoDimMatrix;
 	double width;
 	double height;
 	double farZ;

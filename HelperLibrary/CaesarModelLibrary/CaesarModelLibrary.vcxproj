@@ -56,12 +56,12 @@
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt-d</TargetName>
     <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)Lib\</OutDir>
     <TargetName>$(ProjectName)-mt</TargetName>
-    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)Lib\Assimp\include;$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

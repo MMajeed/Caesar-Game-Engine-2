@@ -9,31 +9,31 @@
 LuaMath::Vector4 LuaLight::Light::GetDiffuse()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIFFUSE);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetDiffuse(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::DIFFUSE, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::DIFFUSE, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 LuaMath::Vector4 LuaLight::Light::GetAmient()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::AMBIENT);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetAmbient(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::AMBIENT, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::AMBIENT, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 LuaMath::Vector4 LuaLight::Light::GetSpecular()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::SPECULAR);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::Light::SetSpecular(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::SPECULAR, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::SPECULAR, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::Light::Release()
@@ -49,8 +49,8 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 	if(luabind::type(table) != LUA_TTABLE)
 		Logger::LogError("Wrong paramter for DirectionalLight, please send in a table");
 
-	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
-	CHL::Vec4 direction;
+	CML::Vec4 diffuse;	CML::Vec4 ambient;	CML::Vec4 specular;
+	CML::Vec4 direction;
 	bool hasShadow = false;
 
 	for(luabind::iterator it(table);
@@ -80,11 +80,11 @@ LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)
 LuaMath::Vector4 LuaLight::DirectionalLight::GetDirection()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIRECTION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::DirectionalLight::SetDirection(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::DIRECTION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::DIRECTION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::DirectionalLight::Register(lua_State *lua)
@@ -109,8 +109,8 @@ LuaLight::PointLight::PointLight(luabind::object const& table)
 	if(luabind::type(table) != LUA_TTABLE)
 		Logger::LogError("Wrong paramter for PointLight, please send in a table");
 
-	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
-	CHL::Vec4 position;	CHL::Vec4 att; double range = 0.0;
+	CML::Vec4 diffuse;	CML::Vec4 ambient;	CML::Vec4 specular;
+	CML::Vec4 position;	CML::Vec4 att; double range = 0.0;
 
 	for(luabind::iterator it(table);
 		it != luabind::iterator();
@@ -140,11 +140,11 @@ LuaLight::PointLight::PointLight(luabind::object const& table)
 LuaMath::Vector4 LuaLight::PointLight::GetPosition()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::POSITION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::PointLight::SetPosition(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::POSITION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::POSITION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 double LuaLight::PointLight::GetRange()
@@ -160,11 +160,11 @@ void LuaLight::PointLight::SetRange(double val)
 LuaMath::Vector4 LuaLight::PointLight::GetAttenuation()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::ATTENUATION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::PointLight::SetAttenuation(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::ATTENUATION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::ATTENUATION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::PointLight::Register(lua_State *lua)
@@ -192,8 +192,8 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 		Logger::LogError("Wrong paramter for SpotLight, please send in a table");
 
 	int slot = 0;
-	CHL::Vec4 diffuse;	CHL::Vec4 ambient;	CHL::Vec4 specular;
-	CHL::Vec4 position; CHL::Vec4 direction; CHL::Vec4 att;
+	CML::Vec4 diffuse;	CML::Vec4 ambient;	CML::Vec4 specular;
+	CML::Vec4 position; CML::Vec4 direction; CML::Vec4 att;
 	double spot = 0.0;	double range = 0.0;
 	bool hasShadow = false;
 
@@ -231,11 +231,11 @@ LuaLight::SpotLight::SpotLight(luabind::object const& table)
 LuaMath::Vector4 LuaLight::SpotLight::GetPosition()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::POSITION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetPosition(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::POSITION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::POSITION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 double LuaLight::SpotLight::GetRange()
@@ -251,11 +251,11 @@ void LuaLight::SpotLight::SetRange(double val)
 LuaMath::Vector4 LuaLight::SpotLight::GetDirection()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIRECTION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetDirection(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::DIRECTION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::DIRECTION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 double LuaLight::SpotLight::GetSpot()
@@ -271,11 +271,11 @@ void LuaLight::SpotLight::SetSpot(double val)
 LuaMath::Vector4 LuaLight::SpotLight::GetAttenuation()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::ATTENUATION);
-	return GenericObj<CHL::Vec4>::GetValue(obj);
+	return GenericObj<CML::Vec4>::GetValue(obj);
 }
 void LuaLight::SpotLight::SetAttenuation(LuaMath::Vector4 vec)
 {
-	EntityConfig::SetEntity(this->ID, Keys::Light::ATTENUATION, GenericObj<CHL::Vec4>::CreateNew(vec));
+	EntityConfig::SetEntity(this->ID, Keys::Light::ATTENUATION, GenericObj<CML::Vec4>::CreateNew(vec));
 }
 
 void LuaLight::SpotLight::Register(lua_State *lua)

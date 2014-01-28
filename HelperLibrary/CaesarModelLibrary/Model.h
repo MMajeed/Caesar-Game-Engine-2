@@ -2,7 +2,7 @@
 #define __Model__
 
 #include "Linker.h"
-#include "Vector.h"
+#include <Vector.h>
 #include <string>
 #include <vector>
 
@@ -15,9 +15,9 @@ namespace CHL
 
 		struct VerticesInfo
 		{
-			CHL::Vec3 Point;
-			CHL::Vec3 Normal;
-			CHL::Vec3 Texture;
+			CML::Vec3 Point;
+			CML::Vec3 Normal;
+			CML::Vec3 Texture;
 		};
 		std::vector<VerticesInfo> Vertices;
 		std::vector<unsigned int> Faces;
