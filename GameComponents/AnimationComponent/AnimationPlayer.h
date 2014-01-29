@@ -12,17 +12,19 @@ class AnimationPlayer
 public:
 	AnimationPlayer();
 
-	void Play(float delta);
+	void Play(double delta);
 
 	double GetCurrentPhase(std::shared_ptr<BasicAnimation> animation) const;
 	double GetCurrentPhase() const;
-	void SetCurrentPhase(float phasePercentage);
+	void SetCurrentPhase(double phasePercentage);
 
 	static std::shared_ptr<AnimationPlayer> Spawn(std::string basicAnimationID,
-												  float startPhase,
-												  float animRate);
+												  double startPhase,
+												  double animRate);
 
-	const std::hash_map<std::string, CML::Matrix4x4> JointsAnimatedTransformation() const;
+	const std::hash_map<std::string, CML::Matrix4x4>& JointsAnimatedTransformation() const;
+	CML::Matrix4x4 GetSingleJoint(std::string jointName);
+	void SetJoint(std::string name, const CML::Matrix4x4& mat);
 protected:
 	std::hash_map<std::string, CML::Matrix4x4> jointsAnimated;
 	int		LastTranslationFrame;

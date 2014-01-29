@@ -8,6 +8,7 @@
 #include <hash_map>
 #include "BasicAnimation.h"
 #include "AnimationPlayer.h"
+#include "AnimationController.h"
 
 class AnimationManager : public Interface, public CHL::Singleton<AnimationManager>
 {
@@ -24,12 +25,17 @@ public:
 	std::hash_map<std::string, std::shared_ptr<BasicAnimation>> AnimationsContainer;
 	void InsertAnimation(const std::string& ID, std::shared_ptr<BasicAnimation> obj);
 	void RemoveAnimation(const std::string& ID);
-	const std::hash_map<std::string, std::shared_ptr<BasicAnimation>> AllAnimation();
+	const std::hash_map<std::string, std::shared_ptr<BasicAnimation>>& AllAnimation();
 
 	std::hash_map<std::string, std::shared_ptr<AnimationPlayer>> AnimationsPlayerContainer;
 	void InsertAnimationPlayer(const std::string& ID, std::shared_ptr<AnimationPlayer> obj);
 	void RemoveAnimationPlayer(const std::string& ID);
-	const std::hash_map<std::string, std::shared_ptr<AnimationPlayer>> AllAnimationPlayer();
+	const std::hash_map<std::string, std::shared_ptr<AnimationPlayer>>& AllAnimationPlayer();
+
+	std::hash_map<std::string, std::shared_ptr<AnimationController>> AnimationControllerContainer;
+	void InsertAnimationController(const std::string& ID, std::shared_ptr<AnimationController> obj);
+	void RemoveAnimationController(const std::string& ID);
+	const std::hash_map<std::string, std::shared_ptr<AnimationController>>& AllAnimationController();
 };
 
 #endif //__AnimationManager__

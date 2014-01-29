@@ -1,11 +1,11 @@
 require("File3DLoader")
+require("AnimationDude")
 require("Text")
 require("camera")
 require("SkyBox")
 require("LightSetup")
 require("floor")
 require("Information")
-require("AnimationDude")
 
 local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"),
                                           [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",

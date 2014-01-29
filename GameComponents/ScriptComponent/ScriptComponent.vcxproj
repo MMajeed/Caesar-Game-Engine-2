@@ -87,7 +87,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="LuaAnimation.h" />
-    <ClInclude Include="LuaBasicAnimationObject.h" />
+    <ClInclude Include="LuaAnimationObject.h" />
     <ClInclude Include="LuaComponentManager.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="LuaMouse.h" />
@@ -118,7 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaAnimation.cpp" />
-    <ClCompile Include="LuaBasicAnimationObject.cpp" />
+    <ClCompile Include="LuaAnimationObject.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaMouse.cpp" />
     <ClCompile Include="LuaNode.cpp" />

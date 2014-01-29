@@ -1,5 +1,6 @@
 #include "AnimationPlayer.h"
 #include "AnimationManager.h"
+#include <MathFunctions.h>
 
 AnimationPlayer::AnimationPlayer()
 {
@@ -10,7 +11,7 @@ AnimationPlayer::AnimationPlayer()
 	this->LastScaleFrame = 0;
 }
 
-void AnimationPlayer::Play(float delta)
+void AnimationPlayer::Play(double delta)
 {
 	std::shared_ptr<BasicAnimation> spAnimation = this->Animation.lock();
 
@@ -18,8 +19,8 @@ void AnimationPlayer::Play(float delta)
 	{
 		double oldAnimTime = this->AnimTime;
 		double newAnimTime = oldAnimTime +(delta * this->AnimRate);
-
-		if(this->AnimTime == oldAnimTime) // They are the same, so skip
+		this->AnimTime = newAnimTime;
+		if(newAnimTime == oldAnimTime) // They are the same, so skip
 		{
 			return;
 		}
@@ -95,32 +96,66 @@ void AnimationPlayer::Play(float delta)
 					}
 				}
 			}
-			static CML::Matrix4x4 CaluclateJoint(double oldTime, double newTime, double totalLength,
-												 const std::vector<BasicAnimation::Node::Key>& vecKeys)
+
+			enum class InterpolationType { Lerp, Slerp, };
+			static CML::Vec4 CaluclateJoint(double oldTime, double newTime, double totalLength,
+											const std::vector<BasicAnimation::Node::Key>& vecKeys, 
+											InterpolationType interpolation )
 			{
+				CML::Vec4 returnValue;
 				if(vecKeys.size() > 1)
 				{
 					BasicAnimation::Node::Key outOldFrame;
 					BasicAnimation::Node::Key outNewFrame;
 					PlayRecursively::FindKeys(oldTime, newTime, totalLength, vecKeys, outOldFrame, outNewFrame);
+
+					double ratio = newTime - outNewFrame.Time / (outNewFrame.Time - outNewFrame.Time);
+
+					switch(interpolation)
+					{
+					case InterpolationType::Lerp:
+						returnValue = CML::Lerp(outOldFrame.Value, outNewFrame.Value, ratio);
+						break;
+					case InterpolationType::Slerp:
+						returnValue = CML::Slerp(outOldFrame.Value, outNewFrame.Value, ratio);
+						break;
+					}
 				}
 				else if(vecKeys.size() == 1)
 				{
-
+					returnValue = vecKeys.front().Value;
 				}
 				else
 				{
-
+					returnValue = {1.0, 1.0, 1.0, 1.0};
 				}
-				return{ };
+				return returnValue;
 			}
-			static void Run(double OldTime, double NewTime, double totalLength,
+			static void Run(double oldTime, double newTime, double totalLength,
 							std::shared_ptr<BasicAnimation::Node> BANode,
-							const CML::Matrix4x4& parentsInvJoint,
+							const CML::Matrix4x4& parentsJoint,
 							AnimationPlayer* animationPlayer)
 			{
+				CML::Vec4 translation = CaluclateJoint(oldTime, newTime, totalLength, BANode->Translation, InterpolationType::Lerp);
+				CML::Vec4 rotation = CaluclateJoint(oldTime, newTime, totalLength, BANode->Rotation, InterpolationType::Slerp);
+				CML::Vec4 scale = CaluclateJoint(oldTime, newTime, totalLength, BANode->Scale, InterpolationType::Lerp);
+
+				CML::Matrix4x4 tranformation = CML::TransformMatrix(translation, rotation, scale);
+
+				CML::Matrix4x4 finalTranslation = CML::Multiple(tranformation, parentsJoint);
+
+				animationPlayer->SetJoint(BANode->Name, finalTranslation);
+
+				for(auto iter = BANode->Childern.begin();
+					iter != BANode->Childern.end();
+					++iter)
+				{
+					PlayRecursively::Run(oldTime, newTime, totalLength, *iter, finalTranslation, animationPlayer);
+				}
 			}
 		};
+
+		PlayRecursively::Run(oldAnimTime, newAnimTime, spAnimation->Duration, spAnimation->RootNode, CML::MatrixIdentity(), this);
 	}
 }
 
@@ -137,15 +172,15 @@ double AnimationPlayer::GetCurrentPhase() const
 	}
 	return returnValue;
 }
-void AnimationPlayer::SetCurrentPhase(float phasePercentage)
+void AnimationPlayer::SetCurrentPhase(double phasePercentage)
 {
 	if(this->Animation.lock())
 	{
-		if(phasePercentage < 0.0f)
+		if(phasePercentage < 0.0)
 		{
 			this->AnimTime = 0.0f;
 		}
-		else if(phasePercentage > 1.0f)
+		else if(phasePercentage > 1.0)
 		{
 			this->AnimTime = this->Animation.lock()->Duration;
 		}
@@ -157,8 +192,8 @@ void AnimationPlayer::SetCurrentPhase(float phasePercentage)
 }
 
 std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimationID,
-														float startPhase,
-														float animRate)
+														double startPhase,
+														double animRate)
 {
 	AnimationManager& animationManager = AnimationManager::GetInstance();
 
@@ -175,7 +210,27 @@ std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimati
 	return newObject;
 }
 
-const std::hash_map<std::string, CML::Matrix4x4> AnimationPlayer::JointsAnimatedTransformation() const
+CML::Matrix4x4 AnimationPlayer::GetSingleJoint(std::string jointName)
+{
+	CML::Matrix4x4 returnValue = CML::MatrixIdentity();
+	AnimationManager& animationManager = AnimationManager::GetInstance();
+
+	auto iter = this->jointsAnimated.find(jointName);
+	if(iter != this->jointsAnimated.end())
+	{
+		returnValue = iter->second;
+	}
+	return returnValue;
+}
+void AnimationPlayer::SetJoint(std::string name, const CML::Matrix4x4& mat)
+{
+	AnimationManager& animationManager = AnimationManager::GetInstance();
+
+	std::lock_guard<std::mutex> lock(animationManager.mutex);
+
+	this->jointsAnimated[name] = mat;
+}
+const std::hash_map<std::string, CML::Matrix4x4>& AnimationPlayer::JointsAnimatedTransformation() const
 {
 	return this->jointsAnimated;
 }

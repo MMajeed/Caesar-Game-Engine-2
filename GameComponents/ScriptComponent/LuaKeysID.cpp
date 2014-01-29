@@ -92,6 +92,7 @@ void LuaKeysID::Register(lua_State *lua)
 		ObjectInfoTable[Keys::ObjectInfo::SHADOW]         = Keys::ObjectInfo::SHADOW;
 		ObjectInfoTable[Keys::ObjectInfo::DEPTH]          = Keys::ObjectInfo::DEPTH;
 		ObjectInfoTable[Keys::ObjectInfo::OBJUSERDATA]    = Keys::ObjectInfo::OBJUSERDATA;
+		ObjectInfoTable[Keys::ObjectInfo::ANIMATIONJOINT] = Keys::ObjectInfo::ANIMATIONJOINT;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenShot = luabind::newtable(lua);

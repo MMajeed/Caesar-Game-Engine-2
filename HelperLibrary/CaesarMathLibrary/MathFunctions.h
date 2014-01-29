@@ -15,6 +15,9 @@ namespace CML
 	Vec4 Normalize(const Vec4& rhs);
 	Vec4 Multiple(Vec4 rhs, Matrix4x4 lhs);
 	Matrix4x4 Multiple(Matrix4x4 rhs, Matrix4x4 lhs);
+	Matrix4x4 MatrixIdentity();
+	Vec4 Lerp(const Vec4& rhs, const Vec4& lhs, double ratio);
+	Vec4 Slerp(const Vec4& rhs, const Vec4& lhs, double ratio);
 };
 
 #endif //__MathFunctions__

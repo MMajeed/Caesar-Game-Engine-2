@@ -9,6 +9,9 @@
     <ClInclude Include="AnimationPlayer.h">
       <Filter>AnimationPlayer</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationController.h">
+      <Filter>AnimationController</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
@@ -17,6 +20,9 @@
     </ClCompile>
     <ClCompile Include="AnimationPlayer.cpp">
       <Filter>AnimationPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationController.cpp">
+      <Filter>AnimationController</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -35,17 +35,16 @@ namespace CML
 		returnValue[3] = {0.0, 0.0, 0.0, 1.0};
 		return returnValue;
 	}
-
 	Vec3 CrossProduct(const Vec3& rhs, const Vec3& lhs)
 	{
-		Eigen::Vector3d eRhs = CML::ConvertVec(rhs);
-		Eigen::Vector3d eLhs = CML::ConvertVec(lhs);
+			Eigen::Vector3d eRhs = CML::ConvertVec(rhs);
+			Eigen::Vector3d eLhs = CML::ConvertVec(lhs);
 
-		Eigen::Vector3d result = eRhs.cross(eLhs);
+			Eigen::Vector3d result = eRhs.cross(eLhs);
 
-		Vec3 returnValue = CML::ConvertVec(result);
-		return returnValue;
-	}
+			Vec3 returnValue = CML::ConvertVec(result);
+			return returnValue;
+		}
 	Vec3 Dot(const Vec3& rhs, const Vec3& lhs)
 	{
 		Eigen::Vector3d eRhs = CML::ConvertVec(rhs);
@@ -89,6 +88,37 @@ namespace CML
 		Eigen::Matrix4d result = eLhs * eRhs;
 
 		Matrix4x4 returnValue = CML::ConvertMatrix<double, 4, 4>(result);
+		return returnValue;
+	}
+	Matrix4x4 MatrixIdentity()
+	{
+		return{	{1.0, 0.0, 0.0, 0.0}, 
+				{0.0, 1.0, 0.0, 0.0},
+				{0.0, 0.0, 1.0, 0.0}, 
+				{0.0, 0.0, 0.0, 1.0}, };
+	}
+	Vec4 Lerp(const Vec4& rhs, const Vec4& lhs, double ratio)
+	{
+		Vec4 result = {	(rhs(0) + (lhs(0) - rhs(0)) * ratio),
+						(rhs(1) + (lhs(1) - rhs(1)) * ratio),
+						(rhs(2) + (lhs(2) - rhs(2)) * ratio),
+						(rhs(3) + (lhs(3) - rhs(3)) * ratio), };
+		return result;
+	}
+	Vec4 Slerp(const Vec4& rhs, const Vec4& lhs, double ratio)
+	{
+		Eigen::AngleAxisd rollAngleRhs(rhs(0), Eigen::Vector3d::UnitZ());
+		Eigen::AngleAxisd yawAngleRhs(rhs(1), Eigen::Vector3d::UnitY());
+		Eigen::AngleAxisd pitchAngleRhs(rhs(2), Eigen::Vector3d::UnitX());
+		Eigen::Quaternion<double> qRhs = rollAngleRhs * yawAngleRhs * pitchAngleRhs;
+
+		Eigen::AngleAxisd rollAngleLhs(lhs(0), Eigen::Vector3d::UnitZ());
+		Eigen::AngleAxisd yawAngleLhs(lhs(1), Eigen::Vector3d::UnitY());
+		Eigen::AngleAxisd pitchAngleLhs(lhs(2), Eigen::Vector3d::UnitX());
+		Eigen::Quaternion<double> qLhs = rollAngleLhs * yawAngleLhs * pitchAngleLhs;
+
+		Eigen::Quaternion<double> result = qRhs.slerp(ratio, qLhs);
+		Vec4 returnValue = {result.x(), result.y(), result.z(), result.w()};
 		return returnValue;
 	}
 };

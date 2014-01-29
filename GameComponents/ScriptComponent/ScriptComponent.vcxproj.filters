@@ -81,8 +81,8 @@
     <ClInclude Include="LuaNode.h">
       <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
     </ClInclude>
-    <ClInclude Include="LuaBasicAnimationObject.h">
-      <Filter>Lua Class/Function\LuaBasicAnimationObject</Filter>
+    <ClInclude Include="LuaAnimationObject.h">
+      <Filter>Lua Class/Function\LuaAnimationObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,8 +162,8 @@
     <ClCompile Include="LuaRegisterAll.cpp">
       <Filter>Lua Class/Function</Filter>
     </ClCompile>
-    <ClCompile Include="LuaBasicAnimationObject.cpp">
-      <Filter>Lua Class/Function\LuaBasicAnimationObject</Filter>
+    <ClCompile Include="LuaAnimationObject.cpp">
+      <Filter>Lua Class/Function\LuaAnimationObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,7 +245,7 @@
     <Filter Include="Lua Class/Function\Lua3DFile\LuaNode">
       <UniqueIdentifier>{36da53ef-19de-4967-9bec-01c699798f11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaBasicAnimationObject">
+    <Filter Include="Lua Class/Function\LuaAnimationObjects">
       <UniqueIdentifier>{de7a75a0-e35c-456d-a6a6-638195d79cf1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

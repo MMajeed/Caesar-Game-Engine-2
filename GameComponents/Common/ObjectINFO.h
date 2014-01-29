@@ -24,8 +24,13 @@ public:
 	bool Light;
 	bool Shadow;
 	bool Depth;
-
 	std::array<float, USERDATASIZE> UserData;
+	struct sAnimationJoint
+	{
+		std::string AnimationID;
+		std::string JointName;
+	} AnimationJoint;
+
 
 	ObjectINFO();
 	virtual std::shared_ptr<Object> Get(const std::string& ID);

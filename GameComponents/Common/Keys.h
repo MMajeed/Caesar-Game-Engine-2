@@ -96,7 +96,8 @@ namespace Keys
 		const static std::string LIGHT          = "Light";
 		const static std::string SHADOW         = "Shadow";
 		const static std::string DEPTH          = "Depth";
-		const static std::string OBJUSERDATA    = "UserData";
+		const static std::string OBJUSERDATA	= "UserData";
+		const static std::string ANIMATIONJOINT = "AnimationJoint";
 	};
 
 	namespace ScreenShot

@@ -7,6 +7,7 @@
 #include <EntityCommunicator\EntityConfig.h>
 #include <ObjectINFO.h>
 #include "LuaManager.h"
+#include "LuaAnimationObject.h"
 
 LuaObject::LuaObject()
 {
@@ -48,6 +49,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	bool depth = true;
 	std::array<float, ObjectINFO::USERDATASIZE> userData;
 	std::fill(userData.begin(), userData.end(), 0.0f);
+	ObjectINFO::sAnimationJoint animJoint;
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -70,14 +72,23 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::OBJUSERDATA)
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
-				Logger::LogError("Wrong paramter for Camera::SetGlobalUserData, please send in a table");
+				Logger::LogError("Wrong paramter for ObjectInfo::SetGlobalUserData, please send in a table");
 			unsigned int iCounter = 0;
-			for(luabind::iterator it(*it);
-				it != luabind::iterator() && iCounter < ObjectINFO::USERDATASIZE;
-				++it, ++iCounter)
+			for(luabind::iterator userDataIt(*it);
+				userDataIt != luabind::iterator() && iCounter < ObjectINFO::USERDATASIZE;
+				++userDataIt, ++iCounter)
 			{
-				userData[iCounter] = luabind::object_cast<float>(*it);
+				userData[iCounter] = luabind::object_cast<float>(*userDataIt);
 			}
+		}
+		else if(key == Keys::ObjectInfo::ANIMATIONJOINT)
+		{
+			if(luabind::type(*it) != LUA_TTABLE)
+				Logger::LogError("Wrong paramter for ObjectInfo::AnimationJoint, please send in a table");
+			luabind::iterator it(*it);
+			animJoint.AnimationID = luabind::object_cast<LuaAnimationObject::AnimationController>(*it).ID;
+			++it;
+			animJoint.JointName = luabind::object_cast<std::string>(*it);
 		}
 	}
 
@@ -95,6 +106,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->Shadow = shadow;
 	obj->Depth = depth;
 	obj->UserData = userData;
+	obj->AnimationJoint = animJoint;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }

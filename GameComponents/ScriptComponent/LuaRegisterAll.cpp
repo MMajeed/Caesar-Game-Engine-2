@@ -18,7 +18,7 @@
 #include "LuaModel.h"
 #include "LuaAnimation.h"
 #include "LuaNode.h"
-#include "LuaBasicAnimationObject.h"
+#include "LuaAnimationObject.h"
 
 void LuaRegisterAll(lua_State *lua)
 {
@@ -40,5 +40,5 @@ void LuaRegisterAll(lua_State *lua)
 	LuaModel::RegisterAllLuaFunction(lua);
 	LuaAnimation::RegisterAllLuaFunction(lua);
 	LuaNode::RegisterAllLuaFunction(lua);
-	LuaBasicAnimationObject::RegisterAllLuaFunction(lua);
+	LuaAnimationObject::RegisterAllLuaFunction(lua);
 }
