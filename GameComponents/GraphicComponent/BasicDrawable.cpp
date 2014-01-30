@@ -398,9 +398,9 @@ void BasicDrawable::ChangePS(std::string fileName)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	if(this->D3DInfo.pVertexShader != 0)
+	if(this->D3DInfo.pPixelShader != 0)
 	{
-		this->D3DInfo.pVertexShader->Release();
+		this->D3DInfo.pPixelShader->Release();
 	}
 	this->D3DInfo.PixelShaderFileName = fileName;
 	this->InitPixelShader(graphic.D3DStuff.pd3dDevice);
