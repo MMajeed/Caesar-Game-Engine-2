@@ -15,7 +15,6 @@ namespace DirectLight
 		light.type = 1;
 		light.shadowNum = -1;
 
-
 		return light;
 	}
 	CML::Matrix4x4 CalculateShadowMatrix(std::shared_ptr<DirectionalLightINFO> lightInfo, const CML::Vec4 eye)
@@ -104,8 +103,9 @@ namespace DirectLight
 		returnValue.TwoDimMatrix = CalculatePrespectiveMatrix(lightInfo, eye);
 		returnValue.width = 2048;
 		returnValue.height = 2048;
-		returnValue.farZ = 1.0;
-		returnValue.nearZ = DirectLight::radius;
+		returnValue.farZ = DirectLight::radius; 
+		returnValue.nearZ = 1.0;
+		returnValue.InclusionState = SceneInfo::InclusionType::All;
 		return returnValue;
 	}
 }

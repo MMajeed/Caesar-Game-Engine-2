@@ -123,6 +123,7 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="WithinRange.h" />
     <ClInclude Include="XNAConverter.h" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClCompile Include="ShadowFilter.cpp" />
     <ClCompile Include="ShadowScreenShot.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="WithinRange.cpp" />
     <ClCompile Include="XNAConverter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

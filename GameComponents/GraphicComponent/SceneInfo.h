@@ -23,7 +23,7 @@ struct DrawableObject
 
 struct SceneInfo
 {
-	enum class InclusionType { Exclude = 0, Include = 1 };
+	enum class InclusionType { Exclude = 0, Include = 1, All = 2};
 
 	CML::Vec4 ClearColour;
 	CML::Vec4 Eye;

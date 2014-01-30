@@ -89,9 +89,9 @@ namespace CHL
 				for(std::size_t iKey = 0; iKey < aiImportedJoint->mNumRotationKeys; ++iKey)
 				{
 					aiQuatKey& jointKey = aiImportedJoint->mRotationKeys[iKey];
-					Animation::Joint::Key newKey;
+					Animation::Joint::QuaKey newKey;
 					newKey.time = jointKey.mTime;
-					newKey.value = {jointKey.mValue.x, jointKey.mValue.y, jointKey.mValue.z};
+					newKey.value = {jointKey.mValue.x, jointKey.mValue.y, jointKey.mValue.z, jointKey.mValue.w};
 					newJoint.Rotation.push_back(newKey);
 				}
 
@@ -125,10 +125,10 @@ namespace CHL
 					CHLNode->meshes.push_back(aiImportedNode->mMeshes[0]);
 				}
 				const aiMatrix4x4& t = aiImportedNode->mTransformation;
-				CHLNode->Transformation = {	{t.a1, t.a2, t.a3, t.a4}, 
-											{t.b1, t.b2, t.b3, t.b4},
-											{t.c1, t.c2, t.c3, t.c4},
-											{t.d1, t.d2, t.d3, t.d4}, };
+				CHLNode->Transformation = {	{t.a1, t.b1, t.c1, t.d1}, 
+											{t.a2, t.b2, t.c2, t.d2},
+											{t.a3, t.b3, t.c3, t.d3},
+											{t.a4, t.b4, t.c4, t.d4}, };
 				for(unsigned int i = 0; i < aiImportedNode->mNumChildren; ++i)
 				{
 					std::shared_ptr<CHL::Node> CHLChildNode(new CHL::Node);

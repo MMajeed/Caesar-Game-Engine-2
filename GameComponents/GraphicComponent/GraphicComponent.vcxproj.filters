@@ -81,6 +81,9 @@
     <ClInclude Include="3DMath.h">
       <Filter>D3D Tools\3DMath</Filter>
     </ClInclude>
+    <ClInclude Include="WithinRange.h">
+      <Filter>Scene\SceneFilter\WithinRange</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="3DMath.cpp">
       <Filter>D3D Tools\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="WithinRange.cpp">
+      <Filter>Scene\SceneFilter\WithinRange</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +238,9 @@
     </Filter>
     <Filter Include="D3D Tools\3DMath">
       <UniqueIdentifier>{014e0cba-67d4-447c-b2c7-f01494f9a965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\SceneFilter\WithinRange">
+      <UniqueIdentifier>{632cd6dc-400c-4ea7-97ac-b6ef3a793197}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

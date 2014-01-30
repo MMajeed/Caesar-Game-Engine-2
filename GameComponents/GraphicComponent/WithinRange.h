@@ -1,13 +1,13 @@
-#ifndef __Process2D__
-#define __Process2D__
+#ifndef __WithinRange__
+#define __WithinRange__
 
 #include <INFO.h>
 #include "SceneInfo.h"
 
-namespace Process2D
+namespace WithinRange
 {
 	bool Filter(const SceneInfo& si, const DrawableObject& obj);
 };
 
 
-#endif //__Process2D__
+#endif //__WithinRange__

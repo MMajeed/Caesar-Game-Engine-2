@@ -32,7 +32,7 @@ std::shared_ptr<BasicAnimation> BasicAnimation::Spawn(std::shared_ptr<CHL::Anima
 					iter != findJoint->second.Rotation.end();
 					++iter)
 				{
-					BasicAnimation::Node::Key newKey{{iter->value(0), iter->value(1), iter->value(2)}, iter->time};
+					BasicAnimation::Node::QuaKey newKey{{iter->value(0), iter->value(1), iter->value(2), iter->value(3)}, iter->time};
 					BANodes->Rotation.push_back(newKey);
 				}
 				for(auto iter = findJoint->second.Scale.begin();

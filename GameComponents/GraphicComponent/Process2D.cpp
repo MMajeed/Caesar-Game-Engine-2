@@ -4,7 +4,7 @@
 
 namespace Process2D
 {
-	bool Filter(const DrawableObject& obj)
+	bool Filter(const SceneInfo& si, const DrawableObject& obj)
 	{
 		std::shared_ptr<Basic2DDrawable> objInfo = std::dynamic_pointer_cast<Basic2DDrawable>(obj.Drawable);
 		if(!objInfo){ return false; }

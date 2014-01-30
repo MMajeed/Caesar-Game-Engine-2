@@ -5,6 +5,7 @@
 #include "Buffers.h"
 #include "XNAConverter.h"
 #include "Process2D.h"
+#include "WithinRange.h"
 
 namespace Scene
 {
@@ -193,8 +194,9 @@ namespace Scene
 
 			if(si.process2D == false)
 			{
-				if(Process2D::Filter({objInfo, drawableIter->second})){ continue; }
+				if(Process2D::Filter(si, {objInfo, drawableIter->second})){ continue; }
 			}
+			if(!WithinRange::Filter(si, {objInfo, drawableIter->second})){ continue; }
 
 			vecObjects.push_back({objInfo, drawableIter->second});
 		}

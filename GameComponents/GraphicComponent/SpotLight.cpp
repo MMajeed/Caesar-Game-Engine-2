@@ -70,8 +70,9 @@ namespace SpotLight
 		returnValue.TwoDimMatrix = CalculatePrespectiveMatrix(lightInfo, eye);
 		returnValue.width = 2048;
 		returnValue.height = 2048;
-		returnValue.farZ = 1.0;
-		returnValue.nearZ = lightInfo->Range;
+		returnValue.farZ = lightInfo->Range;
+		returnValue.nearZ = 1.0;
+		returnValue.InclusionState = SceneInfo::InclusionType::All;
 		return returnValue;
 	}
 }

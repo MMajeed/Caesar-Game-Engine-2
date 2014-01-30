@@ -6,6 +6,7 @@
 #include <memory>
 #include <Animation.h>
 #include <Node.h>
+#include <hash_map>
 
 class BasicAnimation
 {
@@ -25,8 +26,13 @@ public:
 			CML::Vec3 Value;
 			double Time;
 		};
+		struct QuaKey
+		{
+			CML::Vec4 Value;
+			double Time;
+		};
 		std::vector<Node::Key> Translation;
-		std::vector<Node::Key> Rotation;
+		std::vector<Node::QuaKey> Rotation;
 		std::vector<Node::Key> Scale;
 
 		std::string Name;

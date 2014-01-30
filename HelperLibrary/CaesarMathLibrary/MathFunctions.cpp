@@ -4,15 +4,12 @@
 
 namespace CML
 {
-	CML::Matrix4x4 TransformMatrix(CML::Vec4 Translation, CML::Vec4 Rotation, CML::Vec4 Scale)
+	CML::Matrix4x4 TransformMatrix(CML::Vec3 Translation, CML::Vec4 QuaRotation, CML::Vec3 Scale)
 	{
 		Eigen::Translation3d translation(Translation(0), Translation(1), Translation(2));
 
-		Eigen::AngleAxisd rollAngle(Rotation(0), Eigen::Vector3d::UnitZ());
-		Eigen::AngleAxisd yawAngle(Rotation(1), Eigen::Vector3d::UnitY());
-		Eigen::AngleAxisd pitchAngle(Rotation(2), Eigen::Vector3d::UnitX());
-		Eigen::Quaternion<double> rotation = rollAngle * yawAngle * pitchAngle;
-
+		Eigen::Quaternion<double> rotation(QuaRotation(3), QuaRotation(0), QuaRotation(1), QuaRotation(2));
+		
 		Eigen::AlignedScaling3d scaling(Scale(0), Scale(1), Scale(2));
 
 		Eigen::Transform<double, 3, Eigen::Affine> transfrom = translation * rotation  * scaling;
@@ -99,26 +96,27 @@ namespace CML
 	}
 	Vec4 Lerp(const Vec4& rhs, const Vec4& lhs, double ratio)
 	{
-		Vec4 result = {	(rhs(0) + (lhs(0) - rhs(0)) * ratio),
-						(rhs(1) + (lhs(1) - rhs(1)) * ratio),
-						(rhs(2) + (lhs(2) - rhs(2)) * ratio),
-						(rhs(3) + (lhs(3) - rhs(3)) * ratio), };
+		Vec4 result = {	rhs(0) + ((lhs(0) - rhs(0)) * ratio),
+						rhs(1) + ((lhs(1) - rhs(1)) * ratio),
+						rhs(2) + ((lhs(2) - rhs(2)) * ratio),
+						rhs(3) + ((lhs(3) - rhs(3)) * ratio), };
 		return result;
 	}
 	Vec4 Slerp(const Vec4& rhs, const Vec4& lhs, double ratio)
 	{
-		Eigen::AngleAxisd rollAngleRhs(rhs(0), Eigen::Vector3d::UnitZ());
-		Eigen::AngleAxisd yawAngleRhs(rhs(1), Eigen::Vector3d::UnitY());
-		Eigen::AngleAxisd pitchAngleRhs(rhs(2), Eigen::Vector3d::UnitX());
-		Eigen::Quaternion<double> qRhs = rollAngleRhs * yawAngleRhs * pitchAngleRhs;
-
-		Eigen::AngleAxisd rollAngleLhs(lhs(0), Eigen::Vector3d::UnitZ());
-		Eigen::AngleAxisd yawAngleLhs(lhs(1), Eigen::Vector3d::UnitY());
-		Eigen::AngleAxisd pitchAngleLhs(lhs(2), Eigen::Vector3d::UnitX());
-		Eigen::Quaternion<double> qLhs = rollAngleLhs * yawAngleLhs * pitchAngleLhs;
+		Eigen::Quaternion<double> qRhs(rhs(3), rhs(0), rhs(1), rhs(2));
+		Eigen::Quaternion<double> qLhs(lhs(3), lhs(0), lhs(1), lhs(2));
 
 		Eigen::Quaternion<double> result = qRhs.slerp(ratio, qLhs);
 		Vec4 returnValue = {result.x(), result.y(), result.z(), result.w()};
 		return returnValue;
+	}
+	CML::Matrix4x4 Transpose(const CML::Matrix4x4& mat)
+	{
+		return{	{mat[0][0], mat[1][0], mat[2][0], mat[3][0]},
+				{mat[0][1], mat[1][1], mat[2][1], mat[3][1]},
+				{mat[0][2], mat[1][2], mat[2][2], mat[3][2]},
+				{mat[0][3], mat[1][3], mat[2][3], mat[3][3]},
+			  };
 	}
 };

@@ -1,14 +1,12 @@
 #include "AnimationPlayer.h"
 #include "AnimationManager.h"
 #include <MathFunctions.h>
+#include <iostream>
 
 AnimationPlayer::AnimationPlayer()
 {
 	this->AnimTime = 0.0;
 	this->AnimRate = 0.0;
-	this->LastTranslationFrame = 0;
-	this->LastRotationFrame = 0;
-	this->LastScaleFrame = 0;
 }
 
 void AnimationPlayer::Play(double delta)
@@ -17,146 +15,200 @@ void AnimationPlayer::Play(double delta)
 
 	if(spAnimation)
 	{
+		double difference = delta * 100 ;
 		double oldAnimTime = this->AnimTime;
-		double newAnimTime = oldAnimTime +(delta * this->AnimRate);
-		this->AnimTime = newAnimTime;
-		if(newAnimTime == oldAnimTime) // They are the same, so skip
-		{
-			return;
-		}
+		double newAnimTime = oldAnimTime + (difference * this->AnimRate);
+		if(newAnimTime == oldAnimTime){ return; } // They are the same, so skip
 
-		if(newAnimTime > spAnimation->Duration)
-		{
-			newAnimTime = 0.0f;
-		}
-		else if(newAnimTime < 0.0f)
-		{
-			newAnimTime = spAnimation->Duration;
-		}
+		if(newAnimTime > spAnimation->Duration){ newAnimTime = 0.0f; } // Go to the start
+		else if(newAnimTime < 0.0f){newAnimTime = spAnimation->Duration;} // Go to the end
+		this->AnimTime = newAnimTime; // Update the time
 
-		struct PlayRecursively
-		{
-			static void FindKeys(double oldTime, double newTime, double totalLength,
-								 const std::vector<BasicAnimation::Node::Key>& vecKeys,
-								 BasicAnimation::Node::Key& outOldFrame,
-								 BasicAnimation::Node::Key& outNewFrame
-								)
-			{
-				if(oldTime / totalLength > 0.5) // If we are past the half mark then we start to look from the end
-				{
-					for(auto iter = vecKeys.rbegin();
-						iter != vecKeys.rend();
-						++iter)
-					{
-						if(oldTime > iter->Time)
-						{
-							outOldFrame = *iter;
-							break;
-						}
-					}
-				}
-				else // If we are below the half mark then we start to look from the start
-				{
-					for(auto iter = vecKeys.begin();
-						iter != vecKeys.end();
-						++iter)
-					{
-						if(oldTime < iter->Time)
-						{
-							outOldFrame = *iter;
-							break;
-						}
-					}
-				}
-
-				if(newTime / totalLength > 0.5) // If we are past the half mark then we start to look from the end
-				{
-					for(auto iter = vecKeys.rbegin();
-						iter != vecKeys.rend();
-						++iter)
-					{
-						if(newTime > iter->Time)
-						{
-							outNewFrame = *iter;
-							break;
-						}
-					}
-				}
-				else // If we are below the half mark then we start to look from the start
-				{
-					for(auto iter = vecKeys.begin();
-						iter != vecKeys.end();
-						++iter)
-					{
-						if(newTime < iter->Time)
-						{
-							outNewFrame = *iter;
-							break;
-						}
-					}
-				}
-			}
-
-			enum class InterpolationType { Lerp, Slerp, };
-			static CML::Vec4 CaluclateJoint(double oldTime, double newTime, double totalLength,
-											const std::vector<BasicAnimation::Node::Key>& vecKeys, 
-											InterpolationType interpolation )
-			{
-				CML::Vec4 returnValue;
-				if(vecKeys.size() > 1)
-				{
-					BasicAnimation::Node::Key outOldFrame;
-					BasicAnimation::Node::Key outNewFrame;
-					PlayRecursively::FindKeys(oldTime, newTime, totalLength, vecKeys, outOldFrame, outNewFrame);
-
-					double ratio = newTime - outNewFrame.Time / (outNewFrame.Time - outNewFrame.Time);
-
-					switch(interpolation)
-					{
-					case InterpolationType::Lerp:
-						returnValue = CML::Lerp(outOldFrame.Value, outNewFrame.Value, ratio);
-						break;
-					case InterpolationType::Slerp:
-						returnValue = CML::Slerp(outOldFrame.Value, outNewFrame.Value, ratio);
-						break;
-					}
-				}
-				else if(vecKeys.size() == 1)
-				{
-					returnValue = vecKeys.front().Value;
-				}
-				else
-				{
-					returnValue = {1.0, 1.0, 1.0, 1.0};
-				}
-				return returnValue;
-			}
-			static void Run(double oldTime, double newTime, double totalLength,
-							std::shared_ptr<BasicAnimation::Node> BANode,
-							const CML::Matrix4x4& parentsJoint,
-							AnimationPlayer* animationPlayer)
-			{
-				CML::Vec4 translation = CaluclateJoint(oldTime, newTime, totalLength, BANode->Translation, InterpolationType::Lerp);
-				CML::Vec4 rotation = CaluclateJoint(oldTime, newTime, totalLength, BANode->Rotation, InterpolationType::Slerp);
-				CML::Vec4 scale = CaluclateJoint(oldTime, newTime, totalLength, BANode->Scale, InterpolationType::Lerp);
-
-				CML::Matrix4x4 tranformation = CML::TransformMatrix(translation, rotation, scale);
-
-				CML::Matrix4x4 finalTranslation = CML::Multiple(tranformation, parentsJoint);
-
-				animationPlayer->SetJoint(BANode->Name, finalTranslation);
-
-				for(auto iter = BANode->Childern.begin();
-					iter != BANode->Childern.end();
-					++iter)
-				{
-					PlayRecursively::Run(oldTime, newTime, totalLength, *iter, finalTranslation, animationPlayer);
-				}
-			}
-		};
-
-		PlayRecursively::Run(oldAnimTime, newAnimTime, spAnimation->Duration, spAnimation->RootNode, CML::MatrixIdentity(), this);
+		this->PlayRecursively(spAnimation->RootNode, spAnimation->RootNode->Transformation);
 	}
+}
+
+void AnimationPlayer::PlayRecursively(std::shared_ptr<BasicAnimation::Node> BANode, const CML::Matrix4x4& parentsJoint)
+{
+	CML::Vec3 translation = this->CaluclateTranslationJoint(BANode);
+	CML::Vec4 rotation = this->CaluclateRotationJoint(BANode);
+	CML::Vec3 scale = this->CaluclateScaleJoint(BANode);
+
+	CML::Matrix4x4 tranformation = CML::TransformMatrix(translation, rotation, scale);
+	CML::Matrix4x4 finalTranslation = CML::Multiple(parentsJoint, tranformation);
+
+	this->SetJoint(BANode->Name, finalTranslation);
+
+	for(auto iter = BANode->Childern.begin();
+		iter != BANode->Childern.end();
+		++iter)
+	{
+		this->PlayRecursively(*iter, finalTranslation);
+	}
+}
+CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(std::shared_ptr<BasicAnimation::Node> BANode)
+{
+	CML::Vec3 returnValue;
+	if(BANode->Translation.size() > 1)
+	{
+		std::size_t prevFrame = this->LastTranslationFrame[BANode->Name];
+		std::size_t currentFrame = this->CurrentTranslationFrame[BANode->Name];
+		std::size_t nextFrame = prevFrame;
+		if(this->AnimTime > BANode->Translation[nextFrame].Time)
+		{
+			do
+			{
+				nextFrame += 1;
+			} while(this->AnimTime > BANode->Translation[nextFrame].Time);
+		}
+		else if(this->AnimTime < BANode->Translation[nextFrame].Time)
+		{
+			do
+			{
+				nextFrame -= 1;
+			} while(this->AnimTime < BANode->Translation[nextFrame].Time);
+		}
+
+		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
+		{
+			prevFrame = currentFrame;
+		}
+
+		this->LastTranslationFrame[BANode->Name] = prevFrame;
+		this->CurrentTranslationFrame[BANode->Name] = nextFrame;
+
+		if(prevFrame != nextFrame)
+		{
+			const BasicAnimation::Node::Key& oldFrame = BANode->Translation[prevFrame];
+			const BasicAnimation::Node::Key& newFrame = BANode->Translation[nextFrame];
+			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
+
+			returnValue = CML::Lerp(oldFrame.Value, newFrame.Value, ratio);
+		}
+		else
+		{
+			return BANode->Translation[nextFrame].Value;
+		}
+	}
+	else if(BANode->Translation.size() == 1)
+	{
+		returnValue = BANode->Translation.front().Value;
+	}
+	else
+	{
+		returnValue = {0.0, 0.0, 0.0};
+	}
+	return returnValue;
+}
+CML::Vec4 AnimationPlayer::CaluclateRotationJoint(std::shared_ptr<BasicAnimation::Node> BANode)
+{
+	CML::Vec4 returnValue;
+	if(BANode->Rotation.size() > 1)
+	{
+		std::size_t prevFrame = this->LastRotationFrame[BANode->Name];
+		std::size_t currentFrame = this->CurrentRotationFrame[BANode->Name];
+		std::size_t nextFrame = prevFrame;
+		if(this->AnimTime > BANode->Rotation[nextFrame].Time)
+		{
+			do
+			{
+				nextFrame += 1;
+			} while(this->AnimTime > BANode->Rotation[nextFrame].Time);
+		}
+		else if(this->AnimTime < BANode->Rotation[nextFrame].Time)
+		{
+			do
+			{
+				nextFrame -= 1;
+			} while(this->AnimTime < BANode->Rotation[nextFrame].Time);
+		}
+
+		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
+		{
+			prevFrame = currentFrame;
+		}
+
+		this->LastRotationFrame[BANode->Name] = prevFrame;
+		this->CurrentRotationFrame[BANode->Name] = nextFrame;
+
+		if(prevFrame != nextFrame)
+		{
+			const BasicAnimation::Node::QuaKey& oldFrame = BANode->Rotation[prevFrame];
+			const BasicAnimation::Node::QuaKey& newFrame = BANode->Rotation[nextFrame];
+			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
+
+			returnValue = CML::Slerp(oldFrame.Value, newFrame.Value, ratio);
+
+			int breakpoint = 0;
+		}
+		else
+		{
+			return BANode->Rotation[nextFrame].Value;
+		}
+	}
+	else if(BANode->Rotation.size() == 1)
+	{
+		returnValue = BANode->Rotation.front().Value;
+	}
+	else
+	{
+		returnValue = {0.0, 0.0, 0.0, 0.0};
+	}
+	return returnValue;
+}
+CML::Vec3 AnimationPlayer::CaluclateScaleJoint(std::shared_ptr<BasicAnimation::Node> BANode)
+{
+	CML::Vec3 returnValue;
+	if(BANode->Scale.size() > 1)
+	{
+		std::size_t prevFrame = this->LastScaleFrame[BANode->Name];
+		std::size_t currentFrame = this->CurrentScaleFrame[BANode->Name];
+		std::size_t nextFrame = prevFrame;
+		if(this->AnimTime > BANode->Scale[nextFrame].Time)
+		{
+			do
+			{
+				nextFrame += 1;
+			} while(this->AnimTime > BANode->Scale[nextFrame].Time);
+		}
+		else if(this->AnimTime < BANode->Scale[nextFrame].Time)
+		{
+			do
+			{
+				nextFrame -= 1;
+			} while(this->AnimTime < BANode->Scale[nextFrame].Time);
+		}
+
+		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
+		{
+			prevFrame = currentFrame;
+		}
+
+		this->LastScaleFrame[BANode->Name] = prevFrame;
+		this->CurrentScaleFrame[BANode->Name] = nextFrame;
+
+		if(prevFrame != nextFrame)
+		{
+			const BasicAnimation::Node::Key& oldFrame = BANode->Scale[prevFrame];
+			const BasicAnimation::Node::Key& newFrame = BANode->Scale[nextFrame];
+			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
+
+			returnValue = CML::Lerp(oldFrame.Value, newFrame.Value, ratio);
+		}
+		else
+		{
+			return BANode->Scale[nextFrame].Value;
+		}
+	}
+	else if(BANode->Scale.size() == 1)
+	{
+		returnValue = BANode->Scale.front().Value;
+	}
+	else
+	{
+		returnValue = {1.0, 1.0, 1.0};
+	}
+	return returnValue;
 }
 
 double AnimationPlayer::GetCurrentPhase(std::shared_ptr<BasicAnimation> animation) const

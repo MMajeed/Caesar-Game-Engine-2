@@ -4,6 +4,7 @@
 #include <GenerateGUID.h>
 #include "Scene.h"
 #include "ShadowFilter.h"
+#include "WithinRange.h"
 #include <Logger.h>
 
 ShadowScreenShot::ShadowScreenShot()
@@ -107,7 +108,7 @@ void ShadowScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& o
 		iter != vecObj.end();
 		++iter)
 	{
-		if(ShadowFilter::Filter(*iter))
+		if(ShadowFilter::Filter(this->D3DInfo.scene, *iter))
 		{
 			iter->Drawable->DrawShadow(iter->ObjInfo, this->D3DInfo.scene);
 		}

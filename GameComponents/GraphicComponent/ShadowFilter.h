@@ -6,7 +6,7 @@
 
 namespace ShadowFilter 
 {
-	bool Filter(const DrawableObject& obj);
+	bool Filter(const SceneInfo& si, const DrawableObject& obj);
 };
 
 

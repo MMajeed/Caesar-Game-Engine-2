@@ -28,11 +28,11 @@ void Interface::Run()
 			double frameTime = elapsed_seconds.count();
 			double deltaTime = frameTime;
 
-			const double MIN_TIMESTEP = 0.015;
+			/*const double MIN_TIMESTEP = 0.015;
 			if ( deltaTime > MIN_TIMESTEP )
 			{
 				deltaTime = MIN_TIMESTEP;
-			}
+			}*/
 
 			this->ProccessMessages();
 			this->Work(frameTime, deltaTime);

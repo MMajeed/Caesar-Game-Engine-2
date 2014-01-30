@@ -18,9 +18,14 @@ namespace CHL
 				CML::Vec3 value;
 				double time;
 			};
+			struct QuaKey
+			{
+				CML::Vec4 value;
+				double time;
+			};
 			std::string name;
 			std::vector<Key> Translation;
-			std::vector<Key> Rotation;
+			std::vector<QuaKey> Rotation;
 			std::vector<Key> Scale;
 		};
 		std::hash_map<std::string, Joint> vecJoints;
