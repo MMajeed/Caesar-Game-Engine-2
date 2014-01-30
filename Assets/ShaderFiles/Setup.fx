@@ -49,13 +49,16 @@ cbuffer cbObject : register( b0 )
 	matrix UserData;
 };
 
-cbuffer cbInfo : register( b1 )
+cbuffer cbWorld : register( b1 )
 {
 	matrix gView;
 	matrix gProj;
 	float4 eye;
 	int NumberOfGlobal2DTexture;
+	int NumberOfGlobalCubeTexture;
 	matrix GlobalUserData;
+	float NearZ;
+	float FarZ;
 };
 
 cbuffer cbLight : register( b2 )

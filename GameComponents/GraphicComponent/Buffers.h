@@ -43,13 +43,16 @@ public:
 		XMMATRIX userData;
 	};
 
-	struct cbInfo
+	struct cbWorld
 	{
 		XMMATRIX view;
 		XMMATRIX proj;
 		XMFLOAT4 eye;
 		unsigned int numberOfGlobal2DTexture;
+		unsigned int numberOfGlobalCubeTexture;
 		XMMATRIX globalUserData;
+		float NearZ;
+		float FarZ;
 	};
 
 	struct cbLight

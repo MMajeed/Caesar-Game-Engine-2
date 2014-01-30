@@ -92,26 +92,28 @@ namespace Scene
 		GraphicManager& graphic = GraphicManager::GetInstance();
 		auto& d3dStuff = graphic.D3DStuff;
 
-		cBuffer::cbInfo cbInfo;
+		cBuffer::cbWorld cbWorldInfo;
 
 		XMFLOAT4X4 view4x4 = Convert4x4(si.CamerMatrix);;
 		XMFLOAT4X4 proj4x4 = Convert4x4(si.ProjectionMatrix);;
 
-		cbInfo.view = XMMatrixTranspose(XMLoadFloat4x4(&view4x4));
-		cbInfo.proj = XMMatrixTranspose(XMLoadFloat4x4(&proj4x4));
-		cbInfo.eye = ConvertVec4(si.Eye);
-		cbInfo.numberOfGlobal2DTexture = si.Global2DTexture.size() < cBuffer::numOfTextures ? si.Global2DTexture.size() : cBuffer::numOfTextures;
-		
+		cbWorldInfo.view = XMMatrixTranspose(XMLoadFloat4x4(&view4x4));
+		cbWorldInfo.proj = XMMatrixTranspose(XMLoadFloat4x4(&proj4x4));
+		cbWorldInfo.eye = ConvertVec4(si.Eye);
+		cbWorldInfo.numberOfGlobal2DTexture = si.Global2DTexture.size() < cBuffer::numOfTextures ? si.Global2DTexture.size() : cBuffer::numOfTextures;
+		cbWorldInfo.numberOfGlobalCubeTexture = si.GlobalCubeTexture.size() < cBuffer::numOfTextures ? si.GlobalCubeTexture.size() : cBuffer::numOfTextures;
+		cbWorldInfo.FarZ = (float)si.farZ;
+		cbWorldInfo.NearZ = (float)si.nearZ;
 		for(unsigned int i = 0; i < 4; ++i)
 		{
 			int row = i * 4;
-			cbInfo.globalUserData(i, 0) = si.GlobalUserData[row + 0];
-			cbInfo.globalUserData(i, 1) = si.GlobalUserData[row + 1];
-			cbInfo.globalUserData(i, 2) = si.GlobalUserData[row + 2];
-			cbInfo.globalUserData(i, 3) = si.GlobalUserData[row + 3];
+			cbWorldInfo.globalUserData(i, 0) = si.GlobalUserData[row + 0];
+			cbWorldInfo.globalUserData(i, 1) = si.GlobalUserData[row + 1];
+			cbWorldInfo.globalUserData(i, 2) = si.GlobalUserData[row + 2];
+			cbWorldInfo.globalUserData(i, 3) = si.GlobalUserData[row + 3];
 		}
 
-		d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBInfo, 0, NULL, &cbInfo, 0, 0);
+		d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBInfo, 0, NULL, &cbWorldInfo, 0, 0);
 	}
 	void SetupGlobalTexture(const SceneInfo& si)
 	{

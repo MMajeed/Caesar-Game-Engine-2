@@ -338,7 +338,7 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
 	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
 
-	DX11Helper::LoadBuffer<cBuffer::cbInfo>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
+	DX11Helper::LoadBuffer<cBuffer::cbWorld>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
 	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
 	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
 	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
