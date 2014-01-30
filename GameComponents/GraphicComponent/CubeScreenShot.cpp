@@ -217,6 +217,9 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 
 	returnValue.TwoDimMatrix = OrthographicLHCalculation(width, height, nearZ, farZ);
 
+	returnValue.farZ = farZ;
+	returnValue.nearZ = nearZ;
+
 	Scene::SetupSceneExtraInfo(cam, this->D3DInfo.width, this->D3DInfo.height, returnValue);
 
 	return returnValue;
