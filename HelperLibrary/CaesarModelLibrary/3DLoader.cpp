@@ -64,15 +64,16 @@ namespace CHL
 		{
 			std::shared_ptr<CHL::Animation> spCHLAnimation(new CHL::Animation);
 			aiAnimation* aiImportedAnimation = scene->mAnimations[iAnim];
+			
+			double ticksPerSecond = aiImportedAnimation->mTicksPerSecond;
 
-			spCHLAnimation->duration = aiImportedAnimation->mDuration;
+			spCHLAnimation->duration = aiImportedAnimation->mDuration / ticksPerSecond;
 			spCHLAnimation->name = aiImportedAnimation->mName.C_Str();
-
 			for(std::size_t iJoint = 0; iJoint < aiImportedAnimation->mNumChannels; ++iJoint)
 			{
 				aiNodeAnim* aiImportedJoint = aiImportedAnimation->mChannels[iJoint];
 				Animation::Joint newJoint;
-
+				
 				newJoint.name = aiImportedJoint->mNodeName.C_Str();
 
 				newJoint.Translation.reserve(aiImportedJoint->mNumPositionKeys);
@@ -80,7 +81,7 @@ namespace CHL
 				{
 					aiVectorKey& jointKey = aiImportedJoint->mPositionKeys[iKey];
 					Animation::Joint::Key newKey;
-					newKey.time = jointKey.mTime;
+					newKey.time = jointKey.mTime / ticksPerSecond;
 					newKey.value = {jointKey.mValue.x, jointKey.mValue.y, jointKey.mValue.z};
 					newJoint.Translation.push_back(newKey);
 				}
@@ -90,7 +91,7 @@ namespace CHL
 				{
 					aiQuatKey& jointKey = aiImportedJoint->mRotationKeys[iKey];
 					Animation::Joint::QuaKey newKey;
-					newKey.time = jointKey.mTime;
+					newKey.time = jointKey.mTime / ticksPerSecond;
 					newKey.value = {jointKey.mValue.x, jointKey.mValue.y, jointKey.mValue.z, jointKey.mValue.w};
 					newJoint.Rotation.push_back(newKey);
 				}
@@ -100,7 +101,7 @@ namespace CHL
 				{
 					aiVectorKey& jointKey = aiImportedJoint->mScalingKeys[iKey];
 					Animation::Joint::Key newKey;
-					newKey.time = jointKey.mTime;
+					newKey.time = jointKey.mTime / ticksPerSecond;
 					newKey.value = {jointKey.mValue.x, jointKey.mValue.y, jointKey.mValue.z};
 					newJoint.Scale.push_back(newKey);
 				}

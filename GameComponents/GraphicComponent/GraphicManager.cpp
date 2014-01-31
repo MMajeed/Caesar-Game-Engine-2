@@ -386,7 +386,10 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 				width = rect.right - rect.left;
 				height = rect.bottom - rect.top;
 			}
-			GraphicSettings::Resize(width, height);
+			if(width != 0 || height != 0)
+			{
+				GraphicSettings::Resize(width, height);
+			}
 			break;
 		}
 		default:

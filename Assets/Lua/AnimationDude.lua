@@ -2,6 +2,7 @@ local AnimationDude = {}
 
 local fileNames = { "Assets/Animation/bored.BVH", "Assets/Animation/DanceCharleston.BVH", "Assets/Animation/StandIdle.BVH",
                     "Assets/Animation/walk.BVH", "Assets/Animation/WalkCasually.BVH", "Assets/Animation/Zombie.BVH",  };
+--local fileNames = { "Assets/Animation/DanceCharleston.BVH" };
 local zPosition = -40;
 
 for k,v in pairs(fileNames) do 

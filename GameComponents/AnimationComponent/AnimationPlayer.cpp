@@ -15,7 +15,7 @@ void AnimationPlayer::Play(double delta)
 
 	if(spAnimation)
 	{
-		double difference = delta * 100 ;
+		double difference = delta  ;
 		double oldAnimTime = this->AnimTime;
 		double newAnimTime = oldAnimTime + (difference * this->AnimRate);
 		if(newAnimTime == oldAnimTime){ return; } // They are the same, so skip

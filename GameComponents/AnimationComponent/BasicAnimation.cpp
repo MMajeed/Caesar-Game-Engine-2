@@ -3,6 +3,7 @@
 
 BasicAnimation::BasicAnimation()
 {
+	this->Duration = 0.0;
 }
 
 std::shared_ptr<BasicAnimation> BasicAnimation::Spawn(std::shared_ptr<CHL::Animation> animation, std::shared_ptr<CHL::Node> rootNode)
@@ -17,7 +18,7 @@ std::shared_ptr<BasicAnimation> BasicAnimation::Spawn(std::shared_ptr<CHL::Anima
 		{
 			BANodes->Name = CHLNode->Name;
 			BANodes->Transformation = CHLNode->Transformation;
-
+			
 			auto findJoint = fullCHLAnimation->vecJoints.find(BANodes->Name);
 			if(findJoint != fullCHLAnimation->vecJoints.end())
 			{
