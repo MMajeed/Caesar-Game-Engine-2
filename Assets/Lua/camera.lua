@@ -86,20 +86,20 @@ local CamPgUpButton   = false;    local CamPgDownButton = false;
 
 function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
-        regularCam.Yaw = regularCam.Yaw - (0.0025 * time);
+        regularCam.Yaw = regularCam.Yaw - (0.001 * time);
         Quad2DCam.Yaw = regularCam.Yaw;
     end
     if(CamRightButton == true) then
-        regularCam.Yaw = regularCam.Yaw + (0.0025 * time);
+        regularCam.Yaw = regularCam.Yaw + (0.001 * time);
         Quad2DCam.Yaw = regularCam.Yaw;
     end
     
     if(CamPgUpButton == true) then
-        regularCam.Pitch = regularCam.Pitch - (0.0025 * time);
+        regularCam.Pitch = regularCam.Pitch - (0.001 * time);
         Quad2DCam.Pitch = regularCam.Pitch;
     end
     if(CamPgDownButton == true) then
-        regularCam.Pitch = regularCam.Pitch + (0.0025 * time);
+        regularCam.Pitch = regularCam.Pitch + (0.001 * time);
         Quad2DCam.Pitch = regularCam.Pitch;
     end
     

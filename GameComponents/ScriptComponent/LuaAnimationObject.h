@@ -24,7 +24,9 @@ namespace LuaAnimationObject
 	{
 	public:
 		AnimationPlayer();
-		AnimationPlayer(BasicAnimationObject v);
+		AnimationPlayer(luabind::object const& table);
+		void SetPhase(double v);
+		void SetSpeed(double v);
 		void Release();
 		std::string ID;
 

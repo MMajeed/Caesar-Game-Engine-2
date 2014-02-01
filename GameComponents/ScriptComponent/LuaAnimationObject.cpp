@@ -1,8 +1,9 @@
 #include "LuaAnimationObject.h"
-
+#include <Logger.h>
 #include <AnimationCommunicator\BasicAnimationConfig.h>
 #include <AnimationCommunicator\AnimationPlayerConfig.h>
 #include <AnimationCommunicator\AnimationControllerConfig.h>
+#include <Keys.h>
 
 namespace LuaAnimationObject
 {
@@ -28,9 +29,36 @@ namespace LuaAnimationObject
 	}
 
 	AnimationPlayer::AnimationPlayer(){}
-	AnimationPlayer::AnimationPlayer(BasicAnimationObject v)
+	AnimationPlayer::AnimationPlayer(luabind::object const& table)
 	{
-		this->ID = AnimationPlayerConfig::Create(v.ID, 0.0, 1.0);
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for AnimationPlayer, please send in a table");
+		
+		std::string basicAnimationID;
+		double phase = 0.0;
+		double speed = 1.0;
+
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			std::string key = luabind::object_cast<std::string>(it.key());
+
+				 if(key == Keys::AnimationPlayer::BASICANIMATION)	{ basicAnimationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+			else if(key == Keys::AnimationPlayer::PHASE)			{ phase = luabind::object_cast<double>(*it); }
+			else if(key == Keys::AnimationPlayer::SPEED)			{ speed = luabind::object_cast<double>(*it); }
+		}
+		if(basicAnimationID.empty())
+			Logger::LogError(Keys::AnimationPlayer::BASICANIMATION + " is a manditory paramter in AnimationPlayer" );
+		this->ID = AnimationPlayerConfig::Create(basicAnimationID, phase, speed);
+	}
+	void AnimationPlayer::SetPhase(double v)
+	{
+		AnimationPlayerConfig::SetPhase(this->ID, v);
+	}
+	void AnimationPlayer::SetSpeed(double v)
+	{
+		AnimationPlayerConfig::SetSpeed(this->ID, v);
 	}
 	void AnimationPlayer::Release()
 	{
@@ -41,7 +69,9 @@ namespace LuaAnimationObject
 	{
 		luabind::module(lua)[
 			luabind::class_<AnimationPlayer>("AnimationPlayer")
-				.def(luabind::constructor<LuaAnimationObject::BasicAnimationObject>())
+				.def(luabind::constructor<luabind::object>())
+				.def("SetSpeed", &AnimationPlayer::SetSpeed)
+				.def("SetPhase", &AnimationPlayer::SetPhase)
 				.def("Release", &AnimationPlayer::Release)
 				.def_readonly("ID", &AnimationPlayer::ID)
 		];

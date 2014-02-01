@@ -16,6 +16,7 @@ public:
 	double GetCurrentPhase(std::shared_ptr<BasicAnimation> animation) const;
 	double GetCurrentPhase() const;
 	void SetCurrentPhase(double phasePercentage);
+	void SetSpeed(double speed);
 
 	static std::shared_ptr<AnimationPlayer> Spawn(std::string basicAnimationID,
 												  double startPhase,

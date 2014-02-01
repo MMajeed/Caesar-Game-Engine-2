@@ -109,6 +109,12 @@ namespace Keys
 		const static std::string EYE               = "Eye";
 	};
 
+	namespace AnimationPlayer
+	{
+		const static std::string BASICANIMATION = "BasicAnimation";
+		const static std::string PHASE          = "Phase";
+		const static std::string SPEED          = "Speed";
+	};
 };
 
 #endif //__Keys__

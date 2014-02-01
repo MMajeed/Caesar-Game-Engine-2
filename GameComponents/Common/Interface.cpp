@@ -4,6 +4,7 @@
 #include <thread>
 #include <chrono>
 #include "Logger.h"
+#include <iostream>
 
 Interface::Interface()
 {
@@ -46,9 +47,11 @@ void Interface::Run()
 			std::chrono::time_point<std::chrono::system_clock> afterProcessTime = std::chrono::system_clock::now();
 			std::chrono::duration<double> elapsedProcessTime = afterProcessTime - end;
 
-			if(elapsedProcessTime.count() < 15)
+			static const double minWorkTime = 10;
+			if(elapsedProcessTime.count() < minWorkTime)
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds((int)(15 - elapsedProcessTime.count())));
+				int timeToSleep = (int)(minWorkTime - elapsedProcessTime.count());
+				std::this_thread::sleep_for(std::chrono::milliseconds(timeToSleep));
 			}
 		}
 	}

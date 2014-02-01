@@ -39,7 +39,72 @@ namespace AnimationPlayerConfig
 		AnimationManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}
+	void SetPhase(std::string AnimationPlayerID, double phase)
+	{
+		class SetPhaseMesage : public Message
+		{
+		public:
+			SetPhaseMesage(std::string AnimationPlayerID, double phase)
+			{
+				this->AnimationPlayerID = AnimationPlayerID;
+				this->phase = phase;
+			}
 
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
+
+				auto& allPlayer = AnimationManager::GetInstance().AllAnimationPlayer();
+				auto iterObjDrawable = allPlayer.find(this->AnimationPlayerID);
+
+				if(iterObjDrawable != allPlayer.end())
+				{
+					iterObjDrawable->second->SetCurrentPhase(this->phase);
+				}
+
+				return Message::Status::Complete;
+			}
+
+			std::string AnimationPlayerID;
+			double phase;
+		};
+
+		std::shared_ptr<SetPhaseMesage> msg(new SetPhaseMesage(AnimationPlayerID, phase));
+		AnimationManager::GetInstance().SubmitMessage(msg);
+	}
+	void SetSpeed(std::string AnimationPlayerID, double speed)
+	{
+		class SetSpeedMesage : public Message
+		{
+		public:
+			SetSpeedMesage(std::string AnimationPlayerID, double speed)
+			{
+				this->AnimationPlayerID = AnimationPlayerID;
+				this->speed = speed;
+			}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
+
+				auto& allPlayer = AnimationManager::GetInstance().AllAnimationPlayer();
+				auto iterObjDrawable = allPlayer.find(this->AnimationPlayerID);
+
+				if(iterObjDrawable != allPlayer.end())
+				{
+					iterObjDrawable->second->SetSpeed(this->speed);
+				}
+
+				return Message::Status::Complete;
+			}
+
+			std::string AnimationPlayerID;
+			double speed;
+		};
+
+		std::shared_ptr<SetSpeedMesage> msg(new SetSpeedMesage(AnimationPlayerID, speed));
+		AnimationManager::GetInstance().SubmitMessage(msg);
+	}
 	void Release(std::string ID)
 	{
 		class ReleaseMessage : public Message

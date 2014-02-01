@@ -18,7 +18,6 @@ void AnimationPlayer::Play(double delta)
 		double difference = delta  ;
 		double oldAnimTime = this->AnimTime;
 		double newAnimTime = oldAnimTime + (difference * this->AnimRate);
-		if(newAnimTime == oldAnimTime){ return; } // They are the same, so skip
 
 		if(newAnimTime > spAnimation->Duration){ newAnimTime = 0.0f; } // Go to the start
 		else if(newAnimTime < 0.0f){newAnimTime = spAnimation->Duration;} // Go to the end
@@ -26,6 +25,10 @@ void AnimationPlayer::Play(double delta)
 
 		this->PlayRecursively(spAnimation->RootNode, spAnimation->RootNode->Transformation);
 	}
+}
+void AnimationPlayer::SetSpeed(double speed)
+{
+	this->AnimRate = speed;
 }
 
 void AnimationPlayer::PlayRecursively(std::shared_ptr<BasicAnimation::Node> BANode, const CML::Matrix4x4& parentsJoint)
@@ -251,13 +254,14 @@ std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimati
 
 	std::shared_ptr<AnimationPlayer> newObject(new AnimationPlayer());
 
-	newObject->AnimRate = animRate;
-	newObject->SetCurrentPhase(startPhase);
 	auto iter = animationManager.AnimationsContainer.find(basicAnimationID);
 	if(iter != animationManager.AnimationsContainer.end())
 	{
 		newObject->Animation = iter->second;
 	}
+
+	newObject->AnimRate = animRate;
+	newObject->SetCurrentPhase(startPhase);
 
 	return newObject;
 }

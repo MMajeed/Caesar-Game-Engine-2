@@ -10,6 +10,8 @@
 namespace AnimationPlayerConfig
 {
 	std::string Create(std::string basicAnimationID, double startPhase, double animRate);
+	void SetPhase(std::string AnimationPlayerID, double phase);
+	void SetSpeed(std::string AnimationPlayerID, double speed);
 	void Release(std::string ID);
 }
 
