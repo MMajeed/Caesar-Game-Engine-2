@@ -7,32 +7,34 @@
 
 namespace AnimationControllerConfig
 {
-	std::string Create(std::string animPlayerID)
+	std::string Create(std::string animPlayerID, std::shared_ptr<CHL::Node> rootNode)
 	{
 		class  CreateMessage : public Message
 		{
 		public:
-			CreateMessage(std::string animPlayerID)
+			CreateMessage(std::string animPlayerID, std::shared_ptr<CHL::Node> rootNode)
 			{
 				this->ID = CHL::GenerateGUID();
 				this->animPlayerID = animPlayerID;
+				this->rootNode = rootNode;
 			}
 
 			virtual Message::Status Work()
 			{
 				std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
 				std::shared_ptr<AnimationController> newAnimationController
-					= AnimationController::Spawn(this->animPlayerID);
+					= AnimationController::Spawn(rootNode, this->animPlayerID);
 				AnimationManager::GetInstance().InsertAnimationController(this->ID, newAnimationController);
 
 				return Message::Status::Complete;
 			}
 
 			std::string animPlayerID;
+			std::shared_ptr<CHL::Node> rootNode;
 			std::string	ID;
 		};
 
-		std::shared_ptr<CreateMessage> msg(new CreateMessage(animPlayerID));
+		std::shared_ptr<CreateMessage> msg(new CreateMessage(animPlayerID, rootNode));
 		AnimationManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}

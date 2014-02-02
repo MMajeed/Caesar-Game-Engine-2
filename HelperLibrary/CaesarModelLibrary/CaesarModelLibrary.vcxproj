@@ -80,7 +80,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R !Optimization|Win32'">
     <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt</TargetName>
+    <TargetName>$(ProjectName)-mt-no</TargetName>
     <IncludePath>$(SolutionDir)Lib\Assimp\include;$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\Assimp\lib\x86;$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -132,7 +132,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUGNO;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

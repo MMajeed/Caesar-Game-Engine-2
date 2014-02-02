@@ -72,7 +72,7 @@
     <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\InputComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt</TargetName>
+    <TargetName>$(ProjectName)-mt-no</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,7 +114,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;INPUTCOMMUNICATOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUGNO;_WINDOWS;_USRDLL;INPUTCOMMUNICATOR_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>

@@ -13,7 +13,7 @@ namespace LuaAnimationObject
 	{
 	public:
 		BasicAnimationObject();
-		BasicAnimationObject(LuaAnimation::Animation anim, LuaNode::Node rootNode);
+		BasicAnimationObject(LuaAnimation::Animation anim);
 		void Release();
 		std::string ID;
 
@@ -37,7 +37,7 @@ namespace LuaAnimationObject
 	{
 	public:
 		AnimationController();
-		AnimationController(AnimationPlayer v);
+		AnimationController(AnimationPlayer v, LuaNode::Node rootNode);
 		void Release();
 		std::string ID;
 

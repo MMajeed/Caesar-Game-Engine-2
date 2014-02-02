@@ -12,64 +12,52 @@ AnimationPlayer::AnimationPlayer()
 void AnimationPlayer::Play(double delta)
 {
 	std::shared_ptr<BasicAnimation> spAnimation = this->Animation.lock();
+	if(!spAnimation){ return; }
 
-	if(spAnimation)
-	{
-		double difference = delta  ;
-		double oldAnimTime = this->AnimTime;
-		double newAnimTime = oldAnimTime + (difference * this->AnimRate);
+	double difference = delta  ;
+	double oldAnimTime = this->AnimTime;
+	double newAnimTime = oldAnimTime + (difference * this->AnimRate);
 
-		if(newAnimTime > spAnimation->Duration){ newAnimTime = 0.0f; } // Go to the start
-		else if(newAnimTime < 0.0f){newAnimTime = spAnimation->Duration;} // Go to the end
-		this->AnimTime = newAnimTime; // Update the time
+	if(newAnimTime > spAnimation->Duration){ newAnimTime = 0.0f; } // Go to the start
+	else if(newAnimTime < 0.0f){newAnimTime = spAnimation->Duration;} // Go to the end
+	this->AnimTime = newAnimTime; // Update the time
 
-		this->PlayRecursively(spAnimation->RootNode, spAnimation->RootNode->Transformation);
-	}
-}
-void AnimationPlayer::SetSpeed(double speed)
-{
-	this->AnimRate = speed;
-}
-
-void AnimationPlayer::PlayRecursively(std::shared_ptr<BasicAnimation::Node> BANode, const CML::Matrix4x4& parentsJoint)
-{
-	CML::Vec3 translation = this->CaluclateTranslationJoint(BANode);
-	CML::Vec4 rotation = this->CaluclateRotationJoint(BANode);
-	CML::Vec3 scale = this->CaluclateScaleJoint(BANode);
-
-	CML::Matrix4x4 tranformation = CML::TransformMatrix(translation, rotation, scale);
-	CML::Matrix4x4 finalTranslation = CML::Multiple(parentsJoint, tranformation);
-
-	this->SetJoint(BANode->Name, finalTranslation);
-
-	for(auto iter = BANode->Childern.begin();
-		iter != BANode->Childern.end();
+	for(auto iter = spAnimation->AllNodes.begin();
+		iter != spAnimation->AllNodes.end();
 		++iter)
 	{
-		this->PlayRecursively(*iter, finalTranslation);
+		CML::Vec3 translation = this->CaluclateTranslationJoint(iter->second);
+		this->CurrentTranslationJoint[iter->first] = translation;
+
+		CML::Vec4 rotation = this->CaluclateRotationJoint(iter->second);
+		this->CurrentRotationJoint[iter->first] = rotation;
+
+		CML::Vec3 scale = this->CaluclateScaleJoint(iter->second);
+		this->CurrentScaleJoint[iter->first] = scale;
 	}
 }
-CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(std::shared_ptr<BasicAnimation::Node> BANode)
+
+CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(const BasicAnimation::Joint& BANode)
 {
 	CML::Vec3 returnValue;
-	if(BANode->Translation.size() > 1)
+	if(BANode.Translation.size() > 1)
 	{
-		std::size_t prevFrame = this->LastTranslationFrame[BANode->Name];
-		std::size_t currentFrame = this->CurrentTranslationFrame[BANode->Name];
+		std::size_t prevFrame = this->LastTranslationFrame[BANode.Name];
+		std::size_t currentFrame = this->CurrentTranslationFrame[BANode.Name];
 		std::size_t nextFrame = prevFrame;
-		if(this->AnimTime > BANode->Translation[nextFrame].Time)
+		if(this->AnimTime > BANode.Translation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame += 1;
-			} while(this->AnimTime > BANode->Translation[nextFrame].Time);
+			} while(this->AnimTime > BANode.Translation[nextFrame].Time);
 		}
-		else if(this->AnimTime < BANode->Translation[nextFrame].Time)
+		else if(this->AnimTime < BANode.Translation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame -= 1;
-			} while(this->AnimTime < BANode->Translation[nextFrame].Time);
+			} while(this->AnimTime < BANode.Translation[nextFrame].Time);
 		}
 
 		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
@@ -77,25 +65,25 @@ CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(std::shared_ptr<BasicAnimat
 			prevFrame = currentFrame;
 		}
 
-		this->LastTranslationFrame[BANode->Name] = prevFrame;
-		this->CurrentTranslationFrame[BANode->Name] = nextFrame;
+		this->LastTranslationFrame[BANode.Name] = prevFrame;
+		this->CurrentTranslationFrame[BANode.Name] = nextFrame;
 
 		if(prevFrame != nextFrame)
 		{
-			const BasicAnimation::Node::Key& oldFrame = BANode->Translation[prevFrame];
-			const BasicAnimation::Node::Key& newFrame = BANode->Translation[nextFrame];
+			const BasicAnimation::Joint::Key& oldFrame = BANode.Translation[prevFrame];
+			const BasicAnimation::Joint::Key& newFrame = BANode.Translation[nextFrame];
 			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
 
 			returnValue = CML::Lerp(oldFrame.Value, newFrame.Value, ratio);
 		}
 		else
 		{
-			return BANode->Translation[nextFrame].Value;
+			return BANode.Translation[nextFrame].Value;
 		}
 	}
-	else if(BANode->Translation.size() == 1)
+	else if(BANode.Translation.size() == 1)
 	{
-		returnValue = BANode->Translation.front().Value;
+		returnValue = BANode.Translation.front().Value;
 	}
 	else
 	{
@@ -103,27 +91,27 @@ CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(std::shared_ptr<BasicAnimat
 	}
 	return returnValue;
 }
-CML::Vec4 AnimationPlayer::CaluclateRotationJoint(std::shared_ptr<BasicAnimation::Node> BANode)
+CML::Vec4 AnimationPlayer::CaluclateRotationJoint(const BasicAnimation::Joint& BANode)
 {
 	CML::Vec4 returnValue;
-	if(BANode->Rotation.size() > 1)
+	if(BANode.Rotation.size() > 1)
 	{
-		std::size_t prevFrame = this->LastRotationFrame[BANode->Name];
-		std::size_t currentFrame = this->CurrentRotationFrame[BANode->Name];
+		std::size_t prevFrame = this->LastRotationFrame[BANode.Name];
+		std::size_t currentFrame = this->CurrentRotationFrame[BANode.Name];
 		std::size_t nextFrame = prevFrame;
-		if(this->AnimTime > BANode->Rotation[nextFrame].Time)
+		if(this->AnimTime > BANode.Rotation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame += 1;
-			} while(this->AnimTime > BANode->Rotation[nextFrame].Time);
+			} while(this->AnimTime > BANode.Rotation[nextFrame].Time);
 		}
-		else if(this->AnimTime < BANode->Rotation[nextFrame].Time)
+		else if(this->AnimTime < BANode.Rotation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame -= 1;
-			} while(this->AnimTime < BANode->Rotation[nextFrame].Time);
+			} while(this->AnimTime < BANode.Rotation[nextFrame].Time);
 		}
 
 		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
@@ -131,13 +119,13 @@ CML::Vec4 AnimationPlayer::CaluclateRotationJoint(std::shared_ptr<BasicAnimation
 			prevFrame = currentFrame;
 		}
 
-		this->LastRotationFrame[BANode->Name] = prevFrame;
-		this->CurrentRotationFrame[BANode->Name] = nextFrame;
+		this->LastRotationFrame[BANode.Name] = prevFrame;
+		this->CurrentRotationFrame[BANode.Name] = nextFrame;
 
 		if(prevFrame != nextFrame)
 		{
-			const BasicAnimation::Node::QuaKey& oldFrame = BANode->Rotation[prevFrame];
-			const BasicAnimation::Node::QuaKey& newFrame = BANode->Rotation[nextFrame];
+			const BasicAnimation::Joint::QuaKey& oldFrame = BANode.Rotation[prevFrame];
+			const BasicAnimation::Joint::QuaKey& newFrame = BANode.Rotation[nextFrame];
 			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
 
 			returnValue = CML::Slerp(oldFrame.Value, newFrame.Value, ratio);
@@ -146,12 +134,12 @@ CML::Vec4 AnimationPlayer::CaluclateRotationJoint(std::shared_ptr<BasicAnimation
 		}
 		else
 		{
-			return BANode->Rotation[nextFrame].Value;
+			return BANode.Rotation[nextFrame].Value;
 		}
 	}
-	else if(BANode->Rotation.size() == 1)
+	else if(BANode.Rotation.size() == 1)
 	{
-		returnValue = BANode->Rotation.front().Value;
+		returnValue = BANode.Rotation.front().Value;
 	}
 	else
 	{
@@ -159,27 +147,27 @@ CML::Vec4 AnimationPlayer::CaluclateRotationJoint(std::shared_ptr<BasicAnimation
 	}
 	return returnValue;
 }
-CML::Vec3 AnimationPlayer::CaluclateScaleJoint(std::shared_ptr<BasicAnimation::Node> BANode)
+CML::Vec3 AnimationPlayer::CaluclateScaleJoint(const BasicAnimation::Joint& BANode)
 {
 	CML::Vec3 returnValue;
-	if(BANode->Scale.size() > 1)
+	if(BANode.Scale.size() > 1)
 	{
-		std::size_t prevFrame = this->LastScaleFrame[BANode->Name];
-		std::size_t currentFrame = this->CurrentScaleFrame[BANode->Name];
+		std::size_t prevFrame = this->LastScaleFrame[BANode.Name];
+		std::size_t currentFrame = this->CurrentScaleFrame[BANode.Name];
 		std::size_t nextFrame = prevFrame;
-		if(this->AnimTime > BANode->Scale[nextFrame].Time)
+		if(this->AnimTime > BANode.Scale[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame += 1;
-			} while(this->AnimTime > BANode->Scale[nextFrame].Time);
+			} while(this->AnimTime > BANode.Scale[nextFrame].Time);
 		}
-		else if(this->AnimTime < BANode->Scale[nextFrame].Time)
+		else if(this->AnimTime < BANode.Scale[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame -= 1;
-			} while(this->AnimTime < BANode->Scale[nextFrame].Time);
+			} while(this->AnimTime < BANode.Scale[nextFrame].Time);
 		}
 
 		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
@@ -187,31 +175,73 @@ CML::Vec3 AnimationPlayer::CaluclateScaleJoint(std::shared_ptr<BasicAnimation::N
 			prevFrame = currentFrame;
 		}
 
-		this->LastScaleFrame[BANode->Name] = prevFrame;
-		this->CurrentScaleFrame[BANode->Name] = nextFrame;
+		this->LastScaleFrame[BANode.Name] = prevFrame;
+		this->CurrentScaleFrame[BANode.Name] = nextFrame;
 
 		if(prevFrame != nextFrame)
 		{
-			const BasicAnimation::Node::Key& oldFrame = BANode->Scale[prevFrame];
-			const BasicAnimation::Node::Key& newFrame = BANode->Scale[nextFrame];
+			const BasicAnimation::Joint::Key& oldFrame = BANode.Scale[prevFrame];
+			const BasicAnimation::Joint::Key& newFrame = BANode.Scale[nextFrame];
 			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
 
 			returnValue = CML::Lerp(oldFrame.Value, newFrame.Value, ratio);
 		}
 		else
 		{
-			return BANode->Scale[nextFrame].Value;
+			return BANode.Scale[nextFrame].Value;
 		}
 	}
-	else if(BANode->Scale.size() == 1)
+	else if(BANode.Scale.size() == 1)
 	{
-		returnValue = BANode->Scale.front().Value;
+		returnValue = BANode.Scale.front().Value;
 	}
 	else
 	{
 		returnValue = {1.0, 1.0, 1.0};
 	}
 	return returnValue;
+}
+
+std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimationID,
+														double startPhase,
+														double animRate)
+{
+	AnimationManager& animationManager = AnimationManager::GetInstance();
+
+	std::shared_ptr<AnimationPlayer> newObject(new AnimationPlayer());
+
+	auto iter = animationManager.AnimationsContainer.find(basicAnimationID);
+	if(iter != animationManager.AnimationsContainer.end())
+	{
+		newObject->Animation = iter->second;
+	}
+
+	newObject->AnimRate = animRate;
+	newObject->SetCurrentPhase(startPhase);
+
+	return newObject;
+}
+
+std::hash_map<std::string, CML::Vec3>& AnimationPlayer::GetAllTranslation()
+{
+	return this->CurrentTranslationJoint;
+}
+std::hash_map<std::string, CML::Vec4>& AnimationPlayer::GetAllRotation()
+{
+	return this->CurrentRotationJoint;
+}
+std::hash_map<std::string, CML::Vec3>& AnimationPlayer::GetAllScale()
+{
+	return this->CurrentScaleJoint;
+}
+
+double AnimationPlayer::GetSpeed()
+{
+	return this->AnimRate;
+}
+void AnimationPlayer::SetSpeed(double speed)
+{
+	this->AnimRate = speed;
 }
 
 double AnimationPlayer::GetCurrentPhase(std::shared_ptr<BasicAnimation> animation) const
@@ -244,49 +274,4 @@ void AnimationPlayer::SetCurrentPhase(double phasePercentage)
 			this->AnimTime = phasePercentage * this->Animation.lock()->Duration;
 		}
 	}
-}
-
-std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimationID,
-														double startPhase,
-														double animRate)
-{
-	AnimationManager& animationManager = AnimationManager::GetInstance();
-
-	std::shared_ptr<AnimationPlayer> newObject(new AnimationPlayer());
-
-	auto iter = animationManager.AnimationsContainer.find(basicAnimationID);
-	if(iter != animationManager.AnimationsContainer.end())
-	{
-		newObject->Animation = iter->second;
-	}
-
-	newObject->AnimRate = animRate;
-	newObject->SetCurrentPhase(startPhase);
-
-	return newObject;
-}
-
-CML::Matrix4x4 AnimationPlayer::GetSingleJoint(std::string jointName)
-{
-	CML::Matrix4x4 returnValue = CML::MatrixIdentity();
-	AnimationManager& animationManager = AnimationManager::GetInstance();
-
-	auto iter = this->jointsAnimated.find(jointName);
-	if(iter != this->jointsAnimated.end())
-	{
-		returnValue = iter->second;
-	}
-	return returnValue;
-}
-void AnimationPlayer::SetJoint(std::string name, const CML::Matrix4x4& mat)
-{
-	AnimationManager& animationManager = AnimationManager::GetInstance();
-
-	std::lock_guard<std::mutex> lock(animationManager.mutex);
-
-	this->jointsAnimated[name] = mat;
-}
-const std::hash_map<std::string, CML::Matrix4x4>& AnimationPlayer::JointsAnimatedTransformation() const
-{
-	return this->jointsAnimated;
 }

@@ -3,7 +3,9 @@
 
 #if defined(_DEBUG)
 #pragma comment (lib,"AnimationCommunicator-mt-d.lib")
-#elif !defined(_DEBUG)
+#elif defined(NDEBUGNO)
+#pragma comment (lib,"AnimationCommunicator-mt-no.lib")
+#elif defined(NDEBUG)
 #pragma comment (lib,"AnimationCommunicator-mt.lib")
 #else
 #error link: no suitable library

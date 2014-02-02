@@ -9,9 +9,9 @@ namespace LuaAnimationObject
 {
 	
 	BasicAnimationObject::BasicAnimationObject(){}
-	BasicAnimationObject::BasicAnimationObject(LuaAnimation::Animation anim, LuaNode::Node rootNode)
+	BasicAnimationObject::BasicAnimationObject(LuaAnimation::Animation anim)
 	{
-		this->ID = BasicAnimationConfig::Create(anim, rootNode);
+		this->ID = BasicAnimationConfig::Create(anim);
 	}
 	void BasicAnimationObject::Release()
 	{
@@ -22,7 +22,7 @@ namespace LuaAnimationObject
 	{
 		luabind::module(lua)[
 			luabind::class_<BasicAnimationObject>("BasicAnimation")
-				.def(luabind::constructor<LuaAnimation::Animation, LuaNode::Node>())
+				.def(luabind::constructor<LuaAnimation::Animation>())
 				.def("Release", &BasicAnimationObject::Release)
 				.def_readonly("ID", &BasicAnimationObject::ID)
 		];
@@ -78,9 +78,9 @@ namespace LuaAnimationObject
 	}
 
 	AnimationController::AnimationController(){}
-	AnimationController::AnimationController(AnimationPlayer v)
+	AnimationController::AnimationController(AnimationPlayer v, LuaNode::Node rootNode)
 	{
-		this->ID = AnimationControllerConfig::Create(v.ID);
+		this->ID = AnimationControllerConfig::Create(v.ID, rootNode);
 	}
 	void AnimationController::Release()
 	{
@@ -91,7 +91,7 @@ namespace LuaAnimationObject
 	{
 		luabind::module(lua)[
 			luabind::class_<AnimationController>("AnimationController")
-				.def(luabind::constructor<LuaAnimationObject::AnimationPlayer>())
+				.def(luabind::constructor<LuaAnimationObject::AnimationPlayer, LuaNode::Node>())
 				.def("Release", &AnimationController::Release)
 				.def_readonly("ID", &AnimationController::ID)
 		];

@@ -6,33 +6,31 @@
 
 namespace BasicAnimationConfig
 {
-	std::string Create(std::shared_ptr<CHL::Animation> animation, std::shared_ptr<CHL::Node> rootNode)
+	std::string Create(std::shared_ptr<CHL::Animation> animation)
 	{
 		class  CreateMessage : public Message
 		{
 		public:
-			CreateMessage(std::shared_ptr<CHL::Animation> animation, std::shared_ptr<CHL::Node> rootNode)
+			CreateMessage(std::shared_ptr<CHL::Animation> animation)
 			{
 				this->ID = CHL::GenerateGUID();
 				this->animation = animation;
-				this->rootNode = rootNode;
 			}
 
 			virtual Message::Status Work()
 			{
 				std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
-				std::shared_ptr<BasicAnimation> newBasicAnimation = BasicAnimation::Spawn(this->animation, this->rootNode);
+				std::shared_ptr<BasicAnimation> newBasicAnimation = BasicAnimation::Spawn(this->animation);
 				AnimationManager::GetInstance().InsertAnimation(this->ID, newBasicAnimation);
 
 				return Message::Status::Complete;
 			}
 
 			std::shared_ptr<CHL::Animation> animation;
-			std::shared_ptr<CHL::Node> rootNode;
 			std::string	ID;
 		};
 
-		std::shared_ptr<CreateMessage> msg(new CreateMessage(animation, rootNode));
+		std::shared_ptr<CreateMessage> msg(new CreateMessage(animation));
 		AnimationManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}

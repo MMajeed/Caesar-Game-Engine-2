@@ -1,22 +1,26 @@
 local AnimationDude = {}
 
-local fileNames = { "Assets/Animation/bored.BVH", "Assets/Animation/StandIdle.BVH", "Assets/Animation/walk.BVH", 
-                    "Assets/Animation/WalkCasually.BVH", "Assets/Animation/Zombie.BVH", "Assets/Animation/DanceCharleston.BVH",  };
---local fileNames = { "Assets/Animation/DanceCharleston.BVH" };
-local zPosition = -40;
+local fileNames = { 
+                    "Assets/Animation/walk.BVH", 
+                    "Assets/Animation/WalkCasually.BVH", 
+                    "Assets/Animation/StandIdle.BVH",
+                    "Assets/Animation/bored.BVH", 
+                    "Assets/Animation/Zombie.BVH", 
+                    "Assets/Animation/DanceCharleston.BVH",  
+                  };
+local zPosition = -50;
 local speed = 1.0;
 for k,v in pairs(fileNames) do 
     local animationRunScene = LoadScene(v);
     local meshRun = animationRunScene["Model"];
     local animationRun = animationRunScene["Animation"];
     local rootNodeRun = animationRunScene["RootNode"];
-
-    local runBasicAnimation = BasicAnimation(animationRun[1],rootNodeRun); 
+    local runBasicAnimation = BasicAnimation(animationRun[1]); 
     local runAnimationPlayer =  AnimationPlayer({[Keys["AnimationPlayer"]["BasicAnimation"]]  = runBasicAnimation,
                                                  [Keys["AnimationPlayer"]["Phase"]]           = 0.25,
                                                  [Keys["AnimationPlayer"]["Speed"]]           = speed,
                                                 });
-    local runAnimationController = AnimationController(runAnimationPlayer);
+    local runAnimationController = AnimationController(runAnimationPlayer, rootNodeRun);
 
     function RecursiveLoadJoint(joint)
         local meshes = joint.Meshes;
@@ -39,7 +43,7 @@ for k,v in pairs(fileNames) do
 
     RecursiveLoadJoint(rootNodeRun);
     speed = speed - ( 1 / table.getn(fileNames));
-    zPosition = zPosition + 20;
+    zPosition = zPosition + 10;
 end
 
 return AnimationDude;

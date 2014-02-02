@@ -13,14 +13,10 @@ class BasicAnimation
 public:
 	BasicAnimation();
 
-	static std::shared_ptr<BasicAnimation> Spawn(std::shared_ptr<CHL::Animation> animation, std::shared_ptr<CHL::Node> rootNode);
+	static std::shared_ptr<BasicAnimation> Spawn(std::shared_ptr<CHL::Animation> animation);
 
-	struct Node
+	struct Joint
 	{
-		CML::Matrix4x4 Transformation;
-		std::shared_ptr<BasicAnimation::Node> Parent;
-		std::vector<std::shared_ptr<BasicAnimation::Node>> Childern;
-
 		struct Key
 		{
 			CML::Vec3 Value;
@@ -31,14 +27,14 @@ public:
 			CML::Vec4 Value;
 			double Time;
 		};
-		std::vector<Node::Key> Translation;
-		std::vector<Node::QuaKey> Rotation;
-		std::vector<Node::Key> Scale;
+		std::vector<Joint::Key> Translation;
+		std::vector<Joint::QuaKey> Rotation;
+		std::vector<Joint::Key> Scale;
 
 		std::string Name;
 	};
 	double Duration;
-	std::shared_ptr<BasicAnimation::Node> RootNode;
+	std::hash_map<std::string, BasicAnimation::Joint> AllNodes;
 };
 
 

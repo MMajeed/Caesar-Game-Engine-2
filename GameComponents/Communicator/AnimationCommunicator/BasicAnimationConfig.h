@@ -3,13 +3,12 @@
 
 #include "Linker.h"
 #include <Animation.h>
-#include <Node.h>
 #include <memory>
 #include <string>
 
 namespace BasicAnimationConfig
 {
-	std::string Create(std::shared_ptr<CHL::Animation> animation, std::shared_ptr<CHL::Node> rootNode);
+	std::string Create(std::shared_ptr<CHL::Animation> animation);
 	void Release(std::string ID);
 }
 
