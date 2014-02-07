@@ -8,9 +8,8 @@
 #include <Vector.h>
 #include <Matrix.h>
 
-class LuaMath
+namespace LuaMath
 {
-public:
 	class Vector4
 	{
 	public:
@@ -49,11 +48,9 @@ public:
 		static void Register(lua_State *lua);
 	};
 
-	static inline void RegisterAllLuaFunction(lua_State *lua)
-	{
-		LuaMath::Vector4::Register(lua);
-		LuaMath::Matrix4x4::Register(lua);
-	}
+	Vector4 MoveObject(Vector4 Location, Vector4 target, double pitch, double yaw, double roll, double magintude);
+
+	void RegisterAllLuaFunction(lua_State *lua);
 };
 
 #endif //__LuaMath__

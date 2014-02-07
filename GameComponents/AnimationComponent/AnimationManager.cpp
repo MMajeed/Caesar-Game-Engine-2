@@ -42,22 +42,6 @@ const std::hash_map<std::string, std::shared_ptr<BasicAnimation>>& AnimationMana
 	return this->AnimationsContainer;
 }
 
-void AnimationManager::InsertAnimationPlayer(const std::string& ID, std::shared_ptr<AnimationPlayer> obj)
-{
-	this->AnimationsPlayerContainer[ID] = obj;
-}
-void AnimationManager::RemoveAnimationPlayer(const std::string& ID)
-{
-	auto iter = this->AnimationsPlayerContainer.find(ID);
-	if(iter != this->AnimationsPlayerContainer.end())
-	{
-		this->AnimationsPlayerContainer.erase(iter);
-	}
-}
-const std::hash_map<std::string, std::shared_ptr<AnimationPlayer>>& AnimationManager::AllAnimationPlayer()
-{
-	return this->AnimationsPlayerContainer;
-}
 
 void AnimationManager::InsertAnimationController(const std::string& ID, std::shared_ptr<AnimationController> obj)
 {

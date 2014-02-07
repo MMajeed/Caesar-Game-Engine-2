@@ -104,11 +104,13 @@ function UpdateCamera(time, ID)
     end
     
     if(CamUpButton == true) then
-        regularCam:MoveFroward((0.05 * time));
+        local moveDistance = 0.05 * time;
+        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagintude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
         Quad2DCam.Eye = regularCam.Eye;
     end
     if(CamDownButton == true) then
-        regularCam:MoveFroward((-0.05 * time));
+        local moveDistance = -0.05 * time;
+        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagintude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
         Quad2DCam.Eye = regularCam.Eye;
     end
 end

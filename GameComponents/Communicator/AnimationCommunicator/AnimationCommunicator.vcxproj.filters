@@ -8,9 +8,6 @@
     <ClInclude Include="BasicAnimationConfig.h">
       <Filter>BasicAnimationConfig</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationPlayerConfig.h">
-      <Filter>AnimationPlayerConfig</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationControllerConfig.h">
       <Filter>AnimationControllerConfig</Filter>
     </ClInclude>
@@ -22,9 +19,6 @@
     <Filter Include="BasicAnimationConfig">
       <UniqueIdentifier>{acee04e1-383f-41ed-ba31-cc1ca1ac8083}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AnimationPlayerConfig">
-      <UniqueIdentifier>{323a4889-f237-485e-a46f-06cfd6cdf2b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="AnimationControllerConfig">
       <UniqueIdentifier>{9b7be888-c00c-4e5a-993f-172fa54ab1b6}</UniqueIdentifier>
     </Filter>
@@ -35,9 +29,6 @@
     </ClCompile>
     <ClCompile Include="BasicAnimationConfig.cpp">
       <Filter>BasicAnimationConfig</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationPlayerConfig.cpp">
-      <Filter>AnimationPlayerConfig</Filter>
     </ClCompile>
     <ClCompile Include="AnimationControllerConfig.cpp">
       <Filter>AnimationControllerConfig</Filter>

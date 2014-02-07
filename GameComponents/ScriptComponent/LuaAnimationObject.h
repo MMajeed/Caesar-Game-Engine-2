@@ -20,24 +20,13 @@ namespace LuaAnimationObject
 		static void Register(lua_State *lua);
 	};
 
-	class AnimationPlayer
-	{
-	public:
-		AnimationPlayer();
-		AnimationPlayer(luabind::object const& table);
-		void SetPhase(double v);
-		void SetSpeed(double v);
-		void Release();
-		std::string ID;
-
-		static void Register(lua_State *lua);
-	};
-
 	class AnimationController
 	{
 	public:
 		AnimationController();
-		AnimationController(AnimationPlayer v, LuaNode::Node rootNode);
+		AnimationController(luabind::object const& table);
+		void ChangeAnimation(luabind::object const& table);
+		void ChangeSpeed(double speed);
 		void Release();
 		std::string ID;
 

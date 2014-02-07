@@ -13,7 +13,13 @@ box1 = Object({[Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
-
+box2 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(100.0, 0.0, 0.0),
+               [Keys["ObjectInfo"]["Scale"]]       = Vector4(50.0, 0.2, 50.0),
+               [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
+               [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
+               [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
+               [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
+               [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
                                  
 OnKeyDown(KeyCode["Z"], 
     function() 

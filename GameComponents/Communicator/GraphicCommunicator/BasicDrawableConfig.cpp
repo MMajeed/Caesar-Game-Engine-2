@@ -143,7 +143,7 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
 				auto iterObjDrawable = allObjects.find(this->ID);
 
 				if(iterObjDrawable != allObjects.end())
@@ -185,7 +185,7 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
 				auto iterObjDrawable = allObjects.find(this->ID);
 
 				if(iterObjDrawable != allObjects.end())
@@ -225,7 +225,7 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
 				auto iterObjDrawable = allObjects.find(this->ID);
 
 				if(iterObjDrawable != allObjects.end())
@@ -263,7 +263,7 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
 				auto iterObjDrawable = allObjects.find(this->ID);
 
 				if(iterObjDrawable != allObjects.end())
@@ -301,7 +301,7 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto allObjects = GraphicManager::GetInstance().AllObjectDrawables();
+				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
 				auto iterObjDrawable = allObjects.find(this->ID);
 
 				if(iterObjDrawable != allObjects.end())

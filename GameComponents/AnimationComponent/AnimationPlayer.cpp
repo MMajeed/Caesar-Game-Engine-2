@@ -6,7 +6,6 @@
 AnimationPlayer::AnimationPlayer()
 {
 	this->AnimTime = 0.0;
-	this->AnimRate = 0.0;
 }
 
 void AnimationPlayer::Play(double delta)
@@ -16,7 +15,7 @@ void AnimationPlayer::Play(double delta)
 
 	double difference = delta  ;
 	double oldAnimTime = this->AnimTime;
-	double newAnimTime = oldAnimTime + (difference * this->AnimRate);
+	double newAnimTime = oldAnimTime + difference;
 
 	if(newAnimTime > spAnimation->Duration){ newAnimTime = 0.0f; } // Go to the start
 	else if(newAnimTime < 0.0f){newAnimTime = spAnimation->Duration;} // Go to the end
@@ -202,9 +201,7 @@ CML::Vec3 AnimationPlayer::CaluclateScaleJoint(const BasicAnimation::Joint& BANo
 	return returnValue;
 }
 
-std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimationID,
-														double startPhase,
-														double animRate)
+std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimationID, double startPhase)
 {
 	AnimationManager& animationManager = AnimationManager::GetInstance();
 
@@ -216,32 +213,9 @@ std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimati
 		newObject->Animation = iter->second;
 	}
 
-	newObject->AnimRate = animRate;
 	newObject->SetCurrentPhase(startPhase);
 
 	return newObject;
-}
-
-std::hash_map<std::string, CML::Vec3>& AnimationPlayer::GetAllTranslation()
-{
-	return this->CurrentTranslationJoint;
-}
-std::hash_map<std::string, CML::Vec4>& AnimationPlayer::GetAllRotation()
-{
-	return this->CurrentRotationJoint;
-}
-std::hash_map<std::string, CML::Vec3>& AnimationPlayer::GetAllScale()
-{
-	return this->CurrentScaleJoint;
-}
-
-double AnimationPlayer::GetSpeed()
-{
-	return this->AnimRate;
-}
-void AnimationPlayer::SetSpeed(double speed)
-{
-	this->AnimRate = speed;
 }
 
 double AnimationPlayer::GetCurrentPhase(std::shared_ptr<BasicAnimation> animation) const

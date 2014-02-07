@@ -102,11 +102,14 @@ void LuaKeysID::Register(lua_State *lua)
 		BasicScreenShot[Keys::ScreenShot::CAMERAID]		 = Keys::ScreenShot::CAMERAID;
 	luaKeyTable["ScreenShot"] = BasicScreenShot;
 
-	luabind::object AnimationPlayer = luabind::newtable(lua);
-		AnimationPlayer[Keys::AnimationPlayer::BASICANIMATION] = Keys::AnimationPlayer::BASICANIMATION;
-		AnimationPlayer[Keys::AnimationPlayer::SPEED]          = Keys::AnimationPlayer::SPEED;
-		AnimationPlayer[Keys::AnimationPlayer::PHASE]          = Keys::AnimationPlayer::PHASE;
-	luaKeyTable["AnimationPlayer"] = AnimationPlayer;
+	luabind::object AnimationController = luabind::newtable(lua);
+		AnimationController[Keys::AnimationController::BASICANIMATION]   = Keys::AnimationController::BASICANIMATION;
+		AnimationController[Keys::AnimationController::ROOTNODE]		 = Keys::AnimationController::ROOTNODE;
+		AnimationController[Keys::AnimationController::SPEED]            = Keys::AnimationController::SPEED;
+		AnimationController[Keys::AnimationController::TRANSITIONTYPE]   = Keys::AnimationController::TRANSITIONTYPE;
+		AnimationController[Keys::AnimationController::TRANSITIONLENGTH] = Keys::AnimationController::TRANSITIONLENGTH;
+		AnimationController[Keys::AnimationController::STARTONNEXTPHASE] = Keys::AnimationController::STARTONNEXTPHASE;
+	luaKeyTable["AnimationController"] = AnimationController;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;
 }

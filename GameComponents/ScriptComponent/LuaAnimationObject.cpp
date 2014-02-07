@@ -1,7 +1,6 @@
 #include "LuaAnimationObject.h"
 #include <Logger.h>
 #include <AnimationCommunicator\BasicAnimationConfig.h>
-#include <AnimationCommunicator\AnimationPlayerConfig.h>
 #include <AnimationCommunicator\AnimationControllerConfig.h>
 #include <Keys.h>
 
@@ -28,15 +27,16 @@ namespace LuaAnimationObject
 		];
 	}
 
-	AnimationPlayer::AnimationPlayer(){}
-	AnimationPlayer::AnimationPlayer(luabind::object const& table)
+	AnimationController::AnimationController(){}
+	AnimationController::AnimationController(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
-			Logger::LogError("Wrong paramter for AnimationPlayer, please send in a table");
-		
-		std::string basicAnimationID;
-		double phase = 0.0;
+			Logger::LogError("Wrong paramter for AnimationController, please send in a table");
+
+		std::string animationID;
+		LuaNode::Node rootNode;
 		double speed = 1.0;
+
 
 		for(luabind::iterator it(table);
 			it != luabind::iterator();
@@ -44,43 +44,50 @@ namespace LuaAnimationObject
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::AnimationPlayer::BASICANIMATION)	{ basicAnimationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
-			else if(key == Keys::AnimationPlayer::PHASE)			{ phase = luabind::object_cast<double>(*it); }
-			else if(key == Keys::AnimationPlayer::SPEED)			{ speed = luabind::object_cast<double>(*it); }
+				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+			else if(key == Keys::AnimationController::ROOTNODE)			{ rootNode = luabind::object_cast<LuaNode::Node>(*it); }
+			else if(key == Keys::AnimationController::SPEED)			{ speed = luabind::object_cast<double>(*it); }
 		}
-		if(basicAnimationID.empty())
-			Logger::LogError(Keys::AnimationPlayer::BASICANIMATION + " is a manditory paramter in AnimationPlayer" );
-		this->ID = AnimationPlayerConfig::Create(basicAnimationID, phase, speed);
-	}
-	void AnimationPlayer::SetPhase(double v)
-	{
-		AnimationPlayerConfig::SetPhase(this->ID, v);
-	}
-	void AnimationPlayer::SetSpeed(double v)
-	{
-		AnimationPlayerConfig::SetSpeed(this->ID, v);
-	}
-	void AnimationPlayer::Release()
-	{
-		AnimationPlayerConfig::Release(this->ID);
-		this->ID = "";
-	}
-	void AnimationPlayer::Register(lua_State *lua)
-	{
-		luabind::module(lua)[
-			luabind::class_<AnimationPlayer>("AnimationPlayer")
-				.def(luabind::constructor<luabind::object>())
-				.def("SetSpeed", &AnimationPlayer::SetSpeed)
-				.def("SetPhase", &AnimationPlayer::SetPhase)
-				.def("Release", &AnimationPlayer::Release)
-				.def_readonly("ID", &AnimationPlayer::ID)
-		];
-	}
 
-	AnimationController::AnimationController(){}
-	AnimationController::AnimationController(AnimationPlayer v, LuaNode::Node rootNode)
+		if(animationID.empty())
+			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::ChangeAnimation");
+		if(!rootNode.node)
+			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::ROOTNODE");
+
+		this->ID = AnimationControllerConfig::Create(animationID, rootNode.node, speed);
+	}
+	void AnimationController::ChangeAnimation(luabind::object const& table)
 	{
-		this->ID = AnimationControllerConfig::Create(v.ID, rootNode);
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for AnimationController::ChangeAnimation, please send in a table");
+
+		std::string animationID;
+		int transitionType = 0;
+		double transitionLength = 0;
+		bool startonNextPhase = false;
+
+
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			std::string key = luabind::object_cast<std::string>(it.key());
+
+				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+			else if(key == Keys::AnimationController::TRANSITIONTYPE)	{ transitionType = luabind::object_cast<int>(*it); }
+			else if(key == Keys::AnimationController::TRANSITIONLENGTH)	{ transitionLength = luabind::object_cast<double>(*it); }
+			else if(key == Keys::AnimationController::STARTONNEXTPHASE)	{ startonNextPhase = luabind::object_cast<bool>(*it); }
+		}
+
+		if(animationID.empty())
+			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::ChangeAnimation");
+
+		AnimationControllerConfig::TransitionType t = static_cast<AnimationControllerConfig::TransitionType>(transitionType);
+		AnimationControllerConfig::ChangeAnimation(this->ID, animationID, t, transitionLength, startonNextPhase);
+	}
+	void AnimationController::ChangeSpeed(double speed)
+	{
+		AnimationControllerConfig::ChangeSpeed(this->ID, speed);
 	}
 	void AnimationController::Release()
 	{
@@ -91,16 +98,25 @@ namespace LuaAnimationObject
 	{
 		luabind::module(lua)[
 			luabind::class_<AnimationController>("AnimationController")
-				.def(luabind::constructor<LuaAnimationObject::AnimationPlayer, LuaNode::Node>())
+				.def(luabind::constructor<luabind::object const&>())
+				.def("ChangeAnimation", &AnimationController::ChangeAnimation)
+				.def("ChangeSpeed", &AnimationController::ChangeSpeed)
 				.def("Release", &AnimationController::Release)
 				.def_readonly("ID", &AnimationController::ID)
 		];
+
+
+		luabind::object TransitionType = luabind::newtable(lua);
+		TransitionType["None"] = 0;
+		TransitionType["CrossFade"] = 1;
+		TransitionType["SnapShot"] = 2;
+		TransitionType["TimeSync"] = 3;
+		luabind::globals(lua)["TransitionType"] = TransitionType;
 	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		BasicAnimationObject::Register(lua);
-		AnimationPlayer::Register(lua);
 		AnimationController::Register(lua);
 	}
 }

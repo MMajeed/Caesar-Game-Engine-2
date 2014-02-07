@@ -27,11 +27,6 @@ public:
 	void RemoveAnimation(const std::string& ID);
 	const std::hash_map<std::string, std::shared_ptr<BasicAnimation>>& AllAnimation();
 
-	std::hash_map<std::string, std::shared_ptr<AnimationPlayer>> AnimationsPlayerContainer;
-	void InsertAnimationPlayer(const std::string& ID, std::shared_ptr<AnimationPlayer> obj);
-	void RemoveAnimationPlayer(const std::string& ID);
-	const std::hash_map<std::string, std::shared_ptr<AnimationPlayer>>& AllAnimationPlayer();
-
 	std::hash_map<std::string, std::shared_ptr<AnimationController>> AnimationControllerContainer;
 	void InsertAnimationController(const std::string& ID, std::shared_ptr<AnimationController> obj);
 	void RemoveAnimationController(const std::string& ID);

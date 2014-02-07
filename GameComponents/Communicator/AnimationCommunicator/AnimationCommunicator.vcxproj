@@ -17,14 +17,12 @@
   <ItemGroup>
     <ClInclude Include="AnimationCommunicator.h" />
     <ClInclude Include="AnimationControllerConfig.h" />
-    <ClInclude Include="AnimationPlayerConfig.h" />
     <ClInclude Include="BasicAnimationConfig.h" />
     <ClInclude Include="Linker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationCommunicator.cpp" />
     <ClCompile Include="AnimationControllerConfig.cpp" />
-    <ClCompile Include="AnimationPlayerConfig.cpp" />
     <ClCompile Include="BasicAnimationConfig.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

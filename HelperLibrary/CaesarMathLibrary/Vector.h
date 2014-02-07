@@ -11,7 +11,7 @@ namespace CML
 	{
 	public:
 		std::array<Type, ArraySize> arr;
-		Vector(){ }
+		Vector(){ std::fill(arr.begin(), arr.end(), 0); }
 		Vector(std::initializer_list<Type> args)
 		{
 			std::copy(args.begin(), args.end(), this->arr.begin());

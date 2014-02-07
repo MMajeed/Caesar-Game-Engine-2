@@ -1,5 +1,6 @@
 require("File3DLoader")
-require("AnimationDude")
+require("RandomAnimation")
+require("StickPerson")
 require("Text")
 require("camera")
 require("SkyBox")
