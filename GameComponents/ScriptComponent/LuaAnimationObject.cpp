@@ -50,9 +50,9 @@ namespace LuaAnimationObject
 		}
 
 		if(animationID.empty())
-			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::ChangeAnimation");
+			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController");
 		if(!rootNode.node)
-			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::ROOTNODE");
+			Logger::LogError(Keys::AnimationController::ROOTNODE + " is a mandatory field in AnimationController");
 
 		this->ID = AnimationControllerConfig::Create(animationID, rootNode.node, speed);
 	}
@@ -89,6 +89,41 @@ namespace LuaAnimationObject
 	{
 		AnimationControllerConfig::ChangeSpeed(this->ID, speed);
 	}
+	std::string AnimationController::AddMinorAnimation(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for AnimationController, please send in a table");
+
+		std::string animationID;
+		std::string startNodeName;
+		double startRatio = 1.0;
+		double stepRatio = 0.0;
+
+
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			std::string key = luabind::object_cast<std::string>(it.key());
+
+				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+			else if(key == Keys::AnimationController::STARTNODENAME)	{ startNodeName = luabind::object_cast<std::string>(*it); }
+			else if(key == Keys::AnimationController::STARTRATIO)		{ startRatio = luabind::object_cast<double>(*it); }
+			else if(key == Keys::AnimationController::STEPRATIO)		{ stepRatio = luabind::object_cast<double>(*it); }
+		}
+
+		if(animationID.empty())
+			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::AddMinorAnimation");
+		if(startNodeName.empty())
+			Logger::LogError(Keys::AnimationController::STARTNODENAME + " is a mandatory field in AnimationController::AddMinorAnimation");
+
+		std::string newMinorID = AnimationControllerConfig::AddMinorAnimation(this->ID, animationID, startNodeName, startRatio, stepRatio);
+		return newMinorID;
+	}
+	void AnimationController::RemoveMinorAnimation(std::string MinorAnimationID)
+	{
+		AnimationControllerConfig::RemoveMinorAnimation(this->ID, MinorAnimationID);
+	}
 	void AnimationController::Release()
 	{
 		AnimationControllerConfig::Release(this->ID);
@@ -101,6 +136,8 @@ namespace LuaAnimationObject
 				.def(luabind::constructor<luabind::object const&>())
 				.def("ChangeAnimation", &AnimationController::ChangeAnimation)
 				.def("ChangeSpeed", &AnimationController::ChangeSpeed)
+				.def("AddMinorAnimation", &AnimationController::AddMinorAnimation)
+				.def("RemoveMinorAnimation", &AnimationController::RemoveMinorAnimation)
 				.def("Release", &AnimationController::Release)
 				.def_readonly("ID", &AnimationController::ID)
 		];

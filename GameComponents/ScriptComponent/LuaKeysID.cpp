@@ -109,6 +109,9 @@ void LuaKeysID::Register(lua_State *lua)
 		AnimationController[Keys::AnimationController::TRANSITIONTYPE]   = Keys::AnimationController::TRANSITIONTYPE;
 		AnimationController[Keys::AnimationController::TRANSITIONLENGTH] = Keys::AnimationController::TRANSITIONLENGTH;
 		AnimationController[Keys::AnimationController::STARTONNEXTPHASE] = Keys::AnimationController::STARTONNEXTPHASE;
+		AnimationController[Keys::AnimationController::STARTNODENAME]    = Keys::AnimationController::STARTNODENAME;
+		AnimationController[Keys::AnimationController::STARTRATIO]       = Keys::AnimationController::STARTRATIO;
+		AnimationController[Keys::AnimationController::STEPRATIO]        = Keys::AnimationController::STEPRATIO;
 	luaKeyTable["AnimationController"] = AnimationController;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;

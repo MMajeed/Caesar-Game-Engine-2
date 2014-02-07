@@ -1,11 +1,11 @@
 local RandomAnimation = {}
 
 local fileNames = { 
+                    "Assets/Animation/bored.BVH", 
                     "Assets/Animation/walk.BVH", 
                     "Assets/Animation/Run1.BVH", 
                     "Assets/Animation/WalkCasually.BVH", 
                     "Assets/Animation/StandIdle.BVH",
-                    "Assets/Animation/bored.BVH", 
                     "Assets/Animation/Zombie.BVH", 
                     "Assets/Animation/DanceCharleston.BVH",  
                   };

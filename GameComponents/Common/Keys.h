@@ -117,6 +117,9 @@ namespace Keys
 		const static std::string TRANSITIONTYPE 	= "TransitionType";
 		const static std::string TRANSITIONLENGTH	= "TransitionLength";
 		const static std::string STARTONNEXTPHASE 	= "StartOnNextPhase";
+		const static std::string STARTNODENAME	    = "StartNodeName";
+		const static std::string STARTRATIO			= "StartRatio";
+		const static std::string STEPRATIO			= "StepRatio";
 	};
 };
 

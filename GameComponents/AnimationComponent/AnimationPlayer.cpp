@@ -36,27 +36,27 @@ void AnimationPlayer::Play(double delta)
 	}
 }
 
-CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(const BasicAnimation::Joint& BANode)
+CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(const BasicAnimation::Joint& ACNode)
 {
 	CML::Vec3 returnValue;
-	if(BANode.Translation.size() > 1)
+	if(ACNode.Translation.size() > 1)
 	{
-		std::size_t prevFrame = this->LastTranslationFrame[BANode.Name];
-		std::size_t currentFrame = this->CurrentTranslationFrame[BANode.Name];
+		std::size_t prevFrame = this->LastTranslationFrame[ACNode.Name];
+		std::size_t currentFrame = this->CurrentTranslationFrame[ACNode.Name];
 		std::size_t nextFrame = prevFrame;
-		if(this->AnimTime > BANode.Translation[nextFrame].Time)
+		if(this->AnimTime > ACNode.Translation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame += 1;
-			} while(this->AnimTime > BANode.Translation[nextFrame].Time);
+			} while(this->AnimTime > ACNode.Translation[nextFrame].Time);
 		}
-		else if(this->AnimTime < BANode.Translation[nextFrame].Time)
+		else if(this->AnimTime < ACNode.Translation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame -= 1;
-			} while(this->AnimTime < BANode.Translation[nextFrame].Time);
+			} while(this->AnimTime < ACNode.Translation[nextFrame].Time);
 		}
 
 		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
@@ -64,25 +64,25 @@ CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(const BasicAnimation::Joint
 			prevFrame = currentFrame;
 		}
 
-		this->LastTranslationFrame[BANode.Name] = prevFrame;
-		this->CurrentTranslationFrame[BANode.Name] = nextFrame;
+		this->LastTranslationFrame[ACNode.Name] = prevFrame;
+		this->CurrentTranslationFrame[ACNode.Name] = nextFrame;
 
 		if(prevFrame != nextFrame)
 		{
-			const BasicAnimation::Joint::Key& oldFrame = BANode.Translation[prevFrame];
-			const BasicAnimation::Joint::Key& newFrame = BANode.Translation[nextFrame];
+			const BasicAnimation::Joint::Key& oldFrame = ACNode.Translation[prevFrame];
+			const BasicAnimation::Joint::Key& newFrame = ACNode.Translation[nextFrame];
 			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
 
 			returnValue = CML::Lerp(oldFrame.Value, newFrame.Value, ratio);
 		}
 		else
 		{
-			return BANode.Translation[nextFrame].Value;
+			return ACNode.Translation[nextFrame].Value;
 		}
 	}
-	else if(BANode.Translation.size() == 1)
+	else if(ACNode.Translation.size() == 1)
 	{
-		returnValue = BANode.Translation.front().Value;
+		returnValue = ACNode.Translation.front().Value;
 	}
 	else
 	{
@@ -90,27 +90,27 @@ CML::Vec3 AnimationPlayer::CaluclateTranslationJoint(const BasicAnimation::Joint
 	}
 	return returnValue;
 }
-CML::Vec4 AnimationPlayer::CaluclateRotationJoint(const BasicAnimation::Joint& BANode)
+CML::Vec4 AnimationPlayer::CaluclateRotationJoint(const BasicAnimation::Joint& ACNode)
 {
 	CML::Vec4 returnValue;
-	if(BANode.Rotation.size() > 1)
+	if(ACNode.Rotation.size() > 1)
 	{
-		std::size_t prevFrame = this->LastRotationFrame[BANode.Name];
-		std::size_t currentFrame = this->CurrentRotationFrame[BANode.Name];
+		std::size_t prevFrame = this->LastRotationFrame[ACNode.Name];
+		std::size_t currentFrame = this->CurrentRotationFrame[ACNode.Name];
 		std::size_t nextFrame = prevFrame;
-		if(this->AnimTime > BANode.Rotation[nextFrame].Time)
+		if(this->AnimTime > ACNode.Rotation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame += 1;
-			} while(this->AnimTime > BANode.Rotation[nextFrame].Time);
+			} while(this->AnimTime > ACNode.Rotation[nextFrame].Time);
 		}
-		else if(this->AnimTime < BANode.Rotation[nextFrame].Time)
+		else if(this->AnimTime < ACNode.Rotation[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame -= 1;
-			} while(this->AnimTime < BANode.Rotation[nextFrame].Time);
+			} while(this->AnimTime < ACNode.Rotation[nextFrame].Time);
 		}
 
 		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
@@ -118,13 +118,13 @@ CML::Vec4 AnimationPlayer::CaluclateRotationJoint(const BasicAnimation::Joint& B
 			prevFrame = currentFrame;
 		}
 
-		this->LastRotationFrame[BANode.Name] = prevFrame;
-		this->CurrentRotationFrame[BANode.Name] = nextFrame;
+		this->LastRotationFrame[ACNode.Name] = prevFrame;
+		this->CurrentRotationFrame[ACNode.Name] = nextFrame;
 
 		if(prevFrame != nextFrame)
 		{
-			const BasicAnimation::Joint::QuaKey& oldFrame = BANode.Rotation[prevFrame];
-			const BasicAnimation::Joint::QuaKey& newFrame = BANode.Rotation[nextFrame];
+			const BasicAnimation::Joint::QuaKey& oldFrame = ACNode.Rotation[prevFrame];
+			const BasicAnimation::Joint::QuaKey& newFrame = ACNode.Rotation[nextFrame];
 			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
 
 			returnValue = CML::Slerp(oldFrame.Value, newFrame.Value, ratio);
@@ -133,12 +133,12 @@ CML::Vec4 AnimationPlayer::CaluclateRotationJoint(const BasicAnimation::Joint& B
 		}
 		else
 		{
-			return BANode.Rotation[nextFrame].Value;
+			return ACNode.Rotation[nextFrame].Value;
 		}
 	}
-	else if(BANode.Rotation.size() == 1)
+	else if(ACNode.Rotation.size() == 1)
 	{
-		returnValue = BANode.Rotation.front().Value;
+		returnValue = ACNode.Rotation.front().Value;
 	}
 	else
 	{
@@ -146,27 +146,27 @@ CML::Vec4 AnimationPlayer::CaluclateRotationJoint(const BasicAnimation::Joint& B
 	}
 	return returnValue;
 }
-CML::Vec3 AnimationPlayer::CaluclateScaleJoint(const BasicAnimation::Joint& BANode)
+CML::Vec3 AnimationPlayer::CaluclateScaleJoint(const BasicAnimation::Joint& ACNode)
 {
 	CML::Vec3 returnValue;
-	if(BANode.Scale.size() > 1)
+	if(ACNode.Scale.size() > 1)
 	{
-		std::size_t prevFrame = this->LastScaleFrame[BANode.Name];
-		std::size_t currentFrame = this->CurrentScaleFrame[BANode.Name];
+		std::size_t prevFrame = this->LastScaleFrame[ACNode.Name];
+		std::size_t currentFrame = this->CurrentScaleFrame[ACNode.Name];
 		std::size_t nextFrame = prevFrame;
-		if(this->AnimTime > BANode.Scale[nextFrame].Time)
+		if(this->AnimTime > ACNode.Scale[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame += 1;
-			} while(this->AnimTime > BANode.Scale[nextFrame].Time);
+			} while(this->AnimTime > ACNode.Scale[nextFrame].Time);
 		}
-		else if(this->AnimTime < BANode.Scale[nextFrame].Time)
+		else if(this->AnimTime < ACNode.Scale[nextFrame].Time)
 		{
 			do
 			{
 				nextFrame -= 1;
-			} while(this->AnimTime < BANode.Scale[nextFrame].Time);
+			} while(this->AnimTime < ACNode.Scale[nextFrame].Time);
 		}
 
 		if(std::abs((int)nextFrame - (int)prevFrame) > 1)
@@ -174,25 +174,25 @@ CML::Vec3 AnimationPlayer::CaluclateScaleJoint(const BasicAnimation::Joint& BANo
 			prevFrame = currentFrame;
 		}
 
-		this->LastScaleFrame[BANode.Name] = prevFrame;
-		this->CurrentScaleFrame[BANode.Name] = nextFrame;
+		this->LastScaleFrame[ACNode.Name] = prevFrame;
+		this->CurrentScaleFrame[ACNode.Name] = nextFrame;
 
 		if(prevFrame != nextFrame)
 		{
-			const BasicAnimation::Joint::Key& oldFrame = BANode.Scale[prevFrame];
-			const BasicAnimation::Joint::Key& newFrame = BANode.Scale[nextFrame];
+			const BasicAnimation::Joint::Key& oldFrame = ACNode.Scale[prevFrame];
+			const BasicAnimation::Joint::Key& newFrame = ACNode.Scale[nextFrame];
 			double ratio = std::abs(this->AnimTime - oldFrame.Time) / std::abs(newFrame.Time - oldFrame.Time);
 
 			returnValue = CML::Lerp(oldFrame.Value, newFrame.Value, ratio);
 		}
 		else
 		{
-			return BANode.Scale[nextFrame].Value;
+			return ACNode.Scale[nextFrame].Value;
 		}
 	}
-	else if(BANode.Scale.size() == 1)
+	else if(ACNode.Scale.size() == 1)
 	{
-		returnValue = BANode.Scale.front().Value;
+		returnValue = ACNode.Scale.front().Value;
 	}
 	else
 	{

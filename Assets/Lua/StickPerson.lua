@@ -58,7 +58,7 @@ local StickLeftButton     = false;     local StickkRightButton   = false;
 local StickRunButton     = false;
 
 local IdleToWalkLength = 2;
-local WalkToIdleLength = 2;
+local WalkToIdleLength = 1;
 local WalkToRunLength = 2;
 local RunToWalkLength = 1;
 
@@ -101,7 +101,7 @@ function WalkStateUpdate(time)
     if(StickForwardButton == false) then
         StickPersonAnimationController:ChangeAnimation({
                                                     [Keys["AnimationController"]["BasicAnimation"]]     = boardBasicAnimation,
-                                                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["CrossFade"],
+                                                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["SnapShot"],
                                                     [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
                                                     [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
                                                     });
@@ -180,6 +180,23 @@ OnKeyUp(KeyCode["L"], function() StickkRightButton = false; end);-- Right
 OnKeyUp(KeyCode["I"], function() StickForwardButton = false; end);-- Up
 OnKeyUp(KeyCode["K"], function() StickBackwardButton = false; end);-- Down
 OnKeyUp(KeyCode["LSHIFT"], function() StickRunButton = false; end);-- Shift
+
+local minorAnimationID = "";
+OnKeyDown(KeyCode["U"],
+    function() 
+        if(minorAnimationID == "") then
+            minorAnimationID = StickPersonAnimationController:AddMinorAnimation({
+                                                    [Keys["AnimationController"]["BasicAnimation"]] = boardBasicAnimation,
+                                                    [Keys["AnimationController"]["StartNodeName"]]  = "chest",
+                                                    [Keys["AnimationController"]["StartRatio"]]     = 0.3,
+                                                    [Keys["AnimationController"]["StepRatio"]]      = 0.2,
+                                                         });
+        else
+            StickPersonAnimationController:RemoveMinorAnimation(minorAnimationID);
+            minorAnimationID = ""; 
+        end
+    end);-- Left
+
 
 
 return StickPerson;

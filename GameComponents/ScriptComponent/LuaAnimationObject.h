@@ -27,6 +27,8 @@ namespace LuaAnimationObject
 		AnimationController(luabind::object const& table);
 		void ChangeAnimation(luabind::object const& table);
 		void ChangeSpeed(double speed);
+		std::string AddMinorAnimation(luabind::object const& table);
+		void RemoveMinorAnimation(std::string MinorAnimationID);
 		void Release();
 		std::string ID;
 

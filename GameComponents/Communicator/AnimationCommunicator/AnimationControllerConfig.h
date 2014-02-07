@@ -16,6 +16,12 @@ namespace AnimationControllerConfig
 						 TransitionType Transition, 
 						 double TransitionLength, 
 						 bool StartNextPhase);
+	std::string AddMinorAnimation(std::string AnimationControllerID, 
+								  std::string basicAnimID,
+								  std::string startNodeName,
+								  double startingRatio, 
+								  double stepRatio);
+	void RemoveMinorAnimation(std::string AnimationControllerID, std::string minorAnimationID);
 	void ChangeSpeed(std::string AnimationControllerID, double speed);
 	void Release(std::string ID);
 	CML::Matrix4x4 GetSingleJoint(std::string ID, std::string JointName);

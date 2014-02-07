@@ -10,7 +10,8 @@ require("Information")
 
 local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"),
                                           [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                          [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+                                          [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",
+                                          [Keys["BasicDrawable"]["FillMode"]]         = FillMode["Wireframe"]});
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
 
 local ironMan = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.2, -15.0),
@@ -19,6 +20,7 @@ local ironMan = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.2, 
                         [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.1),
                         [Keys["ObjectInfo"]["DrawableObj"]] = ironManMesh,
                         [Keys["ObjectInfo"]["Texture2DObj"]]= ironManTexture,
+                        [Keys["ObjectInfo"]["Depth"]]       = false,
                         [Keys["ObjectInfo"]["UserData"]]    = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  },
                         });
 

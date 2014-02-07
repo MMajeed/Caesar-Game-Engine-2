@@ -23,9 +23,9 @@ public:
 
 	static std::shared_ptr<AnimationPlayer> Spawn(std::string basicAnimationID, double startPhase);
 protected:
-	CML::Vec3 CaluclateTranslationJoint(const BasicAnimation::Joint& BANode);
-	CML::Vec4 CaluclateRotationJoint(const BasicAnimation::Joint& BANode);
-	CML::Vec3 CaluclateScaleJoint(const BasicAnimation::Joint& BANode);
+	CML::Vec3 CaluclateTranslationJoint(const BasicAnimation::Joint& ACNode);
+	CML::Vec4 CaluclateRotationJoint(const BasicAnimation::Joint& ACNode);
+	CML::Vec3 CaluclateScaleJoint(const BasicAnimation::Joint& ACNode);
 
 	std::hash_map<std::string, unsigned int>		LastTranslationFrame;
 	std::hash_map<std::string, unsigned int>		LastRotationFrame;

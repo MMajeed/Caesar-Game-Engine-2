@@ -8,6 +8,7 @@
 #include <Matrix.h>
 #include "AnimationPlayer.h"
 #include <vector>
+#include <hash_map>
 
 class AnimationController
 {
@@ -19,6 +20,13 @@ public:
 		std::shared_ptr<AnimationController::Node> Parent;
 		std::vector<std::shared_ptr<AnimationController::Node>> Childern;
 	};
+	struct MinorAnimation
+	{
+		std::shared_ptr<AnimationPlayer> Animation;
+		std::string StartAtNode;
+		double StartRatio;
+		double StepRatio;
+	};
 
 	AnimationController();
 	
@@ -26,15 +34,21 @@ public:
 	void UpdatePlayers(double delta);
 	void UpdateMainJoints();
 	void UpdateTransitionJoints();
-	void CalculateJointsRecursively(std::shared_ptr<AnimationController::Node> BANode, const CML::Matrix4x4& parentsJoint);
+	void UpdateAllMinorAnimations();
+	void CalculateMinorAnimationRecursively(const MinorAnimation& ma, std::shared_ptr<AnimationController::Node> ACNode, double ratio);
+	void CalculateJointsRecursively(std::shared_ptr<AnimationController::Node> ACNode, const CML::Matrix4x4& parentsJoint);
+	
 
 	enum class TransitionType{ None = 0, CrossFade = 1, SnapShot = 2, TimeSync = 3 };
 	void ChangeAnimation(std::string basicAnimationID, TransitionType Transition, double TransitionLength, bool StartNextPhase);
 
+	void AddMinorAnimation(std::string minorAnimationNewID, std::string basicAnimationID, std::string startAtNode, double startRatio, double stepRatio );
+	void RemoveMinorAnimation(std::string minorAnimationID);
+
 	static std::shared_ptr<AnimationController> Spawn(std::shared_ptr<CHL::Node> rootNode,
 													  std::string basicAnimationID,
 													  double speed);
-	void LoadNodesRecursively(std::shared_ptr<AnimationController::Node>& BANodes, const std::shared_ptr<CHL::Node>& CHLNode);
+	void LoadNodesRecursively(std::shared_ptr<AnimationController::Node>& ACNodes, const std::shared_ptr<CHL::Node>& CHLNode);
 
 	void SetSpeed(double speed);
 	double GetSpeed();
@@ -44,6 +58,7 @@ public:
 	void SetJoint(std::string name, const CML::Matrix4x4& mat);
 protected:
 	std::shared_ptr<AnimationPlayer> MainAnimation;
+	std::hash_map<std::string, MinorAnimation> AllMinorAnimations;
 
 	struct Transition
 	{

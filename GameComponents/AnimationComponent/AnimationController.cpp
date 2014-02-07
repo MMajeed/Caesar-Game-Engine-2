@@ -12,6 +12,7 @@ void AnimationController::Play(double delta)
 	this->UpdatePlayers(delta);
 	this->UpdateMainJoints();
 	this->UpdateTransitionJoints();
+	this->UpdateAllMinorAnimations();
 
 	this->CalculateJointsRecursively(this->RootNode, this->RootNode->Transformation);
 }
@@ -90,6 +91,16 @@ void AnimationController::UpdatePlayers(double delta)
 		}
 		}
 	}
+
+	for(auto iter = this->AllMinorAnimations.begin();
+		iter != this->AllMinorAnimations.end();
+		++iter)
+	{
+		if(iter->second.Animation)
+		{
+			iter->second.Animation->Play(newDelta);
+		}
+	}
 }
 void AnimationController::UpdateMainJoints()
 {
@@ -135,20 +146,73 @@ void AnimationController::UpdateTransitionJoints()
 		this->ScaleJoint[jointIter->second->Name] = CML::Lerp(scaleA, scaleB, t);
 	}
 }
-void AnimationController::CalculateJointsRecursively(std::shared_ptr<AnimationController::Node> BANode, 
+void AnimationController::UpdateAllMinorAnimations()
+{
+	for(auto iter = this->AllMinorAnimations.begin();
+		iter != this->AllMinorAnimations.end();
+		++iter)
+	{
+		if(iter->second.Animation)
+		{
+			auto startNode = this->AllNodes.find(iter->second.StartAtNode);
+			if(startNode != this->AllNodes.end())
+			{
+				this->CalculateMinorAnimationRecursively(iter->second, startNode->second, iter->second.StartRatio);
+			}
+		}
+	}
+}
+void AnimationController::CalculateMinorAnimationRecursively(const MinorAnimation& ma, 
+															 std::shared_ptr<AnimationController::Node> ACNode, 
+															 double ratio)
+{
+
+	if(ma.Animation)
+	{
+		if(ratio >= 0.0 && ratio < 1.0)
+		{
+			CML::Vec3& tranB = ma.Animation->CurrentTranslationJoint[ACNode->Name];
+			CML::Vec3& tranA = this->TranslationJoint[ACNode->Name];
+			this->TranslationJoint[ACNode->Name] = CML::Lerp(tranA, tranB, ratio);
+
+			CML::Vec4& rotB = ma.Animation->CurrentRotationJoint[ACNode->Name];
+			CML::Vec4& rotA = this->RotationJoint[ACNode->Name];
+			this->RotationJoint[ACNode->Name] = CML::Slerp(rotA, rotB, ratio);
+
+			CML::Vec3& scaleB = ma.Animation->CurrentScaleJoint[ACNode->Name];
+			CML::Vec3& scaleA = this->ScaleJoint[ACNode->Name];
+			this->ScaleJoint[ACNode->Name] = CML::Lerp(scaleA, scaleB, ratio);
+		}
+		else if(ratio >= 0)
+		{
+			this->TranslationJoint[ACNode->Name] = ma.Animation->CurrentTranslationJoint[ACNode->Name];
+			this->RotationJoint[ACNode->Name] = ma.Animation->CurrentRotationJoint[ACNode->Name];
+			this->ScaleJoint[ACNode->Name] = ma.Animation->CurrentScaleJoint[ACNode->Name];
+		}
+
+		for(auto iter = ACNode->Childern.begin();
+			iter != ACNode->Childern.end();
+			++iter)
+		{
+			double newRatio = ratio + ma.StepRatio;
+			this->CalculateMinorAnimationRecursively(ma, *iter, newRatio);
+		}
+	}
+}
+void AnimationController::CalculateJointsRecursively(std::shared_ptr<AnimationController::Node> ACNode, 
 													 const CML::Matrix4x4& parentsJoint)
 {
-	CML::Vec3 translation = this->TranslationJoint[BANode->Name];
-	CML::Vec4 rotation = this->RotationJoint[BANode->Name];
-	CML::Vec3 scale = this->ScaleJoint[BANode->Name];
+	CML::Vec3 translation = this->TranslationJoint[ACNode->Name];
+	CML::Vec4 rotation = this->RotationJoint[ACNode->Name];
+	CML::Vec3 scale = this->ScaleJoint[ACNode->Name];
 
 	CML::Matrix4x4 tranformation = CML::TransformMatrix(translation, rotation, scale);
 	CML::Matrix4x4 finalTranslation = CML::Multiple(parentsJoint, tranformation);
 
-	this->SetJoint(BANode->Name, finalTranslation);
+	this->SetJoint(ACNode->Name, finalTranslation);
 
-	for(auto iter = BANode->Childern.begin();
-		iter != BANode->Childern.end();
+	for(auto iter = ACNode->Childern.begin();
+		iter != ACNode->Childern.end();
 		++iter)
 	{
 		this->CalculateJointsRecursively(*iter, finalTranslation);
@@ -220,6 +284,27 @@ void AnimationController::ChangeAnimation(std::string basicAnimationID, Transiti
 	}
 }
 
+void AnimationController::AddMinorAnimation(std::string minorAnimationNewID, 
+											std::string basicAnimationID, 
+											std::string startAtNode, 
+											double startRatio, double stepRatio)
+{
+	AnimationController::MinorAnimation newMinorAnimation;
+	newMinorAnimation.Animation = AnimationPlayer::Spawn(basicAnimationID, 0.0);
+	newMinorAnimation.StartAtNode = startAtNode;
+	newMinorAnimation.StartRatio = startRatio;
+	newMinorAnimation.StepRatio = stepRatio;
+	this->AllMinorAnimations[minorAnimationNewID] = newMinorAnimation;
+}
+void AnimationController::RemoveMinorAnimation(std::string minorAnimationID)
+{
+	auto iter = this->AllMinorAnimations.find(minorAnimationID);
+	if(iter != this->AllMinorAnimations.end())
+	{
+		this->AllMinorAnimations.erase(iter);
+	}
+}
+
 std::shared_ptr<AnimationController> AnimationController::Spawn(std::shared_ptr<CHL::Node> rootNode, 
 																std::string basicAnimationID,
 																double speed)
@@ -235,21 +320,21 @@ std::shared_ptr<AnimationController> AnimationController::Spawn(std::shared_ptr<
 
 	return newObject;
 }
-void  AnimationController::LoadNodesRecursively(std::shared_ptr<AnimationController::Node>& BANodes, const std::shared_ptr<CHL::Node>& CHLNode)
+void  AnimationController::LoadNodesRecursively(std::shared_ptr<AnimationController::Node>& ACNodes, const std::shared_ptr<CHL::Node>& CHLNode)
 {
-	BANodes->Name = CHLNode->Name;
-	BANodes->Transformation = CHLNode->Transformation;
+	ACNodes->Name = CHLNode->Name;
+	ACNodes->Transformation = CHLNode->Transformation;
 
 	for(auto iter = CHLNode->Childern.begin();
 		iter != CHLNode->Childern.end();
 		++iter)
 	{
 		std::shared_ptr<AnimationController::Node> BAChildNode(new AnimationController::Node);
-		BAChildNode->Parent = BANodes;
+		BAChildNode->Parent = ACNodes;
 		this->LoadNodesRecursively(BAChildNode, (*iter));
-		BANodes->Childern.push_back(BAChildNode);
+		ACNodes->Childern.push_back(BAChildNode);
 	}
-	this->AllNodes[BANodes->Name] = BANodes;
+	this->AllNodes[ACNodes->Name] = ACNodes;
 }
 
 double AnimationController::GetSpeed()
