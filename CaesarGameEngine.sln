@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarGameEngine", "CaesarGameEngine\CaesarGameEngine.vcxproj", "{9239EA0D-3EB3-416B-A672-C4BEA37B445B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -188,6 +188,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarModelLibrary", "Helpe
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CaesarLoggerLibrary", "HelperLibrary\CaesarLoggerLibrary\CaesarLoggerLibrary.vcxproj", "{DD4CD8FB-64A4-48EB-80FC-97B345424CE3}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Bullet3", "HelperLibrary\Bullet3\Bullet3.vcxproj", "{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -586,6 +588,27 @@ Global
 		{DD4CD8FB-64A4-48EB-80FC-97B345424CE3}.Release|Win32.ActiveCfg = Release|Win32
 		{DD4CD8FB-64A4-48EB-80FC-97B345424CE3}.Release|Win32.Build.0 = Release|Win32
 		{DD4CD8FB-64A4-48EB-80FC-97B345424CE3}.Release|x64.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|ARM.ActiveCfg = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|Win32.Build.0 = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Debug|x64.ActiveCfg = Debug|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|Any CPU.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|ARM.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|Mixed Platforms.ActiveCfg = R !Optimization|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|Mixed Platforms.Build.0 = R !Optimization|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|Win32.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|Win32.Build.0 = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.R !Optimization|x64.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|Any CPU.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|ARM.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|Win32.ActiveCfg = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|Win32.Build.0 = Release|Win32
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -598,6 +621,7 @@ Global
 		{242492B3-B2E0-458D-99E3-3ED7B62462BD} = {A23A83D9-9645-4158-A34F-8639D001FCD4}
 		{86C5DAEA-023E-426E-8421-BA30A88DEF72} = {A23A83D9-9645-4158-A34F-8639D001FCD4}
 		{DD4CD8FB-64A4-48EB-80FC-97B345424CE3} = {A23A83D9-9645-4158-A34F-8639D001FCD4}
+		{00BFAA68-DB4A-48C6-B4FB-FE6E2DF8B53E} = {A23A83D9-9645-4158-A34F-8639D001FCD4}
 		{18A334CB-53DE-49C7-803A-C3E7A5624AE3} = {6BF4FA07-CB86-471B-9659-0495DD76C07C}
 		{78A5C4ED-4036-4845-977F-84C2D45284D7} = {6BF4FA07-CB86-471B-9659-0495DD76C07C}
 		{767D1DFA-AF97-4D43-BD4D-FFBE1387A0B0} = {6BF4FA07-CB86-471B-9659-0495DD76C07C}
