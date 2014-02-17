@@ -17,9 +17,13 @@
   <ItemGroup>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="PhysicsCommunicator.h" />
+    <ClInclude Include="CollisionShapeConfig.h" />
+    <ClInclude Include="RigidBodyConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PhysicsCommunicator.cpp" />
+    <ClCompile Include="CollisionShapeConfig.cpp" />
+    <ClCompile Include="RigidBodyConfig.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{5E2452FA-3AA4-4E3C-A847-DBA3A2FD7DFE}</ProjectGuid>

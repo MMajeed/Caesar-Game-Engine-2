@@ -7,6 +7,7 @@ require("SkyBox")
 require("LightSetup")
 require("floor")
 require("Information")
+require("PhysicsDemo")
 
 local ironManMesh =  BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"),
                                           [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",

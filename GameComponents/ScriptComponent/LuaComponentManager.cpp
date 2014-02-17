@@ -7,6 +7,7 @@
 #include <InputCommunicator\InputCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
 #include <AnimationCommunicator\AnimationCommunicator.h>
+#include <PhysicsCommunicator\PhysicsCommunicator.h>
 
 namespace LuaComponentManager
 {
@@ -31,6 +32,12 @@ namespace LuaComponentManager
 	void WaitToProcessAnimation(luabind::object const& function)
 	{
 		std::shared_ptr<LuaWaitForProcess> newKeyAction(new LuaWaitForProcess(LuaWaitForProcess::ProcessType::Animation, function));
+
+		ProcessMessage::Add(newKeyAction);
+	}
+	void WaitToProcessPhysics(luabind::object const& function)
+	{
+		std::shared_ptr<LuaWaitForProcess> newKeyAction(new LuaWaitForProcess(LuaWaitForProcess::ProcessType::Physics, function));
 
 		ProcessMessage::Add(newKeyAction);
 	}
@@ -71,6 +78,10 @@ namespace LuaComponentManager
 	{
 		return (double)AnimationCommunicator::GetComponent()->timer.FrameCount;
 	}
+	double GetPhysicsFrame()
+	{
+		return (double)PhysicsCommunicator::GetComponent()->timer.FrameCount;
+	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
@@ -79,6 +90,7 @@ namespace LuaComponentManager
 			luabind::def("WaitToProcessInput", LuaComponentManager::WaitToProcessInput),
 			luabind::def("WaitToProcessScript", LuaComponentManager::WaitToProcessScript),
 			luabind::def("WaitToProcessAnimation", LuaComponentManager::WaitToProcessAnimation),
+			luabind::def("WaitToProcessPhysics", LuaComponentManager::WaitToProcessPhysics),
 			luabind::def("LogInformation", LuaComponentManager::LogInformation),
 			luabind::def("LogError", LuaComponentManager::LogError),
 			luabind::def("Quit", LuaComponentManager::Quit),
@@ -86,7 +98,8 @@ namespace LuaComponentManager
 			luabind::def("GetGraphicFrame", LuaComponentManager::GetGraphicFrame),
 			luabind::def("GetInputFrame", LuaComponentManager::GetInputFrame),
 			luabind::def("GetScriptFrame", LuaComponentManager::GetScriptFrame),
-			luabind::def("GetAnimationFrame", LuaComponentManager::GetAnimationFrame)
+			luabind::def("GetAnimationFrame", LuaComponentManager::GetAnimationFrame),
+			luabind::def("GetPhysicsFrame", LuaComponentManager::GetPhysicsFrame)
 		];
 	}
 };

@@ -12,6 +12,7 @@ namespace LuaComponentManager
 	void WaitToProcessInput(luabind::object const& function);
 	void WaitToProcessScript(luabind::object const& function);
 	void WaitToProcessAnimation(luabind::object const& function);
+	void WaitToProcessPhysics(luabind::object const& function);
 
 	void LogInformation(std::string message);
 	void LogError(std::string message);
@@ -22,6 +23,7 @@ namespace LuaComponentManager
 	double GetInputFrame();
 	double GetScriptFrame();
 	double GetAnimationFrame();
+	double GetPhysicsFrame();
 
 	void RegisterAllLuaFunction(lua_State *lua);
 };

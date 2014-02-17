@@ -5,6 +5,7 @@
 #include <luabind\luabind.hpp>
 #include "LuaBasicDrawableObject.h"
 #include "LuaBasicTexture.h"
+#include "LuaRigidBody.h"
 #include "LuaMath.h"
 #include <ObjectINFO.h>
 

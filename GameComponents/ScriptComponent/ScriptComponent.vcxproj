@@ -127,10 +127,12 @@
   <ItemGroup>
     <ClInclude Include="LuaAnimation.h" />
     <ClInclude Include="LuaAnimationObject.h" />
+    <ClInclude Include="LuaCollisionShape.h" />
     <ClInclude Include="LuaComponentManager.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="LuaMouse.h" />
     <ClInclude Include="LuaNode.h" />
+    <ClInclude Include="LuaRigidBody.h" />
     <ClInclude Include="LuaSleep.h" />
     <ClInclude Include="LuaWaitForProcess.h" />
     <ClInclude Include="ProcessMessage.h" />
@@ -158,10 +160,12 @@
   <ItemGroup>
     <ClCompile Include="LuaAnimation.cpp" />
     <ClCompile Include="LuaAnimationObject.cpp" />
+    <ClCompile Include="LuaCollisionShape.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaMouse.cpp" />
     <ClCompile Include="LuaNode.cpp" />
     <ClCompile Include="LuaRegisterAll.cpp" />
+    <ClCompile Include="LuaRigidBody.cpp" />
     <ClCompile Include="LuaSleep.cpp" />
     <ClCompile Include="LuaWaitForProcess.cpp" />
     <ClCompile Include="ProcessMessage.cpp" />

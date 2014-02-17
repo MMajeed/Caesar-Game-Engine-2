@@ -1,10 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Linker.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="CollisionShape.h">
+      <Filter>CollisionShape</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereShape.h">
+      <Filter>CollisionShape\Primitives\SphereShape</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxShape.h">
+      <Filter>CollisionShape\Primitives\BoxShape</Filter>
+    </ClInclude>
+    <ClInclude Include="CylinderShape.h">
+      <Filter>CollisionShape\Primitives\CylinderShape</Filter>
+    </ClInclude>
+    <ClInclude Include="CapsuleShape.h">
+      <Filter>CollisionShape\Primitives\CapsuleShape</Filter>
+    </ClInclude>
+    <ClInclude Include="ConeShape.h">
+      <Filter>CollisionShape\Primitives\ConeShape</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvexHullShape.h">
+      <Filter>CollisionShape\Meshes\ConvexHullShape</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvexTriangleMeshShape.h">
+      <Filter>CollisionShape\Meshes\ConvexTriangleMeshShape</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="Linker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="CollisionShape.cpp">
+      <Filter>CollisionShape</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereShape.cpp">
+      <Filter>CollisionShape\Primitives\SphereShape</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxShape.cpp">
+      <Filter>CollisionShape\Primitives\BoxShape</Filter>
+    </ClCompile>
+    <ClCompile Include="CylinderShape.cpp">
+      <Filter>CollisionShape\Primitives\CylinderShape</Filter>
+    </ClCompile>
+    <ClCompile Include="CapsuleShape.cpp">
+      <Filter>CollisionShape\Primitives\CapsuleShape</Filter>
+    </ClCompile>
+    <ClCompile Include="ConeShape.cpp">
+      <Filter>CollisionShape\Primitives\ConeShape</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvexHullShape.cpp">
+      <Filter>CollisionShape\Meshes\ConvexHullShape</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvexTriangleMeshShape.cpp">
+      <Filter>CollisionShape\Meshes\ConvexTriangleMeshShape</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBody.cpp">
+      <Filter>RigidBody</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CollisionShape">
+      <UniqueIdentifier>{7b888793-e3d9-40d8-a236-3dd7afcc3ce8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Primitives">
+      <UniqueIdentifier>{cbcd61d4-d712-422c-8b54-09a916ae80bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Primitives\SphereShape">
+      <UniqueIdentifier>{96ff94b0-b46d-4818-b919-21d913be0307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Primitives\BoxShape">
+      <UniqueIdentifier>{8c85171c-357c-41a5-b47e-108dbeef6f82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Primitives\CylinderShape">
+      <UniqueIdentifier>{e62745ec-c60c-40d1-8a3d-228a3c0027bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Primitives\CapsuleShape">
+      <UniqueIdentifier>{51f729c3-9d3c-4d54-9a23-5e3b124ac4bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Primitives\ConeShape">
+      <UniqueIdentifier>{0dd18e38-f821-43ef-a537-4cd3772b36f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Meshes">
+      <UniqueIdentifier>{d0ef213d-23c9-4960-ab53-f42aa374cb6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Meshes\ConvexHullShape">
+      <UniqueIdentifier>{f49cc353-b2d1-444d-a0ac-b5a6a326bbf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShape\Meshes\ConvexTriangleMeshShape">
+      <UniqueIdentifier>{58448746-19f8-4493-8f37-eb18838290a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RigidBody">
+      <UniqueIdentifier>{0a7990aa-2fb4-4b03-b104-0c5a79454ccd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

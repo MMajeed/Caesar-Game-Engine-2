@@ -15,11 +15,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoxShape.h" />
+    <ClInclude Include="CapsuleShape.h" />
+    <ClInclude Include="CollisionShape.h" />
+    <ClInclude Include="ConeShape.h" />
+    <ClInclude Include="ConvexHullShape.h" />
+    <ClInclude Include="ConvexTriangleMeshShape.h" />
+    <ClInclude Include="CylinderShape.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="SphereShape.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoxShape.cpp" />
+    <ClCompile Include="CapsuleShape.cpp" />
+    <ClCompile Include="CollisionShape.cpp" />
+    <ClCompile Include="ConeShape.cpp" />
+    <ClCompile Include="ConvexHullShape.cpp" />
+    <ClCompile Include="ConvexTriangleMeshShape.cpp" />
+    <ClCompile Include="CylinderShape.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SphereShape.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{CC0AC2B3-0CB1-4246-A602-00F16417921E}</ProjectGuid>

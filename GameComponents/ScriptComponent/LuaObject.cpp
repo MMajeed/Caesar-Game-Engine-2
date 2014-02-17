@@ -50,6 +50,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	std::array<float, ObjectINFO::USERDATASIZE> userData;
 	std::fill(userData.begin(), userData.end(), 0.0f);
 	ObjectINFO::sAnimationJoint animJoint;
+	std::string rigidBodyID;
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -69,6 +70,7 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::LIGHT)			{ light = luabind::object_cast<bool>(*it); }
 		else if(key == Keys::ObjectInfo::SHADOW)		{ shadow = luabind::object_cast<bool>(*it); }
 		else if(key == Keys::ObjectInfo::DEPTH)			{ depth = luabind::object_cast<bool>(*it); }
+		else if(key == Keys::ObjectInfo::RIGIDBODY)		{ rigidBodyID = luabind::object_cast<LuaRigidBody::RididBody>(*it).ID; }
 		else if(key == Keys::ObjectInfo::OBJUSERDATA)
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
@@ -107,6 +109,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	obj->Depth = depth;
 	obj->UserData = userData;
 	obj->AnimationJoint = animJoint;
+	obj->PhysicsRigidBodyID = rigidBodyID;
 	EntityConfig::SetEntity(obj);
 	this->ID = obj->ID;
 }

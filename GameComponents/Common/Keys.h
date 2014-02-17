@@ -98,6 +98,7 @@ namespace Keys
 		const static std::string DEPTH          = "Depth";
 		const static std::string OBJUSERDATA	= "UserData";
 		const static std::string ANIMATIONJOINT = "AnimationJoint";
+		const static std::string RIGIDBODY      = "RigidBody";
 	};
 
 	namespace ScreenShot
@@ -120,6 +121,15 @@ namespace Keys
 		const static std::string STARTNODENAME	    = "StartNodeName";
 		const static std::string STARTRATIO			= "StartRatio";
 		const static std::string STEPRATIO			= "StepRatio";
+	};
+
+	namespace RigidBody
+	{
+		const static std::string POSITION       = "Position";
+		const static std::string ROTATION       = "Rotation";
+		const static std::string INERTIA        = "Inertia";
+		const static std::string MASS           = "Mass";
+		const static std::string COLLISIONSHAPE = "CollisionShape";
 	};
 };
 

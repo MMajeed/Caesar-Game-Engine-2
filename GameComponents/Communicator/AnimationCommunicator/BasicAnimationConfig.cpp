@@ -29,8 +29,8 @@ namespace BasicAnimationConfig
 			std::shared_ptr<CHL::Animation> animation;
 			std::string	ID;
 		};
-
-		std::shared_ptr<CreateMessage> msg(new CreateMessage(animation));
+		std::shared_ptr<CHL::Animation> cloneAnimation(new CHL::Animation(*animation));
+		std::shared_ptr<CreateMessage> msg(new CreateMessage(cloneAnimation));
 		AnimationManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}

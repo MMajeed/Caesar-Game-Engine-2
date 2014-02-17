@@ -32,6 +32,17 @@ namespace CML
 		returnValue[3] = {0.0, 0.0, 0.0, 1.0};
 		return returnValue;
 	}
+	CML::Vec4 PYRToQuaternion(double pitch, double yaw, double roll)
+	{
+		Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitZ());
+		Eigen::AngleAxisd yawAngle(yaw, Eigen::Vector3d::UnitY());
+		Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitX());
+
+		Eigen::Quaternion<double> q = rollAngle * yawAngle * pitchAngle;
+
+		CML::Vec4 returnValue = {q.x(), q.y(), q.z(), q.w()};
+		return returnValue;
+	}
 	Vec3 CrossProduct(const Vec3& rhs, const Vec3& lhs)
 	{
 			Eigen::Vector3d eRhs = CML::ConvertVec(rhs);

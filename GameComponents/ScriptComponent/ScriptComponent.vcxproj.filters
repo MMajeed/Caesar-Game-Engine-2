@@ -84,6 +84,12 @@
     <ClInclude Include="LuaAnimationObject.h">
       <Filter>Lua Class/Function\LuaAnimationObjects</Filter>
     </ClInclude>
+    <ClInclude Include="LuaCollisionShape.h">
+      <Filter>Lua Class/Function\LuaCollisionShape</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaRigidBody.h">
+      <Filter>Lua Class/Function\LuaRigidBody</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaManager.cpp" />
@@ -164,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="LuaAnimationObject.cpp">
       <Filter>Lua Class/Function\LuaAnimationObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaCollisionShape.cpp">
+      <Filter>Lua Class/Function\LuaCollisionShape</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaRigidBody.cpp">
+      <Filter>Lua Class/Function\LuaRigidBody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +259,12 @@
     </Filter>
     <Filter Include="Lua Class/Function\LuaAnimationObjects">
       <UniqueIdentifier>{de7a75a0-e35c-456d-a6a6-638195d79cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaCollisionShape">
+      <UniqueIdentifier>{3e4ac30c-937b-461c-b477-4b5302111f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaRigidBody">
+      <UniqueIdentifier>{ee463ac4-05e0-4a07-a7c8-05400e5ed95b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

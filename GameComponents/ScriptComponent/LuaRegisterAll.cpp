@@ -19,6 +19,8 @@
 #include "LuaAnimation.h"
 #include "LuaNode.h"
 #include "LuaAnimationObject.h"
+#include "LuaCollisionShape.h"
+#include "LuaRigidBody.h"
 
 void LuaRegisterAll(lua_State *lua)
 {
@@ -41,4 +43,6 @@ void LuaRegisterAll(lua_State *lua)
 	LuaAnimation::RegisterAllLuaFunction(lua);
 	LuaNode::RegisterAllLuaFunction(lua);
 	LuaAnimationObject::RegisterAllLuaFunction(lua);
+	LuaCollisionShape::RegisterAllLuaFunction(lua);
+	LuaRigidBody::RegisterAllLuaFunction(lua);
 }

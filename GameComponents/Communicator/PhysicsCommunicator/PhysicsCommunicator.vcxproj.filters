@@ -5,15 +5,33 @@
     <ClInclude Include="PhysicsCommunicator.h">
       <Filter>PhysicsCommunicator</Filter>
     </ClInclude>
+    <ClInclude Include="RigidBodyConfig.h">
+      <Filter>RigidBodyConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionShapeConfig.h">
+      <Filter>CollisionShapeConfig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PhysicsCommunicator">
       <UniqueIdentifier>{9ef3d8ac-b2af-4389-93c6-6b1a3cf4842d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RigidBodyConfig">
+      <UniqueIdentifier>{11ac7b6e-5878-45cc-8416-272050f634a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionShapeConfig">
+      <UniqueIdentifier>{0ea1c95a-efa2-4bff-86e1-e71f70cc0646}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PhysicsCommunicator.cpp">
       <Filter>PhysicsCommunicator</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyConfig.cpp">
+      <Filter>RigidBodyConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionShapeConfig.cpp">
+      <Filter>CollisionShapeConfig</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

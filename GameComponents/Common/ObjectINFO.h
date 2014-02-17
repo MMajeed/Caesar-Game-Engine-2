@@ -30,6 +30,7 @@ public:
 		std::string AnimationID;
 		std::string JointName;
 	} AnimationJoint;
+	std::string PhysicsRigidBodyID;
 
 
 	ObjectINFO();

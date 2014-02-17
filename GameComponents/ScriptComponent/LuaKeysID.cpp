@@ -93,6 +93,7 @@ void LuaKeysID::Register(lua_State *lua)
 		ObjectInfoTable[Keys::ObjectInfo::DEPTH]          = Keys::ObjectInfo::DEPTH;
 		ObjectInfoTable[Keys::ObjectInfo::OBJUSERDATA]    = Keys::ObjectInfo::OBJUSERDATA;
 		ObjectInfoTable[Keys::ObjectInfo::ANIMATIONJOINT] = Keys::ObjectInfo::ANIMATIONJOINT;
+		ObjectInfoTable[Keys::ObjectInfo::RIGIDBODY]	  = Keys::ObjectInfo::RIGIDBODY;
 	luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 	luabind::object BasicScreenShot = luabind::newtable(lua);
@@ -113,6 +114,14 @@ void LuaKeysID::Register(lua_State *lua)
 		AnimationController[Keys::AnimationController::STARTRATIO]       = Keys::AnimationController::STARTRATIO;
 		AnimationController[Keys::AnimationController::STEPRATIO]        = Keys::AnimationController::STEPRATIO;
 	luaKeyTable["AnimationController"] = AnimationController;
+
+	luabind::object RigidBody = luabind::newtable(lua);
+		RigidBody[Keys::RigidBody::POSITION]       = Keys::RigidBody::POSITION;
+		RigidBody[Keys::RigidBody::ROTATION]       = Keys::RigidBody::ROTATION;
+		RigidBody[Keys::RigidBody::INERTIA]        = Keys::RigidBody::INERTIA;
+		RigidBody[Keys::RigidBody::MASS]           = Keys::RigidBody::MASS;
+		RigidBody[Keys::RigidBody::COLLISIONSHAPE] = Keys::RigidBody::COLLISIONSHAPE;
+	luaKeyTable["RigidBody"] = RigidBody;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;
 }

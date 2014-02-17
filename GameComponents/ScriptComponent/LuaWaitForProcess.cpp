@@ -4,6 +4,7 @@
 #include <InputCommunicator\InputCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
 #include <AnimationCommunicator\AnimationCommunicator.h>
+#include <PhysicsCommunicator\PhysicsCommunicator.h>
 #include <Logger.h>
 #include "ProcessMessage.h"
 
@@ -29,6 +30,9 @@ void LuaWaitForProcess::Action(lua_State *lua)
 			break;
 		case LuaWaitForProcess::ProcessType::Animation:
 			empty = AnimationCommunicator::GetComponent()->AnyMessage();
+			break;
+		case LuaWaitForProcess::ProcessType::Physics:
+			empty = PhysicsCommunicator::GetComponent()->AnyMessage();
 			break;
 
 	}

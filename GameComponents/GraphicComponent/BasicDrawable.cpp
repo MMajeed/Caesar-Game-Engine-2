@@ -9,6 +9,7 @@
 #include <VecOperators.h>
 #include <MathFunctions.h>
 #include <AnimationCommunicator\AnimationControllerConfig.h>
+#include <PhysicsCommunicator\RigidBodyConfig.h>
 
 BasicDrawable::BasicDrawable()
 {
@@ -238,19 +239,27 @@ void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, 
 
 void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
 {
-	CML::Matrix4x4 animation = CML::MatrixIdentity();
+	CML::Matrix4x4 animation; // Identity by default
 	if(!object->AnimationJoint.AnimationID.empty() && !object->AnimationJoint.JointName.empty())
 	{
 		animation = AnimationControllerConfig::GetSingleJoint(object->AnimationJoint.AnimationID, object->AnimationJoint.JointName);
 	}
+
+	CML::Matrix4x4 physics; // Identity by default
+	if(!object->PhysicsRigidBodyID.empty())
+	{
+		physics = RigidBodyConfig::GetTranslation(object->PhysicsRigidBodyID);
+	}
+
 	CML::Matrix4x4 mObjectFinal = ObjectCalculation(object->Location, object->Rotation, object->Scale);
 
 	XMFLOAT4X4 animation4x4 = Convert4x4(animation);
+	XMFLOAT4X4 physics4x4 = Convert4x4(physics);
 	worldFloat4x4 = Convert4x4(mObjectFinal);
 	XMFLOAT4X4 prespectiveMatrix = Convert4x4(si.ProjectionMatrix);
 	XMFLOAT4X4 viewMatrix = Convert4x4(si.CamerMatrix);
 
-	XMMATRIX finalMatrix = XMLoadFloat4x4(&animation4x4) *  XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
+	XMMATRIX finalMatrix = XMLoadFloat4x4(&animation4x4) * XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&physics4x4) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
 
 	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);
 }

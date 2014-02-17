@@ -61,8 +61,9 @@ namespace BasicDrawableConfig
 			std::string	ID;
 		};
 
+		std::shared_ptr<CHL::Model> modelClone(new CHL::Model(*model));
 		std::shared_ptr<AddBasicDrawableMessage> msg
-			(new AddBasicDrawableMessage(model, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
+			(new AddBasicDrawableMessage(modelClone, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}
@@ -119,8 +120,9 @@ namespace BasicDrawableConfig
 			std::string	ID;
 		};
 
+		std::shared_ptr<CHL::Model> modelClone(new CHL::Model(*model));
 		std::shared_ptr<AddBasicDrawableMessage> msg
-			(new AddBasicDrawableMessage(model, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
+			(new AddBasicDrawableMessage(modelClone, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}
@@ -159,7 +161,8 @@ namespace BasicDrawableConfig
 				return Message::Status::Complete;
 			}
 		};
-		std::shared_ptr<ChangeModel> msg(new ChangeModel(ID, model));
+		std::shared_ptr<CHL::Model> modelClone(new CHL::Model(*model));
+		std::shared_ptr<ChangeModel> msg(new ChangeModel(ID, modelClone));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 
