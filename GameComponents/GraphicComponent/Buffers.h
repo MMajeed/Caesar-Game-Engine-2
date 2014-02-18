@@ -34,6 +34,9 @@ public:
 
 	struct cbObject
 	{
+		XMMATRIX animation;
+		XMMATRIX object;
+		XMMATRIX physics;
 		XMMATRIX world;
 		XMMATRIX worldViewProj;
 		MaterialInfo colour;  

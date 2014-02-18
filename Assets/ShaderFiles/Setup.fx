@@ -40,6 +40,9 @@ struct PS_INPUT
 
 cbuffer cbObject : register( b0 )
 {
+	matrix gAnimation;
+	matrix gObject;
+	matrix gPhysics;
 	matrix gWorld;
     matrix gWorldViewProj;
 	MaterialInfo objectMaterial;

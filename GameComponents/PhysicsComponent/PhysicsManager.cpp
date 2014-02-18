@@ -23,7 +23,6 @@ void PhysicsManager::Init()
 void PhysicsManager::Work(double realTime, double deltaTime)
 {
 	this->Info.dynamicsWorld->stepSimulation((float)deltaTime, 10);
-
 	for(auto iter = this->RigidBodyObjs.begin();
 		iter != this->RigidBodyObjs.end();
 		++iter)

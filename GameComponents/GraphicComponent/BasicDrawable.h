@@ -69,7 +69,12 @@ public:
 	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
 
 	virtual void ProcessModel(std::shared_ptr<CHL::Model> model);
-	virtual void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4);
+	virtual void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si,
+							  XMFLOAT4X4& animationFloat4x4,
+							  XMFLOAT4X4& objectFloat4x4,
+							  XMFLOAT4X4& physicsFloat4x4,
+							  XMFLOAT4X4& worldFloat4x4,
+							  XMFLOAT4X4& finalFloat4x4);
 
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
 	virtual void ChangeModel(std::shared_ptr<CHL::Model> model);

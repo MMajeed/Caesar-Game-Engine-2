@@ -1,13 +1,6 @@
 local PhysicsDemo = {}
 
-local floorBox = Object({
-                [Keys["ObjectInfo"]["Location"]]    = Vector4(-100.0, 0.0, 0.0),
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(100.0, 0.5, 100.0),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
+
 local floorBoxCollisionShape = CreateBoxShape(Vector4(50.0, 0.25, 50.0));
 local floorBoxRididBody = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 0.0, 0.0),
@@ -15,6 +8,14 @@ local floorBoxRididBody = RididBody({
                 [Keys["RigidBody"]["Inertia"]]        = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 0.0,
                 [Keys["RigidBody"]["CollisionShape"]] = floorBoxCollisionShape,});
+local floorBox = Object({
+                [Keys["ObjectInfo"]["Scale"]]       = Vector4(100.0, 0.5, 100.0),
+                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
+                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
+                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
+                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
+                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,
+                [Keys["ObjectInfo"]["RigidBody"]]   = floorBoxRididBody,});
                 
   
 
@@ -29,7 +30,7 @@ local fallingBox = Object({
                 [Keys["ObjectInfo"]["Scale"]]       = Vector4(5.0, 5.0, 5.0),
                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
+                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
                 [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
                 [Keys["ObjectInfo"]["RigidBody"]]   = fallingBoxRididBody,});           
 
@@ -48,7 +49,7 @@ OnKeyUp(KeyCode["T"], function() PhysicsForwardButton = false; end);-- Up
 OnKeyUp(KeyCode["G"], function() PhysicsBackwardButton = false; end);-- Down
 
 function UpdatePhysicsDemo(time, ID)
-    local delta = 1.0 * time;
+    local delta = 2.0 * time;
     if(PhysicsLeftButton == true) then
         fallingBoxRididBody:ApplyTorque(Vector4(delta, 0.0, 0.0));
     end

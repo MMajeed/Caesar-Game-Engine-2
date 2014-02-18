@@ -19,7 +19,12 @@ public:
 
 	virtual void ProcessModel(std::shared_ptr<CHL::Model> model);
 
-	void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4);
+	virtual void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si,
+							  XMFLOAT4X4& animationFloat4x4,
+							  XMFLOAT4X4& objectFloat4x4,
+							  XMFLOAT4X4& physicsFloat4x4,
+							  XMFLOAT4X4& worldFloat4x4,
+							  XMFLOAT4X4& finalFloat4x4);
 };
 
 

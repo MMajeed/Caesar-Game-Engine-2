@@ -147,10 +147,17 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, cons
 }
 void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
 {
-	XMFLOAT4X4 worldFloat4x4; XMFLOAT4X4 finalFloat4x4;
-	this->CalculateWVP(object, si, worldFloat4x4, finalFloat4x4);
+	XMFLOAT4X4 animationFloat4x4;
+	XMFLOAT4X4 objectFloat4x4;
+	XMFLOAT4X4 physicsFloat4x4;
+	XMFLOAT4X4 worldFloat4x4;
+	XMFLOAT4X4 finalFloat4x4;
+	this->CalculateWVP(object, si, animationFloat4x4, objectFloat4x4, physicsFloat4x4, worldFloat4x4, finalFloat4x4);
 	cBuffer::cbObject cbCEF;
 	
+	cbCEF.animation = XMMatrixTranspose(XMLoadFloat4x4(&animationFloat4x4));
+	cbCEF.object = XMMatrixTranspose(XMLoadFloat4x4(&objectFloat4x4));
+	cbCEF.physics = XMMatrixTranspose(XMLoadFloat4x4(&physicsFloat4x4));
 	cbCEF.world = XMMatrixTranspose(XMLoadFloat4x4(&worldFloat4x4));
 	cbCEF.worldViewProj = XMMatrixTranspose(XMLoadFloat4x4(&finalFloat4x4));
 	cbCEF.colour.diffuse = ConvertVec4(object->Diffuse);
@@ -159,11 +166,6 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& o
 	cbCEF.NumberOf2DTextures = object->Texture2DVecs.size() < cBuffer::numOfTextures ? object->Texture2DVecs.size() : cBuffer::numOfTextures;
 	cbCEF.NumberOfCubeTextures = object->TextureCubeVecs.size() < cBuffer::numOfTextures ? object->TextureCubeVecs.size() : cBuffer::numOfTextures;
 	cbCEF.HasLight = object->Light;
-
-	if(cbCEF.HasLight == false)
-	{
-		int breakpoint = 0;
-	}
 
 	for(unsigned int i = 0; i < 4; ++i)
 	{
@@ -237,7 +239,12 @@ void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, 
 	}
 }
 
-void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
+void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si,
+								 XMFLOAT4X4& animationFloat4x4,
+								 XMFLOAT4X4& objectFloat4x4,
+								 XMFLOAT4X4& physicsFloat4x4,
+								 XMFLOAT4X4& worldFloat4x4,
+								 XMFLOAT4X4& finalFloat4x4)
 {
 	CML::Matrix4x4 animation; // Identity by default
 	if(!object->AnimationJoint.AnimationID.empty() && !object->AnimationJoint.JointName.empty())
@@ -253,14 +260,16 @@ void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, cons
 
 	CML::Matrix4x4 mObjectFinal = ObjectCalculation(object->Location, object->Rotation, object->Scale);
 
-	XMFLOAT4X4 animation4x4 = Convert4x4(animation);
-	XMFLOAT4X4 physics4x4 = Convert4x4(physics);
-	worldFloat4x4 = Convert4x4(mObjectFinal);
+	animationFloat4x4 = Convert4x4(animation);
+	objectFloat4x4 = Convert4x4(mObjectFinal);
+	physicsFloat4x4 = Convert4x4(physics);
+	XMMATRIX worldMatrix = XMLoadFloat4x4(&animationFloat4x4) * XMLoadFloat4x4(&objectFloat4x4) * XMLoadFloat4x4(&physicsFloat4x4);
 	XMFLOAT4X4 prespectiveMatrix = Convert4x4(si.ProjectionMatrix);
 	XMFLOAT4X4 viewMatrix = Convert4x4(si.CamerMatrix);
 
-	XMMATRIX finalMatrix = XMLoadFloat4x4(&animation4x4) * XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&physics4x4) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
-
+	XMMATRIX finalMatrix = worldMatrix * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
+	
+	XMStoreFloat4x4(&worldFloat4x4, worldMatrix);
 	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);
 }
 

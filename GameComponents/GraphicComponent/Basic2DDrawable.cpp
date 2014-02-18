@@ -8,6 +8,8 @@
 #include <EntityCommunicator\EntityConfig.h>
 #include <EntityCommunicator\ImportantIDConfig.h>
 #include <VecOperators.h>
+#include <AnimationCommunicator\AnimationControllerConfig.h>
+#include <PhysicsCommunicator\RigidBodyConfig.h>
 
 Basic2DDrawable::Basic2DDrawable()
 {
@@ -61,17 +63,39 @@ void Basic2DDrawable::ProcessModel(std::shared_ptr<CHL::Model> model)
 	}
 }
 
-void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si, XMFLOAT4X4& worldFloat4x4, XMFLOAT4X4& finalFloat4x4)
+void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si,
+								 XMFLOAT4X4& animationFloat4x4,
+								 XMFLOAT4X4& objectFloat4x4,
+								 XMFLOAT4X4& physicsFloat4x4,
+								 XMFLOAT4X4& worldFloat4x4,
+								 XMFLOAT4X4& finalFloat4x4)
 {
+	CML::Matrix4x4 animation; // Identity by default
+	if(!object->AnimationJoint.AnimationID.empty() && !object->AnimationJoint.JointName.empty())
+	{
+		animation = AnimationControllerConfig::GetSingleJoint(object->AnimationJoint.AnimationID, object->AnimationJoint.JointName);
+	}
+
+	CML::Matrix4x4 physics; // Identity by default
+	if(!object->PhysicsRigidBodyID.empty())
+	{
+		physics = RigidBodyConfig::GetTranslation(object->PhysicsRigidBodyID);
+	}
+
 	CML::Vec4 loc = object->Location;
 	loc(1) = -loc(1);
 	loc = loc - CML::Vec4({(si.width / 2.0), -(si.height / 2.0), 0.0, 0.0});
-	
+
 	CML::Matrix4x4 mObjectFinal = ObjectCalculation(loc, object->Rotation, object->Scale);
 
-	worldFloat4x4  = Convert4x4(mObjectFinal);
-	XMFLOAT4X4 orthMatrix = Convert4x4(si.TwoDimMatrix);
+	animationFloat4x4 = Convert4x4(animation);
+	objectFloat4x4 = Convert4x4(mObjectFinal);
+	physicsFloat4x4 = Convert4x4(physics);
+	XMMATRIX worldMatrix = XMLoadFloat4x4(&animationFloat4x4) * XMLoadFloat4x4(&objectFloat4x4) * XMLoadFloat4x4(&physicsFloat4x4);
+	XMFLOAT4X4 prespectiveMatrix = Convert4x4(si.TwoDimMatrix);
 
-	XMMATRIX finalMatrix = XMLoadFloat4x4(&worldFloat4x4) * XMLoadFloat4x4(&orthMatrix);
+	XMMATRIX finalMatrix = worldMatrix * XMLoadFloat4x4(&prespectiveMatrix);
+
+	XMStoreFloat4x4(&worldFloat4x4, worldMatrix);
 	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);
 }
