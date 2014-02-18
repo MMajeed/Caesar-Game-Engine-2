@@ -33,8 +33,14 @@ void RigidBody::Init()
 }
 void RigidBody::Destory()
 {
+	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
+
+	if(this->Info.Body) 
+	{
+		physicsManager.Info.dynamicsWorld->addRigidBody(this->Info.Body);
+		delete this->Info.Body;
+	}
 	if(this->Info.DefaultMotionState) { delete this->Info.DefaultMotionState; }
-	if(this->Info.Body) { delete this->Info.Body; }
 }
 void RigidBody::Update()
 {
@@ -56,11 +62,13 @@ void RigidBody::ApplyTorque(CML::Vec3 v)
 {
 	btVector3 btV((float)v(0), (float)v(1), (float)v(2));
 	this->Info.Body->applyTorque(btV);
+	this->Info.Body->activate();
 }
 void RigidBody::ApplyCentralForce(CML::Vec3 v)
 {
 	btVector3 btV((float)v(0), (float)v(1), (float)v(2));
 	this->Info.Body->applyCentralForce(btV);
+	this->Info.Body->activate();
 }
 
 CML::Vec3 RigidBody::GetLocation()

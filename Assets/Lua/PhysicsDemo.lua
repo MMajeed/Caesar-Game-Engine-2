@@ -51,10 +51,10 @@ OnKeyUp(KeyCode["G"], function() PhysicsBackwardButton = false; end);-- Down
 function UpdatePhysicsDemo(time, ID)
     local delta = 2.0 * time;
     if(PhysicsLeftButton == true) then
-        fallingBoxRididBody:ApplyTorque(Vector4(delta, 0.0, 0.0));
+        fallingBoxRididBody:ApplyCentralFroce(Vector4(delta, 0.0, 0.0));
     end
     if(PhysicsRightButton == true) then
-        fallingBoxRididBody:ApplyTorque(Vector4(-delta , 0.0, 0.0));
+        fallingBoxRididBody:ApplyCentralFroce(Vector4(-delta , 0.0, 0.0));
     end
     
     if(PhysicsForwardButton == true) then

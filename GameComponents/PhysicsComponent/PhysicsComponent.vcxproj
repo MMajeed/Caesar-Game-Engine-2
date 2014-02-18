@@ -15,28 +15,44 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallSocketBodyToBody.h" />
+    <ClInclude Include="BallSocketBodyToPoint.h" />
     <ClInclude Include="BoxShape.h" />
     <ClInclude Include="CapsuleShape.h" />
     <ClInclude Include="CollisionShape.h" />
     <ClInclude Include="ConeShape.h" />
+    <ClInclude Include="ConeTwistBodyToBody.h" />
+    <ClInclude Include="ConeTwistBodyToPoint.h" />
+    <ClInclude Include="Constraint.h" />
     <ClInclude Include="ConvexHullShape.h" />
     <ClInclude Include="ConvexTriangleMeshShape.h" />
     <ClInclude Include="CylinderShape.h" />
+    <ClInclude Include="HingeBodyToBody.h" />
+    <ClInclude Include="HingeBodyToPoint.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="SliderBodyToBody.h" />
     <ClInclude Include="SphereShape.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BallSocketBodyToBody.cpp" />
+    <ClCompile Include="BallSocketBodyToPoint.cpp" />
     <ClCompile Include="BoxShape.cpp" />
     <ClCompile Include="CapsuleShape.cpp" />
     <ClCompile Include="CollisionShape.cpp" />
     <ClCompile Include="ConeShape.cpp" />
+    <ClCompile Include="ConeTwistBodyToBody.cpp" />
+    <ClCompile Include="ConeTwistBodyToPoint.cpp" />
+    <ClCompile Include="Constraint.cpp" />
     <ClCompile Include="ConvexHullShape.cpp" />
     <ClCompile Include="ConvexTriangleMeshShape.cpp" />
     <ClCompile Include="CylinderShape.cpp" />
+    <ClCompile Include="HingeBodyToBody.cpp" />
+    <ClCompile Include="HingeBodyToPoint.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="SliderBodyToBody.cpp" />
     <ClCompile Include="SphereShape.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
