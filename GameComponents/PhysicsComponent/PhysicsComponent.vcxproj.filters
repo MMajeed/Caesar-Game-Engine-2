@@ -95,5 +95,14 @@
     <Filter Include="RigidBody">
       <UniqueIdentifier>{0a7990aa-2fb4-4b03-b104-0c5a79454ccd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Constraint">
+      <UniqueIdentifier>{d1de9f85-72e9-4ca9-8bec-57944dd51fbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constraint\BallSocketBodyToPoint">
+      <UniqueIdentifier>{ab573d41-deaf-4389-9685-225e5b5609dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constraint\BallSocketBodyToBody">
+      <UniqueIdentifier>{6c8ac917-e116-443b-8160-a41b761911a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

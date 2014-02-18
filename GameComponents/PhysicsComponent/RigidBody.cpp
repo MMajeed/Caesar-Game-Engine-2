@@ -26,7 +26,6 @@ void RigidBody::Init()
 		btScalar mass = this->Info.Mass;
 		btVector3 fallInertia((float)this->Info.Inertia(0), (float)this->Info.Inertia(1), (float)this->Info.Inertia(2));
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, pCollisionShape, fallInertia);
-		//fallRigidBodyCI.m_friction = this->Info.Friction;
 		this->Info.Body = new btRigidBody(fallRigidBodyCI);
 
 		physicsManager.Info.dynamicsWorld->addRigidBody(this->Info.Body);
@@ -42,7 +41,7 @@ void RigidBody::Update()
 	btTransform trans;
 	this->Info.Body->getMotionState()->getWorldTransform(trans);
 	CML::Vec3 newLocation = {trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z()};
-	CML::Vec4 newRotation = {trans.getRotation().x(), trans.getRotation().y(), trans.getRotation().z()};
+	CML::Vec4 newRotation = {trans.getRotation().w(), trans.getRotation().x(), trans.getRotation().y(), trans.getRotation().z()};
 
 	CML::Matrix4x4 translation = CML::TransformMatrix(newLocation, newRotation, {1.0, 1.0, 1.0});
 
@@ -81,7 +80,6 @@ std::shared_ptr<RigidBody> RigidBody::Spawn(std::string CollisionShapeID,
 											CML::Vec3 Location,
 											CML::Vec3 PYRRotation,
 											float mass,
-											float friction,
 											bool calculateIntertia,
 											CML::Vec3 intertia)
 {
@@ -109,7 +107,6 @@ std::shared_ptr<RigidBody> RigidBody::Spawn(std::string CollisionShapeID,
 		newObject->Info.CollisionShape = std::pair<std::string, std::weak_ptr<CollisionShape>>(CollisionShapeID, iter->second);
 		newObject->Info.Inertia = finalInertiaValue;
 		newObject->Info.Mass = mass;
-		newObject->Info.Friction = friction;
 		newObject->Info.DefaultLocation = Location;
 		newObject->Info.DefaultQuaRotation = quaternionRotation;
 

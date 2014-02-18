@@ -12,7 +12,6 @@ namespace RigidBodyConfig
 					   CML::Vec3 Location,
 					   CML::Vec3 PYRRotation,
 					   float mass,
-					   float friction,
 					   bool calculateIntertia,
 					   CML::Vec3 intertia)
 	{
@@ -23,7 +22,6 @@ namespace RigidBodyConfig
 						   CML::Vec3 Location,
 						   CML::Vec3 PYRRotation,
 						   float mass,
-						   float friction,
 						   bool calculateIntertia,
 						   CML::Vec3 intertia)
 			{
@@ -32,7 +30,6 @@ namespace RigidBodyConfig
 				this->Location = Location;
 				this->PYRRotation = PYRRotation;
 				this->mass = mass;
-				this->friction = friction;
 				this->calculateIntertia = calculateIntertia;
 				this->intertia = intertia;
 			}
@@ -40,7 +37,7 @@ namespace RigidBodyConfig
 			virtual Message::Status Work()
 			{
 				std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
-				std::shared_ptr<RigidBody> newObj = RigidBody::Spawn(this->CollisionShapeID, this->Location, this->PYRRotation, this->mass, this->friction, this->calculateIntertia, this->intertia);
+				std::shared_ptr<RigidBody> newObj = RigidBody::Spawn(this->CollisionShapeID, this->Location, this->PYRRotation, this->mass, this->calculateIntertia, this->intertia);
 				PhysicsManager::GetInstance().InsertRigidBodyObj(this->ID, newObj);
 
 				return Message::Status::Complete;
@@ -50,13 +47,12 @@ namespace RigidBodyConfig
 			CML::Vec3 Location;
 			CML::Vec3 PYRRotation;
 			float mass;
-			float friction;
 			bool calculateIntertia;
 			CML::Vec3 intertia;
 			std::string	ID;
 		};
 
-		std::shared_ptr<CreateMesssage> msg(new CreateMesssage(CollisionShapeID, Location, PYRRotation, mass, friction, calculateIntertia, intertia));
+		std::shared_ptr<CreateMesssage> msg(new CreateMesssage(CollisionShapeID, Location, PYRRotation, mass, calculateIntertia, intertia));
 		PhysicsManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}

@@ -13,7 +13,6 @@ namespace LuaRigidBody
 		CML::Vec4 Inertia;
 		bool calculateInertia = true;
 		double mass = 0.0;
-		double fricition = 0.0;
 		std::string collisionShape;
 
 		if(luabind::type(table) == LUA_TTABLE)
@@ -28,12 +27,11 @@ namespace LuaRigidBody
 				else if(key == Keys::RigidBody::ROTATION)		{ Rotation = luabind::object_cast<LuaMath::Vector4>(*it); }
 				else if(key == Keys::RigidBody::INERTIA)		{ Inertia = luabind::object_cast<LuaMath::Vector4>(*it); calculateInertia = false; }
 				else if(key == Keys::RigidBody::MASS)			{ mass = luabind::object_cast<double>(*it); }
-				else if(key == Keys::RigidBody::FRICTION)		{ fricition = luabind::object_cast<double>(*it); }
 				else if(key == Keys::RigidBody::COLLISIONSHAPE)	{ collisionShape = luabind::object_cast<LuaCollisionShape::CollisionShape>(*it).ID; }
 			}
 		}
 
-		this->ID = RigidBodyConfig::Create(collisionShape, Location, Rotation, (float)mass, (float)fricition, calculateInertia, Inertia);
+		this->ID = RigidBodyConfig::Create(collisionShape, Location, Rotation, (float)mass, calculateInertia, Inertia);
 	}
 	void RididBody::ApplyTorque(LuaMath::Vector4 v)
 	{

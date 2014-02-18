@@ -121,7 +121,6 @@ void LuaKeysID::Register(lua_State *lua)
 		RigidBody[Keys::RigidBody::INERTIA]        = Keys::RigidBody::INERTIA;
 		RigidBody[Keys::RigidBody::MASS]           = Keys::RigidBody::MASS;
 		RigidBody[Keys::RigidBody::COLLISIONSHAPE] = Keys::RigidBody::COLLISIONSHAPE;
-		RigidBody[Keys::RigidBody::FRICTION]       = Keys::RigidBody::FRICTION;
 	luaKeyTable["RigidBody"] = RigidBody;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;
