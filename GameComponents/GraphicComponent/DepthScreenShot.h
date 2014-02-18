@@ -7,9 +7,9 @@
 
 class DepthScreenShot : public ScreenShot
 {
-public:
+protected:
 	DepthScreenShot();
-
+public:
 	void Init();
 	void Release();
 	void Update(double realTime, double deltaTime);

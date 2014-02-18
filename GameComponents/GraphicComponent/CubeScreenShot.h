@@ -8,9 +8,9 @@
 
 class CubeScreenShot : public ScreenShot
 {
-public:
+protected:
 	CubeScreenShot();
-
+public:
 	void Init();
 	void Release();
 	void Update(double realTime, double deltaTime);

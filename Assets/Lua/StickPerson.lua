@@ -1,5 +1,3 @@
-local StickPerson = {}
-
 
 local WalkScene = LoadScene("Assets/Animation/walk.BVH");
 local runScene = LoadScene("Assets/Animation/Run1.bvh");
@@ -196,8 +194,3 @@ OnKeyDown(KeyCode["U"],
             minorAnimationID = ""; 
         end
     end);-- Left
-
-
-
-return StickPerson;
-

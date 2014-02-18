@@ -131,6 +131,15 @@ namespace Keys
 		const static std::string MASS           = "Mass";
 		const static std::string COLLISIONSHAPE = "CollisionShape";
 	};
+
+	namespace Constraint
+	{
+		const static std::string RigidBodyA = "Position";
+		const static std::string Pi = "Rotation";
+		const static std::string INERTIA = "Inertia";
+		const static std::string MASS = "Mass";
+		const static std::string COLLISIONSHAPE = "CollisionShape";
+	};
 };
 
 #endif //__Keys__

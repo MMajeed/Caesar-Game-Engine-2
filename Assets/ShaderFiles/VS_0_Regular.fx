@@ -18,7 +18,11 @@ PS_INPUT VS(VS_INPUT input)
 
 	output.Normal = input.VertexNorm;
 
-	output.NormalWorld = mul(input.VertexNorm, gWorld);
+	matrix worldNoTranslation = gWorld;
+	worldNoTranslation[3][0] = 0.0;
+	worldNoTranslation[3][1] = 0.0;
+	worldNoTranslation[3][2] = 0.0;
+	output.NormalWorld = mul(input.VertexNorm, worldNoTranslation);
 	output.NormalWorld = normalize(output.NormalWorld);
 
 	// Pass the texture coordinates to the pixel shader

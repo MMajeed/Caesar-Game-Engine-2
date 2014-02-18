@@ -15,9 +15,10 @@ void BallSocketBodyToPoint::Init()
 	if(std::shared_ptr<RigidBody> spRigidBody = this->Info.RigidBody.second.lock())
 	{
 		btVector3 btPivot((float)this->Info.PivotPoint(0), (float)this->Info.PivotPoint(1), (float)this->Info.PivotPoint(2));
-		this->pConstraint = new btPoint2PointConstraint(*spRigidBody->Info.Body, btPivot);
+		this->pConstraint = 
+			std::shared_ptr<btPoint2PointConstraint>(new btPoint2PointConstraint(*spRigidBody->Info.Body.get(), btPivot));
 
-		physicsManager.Info.dynamicsWorld->addConstraint(this->pConstraint);
+		physicsManager.Info.dynamicsWorld->addConstraint(this->pConstraint.get());
 	}
 }
 

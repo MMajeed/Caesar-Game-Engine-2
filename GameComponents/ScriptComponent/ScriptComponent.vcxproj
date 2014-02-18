@@ -129,6 +129,7 @@
     <ClInclude Include="LuaAnimationObject.h" />
     <ClInclude Include="LuaCollisionShape.h" />
     <ClInclude Include="LuaComponentManager.h" />
+    <ClInclude Include="LuaConstraint.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="LuaMouse.h" />
     <ClInclude Include="LuaNode.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="LuaAnimation.cpp" />
     <ClCompile Include="LuaAnimationObject.cpp" />
     <ClCompile Include="LuaCollisionShape.cpp" />
+    <ClCompile Include="LuaConstraint.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaMouse.cpp" />
     <ClCompile Include="LuaNode.cpp" />

@@ -2,21 +2,19 @@
 
 PhysicsManager::PhysicsManager()
 {
-	this->Info.broadphase = 0;
-	this->Info.collisionConfiguration = 0;
-	this->Info.dispatcher = 0;
-	this->Info.solver = 0;
-	this->Info.dynamicsWorld = 0;
 }
 
 void PhysicsManager::Init()
 {
-	this->Info.broadphase = new btDbvtBroadphase();
-	this->Info.collisionConfiguration = new btDefaultCollisionConfiguration();
-	this->Info.dispatcher = new btCollisionDispatcher(this->Info.collisionConfiguration);
-	this->Info.solver = new btSequentialImpulseConstraintSolver;
-	this->Info.dynamicsWorld = 
-		new btDiscreteDynamicsWorld(this->Info.dispatcher, this->Info.broadphase, this->Info.solver, this->Info.collisionConfiguration);
+	this->Info.broadphase = std::shared_ptr<btDbvtBroadphase>(new btDbvtBroadphase());
+	this->Info.collisionConfiguration = std::shared_ptr<btDefaultCollisionConfiguration>(new btDefaultCollisionConfiguration());
+	this->Info.dispatcher = std::shared_ptr<btCollisionDispatcher>(new btCollisionDispatcher(this->Info.collisionConfiguration.get()));
+	this->Info.solver = std::shared_ptr<btSequentialImpulseConstraintSolver>(new btSequentialImpulseConstraintSolver);
+	this->Info.dynamicsWorld = std::shared_ptr<btDiscreteDynamicsWorld>(
+		new btDiscreteDynamicsWorld(this->Info.dispatcher.get(),
+									this->Info.broadphase.get(), 
+									this->Info.solver.get(),
+									this->Info.collisionConfiguration.get()));
 
 	this->Info.dynamicsWorld->setGravity(btVector3(0.0f, -9.81f, 0.0f));
 }
@@ -32,12 +30,8 @@ void PhysicsManager::Work(double realTime, double deltaTime)
 }
 void PhysicsManager::Shutdown()
 {
-	if(this->Info.broadphase)				{ delete this->Info.broadphase; }
-	if(this->Info.collisionConfiguration)	{ delete this->Info.collisionConfiguration; }
-	if(this->Info.dispatcher)				{ delete this->Info.dispatcher; }
-	if(this->Info.solver)					{ delete this->Info.solver; }
-	if(this->Info.dynamicsWorld)			{ delete this->Info.dynamicsWorld; }
 }
+
 
 void PhysicsManager::InsertCollisionShapeObj(const std::string& ID, std::shared_ptr<CollisionShape> obj)
 {
@@ -64,5 +58,19 @@ void PhysicsManager::RemoveRigidBodyObj(const std::string& ID)
 	{
 		iter->second->Destory();
 		this->RigidBodyObjs.erase(iter);
+	}
+}
+
+void PhysicsManager::InsertConstraintObj(const std::string& ID, std::shared_ptr<Constraint> obj)
+{
+	this->ConstraintObjs[ID] = obj;
+}
+void PhysicsManager::RemoveConstraintObj(const std::string& ID)
+{
+	auto iter = this->ConstraintObjs.find(ID);
+	if(iter != this->ConstraintObjs.end())
+	{
+		iter->second->Destory();
+		this->ConstraintObjs.erase(iter);
 	}
 }

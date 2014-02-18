@@ -8,6 +8,8 @@
 
 class SphereShape : public CollisionShape
 {
+protected:
+	SphereShape(){}
 public:
 	virtual void Init();
 

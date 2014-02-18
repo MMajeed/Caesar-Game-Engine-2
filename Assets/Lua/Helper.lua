@@ -1,5 +1,3 @@
-local Helper = {}
-
 string.split = function(s, p)
     local temp = {}
     local index = 0
@@ -72,5 +70,8 @@ function class(base, init)
    return c
 end
 
-return Helper
+function LoadDefaultModel(FileName)
+    return LoadScene(FileName)["Model"][1];
+end
+
 

@@ -12,8 +12,9 @@
 
 class BasicDrawable : public Drawable
 {
-public:
+protected:
 	BasicDrawable();
+public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);

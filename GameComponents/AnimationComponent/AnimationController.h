@@ -12,6 +12,8 @@
 
 class AnimationController
 {
+protected:
+	AnimationController();
 public:
 	struct Node
 	{
@@ -27,8 +29,6 @@ public:
 		double StartRatio;
 		double StepRatio;
 	};
-
-	AnimationController();
 	
 	void Play(double delta);
 	void UpdatePlayers(double delta);

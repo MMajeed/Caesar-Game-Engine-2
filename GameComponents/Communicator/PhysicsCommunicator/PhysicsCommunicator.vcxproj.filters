@@ -11,6 +11,9 @@
     <ClInclude Include="CollisionShapeConfig.h">
       <Filter>CollisionShapeConfig</Filter>
     </ClInclude>
+    <ClInclude Include="ConstraintConfig.h">
+      <Filter>ConstraintConfig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PhysicsCommunicator">
@@ -22,6 +25,9 @@
     <Filter Include="CollisionShapeConfig">
       <UniqueIdentifier>{0ea1c95a-efa2-4bff-86e1-e71f70cc0646}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ConstraintConfig">
+      <UniqueIdentifier>{a1d79447-b37e-4673-bae7-8de4613495da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PhysicsCommunicator.cpp">
@@ -32,6 +38,9 @@
     </ClCompile>
     <ClCompile Include="CollisionShapeConfig.cpp">
       <Filter>CollisionShapeConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstraintConfig.cpp">
+      <Filter>ConstraintConfig</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

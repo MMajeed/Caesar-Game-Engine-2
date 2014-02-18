@@ -10,9 +10,9 @@
 
 class BasicAnimation
 {
-public:
+protected:
 	BasicAnimation();
-
+public:
 	static std::shared_ptr<BasicAnimation> Spawn(std::shared_ptr<CHL::Animation> animation);
 
 	struct Joint

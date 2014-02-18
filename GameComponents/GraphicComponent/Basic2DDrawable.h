@@ -7,9 +7,9 @@
 
 class Basic2DDrawable : public BasicDrawable
 {
-public:
+protected:
 	Basic2DDrawable();
-
+public:
 	static std::shared_ptr<Basic2DDrawable> Spawn(std::shared_ptr<CHL::Model>	model,
 												  const std::string&			vertexFile,
 												  const std::string&			pixelFile,

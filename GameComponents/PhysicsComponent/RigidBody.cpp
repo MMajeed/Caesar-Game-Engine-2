@@ -6,8 +6,6 @@
 
 RigidBody::RigidBody()
 {
-	this->Info.DefaultMotionState = 0;
-	this->Info.Body = 0;
 }
 
 void RigidBody::Init()
@@ -19,16 +17,17 @@ void RigidBody::Init()
 		btVector3 btLocation((float)this->Info.DefaultLocation(0), (float)this->Info.DefaultLocation(1), (float)this->Info.DefaultLocation(2));
 		btQuaternion btQuaternion((float)this->Info.DefaultQuaRotation(0), (float)this->Info.DefaultQuaRotation(1), (float)this->Info.DefaultQuaRotation(2), (float)this->Info.DefaultQuaRotation(3));
 
-		this->Info.DefaultMotionState = new btDefaultMotionState(btTransform(btQuaternion, btLocation));
+		this->Info.DefaultMotionState =
+			std::shared_ptr<btDefaultMotionState>(new btDefaultMotionState(btTransform(btQuaternion, btLocation)));
 
-		btCollisionShape* pCollisionShape = spShape->pCollisionShape;
-		btDefaultMotionState* fallMotionState = this->Info.DefaultMotionState;
+		btCollisionShape* pCollisionShape = spShape->pCollisionShape.get();
+		btDefaultMotionState* fallMotionState = this->Info.DefaultMotionState.get();
 		btScalar mass = this->Info.Mass;
 		btVector3 fallInertia((float)this->Info.Inertia(0), (float)this->Info.Inertia(1), (float)this->Info.Inertia(2));
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, pCollisionShape, fallInertia);
-		this->Info.Body = new btRigidBody(fallRigidBodyCI);
+		this->Info.Body = std::shared_ptr<btRigidBody>(new btRigidBody(fallRigidBodyCI));
 
-		physicsManager.Info.dynamicsWorld->addRigidBody(this->Info.Body);
+		physicsManager.Info.dynamicsWorld->addRigidBody(this->Info.Body.get());
 	}
 }
 void RigidBody::Destory()
@@ -37,10 +36,8 @@ void RigidBody::Destory()
 
 	if(this->Info.Body) 
 	{
-		physicsManager.Info.dynamicsWorld->addRigidBody(this->Info.Body);
-		delete this->Info.Body;
+		physicsManager.Info.dynamicsWorld->removeRigidBody(this->Info.Body.get());
 	}
-	if(this->Info.DefaultMotionState) { delete this->Info.DefaultMotionState; }
 }
 void RigidBody::Update()
 {

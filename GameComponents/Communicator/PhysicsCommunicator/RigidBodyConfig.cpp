@@ -193,7 +193,7 @@ namespace RigidBodyConfig
 			{
 				std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
 
-				PhysicsManager::GetInstance().RemoveCollisionShapeObj(this->ID);
+				PhysicsManager::GetInstance().RemoveRigidBodyObj(this->ID);
 
 				return Message::Status::Complete;
 			}

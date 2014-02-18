@@ -5,7 +5,7 @@ void CylinderShape::Init()
 	btVector3 halfExtent((btScalar)this->Info.HalfExtents[0], 
 						 (btScalar)this->Info.HalfExtents[1],
 						 (btScalar)this->Info.HalfExtents[2]);
-	this->pCollisionShape = new btCylinderShape(halfExtent);
+	this->pCollisionShape = std::shared_ptr<btCollisionShape>(new btCylinderShape(halfExtent));
 }
 
 std::shared_ptr<CylinderShape> CylinderShape::Spawn(CML::Vec3 halfExtent)

@@ -1,8 +1,15 @@
 #include "ConvexHullShape.h"
 
+ConvexHullShape::ConvexHullShape()
+{
+	this->Info.stride = 3;
+}
+
 void ConvexHullShape::Init()
 {
-	this->pCollisionShape = new btConvexHullShape(this->Info.points.data(), this->Info.points.size(), this->Info.stride);
+	this->pCollisionShape = 
+		std::shared_ptr<btCollisionShape>(
+			new btConvexHullShape(this->Info.points.data(), this->Info.points.size(), this->Info.stride));
 }
 
 std::shared_ptr<ConvexHullShape> ConvexHullShape::Spawn(std::shared_ptr<CHL::Model> model)

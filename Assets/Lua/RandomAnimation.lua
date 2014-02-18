@@ -1,5 +1,3 @@
-local RandomAnimation = {}
-
 local fileNames = { 
                     "Assets/Animation/bored.BVH", 
                     "Assets/Animation/walk.BVH", 
@@ -46,6 +44,3 @@ for k,v in pairs(fileNames) do
     speed = speed - ( 1 / table.getn(fileNames));
     zPosition = zPosition + 10;
 end
-
-return RandomAnimation;
-

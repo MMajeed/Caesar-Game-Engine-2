@@ -10,6 +10,8 @@
 
 class ConvexHullShape  : public CollisionShape
 {
+protected:
+	ConvexHullShape();
 public:
 	virtual void Init();
 

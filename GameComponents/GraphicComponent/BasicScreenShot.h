@@ -7,9 +7,9 @@
 
 class BasicScreenShot : public ScreenShot
 {
-public:
+protected:
 	BasicScreenShot();
-
+public:
 	void Init();
 	void Release();
 	void Update(double realTime, double deltaTime);

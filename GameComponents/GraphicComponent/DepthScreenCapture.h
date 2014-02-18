@@ -6,9 +6,9 @@
 
 class DepthScreenCapture : public ScreenCapture
 {
-public:
+protected:
 	DepthScreenCapture();
-
+public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);

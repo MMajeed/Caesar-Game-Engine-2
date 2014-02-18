@@ -9,9 +9,9 @@
 
 class AnimationPlayer
 {
-public:
+protected:
 	AnimationPlayer();
-
+public:
 	void Play(double delta);
 
 	double GetCurrentPhase() const;

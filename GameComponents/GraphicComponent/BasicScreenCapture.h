@@ -6,9 +6,9 @@
 
 class BasicScreenCapture : public ScreenCapture
 {
-public:
+protected:
 	BasicScreenCapture();
-
+public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);

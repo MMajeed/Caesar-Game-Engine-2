@@ -12,9 +12,9 @@
 
 class RigidBody
 {
-public:
+protected:
 	RigidBody();
-
+public:
 	virtual void Init();
 	virtual void Destory();
 	void Update();
@@ -29,8 +29,8 @@ public:
 	struct
 	{
 		std::pair<std::string, std::weak_ptr<CollisionShape>> CollisionShape;
-		btDefaultMotionState* DefaultMotionState;
-		btRigidBody* Body;
+		std::shared_ptr<btDefaultMotionState> DefaultMotionState;
+		std::shared_ptr<btRigidBody> Body;
 		CML::Vec3 DefaultLocation;
 		CML::Vec4 DefaultQuaRotation;
 		CML::Vec3 Inertia;

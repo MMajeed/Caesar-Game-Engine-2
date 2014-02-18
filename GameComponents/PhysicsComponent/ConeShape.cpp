@@ -2,7 +2,8 @@
 
 void ConeShape::Init()
 {
-	this->pCollisionShape = new btConeShape((btScalar)this->Info.Radius, (btScalar)this->Info.Height);
+	this->pCollisionShape = std::shared_ptr<btCollisionShape>(
+		new btConeShape((btScalar)this->Info.Radius, (btScalar)this->Info.Height));
 }
 
 std::shared_ptr<ConeShape> ConeShape::Spawn(double radius, double height)

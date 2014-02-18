@@ -34,9 +34,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lua", "Lua", "{20C64F0E-7A3
 		Assets\Lua\camera.lua = Assets\Lua\camera.lua
 		Assets\Lua\floor.lua = Assets\Lua\floor.lua
 		Assets\Lua\Helper.lua = Assets\Lua\Helper.lua
+		Assets\Lua\Information.lua = Assets\Lua\Information.lua
 		Assets\Lua\LightSetup.lua = Assets\Lua\LightSetup.lua
 		Assets\Lua\main.lua = Assets\Lua\main.lua
+		Assets\Lua\PhysicsDemo.lua = Assets\Lua\PhysicsDemo.lua
+		Assets\Lua\RandomAnimation.lua = Assets\Lua\RandomAnimation.lua
 		Assets\Lua\Skybox.lua = Assets\Lua\Skybox.lua
+		Assets\Lua\StickPerson.lua = Assets\Lua\StickPerson.lua
 		Assets\Lua\Text.lua = Assets\Lua\Text.lua
 	EndProjectSection
 EndProject

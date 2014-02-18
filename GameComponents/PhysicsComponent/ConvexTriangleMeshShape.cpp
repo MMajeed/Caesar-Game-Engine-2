@@ -7,7 +7,7 @@ ConvexTriangleMeshShape::ConvexTriangleMeshShape()
 
 void ConvexTriangleMeshShape::Init()
 {
-	this->pCollisionShape = new btConvexTriangleMeshShape(this->Info.Mesh);
+	this->pCollisionShape = std::shared_ptr<btCollisionShape>(new btConvexTriangleMeshShape(this->Info.Mesh));
 }
 
 std::shared_ptr<ConvexTriangleMeshShape> ConvexTriangleMeshShape::Spawn(std::shared_ptr<CHL::Model> model)

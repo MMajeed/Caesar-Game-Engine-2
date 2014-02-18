@@ -1,6 +1,3 @@
-local floor = {}
-
-
 boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Box.ply"),
                                    [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                    [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
@@ -42,6 +39,4 @@ OnKeyDown(KeyCode["X"],
         box1:Add2DTexture(tilesTexture);
     end
 );
-
-return camera
 

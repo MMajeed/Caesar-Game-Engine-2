@@ -15,12 +15,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ConstraintConfig.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="PhysicsCommunicator.h" />
     <ClInclude Include="CollisionShapeConfig.h" />
     <ClInclude Include="RigidBodyConfig.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConstraintConfig.cpp" />
     <ClCompile Include="PhysicsCommunicator.cpp" />
     <ClCompile Include="CollisionShapeConfig.cpp" />
     <ClCompile Include="RigidBodyConfig.cpp" />

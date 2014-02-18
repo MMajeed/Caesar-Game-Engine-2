@@ -1,5 +1,5 @@
-#ifndef __CollisionShapeConfigcpp__
-#define __CollisionShapeConfigcpp__
+#ifndef __CollisionShapeConfig__
+#define __CollisionShapeConfig__
 
 #include "Linker.h"
 #include <string>
@@ -21,4 +21,4 @@ namespace CollisionShapeConfig
 	void Release(std::string ID);
 }
 
-#endif //__CollisionShapeConfigcpp__
+#endif //__CollisionShapeConfig__

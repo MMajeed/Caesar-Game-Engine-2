@@ -9,8 +9,9 @@
 
 class BasicTexture
 {
-public:
+protected:
 	BasicTexture();
+public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);

@@ -2,7 +2,7 @@
 
 void SphereShape::Init()
 {
-	this->pCollisionShape = new btSphereShape((btScalar)this->Info.Radius);
+	this->pCollisionShape = std::shared_ptr<btCollisionShape>(new btSphereShape((btScalar)this->Info.Radius));
 }
 
 std::shared_ptr<SphereShape> SphereShape::Spawn(double radius)

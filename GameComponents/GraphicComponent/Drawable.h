@@ -8,6 +8,8 @@
 
 class Drawable
 {
+protected:
+	Drawable(){}
 public:
 	virtual void Init()										    = 0;
 	virtual void Destory()									    = 0;

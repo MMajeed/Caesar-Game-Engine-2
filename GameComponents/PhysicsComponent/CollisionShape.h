@@ -4,17 +4,18 @@
 #include "Linker.h"
 
 #include <btBulletDynamicsCommon.h>
+#include <memory>
 
 class CollisionShape
 {
-public:
+protected:
 	CollisionShape();
-
+public:
 	virtual void Init()	   = 0;
-	virtual void Destory();
+	virtual void Destory(){};
 	virtual ~CollisionShape(){}
 
-	btCollisionShape* pCollisionShape;
+	std::shared_ptr<btCollisionShape> pCollisionShape;
 };
 
 #endif //__CollisonShape__

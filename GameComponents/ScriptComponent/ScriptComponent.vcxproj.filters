@@ -3,16 +3,16 @@
   <ItemGroup>
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaCamera.h">
-      <Filter>Lua Class/Function\LuaCamera</Filter>
+      <Filter>Lua Class/Function\Entity\LuaCamera</Filter>
     </ClInclude>
     <ClInclude Include="LuaGraphic.h">
-      <Filter>Lua Class/Function\LuaGraphic</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaGraphic</Filter>
     </ClInclude>
     <ClInclude Include="LuaKeysID.h">
-      <Filter>Lua Class/Function\LuaKeysID</Filter>
+      <Filter>Lua Class/Function\Common\LuaKeysID</Filter>
     </ClInclude>
     <ClInclude Include="LuaObject.h">
-      <Filter>Lua Class/Function\LuaObject</Filter>
+      <Filter>Lua Class/Function\Entity\LuaObject</Filter>
     </ClInclude>
     <ClInclude Include="LuaProcesses.h">
       <Filter>Lua Processes</Filter>
@@ -25,13 +25,13 @@
     </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaBasicDrawableObject.h">
-      <Filter>Lua Class/Function\LuaBasicDrawableObject</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaBasicDrawableObject</Filter>
     </ClInclude>
     <ClInclude Include="LuaBasicTexture.h">
-      <Filter>Lua Class/Function\LuaBasicTexture</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaBasicTexture</Filter>
     </ClInclude>
     <ClInclude Include="LuaLight.h">
-      <Filter>Lua Class/Function\LuaLight</Filter>
+      <Filter>Lua Class/Function\Entity\LuaLight</Filter>
     </ClInclude>
     <ClInclude Include="LuaError.h">
       <Filter>LuaError</Filter>
@@ -40,70 +40,73 @@
       <Filter>Lua Class/Function</Filter>
     </ClInclude>
     <ClInclude Include="LuaMath.h">
-      <Filter>Lua Class/Function\LuaMath</Filter>
+      <Filter>Lua Class/Function\Common\LuaMath</Filter>
     </ClInclude>
     <ClInclude Include="LuaScreenShot.h">
-      <Filter>Lua Class/Function\LuaScreenShot</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaScreenShot</Filter>
     </ClInclude>
     <ClInclude Include="LuaScreenCapture.h">
-      <Filter>Lua Class/Function\LuaScreenCapture</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaScreenCapture</Filter>
     </ClInclude>
     <ClInclude Include="LuaInputKeyActionSetup.h">
-      <Filter>Lua Class/Function\LuaInputKeyActionSetup</Filter>
+      <Filter>Lua Class/Function\Input\LuaInputKeyActionSetup</Filter>
     </ClInclude>
     <ClInclude Include="ProcessMessage.h">
       <Filter>ProcessMessage</Filter>
     </ClInclude>
     <ClInclude Include="LuaMouse.h">
-      <Filter>Lua Class/Function\LuaMouse</Filter>
+      <Filter>Lua Class/Function\Input\LuaMouse</Filter>
     </ClInclude>
     <ClInclude Include="LuaSleep.h">
       <Filter>Lua Processes\LuaSleep</Filter>
     </ClInclude>
     <ClInclude Include="LuaThreadSetup.h">
-      <Filter>Lua Class/Function\LuaThreadSetup</Filter>
+      <Filter>Lua Class/Function\Common\LuaThreadSetup</Filter>
     </ClInclude>
     <ClInclude Include="LuaComponentManager.h">
-      <Filter>Lua Class/Function\LuaComponentManager</Filter>
+      <Filter>Lua Class/Function\Common\LuaComponentManager</Filter>
     </ClInclude>
     <ClInclude Include="LuaWaitForProcess.h">
       <Filter>Lua Processes\LuaWaitForProcess</Filter>
     </ClInclude>
     <ClInclude Include="Lua3DFile.h">
-      <Filter>Lua Class/Function\Lua3DFile</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile</Filter>
     </ClInclude>
     <ClInclude Include="LuaModel.h">
-      <Filter>Lua Class/Function\Lua3DFile\LuaModel</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile\LuaModel</Filter>
     </ClInclude>
     <ClInclude Include="LuaAnimation.h">
-      <Filter>Lua Class/Function\Lua3DFile\LuaAnimation</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile\LuaAnimation</Filter>
     </ClInclude>
     <ClInclude Include="LuaNode.h">
-      <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile\LuaNode</Filter>
     </ClInclude>
     <ClInclude Include="LuaAnimationObject.h">
-      <Filter>Lua Class/Function\LuaAnimationObjects</Filter>
+      <Filter>Lua Class/Function\Animation\LuaAnimationObjects</Filter>
     </ClInclude>
     <ClInclude Include="LuaCollisionShape.h">
-      <Filter>Lua Class/Function\LuaCollisionShape</Filter>
+      <Filter>Lua Class/Function\Physics\LuaCollisionShape</Filter>
     </ClInclude>
     <ClInclude Include="LuaRigidBody.h">
-      <Filter>Lua Class/Function\LuaRigidBody</Filter>
+      <Filter>Lua Class/Function\Physics\LuaRigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaConstraint.h">
+      <Filter>Lua Class/Function\Physics\LuaConstraint</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaCamera.cpp">
-      <Filter>Lua Class/Function\LuaCamera</Filter>
+      <Filter>Lua Class/Function\Entity\LuaCamera</Filter>
     </ClCompile>
     <ClCompile Include="LuaGraphic.cpp">
-      <Filter>Lua Class/Function\LuaGraphic</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaGraphic</Filter>
     </ClCompile>
     <ClCompile Include="LuaKeysID.cpp">
-      <Filter>Lua Class/Function\LuaKeysID</Filter>
+      <Filter>Lua Class/Function\Common\LuaKeysID</Filter>
     </ClCompile>
     <ClCompile Include="LuaObject.cpp">
-      <Filter>Lua Class/Function\LuaObject</Filter>
+      <Filter>Lua Class/Function\Entity\LuaObject</Filter>
     </ClCompile>
     <ClCompile Include="LuaKeyAction.cpp">
       <Filter>Lua Processes\LuaKeyAction</Filter>
@@ -112,111 +115,81 @@
       <Filter>Lua Processes\LuaLoopCall</Filter>
     </ClCompile>
     <ClCompile Include="LuaBasicDrawableObject.cpp">
-      <Filter>Lua Class/Function\LuaBasicDrawableObject</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaBasicDrawableObject</Filter>
     </ClCompile>
     <ClCompile Include="LuaBasicTexture.cpp">
-      <Filter>Lua Class/Function\LuaBasicTexture</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaBasicTexture</Filter>
     </ClCompile>
     <ClCompile Include="LuaLight.cpp">
-      <Filter>Lua Class/Function\LuaLight</Filter>
+      <Filter>Lua Class/Function\Entity\LuaLight</Filter>
     </ClCompile>
     <ClCompile Include="LuaError.cpp">
       <Filter>LuaError</Filter>
     </ClCompile>
     <ClCompile Include="LuaMath.cpp">
-      <Filter>Lua Class/Function\LuaMath</Filter>
+      <Filter>Lua Class/Function\Common\LuaMath</Filter>
     </ClCompile>
     <ClCompile Include="LuaScreenShot.cpp">
-      <Filter>Lua Class/Function\LuaScreenShot</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaScreenShot</Filter>
     </ClCompile>
     <ClCompile Include="LuaScreenCapture.cpp">
-      <Filter>Lua Class/Function\LuaScreenCapture</Filter>
+      <Filter>Lua Class/Function\Graphic\LuaScreenCapture</Filter>
     </ClCompile>
     <ClCompile Include="LuaInputKeyActionSetup.cpp">
-      <Filter>Lua Class/Function\LuaInputKeyActionSetup</Filter>
+      <Filter>Lua Class/Function\Input\LuaInputKeyActionSetup</Filter>
     </ClCompile>
     <ClCompile Include="ProcessMessage.cpp">
       <Filter>ProcessMessage</Filter>
     </ClCompile>
     <ClCompile Include="LuaMouse.cpp">
-      <Filter>Lua Class/Function\LuaMouse</Filter>
+      <Filter>Lua Class/Function\Input\LuaMouse</Filter>
     </ClCompile>
     <ClCompile Include="LuaSleep.cpp">
       <Filter>Lua Processes\LuaSleep</Filter>
     </ClCompile>
     <ClCompile Include="LuaThreadSetup.cpp">
-      <Filter>Lua Class/Function\LuaThreadSetup</Filter>
+      <Filter>Lua Class/Function\Common\LuaThreadSetup</Filter>
     </ClCompile>
     <ClCompile Include="LuaComponentManager.cpp">
-      <Filter>Lua Class/Function\LuaComponentManager</Filter>
+      <Filter>Lua Class/Function\Common\LuaComponentManager</Filter>
     </ClCompile>
     <ClCompile Include="LuaWaitForProcess.cpp">
       <Filter>Lua Processes\LuaWaitForProcess</Filter>
     </ClCompile>
     <ClCompile Include="Lua3DFile.cpp">
-      <Filter>Lua Class/Function\Lua3DFile</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile</Filter>
     </ClCompile>
     <ClCompile Include="LuaModel.cpp">
-      <Filter>Lua Class/Function\Lua3DFile\LuaModel</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile\LuaModel</Filter>
     </ClCompile>
     <ClCompile Include="LuaAnimation.cpp">
-      <Filter>Lua Class/Function\Lua3DFile\LuaAnimation</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile\LuaAnimation</Filter>
     </ClCompile>
     <ClCompile Include="LuaNode.cpp">
-      <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+      <Filter>Lua Class/Function\Common\Lua3DFile\LuaNode</Filter>
     </ClCompile>
     <ClCompile Include="LuaRegisterAll.cpp">
       <Filter>Lua Class/Function</Filter>
     </ClCompile>
     <ClCompile Include="LuaAnimationObject.cpp">
-      <Filter>Lua Class/Function\LuaAnimationObjects</Filter>
+      <Filter>Lua Class/Function\Animation\LuaAnimationObjects</Filter>
     </ClCompile>
     <ClCompile Include="LuaCollisionShape.cpp">
-      <Filter>Lua Class/Function\LuaCollisionShape</Filter>
+      <Filter>Lua Class/Function\Physics\LuaCollisionShape</Filter>
     </ClCompile>
     <ClCompile Include="LuaRigidBody.cpp">
-      <Filter>Lua Class/Function\LuaRigidBody</Filter>
+      <Filter>Lua Class/Function\Physics\LuaRigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaConstraint.cpp">
+      <Filter>Lua Class/Function\Physics\LuaConstraint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lua Class/Function">
       <UniqueIdentifier>{951c548c-e607-4ef5-988b-fe49eabdc9ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaCamera">
-      <UniqueIdentifier>{d1199bf0-fb1c-44e4-bee8-7e4f1ad705c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaGraphic">
-      <UniqueIdentifier>{330e9428-616f-44ea-8430-c29218450476}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaKeysID">
-      <UniqueIdentifier>{fdcfefed-1638-4c58-9e66-0fef002d79f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaObject">
-      <UniqueIdentifier>{7c157c13-425c-470f-971d-0dd4fc24e16a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaBasicDrawableObject">
-      <UniqueIdentifier>{2a8d88a6-f3e0-4249-be15-e4c81b3ae5fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaLight">
-      <UniqueIdentifier>{99aafd94-0f2e-47fe-a6c5-083161a4eb45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="LuaError">
       <UniqueIdentifier>{0068221f-3e77-415c-a28c-d60079bcd49a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaMath">
-      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaScreenShot">
-      <UniqueIdentifier>{bae8b22f-6f8f-4a48-aab5-0c19c0f3f28f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaScreenCapture">
-      <UniqueIdentifier>{a919e6c6-e946-43f4-a988-e9aba7bd9fc6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaBasicTexture">
-      <UniqueIdentifier>{a2836dbb-cde0-4509-9d1e-dc50252e967e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaInputKeyActionSetup">
-      <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lua Processes">
       <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
@@ -227,44 +200,98 @@
     <Filter Include="Lua Processes\LuaLoopCall">
       <UniqueIdentifier>{12120ca4-4311-4d8b-95d6-baf25a7e4c90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaMouse">
-      <UniqueIdentifier>{ee0b11df-a323-4da7-bf68-8f08247c493a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Processes\LuaSleep">
       <UniqueIdentifier>{38c7120f-8460-4a7a-a7de-7c2538a6749d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ProcessMessage">
       <UniqueIdentifier>{e6a51519-be9d-4a9b-8d8e-6457a2a4667f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaThreadSetup">
-      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\LuaComponentManager">
-      <UniqueIdentifier>{e2115848-1c43-4918-aefc-b915acf94140}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Processes\LuaWaitForProcess">
       <UniqueIdentifier>{bef5f593-8f46-4f6e-b2e7-ae27cabc54f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua3DFile">
-      <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
+    <Filter Include="Lua Class/Function\Common">
+      <UniqueIdentifier>{e954d1dc-d188-4dca-9ba1-28bf1df5811b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua3DFile\LuaModel">
-      <UniqueIdentifier>{bac1abd7-c730-4fc6-8014-eb3bad3098b2}</UniqueIdentifier>
+    <Filter Include="Lua Class/Function\Graphic">
+      <UniqueIdentifier>{bca6cbe8-aac9-4f39-9f5c-642d81925fe4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua3DFile\LuaAnimation">
-      <UniqueIdentifier>{cf7b4cf0-e580-4498-b5ff-1d6f1035ac2f}</UniqueIdentifier>
+    <Filter Include="Lua Class/Function\Graphic\LuaBasicDrawableObject">
+      <UniqueIdentifier>{2a8d88a6-f3e0-4249-be15-e4c81b3ae5fb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\Lua3DFile\LuaNode">
-      <UniqueIdentifier>{36da53ef-19de-4967-9bec-01c699798f11}</UniqueIdentifier>
+    <Filter Include="Lua Class/Function\Graphic\LuaBasicTexture">
+      <UniqueIdentifier>{a2836dbb-cde0-4509-9d1e-dc50252e967e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaAnimationObjects">
+    <Filter Include="Lua Class/Function\Graphic\LuaGraphic">
+      <UniqueIdentifier>{330e9428-616f-44ea-8430-c29218450476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Graphic\LuaScreenShot">
+      <UniqueIdentifier>{bae8b22f-6f8f-4a48-aab5-0c19c0f3f28f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Graphic\LuaScreenCapture">
+      <UniqueIdentifier>{a919e6c6-e946-43f4-a988-e9aba7bd9fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Entity">
+      <UniqueIdentifier>{0ff27dca-7034-4137-9795-af327b0af7a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Input">
+      <UniqueIdentifier>{a4d41367-0e2c-43c2-b5f1-62e52408e919}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Entity\LuaCamera">
+      <UniqueIdentifier>{d1199bf0-fb1c-44e4-bee8-7e4f1ad705c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Entity\LuaObject">
+      <UniqueIdentifier>{7c157c13-425c-470f-971d-0dd4fc24e16a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Entity\LuaLight">
+      <UniqueIdentifier>{99aafd94-0f2e-47fe-a6c5-083161a4eb45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Input\LuaMouse">
+      <UniqueIdentifier>{ee0b11df-a323-4da7-bf68-8f08247c493a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\LuaThreadSetup">
+      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\LuaMath">
+      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\LuaKeysID">
+      <UniqueIdentifier>{fdcfefed-1638-4c58-9e66-0fef002d79f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Input\LuaInputKeyActionSetup">
+      <UniqueIdentifier>{75d3a7e4-47f7-4732-a47a-3522e73a35a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\LuaComponentManager">
+      <UniqueIdentifier>{e2115848-1c43-4918-aefc-b915acf94140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Animation">
+      <UniqueIdentifier>{c34cc2b3-739d-48f1-af6f-ec353b3bbfc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Animation\LuaAnimationObjects">
       <UniqueIdentifier>{de7a75a0-e35c-456d-a6a6-638195d79cf1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaCollisionShape">
+    <Filter Include="Lua Class/Function\Common\Lua3DFile">
+      <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\Lua3DFile\LuaModel">
+      <UniqueIdentifier>{bac1abd7-c730-4fc6-8014-eb3bad3098b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\Lua3DFile\LuaAnimation">
+      <UniqueIdentifier>{cf7b4cf0-e580-4498-b5ff-1d6f1035ac2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Common\Lua3DFile\LuaNode">
+      <UniqueIdentifier>{36da53ef-19de-4967-9bec-01c699798f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Physics">
+      <UniqueIdentifier>{fab90c3d-bbf4-4ae9-abcd-bde57d055084}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Physics\LuaCollisionShape">
       <UniqueIdentifier>{3e4ac30c-937b-461c-b477-4b5302111f5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\LuaRigidBody">
+    <Filter Include="Lua Class/Function\Physics\LuaRigidBody">
       <UniqueIdentifier>{ee463ac4-05e0-4a07-a7c8-05400e5ed95b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Physics\LuaConstraint">
+      <UniqueIdentifier>{9fbd3e7a-3a4c-41f6-b577-0e1c6b2e5463}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -7,9 +7,9 @@
 
 class LuaProcesses
 {
-public:
+protected:
 	LuaProcesses(){ this->ID = CHL::GenerateGUID(); }
-
+public:
 	virtual void Update(double realTime, double deltaTime) = 0;
 
 	virtual void Action(lua_State *lua) = 0;

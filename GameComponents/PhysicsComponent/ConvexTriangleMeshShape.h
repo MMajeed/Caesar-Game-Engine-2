@@ -10,9 +10,9 @@
 
 class ConvexTriangleMeshShape : public CollisionShape
 {
-public:
+protected:
 	ConvexTriangleMeshShape();
-
+public:
 	virtual void Init();
 
 	struct

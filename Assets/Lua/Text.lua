@@ -1,7 +1,5 @@
 require("Helper")
 
-local Text = {}
-
 FontData = class(function(acc, left, right, size)
               acc.Left = left;
               acc.Right = right;
@@ -185,6 +183,3 @@ function Text2D:Release()
     self.SpriteTexture:Release();    
     self.SpriteObj:Release();
 end
-
-return Text
-

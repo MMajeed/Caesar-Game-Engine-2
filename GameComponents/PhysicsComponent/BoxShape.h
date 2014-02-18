@@ -9,6 +9,8 @@
 
 class BoxShape : public CollisionShape
 {
+protected:
+	BoxShape(){}
 public:
 	virtual void Init();
 

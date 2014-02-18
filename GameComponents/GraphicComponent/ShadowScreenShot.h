@@ -7,9 +7,9 @@
 
 class ShadowScreenShot : public ScreenShot
 {
-public:
+protected:
 	ShadowScreenShot();
-
+public:
 	void Init();
 	void Release();
 	void Update(double realTime, double deltaTime);

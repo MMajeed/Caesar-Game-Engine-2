@@ -1,5 +1,3 @@
-local camera = {}
-
 local ScreenWidth = GetClientsSize()["Width"];
 local ScreenHeight = GetClientsSize()["Height"];
 
@@ -146,6 +144,4 @@ LoopCall(1000,
             Quad2D.Texture2D = { regularCapture:GetTexture() };
         end
     end);
-
-return camera
 

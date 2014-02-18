@@ -1,5 +1,3 @@
-local PhysicsDemo = {}
-
 
 local floorBoxCollisionShape = CreateBoxShape(Vector4(50.0, 0.25, 50.0));
 local floorBoxRididBody = RididBody({
@@ -51,10 +49,10 @@ OnKeyUp(KeyCode["G"], function() PhysicsBackwardButton = false; end);-- Down
 function UpdatePhysicsDemo(time, ID)
     local delta = 2.0 * time;
     if(PhysicsLeftButton == true) then
-        fallingBoxRididBody:ApplyCentralFroce(Vector4(delta, 0.0, 0.0));
+        fallingBoxRididBody:ApplyTorque(Vector4(delta, 0.0, 0.0));
     end
     if(PhysicsRightButton == true) then
-        fallingBoxRididBody:ApplyCentralFroce(Vector4(-delta , 0.0, 0.0));
+        fallingBoxRididBody:ApplyTorque(Vector4(-delta , 0.0, 0.0));
     end
     
     if(PhysicsForwardButton == true) then
@@ -66,6 +64,3 @@ function UpdatePhysicsDemo(time, ID)
 end
 
 LoopCall(0, UpdatePhysicsDemo);
-
-return PhysicsDemo;
-

@@ -1,8 +1,5 @@
 require("Text")
 
-local Information = {}
-
-
 local mousePositionText = Text2D("",  Vector4(0.0, 0.0, 0.0));
 local windowPositionText = Text2D("",  Vector4(0.0, 20.0, 0.0));
 local windowSizeText = Text2D("",  Vector4(0.0, 40.0, 0.0));
@@ -80,7 +77,3 @@ function UpdateFrameText()
 end
 UpdateFrameText();
 LoopCall(1000, UpdateFrameText);
-
-
-return Information
-

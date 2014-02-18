@@ -10,6 +10,7 @@
 #include <btBulletDynamicsCommon.h>
 #include "RigidBody.h"
 #include "CollisionShape.h"
+#include "Constraint.h"
 
 class PhysicsManager : public Interface, public CHL::Singleton<PhysicsManager>
 {
@@ -23,15 +24,6 @@ public:
 	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 
-	struct
-	{
-		btBroadphaseInterface* broadphase; 
-		btDefaultCollisionConfiguration* collisionConfiguration;
-		btCollisionDispatcher* dispatcher;
-		btSequentialImpulseConstraintSolver* solver;
-		btDiscreteDynamicsWorld* dynamicsWorld;
-	}Info;
-
 	std::hash_map<std::string, std::shared_ptr<CollisionShape>> CollisionShapeObjs;
 	void InsertCollisionShapeObj(const std::string& ID, std::shared_ptr<CollisionShape> obj);
 	void RemoveCollisionShapeObj(const std::string& ID);
@@ -39,6 +31,19 @@ public:
 	std::hash_map<std::string, std::shared_ptr<RigidBody>> RigidBodyObjs;
 	void InsertRigidBodyObj(const std::string& ID, std::shared_ptr<RigidBody> obj);
 	void RemoveRigidBodyObj(const std::string& ID);
+
+	std::hash_map<std::string, std::shared_ptr<Constraint>> ConstraintObjs;
+	void InsertConstraintObj(const std::string& ID, std::shared_ptr<Constraint> obj);
+	void RemoveConstraintObj(const std::string& ID);
+
+	struct
+	{
+		std::shared_ptr<btBroadphaseInterface> broadphase;
+		std::shared_ptr<btDefaultCollisionConfiguration> collisionConfiguration;
+		std::shared_ptr<btCollisionDispatcher> dispatcher;
+		std::shared_ptr<btSequentialImpulseConstraintSolver> solver;
+		std::shared_ptr<btDiscreteDynamicsWorld> dynamicsWorld;
+	}Info;
 };
 
 #endif //__PhysicsManager__
