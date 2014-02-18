@@ -249,7 +249,7 @@ namespace AnimationControllerConfig
 
 	CML::Matrix4x4 GetSingleJoint(std::string ID, std::string JointName)
 	{
-		CML::Matrix4x4 returnValue = CML::MatrixIdentity();
+		CML::Matrix4x4 returnValue;
 		AnimationManager& animationManager = AnimationManager::GetInstance();
 
 		std::lock_guard<std::mutex> lock(animationManager.mutex);

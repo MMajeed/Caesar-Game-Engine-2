@@ -13,6 +13,8 @@ namespace LuaRigidBody
 	public:
 		RididBody();
 		RididBody(luabind::object const& table);
+		void ApplyTorque(LuaMath::Vector4 v);
+		void ApplyCentralFroce(LuaMath::Vector4 v);
 		void Release();
 		std::string ID;
 

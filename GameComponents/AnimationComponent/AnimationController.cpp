@@ -348,7 +348,7 @@ void AnimationController::SetSpeed(double speed)
 
 CML::Matrix4x4 AnimationController::GetSingleJoint(std::string jointName)
 {
-	CML::Matrix4x4 returnValue = CML::MatrixIdentity();
+	CML::Matrix4x4 returnValue;
 	AnimationManager& animationManager = AnimationManager::GetInstance();
 
 	auto iter = this->jointsAnimated.find(jointName);

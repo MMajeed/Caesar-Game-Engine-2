@@ -14,15 +14,17 @@ local floorBoxRididBody = RididBody({
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Inertia"]]        = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 0.0,
+                [Keys["RigidBody"]["Friction"]]       = 1.0,
                 [Keys["RigidBody"]["CollisionShape"]] = floorBoxCollisionShape,});
                 
   
 
 local fallingBoxCollisionShape = CreateBoxShape(Vector4(2.5, 2.5, 2.5));
 local fallingBoxRididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 200.0, 0.0),
+                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 50.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 1.0,
+                [Keys["RigidBody"]["Friction"]]       = 1.0,
                 [Keys["RigidBody"]["CollisionShape"]] = fallingBoxCollisionShape,});   
 local fallingBox = Object({
                 [Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.0, 0.0),
@@ -33,6 +35,38 @@ local fallingBox = Object({
                 [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
                 [Keys["ObjectInfo"]["RigidBody"]]   = fallingBoxRididBody,});           
 
+local PhysicsForwardButton   = false;    local PhysicsBackwardButton  = false;
+local PhysicsLeftButton     = false;     local PhysicsRightButton   = false;
+
+
+OnKeyDown(KeyCode["F"], function() PhysicsLeftButton = true; end);-- Left
+OnKeyDown(KeyCode["H"], function() PhysicsRightButton = true; end);-- Right
+OnKeyDown(KeyCode["T"], function() PhysicsForwardButton = true; end);-- Up
+OnKeyDown(KeyCode["G"], function() PhysicsBackwardButton = true; end);-- Down
+
+OnKeyUp(KeyCode["F"], function() PhysicsLeftButton = false; end);-- Left
+OnKeyUp(KeyCode["H"], function() PhysicsRightButton = false; end);-- Right
+OnKeyUp(KeyCode["T"], function() PhysicsForwardButton = false; end);-- Up
+OnKeyUp(KeyCode["G"], function() PhysicsBackwardButton = false; end);-- Down
+
+function UpdatePhysicsDemo(time, ID)
+    local delta = 1.0 * time;
+    if(PhysicsLeftButton == true) then
+        fallingBoxRididBody:ApplyCentralFroce(Vector4(delta, 0.0, 0.0));
+    end
+    if(PhysicsRightButton == true) then
+        fallingBoxRididBody:ApplyCentralFroce(Vector4(-delta , 0.0, 0.0));
+    end
+    
+    if(PhysicsForwardButton == true) then
+        fallingBoxRididBody:ApplyCentralFroce(Vector4(0.0, 0.0, delta));
+    end
+    if(PhysicsBackwardButton == true) then
+        fallingBoxRididBody:ApplyCentralFroce(Vector4(0.0, 0.0, -delta));
+    end
+end
+
+LoopCall(100, UpdatePhysicsDemo);
 
 return PhysicsDemo;
 

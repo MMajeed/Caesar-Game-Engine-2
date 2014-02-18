@@ -129,6 +129,7 @@ namespace Keys
 		const static std::string ROTATION       = "Rotation";
 		const static std::string INERTIA        = "Inertia";
 		const static std::string MASS           = "Mass";
+		const static std::string FRICTION       = "Friction";
 		const static std::string COLLISIONSHAPE = "CollisionShape";
 	};
 };

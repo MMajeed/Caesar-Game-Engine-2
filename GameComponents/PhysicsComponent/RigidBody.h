@@ -17,8 +17,10 @@ public:
 
 	virtual void Init();
 	virtual void Destory();
-
 	void Update();
+
+	void ApplyTorque(CML::Vec3 v);
+	void ApplyCentralForce(CML::Vec3 v);
 
 	CML::Vec3 GetLocation();
 	CML::Vec4 GetQuaRotation(); 
@@ -33,6 +35,7 @@ public:
 		CML::Vec4 DefaultQuaRotation;
 		CML::Vec3 Inertia;
 		float Mass;
+		float Friction;
 	}Info;
 
 	struct
@@ -45,7 +48,8 @@ public:
 	static std::shared_ptr<RigidBody> Spawn(std::string CollisionShapeID,
 											CML::Vec3 Location, 
 											CML::Vec3 PYRRotation, 
-											float mass, 
+											float mass,
+											float friction,
 											bool calculateIntertia, 
 											CML::Vec3 intertia );
 };
