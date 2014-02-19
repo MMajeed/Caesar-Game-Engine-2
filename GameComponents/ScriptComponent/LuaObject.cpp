@@ -17,9 +17,9 @@ LuaObject::LuaObject()
 	CML::Vec4 col{1.0, 1.0, 1.0, 1.0};
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
-	obj->Location = loc;
-	obj->Rotation = rot;
-	obj->Scale = sca;
+	obj->SetLocation(loc);
+	obj->SetRotation(rot);
+	obj->SetScale(sca);
 	obj->Diffuse = col;
 	obj->Ambient = col;
 	obj->Specular = col;
@@ -95,9 +95,9 @@ LuaObject::LuaObject(luabind::object const& table)
 	}
 
 	std::shared_ptr<ObjectINFO> obj(new ObjectINFO());
-	obj->Location = loc;
-	obj->Rotation = rot;
-	obj->Scale = sca;
+	obj->SetLocation(loc);
+	obj->SetRotation(rot);
+	obj->SetScale(sca);
 	obj->Diffuse = diffuse;
 	obj->Ambient = amibent;
 	obj->Specular = specular;

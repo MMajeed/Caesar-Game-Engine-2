@@ -210,10 +210,10 @@ namespace Scene
 			float rankA = 0.0f; float rankB = 0.0f;
 
 			if(a.ObjInfo->Diffuse[3] >= 1.0)	 { rankA += 100000.0f; }
-			else if(a.ObjInfo->Diffuse[3] < 1.0) { rankA += Length(eye, a.ObjInfo->Location); }
+			else if(a.ObjInfo->Diffuse[3] < 1.0) { rankA += Length(eye, a.ObjInfo->GetLocation()); }
 
 			if(b.ObjInfo->Diffuse[3] >= 1.0)	 { rankB += 100000.0f; }
-			else if(b.ObjInfo->Diffuse[3] < 1.0) { rankB += Length(eye, b.ObjInfo->Location); }
+			else if(b.ObjInfo->Diffuse[3] < 1.0) { rankB += Length(eye, b.ObjInfo->GetLocation()); }
 
 			if(a.ObjInfo->Depth == false) { rankA -= 1000000.0f; }
 			if(b.ObjInfo->Depth == false) { rankB -= 1000000.0f; }

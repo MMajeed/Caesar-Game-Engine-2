@@ -82,11 +82,11 @@ void Basic2DDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, co
 		physics = RigidBodyConfig::GetTranslation(object->PhysicsRigidBodyID);
 	}
 
-	CML::Vec4 loc = object->Location;
+	CML::Vec4 loc = object->GetLocation();
 	loc(1) = -loc(1);
 	loc = loc - CML::Vec4({(si.width / 2.0), -(si.height / 2.0), 0.0, 0.0});
 
-	CML::Matrix4x4 mObjectFinal = ObjectCalculation(loc, object->Rotation, object->Scale);
+	CML::Matrix4x4 mObjectFinal = ObjectCalculation(loc, object->GetRotation(), object->GetScale());
 
 	animationFloat4x4 = Convert4x4(animation);
 	objectFloat4x4 = Convert4x4(mObjectFinal);

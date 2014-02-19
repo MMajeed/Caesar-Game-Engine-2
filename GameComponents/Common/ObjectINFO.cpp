@@ -1,4 +1,5 @@
 #include "ObjectINFO.h"
+#include <MathFunctions.h>
 #include "Keys.h"
 
 ObjectINFO::ObjectINFO()
@@ -34,14 +35,13 @@ std::shared_ptr<Object> ObjectINFO::Get(const std::string& ID)
 	return returnValue;
 }
 
-
 void ObjectINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 {
 	INFO::Set(ID, obj);
 	
-		 if(ID == Keys::ObjectInfo::LOCATION){ this->Location = GenericObj<CML::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::ROTATION){ this->Rotation = GenericObj<CML::Vec4>::GetValue(obj); }
-	else if(ID == Keys::ObjectInfo::SCALE){ this->Scale = GenericObj<CML::Vec4>::GetValue(obj); }
+		 if(ID == Keys::ObjectInfo::LOCATION){ this->SetLocation(GenericObj<CML::Vec4>::GetValue(obj)); }
+	else if(ID == Keys::ObjectInfo::ROTATION){ this->SetRotation(GenericObj<CML::Vec4>::GetValue(obj)); }
+	else if(ID == Keys::ObjectInfo::SCALE){ this->SetScale(GenericObj<CML::Vec4>::GetValue(obj)); }
 	else if(ID == Keys::ObjectInfo::DIFFUSE){ this->Diffuse = GenericObj<CML::Vec4>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::AMBIENT){ this->Ambient = GenericObj<CML::Vec4>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::SPECULAR){ this->Specular = GenericObj<CML::Vec4>::GetValue(obj); }
@@ -53,6 +53,45 @@ void ObjectINFO::Set(const std::string& ID, std::shared_ptr<Object> obj)
 	else if(ID == Keys::ObjectInfo::DEPTH){ this->Depth = GenericObj<bool>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::OBJUSERDATA){ this->UserData = GenericObj<std::array<float, USERDATASIZE>>::GetValue(obj); }
 	else if(ID == Keys::ObjectInfo::ANIMATIONJOINT){ this->AnimationJoint = GenericObj<ObjectINFO::sAnimationJoint>::GetValue(obj); }
+}
+
+const CML::Vec4& ObjectINFO::GetLocation() const
+{
+	return this->Location;
+}
+void ObjectINFO::SetLocation(CML::Vec4 v)
+{
+	this->Location = v;
+	this->UpdateTranslationMatrix();
+}
+const CML::Vec4& ObjectINFO::GetRotation() const
+{
+	return this->Rotation;
+}
+void ObjectINFO::SetRotation(CML::Vec4 v)
+{
+	this->Rotation = v;
+	this->UpdateTranslationMatrix();
+}
+const CML::Vec4& ObjectINFO::GetScale() const
+{
+	return this->Scale;
+}
+void ObjectINFO::SetScale(CML::Vec4 v)
+{
+	this->Scale = v;
+	this->UpdateTranslationMatrix();
+}
+
+CML::Matrix4x4 ObjectINFO::GetTranslationMatrix()
+{
+	return this->TranslationMatrix;
+}
+
+void ObjectINFO::UpdateTranslationMatrix()
+{
+	CML::Vec4 rotationQua = CML::PYRToQuaternion(this->Rotation(0), this->Rotation(1), this->Rotation(2));
+	this->TranslationMatrix = CML::TransformMatrix(this->Location, rotationQua, this->Scale);
 }
 
 std::shared_ptr<INFO> ObjectINFO::Clone()
