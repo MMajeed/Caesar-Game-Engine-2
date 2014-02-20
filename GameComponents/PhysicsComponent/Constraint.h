@@ -12,7 +12,7 @@ protected:
 	Constraint();
 public:
 	virtual void Init() = 0;
-	virtual void Destory(){};
+	virtual void Destory() = 0;
 	virtual ~Constraint(){}
 
 	std::shared_ptr<btTypedConstraint> pConstraint;

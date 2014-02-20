@@ -3,15 +3,25 @@
 
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
-
+#include "LuaRigidBody.h"
 #include "LuaMath.h"
 
 namespace LuaConstraint
 {
-	class BallSocketBodyToPoint
+	class BallSocket
 	{
 	public:
-		BallSocketBodyToPoint(luabind::object const& table);
+		BallSocket(luabind::object const& table);
+		void Release();
+		std::string ID;
+
+		static void Register(lua_State *lua);
+	};
+
+	class Hinge
+	{
+	public:
+		Hinge(luabind::object const& table);
 		void Release();
 		std::string ID;
 

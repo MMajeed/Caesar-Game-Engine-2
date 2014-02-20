@@ -11,7 +11,9 @@ namespace CML
 	{
 	public:
 		std::array<Type, ArraySize> arr;
+
 		Vector(){ std::fill(arr.begin(), arr.end(), 0); }
+
 		Vector(std::initializer_list<Type> args)
 		{
 			std::copy(args.begin(), args.end(), this->arr.begin());
@@ -23,6 +25,7 @@ namespace CML
 			if(args.size() < ArraySize){ std::fill(arr.begin() + args.size(), arr.end(), 0); }
 			return *this;
 		}
+
 		template <typename T, int S> 
 		Vector(const Vector<T, S>& rhs)
 		{
@@ -36,7 +39,7 @@ namespace CML
 			}
 		}
 		template <typename T, int S> 
-		Vector<Type, ArraySize> operator=(const Vector<T, S>& rhs)
+		Vector& operator=(const Vector<T, S>& rhs)
 		{
 			for(std::size_t i = 0; i < S && i < ArraySize; ++i)
 			{
@@ -49,9 +52,14 @@ namespace CML
 			return *this;
 		}
 
+		Vector(const Vector<Type, ArraySize>& rhs) = default;
+		Vector& operator=(const Vector<Type, ArraySize>& other) = default;
+
 		inline int Size(){ return ArraySize; }
+
 		Type& operator()(unsigned int index){ return this->arr[index]; };
 		Type operator()(unsigned int index) const { return this->arr[index]; };
+
 		Type& operator[](unsigned int index){ return this->arr[index]; };
 		Type operator[](unsigned int index) const { return this->arr[index]; };
 	};

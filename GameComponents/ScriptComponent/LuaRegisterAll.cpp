@@ -21,6 +21,7 @@
 #include "LuaAnimationObject.h"
 #include "LuaCollisionShape.h"
 #include "LuaRigidBody.h"
+#include "LuaConstraint.h"
 
 void LuaRegisterAll(lua_State *lua)
 {
@@ -45,4 +46,5 @@ void LuaRegisterAll(lua_State *lua)
 	LuaAnimationObject::RegisterAllLuaFunction(lua);
 	LuaCollisionShape::RegisterAllLuaFunction(lua);
 	LuaRigidBody::RegisterAllLuaFunction(lua);
+	LuaConstraint::RegisterAllLuaFunction(lua);
 }

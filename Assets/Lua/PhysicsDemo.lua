@@ -18,22 +18,53 @@ local floorBox = Object({
   
 
 local fallingBoxCollisionShape = CreateBoxShape(Vector4(2.5, 2.5, 2.5));
-local fallingBoxRididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 200.0, 0.0),
+local fallingBoxRididBodyA = RididBody({
+                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 5.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 1.0,
                 [Keys["RigidBody"]["CollisionShape"]] = fallingBoxCollisionShape,});   
-local fallingBox = Object({
-                [Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.0, 0.0),
+local fallingBoxA = Object({
+                [Keys["ObjectInfo"]["Scale"]]       = Vector4(5.0, 5.0, 5.0),
+                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(1.0, 0.1, 0.1, 1.0),
+                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.1, 0.1),
+                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
+                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
+                [Keys["ObjectInfo"]["RigidBody"]]   = fallingBoxRididBodyA,});     
+
+local fallingBoxRididBodyB = RididBody({
+                [Keys["RigidBody"]["Position"]]       = Vector4(-95.0, 5.0, 0.0),
+                [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
+                [Keys["RigidBody"]["Mass"]]           = 1.0,
+                [Keys["RigidBody"]["CollisionShape"]] = fallingBoxCollisionShape,});   
+local fallingBoxB = Object({
                 [Keys["ObjectInfo"]["Scale"]]       = Vector4(5.0, 5.0, 5.0),
                 [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
                 [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
                 [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
                 [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-                [Keys["ObjectInfo"]["RigidBody"]]   = fallingBoxRididBody,});           
+                [Keys["ObjectInfo"]["RigidBody"]]   = fallingBoxRididBodyB,});     
+
+local constraint = nil;
+OnKeyUp(KeyCode["Z"], 
+    function()
+        if (constraint == nil) then
+            constraint = Hinge({
+                            [Keys["Constraint"]["RigidBodyA"]]          = fallingBoxRididBodyA,
+                            [Keys["Constraint"]["PivotPointA"]]         = Vector4(0.0, 2.5, 0.9),
+                            [Keys["Constraint"]["AxesA"]]               = Vector4(0.78, 0.0, 0.0),
+                            [Keys["Constraint"]["RigidBodyB"]]          = fallingBoxRididBodyB,
+                            [Keys["Constraint"]["PivotPointB"]]         = Vector4(0.0, -2.5, 0.0),
+                            [Keys["Constraint"]["AxesB"]]               = Vector4(0.0, 0.0, 0.0),
+                            [Keys["Constraint"]["BreakingThreshold"]]   = 1000,
+                            });   
+        else
+            constraint:Release();
+            constraint = nil;
+        end
+    end);  
 
 local PhysicsForwardButton   = false;    local PhysicsBackwardButton  = false;
-local PhysicsLeftButton     = false;     local PhysicsRightButton   = false;
+local PhysicsLeftButton      = false;    local PhysicsRightButton     = false;
 
 
 OnKeyDown(KeyCode["F"], function() PhysicsLeftButton = true; end);-- Left
@@ -47,19 +78,19 @@ OnKeyUp(KeyCode["T"], function() PhysicsForwardButton = false; end);-- Up
 OnKeyUp(KeyCode["G"], function() PhysicsBackwardButton = false; end);-- Down
 
 function UpdatePhysicsDemo(time, ID)
-    local delta = 2.0 * time;
+    local delta = 5.0 * time;
     if(PhysicsLeftButton == true) then
-        fallingBoxRididBody:ApplyTorque(Vector4(delta, 0.0, 0.0));
+        fallingBoxRididBodyB:ApplyTorque(Vector4(delta, 0.0, 0.0));
     end
     if(PhysicsRightButton == true) then
-        fallingBoxRididBody:ApplyTorque(Vector4(-delta , 0.0, 0.0));
+        fallingBoxRididBodyB:ApplyTorque(Vector4(-delta, 0.0, 0.0));
     end
     
     if(PhysicsForwardButton == true) then
-        fallingBoxRididBody:ApplyCentralFroce(Vector4(0.0, delta, 0.0));
+        fallingBoxRididBodyA:ApplyCentralFroce(Vector4(0.0, delta, 0.0));
     end
     if(PhysicsBackwardButton == true) then
-        fallingBoxRididBody:ApplyCentralFroce(Vector4(0.0, -delta, 0.0));
+        fallingBoxRididBodyA:ApplyCentralFroce(Vector4(0.0, -delta, 0.0));
     end
 end
 

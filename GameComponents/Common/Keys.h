@@ -134,11 +134,18 @@ namespace Keys
 
 	namespace Constraint
 	{
-		const static std::string RigidBodyA = "Position";
-		const static std::string Pi = "Rotation";
-		const static std::string INERTIA = "Inertia";
-		const static std::string MASS = "Mass";
-		const static std::string COLLISIONSHAPE = "CollisionShape";
+		const static std::string RIGIDBODYA        = "RigidBodyA";
+		const static std::string PIVOTPOINTA       = "PivotPointA";
+		const static std::string AXESA             = "AxesA";
+		const static std::string RIGIDBODYB        = "RigidBodyB";
+		const static std::string PIVOTPOINTB       = "PivotPointB";
+		const static std::string AXESB             = "AxesB";
+		const static std::string BREAKINGTHRESHOLD = "BreakingThreshold";
+		const static std::string LOW               = "Low";
+		const static std::string HIGH              = "High";
+		const static std::string SOFTNESS          = "Softness";
+		const static std::string BIASFACTOR        = "BiasFactor";
+		const static std::string RELEXATIONFACTOR  = "RelaxationFactor";
 	};
 };
 

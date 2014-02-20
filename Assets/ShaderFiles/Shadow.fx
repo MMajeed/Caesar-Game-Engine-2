@@ -8,8 +8,8 @@ SamplerState sam
 
 };
 
-static const float SMAP_SIZE = 2048.0f;
-static const float SMAP_DX = 0.5f / SMAP_SIZE;
+static const float SMAP_SIZE = 1028.0f;
+static const float SMAP_DX = 0.25f / SMAP_SIZE;
 
 float CalcShadowFactor(float4 shadowPosH, LightDesc L)
 {

@@ -30,29 +30,20 @@
       <Filter>RigidBody</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="BallSocketBodyToPoint.h">
-      <Filter>Constraint\BallSocketBodyToPoint</Filter>
-    </ClInclude>
-    <ClInclude Include="BallSocketBodyToBody.h">
-      <Filter>Constraint\BallSocketBodyToBody</Filter>
-    </ClInclude>
-    <ClInclude Include="HingeBodyToPoint.h">
-      <Filter>Constraint\HingeBodyToPoint</Filter>
-    </ClInclude>
-    <ClInclude Include="HingeBodyToBody.h">
-      <Filter>Constraint\HingeBodyToBody</Filter>
-    </ClInclude>
-    <ClInclude Include="ConeTwistBodyToBody.h">
-      <Filter>Constraint\ConeTwistBodyToBody</Filter>
-    </ClInclude>
-    <ClInclude Include="ConeTwistBodyToPoint.h">
-      <Filter>Constraint\ConeTwistBodyToPoint</Filter>
-    </ClInclude>
     <ClInclude Include="SliderBodyToBody.h">
       <Filter>Constraint\SliderBodyToBody</Filter>
     </ClInclude>
     <ClInclude Include="Constraint.h">
       <Filter>Constraint</Filter>
+    </ClInclude>
+    <ClInclude Include="BallSocket.h">
+      <Filter>Constraint\BallSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="ConeTwist.h">
+      <Filter>Constraint\ConeTwist</Filter>
+    </ClInclude>
+    <ClInclude Include="Hinge.h">
+      <Filter>Constraint\Hinge</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -84,29 +75,20 @@
     <ClCompile Include="RigidBody.cpp">
       <Filter>RigidBody</Filter>
     </ClCompile>
-    <ClCompile Include="BallSocketBodyToPoint.cpp">
-      <Filter>Constraint\BallSocketBodyToPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="BallSocketBodyToBody.cpp">
-      <Filter>Constraint\BallSocketBodyToBody</Filter>
-    </ClCompile>
-    <ClCompile Include="HingeBodyToPoint.cpp">
-      <Filter>Constraint\HingeBodyToPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="HingeBodyToBody.cpp">
-      <Filter>Constraint\HingeBodyToBody</Filter>
-    </ClCompile>
-    <ClCompile Include="ConeTwistBodyToBody.cpp">
-      <Filter>Constraint\ConeTwistBodyToBody</Filter>
-    </ClCompile>
-    <ClCompile Include="ConeTwistBodyToPoint.cpp">
-      <Filter>Constraint\ConeTwistBodyToPoint</Filter>
-    </ClCompile>
     <ClCompile Include="SliderBodyToBody.cpp">
       <Filter>Constraint\SliderBodyToBody</Filter>
     </ClCompile>
     <ClCompile Include="Constraint.cpp">
       <Filter>Constraint</Filter>
+    </ClCompile>
+    <ClCompile Include="BallSocket.cpp">
+      <Filter>Constraint\BallSocket</Filter>
+    </ClCompile>
+    <ClCompile Include="ConeTwist.cpp">
+      <Filter>Constraint\ConeTwist</Filter>
+    </ClCompile>
+    <ClCompile Include="Hinge.cpp">
+      <Filter>Constraint\Hinge</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,26 +128,17 @@
     <Filter Include="Constraint">
       <UniqueIdentifier>{d1de9f85-72e9-4ca9-8bec-57944dd51fbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\BallSocketBodyToPoint">
-      <UniqueIdentifier>{ab573d41-deaf-4389-9685-225e5b5609dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Constraint\BallSocketBodyToBody">
-      <UniqueIdentifier>{6c8ac917-e116-443b-8160-a41b761911a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Constraint\HingeBodyToPoint">
-      <UniqueIdentifier>{f65338e7-be96-4199-9fa6-03029e6a68b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Constraint\HingeBodyToBody">
-      <UniqueIdentifier>{ce19b6a3-296a-4c40-81bf-afd5d03cf4ee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Constraint\SliderBodyToBody">
       <UniqueIdentifier>{1cbbcc8f-b2eb-4b51-b3a1-2da95a81ec21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\ConeTwistBodyToBody">
+    <Filter Include="Constraint\BallSocket">
+      <UniqueIdentifier>{ab573d41-deaf-4389-9685-225e5b5609dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constraint\ConeTwist">
       <UniqueIdentifier>{f7f1b90f-37ef-4541-92bd-3d082414e49b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\ConeTwistBodyToPoint">
-      <UniqueIdentifier>{80edbfee-f3ec-4122-8114-edff34266714}</UniqueIdentifier>
+    <Filter Include="Constraint\Hinge">
+      <UniqueIdentifier>{ce19b6a3-296a-4c40-81bf-afd5d03cf4ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

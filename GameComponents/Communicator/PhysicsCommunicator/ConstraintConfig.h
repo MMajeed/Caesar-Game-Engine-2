@@ -7,7 +7,22 @@
 
 namespace ConstraintConfig
 {
-	std::string CreateBallSocketBodyToPoint(std::string RigidBodyID, CML::Vec3 PivotPoint);
+	std::string CreateBallSocket(std::string RigidBodyIDA, CML::Vec3 PivotPointA, double BreakingThreshold);
+	std::string CreateBallSocket(std::string RigidBodyIDA, CML::Vec3 PivotPointA,
+								 std::string RigidBodyIDB, CML::Vec3 PivotPointB,
+								 double BreakingThreshold);
+
+	std::string CreateHinge(std::string RigidBodyIDA, CML::Vec3 PivotPointA, CML::Vec3 AxesA, 
+							double BreakingThreshold,
+							double Low, double High,
+							double Softness,
+							double BiasFactor, double RelaxationFactor);
+	std::string CreateHinge(std::string RigidBodyIDA, CML::Vec3 PivotPointA, CML::Vec3 AxesA,
+							std::string RigidBodyIDB, CML::Vec3 PivotPointB, CML::Vec3 AxesB,
+							double BreakingThreshold,
+							double Low, double High,
+							double Softness,
+							double BiasFactor, double RelaxationFactor);
 
 	void Release(std::string ID);
 }

@@ -12,6 +12,7 @@ namespace CML
 	{
 		public:
 		std::array<Vector<Type, SArraySize>, FArraySize> mat;
+
 		Matrix()
 		{
 			for(unsigned int i = 0; i < FArraySize; ++i)
@@ -23,6 +24,7 @@ namespace CML
 				}
 			}
 		}
+
 		template <typename T, unsigned int  FS, unsigned int SS>
 		Matrix(const Matrix<T, FS, SS>& rhs)
 		{
@@ -34,32 +36,46 @@ namespace CML
 				}
 				for(std::size_t x = SS; x < SArraySize; ++x)
 				{
-					mat[i][x] = 0.0;
+					if(i != x){ mat[i][x] = 0; }
+					else{ mat[i][x] = 1; }
 				}
 			}
 			for(std::size_t i = FS; i < FArraySize; ++i)
 			{
 				for(std::size_t x = 0; x < SArraySize; ++x)
 				{
-					mat[i][x] = 0.0;
+					if(i != x){ mat[i][x] = 0; }
+					else{ mat[i][x] = 1; }
 				}
 			}
 		}
 		template <typename T, unsigned int  FS, unsigned int SS>
-		const Matrix<Type, FArraySize, SArraySize>& operator=( const Matrix<T, FS, SS>& rhs )
+		Matrix& operator=(const Matrix<T, FS, SS>& rhs)
 		{
 			for(std::size_t i = 0; i < FS && i < FArraySize; ++i)
 			{
-				std::copy(rhs[i].begin(), rhs[i].end(), this->mat[i].arr.begin());
-				if(SS < SArraySize){ std::fill(this->mat[i].arr.begin() + SS, this->mat[i].arr.end(), 0); }
+				for(std::size_t x = 0; x < SS && x < SArraySize; ++x)
+				{
+					mat[i][x] = rhs(i, x);
+				}
+				for(std::size_t x = SS; x < SArraySize; ++x)
+				{
+					if(i != x){ mat[i][x] = 0; }
+					else{ mat[i][x] = 1; }
+				}
 			}
-			for(unsigned int i = FS; i < FArraySize; ++i)
+			for(std::size_t i = FS; i < FArraySize; ++i)
 			{
-				std::fill(this->mat[i].arr.begin(), this->mat[i].arr.end(), 0);
+				for(std::size_t x = 0; x < SArraySize; ++x)
+				{
+					if(i != x){ mat[i][x] = 0; }
+					else{ mat[i][x] = 1; }
+				}
 			}
 
 			return *this;
 		}
+
 		Matrix(std::initializer_list<std::initializer_list<Type>> args)
 		{
 			unsigned int i = 0;
@@ -74,7 +90,7 @@ namespace CML
 				std::fill(this->mat[i].arr.begin(), this->mat[i].arr.end(), 0);
 			}
 		}
-		Matrix& operator=( std::initializer_list<std::initializer_list<Type>> args )
+		Matrix& operator=(std::initializer_list<std::initializer_list<Type>> args)
 		{
 			unsigned int i = 0;
 			for(auto argsIter : args)
@@ -90,10 +106,15 @@ namespace CML
 			return *this;
 		}
 
+		Matrix(const Matrix<Type, FArraySize, SArraySize>& rhs) = default;
+		Matrix& operator=(const Matrix<Type, FArraySize, SArraySize>& other) = default;
+
 		inline unsigned int FirstArraySize(){ return FArraySize; }
 		inline unsigned int SecondArraySize(){ return SArraySize; }
+
 		Type& operator()(unsigned int fIndex, unsigned int sIndex){ return this->mat[fIndex][sIndex]; }
 		const Type operator()(unsigned int fIndex, unsigned int sIndex) const { return this->mat[fIndex][sIndex]; }
+
 		Vector<Type, SArraySize>& operator[](unsigned int index){ return this->mat[index]; };
 		const Vector<Type, SArraySize> operator[](unsigned int index) const { return this->mat[index]; };
 	};

@@ -123,5 +123,20 @@ void LuaKeysID::Register(lua_State *lua)
 		RigidBody[Keys::RigidBody::COLLISIONSHAPE] = Keys::RigidBody::COLLISIONSHAPE;
 	luaKeyTable["RigidBody"] = RigidBody;
 
+	luabind::object Constraint = luabind::newtable(lua);
+		Constraint[Keys::Constraint::RIGIDBODYA]        = Keys::Constraint::RIGIDBODYA;
+		Constraint[Keys::Constraint::PIVOTPOINTA]       = Keys::Constraint::PIVOTPOINTA;
+		Constraint[Keys::Constraint::AXESA]             = Keys::Constraint::AXESA;
+		Constraint[Keys::Constraint::RIGIDBODYB]        = Keys::Constraint::RIGIDBODYB;
+		Constraint[Keys::Constraint::PIVOTPOINTB]       = Keys::Constraint::PIVOTPOINTB;
+		Constraint[Keys::Constraint::AXESB]             = Keys::Constraint::AXESB;
+		Constraint[Keys::Constraint::BREAKINGTHRESHOLD] = Keys::Constraint::BREAKINGTHRESHOLD;
+		Constraint[Keys::Constraint::LOW]               = Keys::Constraint::LOW;
+		Constraint[Keys::Constraint::HIGH]              = Keys::Constraint::HIGH;
+		Constraint[Keys::Constraint::SOFTNESS]          = Keys::Constraint::SOFTNESS;
+		Constraint[Keys::Constraint::BIASFACTOR]        = Keys::Constraint::BIASFACTOR;
+		Constraint[Keys::Constraint::RELEXATIONFACTOR]  = Keys::Constraint::RELEXATIONFACTOR;
+	luaKeyTable["Constraint"] = Constraint;
+
 	luabind::globals(lua)["Keys"] = luaKeyTable;
 }
