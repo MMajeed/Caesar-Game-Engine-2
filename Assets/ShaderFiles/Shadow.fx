@@ -8,8 +8,8 @@ SamplerState sam
 
 };
 
-static const float SMAP_SIZE = 1028.0f;
-static const float SMAP_DX = 0.25f / SMAP_SIZE;
+static const float SMAP_SIZE = 2048.0f;
+static const float SMAP_DX = 0.2f / SMAP_SIZE;
 
 float CalcShadowFactor(float4 shadowPosH, LightDesc L)
 {
@@ -41,6 +41,7 @@ float CalcShadowFactor(float4 shadowPosH, LightDesc L)
 			&& loc.y < 1.0f && loc.y > 0.0f)
 		{
 			bool inShadow = (shadowPosH.z - depthTexture) >= dxM;
+
 			if(inShadow == true)
 			{
 				sourcevals -= 0.1;

@@ -41,12 +41,21 @@ void Hinge::Init()
 		}
 
 		newConstraint->setBreakingImpulseThreshold((float)this->Info.BreakingThreshold);
-		newConstraint->setLimit((float)this->Info.Low, (float)this->Info.High, 
+		/*newConstraint->setLimit((float)this->Info.Low, (float)this->Info.High, 
 								(float)this->Info.Softness, 
-								(float)this->Info.BiasFactor, (float)this->Info.RelaxationFactor);
-		
+								(float)this->Info.BiasFactor, (float)this->Info.RelaxationFactor);*/
+	/*	newConstraint->enableAngularMotor(true, 10.0, 1000.0);*/
+		newConstraint->setMaxMotorImpulse(10.0);
 		this->pConstraint = newConstraint;
 		physicsManager.Info.dynamicsWorld->addConstraint(this->pConstraint.get());
+	}
+}
+
+
+void Hinge::ApplyMotor(double Impulse)
+{
+	if(std::shared_ptr<btHingeConstraint> spHinge = std::dynamic_pointer_cast<btHingeConstraint>(this->pConstraint))
+	{
 	}
 }
 

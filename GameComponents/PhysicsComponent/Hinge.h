@@ -16,6 +16,8 @@ public:
 	virtual void Init();
 	virtual void Destory();
 
+	void ApplyMotor(double Impulse);
+
 	static std::shared_ptr<Hinge> Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPointA, CML::Vec3 AxesA,
 										double BreakingThreshold,
 										double Low,

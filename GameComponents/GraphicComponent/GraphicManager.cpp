@@ -91,7 +91,7 @@ void GraphicManager::InitWindow()
 
 	this->window.hInst = GetModuleHandle(NULL);
 	this->window.height = 768;
-	this->window.width = 1024;
+	this->window.width = 2048;
 
 	// Register class
 	WNDCLASSEX wcex;

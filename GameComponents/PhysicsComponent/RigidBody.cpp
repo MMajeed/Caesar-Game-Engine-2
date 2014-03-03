@@ -14,8 +14,13 @@ void RigidBody::Init()
 
 	if(std::shared_ptr<CollisionShape> spShape = this->Info.CollisionShape.second.lock())
 	{
-		btVector3 btLocation((float)this->Info.DefaultLocation(0), (float)this->Info.DefaultLocation(1), (float)this->Info.DefaultLocation(2));
-		btQuaternion btQuaternion((float)this->Info.DefaultQuaRotation(0), (float)this->Info.DefaultQuaRotation(1), (float)this->Info.DefaultQuaRotation(2), (float)this->Info.DefaultQuaRotation(3));
+		btVector3 btLocation((float)this->Info.DefaultLocation(0), 
+							 (float)this->Info.DefaultLocation(1), 
+							 (float)this->Info.DefaultLocation(2));
+		btQuaternion btQuaternion((float)this->Info.DefaultQuaRotation(0), 
+								  (float)this->Info.DefaultQuaRotation(1), 
+								  (float)this->Info.DefaultQuaRotation(2), 
+								  (float)this->Info.DefaultQuaRotation(3));
 
 		this->Info.DefaultMotionState =
 			std::shared_ptr<btDefaultMotionState>(new btDefaultMotionState(btTransform(btQuaternion, btLocation)));
@@ -44,7 +49,7 @@ void RigidBody::Update()
 	btTransform trans;
 	this->Info.Body->getMotionState()->getWorldTransform(trans);
 	CML::Vec3 newLocation = {trans.getOrigin().x(), trans.getOrigin().y(), trans.getOrigin().z()};
-	CML::Vec4 newRotation = {trans.getRotation().w(), trans.getRotation().x(), trans.getRotation().y(), trans.getRotation().z()};
+	CML::Vec4 newRotation = {trans.getRotation().x(), trans.getRotation().y(), trans.getRotation().z(), trans.getRotation().w()};
 
 	CML::Matrix4x4 translation = CML::TransformMatrix(newLocation, newRotation, {1.0, 1.0, 1.0});
 
