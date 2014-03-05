@@ -22,8 +22,8 @@ public:
 	std::vector<std::shared_ptr<ShadowScreenShot>>	vecDepthShadow;
 	ID3D11Texture2D*									shadowTexture;
 	ID3D11ShaderResourceView*							shaderShadowTexture;
-	static const unsigned int Width = 2048;
-	static const unsigned int Height = 2048;
+	static const unsigned int Width = 1024;
+	static const unsigned int Height = 1024;
 
 	friend CHL::Singleton<Light>;
 };

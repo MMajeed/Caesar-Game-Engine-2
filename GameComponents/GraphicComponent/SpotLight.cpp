@@ -54,8 +54,8 @@ namespace SpotLight
 	CML::Matrix4x4 CalculatePrespectiveMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye)
 	{
 		double FovAngleY = 1.570796327;
-		double height = 2048;
-		double width = 2048;
+		double height = SpotLight::Height;
+		double width = SpotLight::Width;
 		double nearZ = 1.0;
 		double farZ = lightInfo->Range;
 
@@ -68,8 +68,8 @@ namespace SpotLight
 		returnValue.CamerMatrix = CalculateViewMatrix(lightInfo, eye);
 		returnValue.ProjectionMatrix = CalculatePrespectiveMatrix(lightInfo, eye);
 		returnValue.TwoDimMatrix = CalculatePrespectiveMatrix(lightInfo, eye);
-		returnValue.width = 2048;
-		returnValue.height = 2048;
+		returnValue.width = SpotLight::Width;
+		returnValue.height = SpotLight::Height;
 		returnValue.farZ = lightInfo->Range;
 		returnValue.nearZ = 1.0;
 		returnValue.InclusionState = SceneInfo::InclusionType::All;

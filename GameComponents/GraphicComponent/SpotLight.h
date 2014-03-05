@@ -14,6 +14,8 @@ namespace SpotLight
 	CML::Matrix4x4 CalculateViewMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye);
 	CML::Matrix4x4 CalculatePrespectiveMatrix(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye);
 	SceneInfo GetScene(std::shared_ptr<SpotLightINFO> lightInfo, const CML::Vec4 eye);
+	static const unsigned int Width = 1024;
+	static const unsigned int Height = 1024;
 }
 
 #endif //__SPOTLIGHT__

@@ -27,13 +27,12 @@ for k,v in pairs(fileNames) do
                                                   [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
                                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 
-        local ManObj =   Object({[Keys["ObjectInfo"]["Location"]]           = Vector4(70, 0.0, zPosition),
-                                    [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
-                                    [Keys["ObjectInfo"]["Diffuse"]]         = Vector4(0.15, 0.15, 0.15, 1.0),
-                                    [Keys["ObjectInfo"]["Ambient"]]         = Vector4(0.0, 0.0, 0.0),
-                                    [Keys["ObjectInfo"]["Specular"]]        = Vector4(0.1, 0.1, 0.1, 0.1),
-                                    [Keys["ObjectInfo"]["DrawableObj"]]     = ManDrawable,
-                                    [Keys["ObjectInfo"]["AnimationJoint"]]  = {AnimationController,  joint.Name},
+        local ManObj =   Object({
+                            [Keys["ObjectInfo"]["Location"]]        = Vector4(70, 0.0, zPosition),
+                            [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
+                            [Keys["ObjectInfo"]["DrawableObj"]]     = ManDrawable,
+                            [Keys["ObjectInfo"]["AnimationJoint"]]  = {AnimationController,  joint.Name},
+                            [Keys["ObjectInfo"]["Light"]]           = false,
                                 });
         for key,value in pairs(joint.Childern) do 
             RecursiveLoadJoint(value);

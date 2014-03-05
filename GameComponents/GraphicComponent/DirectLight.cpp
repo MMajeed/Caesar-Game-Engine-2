@@ -101,8 +101,8 @@ namespace DirectLight
 		returnValue.CamerMatrix = CalculateViewMatrix(lightInfo, eye);
 		returnValue.ProjectionMatrix = CalculatePrespectiveMatrix(lightInfo, eye);
 		returnValue.TwoDimMatrix = CalculatePrespectiveMatrix(lightInfo, eye);
-		returnValue.width = 2048;
-		returnValue.height = 2048;
+		returnValue.width = DirectLight::Width;
+		returnValue.height = DirectLight::Height;
 		returnValue.farZ = DirectLight::radius; 
 		returnValue.nearZ = 1.0;
 		returnValue.InclusionState = SceneInfo::InclusionType::All;

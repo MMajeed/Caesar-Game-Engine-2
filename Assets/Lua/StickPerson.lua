@@ -29,14 +29,13 @@ function RecursiveLoadJoint(joint)
                                                  [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 
     stickFigerObjNodes[joint.Name]
-                    =   Object({[Keys["ObjectInfo"]["Location"]]        = stickLocation,
+                    =   Object({
+                                [Keys["ObjectInfo"]["Location"]]        = stickLocation,
                                 [Keys["ObjectInfo"]["Rotation"]]        = stickRotation,
                                 [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
-                                [Keys["ObjectInfo"]["Diffuse"]]         = Vector4(0.15, 0.15, 0.15, 1.0),
-                                [Keys["ObjectInfo"]["Ambient"]]         = Vector4(0.0, 0.0, 0.0),
-                                [Keys["ObjectInfo"]["Specular"]]        = Vector4(0.1, 0.1, 0.1, 0.1),
                                 [Keys["ObjectInfo"]["DrawableObj"]]     = runManDrawable,
                                 [Keys["ObjectInfo"]["AnimationJoint"]]  = {StickPersonAnimationController,  joint.Name},
+                                [Keys["ObjectInfo"]["Light"]]           = false,
                             });
     for key,value in pairs(joint.Childern) do 
         RecursiveLoadJoint(value);
