@@ -86,7 +86,8 @@ namespace ConstraintConfig
 							double BreakingThreshold,
 							double Low, double High,
 							double Softness,
-							double BiasFactor, double RelaxationFactor)
+							double BiasFactor, double RelaxationFactor,
+							double MaxMotorImpulse)
 	{
 		class CreateHingeSocket : public Message
 		{
@@ -95,7 +96,8 @@ namespace ConstraintConfig
 							  double BreakingThreshold,
 							  double Low, double High,
 							  double Softness,
-							  double BiasFactor, double RelaxationFactor)
+							  double BiasFactor, double RelaxationFactor,
+							  double MaxMotorImpulse)
 			{
 				this->ID = CHL::GenerateGUID();
 				this->RigidBodyIDA = RigidBodyIDA;
@@ -107,6 +109,7 @@ namespace ConstraintConfig
 				this->Softness = Softness;
 				this->BiasFactor = BiasFactor;
 				this->RelaxationFactor = RelaxationFactor;
+				this->MaxMotorImpulse = MaxMotorImpulse;
 			}
 
 			virtual Message::Status Work()
@@ -117,7 +120,8 @@ namespace ConstraintConfig
 					this->BreakingThreshold,
 					this->Low, this->High,
 					this->Softness,
-					this->BiasFactor, this->RelaxationFactor);
+					this->BiasFactor, this->RelaxationFactor,
+					this->MaxMotorImpulse);
 				PhysicsManager::GetInstance().InsertConstraintObj(this->ID, newObj);
 
 				return Message::Status::Complete;
@@ -129,13 +133,15 @@ namespace ConstraintConfig
 			double Low; double High;
 			double Softness;
 			double BiasFactor; double RelaxationFactor;
+			double MaxMotorImpulse;
 		};
 
 		std::shared_ptr<CreateHingeSocket> msg(new CreateHingeSocket(RigidBodyIDA, PivotPointA, AxesA,
 																	 BreakingThreshold,
 																	 Low, High,
 																	 Softness,
-																	 BiasFactor, RelaxationFactor));
+																	 BiasFactor, RelaxationFactor,
+																	 MaxMotorImpulse));
 		PhysicsManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}
@@ -144,7 +150,8 @@ namespace ConstraintConfig
 							double BreakingThreshold,
 							double Low, double High,
 							double Softness,
-							double BiasFactor, double RelaxationFactor)
+							double BiasFactor, double RelaxationFactor,
+							double MaxMotorImpulse)
 	{
 		class CreateHingeSocket : public Message
 		{
@@ -154,7 +161,8 @@ namespace ConstraintConfig
 							  double BreakingThreshold,
 							  double Low, double High,
 							  double Softness,
-							  double BiasFactor, double RelaxationFactor)
+							  double BiasFactor, double RelaxationFactor,
+							  double MaxMotorImpulse)
 			{
 				this->ID = CHL::GenerateGUID();
 				this->RigidBodyIDA = RigidBodyIDA;
@@ -169,6 +177,7 @@ namespace ConstraintConfig
 				this->Softness = Softness;
 				this->BiasFactor = BiasFactor;
 				this->RelaxationFactor = RelaxationFactor;
+				this->MaxMotorImpulse = MaxMotorImpulse;
 			}
 
 			virtual Message::Status Work()
@@ -180,7 +189,8 @@ namespace ConstraintConfig
 								this->BreakingThreshold,
 								this->Low, this->High,
 								this->Softness, 
-								this->BiasFactor, this->RelaxationFactor);
+								this->BiasFactor, this->RelaxationFactor,
+								this->MaxMotorImpulse);
 				PhysicsManager::GetInstance().InsertConstraintObj(this->ID, newObj);
 
 				return Message::Status::Complete;
@@ -193,6 +203,7 @@ namespace ConstraintConfig
 			double Low; double High;
 			double Softness;
 			double BiasFactor; double RelaxationFactor;
+			double MaxMotorImpulse;
 		};
 
 		std::shared_ptr<CreateHingeSocket> msg(new CreateHingeSocket(RigidBodyIDA, PivotPointA, AxesA,
@@ -200,7 +211,8 @@ namespace ConstraintConfig
 																	 BreakingThreshold,
 																	 Low, High,
 																	 Softness,
-																	 BiasFactor, RelaxationFactor));
+																	 BiasFactor, RelaxationFactor,
+																	 MaxMotorImpulse));
 		PhysicsManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}

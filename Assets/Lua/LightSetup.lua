@@ -19,5 +19,5 @@ spotLight = SpotLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 0.8),
                        [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
                        [Keys["Light"]["Spot"]]        = 0.5,
                        [Keys["Light"]["Range"]]       = 20,
-                       [Keys["Light"]["HasShadow"]]   = true,});
+                       [Keys["Light"]["HasShadow"]]   = fal,});
 

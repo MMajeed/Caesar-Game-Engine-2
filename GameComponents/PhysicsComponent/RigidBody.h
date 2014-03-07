@@ -17,11 +17,14 @@ protected:
 public:
 	virtual void Init();
 	virtual void Destory();
-	void Update();
 
 	void ApplyTorque(CML::Vec3 v);
 	void ApplyCentralForce(CML::Vec3 v);
 
+	void SetTorque(CML::Vec3 v);
+
+	CML::Vec3 GetTorque();
+	CML::Vec3 GetForce();
 	CML::Vec3 GetLocation();
 	CML::Vec4 GetQuaRotation(); 
 	CML::Matrix4x4 GetTranMatrix();
@@ -36,13 +39,6 @@ public:
 		CML::Vec3 Inertia;
 		float Mass;
 	}Info;
-
-	struct
-	{
-		CML::Vec3 Location;
-		CML::Vec4 QuaRotation;
-		CML::Matrix4x4 TranMatrix;
-	}Translation;
 
 	static std::shared_ptr<RigidBody> Spawn(std::string CollisionShapeID,
 											CML::Vec3 Location, 

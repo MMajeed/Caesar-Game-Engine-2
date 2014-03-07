@@ -2,6 +2,7 @@
 
 #include <PhysicsCommunicator\RigidBodyConfig.h>
 #include <Keys.h>
+#include <MathFunctions.h>
 #include "LuaCollisionShape.h"
 
 namespace LuaRigidBody
@@ -23,7 +24,7 @@ namespace LuaRigidBody
 			{
 				std::string key = luabind::object_cast<std::string>(it.key());
 
-					 if(key == Keys::RigidBody::POSITION)		{ Location = luabind::object_cast<LuaMath::Vector4>(*it); }
+				if(key == Keys::RigidBody::POSITION)		{ Location = luabind::object_cast<LuaMath::Vector4>(*it); }
 				else if(key == Keys::RigidBody::ROTATION)		{ Rotation = luabind::object_cast<LuaMath::Vector4>(*it); }
 				else if(key == Keys::RigidBody::INERTIA)		{ Inertia = luabind::object_cast<LuaMath::Vector4>(*it); calculateInertia = false; }
 				else if(key == Keys::RigidBody::MASS)			{ mass = luabind::object_cast<double>(*it); }
@@ -33,6 +34,7 @@ namespace LuaRigidBody
 
 		this->ID = RigidBodyConfig::Create(collisionShape, Location, Rotation, (float)mass, calculateInertia, Inertia);
 	}
+
 	void RididBody::ApplyTorque(LuaMath::Vector4 v)
 	{
 		RigidBodyConfig::ApplyTorque(this->ID, v.vector);
@@ -41,10 +43,33 @@ namespace LuaRigidBody
 	{
 		RigidBodyConfig::ApplyCentralFroce(this->ID, v.vector);
 	}
+	void RididBody::SetTorque(LuaMath::Vector4 v)
+	{
+		RigidBodyConfig::SetTorque(this->ID, v.vector);
+	}
+
+	LuaMath::Vector4 RididBody::GetTorque()
+	{
+		return RigidBodyConfig::GetTorque(this->ID);;
+	}
+	LuaMath::Vector4 RididBody::GetForce()
+	{
+		return RigidBodyConfig::GetForce(this->ID);;
+	}
+	LuaMath::Vector4 RididBody::GetQuaRotation()
+	{
+		return RigidBodyConfig::GetQuaRotation(this->ID);;
+	}
+	LuaMath::Vector4 RididBody::GetLocation()
+	{
+		return RigidBodyConfig::GetLocation(this->ID);
+	}
+
 	void RididBody::Release()
 	{
 		RigidBodyConfig::Release(this->ID);
 	}
+
 	void RididBody::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
@@ -53,6 +78,11 @@ namespace LuaRigidBody
 				.def_readonly("ID", &RididBody::ID)
 				.def("ApplyTorque", &RididBody::ApplyTorque)
 				.def("ApplyCentralFroce", &RididBody::ApplyCentralFroce)
+				.def("GetTorque", &RididBody::GetTorque)
+				.def("GetForce", &RididBody::GetForce)
+				.def("GetQuaRotation", &RididBody::GetQuaRotation)
+				.def("GetLocation", &RididBody::GetLocation)
+				.def("SetTorque", &RididBody::SetTorque)
 				.def("Release", &RididBody::Release)
 		];
 	}

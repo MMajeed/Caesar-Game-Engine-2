@@ -136,6 +136,7 @@ void LuaKeysID::Register(lua_State *lua)
 		Constraint[Keys::Constraint::SOFTNESS]          = Keys::Constraint::SOFTNESS;
 		Constraint[Keys::Constraint::BIASFACTOR]        = Keys::Constraint::BIASFACTOR;
 		Constraint[Keys::Constraint::RELEXATIONFACTOR]  = Keys::Constraint::RELEXATIONFACTOR;
+		Constraint[Keys::Constraint::MAXMOTORIMPULSE]   = Keys::Constraint::MAXMOTORIMPULSE;
 	luaKeyTable["Constraint"] = Constraint;
 
 	luabind::globals(lua)["Keys"] = luaKeyTable;

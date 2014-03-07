@@ -44,18 +44,10 @@ void Hinge::Init()
 		/*newConstraint->setLimit((float)this->Info.Low, (float)this->Info.High, 
 								(float)this->Info.Softness, 
 								(float)this->Info.BiasFactor, (float)this->Info.RelaxationFactor);*/
-	/*	newConstraint->enableAngularMotor(true, 10.0, 1000.0);*/
-		newConstraint->setMaxMotorImpulse(10.0);
+		newConstraint->setMaxMotorImpulse((float)this->Info.MaxMotorImpulse);
+
 		this->pConstraint = newConstraint;
 		physicsManager.Info.dynamicsWorld->addConstraint(this->pConstraint.get());
-	}
-}
-
-
-void Hinge::ApplyMotor(double Impulse)
-{
-	if(std::shared_ptr<btHingeConstraint> spHinge = std::dynamic_pointer_cast<btHingeConstraint>(this->pConstraint))
-	{
 	}
 }
 
@@ -76,7 +68,8 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 									double High,
 									double Softness,
 									double BiasFactor,
-									double RelaxationFactor)
+									double RelaxationFactor,
+									double MaxMotorImpulse)
 {
 	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
@@ -114,6 +107,7 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 	newObject->Info.Softness = Softness;
 	newObject->Info.BiasFactor = BiasFactor;
 	newObject->Info.RelaxationFactor = RelaxationFactor;
+	newObject->Info.MaxMotorImpulse = MaxMotorImpulse;
 
 	newObject->Init();
 
@@ -126,7 +120,8 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 									double High,
 									double Softness,
 									double BiasFactor,
-									double RelaxationFactor)
+									double RelaxationFactor,
+									double MaxMotorImpulse)
 {
 	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
@@ -151,7 +146,7 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 	newObject->Info.Softness = Softness;
 	newObject->Info.BiasFactor = BiasFactor;
 	newObject->Info.RelaxationFactor = RelaxationFactor;
-
+	newObject->Info.MaxMotorImpulse = MaxMotorImpulse;
 	newObject->Init();
 
 	return newObject;

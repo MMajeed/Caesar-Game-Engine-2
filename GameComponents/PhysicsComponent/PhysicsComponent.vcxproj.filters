@@ -122,9 +122,6 @@
     <Filter Include="CollisionShape\Meshes\ConvexTriangleMeshShape">
       <UniqueIdentifier>{58448746-19f8-4493-8f37-eb18838290a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RigidBody">
-      <UniqueIdentifier>{0a7990aa-2fb4-4b03-b104-0c5a79454ccd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Constraint">
       <UniqueIdentifier>{d1de9f85-72e9-4ca9-8bec-57944dd51fbc}</UniqueIdentifier>
     </Filter>
@@ -139,6 +136,9 @@
     </Filter>
     <Filter Include="Constraint\Hinge">
       <UniqueIdentifier>{ce19b6a3-296a-4c40-81bf-afd5d03cf4ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RigidBody">
+      <UniqueIdentifier>{0a7990aa-2fb4-4b03-b104-0c5a79454ccd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

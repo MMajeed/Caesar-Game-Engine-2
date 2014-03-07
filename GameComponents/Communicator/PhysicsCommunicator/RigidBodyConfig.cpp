@@ -56,6 +56,7 @@ namespace RigidBodyConfig
 		PhysicsManager::GetInstance().SubmitMessage(msg);
 		return msg->ID;
 	}
+
 	void ApplyTorque(std::string ID, CML::Vec3 v)
 	{
 		class  ApplyTorqueMesssage : public Message
@@ -126,6 +127,76 @@ namespace RigidBodyConfig
 		std::shared_ptr<ApplyCentralFroceMesssage> msg(new ApplyCentralFroceMesssage(ID, v));
 		PhysicsManager::GetInstance().SubmitMessage(msg);
 	}
+	void SetTorque(std::string ID, CML::Vec3 v)
+	{
+		class  SetTorqueMesssage : public Message
+		{
+		public:
+			SetTorqueMesssage(std::string ID, CML::Vec3 v)
+			{
+				this->ID = ID;
+				this->v = v;
+			}
+
+			virtual Message::Status Work()
+			{
+				PhysicsManager& physicsManager = PhysicsManager::GetInstance();
+
+				std::lock_guard<std::mutex> lock(physicsManager.mutex);
+
+				const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+					physicsManager.RigidBodyObjs;
+
+				auto iter = rididBodies.find(ID);
+				if(iter != rididBodies.end())
+				{
+					iter->second->SetTorque(v);
+				}
+				return Message::Status::Complete;
+			}
+
+			CML::Vec3 v;
+			std::string	ID;
+		};
+
+		std::shared_ptr<SetTorqueMesssage> msg(new SetTorqueMesssage(ID, v));
+		PhysicsManager::GetInstance().SubmitMessage(msg);
+	}
+
+	CML::Vec3 GetTorque(std::string ID)
+	{
+		CML::Vec3 returnValue;
+		PhysicsManager& physicsManager = PhysicsManager::GetInstance();
+
+		std::lock_guard<std::mutex> lock(physicsManager.mutex);
+
+		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+			physicsManager.RigidBodyObjs;
+
+		auto iter = rididBodies.find(ID);
+		if(iter != rididBodies.end())
+		{
+			returnValue = iter->second->GetTorque();
+		}
+		return returnValue;
+	}
+	CML::Vec3 GetForce(std::string ID)
+	{
+		CML::Vec3 returnValue;
+		PhysicsManager& physicsManager = PhysicsManager::GetInstance();
+
+		std::lock_guard<std::mutex> lock(physicsManager.mutex);
+
+		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+			physicsManager.RigidBodyObjs;
+
+		auto iter = rididBodies.find(ID);
+		if(iter != rididBodies.end())
+		{
+			returnValue = iter->second->GetForce();
+		}
+		return returnValue;
+	}
 	CML::Vec3 GetLocation(std::string ID)
 	{
 		CML::Vec3 returnValue;
@@ -145,7 +216,7 @@ namespace RigidBodyConfig
 	}
 	CML::Vec4 GetQuaRotation(std::string ID)
 	{
-		CML::Vec3 returnValue;
+		CML::Vec4 returnValue;
 		PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);

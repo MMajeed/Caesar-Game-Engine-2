@@ -16,15 +16,14 @@ public:
 	virtual void Init();
 	virtual void Destory();
 
-	void ApplyMotor(double Impulse);
-
 	static std::shared_ptr<Hinge> Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPointA, CML::Vec3 AxesA,
 										double BreakingThreshold,
 										double Low,
 										double High,
 										double Softness,
 										double BiasFactor,
-										double RelaxationFactor);
+										double RelaxationFactor,
+										double MaxMotorImpulse);
 	static std::shared_ptr<Hinge> Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPointA, CML::Vec3 AxesA,
 										std::string RigidBodyIDB, CML::Vec3 PivotPointB, CML::Vec3 AxesB,
 										double BreakingThreshold,
@@ -32,7 +31,8 @@ public:
 										double High,
 										double Softness,
 										double BiasFactor,
-										double RelaxationFactor);
+										double RelaxationFactor,
+										double MaxMotorImpulse);
 
 	struct
 	{
@@ -48,6 +48,7 @@ public:
 		double Softness;
 		double BiasFactor;
 		double RelaxationFactor;
+		double MaxMotorImpulse;
 	}Info;
 };
 

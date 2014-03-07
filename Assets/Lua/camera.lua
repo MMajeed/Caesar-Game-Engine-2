@@ -26,7 +26,7 @@ local Quad2D = Object({[Keys["ObjectInfo"]["DrawableObj"]]  = Quad2DDrawable,
 local sniperTexture = BasicTexture("Assets/Texture/Sniper2.png");
 
                       
-local Quad2DCam = Camera({[Keys["Camera"]["Eye"]]              = Vector4(0.0, 5.0, -60.0, 0.0),
+local Quad2DCam = Camera({[Keys["Camera"]["Eye"]]              = Vector4(-100.0, 5.0, -60.0, 0.0),
                            [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
                            [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
                            [Keys["Camera"]["RadianRoll"]]      = 0.0,
@@ -44,7 +44,7 @@ local Quad2DCam = Camera({[Keys["Camera"]["Eye"]]              = Vector4(0.0, 5.
 Quad2DCam:SetAsMain();
                       
 
-regularCam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(0.0, 5.0, -60.0, 0.0),
+regularCam = Camera({[Keys["Camera"]["Eye"]]             = Vector4(-100, 5.0, -60.0, 0.0),
                      [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
                      [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
                      [Keys["Camera"]["RadianRoll"]]      = 0.0,

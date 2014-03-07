@@ -146,6 +146,7 @@ namespace Keys
 		const static std::string SOFTNESS          = "Softness";
 		const static std::string BIASFACTOR        = "BiasFactor";
 		const static std::string RELEXATIONFACTOR  = "RelaxationFactor";
+		const static std::string MAXMOTORIMPULSE   = "MaxMotorImpulse";
 	};
 };
 

@@ -49,6 +49,8 @@ namespace LuaMath
 	};
 
 	Vector4 MoveObject(Vector4 Location, Vector4 target, double pitch, double yaw, double roll, double magintude);
+	//Vector4 RotateVector(Vector4 target, double pitch, double yaw, double roll);
+	Vector4 RotateVector(Vector4 Vector, Vector4 QuaRotation);
 
 	void RegisterAllLuaFunction(lua_State *lua);
 };

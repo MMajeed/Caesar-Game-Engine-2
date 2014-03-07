@@ -65,6 +65,7 @@ namespace LuaConstraint
 		double Low = 1; double High = -1;
 		double Softness = 0.9;
 		double BiasFactor = 0.3f; double RelaxationFactor = 1.0f;
+		double MaxMotorImpulse = 0.0f;
 
 		if(luabind::type(table) != LUA_TTABLE)
 			Logger::LogError("Wrong paramter for Hinge, please send in a table");
@@ -87,6 +88,7 @@ namespace LuaConstraint
 			else if(key == Keys::Constraint::SOFTNESS)			{ Softness = luabind::object_cast<double>(*it); }
 			else if(key == Keys::Constraint::BIASFACTOR)		{ BiasFactor = luabind::object_cast<double>(*it); }
 			else if(key == Keys::Constraint::RELEXATIONFACTOR)	{ RelaxationFactor = luabind::object_cast<double>(*it); }
+			else if(key == Keys::Constraint::MAXMOTORIMPULSE)	{ MaxMotorImpulse = luabind::object_cast<double>(*it); }
 		}
 
 		if(RigidBodyIDA.empty())	Logger::LogError(Keys::Constraint::RIGIDBODYA + " is mandetory paramter in Hinge");
@@ -97,7 +99,8 @@ namespace LuaConstraint
 													 BreakingThreshold,
 													 Low, High,
 													 Softness,
-													 BiasFactor, RelaxationFactor);
+													 BiasFactor, RelaxationFactor, 
+													 MaxMotorImpulse);
 		}
 		else
 		{
@@ -106,7 +109,8 @@ namespace LuaConstraint
 													 BreakingThreshold,
 													 Low, High,
 													 Softness,
-													 BiasFactor, RelaxationFactor);
+													 BiasFactor, RelaxationFactor,
+													 MaxMotorImpulse);
 		}
 	}
 	void Hinge::Release()

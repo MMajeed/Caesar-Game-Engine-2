@@ -18,6 +18,7 @@ namespace CML
 		CML::Matrix4x4 returnValue = CML::ConvertMatrix(tranfromMatix);
 		return returnValue;
 	}
+
 	CML::Matrix4x4 RotationMatrix(double pitch, double yaw, double roll)
 	{
 		Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitZ());
@@ -32,6 +33,12 @@ namespace CML
 		returnValue[3] = {0.0, 0.0, 0.0, 1.0};
 		return returnValue;
 	}
+	CML::Matrix4x4 RotationMatrix(CML::Vec4 QuaRotation)
+	{
+		Eigen::Quaternion<double> q(QuaRotation(3), QuaRotation(0), QuaRotation(1), QuaRotation(2));
+		return CML::ConvertMatrix(q.matrix());
+	}
+
 	CML::Vec4 PYRToQuaternion(double pitch, double yaw, double roll)
 	{
 		Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitZ());
@@ -43,17 +50,35 @@ namespace CML
 		CML::Vec4 returnValue = {q.x(), q.y(), q.z(), q.w()};
 		return returnValue;
 	}
-	Vec3 CrossProduct(const Vec3& rhs, const Vec3& lhs)
+	CML::Vec3 QuaternionToEular(CML::Vec4 qua)
 	{
-			Eigen::Vector3d eRhs = CML::ConvertVec(rhs);
-			Eigen::Vector3d eLhs = CML::ConvertVec(lhs);
+		double x = qua[0];
+		double y = qua[1];
+		double z = qua[2];
+		double w = qua[3];
 
-			Eigen::Vector3d result = eRhs.cross(eLhs);
+		double sqw = w*w;
+		double sqx = x*x;
+		double sqy = y*y;
+		double sqz = z*z;
 
-			Vec3 returnValue = CML::ConvertVec(result);
-			return returnValue;
-		}
-	Vec3 Dot(const Vec3& rhs, const Vec3& lhs)
+		double eularZ = atan2(2.0 * (x*y + z*w), (sqx - sqy - sqz + sqw));
+		double eularX = atan2(2.0 * (y*z + x*w), (-sqx - sqy + sqz + sqw));
+		double eularY = sin(-2.0 * (x*z - y*w));
+
+		return{eularX, eularY, eularZ};
+	}
+
+	Vec4 QuaNormalize(const Vec4& rhs)
+	{
+		Eigen::Quaternion<double> q(rhs(3), rhs(0), rhs(1), rhs(2));
+		q.normalize();
+
+		CML::Vec4 returnValue = {q.x(), q.y(), q.z(), q.w()};
+		return returnValue;
+	}
+
+	Vec3 CrossProduct(const Vec3& rhs, const Vec3& lhs)
 	{
 		Eigen::Vector3d eRhs = CML::ConvertVec(rhs);
 		Eigen::Vector3d eLhs = CML::ConvertVec(lhs);
@@ -78,6 +103,7 @@ namespace CML
 		Vec4 returnValue = CML::ConvertVec(eRhs);
 		return returnValue;
 	}
+
 	Vec4 Multiple(Vec4 rhs, Matrix4x4 lhs)
 	{
 		Eigen::Vector4d eRhs = CML::ConvertVec(rhs);
@@ -98,6 +124,7 @@ namespace CML
 		Matrix4x4 returnValue = CML::ConvertMatrix<double, 4, 4>(result);
 		return returnValue;
 	}
+
 	Matrix4x4 MatrixIdentity()
 	{
 		return{	{1.0, 0.0, 0.0, 0.0}, 
@@ -105,6 +132,7 @@ namespace CML
 				{0.0, 0.0, 1.0, 0.0}, 
 				{0.0, 0.0, 0.0, 1.0}, };
 	}
+
 	Vec4 Lerp(const Vec4& rhs, const Vec4& lhs, double ratio)
 	{
 		Vec4 result = {	rhs(0) + ((lhs(0) - rhs(0)) * ratio),
@@ -122,6 +150,7 @@ namespace CML
 		Vec4 returnValue = {result.x(), result.y(), result.z(), result.w()};
 		return returnValue;
 	}
+
 	CML::Matrix4x4 Transpose(const CML::Matrix4x4& mat)
 	{
 		return{	{mat[0][0], mat[1][0], mat[2][0], mat[3][0]},

@@ -65,12 +65,32 @@ namespace LuaMath
 		return newEye;
 	}
 
+	/*Vector4 RotateVector(Vector4 target, double pitch, double yaw, double roll)
+	{
+		CML::Matrix4x4 rotation = CML::RotationMatrix(pitch, yaw, roll);
+		target = CML::Normalize(target);
+
+		CML::Vec4 targetRotation = CML::Multiple(target, rotation);
+
+		return targetRotation;
+	}*/
+	Vector4 RotateVector(Vector4 Vector, Vector4 QuaRotation)
+	{
+		QuaRotation = CML::QuaNormalize(QuaRotation);
+		CML::Matrix4x4 rotation = CML::RotationMatrix(QuaRotation);
+
+		CML::Vec4 targetRotation = CML::Multiple(Vector, rotation);
+
+		return targetRotation;
+	}
+
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		Vector4::Register(lua);
 		Matrix4x4::Register(lua);
 		luabind::module(lua)[
-			luabind::def("MoveObject", LuaMath::MoveObject)
+			luabind::def("MoveObject", LuaMath::MoveObject),
+			luabind::def("RotateVector", LuaMath::RotateVector)
 		];
 	}
 }
