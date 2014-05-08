@@ -12,24 +12,37 @@
 *.a
 
 [Bb]in/*
-[Dd]ebug/*
-[Rr]elease/*
-[Rr] !Optimization/*
+[Dd]ebug Static/*
+[Rr]elease Static/*
+[Rr]!O Static/*
+[Dd]ebug DLL/*
+[Rr]elease DLL/*
+[Rr]!O DLL/*
+
 
 */[Bb]in/*
-*/[Dd]ebug/*
-*/[Rr]elease/*
-*/[Rr] !Optimization/*
+*/[Dd]ebug Static/*
+*/[Rr]elease Static/*
+*/[Rr]!O Static/*
+*/[Dd]ebug DLL/*
+*/[Rr]elease DLL/*
+*/[Rr]!O DLL/*
 
 */*/[Bb]in/*
-*/*/[Dd]ebug/*
-*/*/[Rr]elease/*
-*/*/[Rr] !Optimization/*
+*/*/[Dd]ebug Static/*
+*/*/[Rr]elease Static/*
+*/*/[Rr]!O Static/*
+*/*/[Dd]ebug DLL/*
+*/*/[Rr]elease DLL/*
+*/*/[Rr]!O DLL/*
 
 */*/*/[Bb]in/*
-*/*/*/[Dd]ebug/*
-*/*/*/[Rr]elease/*
-*/*/*/R !Optimization/*
+*/*/*/[Dd]ebug Static/*
+*/*/*/[Rr]elease Static/*
+*/*/*/[Rr]!O Static/*
+*/*/*/[Dd]ebug DLL/*
+*/*/*/[Rr]elease DLL/*
+*/*/*/[Rr]!O DLL/*
 
 *.sdf 
 *.opensdf

@@ -1,14 +1,18 @@
-#ifndef __GUARD_linklib__
-#define __GUARD_linklib__
+#ifndef __ForeignLibraryGUARD_linklib__
+#define __ForeignLibraryGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"ForeignLibrary-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"ForeignLibrary-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"ForeignLibrary-mt.lib")
-#else
-	#error link: no suitable library
-#endif
+	#define ForeignLibraryLibFileName "ForeignLibrary"  FileBuildType ".lib"
 
+	#if defined(STATIC)
+		#pragma comment (lib, ForeignLibraryLibFileName)
+		#define ForeignLibraryDLL_API 
+	#elif defined(DLL)	
+		#ifdef ForeignLibraryDLL_EXPORTS
+			#define ForeignLibraryDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, ForeignLibraryLibFileName)
+			#define ForeignLibraryDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif

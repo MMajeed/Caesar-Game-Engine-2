@@ -1,14 +1,18 @@
-#ifndef __ENTITYCOMPONENT_GUARD_linklib__
-#define __ENTITYCOMPONENT_GUARD_linklib__
+#ifndef __EntityComponentGUARD_linklib__
+#define __EntityComponentGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"EntityComponent-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"EntityComponent-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"EntityComponent-mt.lib")
-#else
-	#error link: no suitable library
+	#define EntityComponentLibFileName "EntityComponent"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, EntityComponentLibFileName)
+		#define EntityComponentDLL_API 
+	#elif defined(DLL)	
+		#ifdef EntityComponentDLL_EXPORTS
+			#define EntityComponentDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, EntityComponentLibFileName)
+			#define EntityComponentDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __ENTITYCOMPONENT_GUARD_linklib__

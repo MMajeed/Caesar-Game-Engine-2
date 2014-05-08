@@ -1,14 +1,18 @@
-#ifndef __ANIMATIONCOMMUNICATOR_GUARD_linklib__
-#define __ANIMATIONCOMMUNICATOR_GUARD_linklib__
+#ifndef __AnimationCommunicatorGUARD_linklib__
+#define __AnimationCommunicatorGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"AnimationCommunicator-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"AnimationCommunicator-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"AnimationCommunicator-mt.lib")
-#else
-#error link: no suitable library
+	#define AnimationCommunicatorLibFileName "AnimationCommunicator"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, AnimationCommunicatorLibFileName)
+		#define AnimationCommunicatorDLL_API 
+	#elif defined(DLL)	
+		#ifdef AnimationCommunicatorDLL_EXPORTS
+			#define AnimationCommunicatorDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, AnimationCommunicatorLibFileName)
+			#define AnimationCommunicatorDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __ANIMATIONCOMMUNICATOR_GUARD_linklib__

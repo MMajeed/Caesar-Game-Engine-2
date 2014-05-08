@@ -1,14 +1,18 @@
-#ifndef __GRAPHICCOMPONENT_GUARD_linklib__
-#define __GRAPHICCOMPONENT_GUARD_linklib__
+#ifndef __GraphicComponentGUARD_linklib__
+#define __GraphicComponentGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"GraphicComponent-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"GraphicComponent-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"GraphicComponent-mt.lib")
-#else
-	#error link: no suitable library
+	#define GraphicComponentLibFileName "GraphicComponent"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, GraphicComponentLibFileName)
+		#define GraphicComponentDLL_API 
+	#elif defined(DLL)	
+		#ifdef GraphicComponentDLL_EXPORTS
+			#define GraphicComponentDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, GraphicComponentLibFileName)
+			#define GraphicComponentDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __GRAPHICCOMPONENT_GUARD_linklib__

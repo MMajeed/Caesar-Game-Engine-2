@@ -1,14 +1,18 @@
-#ifndef __INPUTCOMMUNICATOR_GUARD_linklib__
-#define __INPUTCOMMUNICATOR_GUARD_linklib__
+#ifndef __InputCommunicatorGUARD_linklib__
+#define __InputCommunicatorGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"InputCommunicator-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"InputCommunicator-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"InputCommunicator-mt.lib")
-#else
-	#error link: no suitable library
+	#define InputCommunicatorLibFileName "InputCommunicator"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, InputCommunicatorLibFileName)
+		#define InputCommunicatorDLL_API 
+	#elif defined(DLL)	
+		#ifdef InputCommunicatorDLL_EXPORTS
+			#define InputCommunicatorDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, InputCommunicatorLibFileName)
+			#define InputCommunicatorDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __INPUTCOMMUNICATOR_GUARD_linklib__

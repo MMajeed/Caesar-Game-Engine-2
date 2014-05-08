@@ -1,14 +1,18 @@
-#ifndef __COMMON_GUARD_linklib__
-#define __COMMON_GUARD_linklib__
+#ifndef __CommonGUARD_linklib__
+#define __CommonGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"Common-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"Common-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"Common-mt.lib")
-#else
-	#error link: no suitable library
+	#define CommonLibFileName "Common"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, CommonLibFileName)
+		#define CommonDLL_API 
+	#elif defined(DLL)	
+		#ifdef CommonDLL_EXPORTS
+			#define CommonDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, CommonLibFileName)
+			#define CommonDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __COMMON_GUARD_linklib__

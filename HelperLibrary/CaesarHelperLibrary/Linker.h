@@ -1,14 +1,18 @@
 #ifndef __CaesarHelperLibraryGUARD_linklib__
 #define __CaesarHelperLibraryGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"CaesarHelperLibrary-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"CaesarHelperLibrary-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"CaesarHelperLibrary-mt.lib")
-#else
-	#error link: no suitable library
-#endif
+	#define CaesarHelperLibraryLibFileName "CaesarHelperLibrary"  FileBuildType ".lib"
 
+	#if defined(STATIC)
+		#pragma comment (lib, CaesarHelperLibraryLibFileName)
+		#define CaesarHelperLibraryDLL_API 
+	#elif defined(DLL)	
+		#ifdef CaesarHelperLibraryDLL_EXPORTS
+			#define CaesarHelperLibraryDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, CaesarHelperLibraryLibFileName)
+			#define CaesarHelperLibraryDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif

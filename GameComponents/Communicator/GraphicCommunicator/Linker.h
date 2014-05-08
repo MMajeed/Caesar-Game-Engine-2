@@ -1,14 +1,18 @@
-#ifndef __GRAPHICCOMMUNICATOR_GUARD_linklib__
-#define __GRAPHICCOMMUNICATOR_GUARD_linklib__
+#ifndef __GraphicCommunicatorGUARD_linklib__
+#define __GraphicCommunicatorGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"GraphicCommunicator-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"GraphicCommunicator-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"GraphicCommunicator-mt.lib")
-#else
-	#error link: no suitable library
+	#define GraphicCommunicatorLibFileName "GraphicCommunicator"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, GraphicCommunicatorLibFileName)
+		#define GraphicCommunicatorDLL_API 
+	#elif defined(DLL)	
+		#ifdef GraphicCommunicatorDLL_EXPORTS
+			#define GraphicCommunicatorDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, GraphicCommunicatorLibFileName)
+			#define GraphicCommunicatorDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __GRAPHICCOMMUNICATOR_GUARD_linklib__

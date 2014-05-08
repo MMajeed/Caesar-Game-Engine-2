@@ -1,14 +1,18 @@
-#ifndef __PhysicsCommunicator_GUARD_linklib__
-#define __PhysicsCommunicator_GUARD_linklib__
+#ifndef __PhysicsCommunicatorGUARD_linklib__
+#define __PhysicsCommunicatorGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"PhysicsCommunicator-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"PhysicsCommunicator-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"PhysicsCommunicator-mt.lib")
-#else
-#error link: no suitable library
+	#define PhysicsCommunicatorLibFileName "PhysicsCommunicator"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, PhysicsCommunicatorLibFileName)
+		#define PhysicsCommunicatorDLL_API 
+	#elif defined(DLL)	
+		#ifdef PhysicsCommunicatorDLL_EXPORTS
+			#define PhysicsCommunicatorDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, PhysicsCommunicatorLibFileName)
+			#define PhysicsCommunicatorDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __PhysicsCommunicator_GUARD_linklib__

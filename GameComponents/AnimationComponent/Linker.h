@@ -1,14 +1,18 @@
-#ifndef __ANIMATIONCOMPONENT_GUARD_linklib__
-#define __ANIMATIONCOMPONENT_GUARD_linklib__
+#ifndef __AnimationComponentGUARD_linklib__
+#define __AnimationComponentGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"AnimationComponent-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"AnimationComponent-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"AnimationComponent-mt.lib")
-#else
-#error link: no suitable library
+	#define AnimationComponentLibFileName "AnimationComponent"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, AnimationComponentLibFileName)
+		#define AnimationComponentDLL_API 
+	#elif defined(DLL)	
+		#ifdef AnimationComponentDLL_EXPORTS
+			#define AnimationComponentDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, AnimationComponentLibFileName)
+			#define AnimationComponentDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __ANIMATIONCOMPONENT_GUARD_linklib__

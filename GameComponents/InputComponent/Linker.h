@@ -1,14 +1,18 @@
-#ifndef __INPUTCOMPONENT_GUARD_linklib__
-#define __INPUTCOMPONENT_GUARD_linklib__
+#ifndef __InputComponentGUARD_linklib__
+#define __InputComponentGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"InputComponent-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"InputComponent-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"InputComponent-mt.lib")
-#else
-	#error link: no suitable library
+	#define InputComponentLibFileName "InputComponent"  FileBuildType ".lib"
+
+	#if defined(STATIC)
+		#pragma comment (lib, InputComponentLibFileName)
+		#define InputComponentDLL_API 
+	#elif defined(DLL)	
+		#ifdef InputComponentDLL_EXPORTS
+			#define InputComponentDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, InputComponentLibFileName)
+			#define InputComponentDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
-
-#endif // __INPUTCOMPONENT_GUARD_linklib__

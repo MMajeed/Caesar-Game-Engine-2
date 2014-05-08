@@ -1,14 +1,18 @@
 #ifndef __CaesarLoggerLibraryGUARD_linklib__
 #define __CaesarLoggerLibraryGUARD_linklib__
 
-#if defined(_DEBUG)
-#pragma comment (lib,"CaesarLoggerLibrary-mt-d.lib")
-#elif defined(NDEBUGNO)
-#pragma comment (lib,"CaesarLoggerLibrary-mt-no.lib")
-#elif defined(NDEBUG)
-#pragma comment (lib,"CaesarLoggerLibrary-mt.lib")
-#else
-#error link: no suitable library
-#endif
+	#define CaesarLoggerLibraryLibFileName "CaesarLoggerLibrary"  FileBuildType ".lib"
 
+	#if defined(STATIC)
+		#pragma comment (lib, CaesarLoggerLibraryLibFileName)
+		#define CaesarLoggerLibraryDLL_API 
+	#elif defined(DLL)	
+		#ifdef CaesarLoggerLibraryDLL_EXPORTS
+			#define CaesarLoggerLibraryDLL_API __declspec(dllexport) 
+		#else	
+			#pragma comment (lib, CaesarLoggerLibraryLibFileName)
+			#define CaesarLoggerLibraryDLL_API __declspec(dllimport) 
+		#endif	
+	#endif
+	
 #endif
