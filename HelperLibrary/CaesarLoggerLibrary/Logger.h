@@ -14,6 +14,6 @@ namespace Logger
 	static std::vector<std::function<void(std::string)>> ErrorLogger;
 	CaesarLoggerLibraryDLL_API void AddInformationLogger(std::function<void(std::string)> func);
 	CaesarLoggerLibraryDLL_API void AddErrorLogger(std::function<void(std::string)> func);
-};
+}
 
 #endif //__Logger__

@@ -10,8 +10,8 @@
 		#ifdef GraphicCommunicatorDLL_EXPORTS
 			#define GraphicCommunicatorDLL_API __declspec(dllexport) 
 		#else	
+			#define GraphicCommunicatorDLL_API __declspec(dllimport) 
 			#pragma comment (lib, GraphicCommunicatorLibFileName)
-			#define GraphicCommunicatorDLL_API //__declspec(dllimport) 
 		#endif	
 	#endif
 	

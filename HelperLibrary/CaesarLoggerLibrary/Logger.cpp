@@ -4,28 +4,31 @@
 #include <Windows.h>
 #include <sstream>
 
-void Logger::LogInformation(std::string message)
+namespace Logger
 {
-	for(std::function<void(std::string)>& func : Logger::InformationLogger)
+	void LogInformation(std::string message)
 	{
-		func(message);
+		for(std::function<void(std::string)>& func : Logger::InformationLogger)
+		{
+			func(message);
+		}
 	}
-}
-void Logger::LogError(std::string message)
-{
-	for(std::function<void(std::string)>& func : Logger::ErrorLogger)
+	void LogError(std::string message)
 	{
-		func(message);
-	}
-	
-	std::exit(0);
-}
+		for(std::function<void(std::string)>& func : Logger::ErrorLogger)
+		{
+			func(message);
+		}
 
-void Logger::AddInformationLogger(std::function<void(std::string)> func)
-{
-	Logger::InformationLogger.push_back(func);
-}
-void Logger::AddErrorLogger(std::function<void(std::string)> func)
-{
-	Logger::ErrorLogger.push_back(func);
+		std::exit(0);
+	}
+
+	void AddInformationLogger(std::function<void(std::string)> func)
+	{
+		Logger::InformationLogger.push_back(func);
+	}
+	void AddErrorLogger(std::function<void(std::string)> func)
+	{
+		Logger::ErrorLogger.push_back(func);
+	}
 }

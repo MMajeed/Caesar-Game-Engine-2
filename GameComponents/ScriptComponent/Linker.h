@@ -11,7 +11,7 @@
 			#define ScriptComponentDLL_API __declspec(dllexport) 
 		#else
 			#pragma comment (lib, ScriptComponentLibFileName)
-			#define ScriptComponentDLL_API //__declspec(dllimport) 
+			#define ScriptComponentDLL_API __declspec(dllimport) 
 		#endif	
 	#endif
 	

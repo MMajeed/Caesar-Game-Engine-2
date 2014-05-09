@@ -35,6 +35,8 @@ public:
 	virtual void InitWindow();
 	virtual void InitDevice();
 
+	virtual void Resize(unsigned int width, unsigned int height);
+
 	// DirectX stuff
 	struct
 	{

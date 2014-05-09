@@ -5,7 +5,6 @@
 #include "Logger.h"
 #include <MathFunctions.h>
 
-#pragma comment (lib,"assimp.lib")
 
 namespace CHL
 {

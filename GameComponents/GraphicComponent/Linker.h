@@ -10,8 +10,8 @@
 		#ifdef GraphicComponentDLL_EXPORTS
 			#define GraphicComponentDLL_API __declspec(dllexport) 
 		#else	
+			#define GraphicComponentDLL_API __declspec(dllimport) 
 			#pragma comment (lib, GraphicComponentLibFileName)
-			#define GraphicComponentDLL_API //__declspec(dllimport) 
 		#endif	
 	#endif
 	
