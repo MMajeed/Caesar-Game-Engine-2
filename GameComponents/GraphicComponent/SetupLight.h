@@ -1,6 +1,8 @@
 #ifndef __SetupLight__
 #define __SetupLight__
 
+#include "Linker.h"
+
 #include <hash_map>
 #include <string>
 #include <INFO.h>
@@ -9,7 +11,7 @@
 #include "Buffers.h"
 #include "ShadowScreenShot.h"
 
-class Light : public CHL::Singleton<Light>
+class GraphicComponentDLL_API Light : public CHL::Singleton<Light>
 {
 protected:
 	Light();

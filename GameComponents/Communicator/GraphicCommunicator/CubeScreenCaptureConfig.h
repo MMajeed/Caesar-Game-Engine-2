@@ -10,13 +10,14 @@
 
 namespace CubeScreenCaptureConfig
 {
-	void Create(unsigned int width,
-				unsigned int height,
-				const std::string& cameraID,
-				std::string& ID,
-				std::string& textureID);
-	void SetCameraID(const std::string& id, const std::string& cameraID);
-	void Release(std::string ID);
+	GraphicCommunicatorDLL_API 
+		void Create(unsigned int width,
+					unsigned int height,
+					const std::string& cameraID,
+					std::string& ID,
+					std::string& textureID);
+	GraphicCommunicatorDLL_API void SetCameraID(const std::string& id, const std::string& cameraID);
+	GraphicCommunicatorDLL_API void Release(std::string ID);
 };
 
 #endif //__CubeScreenCaptureConfig__

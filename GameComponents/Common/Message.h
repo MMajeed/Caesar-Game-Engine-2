@@ -3,7 +3,7 @@
 
 #include "Linker.h"
 
-class Message
+class CommonDLL_API Message
 {
 public:	
 	enum class Status{ Incomplete, InProcess , Complete, Unvalid };

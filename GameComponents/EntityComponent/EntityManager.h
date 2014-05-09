@@ -8,7 +8,7 @@
 #include <hash_map>
 #include <mutex>
 
-class EntityManager : public CHL::Singleton<EntityManager>
+class EntityComponentDLL_API EntityManager : public CHL::Singleton<EntityManager>
 {
 protected:
 	EntityManager();

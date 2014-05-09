@@ -6,7 +6,7 @@
 #include <btBulletDynamicsCommon.h>
 #include <memory>
 
-class CollisionShape
+class PhysicsComponentDLL_API CollisionShape
 {
 protected:
 	CollisionShape();

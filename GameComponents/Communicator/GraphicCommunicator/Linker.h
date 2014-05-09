@@ -11,7 +11,7 @@
 			#define GraphicCommunicatorDLL_API __declspec(dllexport) 
 		#else	
 			#pragma comment (lib, GraphicCommunicatorLibFileName)
-			#define GraphicCommunicatorDLL_API __declspec(dllimport) 
+			#define GraphicCommunicatorDLL_API //__declspec(dllimport) 
 		#endif	
 	#endif
 	

@@ -6,7 +6,7 @@
 #include "CollisionShape.h"
 #include <memory>
 
-class SphereShape : public CollisionShape
+class PhysicsComponentDLL_API SphereShape : public CollisionShape
 {
 protected:
 	SphereShape(){}

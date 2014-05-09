@@ -14,7 +14,7 @@ namespace CHL
 		ss << t;
 		return ss.str();
 	}
-	std::string ToString (const std::wstring& t);
+	CaesarHelperLibraryDLL_API std::string ToString(const std::wstring& t);
 
 	template <class T>
 	std::wstring ToWString (const T& t)
@@ -23,9 +23,9 @@ namespace CHL
 		ss << t;
 		return ss.str();
 	}
-	std::wstring ToWString (const std::string& t);
+	CaesarHelperLibraryDLL_API std::wstring ToWString(const std::string& t);
 			
-	std::string ToLower(std::string inputString);
+	CaesarHelperLibraryDLL_API std::string ToLower(std::string inputString);
 
 	template <class T>
 	float ToFloat (const T& t)

@@ -6,7 +6,7 @@
 #include <btBulletDynamicsCommon.h>
 #include <memory>
 
-class Constraint
+class PhysicsComponentDLL_API Constraint
 {
 protected:
 	Constraint();

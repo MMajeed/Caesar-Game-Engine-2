@@ -5,7 +5,7 @@
 #include <string>
 #include <luabind\luabind.hpp>
 
-class LuaLoopCall : public LuaProcesses
+class ScriptComponentDLL_API LuaLoopCall : public LuaProcesses
 {
 public:
 	LuaLoopCall(double inputMilliseconds, luabind::object inputFunction);

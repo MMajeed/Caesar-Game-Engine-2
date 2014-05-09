@@ -2,9 +2,9 @@
 #include "LuaError.h"
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <InputCommunicator\InputCommunicator.h>
-#include <ScriptCommunicator\ScriptCommunicator.h>
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
+#include "LuaManager.h"
 #include <Logger.h>
 #include "ProcessMessage.h"
 
@@ -26,7 +26,7 @@ void LuaWaitForProcess::Action(lua_State *lua)
 			empty = InputCommunicator::GetComponent()->AnyMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Script:
-			empty = ScriptCommunicator::GetComponent()->AnyMessage();
+			empty = LuaManager::GetInstance().AnyMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Animation:
 			empty = AnimationCommunicator::GetComponent()->AnyMessage();

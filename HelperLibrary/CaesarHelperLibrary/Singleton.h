@@ -13,7 +13,7 @@ namespace CHL
 
 		Singleton(){}
 		Singleton(const Singleton& cs) {}
-		Singleton& operator = (const Singleton& cs) {return cs;}
+		const Singleton& operator = (const Singleton& cs) { return cs; }
 
 	public:
 		static CWrappedClass& GetInstance()

@@ -5,7 +5,6 @@
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
 
-
 namespace BasicDrawableConfig
 {
 	std::string Create(std::shared_ptr<CHL::Model> model,

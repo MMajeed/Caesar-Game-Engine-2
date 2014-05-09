@@ -7,7 +7,7 @@
 #include <memory>
 #include <Vector.h>
 
-class CapsuleShape : public CollisionShape
+class PhysicsComponentDLL_API CapsuleShape : public CollisionShape
 {
 protected:
 	CapsuleShape(){}

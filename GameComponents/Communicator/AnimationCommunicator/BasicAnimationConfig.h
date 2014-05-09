@@ -8,8 +8,8 @@
 
 namespace BasicAnimationConfig
 {
-	std::string Create(std::shared_ptr<CHL::Animation> animation);
-	void Release(std::string ID);
+	AnimationCommunicatorDLL_API std::string Create(std::shared_ptr<CHL::Animation> animation);
+	AnimationCommunicatorDLL_API void Release(std::string ID);
 }
 
 #endif //__AnimationConfig__

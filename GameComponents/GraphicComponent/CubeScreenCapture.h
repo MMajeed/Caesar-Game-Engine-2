@@ -4,7 +4,7 @@
 #include "ScreenCapture.h"
 #include "CubeScreenShot.h"
 
-class CubeScreenCapture : public ScreenCapture
+class GraphicComponentDLL_API CubeScreenCapture : public ScreenCapture
 {
 protected:
 	CubeScreenCapture();

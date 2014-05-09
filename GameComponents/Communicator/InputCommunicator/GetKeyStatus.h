@@ -6,7 +6,7 @@
 
 namespace GetKeyStatus
 {
-	InputKeysEnum::KeyStatus GetKey(InputKeysEnum::KeyCode keyID);
+	InputCommunicatorDLL_API InputKeysEnum::KeyStatus GetKey(InputKeysEnum::KeyCode keyID);
 }
 
 #endif //__GetKeyStatus__

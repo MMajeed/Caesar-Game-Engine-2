@@ -5,6 +5,8 @@
 #include "Logger.h"
 #include <MathFunctions.h>
 
+#pragma comment (lib,"assimp.lib")
+
 namespace CHL
 {
 	void AssimpLoadModels(const aiScene* scene, std::vector<std::shared_ptr<CHL::Model>>& modelVec)
@@ -150,6 +152,7 @@ namespace CHL
 					std::vector<std::shared_ptr<CHL::Animation>>& animVec,
 					std::shared_ptr<CHL::Node>& rootNode)
 	{
+		int i = 4 + 5;
 		unsigned int pFlags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded & (~aiProcess_SplitLargeMeshes);
 		const aiScene* scene = aiImportFile(fileName.c_str(), pFlags);
 

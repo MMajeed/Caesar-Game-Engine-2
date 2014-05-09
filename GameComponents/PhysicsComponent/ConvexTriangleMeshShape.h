@@ -8,7 +8,7 @@
 #include <Model.h>
 #include <vector>
 
-class ConvexTriangleMeshShape : public CollisionShape
+class PhysicsComponentDLL_API ConvexTriangleMeshShape : public CollisionShape
 {
 protected:
 	ConvexTriangleMeshShape();

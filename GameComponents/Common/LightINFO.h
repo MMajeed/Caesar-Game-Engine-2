@@ -5,7 +5,7 @@
 #include "INFO.h"
 #include <Vector.h>
 
-class LightINFO : public INFO
+class CommonDLL_API LightINFO : public INFO
 {
 public:
 	LightINFO();

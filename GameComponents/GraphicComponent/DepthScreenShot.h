@@ -5,7 +5,7 @@
 #include <Vector.h>
 #include "SceneInfo.h"
 
-class DepthScreenShot : public ScreenShot
+class GraphicComponentDLL_API DepthScreenShot : public ScreenShot
 {
 protected:
 	DepthScreenShot();

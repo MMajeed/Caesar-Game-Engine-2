@@ -5,7 +5,7 @@
 #include "LightINFO.h"
 #include <Vector.h>
 
-class DirectionalLightINFO : public LightINFO
+class CommonDLL_API DirectionalLightINFO : public LightINFO
 {
 public:
 	CML::Vec4 Direction;

@@ -6,7 +6,7 @@
 #include <Object.h>
 #include <memory>
 
-class INFO
+class CommonDLL_API INFO
 {
 public:
 	INFO();

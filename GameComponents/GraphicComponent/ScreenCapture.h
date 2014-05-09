@@ -1,12 +1,13 @@
 #ifndef __ScreenCapture__
 #define __ScreenCapture__
 
+#include "Linker.h"
 #include <string>
 #include <INFO.h>
 #include <hash_map>
 #include <memory>
 
-class ScreenCapture
+class GraphicComponentDLL_API ScreenCapture
 {
 public:
 	virtual void Init()                                                 = 0;

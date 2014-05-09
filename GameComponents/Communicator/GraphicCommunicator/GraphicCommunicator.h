@@ -7,8 +7,8 @@
 
 namespace GraphicCommunicator
 {
-	void SubmitMessage(std::shared_ptr<Message> msg);
-	Interface* GetComponent();
+	GraphicCommunicatorDLL_API  void SubmitMessage(std::shared_ptr<Message> msg);
+	GraphicCommunicatorDLL_API Interface* GetComponent();
 };
 
 #endif //__GraphicCommunicator__

@@ -7,7 +7,7 @@
 #include <string>
 #include <D3D11.h>
 
-class BasicTexture
+class GraphicComponentDLL_API BasicTexture
 {
 protected:
 	BasicTexture();

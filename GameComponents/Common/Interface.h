@@ -8,7 +8,7 @@
 #include <chrono>
 #include "Message.h"
 
-class Interface
+class CommonDLL_API Interface
 {
 public:
 	Interface();

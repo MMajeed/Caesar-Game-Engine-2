@@ -6,7 +6,7 @@
 #include <luabind\luabind.hpp>
 #include <InputKeysEnum.h>
 
-class LuaWaitForProcess : public LuaProcesses
+class ScriptComponentDLL_API LuaWaitForProcess : public LuaProcesses
 {
 public:
 	enum class ProcessType { Graphic, Input, Script, Animation, Physics };

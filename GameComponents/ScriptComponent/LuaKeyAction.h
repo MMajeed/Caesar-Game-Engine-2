@@ -6,7 +6,7 @@
 #include <luabind\luabind.hpp>
 #include <InputKeysEnum.h>
 
-class LuaKeyAction : public LuaProcesses
+class ScriptComponentDLL_API LuaKeyAction : public LuaProcesses
 {
 public:
 	LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeyStatus inputWanted, luabind::object inputFunction);

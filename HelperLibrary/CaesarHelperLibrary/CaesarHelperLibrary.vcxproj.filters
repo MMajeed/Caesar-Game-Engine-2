@@ -9,7 +9,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Linker.h" />
     <ClInclude Include="GenerateGUID.h">
       <Filter>GenerateGUID</Filter>
     </ClInclude>
@@ -22,6 +21,7 @@
     <ClInclude Include="Singleton.h">
       <Filter>Singleton</Filter>
     </ClInclude>
+    <ClInclude Include="Linker.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GenerateGUID">

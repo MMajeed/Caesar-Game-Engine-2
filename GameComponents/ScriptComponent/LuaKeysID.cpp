@@ -17,7 +17,7 @@ void LuaKeysID::Register(lua_State *lua)
 		classTable[Keys::ClassType::Prespective] = Keys::ClassType::Prespective;
 		classTable[Keys::ClassType::WindowInfo]  = Keys::ClassType::WindowInfo;
 		classTable[Keys::ClassType::Light]       = Keys::ClassType::Light;
-	luaKeyTable["Class"] = classTable;
+	luaKeyTable["class"] = classTable;
 
 	luabind::object lightTable = luabind::newtable(lua);
 		lightTable[Keys::Light::LIGHTTYPE] = Keys::Light::LIGHTTYPE;

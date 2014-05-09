@@ -10,7 +10,7 @@
 #include <vector>
 #include <hash_map>
 
-class AnimationController
+class AnimationComponentDLL_API AnimationController
 {
 protected:
 	AnimationController();

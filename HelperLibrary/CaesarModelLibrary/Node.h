@@ -10,7 +10,7 @@
 
 namespace CHL
 {
-	class Node
+	class CaesarModelLibraryDLL_API Node
 	{
 	public:
 		std::string Name;

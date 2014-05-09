@@ -7,8 +7,8 @@
 
 namespace AnimationCommunicator
 {
-	void SubmitMessage(std::shared_ptr<Message> msg);
-	Interface* GetComponent();
+	AnimationCommunicatorDLL_API void SubmitMessage(std::shared_ptr<Message> msg);
+	AnimationCommunicatorDLL_API Interface* GetComponent();
 };
 
 #endif //__AnimationCommunicator__

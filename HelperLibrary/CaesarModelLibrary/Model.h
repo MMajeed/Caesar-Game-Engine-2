@@ -8,7 +8,7 @@
 
 namespace CHL
 {
-	class Model
+	class CaesarModelLibraryDLL_API Model
 	{
 	public:
 		Model();

@@ -12,7 +12,7 @@
 #include "CollisionShape.h"
 #include "Constraint.h"
 
-class PhysicsManager : public Interface, public CHL::Singleton<PhysicsManager>
+class PhysicsComponentDLL_API PhysicsManager : public Interface, public CHL::Singleton<PhysicsManager>
 {
 protected:
 	PhysicsManager();

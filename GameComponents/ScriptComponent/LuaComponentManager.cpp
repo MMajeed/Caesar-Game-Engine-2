@@ -5,7 +5,7 @@
 #include <Logger.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <InputCommunicator\InputCommunicator.h>
-#include <ScriptCommunicator\ScriptCommunicator.h>
+#include "LuaManager.h"
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
 
@@ -72,7 +72,7 @@ namespace LuaComponentManager
 	}
 	double GetScriptFrame()
 	{
-		return (double)ScriptCommunicator::GetComponent()->timer.FrameCount;
+		return (double)LuaManager::GetInstance().timer.FrameCount;
 	}
 	double GetAnimationFrame()
 	{

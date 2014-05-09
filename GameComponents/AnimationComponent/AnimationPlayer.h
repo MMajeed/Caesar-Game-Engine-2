@@ -7,7 +7,7 @@
 #include "BasicAnimation.h"
 #include <hash_map>
 
-class AnimationPlayer
+class AnimationComponentDLL_API AnimationPlayer
 {
 protected:
 	AnimationPlayer();

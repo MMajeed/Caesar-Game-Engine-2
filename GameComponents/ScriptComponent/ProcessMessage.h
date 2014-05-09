@@ -11,8 +11,8 @@
 
 namespace ProcessMessage
 {
-	void Add(std::shared_ptr<LuaProcesses> process);
-	void Remove(std::string ID);
+	ScriptComponentDLL_API void Add(std::shared_ptr<LuaProcesses> process);
+	ScriptComponentDLL_API void Remove(std::string ID);
 }
 
 #endif //__AdddProcessMessage__

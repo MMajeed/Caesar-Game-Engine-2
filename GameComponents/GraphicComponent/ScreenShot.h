@@ -8,7 +8,7 @@
 #include <memory>
 #include <D3D11.h>
 
-class ScreenShot
+class GraphicComponentDLL_API ScreenShot
 {
 protected:
 	ScreenShot(){}

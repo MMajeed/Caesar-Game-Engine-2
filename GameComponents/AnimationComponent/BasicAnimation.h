@@ -8,7 +8,7 @@
 #include <Node.h>
 #include <hash_map>
 
-class BasicAnimation
+class AnimationComponentDLL_API BasicAnimation
 {
 protected:
 	BasicAnimation();

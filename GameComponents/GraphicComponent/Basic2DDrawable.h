@@ -5,7 +5,7 @@
 
 #include "BasicDrawable.h"
 
-class Basic2DDrawable : public BasicDrawable
+class GraphicComponentDLL_API Basic2DDrawable : public BasicDrawable
 {
 protected:
 	Basic2DDrawable();

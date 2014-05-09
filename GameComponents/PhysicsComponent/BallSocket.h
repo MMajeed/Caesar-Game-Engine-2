@@ -8,7 +8,7 @@
 #include <memory>
 #include "RigidBody.h"
 
-class BallSocket : public Constraint
+class PhysicsComponentDLL_API BallSocket : public Constraint
 {
 protected:
 	BallSocket();

@@ -5,7 +5,7 @@
 #include "LightINFO.h"
 #include <Vector.h>
 
-class SpotLightINFO : public LightINFO
+class CommonDLL_API SpotLightINFO : public LightINFO
 {
 public:
 	CML::Vec4 Position;

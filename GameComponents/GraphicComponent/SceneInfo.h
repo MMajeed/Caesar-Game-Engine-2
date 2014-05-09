@@ -13,7 +13,7 @@
 class ObjectINFO;
 class Drawable;
 
-struct DrawableObject
+struct GraphicComponentDLL_API  DrawableObject
 {
 	DrawableObject(){}
 	DrawableObject(std::shared_ptr<ObjectINFO> ObjInfo, std::shared_ptr<Drawable> Drawable) : ObjInfo(ObjInfo), Drawable(Drawable){}
@@ -21,7 +21,7 @@ struct DrawableObject
 	std::shared_ptr<Drawable> Drawable;
 };
 
-struct SceneInfo
+struct GraphicComponentDLL_API  SceneInfo
 {
 	enum class InclusionType { Exclude = 0, Include = 1, All = 2};
 

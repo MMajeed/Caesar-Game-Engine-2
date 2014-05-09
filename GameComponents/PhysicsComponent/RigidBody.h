@@ -10,7 +10,7 @@
 #include <memory>
 #include <Matrix.h>
 
-class RigidBody
+class PhysicsComponentDLL_API RigidBody
 {
 protected:
 	RigidBody();

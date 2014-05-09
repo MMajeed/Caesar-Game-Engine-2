@@ -17,7 +17,7 @@
 #include <INFO.h>
 #include <hash_map>
 
-class GraphicManager : public Interface, public CHL::Singleton<GraphicManager>
+class GraphicComponentDLL_API GraphicManager : public Interface, public CHL::Singleton<GraphicManager>
 {
 protected:
 	GraphicManager();

@@ -10,7 +10,7 @@
 #include "AnimationPlayer.h"
 #include "AnimationController.h"
 
-class AnimationManager : public Interface, public CHL::Singleton<AnimationManager>
+class AnimationComponentDLL_API AnimationManager : public Interface, public CHL::Singleton<AnimationManager>
 {
 protected:
 	AnimationManager();

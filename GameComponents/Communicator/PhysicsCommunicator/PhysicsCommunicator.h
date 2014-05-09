@@ -7,8 +7,8 @@
 
 namespace PhysicsCommunicator
 {
-	void SubmitMessage(std::shared_ptr<Message> msg);
-	Interface* GetComponent();
+	PhysicsCommunicatorDLL_API void SubmitMessage(std::shared_ptr<Message> msg);
+	PhysicsCommunicatorDLL_API Interface* GetComponent();
 };
 
 #endif //__PhysicsCommunicator__

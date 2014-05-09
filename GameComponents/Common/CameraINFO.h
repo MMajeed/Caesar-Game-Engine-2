@@ -7,7 +7,7 @@
 #include <array>
 #include <set>
 
-class CameraINFO : public INFO
+class CommonDLL_API CameraINFO : public INFO
 {
 public:
 	static const unsigned int GLOBALUSERDATASIZE = 16;

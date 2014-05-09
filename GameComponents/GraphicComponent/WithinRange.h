@@ -6,7 +6,7 @@
 
 namespace WithinRange
 {
-	bool Filter(const SceneInfo& si, const DrawableObject& obj);
+	GraphicComponentDLL_API bool Filter(const SceneInfo& si, const DrawableObject& obj);
 };
 
 

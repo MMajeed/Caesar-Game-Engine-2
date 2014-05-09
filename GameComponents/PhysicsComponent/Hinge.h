@@ -8,7 +8,7 @@
 #include <memory>
 #include "RigidBody.h"
 
-class Hinge : public Constraint
+class PhysicsComponentDLL_API Hinge : public Constraint
 {
 protected:
 	Hinge();

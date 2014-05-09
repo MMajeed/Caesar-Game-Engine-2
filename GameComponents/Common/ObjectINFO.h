@@ -8,7 +8,7 @@
 #include <vector>
 #include <array>
 
-class ObjectINFO : public INFO
+class CommonDLL_API ObjectINFO : public INFO
 {
 public:
 	ObjectINFO();

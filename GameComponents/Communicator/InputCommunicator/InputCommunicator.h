@@ -7,8 +7,8 @@
 
 namespace InputCommunicator
 {
-	void SubmitMessage(std::shared_ptr<Message> msg);
-	Interface* GetComponent();
+	InputCommunicatorDLL_API void SubmitMessage(std::shared_ptr<Message> msg);
+	InputCommunicatorDLL_API Interface* GetComponent();
 };
 
 #endif //__InputCommunicator__

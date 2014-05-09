@@ -6,7 +6,7 @@
 
 namespace CHL
 {
-	std::string GenerateGUID();
+	CaesarHelperLibraryDLL_API std::string GenerateGUID();
 }
 
 #endif //__Object__

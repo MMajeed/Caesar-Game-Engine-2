@@ -11,7 +11,7 @@
 			#define ForeignLibraryDLL_API __declspec(dllexport) 
 		#else	
 			#pragma comment (lib, ForeignLibraryLibFileName)
-			#define ForeignLibraryDLL_API __declspec(dllimport) 
+			#define ForeignLibraryDLL_API //__declspec(dllimport) 
 		#endif	
 	#endif
 	

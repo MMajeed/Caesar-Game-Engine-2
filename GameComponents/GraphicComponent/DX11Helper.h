@@ -11,17 +11,27 @@
 
 namespace DX11Helper 
 {
-	void CompileShaderFromFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, ID3DBlob** ppBlobOut);
-	void LoadShaderFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, std::vector<char>& fileBytes);
-	void LoadInputLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut);
-	void LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut);
-	void LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut);
-	void LoadGeometryShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11GeometryShader** vsOut);
+	GraphicComponentDLL_API 
+		void CompileShaderFromFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, ID3DBlob** ppBlobOut);
+	GraphicComponentDLL_API 
+		void LoadShaderFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, std::vector<char>& fileBytes);
+	GraphicComponentDLL_API 
+		void LoadInputLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut);
+	GraphicComponentDLL_API 
+		void LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut);
+	GraphicComponentDLL_API 
+		void LoadPixelShaderFile(std::string psFileName, ID3D11Device* device, ID3D11PixelShader** pxOut);
+	GraphicComponentDLL_API 
+		void LoadGeometryShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11GeometryShader** vsOut);
 
-	void LoadRasterizerState( D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut);
-	void LoadTextureFile( std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut);	
-	void LoadSamplerState( D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU,D3D11_TEXTURE_ADDRESS_MODE addressV,  D3D11_TEXTURE_ADDRESS_MODE addressw, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut);	
-	void LoadTransparent( ID3D11Device* device, ID3D11BlendState** bsOut);	
+	GraphicComponentDLL_API 
+		void LoadRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode, bool bAntialiasedLine, bool bMultisampleEnable, ID3D11Device* device, ID3D11RasterizerState** rsOut);
+	GraphicComponentDLL_API 
+		void LoadTextureFile(std::wstring txFileName, ID3D11Device* device, ID3D11ShaderResourceView** pxOut);
+	GraphicComponentDLL_API 
+		void LoadSamplerState(D3D11_FILTER filter, D3D11_TEXTURE_ADDRESS_MODE addresU, D3D11_TEXTURE_ADDRESS_MODE addressV, D3D11_TEXTURE_ADDRESS_MODE addressw, D3D11_COMPARISON_FUNC camparisonFunc, float minLOD, float maxLod, ID3D11Device* device, ID3D11SamplerState** ssOut);
+	GraphicComponentDLL_API 
+		void LoadTransparent(ID3D11Device* device, ID3D11BlendState** bsOut);
 
 	template<typename T>
 	void LoadVertexBuffer(ID3D11Device* device, T* pVertex, std::size_t numElements, ID3D11Buffer** bOut)

@@ -9,9 +9,9 @@
 	#elif defined(DLL)	
 		#ifdef ScriptComponentDLL_EXPORTS
 			#define ScriptComponentDLL_API __declspec(dllexport) 
-		#else	
+		#else
 			#pragma comment (lib, ScriptComponentLibFileName)
-			#define ScriptComponentDLL_API __declspec(dllimport) 
+			#define ScriptComponentDLL_API //__declspec(dllimport) 
 		#endif	
 	#endif
 	

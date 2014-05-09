@@ -1,11 +1,13 @@
 #ifndef __LuaProcesses__
 #define __LuaProcesses__
 
+#include "Linker.h"
+
 #include <string>
 #include <GenerateGuid.h>
 #include <Lua.hpp>
 
-class LuaProcesses
+class ScriptComponentDLL_API LuaProcesses
 {
 protected:
 	LuaProcesses(){ this->ID = CHL::GenerateGUID(); }

@@ -8,7 +8,7 @@
 
 namespace CHL
 {
-	class Animation
+	class CaesarModelLibraryDLL_API Animation
 	{
 	public:
 		struct Joint

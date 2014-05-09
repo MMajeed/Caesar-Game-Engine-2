@@ -12,7 +12,7 @@
 #include <Interface.h>
 #include "LuaProcesses.h"
 
-class LuaManager : public Interface, public CHL::Singleton<LuaManager>
+class ScriptComponentDLL_API LuaManager : public Interface, public CHL::Singleton<LuaManager>
 {
 protected:
 	LuaManager();

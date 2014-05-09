@@ -5,7 +5,7 @@
 #include <Keys.h>
 #include <Logger.h>
 
-// Light Class
+// Light class
 LuaMath::Vector4 LuaLight::Light::GetDiffuse()
 {
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Light::DIFFUSE);
@@ -41,7 +41,7 @@ void LuaLight::Light::Release()
 	EntityConfig::DeleteEntity(this->ID);
 	this->ID = "";
 }
-// Light Class End
+// Light class End
 
 // DirectionalLight class
 LuaLight::DirectionalLight::DirectionalLight(luabind::object const& table)

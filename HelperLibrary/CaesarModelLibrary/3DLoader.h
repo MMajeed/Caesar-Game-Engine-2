@@ -9,7 +9,8 @@
 
 namespace CHL
 {
-	void Load3DFile(std::string fileName, 
+	CaesarModelLibraryDLL_API 
+		void Load3DFile(std::string fileName, 
 					std::vector<std::shared_ptr<CHL::Model>>& modelVec, 
 					std::vector<std::shared_ptr<CHL::Animation>>& animVec,
 					std::shared_ptr<CHL::Node>& rootNode);

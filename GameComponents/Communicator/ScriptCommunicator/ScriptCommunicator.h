@@ -6,11 +6,10 @@
 #include <Interface.h>
 #include <Message.h>
 
-class ScriptCommunicator
+namespace ScriptCommunicator
 {
-public:
-	static void SubmitMessage(std::shared_ptr<Message> msg);
-	static Interface* GetComponent();
+	ScriptCommunicatorDLL_API void SubmitMessage(std::shared_ptr<Message> msg);
+	ScriptCommunicatorDLL_API Interface* GetComponent();
 };
 
 #endif //__ScriptCommunicator__

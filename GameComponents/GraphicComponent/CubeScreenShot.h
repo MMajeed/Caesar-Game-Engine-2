@@ -6,7 +6,7 @@
 #include "SceneInfo.h"
 #include <CameraINFO.h>
 
-class CubeScreenShot : public ScreenShot
+class GraphicComponentDLL_API CubeScreenShot : public ScreenShot
 {
 protected:
 	CubeScreenShot();

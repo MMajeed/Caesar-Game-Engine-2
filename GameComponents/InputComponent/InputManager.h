@@ -7,7 +7,7 @@
 #include <Singleton.h>
 #include <InputKeysEnum.h>
 
-class InputManager : public Interface, public CHL::Singleton<InputManager>
+class InputComponentDLL_API InputManager : public Interface, public CHL::Singleton<InputManager>
 {
 protected:	
 	InputManager();

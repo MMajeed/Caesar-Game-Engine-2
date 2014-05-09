@@ -19,6 +19,9 @@ void Print(std::string s)
 
 bool running = true;
 
+#define ScriptCommunicatorLibFileName "ScriptCommunicator"  FileBuildType ".lib"
+#pragma comment (lib, ScriptCommunicatorLibFileName)
+
 int main()
 {
 	Logger::AddInformationLogger(Print);

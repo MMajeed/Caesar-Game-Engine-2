@@ -1,6 +1,8 @@
 #ifndef __LuaMath__
 #define __LuaMath__
 
+#include "Linker.h"
+
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 #include <string>

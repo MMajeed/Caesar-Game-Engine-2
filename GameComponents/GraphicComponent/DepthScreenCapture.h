@@ -4,7 +4,7 @@
 #include "ScreenCapture.h"
 #include "DepthScreenShot.h"
 
-class DepthScreenCapture : public ScreenCapture
+class GraphicComponentDLL_API DepthScreenCapture : public ScreenCapture
 {
 protected:
 	DepthScreenCapture();

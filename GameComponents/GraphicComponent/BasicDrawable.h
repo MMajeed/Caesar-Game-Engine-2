@@ -10,7 +10,7 @@
 #include <D3D11.h>
 #include <Model.h>
 
-class BasicDrawable : public Drawable
+class GraphicComponentDLL_API BasicDrawable : public Drawable
 {
 protected:
 	BasicDrawable();

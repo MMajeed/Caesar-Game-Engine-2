@@ -5,7 +5,7 @@
 #include <string>
 #include <luabind\luabind.hpp>
 
-class LuaSleep : public LuaProcesses
+class ScriptComponentDLL_API LuaSleep : public LuaProcesses
 {
 public:
 	LuaSleep(double inputMilliseconds, luabind::object inputFunction);

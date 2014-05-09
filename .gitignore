@@ -53,5 +53,9 @@
 
 Lib/*.lib
 Lib/*.bsc
+Lib/*.dll
+Lib/*.exp
+Lib/*.ilk
+Lib/*.pdb
 
 *.cso

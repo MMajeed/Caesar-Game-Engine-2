@@ -11,7 +11,7 @@
 			#define ScriptCommunicatorDLL_API __declspec(dllexport) 
 		#else	
 			#pragma comment (lib, ScriptCommunicatorLibFileName)
-			#define ScriptCommunicatorDLL_API __declspec(dllimport) 
+			#define ScriptCommunicatorDLL_API //__declspec(dllimport) 
 		#endif	
 	#endif
 	

@@ -2,12 +2,14 @@
 
 #include <LuaManager.h>
 
-void ScriptCommunicator::SubmitMessage(std::shared_ptr<Message> msg)
+namespace ScriptCommunicator
 {
-	ScriptCommunicator::GetComponent()->SubmitMessage(msg);
-}
-
-Interface* ScriptCommunicator::GetComponent()
-{
-	return &LuaManager::GetInstance();
-}
+	void SubmitMessage(std::shared_ptr<Message> msg)
+	{
+		ScriptCommunicator::GetComponent()->SubmitMessage(msg);
+	}
+	Interface* GetComponent()
+	{
+		return &LuaManager::GetInstance();
+	}
+};

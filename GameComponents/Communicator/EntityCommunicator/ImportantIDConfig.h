@@ -9,8 +9,8 @@ namespace ImportantIDConfig
 {
 	namespace CameraID
 	{
-		void Set(std::string newID);
-		std::string Get();
+		EntityCommunicatorDLL_API void Set(std::string newID);
+		EntityCommunicatorDLL_API std::string Get();
 	}
 }
 

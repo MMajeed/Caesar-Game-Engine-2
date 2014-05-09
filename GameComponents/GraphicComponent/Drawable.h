@@ -6,7 +6,7 @@
 #include <string>
 #include "SceneInfo.h"
 
-class Drawable
+class GraphicComponentDLL_API Drawable
 {
 protected:
 	Drawable(){}

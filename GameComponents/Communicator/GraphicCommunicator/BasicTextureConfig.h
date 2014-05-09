@@ -8,8 +8,8 @@
 
 namespace BasicTextureConfig
 {
-	std::string Create(std::string texture);
-	void Release(std::string ID);
+	GraphicCommunicatorDLL_API std::string Create(std::string texture);
+	GraphicCommunicatorDLL_API void Release(std::string ID);
 }
 
 #endif //__AddBasicTexture__
