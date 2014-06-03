@@ -2,6 +2,7 @@
 
 #include <LuaManager.h>
 
+
 namespace ScriptCommunicator
 {
 	void SubmitMessage(std::shared_ptr<Message> msg)
@@ -12,4 +13,5 @@ namespace ScriptCommunicator
 	{
 		return &LuaManager::GetInstance();
 	}
+
 };

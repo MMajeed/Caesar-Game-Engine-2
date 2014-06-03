@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="LuaAnimationObject.h">
+      <Filter>LuaAnimationObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="LuaAnimationObject">
+      <UniqueIdentifier>{828dd12b-403d-4db1-abd5-cfd5b470d783}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaAnimationObject.cpp">
+      <Filter>LuaAnimationObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

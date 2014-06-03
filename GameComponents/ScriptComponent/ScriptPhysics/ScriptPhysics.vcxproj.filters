@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="LuaCollisionShape.h">
+      <Filter>LuaCollisionShape</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaConstraint.h">
+      <Filter>LuaConstraint</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaRigidBody.h">
+      <Filter>LuaRigidBody</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="LuaCollisionShape">
+      <UniqueIdentifier>{d8c93377-014d-4767-8a4f-44bb916f6461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaConstraint">
+      <UniqueIdentifier>{4cf8bc49-803d-4071-8451-b1fd1d6b213a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaRigidBody">
+      <UniqueIdentifier>{d5ba680f-6241-448f-b098-61e698495ed4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaCollisionShape.cpp">
+      <Filter>LuaCollisionShape</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaConstraint.cpp">
+      <Filter>LuaConstraint</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaRigidBody.cpp">
+      <Filter>LuaRigidBody</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

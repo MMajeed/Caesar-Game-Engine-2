@@ -8,7 +8,7 @@
 #include <Singleton.h>
 #include <hash_map>
 #include <memory>
-
+#include <functional>
 #include <Interface.h>
 #include "LuaProcesses.h"
 
@@ -28,6 +28,7 @@ public:
 
 	virtual void SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process);
 	virtual void RemoveProcesses(std::string ID);
+
 protected:
 	std::hash_map<std::string, std::shared_ptr<LuaProcesses>> allProcesses;
 };

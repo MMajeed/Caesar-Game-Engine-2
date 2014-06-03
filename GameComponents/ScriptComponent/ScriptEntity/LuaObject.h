@@ -3,9 +3,9 @@
 
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include "LuaBasicDrawableObject.h"
-#include "LuaBasicTexture.h"
-#include "LuaRigidBody.h"
+#include <ScriptGraphic\LuaBasicDrawableObject.h>
+#include <ScriptGraphic\LuaBasicTexture.h>
+#include <ScriptPhysics\LuaRigidBody.h>
 #include "LuaMath.h"
 #include <ObjectINFO.h>
 

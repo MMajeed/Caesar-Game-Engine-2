@@ -5,6 +5,7 @@
 
 #include <Interface.h>
 #include <Message.h>
+#include <functional>
 
 namespace ScriptCommunicator
 {

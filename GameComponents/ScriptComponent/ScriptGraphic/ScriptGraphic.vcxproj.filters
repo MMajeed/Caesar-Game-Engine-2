@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="LuaBasicDrawableObject.h">
+      <Filter>LuaBasicDrawableObject</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaBasicTexture.h">
+      <Filter>LuaBasicTexture</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaGraphic.h">
+      <Filter>LuaGraphic</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaScreenCapture.h">
+      <Filter>LuaScreenCapture</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaScreenShot.h">
+      <Filter>LuaScreenShot</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="LuaBasicDrawableObject">
+      <UniqueIdentifier>{b2854fcc-aefc-4be8-a241-562e315f1e4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaBasicTexture">
+      <UniqueIdentifier>{7af2ce55-ece1-410f-b6be-248c5394b214}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaGraphic">
+      <UniqueIdentifier>{fb5568e7-d36d-4d23-973c-5ce35a6411bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaScreenCapture">
+      <UniqueIdentifier>{bfb24e3c-95f9-450b-815b-0360179aed61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaScreenShot">
+      <UniqueIdentifier>{d57728c6-760d-4955-9242-1063ed9c400d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaBasicDrawableObject.cpp">
+      <Filter>LuaBasicDrawableObject</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaBasicTexture.cpp">
+      <Filter>LuaBasicTexture</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaGraphic.cpp">
+      <Filter>LuaGraphic</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaScreenCapture.cpp">
+      <Filter>LuaScreenCapture</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaScreenShot.cpp">
+      <Filter>LuaScreenShot</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

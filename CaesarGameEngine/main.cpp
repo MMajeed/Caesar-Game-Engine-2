@@ -3,11 +3,19 @@
 #include <sstream>
 #include <Converter.h>
 #include <Logger.h>
+
 #include <InputCommunicator\InputCommunicator.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <ScriptCommunicator\ScriptCommunicator.h>
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
+
+#include <ScriptAnimation\ScriptAnimation.h>
+#include <ScriptEntity\ScriptEntity.h>
+#include <ScriptGraphic\ScriptGraphic.h>
+#include <ScriptInput\ScriptInput.h>
+#include <ScriptPhysics\ScriptPhysics.h>
+
 #include <thread>
 #include <map>
 #include <iomanip>
@@ -23,6 +31,12 @@ int main()
 {
 	Logger::AddInformationLogger(Print);
 	Logger::AddErrorLogger(Print);
+
+	ScriptAnimation::GetInstance();
+	ScriptEntity::GetInstance();
+	ScriptGraphic::GetInstance();
+	ScriptInput::GetInstance();
+	ScriptPhysics::GetInstance();
 
 	std::map<std::string, Interface*> vInterfaces;
 	std::vector<std::shared_ptr<std::thread>> vThreads;

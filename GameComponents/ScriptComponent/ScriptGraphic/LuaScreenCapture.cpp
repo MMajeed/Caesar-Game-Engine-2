@@ -5,7 +5,7 @@
 #include <GraphicCommunicator\BasicScreenCaptureConfig.h>
 #include <Keys.h>
 #include "LuaMath.h"
-#include "LuaCamera.h"
+#include <ScriptEntity\LuaCamera.h>
 
 LuaScreenCapture::BasicScreenCapture::BasicScreenCapture(luabind::object const& table)
 {

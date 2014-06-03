@@ -240,68 +240,42 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActivateScriptComponent.h" />
     <ClInclude Include="LuaAnimation.h" />
-    <ClInclude Include="LuaAnimationObject.h" />
-    <ClInclude Include="LuaCollisionShape.h" />
     <ClInclude Include="LuaComponentManager.h" />
-    <ClInclude Include="LuaConstraint.h" />
     <ClInclude Include="LuaModel.h" />
-    <ClInclude Include="LuaMouse.h" />
     <ClInclude Include="LuaNode.h" />
-    <ClInclude Include="LuaRigidBody.h" />
     <ClInclude Include="LuaSleep.h" />
     <ClInclude Include="LuaWaitForProcess.h" />
     <ClInclude Include="ProcessMessage.h" />
-    <ClInclude Include="LuaScreenCapture.h" />
-    <ClInclude Include="LuaScreenShot.h" />
     <ClInclude Include="LuaError.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="LuaBasicDrawableObject.h" />
-    <ClInclude Include="LuaCamera.h" />
-    <ClInclude Include="LuaGraphic.h" />
     <ClInclude Include="LuaKeyAction.h" />
-    <ClInclude Include="LuaInputKeyActionSetup.h" />
     <ClInclude Include="LuaKeysID.h" />
-    <ClInclude Include="LuaLight.h" />
     <ClInclude Include="LuaLoopCall.h" />
     <ClInclude Include="LuaThreadSetup.h" />
     <ClInclude Include="LuaManager.h" />
     <ClInclude Include="Lua3DFile.h" />
-    <ClInclude Include="LuaObject.h" />
     <ClInclude Include="LuaProcesses.h" />
-    <ClInclude Include="LuaBasicTexture.h" />
     <ClInclude Include="LuaMath.h" />
     <ClInclude Include="LuaRegisterAll.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActivateScriptComponent.cpp" />
     <ClCompile Include="LuaAnimation.cpp" />
-    <ClCompile Include="LuaAnimationObject.cpp" />
-    <ClCompile Include="LuaCollisionShape.cpp" />
-    <ClCompile Include="LuaConstraint.cpp" />
     <ClCompile Include="LuaModel.cpp" />
-    <ClCompile Include="LuaMouse.cpp" />
     <ClCompile Include="LuaNode.cpp" />
     <ClCompile Include="LuaRegisterAll.cpp" />
-    <ClCompile Include="LuaRigidBody.cpp" />
     <ClCompile Include="LuaSleep.cpp" />
     <ClCompile Include="LuaWaitForProcess.cpp" />
     <ClCompile Include="ProcessMessage.cpp" />
-    <ClCompile Include="LuaScreenCapture.cpp" />
-    <ClCompile Include="LuaScreenShot.cpp" />
-    <ClCompile Include="LuaBasicDrawableObject.cpp" />
-    <ClCompile Include="LuaCamera.cpp" />
     <ClCompile Include="LuaError.cpp" />
-    <ClCompile Include="LuaGraphic.cpp" />
     <ClCompile Include="LuaKeyAction.cpp" />
-    <ClCompile Include="LuaInputKeyActionSetup.cpp" />
     <ClCompile Include="LuaKeysID.cpp" />
-    <ClCompile Include="LuaLight.cpp" />
     <ClCompile Include="LuaLoopCall.cpp" />
     <ClCompile Include="LuaThreadSetup.cpp" />
     <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="Lua3DFile.cpp" />
-    <ClCompile Include="LuaObject.cpp" />
-    <ClCompile Include="LuaBasicTexture.cpp" />
     <ClCompile Include="LuaMath.cpp" />
     <ClCompile Include="LuaComponentManager.cpp" />
   </ItemGroup>

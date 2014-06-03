@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Linker.h" />
+    <ClInclude Include="LuaCamera.h">
+      <Filter>LuaCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaLight.h">
+      <Filter>LuaLight</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaObject.h">
+      <Filter>LuaObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="LuaCamera">
+      <UniqueIdentifier>{d36fa837-a818-4048-b2fc-c19f679dfef8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaLight">
+      <UniqueIdentifier>{eb92cceb-3f52-49f3-a8b1-ad9b74d872ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaObject">
+      <UniqueIdentifier>{41253e20-6956-4ca0-8e1f-6a6d11a749d5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LuaCamera.cpp">
+      <Filter>LuaCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaLight.cpp">
+      <Filter>LuaLight</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaObject.cpp">
+      <Filter>LuaObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

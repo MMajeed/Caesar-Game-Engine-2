@@ -3,7 +3,7 @@
 #include <GraphicCommunicator\ScreenShotConfig.h>
 #include <Keys.h>
 #include "LuaMath.h"
-#include "LuaCamera.h"
+#include <ScriptEntity\LuaCamera.h>
 
 LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 {

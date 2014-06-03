@@ -44,6 +44,8 @@ void LuaManager::Init()
 
 	LuaRegisterAll(this->lua);
 
+	this->ProccessMessages();
+	this->Work(0.0, 0.0);
 
 	static const char mainLua[] = "Assets/Lua/main.lua";
 
@@ -56,7 +58,6 @@ void LuaManager::Init()
 
 void LuaManager::Work(double realTime, double deltaTime)
 {
-
 	for(auto iterProcesses = this->allProcesses.begin();
 		iterProcesses != this->allProcesses.end();
 		++iterProcesses)
@@ -64,11 +65,22 @@ void LuaManager::Work(double realTime, double deltaTime)
 		iterProcesses->second->Update(realTime, deltaTime);
 	}
 
+	std::stack<std::string> removeProcessesStack;
 	for(auto iterProccessers = this->allProcesses.begin();
 		iterProccessers !=  this->allProcesses.end();
 		++iterProccessers)
 	{
 		iterProccessers->second->Action(this->lua);
+		if(iterProccessers->second->IsInfiniteLoop() == false)
+		{
+			removeProcessesStack.push(iterProccessers->second->ID);
+		}
+	}
+
+	while(removeProcessesStack.empty() == false)
+	{
+		this->RemoveProcesses(removeProcessesStack.top());
+		removeProcessesStack.pop();
 	}
 }
 

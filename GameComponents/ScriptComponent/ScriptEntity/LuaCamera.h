@@ -5,7 +5,7 @@
 #include <luabind\luabind.hpp>
 #include "LuaMath.h"
 #include "CameraINFO.h"
-#include "LuaBasicTexture.h"
+#include <ScriptGraphic\LuaBasicTexture.h>
 #include "LuaObject.h"
 #include <set>
 

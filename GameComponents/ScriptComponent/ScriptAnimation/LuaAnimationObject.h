@@ -4,8 +4,8 @@
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
 #include <string>
-#include "LuaAnimation.h"
-#include "LuaNode.h"
+#include <LuaAnimation.h>
+#include <LuaNode.h>
 
 namespace LuaAnimationObject
 {

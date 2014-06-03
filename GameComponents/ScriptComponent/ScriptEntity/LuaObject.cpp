@@ -7,7 +7,7 @@
 #include <EntityCommunicator\EntityConfig.h>
 #include <ObjectINFO.h>
 #include "LuaManager.h"
-#include "LuaAnimationObject.h"
+#include <ScriptAnimation\LuaAnimationObject.h>
 
 LuaObject::LuaObject()
 {
