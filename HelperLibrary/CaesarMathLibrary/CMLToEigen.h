@@ -3,7 +3,7 @@
 
 #include "Vector.h"
 #include "Matrix.h"
-#include <Eigen\Dense>
+#include "Eigen\Dense"
 
 namespace CML
 {

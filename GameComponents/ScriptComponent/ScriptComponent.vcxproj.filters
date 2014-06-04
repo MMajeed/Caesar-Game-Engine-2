@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="LuaManager.h" />
-    <ClInclude Include="LuaKeysID.h">
-      <Filter>Lua Class/Function\1. Common\LuaKeysID</Filter>
-    </ClInclude>
     <ClInclude Include="LuaProcesses.h">
       <Filter>Lua Processes</Filter>
     </ClInclude>
@@ -18,38 +15,14 @@
     <ClInclude Include="LuaError.h">
       <Filter>LuaError</Filter>
     </ClInclude>
-    <ClInclude Include="LuaRegisterAll.h">
-      <Filter>Lua Class/Function</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaMath.h">
-      <Filter>Lua Class/Function\1. Common\LuaMath</Filter>
-    </ClInclude>
     <ClInclude Include="ProcessMessage.h">
       <Filter>ProcessMessage</Filter>
     </ClInclude>
     <ClInclude Include="LuaSleep.h">
       <Filter>Lua Processes\LuaSleep</Filter>
     </ClInclude>
-    <ClInclude Include="LuaThreadSetup.h">
-      <Filter>Lua Class/Function\1. Common\LuaThreadSetup</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaComponentManager.h">
-      <Filter>Lua Class/Function\1. Common\LuaComponentManager</Filter>
-    </ClInclude>
     <ClInclude Include="LuaWaitForProcess.h">
       <Filter>Lua Processes\LuaWaitForProcess</Filter>
-    </ClInclude>
-    <ClInclude Include="Lua3DFile.h">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaModel.h">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile\LuaModel</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaAnimation.h">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile\LuaAnimation</Filter>
-    </ClInclude>
-    <ClInclude Include="LuaNode.h">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile\LuaNode</Filter>
     </ClInclude>
     <ClInclude Include="ActivateScriptComponent.h">
       <Filter>Lua Processes\ActivateScriptComponent</Filter>
@@ -57,9 +30,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaManager.cpp" />
-    <ClCompile Include="LuaKeysID.cpp">
-      <Filter>Lua Class/Function\1. Common\LuaKeysID</Filter>
-    </ClCompile>
     <ClCompile Include="LuaKeyAction.cpp">
       <Filter>Lua Processes\LuaKeyAction</Filter>
     </ClCompile>
@@ -69,38 +39,14 @@
     <ClCompile Include="LuaError.cpp">
       <Filter>LuaError</Filter>
     </ClCompile>
-    <ClCompile Include="LuaMath.cpp">
-      <Filter>Lua Class/Function\1. Common\LuaMath</Filter>
-    </ClCompile>
     <ClCompile Include="ProcessMessage.cpp">
       <Filter>ProcessMessage</Filter>
     </ClCompile>
     <ClCompile Include="LuaSleep.cpp">
       <Filter>Lua Processes\LuaSleep</Filter>
     </ClCompile>
-    <ClCompile Include="LuaThreadSetup.cpp">
-      <Filter>Lua Class/Function\1. Common\LuaThreadSetup</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaComponentManager.cpp">
-      <Filter>Lua Class/Function\1. Common\LuaComponentManager</Filter>
-    </ClCompile>
     <ClCompile Include="LuaWaitForProcess.cpp">
       <Filter>Lua Processes\LuaWaitForProcess</Filter>
-    </ClCompile>
-    <ClCompile Include="Lua3DFile.cpp">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaModel.cpp">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile\LuaModel</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaAnimation.cpp">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile\LuaAnimation</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaNode.cpp">
-      <Filter>Lua Class/Function\1. Common\Lua3DFile\LuaNode</Filter>
-    </ClCompile>
-    <ClCompile Include="LuaRegisterAll.cpp">
-      <Filter>Lua Class/Function</Filter>
     </ClCompile>
     <ClCompile Include="ActivateScriptComponent.cpp">
       <Filter>Lua Processes\ActivateScriptComponent</Filter>

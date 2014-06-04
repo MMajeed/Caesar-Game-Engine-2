@@ -1,5 +1,5 @@
 #include "MathFunctions.h"
-#include <Eigen\Dense>
+#include "Eigen\Dense"
 #include "CMLToEigen.h"
 
 namespace CML

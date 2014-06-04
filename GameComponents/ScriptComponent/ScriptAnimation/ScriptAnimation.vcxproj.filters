@@ -5,6 +5,7 @@
     <ClInclude Include="LuaAnimationObject.h">
       <Filter>LuaAnimationObject</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="LuaAnimationObject">
@@ -15,5 +16,6 @@
     <ClCompile Include="LuaAnimationObject.cpp">
       <Filter>LuaAnimationObject</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptAnimation.cpp" />
   </ItemGroup>
 </Project>

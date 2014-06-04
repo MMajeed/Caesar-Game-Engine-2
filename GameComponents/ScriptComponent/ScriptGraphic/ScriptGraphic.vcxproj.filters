@@ -17,6 +17,7 @@
     <ClInclude Include="LuaScreenShot.h">
       <Filter>LuaScreenShot</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptGraphic.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="LuaBasicDrawableObject">
@@ -51,5 +52,6 @@
     <ClCompile Include="LuaScreenShot.cpp">
       <Filter>LuaScreenShot</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptGraphic.cpp" />
   </ItemGroup>
 </Project>
