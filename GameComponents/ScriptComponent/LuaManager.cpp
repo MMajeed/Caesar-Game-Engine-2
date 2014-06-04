@@ -5,7 +5,6 @@
 #include <boost/filesystem.hpp>
 #include <algorithm>
 #include "LuaError.h"
-#include "LuaRegisterAll.h"
 #include <Logger.h>
 
 LuaManager::LuaManager()
@@ -41,9 +40,7 @@ void LuaManager::Init()
 	packagePath += boost::filesystem::current_path().string() + "/Assets/Lua/?.lua\"";
 	std::replace(packagePath.begin(), packagePath.end(), '\\', '/');
 	luaL_dostring(this->lua, packagePath.c_str());	
-
-	LuaRegisterAll(this->lua);
-
+	
 	this->ProccessMessages();
 	this->Work(0.0, 0.0);
 

@@ -15,10 +15,11 @@ local faces = {0, 1, 2, 2, 1, 3};
 local spriteModel = Model();
 spriteModel.Vertices = verticeArray;
 spriteModel.Faces = faces;
-local Quad2DDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = spriteModel,
-                                            [Keys["BasicDrawable"]["Dimension"]]        = Dimension["2D"],
-                                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+local Quad2DDrawable = BasicDrawableObject({
                                             [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_2_Texture.cso",
+                                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+                                            [Keys["BasicDrawable"]["MODEL"]]            = spriteModel,
+                                            [Keys["BasicDrawable"]["Dimension"]]        = Dimension["2D"],
                                            });
 local Quad2D = Object({[Keys["ObjectInfo"]["DrawableObj"]]  = Quad2DDrawable,
                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(ScreenWidth, ScreenHeight, 1.0, 1.0),

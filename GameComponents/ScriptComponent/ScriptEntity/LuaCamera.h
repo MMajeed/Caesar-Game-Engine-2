@@ -3,7 +3,7 @@
 
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include "LuaMath.h"
+#include <ScriptCommon\LuaMath.h>
 #include "CameraINFO.h"
 #include <ScriptGraphic\LuaBasicTexture.h>
 #include "LuaObject.h"

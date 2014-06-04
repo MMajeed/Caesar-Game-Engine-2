@@ -1,14 +1,16 @@
 #ifndef __LuaBasicDrawableObject__
 #define __LuaBasicDrawableObject__
 
+#include "Linker.h"
+
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
 #include <string>
-#include "LuaModel.h"
+#include "ScriptCommon\LuaModel.h"
 
 namespace LuaBasicDrawableObject
 {
-	class BasicDrawableObject
+	class ScriptGraphicDLL_API BasicDrawableObject
 	{
 	public:
 		BasicDrawableObject(){}

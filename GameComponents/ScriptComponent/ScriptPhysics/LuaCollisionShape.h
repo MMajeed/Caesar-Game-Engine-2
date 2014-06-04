@@ -4,8 +4,8 @@
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
 #include <string>
-#include "LuaModel.h"
-#include "LuaMath.h"
+#include <ScriptCommon\LuaModel.h>
+#include <ScriptCommon\LuaMath.h>
 
 namespace LuaCollisionShape
 {

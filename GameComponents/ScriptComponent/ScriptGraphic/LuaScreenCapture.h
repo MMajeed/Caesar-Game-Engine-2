@@ -4,7 +4,7 @@
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
 #include "LuaBasicTexture.h"
-#include <LuaMath.h>
+#include <ScriptCommon\LuaMath.h>
 #include <ScriptEntity\LuaCamera.h>
 
 namespace LuaScreenCapture

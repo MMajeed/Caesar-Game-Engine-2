@@ -2,7 +2,7 @@
 #include <luabind\luabind.hpp>
 #include <GraphicCommunicator\ScreenShotConfig.h>
 #include <Keys.h>
-#include "LuaMath.h"
+#include <ScriptCommon\LuaMath.h>
 #include <ScriptEntity\LuaCamera.h>
 
 LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)

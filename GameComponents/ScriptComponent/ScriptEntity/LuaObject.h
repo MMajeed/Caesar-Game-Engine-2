@@ -6,7 +6,7 @@
 #include <ScriptGraphic\LuaBasicDrawableObject.h>
 #include <ScriptGraphic\LuaBasicTexture.h>
 #include <ScriptPhysics\LuaRigidBody.h>
-#include "LuaMath.h"
+#include <ScriptCommon\LuaMath.h>
 #include <ObjectINFO.h>
 
 class LuaObject

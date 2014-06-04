@@ -12,7 +12,7 @@
 
 namespace LuaMath
 {
-	class Vector4
+	class ScriptCommonDLL_API Vector4
 	{
 	public:
 		Vector4();
@@ -36,7 +36,7 @@ namespace LuaMath
 		static void Register(lua_State *lua);
 	};
 
-	class Matrix4x4
+	class ScriptCommonDLL_API Matrix4x4
 	{
 	public:
 		Matrix4x4();

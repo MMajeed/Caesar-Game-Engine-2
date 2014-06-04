@@ -9,9 +9,9 @@
 
 namespace Lua3DFile
 {
-	ScriptComponentDLL_API luabind::object LoadScene(std::string fileName);
+	ScriptCommonDLL_API luabind::object LoadScene(std::string fileName);
 
-	ScriptComponentDLL_API void RegisterAllLuaFunction(lua_State *lua);
+	ScriptCommonDLL_API void RegisterAllLuaFunction(lua_State *lua);
 };
 
 #endif //__Lua3DFile__

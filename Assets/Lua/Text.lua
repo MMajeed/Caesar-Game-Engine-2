@@ -110,10 +110,11 @@ Text2D = class(function(self, text, location)
                                                           });
                 self.SpriteTexture = BasicTexture("Assets/Font/font.dds");
                 
-                self.SpriteObj = Object({[Keys["ObjectInfo"]["Location"]]     = location,
-                                         [Keys["ObjectInfo"]["DrawableObj"]]  = self.SpriteDrawable,
-                                         [Keys["ObjectInfo"]["Texture2DObj"]] = self.SpriteTexture,
-                                         [Keys["ObjectInfo"]["Diffuse"]]      = Vector4(1.0, 1.0, 1.0, 1.0),
+                self.SpriteObj = Object({
+                                            [Keys["ObjectInfo"]["Location"]]     = location,
+                                            [Keys["ObjectInfo"]["DrawableObj"]]  = self.SpriteDrawable,
+                                            [Keys["ObjectInfo"]["Texture2DObj"]] = self.SpriteTexture,
+                                            [Keys["ObjectInfo"]["Diffuse"]]      = Vector4(1.0, 1.0, 1.0, 1.0),
                                         });
                 self:Set();
              end)

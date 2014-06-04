@@ -15,6 +15,7 @@
 #include <ScriptGraphic\ScriptGraphic.h>
 #include <ScriptInput\ScriptInput.h>
 #include <ScriptPhysics\ScriptPhysics.h>
+#include <ScriptCommon\ScriptCommon.h>
 
 #include <thread>
 #include <map>
@@ -32,6 +33,7 @@ int main()
 	Logger::AddInformationLogger(Print);
 	Logger::AddErrorLogger(Print);
 
+	ScriptCommon::GetInstance();
 	ScriptAnimation::GetInstance();
 	ScriptEntity::GetInstance();
 	ScriptGraphic::GetInstance();

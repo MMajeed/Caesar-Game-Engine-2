@@ -4,7 +4,7 @@
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
 #include "LuaRigidBody.h"
-#include "LuaMath.h"
+#include <ScriptCommon\LuaMath.h>
 
 namespace LuaConstraint
 {

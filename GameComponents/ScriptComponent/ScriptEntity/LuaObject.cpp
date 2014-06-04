@@ -4,9 +4,9 @@
 #include <string>
 #include <Converter.h>
 #include <Keys.h>
-#include <EntityCommunicator\EntityConfig.h>
 #include <ObjectINFO.h>
 #include "LuaManager.h"
+#include <EntityCommunicator\EntityConfig.h>
 #include <ScriptAnimation\LuaAnimationObject.h>
 
 LuaObject::LuaObject()

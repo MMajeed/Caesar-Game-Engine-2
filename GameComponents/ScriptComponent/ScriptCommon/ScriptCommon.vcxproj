@@ -28,17 +28,29 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="LuaInputKeyActionSetup.h" />
-    <ClInclude Include="LuaMouse.h" />
-    <ClInclude Include="ScriptInput.h" />
+    <ClInclude Include="Lua3DFile.h" />
+    <ClInclude Include="LuaAnimation.h" />
+    <ClInclude Include="LuaComponentManager.h" />
+    <ClInclude Include="LuaKeysID.h" />
+    <ClInclude Include="LuaMath.h" />
+    <ClInclude Include="LuaModel.h" />
+    <ClInclude Include="LuaNode.h" />
+    <ClInclude Include="LuaThreadSetup.h" />
+    <ClInclude Include="ScriptCommon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaInputKeyActionSetup.cpp" />
-    <ClCompile Include="LuaMouse.cpp" />
-    <ClCompile Include="ScriptInput.cpp" />
+    <ClCompile Include="Lua3DFile.cpp" />
+    <ClCompile Include="LuaAnimation.cpp" />
+    <ClCompile Include="LuaComponentManager.cpp" />
+    <ClCompile Include="LuaKeysID.cpp" />
+    <ClCompile Include="LuaMath.cpp" />
+    <ClCompile Include="LuaModel.cpp" />
+    <ClCompile Include="LuaNode.cpp" />
+    <ClCompile Include="LuaThreadSetup.cpp" />
+    <ClCompile Include="ScriptCommon.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{95343893-44E3-4B59-BC9A-04C26695D885}</ProjectGuid>
+    <ProjectGuid>{95A81385-4635-43D8-8B87-05C46966107F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ScriptComponent</RootNamespace>
   </PropertyGroup>

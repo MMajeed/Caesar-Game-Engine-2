@@ -29,9 +29,9 @@ namespace LuaBasicDrawableObject
 			it != luabind::iterator();
 			++it)
 		{
-			std::string key = luabind::object_cast<std::string>(it.key());
+ 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::BasicDrawable::MODEL)				{ model = luabind::object_cast<LuaModel::Model>(*it); }
+ 				 if(key == Keys::BasicDrawable::MODEL)				{ model = luabind::object_cast<LuaModel::Model>(*it); }
 			else if(key == Keys::BasicDrawable::VERTEXSHADERFILE)	{ vertexFileName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::BasicDrawable::PIXELSHADERFILE)	{ pixelFileName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::BasicDrawable::GEOMETRYSHADERFILE)	{ geometryFileName = luabind::object_cast<std::string>(*it); }
