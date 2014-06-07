@@ -1,15 +1,16 @@
 #ifndef __LuaCamera__
 #define __LuaCamera__
 
+#include "Linker.h"
+
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include <ScriptCommon\LuaMath.h>
+#include <GenericLuaObject.h>
+#include <LuaMath.h>
 #include "CameraINFO.h"
-#include <ScriptGraphic\LuaBasicTexture.h>
-#include "LuaObject.h"
 #include <set>
 
-class LuaCamera
+class ScriptEntityDLL_API LuaCamera : public GenericLuaObject
 {
 public:
 	LuaCamera(luabind::object const& table);
@@ -48,14 +49,14 @@ public:
 	LuaMath::Vector4 GetClearColor();
 
 	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAll2DTextures();
-	void Add2dTexture(LuaBasicTexture texture);
-	void Remove2Texture(LuaBasicTexture texture);
+	void Add2dTexture(GenericLuaObject texture);
+	void Remove2Texture(GenericLuaObject texture);
 	void Set2DTexture(const luabind::object& textures );
 	luabind::object All2DTexture();
 	
 	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAllCubeTextures();
-	void AddCubeTexture(LuaBasicTexture texture);
-	void RemoveCubeTexture(LuaBasicTexture texture);
+	void AddCubeTexture(GenericLuaObject texture);
+	void RemoveCubeTexture(GenericLuaObject texture);
 	void SetCubeTexture(const luabind::object& textures);
 	luabind::object AllCubeTexture();
 
@@ -69,14 +70,12 @@ public:
 	int GetInclusionState();
 
 	std::shared_ptr<GenericObj<std::set<std::string>>> GetRawObjectList();
-	void AddObject(LuaObject obj);
-	void RemoveObject(LuaObject obj);
+	void AddObject(GenericLuaObject obj);
+	void RemoveObject(GenericLuaObject obj);
 	void SetObjectList(const luabind::object& obj);
 	luabind::object GetObjectList();
 
 	void Release();
-
-	std::string ID;
 
 	static void Register(lua_State *lua);
 

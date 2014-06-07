@@ -1,17 +1,18 @@
 #ifndef __LuaBasicTexture__
 #define __LuaBasicTexture__
 
+#include "Linker.h"
+
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
-#include <string>
+#include <GenericLuaObject.h>
 
-class LuaBasicTexture
+class ScriptGraphicDLL_API LuaBasicTexture : public GenericLuaObject
 {
 public:
 	LuaBasicTexture(){};
 	LuaBasicTexture(std::string textureFile);
 	void Release();
-	std::string ID;
 
 	static void Register(lua_State *lua);
 	static inline void RegisterAllLuaFunction(lua_State *lua)

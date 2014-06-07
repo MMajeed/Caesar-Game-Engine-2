@@ -73,9 +73,8 @@ namespace LuaRigidBody
 	void RididBody::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<LuaRigidBody::RididBody>("RididBody")
+			luabind::class_<LuaRigidBody::RididBody, GenericLuaObject>("RididBody")
 				.def(luabind::constructor<luabind::object const&>())
-				.def_readonly("ID", &RididBody::ID)
 				.def("ApplyTorque", &RididBody::ApplyTorque)
 				.def("ApplyCentralFroce", &RididBody::ApplyCentralFroce)
 				.def("GetTorque", &RididBody::GetTorque)

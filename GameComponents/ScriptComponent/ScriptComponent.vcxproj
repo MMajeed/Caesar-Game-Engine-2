@@ -241,7 +241,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ActivateScriptComponent.h" />
+    <ClInclude Include="GenericLuaObject.h" />
+    <ClInclude Include="Lua3DFile.h" />
+    <ClInclude Include="LuaAnimation.h" />
+    <ClInclude Include="LuaComponentManager.h" />
+    <ClInclude Include="LuaKeysID.h" />
+    <ClInclude Include="LuaMath.h" />
+    <ClInclude Include="LuaModel.h" />
+    <ClInclude Include="LuaNode.h" />
     <ClInclude Include="LuaSleep.h" />
+    <ClInclude Include="LuaThreadSetup.h" />
     <ClInclude Include="LuaWaitForProcess.h" />
     <ClInclude Include="ProcessMessage.h" />
     <ClInclude Include="LuaError.h" />
@@ -253,7 +262,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActivateScriptComponent.cpp" />
+    <ClCompile Include="GenericLuaObject.cpp" />
+    <ClCompile Include="Lua3DFile.cpp" />
+    <ClCompile Include="LuaAnimation.cpp" />
+    <ClCompile Include="LuaComponentManager.cpp" />
+    <ClCompile Include="LuaKeysID.cpp" />
+    <ClCompile Include="LuaMath.cpp" />
+    <ClCompile Include="LuaModel.cpp" />
+    <ClCompile Include="LuaNode.cpp" />
     <ClCompile Include="LuaSleep.cpp" />
+    <ClCompile Include="LuaThreadSetup.cpp" />
     <ClCompile Include="LuaWaitForProcess.cpp" />
     <ClCompile Include="ProcessMessage.cpp" />
     <ClCompile Include="LuaError.cpp" />

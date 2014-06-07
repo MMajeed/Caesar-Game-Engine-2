@@ -90,9 +90,8 @@ void LuaLight::DirectionalLight::SetDirection(LuaMath::Vector4 vec)
 void LuaLight::DirectionalLight::Register(lua_State *lua)
 {
 	luabind::module(lua)[
-		luabind::class_<LuaLight::DirectionalLight>("DirectionalLight")
+		luabind::class_<LuaLight::DirectionalLight, GenericLuaObject>("DirectionalLight")
 			.def(luabind::constructor<luabind::object const&>())
-			.def_readonly("ID", &LuaLight::DirectionalLight::ID)
 			.property("Diffuse", &LuaLight::DirectionalLight::GetDiffuse, &LuaLight::DirectionalLight::SetDiffuse)
 			.property("Ambient", &LuaLight::DirectionalLight::GetAmient, &LuaLight::DirectionalLight::SetAmbient)
 			.property("Specular", &LuaLight::DirectionalLight::GetSpecular, &LuaLight::DirectionalLight::SetSpecular)
@@ -170,9 +169,8 @@ void LuaLight::PointLight::SetAttenuation(LuaMath::Vector4 vec)
 void LuaLight::PointLight::Register(lua_State *lua)
 {
 	luabind::module(lua)[
-		luabind::class_<LuaLight::PointLight>("PointLight")
+		luabind::class_<LuaLight::PointLight, GenericLuaObject>("PointLight")
 			.def(luabind::constructor<luabind::object const&>())
-			.def_readonly("ID", &LuaLight::PointLight::ID)
 			.property("Diffuse", &LuaLight::PointLight::GetDiffuse, &LuaLight::PointLight::SetDiffuse)
 			.property("Ambient", &LuaLight::PointLight::GetAmient, &LuaLight::PointLight::SetAmbient)
 			.property("Specular", &LuaLight::PointLight::GetSpecular, &LuaLight::PointLight::SetSpecular)
@@ -281,9 +279,8 @@ void LuaLight::SpotLight::SetAttenuation(LuaMath::Vector4 vec)
 void LuaLight::SpotLight::Register(lua_State *lua)
 {
 	luabind::module(lua)[
-		luabind::class_<LuaLight::SpotLight>("SpotLight")
+		luabind::class_<LuaLight::SpotLight, GenericLuaObject>("SpotLight")
 			.def(luabind::constructor<luabind::object const&>())
-			.def_readonly("ID", &LuaLight::SpotLight::ID)
 			.property("Diffuse", &LuaLight::SpotLight::GetDiffuse, &LuaLight::SpotLight::SetDiffuse)
 			.property("Ambient", &LuaLight::SpotLight::GetAmient, &LuaLight::SpotLight::SetAmbient)
 			.property("Specular", &LuaLight::SpotLight::GetSpecular, &LuaLight::SpotLight::SetSpecular)

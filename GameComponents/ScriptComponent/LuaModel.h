@@ -10,7 +10,7 @@
 
 namespace LuaModel
 {
-	class ScriptCommonDLL_API Vertices
+	class ScriptComponentDLL_API  Vertices
 	{
 	public:
 		Vertices();
@@ -24,7 +24,7 @@ namespace LuaModel
 
 		static void Register(lua_State *lua);
 	};
-	class ScriptCommonDLL_API Model
+	class ScriptComponentDLL_API  Model
 	{
 	public:
 		Model();

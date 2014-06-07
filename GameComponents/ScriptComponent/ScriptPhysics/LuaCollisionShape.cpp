@@ -20,9 +20,8 @@ namespace LuaCollisionShape
 	void CollisionShape::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<LuaCollisionShape::CollisionShape>("CollisionShape")
+			luabind::class_<LuaCollisionShape::CollisionShape, GenericLuaObject>("CollisionShape")
 				.def(luabind::constructor<>())
-				.def_readonly("ID", &CollisionShape::ID)
 				.def("Release", &CollisionShape::Release)
 		];
 	}

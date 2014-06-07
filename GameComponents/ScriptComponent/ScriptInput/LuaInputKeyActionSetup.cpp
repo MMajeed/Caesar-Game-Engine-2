@@ -33,17 +33,13 @@ namespace LuaInputKeyActionSetup
 		ProcessMessage::Add(newKeyAction);
 		return newKeyAction->ID;
 	}
-	void Register(lua_State *lua)
+
+	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		luabind::module(lua)[
 			luabind::def("OnKeyDown", LuaInputKeyActionSetup::OnKeyDown),
 				luabind::def("OnKeyUp", LuaInputKeyActionSetup::OnKeyUp)
 		];
-	}
-
-	void RegisterAllLuaFunction(lua_State *lua)
-	{
-		LuaInputKeyActionSetup::Register(lua);
 
 		luabind::object keyState = luabind::newtable(lua);
 		keyState["KeyUp"] = 0;

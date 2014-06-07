@@ -1,34 +1,32 @@
 #ifndef __LuaObject__
 #define __LuaObject__
 
+#include "Linker.h"
+
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include <ScriptGraphic\LuaBasicDrawableObject.h>
-#include <ScriptGraphic\LuaBasicTexture.h>
-#include <ScriptPhysics\LuaRigidBody.h>
-#include <ScriptCommon\LuaMath.h>
+#include <GenericLuaObject.h>
+#include <LuaMath.h>
 #include <ObjectINFO.h>
 
-class LuaObject
+class ScriptEntityDLL_API LuaObject : public GenericLuaObject
 {
 public:
 	LuaObject();
 	LuaObject(luabind::object const& table);
 
-	std::string ID;
-
-	void SetGraphic(LuaBasicDrawableObject::BasicDrawableObject graphic);
+	void SetGraphic(GenericLuaObject graphic);
 	void RemoveGraphic();
 
 	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAll2DTextures();
-	void Add2DTexture(LuaBasicTexture texture);
-	void Remove2DTexture(LuaBasicTexture texture);
+	void Add2DTexture(GenericLuaObject texture);
+	void Remove2DTexture(GenericLuaObject texture);
 	void Set2DTexture(const luabind::object& textures);
 	luabind::object All2DTexture();
 
 	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAllCubeTextures();
-	void AddCubeTexture(LuaBasicTexture texture);
-	void RemoveCubeTexture(LuaBasicTexture texture);
+	void AddCubeTexture(GenericLuaObject texture);
+	void RemoveCubeTexture(GenericLuaObject texture);
 	void SetCubeTexture(const luabind::object& textures);
 	luabind::object AllCubeTexture();
 

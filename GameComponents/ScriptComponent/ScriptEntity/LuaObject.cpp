@@ -1,13 +1,10 @@
 #include "LuaObject.h"
 
-#include <luabind\luabind.hpp>
-#include <string>
 #include <Converter.h>
 #include <Keys.h>
 #include <ObjectINFO.h>
 #include "LuaManager.h"
 #include <EntityCommunicator\EntityConfig.h>
-#include <ScriptAnimation\LuaAnimationObject.h>
 
 LuaObject::LuaObject()
 {
@@ -64,13 +61,13 @@ LuaObject::LuaObject(luabind::object const& table)
 		else if(key == Keys::ObjectInfo::DIFFUSE)		{ diffuse = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if(key == Keys::ObjectInfo::AMBIENT)		{ amibent = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if(key == Keys::ObjectInfo::SPECULAR)		{ specular = luabind::object_cast<LuaMath::Vector4>(*it); }
-		else if(key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<LuaBasicDrawableObject::BasicDrawableObject>(*it).ID; }
-		else if(key == Keys::ObjectInfo::TEXTURE2DOBJ)	{ textures2D.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
-		else if(key == Keys::ObjectInfo::TEXTURECUBEOBJ){ texturesCube.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
+		else if(key == Keys::ObjectInfo::DRAWABLEOBJ)	{ graphicDrawable = luabind::object_cast<GenericLuaObject>(*it).ID; }
+		else if(key == Keys::ObjectInfo::TEXTURE2DOBJ)	{ textures2D.push_back(luabind::object_cast<GenericLuaObject>(*it).ID); }
+		else if(key == Keys::ObjectInfo::TEXTURECUBEOBJ){ texturesCube.push_back(luabind::object_cast<GenericLuaObject>(*it).ID); }
 		else if(key == Keys::ObjectInfo::LIGHT)			{ light = luabind::object_cast<bool>(*it); }
 		else if(key == Keys::ObjectInfo::SHADOW)		{ shadow = luabind::object_cast<bool>(*it); }
 		else if(key == Keys::ObjectInfo::DEPTH)			{ depth = luabind::object_cast<bool>(*it); }
-		else if(key == Keys::ObjectInfo::RIGIDBODY)		{ rigidBodyID = luabind::object_cast<LuaRigidBody::RididBody>(*it).ID; }
+		else if(key == Keys::ObjectInfo::RIGIDBODY)		{ rigidBodyID = luabind::object_cast<GenericLuaObject>(*it).ID; }
 		else if(key == Keys::ObjectInfo::OBJUSERDATA)
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
@@ -88,7 +85,7 @@ LuaObject::LuaObject(luabind::object const& table)
 			if(luabind::type(*it) != LUA_TTABLE)
 				Logger::LogError("Wrong paramter for ObjectInfo::AnimationJoint, please send in a table");
 			luabind::iterator it(*it);
-			animJoint.AnimationID = luabind::object_cast<LuaAnimationObject::AnimationController>(*it).ID;
+			animJoint.AnimationID = luabind::object_cast<GenericLuaObject>(*it).ID;
 			++it;
 			animJoint.JointName = luabind::object_cast<std::string>(*it);
 		}
@@ -114,7 +111,7 @@ LuaObject::LuaObject(luabind::object const& table)
 	this->ID = obj->ID;
 }
 
-void LuaObject::SetGraphic(LuaBasicDrawableObject::BasicDrawableObject graphic)
+void LuaObject::SetGraphic(GenericLuaObject graphic)
 {
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::DRAWABLEOBJ, GenericObj<std::string>::CreateNew(graphic.ID));
 }
@@ -128,13 +125,13 @@ std::shared_ptr<GenericObj<std::vector<std::string>>> LuaObject::GetRawAll2DText
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ);
 	return GenericObj<std::vector<std::string>>::Cast(obj);
 }
-void LuaObject::Add2DTexture(LuaBasicTexture texture)
+void LuaObject::Add2DTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
 	textures->GetValue().push_back(texture.ID);
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ, textures);
 }
-void LuaObject::Remove2DTexture(LuaBasicTexture texture)
+void LuaObject::Remove2DTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
 	auto iter = std::find(textures->GetValue().begin(), textures->GetValue().end(), texture.ID);
@@ -153,7 +150,7 @@ void LuaObject::Set2DTexture(const luabind::object& textures)
 		it != luabind::iterator();
 		++it)
 	{
-		std::string texID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+		std::string texID = luabind::object_cast<GenericLuaObject>(*it).ID;
 		textureIDs.push_back(texID);
 	}
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURE2DOBJ, GenericObj<std::vector<std::string>>::CreateNew(textureIDs));
@@ -168,7 +165,7 @@ luabind::object LuaObject::All2DTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		LuaBasicTexture texture;
+		GenericLuaObject texture;
 		texture.ID = (*iter);
 		luaTextureVec[keyCounter] = texture;
 	}
@@ -180,13 +177,13 @@ std::shared_ptr<GenericObj<std::vector<std::string>>> LuaObject::GetRawAllCubeTe
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ);
 	return GenericObj<std::vector<std::string>>::Cast(obj);
 }
-void LuaObject::AddCubeTexture(LuaBasicTexture texture)
+void LuaObject::AddCubeTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
 	textures->GetValue().push_back(texture.ID);
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ, textures);
 }
-void LuaObject::RemoveCubeTexture(LuaBasicTexture texture)
+void LuaObject::RemoveCubeTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
 	auto iter = std::find(textures->GetValue().begin(), textures->GetValue().end(), texture.ID);
@@ -205,7 +202,7 @@ void LuaObject::SetCubeTexture(const luabind::object& textures)
 		it != luabind::iterator();
 		++it)
 	{
-		std::string texID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+		std::string texID = luabind::object_cast<GenericLuaObject>(*it).ID;
 		textureIDs.push_back(texID);
 	}
 	EntityConfig::SetEntity(this->ID, Keys::ObjectInfo::TEXTURECUBEOBJ, GenericObj<std::vector<std::string>>::CreateNew(textureIDs));
@@ -220,7 +217,7 @@ luabind::object LuaObject::AllCubeTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		LuaBasicTexture texture;
+		GenericLuaObject texture;
 		texture.ID = (*iter);
 		luaTextureVec[keyCounter] = texture;
 	}
@@ -366,10 +363,9 @@ std::shared_ptr<ObjectINFO> LuaObject::GetObject()
 void LuaObject::Register(lua_State *lua)
 {
 	luabind::module(lua) [
-		luabind::class_<LuaObject>("Object")
+		luabind::class_<LuaObject, GenericLuaObject>("Object")
 			.def(luabind::constructor<>())
 			.def(luabind::constructor<luabind::object const&>())
-			.def_readonly("ID", &LuaObject::ID)
 			.def("SetGraphic", &LuaObject::SetGraphic)
 			.def("RemoveGraphic", &LuaObject::RemoveGraphic)
 			.property("Texture2D", &LuaObject::All2DTexture, &LuaObject::Set2DTexture)

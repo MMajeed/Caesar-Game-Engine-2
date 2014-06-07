@@ -1,25 +1,27 @@
 #ifndef __LuaGraphic__
 #define __LuaGraphic__
 
+#include "Linker.h"
+
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 
 namespace LuaGraphic
 {
-	void ChangeWindowsTitle(std::string title);
-	void MoveWindow(unsigned int x, unsigned int y);
-	void ResizeWindow(unsigned int height, unsigned int width);
-	void ResizeClient(unsigned int height, unsigned int width);
-	void DiableResize();
-	void EnableResize();
-	void FullScreen();
-	void LeaveFullScreen();
-	bool IsFullScreen();
-	luabind::object GetClientsSize();
-	luabind::object GetWindowsSize();
-	luabind::object GetWindowsLoc();
+	ScriptGraphicDLL_API void ChangeWindowsTitle(std::string title);
+	ScriptGraphicDLL_API void MoveWindow(unsigned int x, unsigned int y);
+	ScriptGraphicDLL_API void ResizeWindow(unsigned int height, unsigned int width);
+	ScriptGraphicDLL_API void ResizeClient(unsigned int height, unsigned int width);
+	ScriptGraphicDLL_API void DiableResize();
+	ScriptGraphicDLL_API void EnableResize();
+	ScriptGraphicDLL_API void FullScreen();
+	ScriptGraphicDLL_API void LeaveFullScreen();
+	ScriptGraphicDLL_API bool IsFullScreen();
+	ScriptGraphicDLL_API luabind::object GetClientsSize();
+	ScriptGraphicDLL_API luabind::object GetWindowsSize();
+	ScriptGraphicDLL_API luabind::object GetWindowsLoc();
 
-	void RegisterAllLuaFunction(lua_State *lua);
+	ScriptGraphicDLL_API void RegisterAllLuaFunction(lua_State *lua);
 };
 
 #endif //__LuaGraphic__

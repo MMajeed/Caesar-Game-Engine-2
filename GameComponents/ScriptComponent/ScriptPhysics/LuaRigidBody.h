@@ -1,14 +1,16 @@
 #ifndef __LuaRigidBody__
 #define __LuaRigidBody__
 
+#include "Linker.h"
+
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
-
-#include <ScriptCommon\LuaMath.h>
+#include <GenericLuaObject.h>
+#include <LuaMath.h>
 
 namespace LuaRigidBody
 {
-	class RididBody
+	class ScriptPhysicsDLL_API RididBody : public GenericLuaObject
 	{
 	public:
 		RididBody();
@@ -24,12 +26,11 @@ namespace LuaRigidBody
 		LuaMath::Vector4 GetLocation();
 
 		void Release();
-		std::string ID;
 
 		static void Register(lua_State *lua);
 	};
 
-	void RegisterAllLuaFunction(lua_State *lua);
+	ScriptPhysicsDLL_API void RegisterAllLuaFunction(lua_State *lua);
 }
 
 #endif //__LuaRigidBody__

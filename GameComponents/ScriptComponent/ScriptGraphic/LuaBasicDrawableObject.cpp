@@ -87,9 +87,8 @@ namespace LuaBasicDrawableObject
 	void BasicDrawableObject::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<BasicDrawableObject>("BasicDrawableObject")
+			luabind::class_<BasicDrawableObject, GenericLuaObject>("BasicDrawableObject")
 				.def(luabind::constructor<luabind::object const&>())
-				.def_readonly("ID", &BasicDrawableObject::ID)
 				.def("ChangeRastersizerState", &BasicDrawableObject::ChangeRastersizerState)
 				.def("ChangeModel", &BasicDrawableObject::ChangeModel)
 				.def("ChangeVS", &BasicDrawableObject::ChangeVS)

@@ -26,6 +26,8 @@ public:
 
 	lua_State *lua;
 
+	virtual void ActivateLuaClassesNFunction();
+
 	virtual void SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process);
 	virtual void RemoveProcesses(std::string ID);
 

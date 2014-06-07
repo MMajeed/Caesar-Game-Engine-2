@@ -1,26 +1,27 @@
 #ifndef __LuaAnimationObject__
 #define __LuaAnimationObject__
 
+#include "Linker.h"
+
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
-#include <string>
-#include <ScriptCommon\LuaAnimation.h>
-#include <ScriptCommon\LuaNode.h>
+#include <GenericLuaObject.h>
+#include <LuaAnimation.h>
+#include <LuaNode.h>
 
 namespace LuaAnimationObject
 {
-	class BasicAnimationObject
+	class ScriptAnimationDLL_API BasicAnimationObject : public GenericLuaObject
 	{
 	public:
 		BasicAnimationObject();
 		BasicAnimationObject(LuaAnimation::Animation anim);
 		void Release();
-		std::string ID;
 
 		static void Register(lua_State *lua);
 	};
 
-	class AnimationController
+	class ScriptAnimationDLL_API AnimationController : public GenericLuaObject
 	{
 	public:
 		AnimationController();
@@ -30,7 +31,6 @@ namespace LuaAnimationObject
 		std::string AddMinorAnimation(luabind::object const& table);
 		void RemoveMinorAnimation(std::string MinorAnimationID);
 		void Release();
-		std::string ID;
 
 		static void Register(lua_State *lua);
 	};

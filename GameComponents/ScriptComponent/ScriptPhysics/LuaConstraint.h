@@ -1,29 +1,30 @@
 #ifndef __LuaConstraint__
 #define __LuaConstraint__
 
+#include "Linker.h"
+
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
+#include <GenericLuaObject.h>
 #include "LuaRigidBody.h"
-#include <ScriptCommon\LuaMath.h>
+#include <LuaMath.h>
 
 namespace LuaConstraint
 {
-	class BallSocket
+	class ScriptPhysicsDLL_API BallSocket : public GenericLuaObject
 	{
 	public:
 		BallSocket(luabind::object const& table);
 		void Release();
-		std::string ID;
 
 		static void Register(lua_State *lua);
 	};
 
-	class Hinge
+	class ScriptPhysicsDLL_API Hinge : public GenericLuaObject
 	{
 	public:
 		Hinge(luabind::object const& table);
 		void Release();
-		std::string ID;
 
 		static void Register(lua_State *lua);
 	};

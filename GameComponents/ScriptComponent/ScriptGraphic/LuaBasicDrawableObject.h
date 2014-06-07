@@ -5,12 +5,12 @@
 
 #include <lua.hpp>
 #include <luabind\luabind.hpp>
-#include <string>
-#include "ScriptCommon\LuaModel.h"
+#include <GenericLuaObject.h>
+#include "LuaModel.h"
 
 namespace LuaBasicDrawableObject
 {
-	class ScriptGraphicDLL_API BasicDrawableObject
+	class ScriptGraphicDLL_API BasicDrawableObject : public GenericLuaObject
 	{
 	public:
 		BasicDrawableObject(){}
@@ -21,7 +21,6 @@ namespace LuaBasicDrawableObject
 		void ChangeGS(std::string fileName);
 		void ChangePS(std::string fileName);
 		void Release();
-		std::string ID;
 
 		static void Register(lua_State *lua);
 	};

@@ -1,9 +1,12 @@
 #ifndef __LuaLight__
 #define __LuaLight__
 
+#include "Linker.h"
+
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include <ScriptCommon\LuaMath.h>
+#include <GenericLuaObject.h>
+#include <LuaMath.h>
 #include <string>
 #include <DirectionalLightINFO.h>
 #include <PointLightINFO.h>
@@ -12,7 +15,7 @@
 class LuaLight
 {
 public:
-	class Light
+	class ScriptEntityDLL_API Light : public GenericLuaObject
 	{
 	public:
 		LuaMath::Vector4 GetDiffuse();
@@ -25,11 +28,9 @@ public:
 		void SetSpecular(LuaMath::Vector4 vec);
 
 		void Release();
-
-		std::string ID;
 	};
 
-	class DirectionalLight : public Light
+	class ScriptEntityDLL_API DirectionalLight : public Light
 	{
 	public:
 		DirectionalLight(luabind::object const& table);
@@ -40,7 +41,7 @@ public:
 		static void Register(lua_State *lua);
 	};
 
-	class PointLight : public Light
+	class ScriptEntityDLL_API PointLight : public Light
 	{
 	public:
 		PointLight(luabind::object const& table);
@@ -57,7 +58,7 @@ public:
 		static void Register(lua_State *lua);
 	};
 
-	class SpotLight : public Light
+	class ScriptEntityDLL_API SpotLight : public Light
 	{
 	public:
 		SpotLight(luabind::object const& table);

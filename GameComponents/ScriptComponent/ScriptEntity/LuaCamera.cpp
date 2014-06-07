@@ -46,8 +46,8 @@ LuaCamera::LuaCamera(luabind::object const& table)
 		else if(key == Keys::Camera::FARZ)		        { farZ = luabind::object_cast<double>(*it); }
 		else if(key == Keys::Camera::CLEARCOLOR)        { ClearColor = luabind::object_cast<LuaMath::Vector4>(*it); }
 		else if(key == Keys::Camera::PROCESS2D)         { process2D = luabind::object_cast<bool>(*it); }
-		else if(key == Keys::Camera::GLOBAL2DTEXTURE)   { global2DTexture.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
-		else if(key == Keys::Camera::GLOBALCUBETEXTURE) { globalCubeTexture.push_back(luabind::object_cast<LuaBasicTexture>(*it).ID); }
+		else if(key == Keys::Camera::GLOBAL2DTEXTURE)   { global2DTexture.push_back(luabind::object_cast<GenericLuaObject>(*it).ID); }
+		else if(key == Keys::Camera::GLOBALCUBETEXTURE) { globalCubeTexture.push_back(luabind::object_cast<GenericLuaObject>(*it).ID); }
 		else if(key == Keys::Camera::GLOBALUSERDATA)   
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
@@ -69,7 +69,7 @@ LuaCamera::LuaCamera(luabind::object const& table)
 				it2 != luabind::iterator();
 				++it2)
 			{
-				std::string objID = luabind::object_cast<LuaObject>(*it2).ID;
+				std::string objID = luabind::object_cast<GenericLuaObject>(*it2).ID;
 				objList.insert(objID);
 			}
 		}
@@ -227,13 +227,13 @@ std::shared_ptr<GenericObj<std::vector<std::string>>> LuaCamera::GetRawAll2DText
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::GLOBAL2DTEXTURE);
 	return GenericObj<std::vector<std::string>>::Cast(obj);
 }
-void LuaCamera::Add2dTexture(LuaBasicTexture texture)
+void LuaCamera::Add2dTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
 	textures->GetValue().push_back(texture.ID);
 	EntityConfig::SetEntity(this->ID, Keys::Camera::GLOBAL2DTEXTURE, textures);
 }
-void LuaCamera::Remove2Texture(LuaBasicTexture texture)
+void LuaCamera::Remove2Texture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
 	auto iter = std::find(textures->GetValue().begin(), textures->GetValue().end(), texture.ID);
@@ -252,7 +252,7 @@ void LuaCamera::Set2DTexture(const luabind::object& textures)
 		it != luabind::iterator();
 		++it)
 	{
-		std::string texID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+		std::string texID = luabind::object_cast<GenericLuaObject>(*it).ID;
 		textureIDs.push_back(texID);
 	}
 	EntityConfig::SetEntity(this->ID, Keys::Camera::GLOBAL2DTEXTURE, GenericObj<std::vector<std::string>>::CreateNew(textureIDs));
@@ -267,7 +267,7 @@ luabind::object LuaCamera::All2DTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		LuaBasicTexture texture;
+		GenericLuaObject texture;
 		texture.ID = (*iter);
 		luaTextureVec[keyCounter] = texture;
 	}
@@ -279,13 +279,13 @@ std::shared_ptr<GenericObj<std::vector<std::string>>> LuaCamera::GetRawAllCubeTe
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::GLOBALCUBETEXTURE);
 	return GenericObj<std::vector<std::string>>::Cast(obj);
 }
-void LuaCamera::AddCubeTexture(LuaBasicTexture texture)
+void LuaCamera::AddCubeTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
 	textures->GetValue().push_back(texture.ID);
 	EntityConfig::SetEntity(this->ID, Keys::Camera::GLOBALCUBETEXTURE, textures);
 }
-void LuaCamera::RemoveCubeTexture(LuaBasicTexture texture)
+void LuaCamera::RemoveCubeTexture(GenericLuaObject texture)
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
 	auto iter = std::find(textures->GetValue().begin(), textures->GetValue().end(), texture.ID);
@@ -304,7 +304,7 @@ void LuaCamera::SetCubeTexture(const luabind::object& textures)
 		it != luabind::iterator();
 		++it)
 	{
-		std::string texID = luabind::object_cast<LuaBasicTexture>(*it).ID;
+		std::string texID = luabind::object_cast<GenericLuaObject>(*it).ID;
 		textureIDs.push_back(texID);
 	}
 	EntityConfig::SetEntity(this->ID, Keys::Camera::GLOBALCUBETEXTURE, GenericObj<std::vector<std::string>>::CreateNew(textureIDs));
@@ -319,7 +319,7 @@ luabind::object LuaCamera::AllCubeTexture()
 		iter != textures->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		LuaBasicTexture texture; 
+		GenericLuaObject texture;
 		texture.ID = (*iter);
 		luaTextureVec[keyCounter] = texture;
 	}
@@ -380,13 +380,13 @@ std::shared_ptr<GenericObj<std::set<std::string>>> LuaCamera::GetRawObjectList()
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::OBJECTLIST);
 	return GenericObj<std::set<std::string>>::Cast(obj);
 }
-void LuaCamera::AddObject(LuaObject obj)
+void LuaCamera::AddObject(GenericLuaObject obj)
 {
 	std::shared_ptr<GenericObj<std::set<std::string>>> objects = this->GetRawObjectList();
 	objects->GetValue().insert(obj.ID);
 	EntityConfig::SetEntity(this->ID, Keys::Camera::OBJECTLIST, objects);
 }
-void LuaCamera::RemoveObject(LuaObject obj)
+void LuaCamera::RemoveObject(GenericLuaObject obj)
 {
 	std::shared_ptr<GenericObj<std::set<std::string>>> objectList = this->GetRawObjectList();
 	auto iter = std::find(objectList->GetValue().begin(), objectList->GetValue().end(), obj.ID);
@@ -406,7 +406,7 @@ void LuaCamera::SetObjectList(const luabind::object& obj)
 		it != luabind::iterator();
 		++it)
 	{
-		std::string objID = luabind::object_cast<LuaObject>(*it).ID;
+		std::string objID = luabind::object_cast<GenericLuaObject>(*it).ID;
 		objects.insert(objID);
 	}
 	EntityConfig::SetEntity(this->ID, Keys::Camera::OBJECTLIST, GenericObj<std::set<std::string>>::CreateNew(objects));
@@ -421,7 +421,7 @@ luabind::object LuaCamera::GetObjectList()
 		iter != objList->GetValue().end();
 		++iter, ++keyCounter)
 	{
-		LuaBasicDrawableObject::BasicDrawableObject obj;
+		GenericLuaObject obj;
 		obj.ID = (*iter);
 		luaObjVec[keyCounter] = obj;
 	}
@@ -437,7 +437,7 @@ void LuaCamera::Release()
 void LuaCamera::Register(lua_State *lua)
 {
 	luabind::module(lua) [
-		luabind::class_<LuaCamera>("Camera")
+		luabind::class_<LuaCamera, GenericLuaObject>("Camera")
 			.def(luabind::constructor<luabind::object const&>())
 			.property("Eye", &LuaCamera::GetEye, &LuaCamera::SetEye)
 			.property("TargetMagintude", &LuaCamera::GetTargetMagintude, &LuaCamera::SetTargetMagintude)

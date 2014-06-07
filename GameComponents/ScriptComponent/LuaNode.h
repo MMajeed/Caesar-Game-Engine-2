@@ -10,7 +10,7 @@
 
 namespace LuaNode
 {
-	class ScriptCommonDLL_API Node
+	class ScriptComponentDLL_API  Node
 	{
 	public:
 		Node();

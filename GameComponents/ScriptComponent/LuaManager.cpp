@@ -7,6 +7,16 @@
 #include "LuaError.h"
 #include <Logger.h>
 
+#include "GenericLuaObject.h"
+#include "LuaMath.h"
+#include "LuaKeysID.h"
+#include "LuaThreadSetup.h"
+#include "LuaComponentManager.h"
+#include "Lua3DFile.h"
+#include "LuaModel.h"
+#include "LuaAnimation.h"
+#include "LuaNode.h"
+
 LuaManager::LuaManager()
 {
 	this->lua = 0;
@@ -41,8 +51,7 @@ void LuaManager::Init()
 	std::replace(packagePath.begin(), packagePath.end(), '\\', '/');
 	luaL_dostring(this->lua, packagePath.c_str());	
 	
-	this->ProccessMessages();
-	this->Work(0.0, 0.0);
+	this->ActivateLuaClassesNFunction();
 
 	static const char mainLua[] = "Assets/Lua/main.lua";
 
@@ -84,6 +93,22 @@ void LuaManager::Work(double realTime, double deltaTime)
 void LuaManager::Shutdown()
 {
 
+}
+
+void LuaManager::ActivateLuaClassesNFunction()
+{
+	GenericLuaObject::RegisterAllLuaFunction(this->lua);
+	LuaMath::RegisterAllLuaFunction(this->lua);
+	LuaKeysID::RegisterAllLuaFunction(this->lua);
+	LuaThreadSetup::RegisterAllLuaFunction(this->lua);
+	LuaComponentManager::RegisterAllLuaFunction(this->lua);
+	Lua3DFile::RegisterAllLuaFunction(this->lua);
+	LuaModel::RegisterAllLuaFunction(this->lua);
+	LuaAnimation::RegisterAllLuaFunction(this->lua);
+	LuaNode::RegisterAllLuaFunction(this->lua);
+
+	this->ProccessMessages();
+	this->Work(0.0, 0.0);
 }
 
 void LuaManager::SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process)

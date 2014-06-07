@@ -27,6 +27,33 @@
     <ClInclude Include="ActivateScriptComponent.h">
       <Filter>Lua Processes\ActivateScriptComponent</Filter>
     </ClInclude>
+    <ClInclude Include="GenericLuaObject.h">
+      <Filter>Lua Class/Function\GenericLuaObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Lua3DFile.h">
+      <Filter>Lua Class/Function\Lua3DFile</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaAnimation.h">
+      <Filter>Lua Class/Function\Lua3DFile\LuaAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaComponentManager.h">
+      <Filter>Lua Class/Function\LuaComponentManager</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaKeysID.h">
+      <Filter>Lua Class/Function\LuaKeysID</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaMath.h">
+      <Filter>Lua Class/Function\LuaMath</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaModel.h">
+      <Filter>Lua Class/Function\Lua3DFile\LuaModel</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaNode.h">
+      <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaThreadSetup.h">
+      <Filter>Lua Class/Function\LuaThreadSetup</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaManager.cpp" />
@@ -50,6 +77,31 @@
     </ClCompile>
     <ClCompile Include="ActivateScriptComponent.cpp">
       <Filter>Lua Processes\ActivateScriptComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaNode.cpp" />
+    <ClCompile Include="GenericLuaObject.cpp">
+      <Filter>Lua Class/Function\GenericLuaObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Lua3DFile.cpp">
+      <Filter>Lua Class/Function\Lua3DFile</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaAnimation.cpp">
+      <Filter>Lua Class/Function\Lua3DFile\LuaAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaComponentManager.cpp">
+      <Filter>Lua Class/Function\LuaComponentManager</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaKeysID.cpp">
+      <Filter>Lua Class/Function\LuaKeysID</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaMath.cpp">
+      <Filter>Lua Class/Function\LuaMath</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaModel.cpp">
+      <Filter>Lua Class/Function\Lua3DFile\LuaModel</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaThreadSetup.cpp">
+      <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,35 +129,35 @@
     <Filter Include="Lua Processes\LuaWaitForProcess">
       <UniqueIdentifier>{bef5f593-8f46-4f6e-b2e7-ae27cabc54f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Lua Class/Function\1. Common">
-      <UniqueIdentifier>{e954d1dc-d188-4dca-9ba1-28bf1df5811b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\LuaThreadSetup">
-      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\LuaMath">
-      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\LuaKeysID">
-      <UniqueIdentifier>{fdcfefed-1638-4c58-9e66-0fef002d79f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\LuaComponentManager">
-      <UniqueIdentifier>{e2115848-1c43-4918-aefc-b915acf94140}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\Lua3DFile">
-      <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\Lua3DFile\LuaModel">
-      <UniqueIdentifier>{bac1abd7-c730-4fc6-8014-eb3bad3098b2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\Lua3DFile\LuaAnimation">
-      <UniqueIdentifier>{cf7b4cf0-e580-4498-b5ff-1d6f1035ac2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Class/Function\1. Common\Lua3DFile\LuaNode">
-      <UniqueIdentifier>{36da53ef-19de-4967-9bec-01c699798f11}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Lua Processes\ActivateScriptComponent">
       <UniqueIdentifier>{3547ec3c-d9cb-4458-9872-a5ad7f9e4b36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile">
+      <UniqueIdentifier>{99aab005-2062-487a-b4cb-668aa81f9273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile\LuaModel">
+      <UniqueIdentifier>{bac1abd7-c730-4fc6-8014-eb3bad3098b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile\LuaAnimation">
+      <UniqueIdentifier>{cf7b4cf0-e580-4498-b5ff-1d6f1035ac2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\Lua3DFile\LuaNode">
+      <UniqueIdentifier>{36da53ef-19de-4967-9bec-01c699798f11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaComponentManager">
+      <UniqueIdentifier>{e2115848-1c43-4918-aefc-b915acf94140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaKeysID">
+      <UniqueIdentifier>{fdcfefed-1638-4c58-9e66-0fef002d79f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaMath">
+      <UniqueIdentifier>{cdd74eac-5b5d-4988-b855-eba8302574b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\LuaThreadSetup">
+      <UniqueIdentifier>{be29cf94-9c75-4d92-a849-a1094ae9cb1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Class/Function\GenericLuaObject">
+      <UniqueIdentifier>{ce047446-452c-4f86-ae49-0d623a546e6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -20,10 +20,9 @@ namespace LuaAnimationObject
 	void BasicAnimationObject::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<BasicAnimationObject>("BasicAnimation")
+			luabind::class_<BasicAnimationObject, GenericLuaObject>("BasicAnimation")
 				.def(luabind::constructor<LuaAnimation::Animation>())
 				.def("Release", &BasicAnimationObject::Release)
-				.def_readonly("ID", &BasicAnimationObject::ID)
 		];
 	}
 
@@ -132,14 +131,13 @@ namespace LuaAnimationObject
 	void AnimationController::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<AnimationController>("AnimationController")
+			luabind::class_<AnimationController, GenericLuaObject>("AnimationController")
 				.def(luabind::constructor<luabind::object const&>())
 				.def("ChangeAnimation", &AnimationController::ChangeAnimation)
 				.def("ChangeSpeed", &AnimationController::ChangeSpeed)
 				.def("AddMinorAnimation", &AnimationController::AddMinorAnimation)
 				.def("RemoveMinorAnimation", &AnimationController::RemoveMinorAnimation)
 				.def("Release", &AnimationController::Release)
-				.def_readonly("ID", &AnimationController::ID)
 		];
 
 

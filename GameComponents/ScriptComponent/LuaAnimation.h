@@ -10,7 +10,7 @@
 
 namespace LuaAnimation
 {
-	class ScriptCommonDLL_API Animation
+	class ScriptComponentDLL_API  Animation
 	{
 	public:
 		Animation();

@@ -48,9 +48,8 @@ namespace LuaConstraint
 	void BallSocket::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<LuaConstraint::BallSocket>("BallSocket")
+			luabind::class_<LuaConstraint::BallSocket, GenericLuaObject>("BallSocket")
 				.def(luabind::constructor<luabind::object const&>())
-				.def_readonly("ID", &LuaConstraint::BallSocket::ID)
 				.def("Release", &LuaConstraint::BallSocket::Release)
 		];
 	}
@@ -120,9 +119,8 @@ namespace LuaConstraint
 	void Hinge::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
-			luabind::class_<LuaConstraint::Hinge>("Hinge")
+			luabind::class_<LuaConstraint::Hinge, GenericLuaObject>("Hinge")
 				.def(luabind::constructor<luabind::object const&>())
-				.def_readonly("ID", &LuaConstraint::Hinge::ID)
 				.def("Release", &LuaConstraint::Hinge::Release)
 		];
 	}

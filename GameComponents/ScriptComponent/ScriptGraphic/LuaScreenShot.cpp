@@ -2,8 +2,8 @@
 #include <luabind\luabind.hpp>
 #include <GraphicCommunicator\ScreenShotConfig.h>
 #include <Keys.h>
-#include <ScriptCommon\LuaMath.h>
-#include <ScriptEntity\LuaCamera.h>
+#include <LuaMath.h>
+#include <GenericLuaObject.h>
 
 LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 {
@@ -23,7 +23,7 @@ LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 
 				 if(key == Keys::ScreenShot::WIDTH)			{ width = luabind::object_cast<int>(*it); }
 				 else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
-				 else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<LuaCamera>(*it).ID; }
+				 else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).ID; }
 		}
 	}
 
@@ -49,9 +49,9 @@ LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-			if(key == Keys::ScreenShot::WIDTH)				{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)				{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<LuaCamera>(*it).ID; }
+			if(key == Keys::ScreenShot::WIDTH)			{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)    { height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).ID; }
 		}
 	}
 
@@ -79,7 +79,7 @@ LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
 
 			if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::HEIGHT){ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<LuaCamera>(*it).ID; }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).ID; }
 		}
 	}
 

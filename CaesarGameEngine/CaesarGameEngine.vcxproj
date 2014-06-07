@@ -96,7 +96,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
@@ -106,22 +106,22 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\ForeignLibrary;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(SolutionDir)GameComponents\ScriptComponent;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
@@ -244,14 +244,30 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ItemGroup>
+    <AssimpDLL Include="$(SolutionDir)Lib\Assimp\dll\x86\Assimp32.dll" />
+  </ItemGroup>
+  <Choose>
+    <When Condition=" '$(Configuration)'=='Debug DLL' ">
+      <ItemGroup>
+        <DLL Include="$(SolutionDir)Lib\*-mt-d-dll.dll" />
+      </ItemGroup>
+    </When>
+    <When Condition=" '$(Configuration)'=='R!O DLL' ">
+      <ItemGroup>
+        <DLL Include="$(SolutionDir)Lib\*-mt-no-dll.dll" />
+      </ItemGroup>
+    </When>
+    <When Condition=" '$(Configuration)'=='Release DLL' ">
+      <ItemGroup>
+        <DLL Include="$(SolutionDir)Lib\*-mt-dll.dll" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <Target Name="CopyDLL" AfterTargets="Rebuild;Build">
-    <Message Text="Copying All '*.dll' to bin directory" Importance="high">
-    </Message>
-    <ItemGroup>
-      <AssimpDLL Include="$(SolutionDir)Lib\Assimp\dll\x86\Assimp32.dll" />
-      <DLL Include="$(SolutionDir)Lib\*$(FileBuildType).dll" />
-    </ItemGroup>
+    <Message Text="Copying '@(AssimpDLL)' to bin directory `$(SolutionDir)$(Configuration)\`" Importance="high" />
     <Copy SourceFiles="@(AssimpDLL)" DestinationFolder="$(SolutionDir)$(Configuration)\" />
+    <Message Text="Copying '@(DLL)' to bin directory `$(SolutionDir)$(Configuration)\`" Importance="high" />
     <Copy SourceFiles="@(DLL)" DestinationFolder="$(SolutionDir)$(Configuration)\" />
   </Target>
 </Project>
