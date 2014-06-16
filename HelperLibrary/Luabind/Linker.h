@@ -11,7 +11,7 @@
 			#define LuabindDLL_API __declspec(dllexport) 
 		#else	
 			#pragma comment (lib, LuabindLibFileName)
-			#define LuabindDLL_API //__declspec(dllimport) 
+			#define LuabindDLL_API __declspec(dllimport) 
 		#endif	
 	#endif
 	
