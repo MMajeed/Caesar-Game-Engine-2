@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="FileHelper.h">
+      <Filter>FileHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="FXCompiler.h">
+      <Filter>FXCompiler</Filter>
+    </ClInclude>
+    <ClInclude Include="GenerateFile.h">
+      <Filter>GenerateFile</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="FileHelper.cpp">
+      <Filter>FileHelper</Filter>
+    </ClCompile>
+    <ClCompile Include="FXCompiler.cpp">
+      <Filter>FXCompiler</Filter>
+    </ClCompile>
+    <ClCompile Include="GenerateFile.cpp">
+      <Filter>GenerateFile</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FileHelper">
+      <UniqueIdentifier>{d02b7533-f96a-406d-bd50-0a666694cf18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FXCompiler">
+      <UniqueIdentifier>{59d0d255-53a3-4756-b5c9-68ef9d435202}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GenerateFile">
+      <UniqueIdentifier>{effb7865-9571-4faf-b7d4-4aacb8a1868e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

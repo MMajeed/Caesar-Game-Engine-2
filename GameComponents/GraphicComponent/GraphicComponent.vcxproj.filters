@@ -84,6 +84,9 @@
     <ClInclude Include="WithinRange.h">
       <Filter>Scene\SceneFilter\WithinRange</Filter>
     </ClInclude>
+    <ClInclude Include="ScreenTexture.h">
+      <Filter>ScreenTexture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -149,6 +152,9 @@
     </ClCompile>
     <ClCompile Include="WithinRange.cpp">
       <Filter>Scene\SceneFilter\WithinRange</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenTexture.cpp">
+      <Filter>ScreenTexture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,5 +248,16 @@
     <Filter Include="Scene\SceneFilter\WithinRange">
       <UniqueIdentifier>{632cd6dc-400c-4ea7-97ac-b6ef3a793197}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ScreenTexture">
+      <UniqueIdentifier>{bfd1c2f8-ef4b-4417-9e65-912e255e89fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScreenTexture\Shader">
+      <UniqueIdentifier>{0ebf790f-1d93-461d-b1ae-0cbd0cf7795b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="ScreenTextureShader.fx">
+      <Filter>ScreenTexture\Shader</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

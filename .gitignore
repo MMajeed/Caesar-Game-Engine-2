@@ -12,37 +12,46 @@
 *.a
 
 [Bb]in/*
+[Dd]ebug/*
 [Dd]ebug Static/*
+[Rr]elease/*
 [Rr]elease Static/*
+[Rr]elease DLL/*
 [Rr]!O Static/*
 [Dd]ebug DLL/*
-[Rr]elease DLL/*
 [Rr]!O DLL/*
 
-
 */[Bb]in/*
+*/[Dd]ebug/*
 */[Dd]ebug Static/*
+*/[Rr]elease/*
 */[Rr]elease Static/*
+*/[Rr]elease DLL/*
 */[Rr]!O Static/*
 */[Dd]ebug DLL/*
-*/[Rr]elease DLL/*
 */[Rr]!O DLL/*
 
 */*/[Bb]in/*
+*/*/[Dd]ebug/*
 */*/[Dd]ebug Static/*
+*/*/[Rr]elease/*
 */*/[Rr]elease Static/*
+*/*/[Rr]elease DLL/*
 */*/[Rr]!O Static/*
 */*/[Dd]ebug DLL/*
-*/*/[Rr]elease DLL/*
 */*/[Rr]!O DLL/*
 
 */*/*/[Bb]in/*
+*/*/*/[Dd]ebug/*
 */*/*/[Dd]ebug Static/*
+*/*/*/[Rr]elease/*
 */*/*/[Rr]elease Static/*
+*/*/*/[Rr]elease DLL/*
 */*/*/[Rr]!O Static/*
 */*/*/[Dd]ebug DLL/*
-*/*/*/[Rr]elease DLL/*
 */*/*/[Rr]!O DLL/*
+
+FXFileGenerator/*
 
 *.sdf 
 *.opensdf

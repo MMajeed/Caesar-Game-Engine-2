@@ -4,7 +4,7 @@
 #include <InputCommunicator\InputCommunicator.h>
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <Logger.h>
 #include "ProcessMessage.h"
 
@@ -26,7 +26,7 @@ void LuaWaitForProcess::Action(lua_State *lua)
 			empty = InputCommunicator::GetComponent()->AnyMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Script:
-			empty = LuaManager::GetInstance().AnyMessage();
+			empty = ScriptManager::GetInstance().AnyMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Animation:
 			empty = AnimationCommunicator::GetComponent()->AnyMessage();

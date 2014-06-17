@@ -3,7 +3,7 @@
 
 #include "LuaProcesses.h"
 #include <string>
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <functional>
 
 class ScriptComponentDLL_API ActivateScriptComponent : public LuaProcesses

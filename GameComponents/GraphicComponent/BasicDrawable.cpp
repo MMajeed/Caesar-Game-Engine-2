@@ -179,6 +179,8 @@ void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& o
 	auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
 
 	d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBObject, 0, NULL, &cbCEF, 0, 0);
+	d3dStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &(d3dStuff.pCBObject));
+	d3dStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &(d3dStuff.pCBObject));
 }
 void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
 {	

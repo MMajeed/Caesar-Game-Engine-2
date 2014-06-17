@@ -6,7 +6,7 @@
 #include <Keys.h>
 #include <MathFunctions.h>
 #include <VecOperators.h>
-#include "LuaManager.h"
+#include "ScriptManager.h"
 
 LuaCamera::LuaCamera(luabind::object const& table)
 {
@@ -261,7 +261,7 @@ luabind::object LuaCamera::All2DTexture()
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
 
-	luabind::object luaTextureVec = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaTextureVec = luabind::newtable(ScriptManager::GetInstance().lua);
 	int keyCounter = 1;
 	for(auto iter = textures->GetValue().begin();
 		iter != textures->GetValue().end();
@@ -313,7 +313,7 @@ luabind::object LuaCamera::AllCubeTexture()
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
 
-	luabind::object luaTextureVec = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaTextureVec = luabind::newtable(ScriptManager::GetInstance().lua);
 	int keyCounter = 1;
 	for(auto iter = textures->GetValue().begin();
 		iter != textures->GetValue().end();
@@ -345,7 +345,7 @@ luabind::object LuaCamera::GetGlobalUserData()
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::Camera::GLOBALUSERDATA);
 	std::array<float, CameraINFO::GLOBALUSERDATASIZE> userData = GenericObj<std::array<float, CameraINFO::GLOBALUSERDATASIZE>>::GetValue(obj);
 
-	luabind::object luaUserDataTable = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaUserDataTable = luabind::newtable(ScriptManager::GetInstance().lua);
 	for(unsigned int i = 0; i < CameraINFO::GLOBALUSERDATASIZE; ++i)
 	{
 		luaUserDataTable[i + 1] = userData[i];
@@ -415,7 +415,7 @@ luabind::object LuaCamera::GetObjectList()
 {
 	std::shared_ptr<GenericObj<std::set<std::string>>> objList = this->GetRawObjectList();
 
-	luabind::object luaObjVec = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaObjVec = luabind::newtable(ScriptManager::GetInstance().lua);
 	int keyCounter = 1;
 	for(auto iter = objList->GetValue().begin();
 		iter != objList->GetValue().end();

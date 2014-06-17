@@ -1,5 +1,5 @@
 #include "LuaGraphic.h"
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <GraphicCommunicator\GraphicSettings.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Keys.h>
@@ -46,7 +46,7 @@ namespace LuaGraphic
 	{
 		unsigned int height; unsigned int width;
 		GraphicSettings::GetWindowsClientSize(height, width);
-		luabind::object returnValue = luabind::newtable(LuaManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
@@ -55,7 +55,7 @@ namespace LuaGraphic
 	{
 		unsigned int height; unsigned int width;
 		GraphicSettings::GetWindowsWindowSize(height, width);
-		luabind::object returnValue = luabind::newtable(LuaManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
@@ -64,10 +64,14 @@ namespace LuaGraphic
 	{
 		unsigned int x; unsigned int y;
 		GraphicSettings::GetWindowsLocation(x, y); 
-		luabind::object returnValue = luabind::newtable(LuaManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 		returnValue["X"] = x;
 		returnValue["Y"] = y;
 		return returnValue;
+	}
+	void SetScreenTexture(GenericLuaObject tx)
+	{
+		GraphicSettings::SetScreenTexture(tx.ID);
 	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
@@ -84,7 +88,8 @@ namespace LuaGraphic
 			luabind::def("IsFullScreen", LuaGraphic::IsFullScreen),
 			luabind::def("GetWindowsSize", LuaGraphic::GetWindowsSize),
 			luabind::def("GetClientsSize", LuaGraphic::GetClientsSize),
-			luabind::def("GetWindowsLocs", LuaGraphic::GetWindowsLoc)
+			luabind::def("GetWindowsLocs", LuaGraphic::GetWindowsLoc),
+			luabind::def("SetScreenTexture", LuaGraphic::SetScreenTexture)
 		];
 	}
 };

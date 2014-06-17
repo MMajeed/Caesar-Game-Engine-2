@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="LuaManager.h" />
     <ClInclude Include="LuaProcesses.h">
       <Filter>Lua Processes</Filter>
     </ClInclude>
@@ -54,9 +53,9 @@
     <ClInclude Include="LuaThreadSetup.h">
       <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaManager.cpp" />
     <ClCompile Include="LuaKeyAction.cpp">
       <Filter>Lua Processes\LuaKeyAction</Filter>
     </ClCompile>
@@ -103,6 +102,7 @@
     <ClCompile Include="LuaThreadSetup.cpp">
       <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lua Class/Function">

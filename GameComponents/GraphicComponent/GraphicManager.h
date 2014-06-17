@@ -14,6 +14,7 @@
 #include "BasicTexture.h"
 #include "ScreenShot.h"
 #include "ScreenCapture.h"
+#include "ScreenTexture.h"
 #include <INFO.h>
 #include <hash_map>
 
@@ -33,10 +34,15 @@ public:
 	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
 
 	virtual void InitWindow();
-	virtual void InitDevice();
+	virtual void InitDirectX();
 
 	virtual void Resize(unsigned int width, unsigned int height);
-
+protected:
+	virtual void InitDevice();
+	virtual void InitBackBuffer();
+	virtual void InitDepthBuffer();
+	virtual void InitViewport();
+public:
 	// DirectX stuff
 	struct
 	{
@@ -55,8 +61,9 @@ public:
 		ID3D11Buffer*				pCBInfo;
 		ID3D11Buffer*				pCBLight;
 		ID3D11Buffer*				pCBShadow;
-		ID3D11BlendState*			pTransperency;
-		bool						IsInitialized;
+
+		std::string finalScreenTexture;
+		std::shared_ptr<ScreenTexture> screenTexture;
 	} D3DStuff;
 
 	// Windows stuff
@@ -67,7 +74,7 @@ public:
 		UINT		width;
 		UINT		height;
 	} window;
-
+	
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	static void MesageBoxError(std::string s);
 

@@ -1,6 +1,6 @@
 #include "LuaMouse.h"
 
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <InputCommunicator\GetMouseStatus.h>
 #include <GraphicCommunicator\GraphicSettings.h>
 
@@ -12,7 +12,7 @@ namespace LuaMouse
 		int x = mouseLoc.first;
 		int y = mouseLoc.second;
 		GraphicSettings::GetPosRelativeToClient(x, y);
-		luabind::object keyState = luabind::newtable(LuaManager::GetInstance().lua);
+		luabind::object keyState = luabind::newtable(ScriptManager::GetInstance().lua);
 		keyState["X"] = x;
 		keyState["Y"] = y;
 		return keyState;

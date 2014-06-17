@@ -26,47 +26,57 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FileHelper.h" />
+    <ClInclude Include="FXCompiler.h" />
+    <ClInclude Include="GenerateFile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FileHelper.cpp" />
+    <ClCompile Include="FXCompiler.cpp" />
+    <ClCompile Include="GenerateFile.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{17A58400-1B6B-4A1B-BA78-E91F0719BDFE}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ScriptComponent</RootNamespace>
+    <ProjectGuid>{4EE12FBA-EFA1-4930-ADAB-890627BEDCF5}</ProjectGuid>
+    <RootNamespace>ForeignLibrary</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -95,190 +105,129 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)FXFileGenerator\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\$(ProjectName);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt-d-static</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
-    <LinkIncremental>
-    </LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt-d-dll</TargetName>
+    <OutDir>$(SolutionDir)FXFileGenerator\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)FXFileGenerator\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\$(ProjectName);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt-static</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
-    <LinkIncremental>
-    </LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)FXFileGenerator\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\$(ProjectName);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt-dll</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)FXFileGenerator\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\$(ProjectName);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt-no-static</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
-    <LinkIncremental>
-    </LinkIncremental>
-    <IncludePath>$(SolutionDir)HelperLibrary\CaesarMathLibrary;$(SolutionDir)HelperLibrary\CaesarModelLibrary;$(SolutionDir)HelperLibrary\CaesarLoggerLibrary;$(SolutionDir)HelperLibrary\CaesarHelperLibrary;$(SolutionDir)HelperLibrary\Luabind;$(SolutionDir)HelperLibrary\Lua;$(SolutionDir)GameComponents\Common;$(SolutionDir)GameComponents\Communicator;$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)FXFileGenerator\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+    <IncludePath>$(SolutionDir)HelperLibrary\$(ProjectName);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)Lib\</OutDir>
-    <TargetName>$(ProjectName)-mt-no-dll</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;STATIC;FileBuildType="-mt-d-static";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_LIB;DLL;$(ProjectName)DLL_EXPORTS;FileBuildType="-mt-d-dll";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;DLL;$(ProjectName)DLL_EXPORTS;FileBuildType="-mt-d-dll";LUA_BUILD_AS_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;STATIC;FileBuildType="-mt-static";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_LIB;DLL;$(ProjectName)DLL_EXPORTS;FileBuildType="-mt-dll";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;DLL;$(ProjectName)DLL_EXPORTS;FileBuildType="-mt-dll";LUA_BUILD_AS_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUGNO;_LIB;STATIC;FileBuildType="-mt-no-static";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUGNO;_LIB;DLL;$(ProjectName)DLL_EXPORTS;FileBuildType="-mt-no-dll";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableSpecificWarnings>4996;4005;4127;4100;4251</DisableSpecificWarnings>
+      <SDLCheck>false</SDLCheck>
+      <PreprocessorDefinitions>NDEBUGNO;_LIB;DLL;$(ProjectName)DLL_EXPORTS;FileBuildType="-mt-no-dll";LUA_BUILD_AS_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>d3d11.lib;d3dcompiler.lib;d3dx11d.lib;d3dx9d.lib;dxerr.lib;dxguid.lib;winmm.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="ActivateScriptComponent.h" />
-    <ClInclude Include="GenericLuaObject.h" />
-    <ClInclude Include="Lua3DFile.h" />
-    <ClInclude Include="LuaAnimation.h" />
-    <ClInclude Include="LuaComponentManager.h" />
-    <ClInclude Include="LuaKeysID.h" />
-    <ClInclude Include="LuaMath.h" />
-    <ClInclude Include="LuaModel.h" />
-    <ClInclude Include="LuaNode.h" />
-    <ClInclude Include="LuaSleep.h" />
-    <ClInclude Include="LuaThreadSetup.h" />
-    <ClInclude Include="LuaWaitForProcess.h" />
-    <ClInclude Include="ProcessMessage.h" />
-    <ClInclude Include="LuaError.h" />
-    <ClInclude Include="Linker.h" />
-    <ClInclude Include="LuaKeyAction.h" />
-    <ClInclude Include="LuaLoopCall.h" />
-    <ClInclude Include="ScriptManager.h" />
-    <ClInclude Include="LuaProcesses.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ActivateScriptComponent.cpp" />
-    <ClCompile Include="GenericLuaObject.cpp" />
-    <ClCompile Include="Lua3DFile.cpp" />
-    <ClCompile Include="LuaAnimation.cpp" />
-    <ClCompile Include="LuaComponentManager.cpp" />
-    <ClCompile Include="LuaKeysID.cpp" />
-    <ClCompile Include="LuaMath.cpp" />
-    <ClCompile Include="LuaModel.cpp" />
-    <ClCompile Include="LuaNode.cpp" />
-    <ClCompile Include="LuaSleep.cpp" />
-    <ClCompile Include="LuaThreadSetup.cpp" />
-    <ClCompile Include="LuaWaitForProcess.cpp" />
-    <ClCompile Include="ProcessMessage.cpp" />
-    <ClCompile Include="LuaError.cpp" />
-    <ClCompile Include="LuaKeyAction.cpp" />
-    <ClCompile Include="LuaLoopCall.cpp" />
-    <ClCompile Include="ScriptManager.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

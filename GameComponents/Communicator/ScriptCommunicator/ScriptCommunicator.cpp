@@ -1,6 +1,6 @@
 #include "ScriptCommunicator.h"
 
-#include <LuaManager.h>
+#include <ScriptManager.h>
 
 
 namespace ScriptCommunicator
@@ -11,7 +11,7 @@ namespace ScriptCommunicator
 	}
 	Interface* GetComponent()
 	{
-		return &LuaManager::GetInstance();
+		return &ScriptManager::GetInstance();
 	}
 
 };

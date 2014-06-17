@@ -2,7 +2,7 @@
 
 #include <exception>
 #include <Converter.h>
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <GraphicCommunicator\BasicDrawableConfig.h>
 #include <Keys.h>
 #include <stdexcept>

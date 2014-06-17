@@ -25,13 +25,12 @@ GraphicManager::GraphicManager()
 	this->D3DStuff.pDepthStencilBuffer = 0;
 	this->D3DStuff.pDepthStencilState = 0;
 	this->D3DStuff.pDepthStencilView = 0;
-	this->D3DStuff.IsInitialized = false;
 }
 
 void GraphicManager::Init()
 {
 	this->InitWindow();
-	this->InitDevice();
+	this->InitDirectX();
 }
 
 void GraphicManager::Work(double realTime, double deltaTime)
@@ -54,21 +53,32 @@ void GraphicManager::Shutdown()
 
 void GraphicManager::ProcessDrawing()
 {
-	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
+	GraphicManager& graphic = GraphicManager::GetInstance();
+	auto& d3dStuff = graphic.D3DStuff;
+	
+	// Clear the back buffer 
+	float ClearColor[4] = {0.0, 0.0, 0.0, 1.0f}; // red,green,blue,alpha
+	graphic.D3DStuff.pImmediateContext->ClearRenderTargetView(graphic.D3DStuff.pRenderTargetView, ClearColor);
+	graphic.D3DStuff.pImmediateContext->ClearDepthStencilView(graphic.D3DStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-	std::string camera = ImportantIDConfig::CameraID::Get();
-	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(camera);
-	std::shared_ptr<CameraINFO> cameraObj;
-	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
+	// Set the depth stencil state.
+	graphic.D3DStuff.pImmediateContext->OMSetDepthStencilState(graphic.D3DStuff.pDepthStencilState, 1);
 
-	SceneInfo s = Scene::SetupScene(cameraObj, this->window.width, this->window.height);
-	Light::GetInstance().SetupLight(objects, s.Eye);
-	this->RunAllCapture(objects);
-	Scene::SetupConstantBuffer(s);
-	Scene::SetupGlobalTexture(s);
-	Scene::ClearScreen(s);
-	auto vecObj = Scene::FilterScene(objects, s);
-	Scene::DrawObjects(vecObj, s);
+	graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &graphic.D3DStuff.pRenderTargetView, graphic.D3DStuff.pDepthStencilView);
+
+	graphic.D3DStuff.pImmediateContext->RSSetViewports(1, &(graphic.D3DStuff.vp));
+
+	float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};
+	graphic.D3DStuff.pImmediateContext->OMSetBlendState(NULL, blendFactor, 0xffffffff);
+
+	if(this->D3DStuff.finalScreenTexture.empty() == false)
+	{
+		auto finalTextureIter = graphic.textures.find(this->D3DStuff.finalScreenTexture);
+		if(finalTextureIter != graphic.textures.end())
+		{
+			this->D3DStuff.screenTexture->Draw(this->window.width, this->window.height, finalTextureIter->second);
+		}
+	}
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->D3DStuff.pSwapChain->Present(0, 0);
@@ -90,7 +100,7 @@ void GraphicManager::InitWindow()
 
 	this->window.hInst = GetModuleHandle(NULL);
 	this->window.height = 768;
-	this->window.width = 2048;
+	this->window.width = 1028;
 
 	// Register class
 	WNDCLASSEX wcex;
@@ -129,10 +139,44 @@ void GraphicManager::InitWindow()
 
 	ShowWindow(this->window.hWnd, SW_SHOWNORMAL);
 }
-void GraphicManager::InitDevice()
+void GraphicManager::InitDirectX()
 {
 	std::hash_map<std::string, SP_INFO> objects = EntityConfig::GetAllEntity();
 
+	unsigned int& Width = this->window.width;
+	unsigned int& Height = this->window.height;
+	HWND& hwnd = this->window.hWnd;
+
+	this->InitDevice();
+	this->InitBackBuffer();
+	this->InitDepthBuffer();
+	this->InitViewport();
+	
+	DX11Helper::LoadBuffer<cBuffer::cbObject>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBObject));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
+
+	DX11Helper::LoadBuffer<cBuffer::cbWorld>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
+
+	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
+
+	DX11Helper::LoadBuffer<cBuffer::cbShadows>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBShadow));
+	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
+	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
+	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
+	
+	this->D3DStuff.screenTexture = ScreenTexture::Spawn();
+}
+
+void GraphicManager::InitDevice()
+{
 	unsigned int& Width = this->window.width;
 	unsigned int& Height = this->window.height;
 	HWND& hwnd = this->window.hWnd;
@@ -184,10 +228,12 @@ void GraphicManager::InitDevice()
 	}
 	if(FAILED(hr))
 		Logger::LogError("Failed at creating device and SwapChain");
-
+}
+void GraphicManager::InitBackBuffer()
+{
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
-	hr = this->D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+	HRESULT hr = this->D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 	if(FAILED(hr))
 		Logger::LogError("Failed at creating back buffer");
 
@@ -195,6 +241,11 @@ void GraphicManager::InitDevice()
 	pBackBuffer->Release();
 	if(FAILED(hr))
 		Logger::LogError("Failed at creating Render Target view");
+}
+void GraphicManager::InitDepthBuffer()
+{
+	unsigned int& Width = this->window.width;
+	unsigned int& Height = this->window.height;
 
 	// Set up depth & stencil buffer
 	// Initialize the description of the depth buffer.
@@ -215,7 +266,7 @@ void GraphicManager::InitDevice()
 	depthBufferDesc.MiscFlags = 0;
 
 	// Create the texture for the depth buffer using the filled out description.
-	hr = this->D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &this->D3DStuff.pDepthStencilBuffer);
+	HRESULT hr = this->D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &this->D3DStuff.pDepthStencilBuffer);
 	if(FAILED(hr))
 	{
 		Logger::LogError("Failed at creating dept buffer");
@@ -279,9 +330,6 @@ void GraphicManager::InitDevice()
 		Logger::LogError("Failed at creating no depth state");
 	}
 
-	// Set the depth stencil state.
-	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
-
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 	// Initialize the depth stencil view.
 	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
@@ -297,31 +345,11 @@ void GraphicManager::InitDevice()
 	{
 		Logger::LogError("Failed at creating depth stencil view");
 	}
-
-	// Set the depth stencil state.
-	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
-
-	this->D3DStuff.pImmediateContext->OMSetRenderTargets(1, &this->D3DStuff.pRenderTargetView, this->D3DStuff.pDepthStencilView);
-
-	D3D11_BLEND_DESC transparentDesc = {0};
-	transparentDesc.AlphaToCoverageEnable = false;
-	transparentDesc.IndependentBlendEnable = false;
-
-	transparentDesc.RenderTarget[0].BlendEnable = true;
-	transparentDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-	transparentDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-	transparentDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-	transparentDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-	transparentDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-	transparentDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-	transparentDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-	hr = this->D3DStuff.pd3dDevice->CreateBlendState(&transparentDesc, &(this->D3DStuff.pTransperency));
-	if(FAILED(hr))
-	{
-		Logger::LogError("Failed at creating a transperency blend");
-	}
-	float blendFactor[] = {0.0f, 0.0f, 0.0f, 0.0f};
-	this->D3DStuff.pImmediateContext->OMSetBlendState(this->D3DStuff.pTransperency, blendFactor, 0xffffffff);
+}
+void GraphicManager::InitViewport()
+{
+	unsigned int& Width = this->window.width;
+	unsigned int& Height = this->window.height;
 
 	// Setup the viewport
 	this->D3DStuff.vp.Width = (FLOAT)Width;
@@ -331,30 +359,6 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.vp.TopLeftX = 0;
 	this->D3DStuff.vp.TopLeftY = 0;
 	this->D3DStuff.pImmediateContext->RSSetViewports(1, &(this->D3DStuff.vp));
-
-	DX11Helper::LoadBuffer<cBuffer::cbObject>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBObject));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
-	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(0, 1, &(this->D3DStuff.pCBObject));
-
-	DX11Helper::LoadBuffer<cBuffer::cbWorld>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBInfo));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
-	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(1, 1, &(this->D3DStuff.pCBInfo));
-
-	DX11Helper::LoadBuffer<cBuffer::cbLight>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBLight));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
-	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(2, 1, &(this->D3DStuff.pCBLight));
-
-	DX11Helper::LoadBuffer<cBuffer::cbShadows>(this->D3DStuff.pd3dDevice, &(this->D3DStuff.pCBShadow));
-	this->D3DStuff.pImmediateContext->VSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
-	this->D3DStuff.pImmediateContext->PSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
-	this->D3DStuff.pImmediateContext->GSSetConstantBuffers(3, 1, &(this->D3DStuff.pCBShadow));
-
-	Light::GetInstance().Init();
-
-	this->D3DStuff.IsInitialized = true;
 }
 
 void GraphicManager::MesageBoxError(std::string s)
@@ -401,88 +405,87 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 void GraphicManager::Resize(unsigned int width, unsigned int height)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
+	
+	if(graphic.D3DStuff.pRenderTargetView == 0){ return; }
+	if(graphic.D3DStuff.pDepthStencilBuffer == 0){ return; }
+	if(graphic.D3DStuff.pDepthStencilView == 0){ return; }
 
-	if(graphic.D3DStuff.IsInitialized == true)
+	graphic.D3DStuff.pRenderTargetView->Release();
+	graphic.D3DStuff.pDepthStencilBuffer->Release();
+	graphic.D3DStuff.pDepthStencilView->Release();
+
+
+	// Resize the swap chain and recreate the render target view.
+	HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+	if(FAILED(hr))
+		Logger::LogError("Failed at resizing swap chain buffer");
+
+	ID3D11Texture2D* pBuffer = NULL;
+	hr = graphic.D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
+	if(FAILED(hr))
+		Logger::LogError("Failed at creating back buffer");
+
+	hr = graphic.D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &graphic.D3DStuff.pRenderTargetView);
+	if(FAILED(hr))
+		Logger::LogError("Failed at creating Render Target view");
+
+	pBuffer->Release();
+
+	// Create the depth/stencil buffer and view.
+	D3D11_TEXTURE2D_DESC depthBufferDesc;
+	ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
+
+	// Set up the description of the depth buffer.
+	depthBufferDesc.Width = width;
+	depthBufferDesc.Height = height;
+	depthBufferDesc.MipLevels = 1;
+	depthBufferDesc.ArraySize = 1;
+	depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthBufferDesc.SampleDesc.Count = 1;
+	depthBufferDesc.SampleDesc.Quality = 0;
+	depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+	depthBufferDesc.CPUAccessFlags = 0;
+	depthBufferDesc.MiscFlags = 0;
+
+	// Create the texture for the depth buffer using the filled out description.
+	hr = graphic.D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &graphic.D3DStuff.pDepthStencilBuffer);
+	if(FAILED(hr))
 	{
-		graphic.D3DStuff.pRenderTargetView->Release();
-		graphic.D3DStuff.pDepthStencilBuffer->Release();
-		graphic.D3DStuff.pDepthStencilView->Release();
-
-
-		// Resize the swap chain and recreate the render target view.
-		HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
-		if(FAILED(hr))
-			Logger::LogError("Failed at resizing swap chain buffer");
-
-		ID3D11Texture2D* pBuffer = NULL;
-		hr = graphic.D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
-		if(FAILED(hr))
-			Logger::LogError("Failed at creating back buffer");
-
-		hr = graphic.D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &graphic.D3DStuff.pRenderTargetView);
-		if(FAILED(hr))
-			Logger::LogError("Failed at creating Render Target view");
-
-		pBuffer->Release();
-
-		// Create the depth/stencil buffer and view.
-		D3D11_TEXTURE2D_DESC depthBufferDesc;
-		ZeroMemory(&depthBufferDesc, sizeof(depthBufferDesc));
-
-		// Set up the description of the depth buffer.
-		depthBufferDesc.Width = width;
-		depthBufferDesc.Height = height;
-		depthBufferDesc.MipLevels = 1;
-		depthBufferDesc.ArraySize = 1;
-		depthBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-		depthBufferDesc.SampleDesc.Count = 1;
-		depthBufferDesc.SampleDesc.Quality = 0;
-		depthBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-		depthBufferDesc.CPUAccessFlags = 0;
-		depthBufferDesc.MiscFlags = 0;
-
-		// Create the texture for the depth buffer using the filled out description.
-		hr = graphic.D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &graphic.D3DStuff.pDepthStencilBuffer);
-		if(FAILED(hr))
-		{
-			Logger::LogError("Failed at creating dept buffer");
-		}
-
-
-		D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
-		// Initialize the depth stencil view.
-		ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
-
-		// Set up the depth stencil view description.
-		depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-		depthStencilViewDesc.Texture2D.MipSlice = 0;
-
-		// Create the depth stencil view.
-		hr = graphic.D3DStuff.pd3dDevice->CreateDepthStencilView(graphic.D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &graphic.D3DStuff.pDepthStencilView);
-		if(FAILED(hr))
-		{
-			Logger::LogError("Failed at creating depth stencil view");
-		}
-
-		graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &graphic.D3DStuff.pRenderTargetView, graphic.D3DStuff.pDepthStencilView);
-
-
-		// Set the viewport transform.
-
-		// Setup the viewport
-		graphic.D3DStuff.vp.Width = (FLOAT)width;
-		graphic.D3DStuff.vp.Height = (FLOAT)height;
-		graphic.D3DStuff.vp.MinDepth = 0.0f;
-		graphic.D3DStuff.vp.MaxDepth = 1.0f;
-		graphic.D3DStuff.vp.TopLeftX = 0;
-		graphic.D3DStuff.vp.TopLeftY = 0;
-		graphic.D3DStuff.pImmediateContext->RSSetViewports(1, &(graphic.D3DStuff.vp));
-
-		graphic.window.width = width;
-		graphic.window.height = height;
+		Logger::LogError("Failed at creating dept buffer");
 	}
+
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+	// Initialize the depth stencil view.
+	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+
+	// Set up the depth stencil view description.
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+	// Create the depth stencil view.
+	hr = graphic.D3DStuff.pd3dDevice->CreateDepthStencilView(graphic.D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &graphic.D3DStuff.pDepthStencilView);
+	if(FAILED(hr))
+	{
+		Logger::LogError("Failed at creating depth stencil view");
+	}
+
+	graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &graphic.D3DStuff.pRenderTargetView, graphic.D3DStuff.pDepthStencilView);
+
+
+	// Setup the viewport
+	graphic.D3DStuff.vp.Width = (FLOAT)width;
+	graphic.D3DStuff.vp.Height = (FLOAT)height;
+	graphic.D3DStuff.vp.MinDepth = 0.0f;
+	graphic.D3DStuff.vp.MaxDepth = 1.0f;
+	graphic.D3DStuff.vp.TopLeftX = 0;
+	graphic.D3DStuff.vp.TopLeftY = 0;
+	graphic.D3DStuff.pImmediateContext->RSSetViewports(1, &(graphic.D3DStuff.vp));
+
+	graphic.window.width = width;
+	graphic.window.height = height;
 }
 
 void GraphicManager::InsertObjectDrawable(const std::string& ID, std::shared_ptr<Drawable> obj)

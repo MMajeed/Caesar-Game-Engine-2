@@ -1,11 +1,11 @@
 #include "LuaComponentManager.h"
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include "ProcessMessage.h"
 #include "LuaWaitForProcess.h"
 #include <Logger.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <InputCommunicator\InputCommunicator.h>
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
 
@@ -58,7 +58,7 @@ namespace LuaComponentManager
 	double GetTimeSinceStart()
 	{
 		std::chrono::time_point<std::chrono::system_clock> now = std::chrono::system_clock::now();
-		std::chrono::time_point<std::chrono::system_clock>& start = LuaManager::GetInstance().timer.start;
+		std::chrono::time_point<std::chrono::system_clock>& start = ScriptManager::GetInstance().timer.start;
 		std::chrono::duration<double> elapsed_seconds = now - start;
 		return elapsed_seconds.count();
 	}
@@ -72,7 +72,7 @@ namespace LuaComponentManager
 	}
 	double GetScriptFrame()
 	{
-		return (double)LuaManager::GetInstance().timer.FrameCount;
+		return (double)ScriptManager::GetInstance().timer.FrameCount;
 	}
 	double GetAnimationFrame()
 	{

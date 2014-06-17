@@ -1,4 +1,4 @@
-#include "LuaManager.h"
+#include "ScriptManager.h"
 
 #include <exception>
 #include <sstream>
@@ -17,13 +17,13 @@
 #include "LuaAnimation.h"
 #include "LuaNode.h"
 
-LuaManager::LuaManager()
+ScriptManager::ScriptManager()
 {
 	this->lua = 0;
 }
 
 
-void LuaManager::Init()
+void ScriptManager::Init()
 {
 	this->lua = lua_open();
 
@@ -62,7 +62,7 @@ void LuaManager::Init()
 	if(ErrorException != 0)	Logger::LogError(LuaError::GetLuaError(lua));
 }
 
-void LuaManager::Work(double realTime, double deltaTime)
+void ScriptManager::Work(double realTime, double deltaTime)
 {
 	for(auto iterProcesses = this->allProcesses.begin();
 		iterProcesses != this->allProcesses.end();
@@ -90,12 +90,12 @@ void LuaManager::Work(double realTime, double deltaTime)
 	}
 }
 
-void LuaManager::Shutdown()
+void ScriptManager::Shutdown()
 {
 
 }
 
-void LuaManager::ActivateLuaClassesNFunction()
+void ScriptManager::ActivateLuaClassesNFunction()
 {
 	GenericLuaObject::RegisterAllLuaFunction(this->lua);
 	LuaMath::RegisterAllLuaFunction(this->lua);
@@ -111,12 +111,12 @@ void LuaManager::ActivateLuaClassesNFunction()
 	this->Work(0.0, 0.0);
 }
 
-void LuaManager::SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process)
+void ScriptManager::SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process)
 {
 	this->allProcesses[ID] = process;
 }
 
-void LuaManager::RemoveProcesses(std::string ID)
+void ScriptManager::RemoveProcesses(std::string ID)
 {
 	this->allProcesses.erase(ID);
 }

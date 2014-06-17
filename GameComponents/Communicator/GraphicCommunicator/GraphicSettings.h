@@ -8,6 +8,7 @@
 
 namespace GraphicSettings
 {
+	GraphicCommunicatorDLL_API void SetScreenTexture(std::string textureID);
 	GraphicCommunicatorDLL_API void Resize(unsigned int widthInput, unsigned int heightInput);
 	GraphicCommunicatorDLL_API void ChangeWindowsText(std::string s);
 	GraphicCommunicatorDLL_API void MoveWindow(unsigned int x, unsigned int y);

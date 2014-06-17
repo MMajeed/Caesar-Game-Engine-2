@@ -3,7 +3,7 @@
 #include <Converter.h>
 #include <Keys.h>
 #include <ObjectINFO.h>
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <EntityCommunicator\EntityConfig.h>
 
 LuaObject::LuaObject()
@@ -159,7 +159,7 @@ luabind::object LuaObject::All2DTexture()
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAll2DTextures();
 
-	luabind::object luaTextureVec = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaTextureVec = luabind::newtable(ScriptManager::GetInstance().lua);
 	int keyCounter = 1;
 	for(auto iter = textures->GetValue().begin();
 		iter != textures->GetValue().end();
@@ -211,7 +211,7 @@ luabind::object LuaObject::AllCubeTexture()
 {
 	std::shared_ptr<GenericObj<std::vector<std::string>>> textures = this->GetRawAllCubeTextures();
 
-	luabind::object luaTextureVec = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaTextureVec = luabind::newtable(ScriptManager::GetInstance().lua);
 	int keyCounter = 1;
 	for(auto iter = textures->GetValue().begin();
 		iter != textures->GetValue().end();
@@ -333,7 +333,7 @@ luabind::object LuaObject::GetUserData()
 	auto obj = EntityConfig::GetEntity(this->ID, Keys::ObjectInfo::OBJUSERDATA);
 	std::array<float, ObjectINFO::USERDATASIZE> userData = GenericObj<std::array<float, ObjectINFO::USERDATASIZE>>::GetValue(obj);
 
-	luabind::object luaUserDataTable = luabind::newtable(LuaManager::GetInstance().lua);
+	luabind::object luaUserDataTable = luabind::newtable(ScriptManager::GetInstance().lua);
 	for(unsigned int i = 0; i < ObjectINFO::USERDATASIZE; ++i)
 	{
 		luaUserDataTable[i + 1] = userData[i];

@@ -154,6 +154,10 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
     <ClCompile>
@@ -173,6 +177,10 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
     <ClCompile>
@@ -196,6 +204,10 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
     <ClCompile>
@@ -219,6 +231,10 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
     <ClCompile>
@@ -242,6 +258,10 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
     <ClCompile>
@@ -265,6 +285,10 @@
       <AdditionalDependencies>
       </AdditionalDependencies>
     </Lib>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3DMath.h" />
@@ -288,6 +312,7 @@
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="ScreenShot.h" />
+    <ClInclude Include="ScreenTexture.h" />
     <ClInclude Include="SetupLight.h" />
     <ClInclude Include="ShadowFilter.h" />
     <ClInclude Include="ShadowScreenShot.h" />
@@ -314,12 +339,85 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Process2D.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ScreenTexture.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SetupLight.cpp" />
     <ClCompile Include="ShadowFilter.cpp" />
     <ClCompile Include="ShadowScreenShot.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="WithinRange.cpp" />
     <ClCompile Include="XNAConverter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="ScreenTextureShader.fx">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
+      </DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      </DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
+      </DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      </DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
+      </DeploymentContent>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
+      </DeploymentContent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0 PS/ps_4_0</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0 PS/ps_4_0</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0 PS/ps_4_0</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0 PS/ps_4_0</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0 PS/ps_4_0</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0 PS/ps_4_0</Command>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">false</LinkObjects>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">false</LinkObjects>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">$(ProjectDir)%(Filename)VS.h;$(ProjectDir)%(Filename)PS.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">$(ProjectDir)%(Filename)VS.h;$(ProjectDir)%(Filename)PS.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">$(ProjectDir)%(Filename)VS.h;$(ProjectDir)%(Filename)PS.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">$(ProjectDir)%(Filename)VS.h;$(ProjectDir)%(Filename)PS.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">$(ProjectDir)%(Filename)VS.h;$(ProjectDir)%(Filename)PS.h</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">$(ProjectDir)%(Filename)VS.h;$(ProjectDir)%(Filename)PS.h</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
+      </Message>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

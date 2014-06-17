@@ -1,6 +1,6 @@
 #include "LuaModel.h"
 
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include <Model.h>
 #include <3DLoader.h>
 #include <string>
@@ -37,7 +37,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetVertices()
 	{
-		luabind::object returnValue = luabind::newtable(LuaManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 
 		for(std::size_t i = 0; i < this->model->Vertices.size(); ++i)
 		{
@@ -63,7 +63,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetFaces()
 	{
-		luabind::object returnValue = luabind::newtable(LuaManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 
 		for(std::size_t i = 0; i < this->model->Faces.size(); ++i)
 		{

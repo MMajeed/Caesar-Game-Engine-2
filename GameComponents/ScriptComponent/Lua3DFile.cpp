@@ -1,6 +1,6 @@
 #include "Lua3DFile.h"
 
-#include "LuaManager.h"
+#include "ScriptManager.h"
 #include "LuaModel.h"
 #include "LuaAnimation.h"
 #include "LuaNode.h"
@@ -12,7 +12,7 @@ namespace Lua3DFile
 {
 	luabind::object  LoadScene(std::string fileName)
 	{
-		lua_State *lua = LuaManager::GetInstance().lua;
+		lua_State *lua = ScriptManager::GetInstance().lua;
 		luabind::object outModels = luabind::newtable(lua);
 		luabind::object outAnimation = luabind::newtable(lua);
 

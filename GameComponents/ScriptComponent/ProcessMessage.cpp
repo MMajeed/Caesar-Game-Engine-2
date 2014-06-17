@@ -1,5 +1,5 @@
 #include "ProcessMessage.h"
-#include "LuaManager.h"
+#include "ScriptManager.h"
  
 namespace ProcessMessage
 {
@@ -15,9 +15,9 @@ namespace ProcessMessage
 
 			virtual Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(LuaManager::GetInstance().mutex);
+				std::lock_guard<std::mutex> lock(ScriptManager::GetInstance().mutex);
 
-				LuaManager::GetInstance().SubmitProcesses(this->item->ID, this->item);
+				ScriptManager::GetInstance().SubmitProcesses(this->item->ID, this->item);
 
 				return Message::Status::Complete;
 			}
@@ -26,7 +26,7 @@ namespace ProcessMessage
 		};
 
 		std::shared_ptr<AdddProcessMessage> msg(new AdddProcessMessage(process));
-		LuaManager::GetInstance().SubmitMessage(msg);
+		ScriptManager::GetInstance().SubmitMessage(msg);
 	}
 	void Add(std::shared_ptr<LuaProcesses> process, std::string ID)
 	{
@@ -41,9 +41,9 @@ namespace ProcessMessage
 
 			virtual Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(LuaManager::GetInstance().mutex);
+				std::lock_guard<std::mutex> lock(ScriptManager::GetInstance().mutex);
 
-				LuaManager::GetInstance().SubmitProcesses(this->ID, this->item);
+				ScriptManager::GetInstance().SubmitProcesses(this->ID, this->item);
 
 				return Message::Status::Complete;
 			}
@@ -53,7 +53,7 @@ namespace ProcessMessage
 		};
 
 		std::shared_ptr<AdddProcessMessage> msg(new AdddProcessMessage(process, ID));
-		LuaManager::GetInstance().SubmitMessage(msg);
+		ScriptManager::GetInstance().SubmitMessage(msg);
 	}
 	void Remove(std::string ID)
 	{
@@ -67,9 +67,9 @@ namespace ProcessMessage
 
 			virtual Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(LuaManager::GetInstance().mutex);
+				std::lock_guard<std::mutex> lock(ScriptManager::GetInstance().mutex);
 
-				LuaManager::GetInstance().RemoveProcesses(this->ID);
+				ScriptManager::GetInstance().RemoveProcesses(this->ID);
 
 				return Message::Status::Complete;
 			}
@@ -77,6 +77,6 @@ namespace ProcessMessage
 		};
 
 		std::shared_ptr<RemoveProcessMessage> msg(new RemoveProcessMessage(ID));
-		LuaManager::GetInstance().SubmitMessage(msg);
+		ScriptManager::GetInstance().SubmitMessage(msg);
 	}
 }

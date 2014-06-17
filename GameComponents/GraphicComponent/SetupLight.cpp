@@ -77,131 +77,131 @@ void Light::SetupShadow(unsigned int numberOfShadows)
 
 void Light::SetupLight(std::hash_map<std::string, SP_INFO>& objects, const CML::Vec4& eye)
 {
-	GraphicManager& graphicManager = GraphicManager::GetInstance();
-	//graphicManager.InsertSceneFilter(this->shadowFilter);
+	//GraphicManager& graphicManager = GraphicManager::GetInstance();
+	////graphicManager.InsertSceneFilter(this->shadowFilter);
 
-	std::vector<std::shared_ptr<LightINFO>> vecLights;
-	for(auto iterObj = objects.begin();
-		iterObj != objects.end();
-		++iterObj)
-	{
-		std::shared_ptr<LightINFO> light = std::dynamic_pointer_cast<LightINFO>( iterObj->second );
-		if(!light){ continue; }
+	//std::vector<std::shared_ptr<LightINFO>> vecLights;
+	//for(auto iterObj = objects.begin();
+	//	iterObj != objects.end();
+	//	++iterObj)
+	//{
+	//	std::shared_ptr<LightINFO> light = std::dynamic_pointer_cast<LightINFO>( iterObj->second );
+	//	if(!light){ continue; }
 
-		vecLights.push_back(light);
-	}
+	//	vecLights.push_back(light);
+	//}
 
-	
-	if(vecLights.size() > cBuffer::numOfLights)
-	{
-		std::sort(vecLights.begin(), vecLights.end(),
-				  [eye](const std::shared_ptr<LightINFO>& a, const std::shared_ptr<LightINFO>& b) -> bool
-					{
-						float rankA = 0.0f; float rankB = 0.0f;
+	//
+	//if(vecLights.size() > cBuffer::numOfLights)
+	//{
+	//	std::sort(vecLights.begin(), vecLights.end(),
+	//			  [eye](const std::shared_ptr<LightINFO>& a, const std::shared_ptr<LightINFO>& b) -> bool
+	//				{
+	//					float rankA = 0.0f; float rankB = 0.0f;
 
-						if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( a ))
-						{
-							rankA += Length(eye, light->Position);
-						}
-						else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( a ))
-						{
-							rankA += Length(eye, light->Position);
-						}
+	//					if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( a ))
+	//					{
+	//						rankA += Length(eye, light->Position);
+	//					}
+	//					else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( a ))
+	//					{
+	//						rankA += Length(eye, light->Position);
+	//					}
 
-						if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( b ))
-						{
-							rankB += Length(eye, light->Position);
-						}
-						else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( b ))
-						{
-							rankB += Length(eye, light->Position);
-						}
+	//					if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( b ))
+	//					{
+	//						rankB += Length(eye, light->Position);
+	//					}
+	//					else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( b ))
+	//					{
+	//						rankB += Length(eye, light->Position);
+	//					}
 
-						return rankA < rankB;
-					});
-		vecLights.resize(cBuffer::numOfLights);
-	}
+	//					return rankA < rankB;
+	//				});
+	//	vecLights.resize(cBuffer::numOfLights);
+	//}
 
-	unsigned int numberOfShadows = 0;
-	for(auto iterLight = vecLights.begin();
-		iterLight != vecLights.end();
-		++iterLight)
-	{
-		if((*iterLight)->HasShadow == true ){ ++numberOfShadows; }
-	}
-	if(numberOfShadows > this->vecDepthShadow.size())
-	{
-		this->SetupShadow(numberOfShadows);
-	}
+	//unsigned int numberOfShadows = 0;
+	//for(auto iterLight = vecLights.begin();
+	//	iterLight != vecLights.end();
+	//	++iterLight)
+	//{
+	//	if((*iterLight)->HasShadow == true ){ ++numberOfShadows; }
+	//}
+	//if(numberOfShadows > this->vecDepthShadow.size())
+	//{
+	//	this->SetupShadow(numberOfShadows);
+	//}
 
-	cBuffer::cbLight lightBuffer;
-	cBuffer::cbShadows shadows;
-	ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
-	ZeroMemory(&shadows, sizeof(cBuffer::cbShadows));
-	unsigned int shadowCounter = 0;
-	unsigned int counter = 0;
-	for(auto iterLight = vecLights.begin();
-		iterLight != vecLights.end();
-		++iterLight, ++counter)
-	{
-		if(std::shared_ptr<DirectionalLightINFO> light = std::dynamic_pointer_cast<DirectionalLightINFO>( *iterLight ))
-		{
-			lightBuffer.lights[counter] = DirectLight::GetLightDesc(light);
+	//cBuffer::cbLight lightBuffer;
+	//cBuffer::cbShadows shadows;
+	//ZeroMemory(&lightBuffer, sizeof(cBuffer::cbLight));
+	//ZeroMemory(&shadows, sizeof(cBuffer::cbShadows));
+	//unsigned int shadowCounter = 0;
+	//unsigned int counter = 0;
+	//for(auto iterLight = vecLights.begin();
+	//	iterLight != vecLights.end();
+	//	++iterLight, ++counter)
+	//{
+	//	if(std::shared_ptr<DirectionalLightINFO> light = std::dynamic_pointer_cast<DirectionalLightINFO>( *iterLight ))
+	//	{
+	//		lightBuffer.lights[counter] = DirectLight::GetLightDesc(light);
 
-			if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
-			{
-				this->vecDepthShadow[shadowCounter]->D3DInfo.scene = DirectLight::GetScene(light, eye);
+	//		if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
+	//		{
+	//			this->vecDepthShadow[shadowCounter]->D3DInfo.scene = DirectLight::GetScene(light, eye);
 
-				this->vecDepthShadow[shadowCounter]->Snap(objects);
+	//			this->vecDepthShadow[shadowCounter]->Snap(objects);
 
-				lightBuffer.lights[counter].shadowNum = shadowCounter;
+	//			lightBuffer.lights[counter].shadowNum = shadowCounter;
 
-				shadows.shadows[counter] = XMLoadFloat4x4(&Convert4x4(DirectLight::CalculateShadowMatrix(light, eye)));
-				++shadowCounter;
-			}
-		}
-		else if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( *iterLight ))
-		{
-			lightBuffer.lights[counter] = PointLight::GetLightDesc(light);
-		}
-		else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( *iterLight ))
-		{
-			lightBuffer.lights[counter] = SpotLight::GetLightDesc(light);
+	//			shadows.shadows[counter] = XMLoadFloat4x4(&Convert4x4(DirectLight::CalculateShadowMatrix(light, eye)));
+	//			++shadowCounter;
+	//		}
+	//	}
+	//	else if(std::shared_ptr<PointLightINFO> light = std::dynamic_pointer_cast<PointLightINFO>( *iterLight ))
+	//	{
+	//		lightBuffer.lights[counter] = PointLight::GetLightDesc(light);
+	//	}
+	//	else if(std::shared_ptr<SpotLightINFO> light = std::dynamic_pointer_cast<SpotLightINFO>( *iterLight ))
+	//	{
+	//		lightBuffer.lights[counter] = SpotLight::GetLightDesc(light);
 
-			if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
-			{
-				this->vecDepthShadow[shadowCounter]->D3DInfo.scene = SpotLight::GetScene(light, eye);
+	//		if(light->HasShadow == true && ( shadowCounter < this->vecDepthShadow.size() ))
+	//		{
+	//			this->vecDepthShadow[shadowCounter]->D3DInfo.scene = SpotLight::GetScene(light, eye);
 
-				this->vecDepthShadow[shadowCounter]->Snap(objects);
+	//			this->vecDepthShadow[shadowCounter]->Snap(objects);
 
-				lightBuffer.lights[counter].shadowNum = shadowCounter;
-				shadows.shadows[counter] = XMLoadFloat4x4(&Convert4x4(SpotLight::CalculateShadowMatrix(light, eye)));
+	//			lightBuffer.lights[counter].shadowNum = shadowCounter;
+	//			shadows.shadows[counter] = XMLoadFloat4x4(&Convert4x4(SpotLight::CalculateShadowMatrix(light, eye)));
 
-				++shadowCounter;
-			}
-		}
-	}
-	
-	int lightDifference = memcmp(&lightBuffer, &LastLightInput, sizeof(cBuffer::cbLight));
-	if(lightDifference != 0)
-	{
-		ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
+	//			++shadowCounter;
+	//		}
+	//	}
+	//}
+	//
+	//int lightDifference = memcmp(&lightBuffer, &LastLightInput, sizeof(cBuffer::cbLight));
+	//if(lightDifference != 0)
+	//{
+	//	ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
 
-		graphicManager.D3DStuff.pImmediateContext->UpdateSubresource(graphicManager.D3DStuff.pCBLight, 0, NULL, &lightBuffer, 0, 0);
+	//	graphicManager.D3DStuff.pImmediateContext->UpdateSubresource(graphicManager.D3DStuff.pCBLight, 0, NULL, &lightBuffer, 0, 0);
 
-		LastLightInput = lightBuffer;
-	}
-	int ShadowDifference = memcmp(&shadows, &LastShadowInput, sizeof(cBuffer::cbShadows));
-	if(ShadowDifference != 0)
-	{
-		ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
+	//	LastLightInput = lightBuffer;
+	//}
+	//int ShadowDifference = memcmp(&shadows, &LastShadowInput, sizeof(cBuffer::cbShadows));
+	//if(ShadowDifference != 0)
+	//{
+	//	ID3D11DeviceContext* pImmediateContext = graphicManager.D3DStuff.pImmediateContext;
 
-		graphicManager.D3DStuff.pImmediateContext->UpdateSubresource(graphicManager.D3DStuff.pCBShadow, 0, NULL, &shadows, 0, 0);
+	//	graphicManager.D3DStuff.pImmediateContext->UpdateSubresource(graphicManager.D3DStuff.pCBShadow, 0, NULL, &shadows, 0, 0);
 
-		LastShadowInput = shadows;
-	}
+	//	LastShadowInput = shadows;
+	//}
 
-	graphicManager.D3DStuff.pImmediateContext->PSSetShaderResources(100, 1, &(this->shaderShadowTexture));
+	//graphicManager.D3DStuff.pImmediateContext->PSSetShaderResources(100, 1, &(this->shaderShadowTexture));
 
 	//graphicManager.RemoveSceneFilter(this->shadowFilter->ID);
 }

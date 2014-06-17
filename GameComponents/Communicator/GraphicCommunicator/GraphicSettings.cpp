@@ -5,6 +5,30 @@
 
 namespace GraphicSettings
 {
+	void SetScreenTexture(std::string textureID)
+	{
+		class SetScreenTextureMessage : public Message
+		{
+		public:
+			SetScreenTextureMessage(std::string textureID) :
+				textureID(textureID){}
+
+			virtual Message::Status Work()
+			{
+				GraphicManager& graphic = GraphicManager::GetInstance();
+
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				graphic.D3DStuff.finalScreenTexture = textureID;
+
+				return Message::Status::Complete;
+			}
+			std::string textureID;
+		};
+
+		std::shared_ptr<SetScreenTextureMessage> msg(new SetScreenTextureMessage(textureID));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
 	void Resize(unsigned int widthInput, unsigned int heightInput)
 	{
 		class OnResize : public Message

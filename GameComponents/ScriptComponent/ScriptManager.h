@@ -1,5 +1,5 @@
-#ifndef __LuaManager__
-#define __LuaManager__
+#ifndef __ScriptManager__
+#define __ScriptManager__
 
 #include "Linker.h"
 
@@ -12,13 +12,13 @@
 #include <Interface.h>
 #include "LuaProcesses.h"
 
-class ScriptComponentDLL_API LuaManager : public Interface, public CHL::Singleton<LuaManager>
+class ScriptComponentDLL_API ScriptManager : public Interface, public CHL::Singleton<ScriptManager>
 {
 protected:
-	LuaManager();
-	LuaManager(const LuaManager& that) = delete;
-	LuaManager& operator=(const LuaManager&) = delete;
-	friend CHL::Singleton<LuaManager>;
+	ScriptManager();
+	ScriptManager(const ScriptManager& that) = delete;
+	ScriptManager& operator=(const ScriptManager&) = delete;
+	friend CHL::Singleton<ScriptManager>;
 public:
 	virtual void Init();
 	virtual void Work(double realTime, double deltaTime);
@@ -35,4 +35,4 @@ protected:
 	std::hash_map<std::string, std::shared_ptr<LuaProcesses>> allProcesses;
 };
 
-#endif //__LuaManager__
+#endif //__ScriptManager__
