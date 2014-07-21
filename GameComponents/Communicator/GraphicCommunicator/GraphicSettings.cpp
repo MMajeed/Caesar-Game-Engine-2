@@ -19,7 +19,7 @@ namespace GraphicSettings
 
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				graphic.D3DStuff.finalScreenTexture = textureID;
+				//graphic.D3DStuff.finalScreenTexture = textureID;
 
 				return Message::Status::Complete;
 			}

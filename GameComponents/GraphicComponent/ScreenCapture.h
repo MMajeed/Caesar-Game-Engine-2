@@ -3,7 +3,7 @@
 
 #include "Linker.h"
 #include <string>
-#include <INFO.h>
+#include <Entity.h>
 #include <hash_map>
 #include <memory>
 

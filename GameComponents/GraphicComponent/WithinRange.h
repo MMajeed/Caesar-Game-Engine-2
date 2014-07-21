@@ -1,7 +1,7 @@
 #ifndef __WithinRange__
 #define __WithinRange__
 
-#include <INFO.h>
+#include <Entity.h>
 #include "SceneInfo.h"
 
 namespace WithinRange

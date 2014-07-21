@@ -237,29 +237,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CameraINFO.cpp" />
-    <ClCompile Include="DirectionalLightINFO.cpp" />
-    <ClCompile Include="INFO.cpp" />
+    <ClCompile Include="CameraEntity.cpp" />
+    <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="EntityList.cpp" />
     <ClCompile Include="Interface.cpp" />
-    <ClCompile Include="LightINFO.cpp" />
     <ClCompile Include="Message.cpp" />
-    <ClCompile Include="ObjectINFO.cpp" />
-    <ClCompile Include="PointLightINFO.cpp" />
-    <ClCompile Include="SpotLightINFO.cpp" />
+    <ClCompile Include="ObjectEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CameraINFO.h" />
-    <ClInclude Include="DirectionalLightINFO.h" />
+    <ClInclude Include="CameraEntity.h" />
+    <ClInclude Include="EntityList.h" />
     <ClInclude Include="InputKeysEnum.h" />
-    <ClInclude Include="LightINFO.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Keys.h" />
     <ClInclude Include="Message.h" />
-    <ClInclude Include="INFO.h" />
-    <ClInclude Include="ObjectINFO.h" />
-    <ClInclude Include="PointLightINFO.h" />
-    <ClInclude Include="SpotLightINFO.h" />
+    <ClInclude Include="Entity.h" />
+    <ClInclude Include="ObjectEntity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

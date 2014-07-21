@@ -18,8 +18,8 @@ public:
 	virtual void Init();
 	virtual void Destory();
 	virtual void Update(double realTime, double deltaTime);
-	virtual void Draw(std::shared_ptr<ObjectINFO> object, const SceneInfo& si);
-	virtual void DrawShadow(std::shared_ptr<ObjectINFO> object, const SceneInfo& si);
+	virtual void Draw(std::shared_ptr<ObjectEntity> object, const SceneInfo& si);
+	virtual void DrawShadow(std::shared_ptr<ObjectEntity> object, const SceneInfo& si);
 	virtual std::shared_ptr<Drawable> clone() const;
 	
 	static std::shared_ptr<BasicDrawable> Spawn(std::shared_ptr<CHL::Model>	model,
@@ -34,12 +34,12 @@ public:
 		ID3D11Buffer*				pVertexBuffer;
 		ID3D11Buffer*				pIndexBuffer;
 		ID3D11InputLayout*			pInputLayout;
-		std::string					VertexShaderFileName;
-		ID3D11VertexShader*			pVertexShader;
-		std::string					PixelShaderFileName;
-		ID3D11PixelShader*			pPixelShader;
-		std::string					GeometryShaderFileName;
-		ID3D11GeometryShader*		pGeometryShader;
+		std::vector<char>			vertexShaderBytes;
+		std::string					vertexShaderID;
+		std::vector<char>			pixelShaderBytes;
+		std::string					pixelShaderID;
+		std::vector<char>			geometryShaderBytes;
+		std::string					geometryShaderID;
 		ID3D11RasterizerState*		pRastersizerState;
 		ID3D11RasterizerState*		pShadowRastersizerState;
 		std::vector<Vertex>			vertices;
@@ -57,25 +57,18 @@ public:
 	virtual void InitRastersizerState(ID3D11Device* device);
 	virtual void InitShadowRastersizerState(ID3D11Device* device);
 
-	virtual bool CheckIfValid(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDepth(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupTexture(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDrawPixelShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDrawGeometryShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void DrawObject(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
-	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si);
+	virtual bool CheckIfValid(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupDepth(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupTexture(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupDrawVertexBuffer(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupDrawInputVertexShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupDrawPixelShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupDrawGeometryShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void SetupDrawRasterizeShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void DrawObject(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
+	virtual void CleanupAfterDraw(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si);
 
 	virtual void ProcessModel(std::shared_ptr<CHL::Model> model);
-	virtual void CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si,
-							  XMFLOAT4X4& animationFloat4x4,
-							  XMFLOAT4X4& objectFloat4x4,
-							  XMFLOAT4X4& physicsFloat4x4,
-							  XMFLOAT4X4& worldFloat4x4,
-							  XMFLOAT4X4& finalFloat4x4);
 
 	virtual void ChangeRasterizerState(D3D11_CULL_MODE cullMode, D3D11_FILL_MODE fillMode);
 	virtual void ChangeModel(std::shared_ptr<CHL::Model> model);

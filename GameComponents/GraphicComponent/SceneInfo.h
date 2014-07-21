@@ -10,14 +10,14 @@
 #include <array>
 #include <Matrix.h>
 
-class ObjectINFO;
+class ObjectEntity;
 class Drawable;
 
 struct GraphicComponentDLL_API  DrawableObject
 {
 	DrawableObject(){}
-	DrawableObject(std::shared_ptr<ObjectINFO> ObjInfo, std::shared_ptr<Drawable> Drawable) : ObjInfo(ObjInfo), Drawable(Drawable){}
-	std::shared_ptr<ObjectINFO> ObjInfo;
+	DrawableObject(std::shared_ptr<ObjectEntity> ObjInfo, std::shared_ptr<Drawable> Drawable) : ObjInfo(ObjInfo), Drawable(Drawable){}
+	std::shared_ptr<ObjectEntity> ObjInfo;
 	std::shared_ptr<Drawable> Drawable;
 };
 

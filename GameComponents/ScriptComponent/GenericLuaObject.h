@@ -10,6 +10,10 @@
 class GenericLuaObject
 {
 public:
+	GenericLuaObject() = default;
+	GenericLuaObject(std::string ID);
+	operator std::string();
+
 	std::string ID; 
 
 	static void RegisterAllLuaFunction(lua_State *lua);

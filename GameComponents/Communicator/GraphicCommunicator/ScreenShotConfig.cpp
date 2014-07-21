@@ -4,8 +4,8 @@
 #include <CubeScreenShot.h>
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
-#include <EntityCommunicator/EntityConfig.h>
 #include <BasicTexture.h>
+#include <ResourceManager.h>
 
 namespace ScreenShotConfig
 {
@@ -28,7 +28,7 @@ namespace ScreenShotConfig
 
 			Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				auto allObjects = EntityConfig::GetAllEntity();
 
@@ -39,9 +39,9 @@ namespace ScreenShotConfig
 				auto texture = newBasicScreenShot->GetScreenTexture();
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
-				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
+				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
-				newBasicScreenShot->Release();
+				newBasicScreenShot->Release();*/
 
 				return Message::Status::Complete;
 			}
@@ -75,7 +75,7 @@ namespace ScreenShotConfig
 
 			Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				auto allObjects = EntityConfig::GetAllEntity();
 
@@ -86,10 +86,10 @@ namespace ScreenShotConfig
 				auto texture = newBasicScreenShot->GetScreenTexture();
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
-				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
+				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				newBasicScreenShot->Release();
-
+*/
 				return Message::Status::Complete;
 			}
 
@@ -120,7 +120,7 @@ namespace ScreenShotConfig
 
 			Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				auto allObjects = EntityConfig::GetAllEntity();
 
@@ -131,10 +131,10 @@ namespace ScreenShotConfig
 				auto texture = newBasicScreenShot->GetScreenTexture();
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
-				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
+				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				newBasicScreenShot->Release();
-
+*/
 				return Message::Status::Complete;
 			}
 

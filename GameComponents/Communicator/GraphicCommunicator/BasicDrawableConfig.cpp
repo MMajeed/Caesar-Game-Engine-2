@@ -1,9 +1,9 @@
 #include "BasicDrawableConfig.h"
 #include <Vertex.h>
 #include <BasicDrawable.h>
-#include <Basic2DDrawable.h>
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
+#include <ResourceManager.h>
 
 namespace BasicDrawableConfig
 {
@@ -45,7 +45,7 @@ namespace BasicDrawableConfig
 										 static_cast<D3D11_CULL_MODE>(this->cullMode),
 										 static_cast<D3D11_FILL_MODE>(this->fillMode));
 
-				GraphicManager::GetInstance().InsertObjectDrawable(this->ID, newObject);
+				ResourceManager::DrawableList.Insert(this->ID, newObject);
 
 				return Message::Status::Complete;
 			}
@@ -73,57 +73,8 @@ namespace BasicDrawableConfig
 						 BasicDrawableConfig::CULL_MODE cullMode,
 						 BasicDrawableConfig::FILL_MODE fillMode)
 	{
-		class  AddBasicDrawableMessage : public Message
-		{
-		public:
-			AddBasicDrawableMessage(std::shared_ptr<CHL::Model> model,
-									std::string	vertexFileName,
-									std::string	pixelFileName,
-									std::string	GeometryFileName,
-									BasicDrawableConfig::CULL_MODE cullMode,
-									BasicDrawableConfig::FILL_MODE fillMode)
-			{
-				this->ID = CHL::GenerateGUID();
-				this->vertexFileName = vertexFileName;
-				this->pixelFileName = pixelFileName;
-				this->geometryFileName = GeometryFileName;
-				this->cullMode = cullMode;
-				this->fillMode = fillMode;
-				this->model = model;
-			}
-
-			virtual Message::Status Work()
-			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-				std::shared_ptr<Basic2DDrawable> newObject =
-					Basic2DDrawable::Spawn( this->model,
-											this->vertexFileName,
-											this->pixelFileName,
-											this->geometryFileName,
-											static_cast<D3D11_CULL_MODE>(this->cullMode),
-											static_cast<D3D11_FILL_MODE>(this->fillMode));
-
-				GraphicManager::GetInstance().InsertObjectDrawable(this->ID, newObject);
-
-				return Message::Status::Complete;
-			}
-
-			std::shared_ptr<CHL::Model> model;
-			std::string	vertexFileName;
-			std::string	pixelFileName;
-			std::string	geometryFileName;
-			BasicDrawableConfig::CULL_MODE cullMode;
-			BasicDrawableConfig::FILL_MODE fillMode;
-
-			std::string	ID;
-		};
-
-		std::shared_ptr<CHL::Model> modelClone(new CHL::Model(*model));
-		std::shared_ptr<AddBasicDrawableMessage> msg
-			(new AddBasicDrawableMessage(modelClone, vertexFileName, pixelFileName, GeometryFileName, cullMode, fillMode));
-		GraphicManager::GetInstance().SubmitMessage(msg);
-		return msg->ID;
+		
+		return "";
 	}
 
 	void ChangeModel(std::string ID, std::shared_ptr<CHL::Model> model)
@@ -144,12 +95,11 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
-				auto iterObjDrawable = allObjects.find(this->ID);
+				auto object = ResourceManager::DrawableList.Find(this->ID);
 
-				if(iterObjDrawable != allObjects.end())
+				if(object)
 				{
-					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(object);
 
 					if(bdObj)
 					{
@@ -187,12 +137,11 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
-				auto iterObjDrawable = allObjects.find(this->ID);
+				auto object = ResourceManager::DrawableList.Find(this->ID);
 
-				if(iterObjDrawable != allObjects.end())
+				if(object)
 				{
-					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(object);
 
 					if(bdObj)
 					{
@@ -227,12 +176,11 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
-				auto iterObjDrawable = allObjects.find(this->ID);
+				auto object = ResourceManager::DrawableList.Find(this->ID);
 
-				if(iterObjDrawable != allObjects.end())
+				if(object)
 				{
-					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(object);
 
 					if(bdObj)
 					{
@@ -265,12 +213,11 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
-				auto iterObjDrawable = allObjects.find(this->ID);
+				auto object = ResourceManager::DrawableList.Find(this->ID);
 
-				if(iterObjDrawable != allObjects.end())
+				if(object)
 				{
-					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(object);
 
 					if(bdObj)
 					{
@@ -303,12 +250,11 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allObjects = GraphicManager::GetInstance().AllObjectDrawables();
-				auto iterObjDrawable = allObjects.find(this->ID);
+				auto object = ResourceManager::DrawableList.Find(this->ID);
 
-				if(iterObjDrawable != allObjects.end())
+				if(object)
 				{
-					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(iterObjDrawable->second);
+					std::shared_ptr<BasicDrawable> bdObj = std::dynamic_pointer_cast<BasicDrawable>(object);
 
 					if(bdObj)
 					{
@@ -338,7 +284,7 @@ namespace BasicDrawableConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				GraphicManager::GetInstance().RemoveObjectDrawable(this->ID);
+				ResourceManager::DrawableList.Remove(this->ID);
 
 				return Message::Status::Complete;
 			}

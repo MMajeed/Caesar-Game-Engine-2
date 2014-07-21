@@ -1,7 +1,7 @@
 #ifndef __ShadowFilter__
 #define __ShadowFilter__
 
-#include <ObjectINFO.h>
+#include <ObjectEntity.h>
 #include "SceneInfo.h" 
 
 namespace ShadowFilter 

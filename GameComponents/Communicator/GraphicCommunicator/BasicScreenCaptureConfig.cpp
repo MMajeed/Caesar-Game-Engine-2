@@ -3,6 +3,7 @@
 #include <GraphicManager.h>
 #include <BasicScreenCapture.h>
 #include <BasicTexture.h>
+#include <ResourceManager.h>
 
 namespace BasicScreenCaptureConfig
 {
@@ -32,11 +33,11 @@ namespace BasicScreenCaptureConfig
 
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn();
-				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
+				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				std::shared_ptr<BasicScreenCapture> newBasicScreenShot =
 					BasicScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
-				GraphicManager::GetInstance().InsertScreenCapture(this->ID, newBasicScreenShot);
+				ResourceManager::ScreenCaptureList.Insert(this->ID, newBasicScreenShot);
 
 				return Message::Status::Complete;
 			}
@@ -70,11 +71,10 @@ namespace BasicScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allContinuous = GraphicManager::GetInstance().AllScreenCapture();
-				auto iter = allContinuous.find(this->ID);
-				if(iter != allContinuous.end())
+				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
+				if(screenCapture)
 				{
-					std::shared_ptr<BasicScreenCapture> cast = std::dynamic_pointer_cast<BasicScreenCapture>(iter->second);
+					std::shared_ptr<BasicScreenCapture> cast = std::dynamic_pointer_cast<BasicScreenCapture>(screenCapture);
 					if(cast)
 					{
 						cast->cameraID = this->cameraID;
@@ -106,7 +106,7 @@ namespace BasicScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				GraphicManager::GetInstance().RemoveScreenCapture(this->ID);
+				ResourceManager::ScreenCaptureList.Remove(this->ID);
 
 				return Message::Status::Complete;
 			}

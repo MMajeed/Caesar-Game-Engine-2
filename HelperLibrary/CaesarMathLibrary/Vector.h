@@ -16,8 +16,20 @@ namespace CML
 
 		Vector(std::initializer_list<Type> args)
 		{
-			std::copy(args.begin(), args.end(), this->arr.begin());
-			if(args.size() < ArraySize){ std::fill(arr.begin() + args.size(), arr.end(), 0); }
+			if(args.size() == ArraySize)
+			{
+				std::copy(args.begin(), args.end(), this->arr.begin());
+			}
+			else if(args.size() < ArraySize)
+			{
+				std::copy(args.begin(), args.end(), this->arr.begin());
+				std::fill(arr.begin() + args.size(), arr.end(), 0); 
+			}
+			else
+			{
+				auto properEnd = args.begin() + ArraySize;
+				std::copy(args.begin(), properEnd, this->arr.begin());
+			}
 		}
 		Vector& operator=(std::initializer_list<Type> args)
 		{

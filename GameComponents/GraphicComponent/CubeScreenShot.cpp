@@ -135,8 +135,8 @@ void CubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(this->D3DInfo.cameraID);
-	std::shared_ptr<CameraINFO> cameraObj;
-	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
+	std::shared_ptr<CameraEntity> cameraObj;
+	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraEntity>(cameraIter->second); }
 
 	for(std::size_t i = 0; i < 6; ++i)
 	{
@@ -147,7 +147,7 @@ void CubeScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	this->CleanupSnapShot(objects);
 }
 
-SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const std::shared_ptr<CameraINFO>& cam)
+SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const std::shared_ptr<CameraEntity>& cam)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -167,7 +167,7 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 		Z_NEG	// = 5 
 	};
 
-	CML::Vec4 vEye = cam->Eye;
+	CML::Vec4 vEye = cam->GetEye();
 	CML::Vec4 vTM;
 	CML::Vec4 vUp;
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
@@ -205,8 +205,8 @@ SceneInfo CubeScreenShot::SetupScene(std::hash_map<std::string, SP_INFO>& object
 	double FovAngleY = 1.5707963267948966192313216916398;
 	double height = this->D3DInfo.height; 
 	double width = this->D3DInfo.width;
-	double nearZ = cam->NearZ;
-	double farZ = cam->FarZ;
+	double nearZ = cam->GetNearZ();
+	double farZ = cam->GetFarZ();
 	SceneInfo returnValue;
 	returnValue.CamerMatrix = ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
 	returnValue.Eye = vEye;
@@ -244,7 +244,7 @@ void CubeScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& obj
 
 	Scene::SetupConstantBuffer(si);
 	Scene::SetupGlobalTexture(si);
-	auto vecObj = Scene::FilterScene(objects, si);
+	std::vector<DrawableObject> vecObj;// = Scene::FilterScene(objects, si);
 	Scene::DrawObjects(vecObj, si);
 
 	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);

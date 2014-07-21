@@ -1,6 +1,6 @@
 #include "WithinRange.h"
 #include "3DMath.h"
-#include <ObjectINFO.h>
+#include <ObjectEntity.h>
 
 namespace WithinRange
 {

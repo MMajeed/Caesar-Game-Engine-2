@@ -7,26 +7,17 @@
     <ClCompile Include="Message.cpp">
       <Filter>Message</Filter>
     </ClCompile>
-    <ClCompile Include="ObjectINFO.cpp">
-      <Filter>INFO\ObjectINFO</Filter>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Entity List\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="INFO.cpp">
-      <Filter>INFO</Filter>
+    <ClCompile Include="EntityList.cpp">
+      <Filter>Entity List</Filter>
     </ClCompile>
-    <ClCompile Include="CameraINFO.cpp">
-      <Filter>INFO\CameraINFO</Filter>
+    <ClCompile Include="ObjectEntity.cpp">
+      <Filter>Entity List\Entity\ObjectEntity</Filter>
     </ClCompile>
-    <ClCompile Include="LightINFO.cpp">
-      <Filter>INFO\LightINFO</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectionalLightINFO.cpp">
-      <Filter>INFO\LightINFO\DirectionalLightINFO</Filter>
-    </ClCompile>
-    <ClCompile Include="SpotLightINFO.cpp">
-      <Filter>INFO\LightINFO\SpotLightINFO</Filter>
-    </ClCompile>
-    <ClCompile Include="PointLightINFO.cpp">
-      <Filter>INFO\LightINFO\PointLightINFO</Filter>
+    <ClCompile Include="CameraEntity.cpp">
+      <Filter>Entity List\Entity\CameraEntity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,29 +31,20 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="INFO.h">
-      <Filter>INFO</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectINFO.h">
-      <Filter>INFO\ObjectINFO</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraINFO.h">
-      <Filter>INFO\CameraINFO</Filter>
-    </ClInclude>
-    <ClInclude Include="LightINFO.h">
-      <Filter>INFO\LightINFO</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionalLightINFO.h">
-      <Filter>INFO\LightINFO\DirectionalLightINFO</Filter>
-    </ClInclude>
-    <ClInclude Include="SpotLightINFO.h">
-      <Filter>INFO\LightINFO\SpotLightINFO</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLightINFO.h">
-      <Filter>INFO\LightINFO\PointLightINFO</Filter>
-    </ClInclude>
     <ClInclude Include="InputKeysEnum.h">
       <Filter>InputKeysEnum</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Entity List\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityList.h">
+      <Filter>Entity List</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectEntity.h">
+      <Filter>Entity List\Entity\ObjectEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraEntity.h">
+      <Filter>Entity List\Entity\CameraEntity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -75,29 +57,20 @@
     <Filter Include="Message">
       <UniqueIdentifier>{9f928656-2491-4f9c-889a-a462f19ee5cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="INFO">
-      <UniqueIdentifier>{9173c95d-de8b-4cec-82a6-47d0a3551630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\ObjectINFO">
-      <UniqueIdentifier>{9f7b697f-b5e8-49a7-9ed2-9d55cdddd6f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\CameraINFO">
-      <UniqueIdentifier>{263ccd96-3cc0-462a-ac09-6b4fb46e4501}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\LightINFO">
-      <UniqueIdentifier>{4f9fd283-ceff-4f85-b74c-a983dfd3106e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\LightINFO\DirectionalLightINFO">
-      <UniqueIdentifier>{59ced510-f175-44ec-aafd-266efa59572c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\LightINFO\PointLightINFO">
-      <UniqueIdentifier>{fa172f81-a567-48b6-ba47-b4a73f9d88b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="INFO\LightINFO\SpotLightINFO">
-      <UniqueIdentifier>{219946ce-fb25-423d-856e-1a63ebeda727}</UniqueIdentifier>
-    </Filter>
     <Filter Include="InputKeysEnum">
       <UniqueIdentifier>{699fa837-8bdb-4586-b9c8-5a625a7d7ea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity List">
+      <UniqueIdentifier>{e9ecd327-a7b9-4646-a664-7d2e4d3fec83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity List\Entity">
+      <UniqueIdentifier>{9173c95d-de8b-4cec-82a6-47d0a3551630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity List\Entity\ObjectEntity">
+      <UniqueIdentifier>{9f7b697f-b5e8-49a7-9ed2-9d55cdddd6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity List\Entity\CameraEntity">
+      <UniqueIdentifier>{263ccd96-3cc0-462a-ac09-6b4fb46e4501}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -5,75 +5,75 @@
 
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include <GenericLuaObject.h>
 #include <LuaMath.h>
-#include "CameraINFO.h"
-#include <set>
+#include <CameraEntity.h>
+#include <GenericLuaObject.h>
 
-class ScriptEntityDLL_API LuaCamera : public GenericLuaObject
+class ScriptEntityDLL_API LuaCamera
 {
+protected:
+	std::weak_ptr<CameraEntity> wp_Obj;
 public:
-	LuaCamera(luabind::object const& table);
-	void SetAsMain();
-		
-	void MoveFroward(double distance);
+	LuaCamera();
+	LuaCamera(const luabind::object& table);
 
-	void SetEye(LuaMath::Vector4 eye);
 	LuaMath::Vector4 GetEye();
+	void SetEye(const LuaMath::Vector4& v);
 
-	void SetTargetMagintude(LuaMath::Vector4 targetMagintude);
-	LuaMath::Vector4 GetTargetMagintude();
+	LuaMath::Vector4 GetTargetMagnitude();
+	void SetTargetMagnitude(const LuaMath::Vector4& v);
 
-	void SetUp(LuaMath::Vector4 up);
 	LuaMath::Vector4 GetUp();
+	void SetUp(const LuaMath::Vector4& v);
 
-	void SetRoll(double roll);
 	double GetRoll();
+	void SetRoll(double v);
 
-	void SetPitch(double pitch);
 	double GetPitch();
+	void SetPitch(double v);
 
-	void SetYaw(double yaw);
 	double GetYaw();
+	void SetYaw(double v);
 
-	void SetFovAngle(double val);
 	double GetFovAngle();
+	void SetFovAngle(double v);
 
-	void SetNearZ(double val);
 	double GetNearZ();
+	void SetNearZ(double v);
 
-	void SetFarZ(double val);
 	double GetFarZ();
+	void SetFarZ(double v);
 
-	void SetClearColor(LuaMath::Vector4 val);
 	LuaMath::Vector4 GetClearColor();
+	void SetClearColor(const LuaMath::Vector4& v);
 
-	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAll2DTextures();
-	void Add2dTexture(GenericLuaObject texture);
-	void Remove2Texture(GenericLuaObject texture);
-	void Set2DTexture(const luabind::object& textures );
-	luabind::object All2DTexture();
+	luabind::object GetGlobalTexture2D();
+	void SetGlobalTexture2D(const luabind::object& v);
+	void AddGlobalTexture2D(const GenericLuaObject& v);
+	void DeleteGlobalTexture2D(const GenericLuaObject& v);
+	void EmptyGlobalTexture2D();
+
+	luabind::object GetGlobalTextureCube();
+	void SetGlobalTextureCube(const luabind::object& v);
+	void AddGlobalTextureCube(const GenericLuaObject& v);
+	void DeleteGlobalTextureCube(const GenericLuaObject& v);
+	void EmptyGlobalTextureCube();
+
+	/*luabind::object GetUserData();
+	void SetUserData(const luabind::object& v)
+	bool FindUserData(const std::string& ID, std::vector<char>& v);
+	void SetUserData(const std::string& ID, const std::vector<char>& data);
+	void DeleteUserData(const std::string& ID);
+	void EmptyUserData();*/
 	
-	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAllCubeTextures();
-	void AddCubeTexture(GenericLuaObject texture);
-	void RemoveCubeTexture(GenericLuaObject texture);
-	void SetCubeTexture(const luabind::object& textures);
-	luabind::object AllCubeTexture();
-
-	void SetGlobalUserData(const luabind::object& textures);
-	luabind::object GetGlobalUserData();
-
-	void SetProccess2D(bool val);
-	bool GetProccess2D();
-
-	void SetInclusionState(int type);
 	int GetInclusionState();
+	void SetInclusionState(int v);
 
-	std::shared_ptr<GenericObj<std::set<std::string>>> GetRawObjectList();
-	void AddObject(GenericLuaObject obj);
-	void RemoveObject(GenericLuaObject obj);
-	void SetObjectList(const luabind::object& obj);
-	luabind::object GetObjectList();
+	luabind::object GetInclusionList();
+	void SetInclusionList(const luabind::object& v);
+	void AddInclusionList(const GenericLuaObject& v);
+	void DeleteInclusionList(const GenericLuaObject& v);
+	void EmptyInclusionList();
 
 	void Release();
 

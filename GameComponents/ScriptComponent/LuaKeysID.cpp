@@ -49,19 +49,18 @@ namespace LuaKeysID
 			cameraTable[Keys::Camera::EYE]               = Keys::Camera::EYE;
 			cameraTable[Keys::Camera::TARGETMAGNITUDE]   = Keys::Camera::TARGETMAGNITUDE;
 			cameraTable[Keys::Camera::UP]                = Keys::Camera::UP;
-			cameraTable[Keys::Camera::RADIANROLL]        = Keys::Camera::RADIANROLL;
-			cameraTable[Keys::Camera::RADIANPITCH]       = Keys::Camera::RADIANPITCH;
-			cameraTable[Keys::Camera::RADIANYAW]         = Keys::Camera::RADIANYAW;
+			cameraTable[Keys::Camera::ROLL]              = Keys::Camera::ROLL;
+			cameraTable[Keys::Camera::PITCH]             = Keys::Camera::PITCH;
+			cameraTable[Keys::Camera::YAW]               = Keys::Camera::YAW;
 			cameraTable[Keys::Camera::FOVANGLE]          = Keys::Camera::FOVANGLE;
 			cameraTable[Keys::Camera::NEARZ]             = Keys::Camera::NEARZ;
 			cameraTable[Keys::Camera::FARZ]              = Keys::Camera::FARZ;
 			cameraTable[Keys::Camera::CLEARCOLOR]        = Keys::Camera::CLEARCOLOR;
-			cameraTable[Keys::Camera::PROCESS2D]	     = Keys::Camera::PROCESS2D;
 			cameraTable[Keys::Camera::GLOBAL2DTEXTURE]   = Keys::Camera::GLOBAL2DTEXTURE;
 			cameraTable[Keys::Camera::GLOBALCUBETEXTURE] = Keys::Camera::GLOBALCUBETEXTURE;
 			cameraTable[Keys::Camera::GLOBALUSERDATA]    = Keys::Camera::GLOBALUSERDATA;
 			cameraTable[Keys::Camera::INCLUSIONSTATE]    = Keys::Camera::INCLUSIONSTATE;
-			cameraTable[Keys::Camera::OBJECTLIST]        = Keys::Camera::OBJECTLIST;
+			cameraTable[Keys::Camera::INCLUSIONLIST]     = Keys::Camera::INCLUSIONLIST;
 		luaKeyTable["Camera"] = cameraTable;
 
 		luabind::object BasicDrawableTable = luabind::newtable(lua);
@@ -84,18 +83,14 @@ namespace LuaKeysID
 			ObjectInfoTable[Keys::ObjectInfo::LOCATION]       = Keys::ObjectInfo::LOCATION;
 			ObjectInfoTable[Keys::ObjectInfo::ROTATION]       = Keys::ObjectInfo::ROTATION;
 			ObjectInfoTable[Keys::ObjectInfo::SCALE]          = Keys::ObjectInfo::SCALE;
-			ObjectInfoTable[Keys::ObjectInfo::DIFFUSE]        = Keys::ObjectInfo::DIFFUSE;
-			ObjectInfoTable[Keys::ObjectInfo::AMBIENT]        = Keys::ObjectInfo::AMBIENT;
-			ObjectInfoTable[Keys::ObjectInfo::SPECULAR]       = Keys::ObjectInfo::SPECULAR;
 			ObjectInfoTable[Keys::ObjectInfo::DRAWABLEOBJ]    = Keys::ObjectInfo::DRAWABLEOBJ;
+			ObjectInfoTable[Keys::ObjectInfo::ANIMATIONOBJ]   = Keys::ObjectInfo::ANIMATIONOBJ;
+			ObjectInfoTable[Keys::ObjectInfo::ANIMATIONJOINT] = Keys::ObjectInfo::ANIMATIONJOINT;
+			ObjectInfoTable[Keys::ObjectInfo::RIGIDBODY]      = Keys::ObjectInfo::RIGIDBODY;
 			ObjectInfoTable[Keys::ObjectInfo::TEXTURE2DOBJ]   = Keys::ObjectInfo::TEXTURE2DOBJ;
 			ObjectInfoTable[Keys::ObjectInfo::TEXTURECUBEOBJ] = Keys::ObjectInfo::TEXTURECUBEOBJ;
-			ObjectInfoTable[Keys::ObjectInfo::LIGHT]          = Keys::ObjectInfo::LIGHT;
-			ObjectInfoTable[Keys::ObjectInfo::SHADOW]         = Keys::ObjectInfo::SHADOW;
-			ObjectInfoTable[Keys::ObjectInfo::DEPTH]          = Keys::ObjectInfo::DEPTH;
-			ObjectInfoTable[Keys::ObjectInfo::OBJUSERDATA]    = Keys::ObjectInfo::OBJUSERDATA;
-			ObjectInfoTable[Keys::ObjectInfo::ANIMATIONJOINT] = Keys::ObjectInfo::ANIMATIONJOINT;
-			ObjectInfoTable[Keys::ObjectInfo::RIGIDBODY]	  = Keys::ObjectInfo::RIGIDBODY;
+			ObjectInfoTable[Keys::ObjectInfo::GROUP]          = Keys::ObjectInfo::GROUP;
+			ObjectInfoTable[Keys::ObjectInfo::USERDATA]       = Keys::ObjectInfo::USERDATA;
 		luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 		luabind::object BasicScreenShot = luabind::newtable(lua);

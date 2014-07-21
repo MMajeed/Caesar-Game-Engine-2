@@ -2,6 +2,7 @@
 #include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
+#include "ResourceManager.h"
 
 BasicScreenCapture::BasicScreenCapture()
 {
@@ -16,11 +17,10 @@ void BasicScreenCapture::Destory()
 {
 	this->ScreenShot[0]->Release();
 	this->ScreenShot[1]->Release();
-	auto& allTexture = GraphicManager::GetInstance().AllTexture();
-	auto textureIter = allTexture.find(this->TextureID);
-	if(textureIter != allTexture.end())
+	auto& texture = ResourceManager::TextureList.Find(this->TextureID);
+	if(texture)
 	{
-		textureIter->second->Destory();
+		texture->Destory();
 	}
 }
 void BasicScreenCapture::Update(double realTime, double deltaTime)
@@ -35,11 +35,10 @@ void BasicScreenCapture::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	this->ScreenShot[this->current]->D3DInfo.cameraID = this->cameraID;
 	this->ScreenShot[this->current]->Snap(objects);
 
-	auto& allTexture = GraphicManager::GetInstance().AllTexture();
-	auto textureIter = allTexture.find(this->TextureID);
-	if(textureIter != allTexture.end())
+	auto texture = ResourceManager::TextureList.Find(this->TextureID);
+	if(texture)
 	{
-		auto basicTexture = std::dynamic_pointer_cast<BasicTexture>(textureIter->second);
+		auto basicTexture = std::dynamic_pointer_cast<BasicTexture>(texture);
 		if(basicTexture != 0)
 		{
 			basicTexture->D3DInfo.pTexture = this->ScreenShot[this->current]->pScreenTexture;

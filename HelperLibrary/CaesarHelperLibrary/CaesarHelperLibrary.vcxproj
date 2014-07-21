@@ -246,6 +246,7 @@
     <ClCompile Include="GenerateGUID.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ByteCopy.h" />
     <ClInclude Include="Converter.h" />
     <ClInclude Include="GenerateGUID.h" />
     <ClInclude Include="Linker.h" />

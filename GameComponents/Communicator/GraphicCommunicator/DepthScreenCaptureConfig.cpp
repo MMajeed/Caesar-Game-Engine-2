@@ -1,4 +1,5 @@
 #include "DepthScreenCaptureConfig.h"
+#include <ResourceManager.h>
 #include <GenerateGUID.h>
 #include <GraphicManager.h>
 #include <DepthScreenCapture.h>
@@ -30,11 +31,11 @@ namespace DepthScreenCaptureConfig
 
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn();
-				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
+				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
 					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
-				GraphicManager::GetInstance().InsertScreenCapture(this->ID, newDepthScreenShot);
+				ResourceManager::ScreenCaptureList.Insert(this->ID, newDepthScreenShot);
 
 				return Message::Status::Complete;
 			}
@@ -67,11 +68,10 @@ namespace DepthScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allContinuous = GraphicManager::GetInstance().AllScreenCapture();
-				auto iter = allContinuous.find(this->ID);
-				if(iter != allContinuous.end())
+				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
+				if(screenCapture)
 				{
-					std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(iter->second);
+					std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture);
 					if(cast)
 					{
 						cast->cameraID = this->cameraID;
@@ -104,7 +104,7 @@ namespace DepthScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 				
-				GraphicManager::GetInstance().RemoveScreenCapture(this->ID);
+				ResourceManager::ScreenCaptureList.Remove(this->ID);
 
 				return Message::Status::Complete;
 			}

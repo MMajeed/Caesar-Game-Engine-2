@@ -22,6 +22,9 @@
       <Filter>Singleton</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="ByteCopy.h">
+      <Filter>ByteCopy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GenerateGUID">
@@ -35,6 +38,9 @@
     </Filter>
     <Filter Include="Singleton">
       <UniqueIdentifier>{76720ea5-0baa-4432-a4c7-16fdc3721f7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ByteCopy">
+      <UniqueIdentifier>{d395c1ef-3bd1-4340-93fc-f6bc7572e572}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

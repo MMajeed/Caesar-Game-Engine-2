@@ -1,4 +1,5 @@
 #include "CubeScreenCaptureConfig.h"
+#include <ResourceManager.h>
 #include <GenerateGUID.h>
 #include <GraphicManager.h>
 #include <CubeScreenCapture.h>
@@ -30,11 +31,11 @@ namespace CubeScreenCaptureConfig
 
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn();
-				GraphicManager::GetInstance().InsertTexture(this->newTextureID, newTexture);
+				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				std::shared_ptr<CubeScreenCapture> newCubeScreenShot =
 					CubeScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
-				GraphicManager::GetInstance().InsertScreenCapture(this->ID, newCubeScreenShot);
+				ResourceManager::ScreenCaptureList.Insert(this->ID, newCubeScreenShot);
 
 				return Message::Status::Complete;
 			}
@@ -68,11 +69,10 @@ namespace CubeScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				auto& allContinuous = GraphicManager::GetInstance().AllScreenCapture();
-				auto iter = allContinuous.find(this->ID);
-				if(iter != allContinuous.end())
+				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
+				if(screenCapture)
 				{
-					std::shared_ptr<CubeScreenCapture> cast = std::dynamic_pointer_cast<CubeScreenCapture>(iter->second);
+					std::shared_ptr<CubeScreenCapture> cast = std::dynamic_pointer_cast<CubeScreenCapture>(screenCapture);
 					if(cast)
 					{
 						cast->cameraID = this->cameraID;
@@ -104,7 +104,7 @@ namespace CubeScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				GraphicManager::GetInstance().RemoveScreenCapture(this->ID);
+				ResourceManager::ScreenCaptureList.Remove(this->ID);
 
 				return Message::Status::Complete;
 			}

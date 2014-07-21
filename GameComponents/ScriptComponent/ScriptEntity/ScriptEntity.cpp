@@ -5,7 +5,6 @@
 #include <ActivateScriptComponent.h>
 
 #include "LuaCamera.h"
-#include "LuaLight.h"
 #include "LuaObject.h"
 
 ScriptEntity::ScriptEntity()
@@ -19,6 +18,5 @@ ScriptEntity::ScriptEntity()
 void ScriptEntity::Init(lua_State *lua)
 {
 	LuaCamera::RegisterAllLuaFunction(lua);
-	LuaLight::RegisterAllLuaFunction(lua);
 	LuaObject::RegisterAllLuaFunction(lua);
 }

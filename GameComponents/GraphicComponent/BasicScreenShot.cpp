@@ -107,8 +107,8 @@ void BasicScreenShot::Snap(std::hash_map<std::string, SP_INFO>& objects)
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	std::hash_map<std::string, SP_INFO>::iterator cameraIter = objects.find(this->D3DInfo.cameraID);
-	std::shared_ptr<CameraINFO> cameraObj;
-	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraINFO>(cameraIter->second); }
+	std::shared_ptr<CameraEntity> cameraObj;
+	if(cameraIter != objects.cend()) { cameraObj = std::dynamic_pointer_cast<CameraEntity>(cameraIter->second); }
 
 	SceneInfo si = Scene::SetupScene(cameraObj, this->D3DInfo.width, this->D3DInfo.height);
 	this->SetupSnapShot(objects, si);
@@ -136,7 +136,7 @@ void BasicScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& ob
 
 	Scene::SetupConstantBuffer(si);
 	Scene::SetupGlobalTexture(si);
-	auto vecObj = Scene::FilterScene(objects, si);
+	std::vector<DrawableObject> vecObj;// = Scene::FilterScene(objects, si);
 	Scene::DrawObjects(vecObj, si);
 	graphic.D3DStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
 }

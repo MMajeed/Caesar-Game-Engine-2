@@ -1,15 +1,15 @@
 #include "Scene.h"
-#include <EntityCommunicator\ImportantIDConfig.h>
 #include "3DMath.h"
 #include "GraphicManager.h"
 #include "Buffers.h"
 #include "XNAConverter.h"
 #include "Process2D.h"
 #include "WithinRange.h"
+#include "ResourceManager.h"
 
 namespace Scene
 {
-	void SetupSceneCameraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si)
+	void SetupSceneCameraInfo(const std::shared_ptr<CameraEntity>& camera, unsigned int width, unsigned int height, SceneInfo& si)
 	{
 		// Camera
 		CML::Vec4 vEye{0.0, 0.0, 0.0, 0.0};
@@ -23,15 +23,15 @@ namespace Scene
 		double farZ = 5000.0;
 		if(camera)
 		{
-			vEye = camera->Eye;
-			vTM = camera->TargetMagnitude;
-			vUp = camera->Up;
-			pitch = camera->Pitch;
-			yaw = camera->Yaw;
-			roll = camera->Roll;
-			FovAngleY = camera->FovAngleY;
-			nearZ = camera->NearZ;
-			farZ = camera->FarZ;
+			vEye = camera->GetEye();
+			vTM = camera->GetTargetMagnitude();
+			vUp = camera->GetUp();
+			pitch = camera->GetPitch();
+			yaw = camera->GetYaw();
+			roll = camera->GetRoll();
+			FovAngleY = camera->GetFovAngleY();
+			nearZ = camera->GetNearZ();
+			farZ = camera->GetFarZ();
 		}
 
 		si.CamerMatrix = ViewCalculation(vEye, vTM, vUp, pitch, yaw, roll);
@@ -47,7 +47,7 @@ namespace Scene
 		si.farZ = farZ;
 		si.nearZ = nearZ;
 	}
-	void SetupSceneExtraInfo(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height, SceneInfo& si)
+	void SetupSceneExtraInfo(const std::shared_ptr<CameraEntity>& camera, unsigned int width, unsigned int height, SceneInfo& si)
 	{
 		CML::Vec4 clearColor{0.5, 0.5, 0.5, 1.0};
 		bool process2D = true;
@@ -59,13 +59,13 @@ namespace Scene
 		std::set<std::string> objList;
 		if(camera)
 		{
-			clearColor = camera->ClearColor;
-			process2D = camera->Process2D;
-			global2DTexture = camera->Global2DTexture;
-			globalCubeTexture = camera->GlobalCubeTexture;
-			globalUserData = camera->GlobalUserData;
-			inclusionState = static_cast<SceneInfo::InclusionType>(camera->InclusionState);
-			objList = camera->ObjectList;
+			clearColor = camera->GetClearColor();
+			/*process2D = camera->GetProcess2D();
+			global2DTexture = camera->GetGlobalTexture2D();
+			globalCubeTexture = camera->GetGlobalCubeTexture();
+			globalUserData = camera->GetGlobalUserData();*/
+			inclusionState = static_cast<SceneInfo::InclusionType>(camera->GetInclusionState());
+			//objList = camera->GetObjectList();
 		}
 
 		si.width = width;
@@ -78,7 +78,7 @@ namespace Scene
 		si.InclusionState = inclusionState;
 		si.ObjectList = objList;
 	}
-	SceneInfo SetupScene(const std::shared_ptr<CameraINFO>& camera, unsigned int width, unsigned int height)
+	SceneInfo SetupScene(const std::shared_ptr<CameraEntity>& camera, unsigned int width, unsigned int height)
 	{
 		SceneInfo returnValue;
 
@@ -113,7 +113,6 @@ namespace Scene
 			cbWorldInfo.globalUserData(i, 3) = si.GlobalUserData[row + 3];
 		}
 
-		d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBInfo, 0, NULL, &cbWorldInfo, 0, 0);
 	}
 	void SetupGlobalTexture(const SceneInfo& si)
 	{
@@ -125,10 +124,10 @@ namespace Scene
 			for(std::size_t i = 0; i < limit; ++i)
 			{
 				std::string textureID = si.Global2DTexture[i];
-				auto textureIter = graphic.textures.find(textureID);
-				if(textureIter != graphic.textures.end())
+				auto texture = ResourceManager::TextureList.Find(textureID);
+				if(texture)
 				{
-					pTexture[i] = textureIter->second->D3DInfo.pTexture;
+					pTexture[i] = texture->D3DInfo.pTexture;
 				}
 			}
 			graphic.D3DStuff.pImmediateContext->VSSetShaderResources(0, limit, pTexture);
@@ -143,10 +142,10 @@ namespace Scene
 			for(std::size_t i = 0; i < limit; ++i)
 			{
 				std::string textureID = si.GlobalCubeTexture[i];
-				auto textureIter = graphic.textures.find(textureID);
-				if(textureIter != graphic.textures.end())
+				auto texture = ResourceManager::TextureList.Find(textureID);
+				if(texture)
 				{
-					pTexture[i] = textureIter->second->D3DInfo.pTexture;
+					pTexture[i] = texture->D3DInfo.pTexture;
 				}
 			}
 			graphic.D3DStuff.pImmediateContext->VSSetShaderResources(5, limit, pTexture);
@@ -164,7 +163,7 @@ namespace Scene
 		d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, ClearColor);
 		d3dStuff.pImmediateContext->ClearDepthStencilView(d3dStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
-	std::vector<DrawableObject> FilterScene(const std::hash_map<std::string, SP_INFO>& objects, const SceneInfo& si)
+	std::vector<DrawableObject> FilterScene(const std::hash_map<std::string, std::weak_ptr<ObjectEntity>>& objects, const SceneInfo& si)
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -187,23 +186,23 @@ namespace Scene
 				if(iterSceneObj == si.ObjectList.end()){ continue; } // It is not on the list, so don't include it
 			}
 
-			std::shared_ptr<ObjectINFO> objInfo = std::dynamic_pointer_cast<ObjectINFO>(iterObj->second);
+			std::shared_ptr<ObjectEntity> objInfo = std::dynamic_pointer_cast<ObjectEntity>(iterObj->second.lock());
 			if(!objInfo){ continue; }
 
-			auto drawableIter = graphic.objectDrawables.find(objInfo->DrawObjID);
-			if(drawableIter == graphic.objectDrawables.end()){ continue; }// If it didn't fine then continue
+			auto drawable = ResourceManager::DrawableList.Find(objInfo->GetDrawObjID());
+			if(!drawable){ continue; }// If it didn't fine then continue
 
 
 			if(si.process2D == false)
 			{
-				if(Process2D::Filter(si, {objInfo, drawableIter->second})){ continue; }
+				if(Process2D::Filter(si, {objInfo, drawable})){ continue; }
 			}
-			if(!WithinRange::Filter(si, {objInfo, drawableIter->second})){ continue; }
+			if(!WithinRange::Filter(si, {objInfo, drawable})){ continue; }
 
-			vecObjects.push_back({objInfo, drawableIter->second});
+			vecObjects.push_back({objInfo, drawable});
 		}
 
-		const CML::Vec4& eye = si.Eye;
+		/*const CML::Vec4& eye = si.Eye;
 		std::sort(vecObjects.begin(), vecObjects.end(),
 				  [eye](const DrawableObject& a, const DrawableObject& b) -> bool
 		{
@@ -219,7 +218,7 @@ namespace Scene
 			if(b.ObjInfo->Depth == false) { rankB -= 1000000.0f; }
 
 			return rankA > rankB;
-		});
+		});*/
 
 
 		return vecObjects;

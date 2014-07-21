@@ -4,7 +4,7 @@
 #include "ScreenShot.h"
 #include <Vector.h>
 #include "SceneInfo.h"
-#include <CameraINFO.h>
+#include <CameraEntity.h>
 
 class GraphicComponentDLL_API CubeScreenShot : public ScreenShot
 {
@@ -16,7 +16,7 @@ public:
 	void Update(double realTime, double deltaTime);
 	void Snap(std::hash_map<std::string, SP_INFO>& objects);
 
-	SceneInfo SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const std::shared_ptr<CameraINFO>& cam);
+	SceneInfo SetupScene(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const std::shared_ptr<CameraEntity>& cam);
 	void SetupSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si);
 	void TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects, std::size_t side, const SceneInfo& si);
 	void CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects);

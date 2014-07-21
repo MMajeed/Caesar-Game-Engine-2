@@ -4,8 +4,13 @@
 #include "DX11Helper.h"
 #include "Buffers.h"
 #include "XNAConverter.h"
-#include <Keys.h>
 #include "3DMath.h"
+#include "VertexShader.h"
+#include "PixelShader.h"
+#include "GeometryShader.h"
+#include "ResourceManager.h"
+#include "ShaderSetup.h"
+#include <Keys.h>
 #include <VecOperators.h>
 #include <MathFunctions.h>
 #include <AnimationCommunicator\AnimationControllerConfig.h>
@@ -16,9 +21,6 @@ BasicDrawable::BasicDrawable()
 	this->D3DInfo.pVertexBuffer = 0;
 	this->D3DInfo.pIndexBuffer = 0;
 	this->D3DInfo.pInputLayout = 0;
-	this->D3DInfo.pVertexShader = 0;
-	this->D3DInfo.pPixelShader = 0;
-	this->D3DInfo.pGeometryShader = 0;
 	this->D3DInfo.pRastersizerState = 0;
 	this->D3DInfo.cullMode = D3D11_CULL_BACK;
 	this->D3DInfo.fillMode = D3D11_FILL_SOLID;
@@ -42,8 +44,6 @@ void BasicDrawable::Destory()
 	this->D3DInfo.pVertexBuffer->Release();
 	this->D3DInfo.pIndexBuffer->Release();
 	this->D3DInfo.pInputLayout->Release();
-	this->D3DInfo.pVertexShader->Release();
-	this->D3DInfo.pPixelShader->Release();
 	this->D3DInfo.pRastersizerState->Release();
 }
 
@@ -52,13 +52,12 @@ void BasicDrawable::Update(double realTime, double deltaTime)
 
 }
 
-void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object, const SceneInfo& si)
+void BasicDrawable::Draw(std::shared_ptr<ObjectEntity> object, const SceneInfo& si)
 {
 	if(this->CheckIfValid(object, si))
 	{
 		this->SetupDepth(object, si);
 		this->SetupTexture(object, si);
-		this->SetupDrawConstantBuffer(object, si);
 		this->SetupDrawVertexBuffer(object, si);
 		this->SetupDrawInputVertexShader(object, si);
 		this->SetupDrawPixelShader(object, si);
@@ -68,13 +67,12 @@ void BasicDrawable::Draw(std::shared_ptr<ObjectINFO> object, const SceneInfo& si
 		this->CleanupAfterDraw(object, si);
 	}
 }
-void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object, const SceneInfo& si)
+void BasicDrawable::DrawShadow(std::shared_ptr<ObjectEntity> object, const SceneInfo& si)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	if(this->CheckIfValid(object, si))
 	{
-		this->SetupDrawConstantBuffer(object, si);
 		this->SetupDrawVertexBuffer(object, si);
 		this->SetupDrawInputVertexShader(object, si);
 		this->SetupDrawPixelShader(object, si);
@@ -85,40 +83,43 @@ void BasicDrawable::DrawShadow(std::shared_ptr<ObjectINFO> object, const SceneIn
 	}
 }
 
-bool BasicDrawable::CheckIfValid(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+bool BasicDrawable::CheckIfValid(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	if(this->D3DInfo.pVertexBuffer == 0) { return false; }
 	if(this->D3DInfo.pIndexBuffer == 0) { return false; }
 	if(this->D3DInfo.pInputLayout == 0) { return false; }
-	if(this->D3DInfo.pVertexShader == 0) { return false; }
-	if(this->D3DInfo.pPixelShader == 0) { return false; }
 	if(this->D3DInfo.pRastersizerState == 0) { return false; }
 	return true;
 }
-void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupDepth(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	if(object->Depth == false)
+	if(object->GetDepth() == false)
 	{
 		graphic.D3DStuff.pImmediateContext->OMSetDepthStencilState(graphic.D3DStuff.pDepthDisabledStencilState, 1);
 	}
 }
-void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	if(object->Texture2DVecs.size() > 0)
+	std::hash_set<std::string> texture2D = object->GetTexture2D();
+	if(texture2D.size() > 0)
 	{
 		ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
 
-		std::size_t limit = object->Texture2DVecs.size() < cBuffer::numOfTextures ? object->Texture2DVecs.size() : cBuffer::numOfTextures;
-		for(std::size_t i = 0; i < limit; ++i)
+		std::size_t limit = texture2D.size() < cBuffer::numOfTextures ? texture2D.size() : cBuffer::numOfTextures;
+		unsigned int i = 0;
+		for(auto iter = texture2D.begin();
+			iter != texture2D.end();
+			++iter)
 		{
-			std::string textureID = object->Texture2DVecs[i];
-			auto textureIter = graphic.textures.find(textureID);
-			if(textureIter != graphic.textures.end()) 
+			std::string textureID = *iter;
+			auto texture = ResourceManager::TextureList.Find(textureID);
+			if(texture)
 			{ 
-				pTexture[i] = textureIter->second->D3DInfo.pTexture;
+				pTexture[i] = texture->D3DInfo.pTexture;
+				++i;
 			}
 		}
 
@@ -126,18 +127,24 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, cons
 		graphic.D3DStuff.pImmediateContext->GSSetShaderResources(50, limit, pTexture);
 		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(50, limit, pTexture);
 	}
-	if(object->TextureCubeVecs.size() > 0)
+
+	std::hash_set<std::string> textureCube = object->GetTextureCube();
+	if(textureCube.size() > 0)
 	{
 		ID3D11ShaderResourceView* pTexture[cBuffer::numOfTextures] = {0};
 
-		std::size_t limit = object->TextureCubeVecs.size() < cBuffer::numOfTextures ? object->TextureCubeVecs.size() : cBuffer::numOfTextures;
-		for(std::size_t i = 0; i < limit; ++i)
+		std::size_t limit = textureCube.size() < cBuffer::numOfTextures ? textureCube.size() : cBuffer::numOfTextures;
+		unsigned int i = 0;
+		for(auto iter = texture2D.begin();
+			iter != texture2D.end();
+			++iter)
 		{
-			std::string textureID = object->TextureCubeVecs[i];
-			auto textureIter = graphic.textures.find(textureID);
-			if(textureIter != graphic.textures.end())
+			std::string textureID = *iter;
+			auto texture = ResourceManager::TextureList.Find(textureID);
+			if(texture)
 			{
-				pTexture[i] = textureIter->second->D3DInfo.pTexture;
+				pTexture[i] = texture->D3DInfo.pTexture;
+				++i;
 			}
 		}
 		graphic.D3DStuff.pImmediateContext->VSSetShaderResources(55, limit, pTexture);
@@ -145,44 +152,7 @@ void BasicDrawable::SetupTexture(const std::shared_ptr<ObjectINFO>& object, cons
 		graphic.D3DStuff.pImmediateContext->PSSetShaderResources(55, limit, pTexture);
 	}
 }
-void BasicDrawable::SetupDrawConstantBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
-{
-	XMFLOAT4X4 animationFloat4x4;
-	XMFLOAT4X4 objectFloat4x4;
-	XMFLOAT4X4 physicsFloat4x4;
-	XMFLOAT4X4 worldFloat4x4;
-	XMFLOAT4X4 finalFloat4x4;
-	this->CalculateWVP(object, si, animationFloat4x4, objectFloat4x4, physicsFloat4x4, worldFloat4x4, finalFloat4x4);
-	cBuffer::cbObject cbCEF;
-	
-	cbCEF.animation = XMMatrixTranspose(XMLoadFloat4x4(&animationFloat4x4));
-	cbCEF.object = XMMatrixTranspose(XMLoadFloat4x4(&objectFloat4x4));
-	cbCEF.physics = XMMatrixTranspose(XMLoadFloat4x4(&physicsFloat4x4));
-	cbCEF.world = XMMatrixTranspose(XMLoadFloat4x4(&worldFloat4x4));
-	cbCEF.worldViewProj = XMMatrixTranspose(XMLoadFloat4x4(&finalFloat4x4));
-	cbCEF.colour.diffuse = ConvertVec4(object->Diffuse);
-	cbCEF.colour.ambient = ConvertVec4(object->Ambient);
-	cbCEF.colour.specular = ConvertVec4(object->Specular);
-	cbCEF.NumberOf2DTextures = object->Texture2DVecs.size() < cBuffer::numOfTextures ? object->Texture2DVecs.size() : cBuffer::numOfTextures;
-	cbCEF.NumberOfCubeTextures = object->TextureCubeVecs.size() < cBuffer::numOfTextures ? object->TextureCubeVecs.size() : cBuffer::numOfTextures;
-	cbCEF.HasLight = object->Light;
-
-	for(unsigned int i = 0; i < 4; ++i)
-	{
-		int row = i * 4;
-		cbCEF.userData(i, 0) = object->UserData[row + 0];
-		cbCEF.userData(i, 1) = object->UserData[row + 1];
-		cbCEF.userData(i, 2) = object->UserData[row + 2];
-		cbCEF.userData(i, 3) = object->UserData[row + 3];
-	}
-
-	auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
-
-	d3dStuff.pImmediateContext->UpdateSubresource(d3dStuff.pCBObject, 0, NULL, &cbCEF, 0, 0);
-	d3dStuff.pImmediateContext->VSSetConstantBuffers(0, 1, &(d3dStuff.pCBObject));
-	d3dStuff.pImmediateContext->PSSetConstantBuffers(0, 1, &(d3dStuff.pCBObject));
-}
-void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {	
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -192,87 +162,43 @@ void BasicDrawable::SetupDrawVertexBuffer(const std::shared_ptr<ObjectINFO>& obj
 	pImmediateContext->IASetIndexBuffer( this->D3DInfo.pIndexBuffer, DXGI_FORMAT_R16_UINT, 0 );
 	pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );	
 }
-void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupDrawInputVertexShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	// Set the input layout
 	pImmediateContext->IASetInputLayout( this->D3DInfo.pInputLayout );
-	pImmediateContext->VSSetShader( this->D3DInfo.pVertexShader, NULL, 0 );
+	
+	ShaderSetup::SetupVertexShader(this->D3DInfo.vertexShaderID, object, si);
 }
-void BasicDrawable::SetupDrawPixelShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupDrawPixelShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-
-	pImmediateContext->PSSetShader(this->D3DInfo.pPixelShader, NULL, 0);
+	ShaderSetup::SetupPixelShader(this->D3DInfo.pixelShaderID, object, si);
 }
-void BasicDrawable::SetupDrawGeometryShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupDrawGeometryShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-
-	if(this->D3DInfo.pGeometryShader != 0)
-	{
-		pImmediateContext->GSSetShader(this->D3DInfo.pGeometryShader, NULL, 0);
-	}
-	else
-	{
-		pImmediateContext->GSSetShader(NULL, NULL, 0);
-	}
+	ShaderSetup::SetupGeometryShader(this->D3DInfo.geometryShaderID, object, si);
 }
-void BasicDrawable::SetupDrawRasterizeShader(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::SetupDrawRasterizeShader(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 	
 	pImmediateContext->RSSetState(this->D3DInfo.pRastersizerState);
 }
-void BasicDrawable::DrawObject(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::DrawObject(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
 	pImmediateContext->DrawIndexed( this->D3DInfo.indices.size(), 0, 0 );
 }
-void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si)
+void BasicDrawable::CleanupAfterDraw(const std::shared_ptr<ObjectEntity>& object, const SceneInfo& si)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	if(object->Depth == false)
+	if(object->GetDepth() == false)
 	{
 		graphic.D3DStuff.pImmediateContext->OMSetDepthStencilState(graphic.D3DStuff.pDepthStencilState, 1);
 	}
-}
-
-void BasicDrawable::CalculateWVP(const std::shared_ptr<ObjectINFO>& object, const SceneInfo& si,
-								 XMFLOAT4X4& animationFloat4x4,
-								 XMFLOAT4X4& objectFloat4x4,
-								 XMFLOAT4X4& physicsFloat4x4,
-								 XMFLOAT4X4& worldFloat4x4,
-								 XMFLOAT4X4& finalFloat4x4)
-{
-	CML::Matrix4x4 animation; // Identity by default
-	if(!object->AnimationJoint.AnimationID.empty() && !object->AnimationJoint.JointName.empty())
-	{
-		animation = AnimationControllerConfig::GetSingleJoint(object->AnimationJoint.AnimationID, object->AnimationJoint.JointName);
-	}
-
-	CML::Matrix4x4 physics; // Identity by default
-	if(!object->PhysicsRigidBodyID.empty())
-	{
-		physics = RigidBodyConfig::GetTranslation(object->PhysicsRigidBodyID);
-	}
-
-	CML::Matrix4x4 mObjectFinal = object->GetTranslationMatrix();
-
-	animationFloat4x4 = Convert4x4(animation);
-	objectFloat4x4 = Convert4x4(mObjectFinal);
-	physicsFloat4x4 = Convert4x4(physics);
-	XMMATRIX worldMatrix = XMLoadFloat4x4(&animationFloat4x4) * XMLoadFloat4x4(&objectFloat4x4) * XMLoadFloat4x4(&physicsFloat4x4);
-	XMFLOAT4X4 prespectiveMatrix = Convert4x4(si.ProjectionMatrix);
-	XMFLOAT4X4 viewMatrix = Convert4x4(si.CamerMatrix);
-
-	XMMATRIX finalMatrix = worldMatrix * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
-	
-	XMStoreFloat4x4(&worldFloat4x4, worldMatrix);
-	XMStoreFloat4x4(&finalFloat4x4, finalMatrix);
 }
 
 void BasicDrawable::InitVertexBuffer(ID3D11Device* device)
@@ -291,43 +217,36 @@ void BasicDrawable::InitIndexBuffer(ID3D11Device* device)
 }
 void BasicDrawable::InitInputLayout(ID3D11Device* device)
 {
-	if(this->D3DInfo.VertexShaderFileName.empty() == false)
+	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
-		D3D11_INPUT_ELEMENT_DESC layout[] =
-		{
-			{"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{"TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		};
-		UINT numElements = ARRAYSIZE(layout);
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"NORMAL", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"TEXCOORD", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	};
+	UINT numElements = ARRAYSIZE(layout);
 
-		DX11Helper::LoadInputLayoutFile(this->D3DInfo.VertexShaderFileName,
-										device, layout, numElements, &(this->D3DInfo.pInputLayout));
-	}
+	// Now pass this compiled vertex shader to the device so it can be used
+	HRESULT hr = device->CreateInputLayout(layout, numElements, 
+										   this->D3DInfo.vertexShaderBytes.data(), this->D3DInfo.vertexShaderBytes.size(),
+										   &(this->D3DInfo.pInputLayout));
+
+	// NOTE: DON'T Release the VSblob yet as it's needed for the vertex layout...
+	if(FAILED(hr))
+	{
+		Logger::LogError("ErrorException: Could not assign compiled vertex shader to device.");
+	}	
 }
 void BasicDrawable::InitVertexShader(ID3D11Device* device)
 {
-	if(this->D3DInfo.VertexShaderFileName.empty() == false)
-	{
-		DX11Helper::LoadVertexShaderFile(this->D3DInfo.VertexShaderFileName,
-										 device, &(this->D3DInfo.pVertexShader));
-	}
+	//this->D3DInfo.vertexShader = VertexShader::Spawn(this->D3DInfo.vertexShaderBytes);
 }
 void BasicDrawable::InitGeometryShader(ID3D11Device* device)
 {
-	if(this->D3DInfo.GeometryShaderFileName.empty() == false)
-	{
-		DX11Helper::LoadGeometryShaderFile(this->D3DInfo.GeometryShaderFileName,
-										   device, &(this->D3DInfo.pGeometryShader));
-	}
+	//this->D3DInfo.geometryShader = GeometryShader::Spawn(this->D3DInfo.geometryShaderBytes);
 }
 void BasicDrawable::InitPixelShader(ID3D11Device* device)
 {
-	if(this->D3DInfo.VertexShaderFileName.empty() == false)
-	{
-		DX11Helper::LoadPixelShaderFile(this->D3DInfo.PixelShaderFileName,
-										device, &(this->D3DInfo.pPixelShader));
-	}
+	//this->D3DInfo.pixelShader = PixelShader::Spawn(this->D3DInfo.pixelShaderBytes);
 }
 void BasicDrawable::InitRastersizerState(ID3D11Device* device)
 {
@@ -405,36 +324,36 @@ void BasicDrawable::ChangeModel(std::shared_ptr<CHL::Model> model)
 
 void BasicDrawable::ChangeVS(std::string fileName)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	if(this->D3DInfo.pVertexShader != 0)
 	{
 		this->D3DInfo.pVertexShader->Release();
 	}
 	this->D3DInfo.VertexShaderFileName = fileName;
-	this->InitVertexShader(graphic.D3DStuff.pd3dDevice);
+	this->InitVertexShader(graphic.D3DStuff.pd3dDevice);*/
 }
 void BasicDrawable::ChangePS(std::string fileName)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	if(this->D3DInfo.pPixelShader != 0)
 	{
 		this->D3DInfo.pPixelShader->Release();
 	}
 	this->D3DInfo.PixelShaderFileName = fileName;
-	this->InitPixelShader(graphic.D3DStuff.pd3dDevice);
+	this->InitPixelShader(graphic.D3DStuff.pd3dDevice);*/
 }
 void BasicDrawable::ChangeGS(std::string fileName)
 {
-	GraphicManager& graphic = GraphicManager::GetInstance();
+	/*GraphicManager& graphic = GraphicManager::GetInstance();
 
 	if(this->D3DInfo.pGeometryShader != 0)
 	{
 		this->D3DInfo.pGeometryShader->Release();
 	}
 	this->D3DInfo.GeometryShaderFileName = fileName;
-	this->InitGeometryShader(graphic.D3DStuff.pd3dDevice);
+	this->InitGeometryShader(graphic.D3DStuff.pd3dDevice);*/
 }
 
 std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::shared_ptr<CHL::Model>	model,
@@ -447,9 +366,14 @@ std::shared_ptr<BasicDrawable> BasicDrawable::Spawn(std::shared_ptr<CHL::Model>	
 	std::shared_ptr<BasicDrawable> newObject(new BasicDrawable());
 
 	newObject->ProcessModel(model);
-	newObject->D3DInfo.VertexShaderFileName = vertexFile;
-	newObject->D3DInfo.PixelShaderFileName = pixelFile;
-	newObject->D3DInfo.GeometryShaderFileName = geometryFile;
+
+	if(vertexFile.empty() == false)
+		DX11Helper::LoadShaderFile(vertexFile, "VS", "vs_4_0", newObject->D3DInfo.vertexShaderBytes);
+	if(pixelFile.empty() == false)
+		DX11Helper::LoadShaderFile(pixelFile, "PS", "ps_4_0", newObject->D3DInfo.pixelShaderBytes);
+	if(geometryFile.empty() == false)
+		DX11Helper::LoadShaderFile(geometryFile, "GS", "gs_4_0", newObject->D3DInfo.geometryShaderBytes);
+
 	newObject->D3DInfo.cullMode = cullMode;
 	newObject->D3DInfo.fillMode = fillMode;
 

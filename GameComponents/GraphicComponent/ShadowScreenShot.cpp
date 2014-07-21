@@ -101,7 +101,7 @@ void ShadowScreenShot::SetupSnapShot(std::hash_map<std::string, SP_INFO>& object
 void ShadowScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-
+/*
 	Scene::SetupConstantBuffer(this->D3DInfo.scene);
 	auto vecObj = Scene::FilterScene(objects, this->D3DInfo.scene);
 	for(auto iter = vecObj.begin();
@@ -112,7 +112,7 @@ void ShadowScreenShot::TakeScreenSnapShot(std::hash_map<std::string, SP_INFO>& o
 		{
 			iter->Drawable->DrawShadow(iter->ObjInfo, this->D3DInfo.scene);
 		}
-	}
+	}*/
 }
 void ShadowScreenShot::CleanupSnapShot(std::hash_map<std::string, SP_INFO>& objects)
 {

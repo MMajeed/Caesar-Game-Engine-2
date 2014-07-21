@@ -52,7 +52,7 @@ namespace LuaMath
 		];
 	}
 
-	Vector4 MoveObject(Vector4 Location, Vector4 target, double pitch, double yaw, double roll, double magintude)
+	Vector4 MoveObject(Vector4 Location, Vector4 target, double pitch, double yaw, double roll, double Magnitude)
 	{
 		CML::Matrix4x4 rotation = CML::RotationMatrix(pitch, yaw, roll);
 		target = CML::Normalize(target);
@@ -60,7 +60,7 @@ namespace LuaMath
 		CML::Vec4 targetRotation = CML::Multiple(target, rotation);
 		targetRotation = CML::Normalize(targetRotation);
 
-		CML::Vec4 newEye = Location.vector + (targetRotation * magintude);
+		CML::Vec4 newEye = Location.vector + (targetRotation * Magnitude);
 
 		return newEye;
 	}

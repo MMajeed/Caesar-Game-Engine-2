@@ -5,64 +5,72 @@
 
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
-#include <GenericLuaObject.h>
 #include <LuaMath.h>
-#include <ObjectINFO.h>
+#include <ObjectEntity.h>
+#include <GenericLuaObject.h>
 
-class ScriptEntityDLL_API LuaObject : public GenericLuaObject
+class ScriptEntityDLL_API LuaObject
 {
+protected:
+	std::weak_ptr<ObjectEntity> wp_Obj;
 public:
 	LuaObject();
-	LuaObject(luabind::object const& table);
+	LuaObject(const luabind::object& table);
 
-	void SetGraphic(GenericLuaObject graphic);
-	void RemoveGraphic();
-
-	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAll2DTextures();
-	void Add2DTexture(GenericLuaObject texture);
-	void Remove2DTexture(GenericLuaObject texture);
-	void Set2DTexture(const luabind::object& textures);
-	luabind::object All2DTexture();
-
-	std::shared_ptr<GenericObj<std::vector<std::string>>> GetRawAllCubeTextures();
-	void AddCubeTexture(GenericLuaObject texture);
-	void RemoveCubeTexture(GenericLuaObject texture);
-	void SetCubeTexture(const luabind::object& textures);
-	luabind::object AllCubeTexture();
-
-	void SetLocation(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetLocation();
+	void SetLocation(const LuaMath::Vector4& v);
 
-	void SetScale(LuaMath::Vector4 vec);
-	LuaMath::Vector4 GetScale();
-
-	void SetRotation(LuaMath::Vector4 vec);
 	LuaMath::Vector4 GetRotation();
+	void SetRotation(const LuaMath::Vector4& v);
 
-	void SetDiffuse(LuaMath::Vector4 vec);
-	LuaMath::Vector4 GetDiffuse();
+	LuaMath::Vector4 GetScale();
+	void SetScale(const LuaMath::Vector4& v);
 
-	void SetAmibent(LuaMath::Vector4 vec);
-	LuaMath::Vector4 GetAmibent();
-
-	void SetSpecular(LuaMath::Vector4 vec);
-	LuaMath::Vector4 GetSpecular();
-
-	void SetLight(bool vec);
-	bool GetLight();
-
-	void SetShadow(bool vec);
-	bool GetShadow();
-
-	void SetDepth(bool vec);
 	bool GetDepth();
+	void SetDepth(bool v);
 
-	void SetUserData(const luabind::object& textures);
-	luabind::object GetUserData();
+	GenericLuaObject GetDrawObjID();
+	void SetDrawObjID(const GenericLuaObject& v);
+	void RemoveDrawObjID();
+
+	GenericLuaObject GetAnimationID();
+	void SetAnimationID(const GenericLuaObject& v);
+	void RemoveAnimationID();
+
+	GenericLuaObject GetJointName();
+	void SetJointName(const GenericLuaObject& v);
+	void RemoveJointName();
+
+	GenericLuaObject GetRigidBodyID();
+	void SetRigidBodyID(const GenericLuaObject& v);
+	void RemoveRigidBodyID();
+
+	luabind::object GetGroupList();
+	void SetGroupList(const luabind::object& v);
+	void AddGroupList(const GenericLuaObject& v);
+	void DeleteGroupList(const GenericLuaObject& v);
+	void EmptyGroupList();
+
+	luabind::object GetTexture2D();
+	void SetTexture2D(const luabind::object& v);
+	void AddTexture2D(const GenericLuaObject& v);
+	void DeleteTexture2D(const GenericLuaObject& v);
+	void EmptyTexture2D();
+
+	luabind::object GetTextureCube();
+	void SetTextureCube(const luabind::object& v);
+	void AddTextureCube(const GenericLuaObject& v);
+	void DeleteTextureCube(const GenericLuaObject& v);
+	void EmptyTextureCube();
+
+	/*luabind::object GetUserData();
+	void SetUserData(const luabind::object& v)
+	bool FindUserData(const std::string& ID, std::vector<char>& v);
+	void SetUserData(const std::string& ID, const std::vector<char>& data);
+	void DeleteUserData(const std::string& ID);
+	void EmptyUserData();*/
 
 	void Release();
-
-	std::shared_ptr<ObjectINFO> GetObject();
 
 	static void Register(lua_State *lua);
 	static inline void RegisterAllLuaFunction(lua_State *lua)

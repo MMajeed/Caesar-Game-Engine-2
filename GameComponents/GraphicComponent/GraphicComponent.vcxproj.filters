@@ -63,9 +63,6 @@
     <ClInclude Include="BasicScreenCapture.h">
       <Filter>ScreenCapture\BasicScreenCapture</Filter>
     </ClInclude>
-    <ClInclude Include="Basic2DDrawable.h">
-      <Filter>Item Drawing\Drawable\BasicDrawable\Basic2DDrawable</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -84,8 +81,35 @@
     <ClInclude Include="WithinRange.h">
       <Filter>Scene\SceneFilter\WithinRange</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenTexture.h">
-      <Filter>ScreenTexture</Filter>
+    <ClInclude Include="PixelShader.h">
+      <Filter>Item Drawing\Shader\Shaders\PixelShader</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexShader.h">
+      <Filter>Item Drawing\Shader\Shaders\VertexShader</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryShader.h">
+      <Filter>Item Drawing\Shader\Shaders\GeometryShader</Filter>
+    </ClInclude>
+    <ClInclude Include="COMSharedPtr.h">
+      <Filter>D3D Tools\COMSharedPtr</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderSetup.h">
+      <Filter>Item Drawing\Shader\ShaderSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="CBufferSetup.h">
+      <Filter>Item Drawing\Shader\CBufferSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="CBufferVariables.h">
+      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="CBHardVariables.h">
+      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBHardVariables</Filter>
+    </ClInclude>
+    <ClInclude Include="CBWeakVariables.h">
+      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBWeakVariables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -135,9 +159,6 @@
     <ClCompile Include="BasicScreenCapture.cpp">
       <Filter>ScreenCapture\BasicScreenCapture</Filter>
     </ClCompile>
-    <ClCompile Include="Basic2DDrawable.cpp">
-      <Filter>Item Drawing\Drawable\BasicDrawable\Basic2DDrawable</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -153,8 +174,32 @@
     <ClCompile Include="WithinRange.cpp">
       <Filter>Scene\SceneFilter\WithinRange</Filter>
     </ClCompile>
-    <ClCompile Include="ScreenTexture.cpp">
-      <Filter>ScreenTexture</Filter>
+    <ClCompile Include="PixelShader.cpp">
+      <Filter>Item Drawing\Shader\Shaders\PixelShader</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexShader.cpp">
+      <Filter>Item Drawing\Shader\Shaders\VertexShader</Filter>
+    </ClCompile>
+    <ClCompile Include="GeometryShader.cpp">
+      <Filter>Item Drawing\Shader\Shaders\GeometryShader</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderSetup.cpp">
+      <Filter>Item Drawing\Shader\ShaderSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="CBufferSetup.cpp">
+      <Filter>Item Drawing\Shader\CBufferSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="CBufferVariables.cpp">
+      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="CBHardVariables.cpp">
+      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBHardVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="CBWeakVariables.cpp">
+      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBWeakVariables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,9 +266,6 @@
     <Filter Include="Item Drawing\Drawable\BasicDrawable">
       <UniqueIdentifier>{6ecccf77-6892-4631-b816-96f01f8ff2b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Drawable\BasicDrawable\Basic2DDrawable">
-      <UniqueIdentifier>{2e7d37dc-dad8-4b83-b768-8bb1cf8db8be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{bea3c4dd-524f-4282-b497-ddddbe8f9936}</UniqueIdentifier>
     </Filter>
@@ -248,16 +290,52 @@
     <Filter Include="Scene\SceneFilter\WithinRange">
       <UniqueIdentifier>{632cd6dc-400c-4ea7-97ac-b6ef3a793197}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScreenTexture">
-      <UniqueIdentifier>{bfd1c2f8-ef4b-4417-9e65-912e255e89fe}</UniqueIdentifier>
+    <Filter Include="D3D Tools\COMSharedPtr">
+      <UniqueIdentifier>{4bf21998-4e84-4b75-aa90-ea731067fc4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScreenTexture\Shader">
-      <UniqueIdentifier>{0ebf790f-1d93-461d-b1ae-0cbd0cf7795b}</UniqueIdentifier>
+    <Filter Include="ResourceManager">
+      <UniqueIdentifier>{30f8f52f-587e-4147-91d5-2ddfa3956a3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader">
+      <UniqueIdentifier>{5a69b6cb-a360-4ff9-897a-855c9ccb9626}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\Shaders">
+      <UniqueIdentifier>{c1df2eaf-85e8-4503-81ca-c8c3eff5dbc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\Shaders\GeometryShader">
+      <UniqueIdentifier>{5bbc9321-ffd9-4f77-b070-419372526768}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\Shaders\VertexShader">
+      <UniqueIdentifier>{253d31b8-5d85-4135-b398-cc386d997e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\Shaders\PixelShader">
+      <UniqueIdentifier>{c0eea300-bcb6-4bd7-9a52-97dd5bd49758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\ShaderSetup">
+      <UniqueIdentifier>{50544b97-8678-446a-99df-8369fbece1ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\ShaderSetup\FX">
+      <UniqueIdentifier>{4117cb26-78f9-409e-915c-f47019ce0ddc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\CBufferSetup">
+      <UniqueIdentifier>{4f8ae00f-23ef-4d09-8dc2-41468966f37e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp">
+      <UniqueIdentifier>{c21721f5-33f6-4b27-8fb9-f3e8fc89838b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBHardVariables">
+      <UniqueIdentifier>{f946b745-aac8-4c62-bee9-8c87e83500c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBWeakVariables">
+      <UniqueIdentifier>{41a9a63a-5119-4d04-892b-393f5be5dc8c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="ScreenTextureShader.fx">
-      <Filter>ScreenTexture\Shader</Filter>
+    <CustomBuild Include="VSDefault.fx">
+      <Filter>Item Drawing\Shader\ShaderSetup\FX</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PSDefault.fx">
+      <Filter>Item Drawing\Shader\ShaderSetup\FX</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

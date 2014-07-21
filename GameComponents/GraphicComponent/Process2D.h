@@ -1,7 +1,7 @@
 #ifndef __Process2D__
 #define __Process2D__
 
-#include <INFO.h>
+#include <Entity.h>
 #include "SceneInfo.h"
 
 namespace Process2D

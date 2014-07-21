@@ -46,22 +46,21 @@ namespace Keys
 
 	namespace Camera
 	{
-		const static std::string EYE               = "Eye";
-		const static std::string TARGETMAGNITUDE   = "TargetMagnitude";
-		const static std::string UP                = "Up";
-		const static std::string RADIANROLL        = "RadianRoll";
-		const static std::string RADIANPITCH       = "RadianPitch";
-		const static std::string RADIANYAW         = "RadianYaw";
-		const static std::string FOVANGLE		   = "FovAngle";
-		const static std::string NEARZ			   = "NearZ";
-		const static std::string FARZ              = "FarZ";
-		const static std::string CLEARCOLOR        = "ClearColor";
-		const static std::string GLOBAL2DTEXTURE   = "Global2DTexture";
-		const static std::string GLOBALCUBETEXTURE = "GlobalCubeTexture";
-		const static std::string PROCESS2D		   = "Process2D";
-		const static std::string GLOBALUSERDATA    = "GlobalUserData";
-		const static std::string INCLUSIONSTATE    = "InclusionState";
-		const static std::string OBJECTLIST        = "ObjectList";
+		const static std::string EYE                = "Eye";
+		const static std::string TARGETMAGNITUDE    = "TargetMagnitude";
+		const static std::string UP                 = "Up";
+		const static std::string ROLL				= "Roll";
+		const static std::string PITCH				= "Pitch";
+		const static std::string YAW				= "Yaw";
+		const static std::string FOVANGLE		    = "FovAngle";
+		const static std::string NEARZ			    = "NearZ";
+		const static std::string FARZ               = "FarZ";
+		const static std::string CLEARCOLOR         = "ClearColor";
+		const static std::string GLOBAL2DTEXTURE    = "Global2DTexture";
+		const static std::string GLOBALCUBETEXTURE  = "GlobalCubeTexture";
+		const static std::string GLOBALUSERDATA     = "GlobalUserData";
+		const static std::string INCLUSIONSTATE     = "InclusionState";
+		const static std::string INCLUSIONLIST		= "InclusionList";
 	};
 	
 	namespace BasicDrawable
@@ -87,18 +86,15 @@ namespace Keys
 		const static std::string LOCATION       = "Location";
 		const static std::string ROTATION       = "Rotation";
 		const static std::string SCALE          = "Scale";
-		const static std::string DIFFUSE        = "Diffuse";
-		const static std::string AMBIENT        = "Ambient";
-		const static std::string SPECULAR       = "Specular";
-		const static std::string DRAWABLEOBJ    = "DrawableObj";
-		const static std::string TEXTURE2DOBJ   = "Texture2DObj";
-		const static std::string TEXTURECUBEOBJ = "TextureCubeObj";
-		const static std::string LIGHT          = "Light";
-		const static std::string SHADOW         = "Shadow";
 		const static std::string DEPTH          = "Depth";
-		const static std::string OBJUSERDATA	= "UserData";
+		const static std::string DRAWABLEOBJ    = "DrawableObj";
+		const static std::string ANIMATIONOBJ   = "AnimationObj";
 		const static std::string ANIMATIONJOINT = "AnimationJoint";
 		const static std::string RIGIDBODY      = "RigidBody";
+		const static std::string TEXTURE2DOBJ   = "Texture2DObj";
+		const static std::string TEXTURECUBEOBJ = "TextureCubeObj";
+		const static std::string GROUP			= "Group";
+		const static std::string USERDATA		= "UserData";
 	};
 
 	namespace ScreenShot

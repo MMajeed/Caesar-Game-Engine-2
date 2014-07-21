@@ -50,7 +50,7 @@ namespace LuaMath
 		static void Register(lua_State *lua);
 	};
 
-	ScriptComponentDLL_API Vector4 MoveObject(Vector4 Location, Vector4 target, double pitch, double yaw, double roll, double magintude);
+	ScriptComponentDLL_API Vector4 MoveObject(Vector4 Location, Vector4 target, double pitch, double yaw, double roll, double Magnitude);
 	ScriptComponentDLL_API Vector4 RotateVector(Vector4 Vector, Vector4 QuaRotation);
 
 	ScriptComponentDLL_API void RegisterAllLuaFunction(lua_State *lua);

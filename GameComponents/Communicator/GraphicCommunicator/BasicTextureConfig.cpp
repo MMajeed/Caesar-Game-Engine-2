@@ -1,5 +1,6 @@
 #include "BasicTextureConfig.h"
 
+#include <ResourceManager.h>
 #include <BasicTexture.h>
 #include <GraphicManager.h>
 #include <GenerateGUID.h>
@@ -24,7 +25,7 @@ namespace BasicTextureConfig
 				std::shared_ptr<BasicTexture> newObject =
 					BasicTexture::Spawn(this->TextureFileName);
 
-				GraphicManager::GetInstance().InsertTexture(this->ID, newObject);
+				ResourceManager::TextureList.Insert(this->ID, newObject);
 
 				return Message::Status::Complete;
 			}
@@ -53,7 +54,7 @@ namespace BasicTextureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				GraphicManager::GetInstance().RemoveTexture(this->ID);
+				ResourceManager::TextureList.Remove(this->ID);
 
 				return Message::Status::Complete;
 			}
