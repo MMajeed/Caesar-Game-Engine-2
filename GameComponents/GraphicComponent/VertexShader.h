@@ -4,23 +4,35 @@
 #include "Linker.h"
 #include "COMSharedPtr.h"
 #include <string>
+#include <hash_map>
 #include <ObjectEntity.h>
-#include "SceneInfo.h"
-#include "CBufferSetup.h"
+#include "GraphicCameraEntity.h"
+#include "GraphicObjectEntity.h"
+#include "CBSetup.h"
+#include "TextureSetup.h"
 
 class GraphicComponentDLL_API VertexShader
 {
 protected:
 	VertexShader(){}
-	void Init(const std::vector<char>& compiledShader);
+	void Init();
 public:
-	void Setup(std::shared_ptr<ObjectEntity> object, const SceneInfo& si);
+	void Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
 
-	static std::shared_ptr<VertexShader> Spawn(const std::vector<char>& compiledVertexShader);
+	static std::shared_ptr<VertexShader> Spawn(const std::vector<char>& CompiledShader);
+	static std::shared_ptr<VertexShader> Spawn(const std::string& fileName);
 protected:
 	COMSharedPtr<ID3D11VertexShader>	pVertexShader;
 	COMSharedPtr<ID3D11Buffer>			pConstantBuffer;
-	std::shared_ptr<CBufferSetup>		pCBufferSetup;
+	std::shared_ptr<CBSetup>		pCBSetup;
+	std::vector<char>					CompiledShader;
+
+	COMSharedPtr<ID3D11InputLayout> GetVertexLayout(std::string ID);
+	COMSharedPtr<ID3D11InputLayout> GenerateInputLayout(std::string ID);
+
+	std::shared_ptr<TextureSetup>		pTexture;
+
+	std::hash_map<std::string, COMSharedPtr<ID3D11InputLayout>> InputLayoutMap;
 };
 
 

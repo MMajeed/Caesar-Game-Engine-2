@@ -14,7 +14,6 @@ protected:
 public:
 	virtual void Init();
 	virtual void Destory();
-	virtual void Update(double realTime, double deltaTime);
 	
 	static std::shared_ptr<BasicTexture> Spawn();
 	static std::shared_ptr<BasicTexture> Spawn(const std::string& fileName);

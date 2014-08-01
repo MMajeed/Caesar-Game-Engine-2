@@ -268,52 +268,49 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3DMath.h" />
-    <ClInclude Include="BasicDrawable.h" />
     <ClInclude Include="BasicScreenShot.h" />
-    <ClInclude Include="Buffers.h" />
     <ClInclude Include="BasicScreenCapture.h" />
     <ClInclude Include="CBHardVariables.h" />
-    <ClInclude Include="CBufferSetup.h" />
-    <ClInclude Include="CBufferVariables.h" />
+    <ClInclude Include="CBSetup.h" />
+    <ClInclude Include="CBVariables.h" />
     <ClInclude Include="CBWeakVariables.h" />
     <ClInclude Include="COMSharedPtr.h" />
     <ClInclude Include="CubeScreenCapture.h" />
     <ClInclude Include="DepthScreenCapture.h" />
     <ClInclude Include="GeometryShader.h" />
+    <ClInclude Include="GraphicCameraEntity.h" />
+    <ClInclude Include="GraphicModel.h" />
+    <ClInclude Include="GraphicObjectEntity.h" />
     <ClInclude Include="PixelShader.h" />
-    <ClInclude Include="Process2D.h" />
+    <ClInclude Include="Rasterizer.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneInfo.h" />
     <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="CubeScreenShot.h" />
     <ClInclude Include="DepthScreenShot.h" />
     <ClInclude Include="DirectLight.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="Drawable.h" />
     <ClInclude Include="DX11Helper.h" />
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="ScreenShot.h" />
     <ClInclude Include="SetupLight.h" />
-    <ClInclude Include="ShaderSetup.h" />
-    <ClInclude Include="ShadowFilter.h" />
     <ClInclude Include="ShadowScreenShot.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
+    <ClInclude Include="TextureSetup.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="VertexLayout.h" />
     <ClInclude Include="VertexShader.h" />
-    <ClInclude Include="WithinRange.h" />
     <ClInclude Include="XNAConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DMath.cpp" />
-    <ClCompile Include="BasicDrawable.cpp" />
     <ClCompile Include="BasicScreenShot.cpp" />
     <ClCompile Include="BasicScreenCapture.cpp" />
     <ClCompile Include="CBHardVariables.cpp" />
-    <ClCompile Include="CBufferSetup.cpp" />
-    <ClCompile Include="CBufferVariables.cpp" />
+    <ClCompile Include="CBSetup.cpp" />
+    <ClCompile Include="CBVariables.cpp" />
     <ClCompile Include="CBWeakVariables.cpp" />
     <ClCompile Include="CubeScreenCapture.cpp" />
     <ClCompile Include="DepthScreenCapture.cpp" />
@@ -322,77 +319,22 @@
     <ClCompile Include="DirectLight.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GeometryShader.cpp" />
+    <ClCompile Include="GraphicCameraEntity.cpp" />
+    <ClCompile Include="GraphicModel.cpp" />
+    <ClCompile Include="GraphicObjectEntity.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="BasicTexture.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PointLight.cpp" />
-    <ClCompile Include="Process2D.cpp" />
+    <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SetupLight.cpp" />
-    <ClCompile Include="ShaderSetup.cpp" />
-    <ClCompile Include="ShadowFilter.cpp" />
     <ClCompile Include="ShadowScreenShot.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="TextureSetup.cpp" />
     <ClCompile Include="VertexShader.cpp" />
-    <ClCompile Include="WithinRange.cpp" />
     <ClCompile Include="XNAConverter.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="PSDefault.fx">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) PS/ps_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">$(ProjectDir)%(Filename)PS.h;</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) PS/ps_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">$(ProjectDir)%(Filename)PS.h;</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) PS/ps_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">$(ProjectDir)%(Filename)PS.h;</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) PS/ps_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">$(ProjectDir)%(Filename)PS.h;</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) PS/ps_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">$(ProjectDir)%(Filename)PS.h;</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) PS/ps_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">$(ProjectDir)%(Filename)PS.h;</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="VSDefault.fx">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">
-      </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">
-      </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">
-      </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">
-      </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">
-      </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">$(SolutionDir)FXFileGenerator\FXFileGenerator.exe $(ProjectDir)%(Filename).fx $(ProjectDir) VS/vs_4_0</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">
-      </Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">$(ProjectDir)%(Filename)VS.h;</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">$(ProjectDir)%(Filename)VS.h;</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">$(ProjectDir)%(Filename)VS.h;</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">$(ProjectDir)%(Filename)VS.h;</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">$(ProjectDir)%(Filename)VS.h;</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">$(ProjectDir)%(Filename)VS.h;</Outputs>
-    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

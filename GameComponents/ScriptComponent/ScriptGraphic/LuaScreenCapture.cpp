@@ -23,7 +23,7 @@ LuaScreenCapture::BasicScreenCapture::BasicScreenCapture(luabind::object const& 
 
 				 if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).ID; }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
 		}
 	}
 	
@@ -32,12 +32,12 @@ LuaScreenCapture::BasicScreenCapture::BasicScreenCapture(luabind::object const& 
 
 void LuaScreenCapture::BasicScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
-	BasicScreenCaptureConfig::SetCameraID(this->ID, cameraID.ID);
+	BasicScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::BasicScreenCapture::GetTexture()
 {
 	LuaBasicTexture texture;
-	texture.ID = this->TextureID;
+	texture.GetID() = this->TextureID;
 	return texture;
 }
 void LuaScreenCapture::BasicScreenCapture::Release()
@@ -75,7 +75,7 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 
 				 if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).ID; }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
 		}
 	}
 	
@@ -84,12 +84,12 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 
 void LuaScreenCapture::DepthScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
-	DepthScreenCaptureConfig::SetCameraID(this->ID, cameraID.ID);
+	DepthScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 {
 	LuaBasicTexture texture;
-	texture.ID = this->TextureID;
+	texture.GetID() = this->TextureID;
 	return texture;
 }
 void LuaScreenCapture::DepthScreenCapture::Release()
@@ -127,7 +127,7 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 
 			if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::HEIGHT){ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).ID; }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
 		}
 	}
 
@@ -136,12 +136,12 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 
 void LuaScreenCapture::CubeScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
-	CubeScreenCaptureConfig::SetCameraID(this->ID, cameraID.ID);
+	CubeScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 {
 	LuaBasicTexture texture;
-	texture.ID = this->TextureID;
+	texture.GetID() = this->TextureID;
 	return texture;
 }
 void LuaScreenCapture::CubeScreenCapture::Release()

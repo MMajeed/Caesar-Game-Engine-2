@@ -1,17 +1,18 @@
 #include "GraphicSettings.h"
+#include <Message.h>
 #include <Converter.h>
 #include <GraphicManager.h>
 #include <Logger.h>
 
 namespace GraphicSettings
 {
-	void SetScreenTexture(std::string textureID)
+	void SetMainCamera(std::string cameraID)
 	{
-		class SetScreenTextureMessage : public Message
+		class SetMainCameraMessage : public Message
 		{
 		public:
-			SetScreenTextureMessage(std::string textureID) :
-				textureID(textureID){}
+			SetMainCameraMessage(std::string cameraID) :
+				cameraID(cameraID){}
 
 			virtual Message::Status Work()
 			{
@@ -19,14 +20,14 @@ namespace GraphicSettings
 
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				//graphic.D3DStuff.finalScreenTexture = textureID;
+				graphic.DefaultCamera = cameraID;
 
 				return Message::Status::Complete;
 			}
-			std::string textureID;
+			std::string cameraID;
 		};
 
-		std::shared_ptr<SetScreenTextureMessage> msg(new SetScreenTextureMessage(textureID));
+		std::shared_ptr<SetMainCameraMessage> msg(new SetMainCameraMessage(cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 	void Resize(unsigned int widthInput, unsigned int heightInput)

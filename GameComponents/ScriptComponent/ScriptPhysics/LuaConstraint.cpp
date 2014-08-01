@@ -23,9 +23,9 @@ namespace LuaConstraint
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-					if(key == Keys::Constraint::RIGIDBODYA)		{ RigidBodyIDA = luabind::object_cast<LuaRigidBody::RididBody>(*it).ID; }
+				 if(key == Keys::Constraint::RIGIDBODYA)		{ RigidBodyIDA = luabind::object_cast<LuaRigidBody::RididBody>(*it).GetID(); }
 			else if(key == Keys::Constraint::PIVOTPOINTA)		{ PivotPointA = luabind::object_cast<LuaMath::Vector4>(*it); }
-			else if(key == Keys::Constraint::RIGIDBODYB)		{ RigidBodyIDB = luabind::object_cast<LuaRigidBody::RididBody>(*it).ID; }
+			else if(key == Keys::Constraint::RIGIDBODYB)		{ RigidBodyIDB = luabind::object_cast<LuaRigidBody::RididBody>(*it).GetID(); }
 			else if(key == Keys::Constraint::PIVOTPOINTB)		{ PivotPointB = luabind::object_cast<LuaMath::Vector4>(*it); }
 			else if(key == Keys::Constraint::BREAKINGTHRESHOLD)	{ breakingThreshold = luabind::object_cast<double>(*it); }
 		}
@@ -75,10 +75,10 @@ namespace LuaConstraint
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::Constraint::RIGIDBODYA)		{ RigidBodyIDA = luabind::object_cast<LuaRigidBody::RididBody>(*it).ID; }
+				 if(key == Keys::Constraint::RIGIDBODYA)		{ RigidBodyIDA = luabind::object_cast<LuaRigidBody::RididBody>(*it).GetID(); }
 			else if(key == Keys::Constraint::PIVOTPOINTA)		{ PivotPointA = luabind::object_cast<LuaMath::Vector4>(*it).vector; }
 			else if(key == Keys::Constraint::AXESA)				{ AxesA = luabind::object_cast<LuaMath::Vector4>(*it).vector; }
-			else if(key == Keys::Constraint::RIGIDBODYB)		{ RigidBodyIDB = luabind::object_cast<LuaRigidBody::RididBody>(*it).ID; }
+			else if(key == Keys::Constraint::RIGIDBODYB)		{ RigidBodyIDB = luabind::object_cast<LuaRigidBody::RididBody>(*it).GetID(); }
 			else if(key == Keys::Constraint::PIVOTPOINTB)		{ PivotPointB = luabind::object_cast<LuaMath::Vector4>(*it).vector; }
 			else if(key == Keys::Constraint::AXESB)				{ AxesB = luabind::object_cast<LuaMath::Vector4>(*it).vector; }
 			else if(key == Keys::Constraint::BREAKINGTHRESHOLD)	{ BreakingThreshold = luabind::object_cast<double>(*it); }

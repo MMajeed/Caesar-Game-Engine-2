@@ -10,7 +10,7 @@
 
 namespace LuaModel
 {
-	class ScriptComponentDLL_API  Vertices
+	/*class ScriptComponentDLL_API  Vertices
 	{
 	public:
 		Vertices();
@@ -23,7 +23,7 @@ namespace LuaModel
 		LuaMath::Vector4 Texture;
 
 		static void Register(lua_State *lua);
-	};
+	};*/
 	class ScriptComponentDLL_API  Model
 	{
 	public:
@@ -31,10 +31,10 @@ namespace LuaModel
 		Model(std::shared_ptr<CHL::Model> model);
 		operator std::shared_ptr<CHL::Model>();
 
-		void SetVertices(luabind::object const& table);
-		luabind::object GetVertices();
-		void SeFaces(luabind::object const& table);
-		luabind::object GetFaces();
+		//void SetVertices(luabind::object const& table);
+		//luabind::object GetVertices();
+		//void SeFaces(luabind::object const& table);
+		//luabind::object GetFaces();
 
 		std::shared_ptr<CHL::Model> model;
 

@@ -16,7 +16,7 @@ namespace DX11Helper
 	GraphicComponentDLL_API 
 		void LoadShaderFile(std::string shaderFileName, std::string vsEntryPoint, std::string vsModel, std::vector<char>& fileBytes);
 	GraphicComponentDLL_API 
-		void LoadInputLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut);
+		void LoadVertexLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut);
 	GraphicComponentDLL_API 
 		void LoadVertexShaderFile(std::string vsFileName, ID3D11Device* device, ID3D11VertexShader** vsOut);
 	GraphicComponentDLL_API 

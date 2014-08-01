@@ -3,25 +3,21 @@
 
 #include "Linker.h"
 
-#include <Entity.h>
-#include <CameraEntity.h>
-#include <ObjectEntity.h>
-#include <hash_map>
-#include <Vector.h>
-#include <Vector.h>
-#include <vector>
-#include "SceneInfo.h"
+#include "GraphicCameraEntity.h"
+#include "GraphicObjectEntity.h"
+#include <string>
 
 namespace Scene
 {
-	GraphicComponentDLL_API void SetupSceneCameraInfo(const std::shared_ptr<CameraEntity>& camera, unsigned int width, unsigned int height, SceneInfo& si);
-	GraphicComponentDLL_API void SetupSceneExtraInfo(const std::shared_ptr<CameraEntity>& camera, unsigned int width, unsigned int height, SceneInfo& si);
-	GraphicComponentDLL_API SceneInfo SetupScene(const std::shared_ptr<CameraEntity>& camera, unsigned int width, unsigned int height);
-	GraphicComponentDLL_API void SetupConstantBuffer(const SceneInfo& si);
-	GraphicComponentDLL_API void SetupGlobalTexture(const SceneInfo& si);
-	GraphicComponentDLL_API void ClearScreen(const SceneInfo& si);
-	GraphicComponentDLL_API std::vector<DrawableObject> FilterScene(const std::hash_map<std::string, std::weak_ptr<ObjectEntity>>& objects, const SceneInfo& si);
-	GraphicComponentDLL_API void DrawObjects(const std::vector<DrawableObject>& objects, const SceneInfo& si);
+	GraphicComponentDLL_API 
+		GraphicCameraEntity GetCamera(const std::string& ID);
+	GraphicComponentDLL_API 
+		std::hash_map<std::string, GraphicObjectEntity> GetAllObjectEntities();
+
+	GraphicComponentDLL_API
+		void ClearScreen(const GraphicCameraEntity& Camera);
+	GraphicComponentDLL_API
+		void DrawObjects(const GraphicCameraEntity& Camera, std::hash_map<std::string, GraphicObjectEntity>& list);
 };
 
 #endif //__Scene__

@@ -21,7 +21,7 @@ namespace LuaModel
 	{
 		return this->model;
 	}
-	void Model::SetVertices(luabind::object const& table)
+	/*void Model::SetVertices(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
 			Logger::LogError("Wrong paramter for Model::SetVertices, please send in a table");
@@ -71,75 +71,75 @@ namespace LuaModel
 		}
 
 		return returnValue;
-	}
+	}*/
 
 	void Model::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
 			luabind::class_<LuaModel::Model>("Model")
 				.def(luabind::constructor<>())
-				.property("Vertices", &LuaModel::Model::GetVertices, &LuaModel::Model::SetVertices)
-				.property("Faces", &LuaModel::Model::GetFaces, &LuaModel::Model::SeFaces)
+				/*.property("Vertices", &LuaModel::Model::GetVertices, &LuaModel::Model::SetVertices)
+				.property("Faces", &LuaModel::Model::GetFaces, &LuaModel::Model::SeFaces)*/
 		];
 	}
 	//-----------------------------End Model--------------------------------------//
 
-	//-----------------------------Start Vertices--------------------------------------//
-	Vertices::Vertices()
-	{
-		this->Point = {0.0, 0.0, 0.0, 0.0};
-		this->Normal = {0.0, 0.0, 0.0, 0.0};
-		this->Texture = {0.0, 0.0, 0.0, 0.0};
-	}
-	Vertices::Vertices(luabind::object const& table)
-	{
-		if(luabind::type(table) != LUA_TTABLE)
-			Logger::LogError("Wrong paramter for Vertices, please send in a table");
+	////-----------------------------Start Vertices--------------------------------------//
+	//Vertices::Vertices()
+	//{
+	//	this->Point = {0.0, 0.0, 0.0, 0.0};
+	//	this->Normal = {0.0, 0.0, 0.0, 0.0};
+	//	this->Texture = {0.0, 0.0, 0.0, 0.0};
+	//}
+	//Vertices::Vertices(luabind::object const& table)
+	//{
+	//	if(luabind::type(table) != LUA_TTABLE)
+	//		Logger::LogError("Wrong paramter for Vertices, please send in a table");
 
-		this->Point = {0.0, 0.0, 0.0, 0.0};
-		this->Normal = {0.0, 0.0, 0.0, 0.0};
-		this->Texture = {0.0, 0.0, 0.0, 0.0};
+	//	this->Point = {0.0, 0.0, 0.0, 0.0};
+	//	this->Normal = {0.0, 0.0, 0.0, 0.0};
+	//	this->Texture = {0.0, 0.0, 0.0, 0.0};
 
-		for(luabind::iterator it(table);
-			it != luabind::iterator();
-			++it)
-		{
-			std::string key = luabind::object_cast<std::string>(it.key());
+	//	for(luabind::iterator it(table);
+	//		it != luabind::iterator();
+	//		++it)
+	//	{
+	//		std::string key = luabind::object_cast<std::string>(it.key());
 
-			if(key == "Point")		{ this->Point = luabind::object_cast<LuaMath::Vector4>(*it); }
-			else if(key == "Normal")	{ this->Normal = luabind::object_cast<LuaMath::Vector4>(*it); }
-			else if(key == "Texture")	{ this->Texture = luabind::object_cast<LuaMath::Vector4>(*it); }
-		}
-	}
-	Vertices::Vertices(CHL::Model::VerticesInfo vertices)
-		: Point(vertices.Point), Normal(vertices.Normal), Texture(vertices.Texture)
-	{
-	}
-	Vertices::operator CHL::Model::VerticesInfo()
-	{
-		CHL::Model::VerticesInfo returnValue;
-		returnValue.Point = this->Point.vector;
-		returnValue.Normal = this->Normal.vector;
-		returnValue.Texture = this->Texture.vector;
-		return returnValue;
-	}
+	//		if(key == "Point")		{ this->Point = luabind::object_cast<LuaMath::Vector4>(*it); }
+	//		else if(key == "Normal")	{ this->Normal = luabind::object_cast<LuaMath::Vector4>(*it); }
+	//		else if(key == "Texture")	{ this->Texture = luabind::object_cast<LuaMath::Vector4>(*it); }
+	//	}
+	//}
+	//Vertices::Vertices(CHL::Model::VerticesInfo vertices)
+	//	: Point(vertices.Point), Normal(vertices.Normal), Texture(vertices.Texture)
+	//{
+	//}
+	//Vertices::operator CHL::Model::VerticesInfo()
+	//{
+	//	CHL::Model::VerticesInfo returnValue;
+	//	returnValue.Point = this->Point.vector;
+	//	returnValue.Normal = this->Normal.vector;
+	//	returnValue.Texture = this->Texture.vector;
+	//	return returnValue;
+	//}
 
-	void Vertices::Register(lua_State *lua)
-	{
-		luabind::module(lua)[
-			luabind::class_<LuaModel::Vertices>("Vertice")
-				.def(luabind::constructor<>())
-				.def(luabind::constructor<luabind::object const&>())
-				.property("Point", &LuaModel::Vertices::Point)
-				.property("Normal", &LuaModel::Vertices::Normal)
-				.property("Texture", &LuaModel::Vertices::Texture)
-		];
-	}
-	//----------------------------End Vertices-----------------------------------//
+	//void Vertices::Register(lua_State *lua)
+	//{
+	//	luabind::module(lua)[
+	//		luabind::class_<LuaModel::Vertices>("Vertice")
+	//			.def(luabind::constructor<>())
+	//			.def(luabind::constructor<luabind::object const&>())
+	//			.property("Point", &LuaModel::Vertices::Point)
+	//			.property("Normal", &LuaModel::Vertices::Normal)
+	//			.property("Texture", &LuaModel::Vertices::Texture)
+	//	];
+	//}
+	////----------------------------End Vertices-----------------------------------//
 
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		LuaModel::Model::Register(lua);
-		LuaModel::Vertices::Register(lua);
+		//LuaModel::Vertices::Register(lua);
 	}
 }

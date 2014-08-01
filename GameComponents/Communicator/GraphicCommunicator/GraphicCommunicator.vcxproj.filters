@@ -5,9 +5,6 @@
     <ClInclude Include="GraphicCommunicator.h">
       <Filter>GraphicCommunicator</Filter>
     </ClInclude>
-    <ClInclude Include="BasicDrawableConfig.h">
-      <Filter>BasicDrawableConfig</Filter>
-    </ClInclude>
     <ClInclude Include="GraphicSettings.h">
       <Filter>GraphicSettings</Filter>
     </ClInclude>
@@ -26,13 +23,16 @@
     <ClInclude Include="ScreenShotConfig.h">
       <Filter>ScreenShotConfig</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicModelConfig.h">
+      <Filter>GraphicModelConfig</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderConfig.h">
+      <Filter>ShaderConfig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicCommunicator.cpp">
       <Filter>GraphicCommunicator</Filter>
-    </ClCompile>
-    <ClCompile Include="BasicDrawableConfig.cpp">
-      <Filter>BasicDrawableConfig</Filter>
     </ClCompile>
     <ClCompile Include="GraphicSettings.cpp">
       <Filter>GraphicSettings</Filter>
@@ -53,13 +53,16 @@
       <Filter>ScreenCaptureConfig\BasicScreenCaptureConfig</Filter>
     </ClCompile>
     <ClCompile Include="Linker.cpp" />
+    <ClCompile Include="GraphicModelConfig.cpp">
+      <Filter>GraphicModelConfig</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderConfig.cpp">
+      <Filter>ShaderConfig</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="GraphicCommunicator">
       <UniqueIdentifier>{5d761ba5-65fa-4eab-93ab-0dbf01e120f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BasicDrawableConfig">
-      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
     </Filter>
     <Filter Include="GraphicSettings">
       <UniqueIdentifier>{7c1d480e-8780-43f2-a137-3c7f39c8b2c8}</UniqueIdentifier>
@@ -81,6 +84,12 @@
     </Filter>
     <Filter Include="ScreenShotConfig">
       <UniqueIdentifier>{b5254899-5d92-4dba-89f6-c6c4ef75daa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GraphicModelConfig">
+      <UniqueIdentifier>{cdf66566-bbb2-4cfc-9e94-91ad3b1e0014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ShaderConfig">
+      <UniqueIdentifier>{60a42742-01e2-4e97-bb94-03130af36737}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

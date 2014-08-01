@@ -27,7 +27,7 @@ namespace DepthScreenCaptureConfig
 
 			Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn();
@@ -35,7 +35,7 @@ namespace DepthScreenCaptureConfig
 
 				std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
 					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
-				ResourceManager::ScreenCaptureList.Insert(this->ID, newDepthScreenShot);
+				ResourceManager::ScreenCaptureList.Insert(this->ID, newDepthScreenShot);*/
 
 				return Message::Status::Complete;
 			}
@@ -66,7 +66,7 @@ namespace DepthScreenCaptureConfig
 
 			Message::Status Work()
 			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
 				if(screenCapture)
@@ -76,7 +76,7 @@ namespace DepthScreenCaptureConfig
 					{
 						cast->cameraID = this->cameraID;
 					}
-				}
+				}*/
 
 				return Message::Status::Complete;
 			}

@@ -4,7 +4,7 @@
 #include "Linker.h"
 #include <hash_map>
 #include <string>
-#include "Drawable.h"
+#include "GraphicModel.h"
 #include "BasicTexture.h"
 #include "ScreenCapture.h"
 #include "VertexShader.h"
@@ -40,7 +40,6 @@ namespace ResourceManager
 			auto iter = this->objList.find(ID);
 			if(iter != this->objList.end())
 			{
-				iter->second->Destory();
 				this->objList.erase(iter);
 			}
 		}
@@ -50,12 +49,12 @@ namespace ResourceManager
 		}
 	};
 
-	extern ResourceManager::Resource<Drawable>			DrawableList;
-	extern ResourceManager::Resource<BasicTexture>		TextureList;
-	extern ResourceManager::Resource<ScreenCapture>		ScreenCaptureList;
-	extern ResourceManager::Resource<VertexShader>		VertexShaderList;
-	extern ResourceManager::Resource<GeometryShader>	GeometryShaderList;
-	extern ResourceManager::Resource<PixelShader>		PixelShaderList;
+	extern GraphicComponentDLL_API ResourceManager::Resource<GraphicModel>		GraphicModelList;
+	extern GraphicComponentDLL_API ResourceManager::Resource<BasicTexture>		TextureList;
+	extern GraphicComponentDLL_API ResourceManager::Resource<ScreenCapture>		ScreenCaptureList;
+	extern GraphicComponentDLL_API ResourceManager::Resource<VertexShader>		VertexShaderList;
+	extern GraphicComponentDLL_API ResourceManager::Resource<GeometryShader>	GeometryShaderList;
+	extern GraphicComponentDLL_API ResourceManager::Resource<PixelShader>		PixelShaderList;
 
 };
 

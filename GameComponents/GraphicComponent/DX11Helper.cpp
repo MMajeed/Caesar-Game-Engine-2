@@ -60,7 +60,7 @@ void DX11Helper::LoadShaderFile(std::string shaderFileName, std::string vsEntryP
 		fin.close();
 	}
 }
-void DX11Helper::LoadInputLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut)
+void DX11Helper::LoadVertexLayoutFile(std::string vsFileName, ID3D11Device* device, D3D11_INPUT_ELEMENT_DESC layout[], UINT numElements, ID3D11InputLayout** ilOut)
 {
 	std::vector<char> fileBytes;
 

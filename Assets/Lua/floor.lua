@@ -1,33 +1,34 @@
-boxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Box.ply"),
-                                   [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                   [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
-tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
+local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
+local PSTextureShader = PixelShader("Assets/ShaderFiles/PS_Texture.cso");
+local boxDrawable = GraphicModel(LoadDefaultModel("Assets/Models/Box.ply"));
+local tilesTexture = BasicTexture("Assets/Texture/Tiles.png");
 
+local floor1 = Object({
+                        [Keys["ObjectInfo"]["Location"]]     = Vector4(100.0, 0.0, 0.0),
+                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(100.0, 0.5, 100.0),
+                        [Keys["ObjectInfo"]["GraphicModel"]] = boxDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = tilesTexture },
+                        });
+                        
+local floor2 = Object({
+                        [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.0, 0.0),
+                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(100.0, 0.5, 100.0),
+                        [Keys["ObjectInfo"]["GraphicModel"]] = boxDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = tilesTexture },
+                        });
 
-local box1 = Object({
-                [Keys["ObjectInfo"]["Location"]]    = Vector4(100.0, 0.0, 0.0),
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(100.0, 0.5, 100.0),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
-local box2 = Object({
-                [Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.0, 0.0),
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(100.0, 0.5, 100.0),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
-local box3 = Object({
-                [Keys["ObjectInfo"]["Location"]]    = Vector4(-100.0, 0.0, 0.0),
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(100.0, 0.5, 100.0),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.5, 0.5, 0.5, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.1, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.01, 0.01, 0.01, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-                [Keys["ObjectInfo"]["Texture2DObj"]]= tilesTexture,});
+local floor3 = Object({
+                        [Keys["ObjectInfo"]["Location"]]     = Vector4(-100.0, 0.0, 0.0),
+                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(100.0, 0.5, 100.0),
+                        [Keys["ObjectInfo"]["GraphicModel"]] = boxDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = tilesTexture },
+                        });
 
                                  
 OnKeyDown(KeyCode["Z"], 
@@ -37,8 +38,7 @@ OnKeyDown(KeyCode["Z"],
                                           [Keys["ScreenShot"]["CameraID"]] = regularCam, });
         WaitToProcessGraphic(
             function()
-                box1.Texture2D = {};
-                box1.Texture2D = {myTexture};
+                floor1.Texture = { ["Texture"] = myTexture };
             end
         );
     end
@@ -46,8 +46,7 @@ OnKeyDown(KeyCode["Z"],
 
 OnKeyDown(KeyCode["X"], 
     function() 
-        box1.Texture2D = {};
-        box1:Add2DTexture(tilesTexture);
+       floor1.Texture = { };
     end
 );
 

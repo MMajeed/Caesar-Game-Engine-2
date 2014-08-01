@@ -237,7 +237,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BasicDrawableConfig.h" />
+    <ClInclude Include="GraphicModelConfig.h" />
     <ClInclude Include="BasicTextureConfig.h" />
     <ClInclude Include="BasicScreenCaptureConfig.h" />
     <ClInclude Include="CubeScreenCaptureConfig.h" />
@@ -246,9 +246,10 @@
     <ClInclude Include="GraphicSettings.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="GraphicCommunicator.h" />
+    <ClInclude Include="ShaderConfig.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BasicDrawableConfig.cpp" />
+    <ClCompile Include="GraphicModelConfig.cpp" />
     <ClCompile Include="BasicTextureConfig.cpp" />
     <ClCompile Include="BasicScreenCaptureConfig.cpp" />
     <ClCompile Include="CubeScreenCaptureConfig.cpp" />
@@ -257,6 +258,7 @@
     <ClCompile Include="ScreenShotConfig.cpp" />
     <ClCompile Include="GraphicSettings.cpp" />
     <ClCompile Include="GraphicCommunicator.cpp" />
+    <ClCompile Include="ShaderConfig.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="LuaBasicDrawableObject.h">
-      <Filter>LuaBasicDrawableObject</Filter>
-    </ClInclude>
     <ClInclude Include="LuaBasicTexture.h">
       <Filter>LuaBasicTexture</Filter>
     </ClInclude>
@@ -18,11 +15,14 @@
       <Filter>LuaScreenShot</Filter>
     </ClInclude>
     <ClInclude Include="ScriptGraphic.h" />
+    <ClInclude Include="LuaShader.h">
+      <Filter>LuaShader</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaGraphicModel.h">
+      <Filter>LuaGraphicModel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="LuaBasicDrawableObject">
-      <UniqueIdentifier>{b2854fcc-aefc-4be8-a241-562e315f1e4d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="LuaBasicTexture">
       <UniqueIdentifier>{7af2ce55-ece1-410f-b6be-248c5394b214}</UniqueIdentifier>
     </Filter>
@@ -35,11 +35,14 @@
     <Filter Include="LuaScreenShot">
       <UniqueIdentifier>{d57728c6-760d-4955-9242-1063ed9c400d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="LuaShader">
+      <UniqueIdentifier>{0849c253-c782-4763-89f9-55d524a3d0f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaGraphicModel">
+      <UniqueIdentifier>{b2854fcc-aefc-4be8-a241-562e315f1e4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaBasicDrawableObject.cpp">
-      <Filter>LuaBasicDrawableObject</Filter>
-    </ClCompile>
     <ClCompile Include="LuaBasicTexture.cpp">
       <Filter>LuaBasicTexture</Filter>
     </ClCompile>
@@ -53,5 +56,11 @@
       <Filter>LuaScreenShot</Filter>
     </ClCompile>
     <ClCompile Include="ScriptGraphic.cpp" />
+    <ClCompile Include="LuaShader.cpp">
+      <Filter>LuaShader</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaGraphicModel.cpp">
+      <Filter>LuaGraphicModel</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

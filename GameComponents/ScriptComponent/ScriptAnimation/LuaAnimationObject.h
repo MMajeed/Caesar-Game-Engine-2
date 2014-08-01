@@ -15,6 +15,7 @@ namespace LuaAnimationObject
 	{
 	public:
 		BasicAnimationObject();
+		BasicAnimationObject(const GenericLuaObject& v);
 		BasicAnimationObject(LuaAnimation::Animation anim);
 		void Release();
 
@@ -25,6 +26,7 @@ namespace LuaAnimationObject
 	{
 	public:
 		AnimationController();
+		AnimationController(const GenericLuaObject& v);
 		AnimationController(luabind::object const& table);
 		void ChangeAnimation(luabind::object const& table);
 		void ChangeSpeed(double speed);

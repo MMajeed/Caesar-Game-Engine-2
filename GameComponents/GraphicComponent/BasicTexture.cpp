@@ -2,7 +2,6 @@
 
 #include "GraphicManager.h"
 #include "DX11Helper.h"
-#include <Keys.h>
 #include <Converter.h>
 
 BasicTexture::BasicTexture()
@@ -21,10 +20,6 @@ void BasicTexture::Init()
 void BasicTexture::Destory()
 {
 	this->D3DInfo.pTexture->Release();
-}
-void BasicTexture::Update(double realTime, double deltaTime)
-{
-
 }
 std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& fileName)
 {

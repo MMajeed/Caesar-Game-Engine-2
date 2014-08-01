@@ -9,7 +9,8 @@ namespace CHL
 	template<typename T>
 	void ByteCopy(const T& v, std::vector<char>& byte, unsigned int offset = 0)
 	{
-		byte.resize(offset + sizeof(T));
+		const unsigned int finalSize = offset + sizeof(T);
+		if(finalSize > byte.size()){ byte.resize(finalSize); }
 		memcpy(&byte[offset], &v, sizeof(T));
 	}
 }

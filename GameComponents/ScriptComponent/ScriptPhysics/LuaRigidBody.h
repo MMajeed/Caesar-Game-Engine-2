@@ -14,6 +14,7 @@ namespace LuaRigidBody
 	{
 	public:
 		RididBody();
+		RididBody(const GenericLuaObject& v);
 		RididBody(luabind::object const& table);
 
 		void ApplyTorque(LuaMath::Vector4 v);

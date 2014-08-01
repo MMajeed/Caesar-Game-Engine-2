@@ -77,7 +77,6 @@
     <ClCompile Include="ActivateScriptComponent.cpp">
       <Filter>Lua Processes\ActivateScriptComponent</Filter>
     </ClCompile>
-    <ClCompile Include="LuaNode.cpp" />
     <ClCompile Include="GenericLuaObject.cpp">
       <Filter>Lua Class/Function\GenericLuaObject</Filter>
     </ClCompile>
@@ -103,6 +102,9 @@
       <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClCompile>
     <ClCompile Include="ScriptManager.cpp" />
+    <ClCompile Include="LuaNode.cpp">
+      <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Lua Class/Function">

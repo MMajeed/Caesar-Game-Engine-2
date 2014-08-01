@@ -26,19 +26,7 @@ public:
 
 	static std::shared_ptr<GenericObj<T>> CreateNew(const T& value){ return std::make_shared<GenericObj<T>>(value); }
 	static T& GetValue(const std::shared_ptr<Object>& value){ return GenericObj<T>::Cast(value)->item; }
-	static std::shared_ptr<GenericObj<T>> Cast(const std::shared_ptr<Object>& value)
-	{
-#ifdef _DEBUG
-		std::shared_ptr<GenericObj<T>> obj = std::dynamic_pointer_cast<GenericObj<T>>(value);
-		if (!obj)
-		{
-			Logger::LogError("Attempting to access a wrong Generic Object in T& GetValue(std::shared_ptr<Object> value)");
-		}
-		return obj;
-#else
-		return std::static_pointer_cast<GenericObj<T>>(value);
-#endif
-	}
+	static std::shared_ptr<GenericObj<T>> Cast(const std::shared_ptr<Object>& value){ return std::dynamic_pointer_cast<GenericObj<T>>(value); }
 };
 
 #endif //__Object__

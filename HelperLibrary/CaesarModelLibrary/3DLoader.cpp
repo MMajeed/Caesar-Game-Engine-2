@@ -30,29 +30,46 @@ namespace CHL
 			spCHLModel->Vertices.resize(aiSceneModel->mNumVertices);
 			for(std::size_t i = 0; i < aiSceneModel->mNumVertices; ++i)
 			{
-				aiVector3D vec;
-
-				vec = aiSceneModel->mVertices[i];
-				spCHLModel->Vertices[i].Point = CML::Vec3{vec.x, vec.y, vec.z};
-
-				if(aiSceneModel->HasNormals())
+				aiVector3D vec = aiSceneModel->mVertices[i];
+				spCHLModel->Vertices[i] = {vec.x, vec.y, vec.z};
+			}
+			if(aiSceneModel->HasNormals())
+			{
+				spCHLModel->Normal.resize(aiSceneModel->mNumVertices);
+				for(std::size_t i = 0; i < aiSceneModel->mNumVertices; ++i)
 				{
-					vec = aiSceneModel->mNormals[i];
-					spCHLModel->Vertices[i].Normal = CML::Vec3{vec.x, vec.y, vec.z};
+					aiVector3D vec = aiSceneModel->mNormals[i];
+					spCHLModel->Normal[i] = {vec.x, vec.y, vec.z};
 				}
-				else
+			}
+			if(aiSceneModel->HasTangentsAndBitangents())
+			{
+				spCHLModel->Tangents.resize(aiSceneModel->mNumVertices);
+				spCHLModel->Bitangents.resize(aiSceneModel->mNumVertices);
+				for(std::size_t i = 0; i < aiSceneModel->mNumVertices; ++i)
 				{
-					spCHLModel->Vertices[i].Normal = CML::Vec3{0.0, 0.0, 0.0};
+					aiVector3D vec1 = aiSceneModel->mTangents[i];
+					spCHLModel->Tangents[i] = {vec1.x, vec1.y, vec1.z};
+					aiVector3D vec2 = aiSceneModel->mBitangents[i];
+					spCHLModel->Bitangents[i] = {vec2.x, vec2.y, vec2.z};
 				}
-
-				if(aiSceneModel->HasTextureCoords(0))
+			}
+			if(aiSceneModel->HasVertexColors(0))
+			{
+				spCHLModel->Color.resize(aiSceneModel->mNumVertices);
+				for(std::size_t i = 0; i < aiSceneModel->mNumVertices; ++i)
 				{
-					vec = aiSceneModel->mTextureCoords[0][i];
-					spCHLModel->Vertices[i].Texture = CML::Vec3{vec.x, vec.y, vec.z};
+					aiColor4D vec = aiSceneModel->mColors[0][i];
+					spCHLModel->Color[i] = {vec.r, vec.g, vec.b, vec.a};
 				}
-				else
+			}
+			if(aiSceneModel->HasTextureCoords(0))
+			{
+				spCHLModel->Texture.resize(aiSceneModel->mNumVertices);
+				for(std::size_t i = 0; i < aiSceneModel->mNumVertices; ++i)
 				{
-					spCHLModel->Vertices[i].Texture = spCHLModel->Vertices[i].Normal;
+					aiVector3D vec = aiSceneModel->mTextureCoords[0][i];
+					spCHLModel->Texture[i] = CML::Vec3{vec.x, vec.y, vec.z};
 				}
 			}
 			modelVec.push_back(spCHLModel);

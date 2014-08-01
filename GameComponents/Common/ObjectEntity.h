@@ -8,6 +8,7 @@
 #include <vector>
 #include <hash_set>
 #include <hash_map>
+#include <Object.h>
 
 class CommonDLL_API ObjectEntity : public Entity
 {
@@ -32,9 +33,21 @@ private:	bool Depth;
 public:		bool GetDepth();
 			void SetDepth(bool v);
 
-private:	std::string DrawObjID;
-public:		std::string GetDrawObjID();
-			void SetDrawObjID(const std::string& v);
+private:	std::string GraphicModelID;
+public:		std::string GetGraphicModelID();
+			void SetGraphicModelID(const std::string& v);
+
+private:	std::string VertexShaderID;
+public:		std::string GetVertexShaderID();
+			void SetVertexShaderID(const std::string& v);
+
+private:	std::string GeometryShaderID;
+public:		std::string GetGeometryShaderID();
+			void SetGeometryShaderID(const std::string& v);
+
+private:	std::string PixelShaderID;
+public:		std::string GetPixelShaderID();
+			void SetPixelShaderID(const std::string& v);
 
 private:	std::string AnimationID;
 public:		std::string GetAnimationID();
@@ -55,27 +68,32 @@ public:		std::hash_set<std::string> GetGroupList();
 			void DeleteGroupList(std::string ID);
 			void EmptyGroupList();
 
-private:	std::hash_set<std::string> Texture2D;
-public:		std::hash_set<std::string> GetTexture2D();
-			void SetTexture2D(const std::hash_set<std::string>& v);
-			void AddTexture2D(std::string ID);
-			void DeleteTexture2D(std::string ID);
-			void EmptyTexture2D();
+private:	std::hash_map<std::string, std::string> Texture;
+public:		std::hash_map<std::string, std::string> GetTexture();
+			void SetTexture(std::hash_map<std::string, std::string> v);
+			bool FindTexture(const std::string& ID, std::string& returnTextureID);
+			void SetTexture(const std::string& ID, const std::string& v);
+			void DeleteTexture(const std::string& ID);
+			void EmptyTexture();
 
-private:	std::hash_set<std::string> TextureCube;
-public:		std::hash_set<std::string> GetTextureCube();
-			void SetTextureCube(const std::hash_set<std::string>& v);
-			void AddTextureCube(const std::string& ID);
-			void DeleteTextureCube(const std::string& ID);
-			void EmptyTextureCube();
-
-private:	std::hash_map<std::string, std::vector<char>> UserData;
-public:		std::hash_map<std::string, std::vector<char>> GetUserData();
-			void SetUserData(std::hash_map<std::string, std::vector<char>> v);
-			bool FindUserData(const std::string& ID, std::vector<char>& v);
-			void SetUserData(const std::string& ID, const std::vector<char>& data);
+private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
+public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData();
+			void SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v);
+			std::shared_ptr<Object> FindUserData(const std::string& ID);
+			void SetUserData(const std::string& ID, const std::shared_ptr<Object>& data);
 			void DeleteUserData(const std::string& ID);
 			void EmptyUserData();
+
+public:		enum class FILL_MODE { FILL_WIREFRAME = 2, FILL_SOLID = 3 };
+private:	FILL_MODE FillMode;
+public:		FILL_MODE GetFillMode();
+			void SetFillMode(const FILL_MODE& v);
+
+public:		enum class CULL_MODE { CULL_NONE = 1, CULL_FRONT = 2, CULL_BACK = 3 };
+private:	CULL_MODE CullMode;
+public:		CULL_MODE GetCullMode();
+			void SetCullMode(const CULL_MODE& v);
+
 public:
 	static std::shared_ptr<ObjectEntity> Spawn();
 	virtual std::shared_ptr<Entity> Clone();

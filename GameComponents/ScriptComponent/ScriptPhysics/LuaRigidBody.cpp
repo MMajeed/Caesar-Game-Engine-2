@@ -7,6 +7,7 @@
 
 namespace LuaRigidBody
 {
+	RididBody::RididBody(const GenericLuaObject& v) : GenericLuaObject(v){}
 	RididBody::RididBody(luabind::object const& table)
 	{
 		CML::Vec4 Location;
@@ -24,11 +25,11 @@ namespace LuaRigidBody
 			{
 				std::string key = luabind::object_cast<std::string>(it.key());
 
-				if(key == Keys::RigidBody::POSITION)		{ Location = luabind::object_cast<LuaMath::Vector4>(*it); }
+					 if(key == Keys::RigidBody::POSITION)		{ Location = luabind::object_cast<LuaMath::Vector4>(*it); }
 				else if(key == Keys::RigidBody::ROTATION)		{ Rotation = luabind::object_cast<LuaMath::Vector4>(*it); }
 				else if(key == Keys::RigidBody::INERTIA)		{ Inertia = luabind::object_cast<LuaMath::Vector4>(*it); calculateInertia = false; }
 				else if(key == Keys::RigidBody::MASS)			{ mass = luabind::object_cast<double>(*it); }
-				else if(key == Keys::RigidBody::COLLISIONSHAPE)	{ collisionShape = luabind::object_cast<LuaCollisionShape::CollisionShape>(*it).ID; }
+				else if(key == Keys::RigidBody::COLLISIONSHAPE)	{ collisionShape = luabind::object_cast<LuaCollisionShape::CollisionShape>(*it).GetID(); }
 			}
 		}
 
@@ -74,6 +75,7 @@ namespace LuaRigidBody
 	{
 		luabind::module(lua)[
 			luabind::class_<LuaRigidBody::RididBody, GenericLuaObject>("RididBody")
+				.def(luabind::constructor<const GenericLuaObject&>())
 				.def(luabind::constructor<luabind::object const&>())
 				.def("ApplyTorque", &RididBody::ApplyTorque)
 				.def("ApplyCentralFroce", &RididBody::ApplyCentralFroce)

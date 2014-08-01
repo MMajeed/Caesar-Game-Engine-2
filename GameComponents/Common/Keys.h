@@ -5,45 +5,6 @@
 
 namespace Keys
 {
-	const static std::string ID    = "_ID";
-	const static std::string Class = "_Class";
-
-	namespace ClassType
-	{
-		const static std::string Object			= "_Object";
-		const static std::string Camera			= "_Camera";
-		const static std::string Prespective	= "_Prespective";
-		const static std::string WindowInfo		= "_WindowInfo";
-		const static std::string Light			= "_Light";
-	};
-
-	namespace Light
-	{
-		const static std::string LIGHTTYPE   = "LightType";
-		namespace LightTypes
-		{
-			const static std::string DIRECTIONAL	= "Directional";
-			const static std::string POINT			= "Point";
-			const static std::string SPOT			= "Spot";
-		};
-		const static std::string DIFFUSE     = "Diffuse";
-		const static std::string AMBIENT     = "Ambient";
-		const static std::string SPECULAR    = "Specular";
-		const static std::string DIRECTION   = "Direction";
-		const static std::string RANGE       = "Range";
-		const static std::string ATTENUATION = "Attenuation";
-		const static std::string SPOT        = "Spot";
-		const static std::string POSITION    = "Position";
-		const static std::string HASHADOW    = "HasShadow";
-	};
-
-	namespace Window
-	{
-		const static std::string WIDTH  = "WIDTH";
-		const static std::string HEIGHT = "HEIGHT";
-		const static std::string HWND   = "HWND";
-	};
-
 	namespace Camera
 	{
 		const static std::string EYE                = "Eye";
@@ -63,18 +24,6 @@ namespace Keys
 		const static std::string INCLUSIONLIST		= "InclusionList";
 	};
 	
-	namespace BasicDrawable
-	{
-		const static std::string DRAWABLEOBJ         = "DrawableObj";
-		const static std::string MODEL	             = "MODEL";
-		const static std::string VERTEXSHADERFILE    = "VertexShaderFile";
-		const static std::string PIXELSHADERFILE     = "PixelShaderFile";
-		const static std::string GEOMETRYSHADERFILE  = "GeometryShaderFile";
-		const static std::string CULLMODE            = "CullMode";
-		const static std::string FILLMODE            = "FillMode";
-		const static std::string DIMENSION		     = "Dimension";
-	};
-
 	namespace BasicTexture
 	{
 		const static std::string TEXTUREFILE = "TextureFile";
@@ -87,14 +36,18 @@ namespace Keys
 		const static std::string ROTATION       = "Rotation";
 		const static std::string SCALE          = "Scale";
 		const static std::string DEPTH          = "Depth";
-		const static std::string DRAWABLEOBJ    = "DrawableObj";
+		const static std::string GRAPHICMODEL	= "GraphicModel";
+		const static std::string VERTEXSHADER	= "VertexShader";
+		const static std::string GEOMETRYSHADER	= "GeometryShader";
+		const static std::string PIXELSHADER	= "PixelShader";
 		const static std::string ANIMATIONOBJ   = "AnimationObj";
 		const static std::string ANIMATIONJOINT = "AnimationJoint";
 		const static std::string RIGIDBODY      = "RigidBody";
-		const static std::string TEXTURE2DOBJ   = "Texture2DObj";
-		const static std::string TEXTURECUBEOBJ = "TextureCubeObj";
+		const static std::string TEXTURE        = "Texture";
 		const static std::string GROUP			= "Group";
 		const static std::string USERDATA		= "UserData";
+		const static std::string FILLMODE		= "FillMode";
+		const static std::string CULLMODE		= "CullMode";
 	};
 
 	namespace ScreenShot

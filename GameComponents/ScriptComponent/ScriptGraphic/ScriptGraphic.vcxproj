@@ -28,19 +28,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="LuaBasicDrawableObject.h" />
+    <ClInclude Include="LuaGraphicModel.h" />
     <ClInclude Include="LuaBasicTexture.h" />
     <ClInclude Include="LuaGraphic.h" />
     <ClInclude Include="LuaScreenCapture.h" />
     <ClInclude Include="LuaScreenShot.h" />
+    <ClInclude Include="LuaShader.h" />
     <ClInclude Include="ScriptGraphic.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaBasicDrawableObject.cpp" />
+    <ClCompile Include="LuaGraphicModel.cpp" />
     <ClCompile Include="LuaBasicTexture.cpp" />
     <ClCompile Include="LuaGraphic.cpp" />
     <ClCompile Include="LuaScreenCapture.cpp" />
     <ClCompile Include="LuaScreenShot.cpp" />
+    <ClCompile Include="LuaShader.cpp" />
     <ClCompile Include="ScriptGraphic.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

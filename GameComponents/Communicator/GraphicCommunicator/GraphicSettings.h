@@ -2,13 +2,11 @@
 #define __GraphicSettings__
 
 #include "Linker.h"
-#include <Message.h>
-#include <Vector.h>
 #include <string>
 
 namespace GraphicSettings
 {
-	GraphicCommunicatorDLL_API void SetScreenTexture(std::string textureID);
+	GraphicCommunicatorDLL_API void SetMainCamera(std::string cameraID);
 	GraphicCommunicatorDLL_API void Resize(unsigned int widthInput, unsigned int heightInput);
 	GraphicCommunicatorDLL_API void ChangeWindowsText(std::string s);
 	GraphicCommunicatorDLL_API void MoveWindow(unsigned int x, unsigned int y);

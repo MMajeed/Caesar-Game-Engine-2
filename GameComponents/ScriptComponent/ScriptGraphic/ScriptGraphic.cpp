@@ -4,11 +4,12 @@
 #include <ProcessMessage.h>
 #include <ActivateScriptComponent.h>
 
-#include "LuaBasicDrawableObject.h"
+#include "LuaGraphicModel.h"
 #include "LuaBasicTexture.h"
 #include "LuaGraphic.h"
 #include "LuaScreenCapture.h"
 #include "LuaScreenShot.h"
+#include "LuaShader.h"
 
 ScriptGraphic::ScriptGraphic()
 {
@@ -20,9 +21,10 @@ ScriptGraphic::ScriptGraphic()
 
 void ScriptGraphic::Init(lua_State *lua)
 {
-	LuaBasicDrawableObject::RegisterAllLuaFunction(lua);
+	LuaGraphicModel::RegisterAllLuaFunction(lua);
 	LuaBasicTexture::RegisterAllLuaFunction(lua);
 	LuaGraphic::RegisterAllLuaFunction(lua);
 	LuaScreenCapture::RegisterAllLuaFunction(lua);
 	LuaScreenShot::RegisterAllLuaFunction(lua);
+	LuaShader::RegisterAllLuaFunction(lua);
 }

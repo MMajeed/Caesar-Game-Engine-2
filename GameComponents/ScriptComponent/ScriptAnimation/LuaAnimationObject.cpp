@@ -8,6 +8,7 @@ namespace LuaAnimationObject
 {
 	
 	BasicAnimationObject::BasicAnimationObject(){}
+	BasicAnimationObject::BasicAnimationObject(const GenericLuaObject& v) : GenericLuaObject(v){}
 	BasicAnimationObject::BasicAnimationObject(LuaAnimation::Animation anim)
 	{
 		this->ID = BasicAnimationConfig::Create(anim);
@@ -21,12 +22,14 @@ namespace LuaAnimationObject
 	{
 		luabind::module(lua)[
 			luabind::class_<BasicAnimationObject, GenericLuaObject>("BasicAnimation")
+				.def(luabind::constructor<const GenericLuaObject&>())
 				.def(luabind::constructor<LuaAnimation::Animation>())
 				.def("Release", &BasicAnimationObject::Release)
 		];
 	}
 
 	AnimationController::AnimationController(){}
+	AnimationController::AnimationController(const GenericLuaObject& v) : GenericLuaObject(v){}
 	AnimationController::AnimationController(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
@@ -43,7 +46,7 @@ namespace LuaAnimationObject
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).GetID(); }
 			else if(key == Keys::AnimationController::ROOTNODE)			{ rootNode = luabind::object_cast<LuaNode::Node>(*it); }
 			else if(key == Keys::AnimationController::SPEED)			{ speed = luabind::object_cast<double>(*it); }
 		}
@@ -72,7 +75,7 @@ namespace LuaAnimationObject
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+			if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).GetID(); }
 			else if(key == Keys::AnimationController::TRANSITIONTYPE)	{ transitionType = luabind::object_cast<int>(*it); }
 			else if(key == Keys::AnimationController::TRANSITIONLENGTH)	{ transitionLength = luabind::object_cast<double>(*it); }
 			else if(key == Keys::AnimationController::STARTONNEXTPHASE)	{ startonNextPhase = luabind::object_cast<bool>(*it); }
@@ -105,7 +108,7 @@ namespace LuaAnimationObject
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).ID; }
+				 if(key == Keys::AnimationController::BASICANIMATION)	{ animationID = luabind::object_cast<BasicAnimationObject>(*it).GetID(); }
 			else if(key == Keys::AnimationController::STARTNODENAME)	{ startNodeName = luabind::object_cast<std::string>(*it); }
 			else if(key == Keys::AnimationController::STARTRATIO)		{ startRatio = luabind::object_cast<double>(*it); }
 			else if(key == Keys::AnimationController::STEPRATIO)		{ stepRatio = luabind::object_cast<double>(*it); }
@@ -132,6 +135,7 @@ namespace LuaAnimationObject
 	{
 		luabind::module(lua)[
 			luabind::class_<AnimationController, GenericLuaObject>("AnimationController")
+				.def(luabind::constructor<const GenericLuaObject&>())
 				.def(luabind::constructor<luabind::object const&>())
 				.def("ChangeAnimation", &AnimationController::ChangeAnimation)
 				.def("ChangeSpeed", &AnimationController::ChangeSpeed)

@@ -1,6 +1,5 @@
 #include "ObjectEntity.h"
 #include <MathFunctions.h>
-#include "Keys.h"
 
 ObjectEntity::ObjectEntity()
 {
@@ -8,6 +7,8 @@ ObjectEntity::ObjectEntity()
 	this->Rotation	= {0.0, 0.0, 0.0, 1.0};
 	this->Scale		= {1.0, 1.0, 1.0, 1.0};
 	this->Depth		= true;
+	this->FillMode	= FILL_MODE::FILL_SOLID;
+	this->CullMode	= CULL_MODE::CULL_BACK;
 }
 
 CML::Vec4 ObjectEntity::GetLocation()
@@ -55,15 +56,48 @@ void ObjectEntity::SetDepth(bool v)
 	this->Depth = v; 
 }
 
-std::string ObjectEntity::GetDrawObjID()
+std::string ObjectEntity::GetGraphicModelID()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	return this->DrawObjID; 
+	return this->GraphicModelID; 
 }
-void ObjectEntity::SetDrawObjID(const std::string& v)
+void ObjectEntity::SetGraphicModelID(const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	this->DrawObjID = v;
+	this->GraphicModelID = v;
+}
+
+std::string ObjectEntity::GetVertexShaderID()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->VertexShaderID;
+}
+void ObjectEntity::SetVertexShaderID(const std::string& v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->VertexShaderID = v;
+}
+
+std::string ObjectEntity::GetGeometryShaderID()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->GeometryShaderID;
+}
+void ObjectEntity::SetGeometryShaderID(const std::string& v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->GeometryShaderID = v;
+}
+
+std::string ObjectEntity::GetPixelShaderID()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->PixelShaderID;
+}
+void ObjectEntity::SetPixelShaderID(const std::string& v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->PixelShaderID = v;
 }
 
 std::string ObjectEntity::GetAnimationID()
@@ -125,80 +159,67 @@ void ObjectEntity::EmptyGroupList()
 	this->GroupList.clear();
 }
 
-std::hash_set<std::string> ObjectEntity::GetTexture2D()
+std::hash_map<std::string, std::string> ObjectEntity::GetTexture()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	return this->Texture2D;
+	return this->Texture;
 }
-void ObjectEntity::SetTexture2D(const std::hash_set<std::string>& v)
+void ObjectEntity::SetTexture(std::hash_map<std::string, std::string> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	this->Texture2D = v;
+	this->Texture = v;
 }
-void ObjectEntity::AddTexture2D(std::string ID)
+bool ObjectEntity::FindTexture(const std::string& ID, std::string& returnTextureID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	this->Texture2D.insert(ID);
+	bool returnValue = false;
+	auto iter = this->Texture.find(ID);
+	if(iter != this->Texture.end())
+	{
+		returnTextureID = iter->second;
+		returnValue = true;
+	}
+	return returnValue;
 }
-void ObjectEntity::DeleteTexture2D(std::string ID)
+void ObjectEntity::SetTexture(const std::string& ID, const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	this->Texture2D.erase(ID);
+	this->Texture[ID] = v;
 }
-void ObjectEntity::EmptyTexture2D()
+void ObjectEntity::DeleteTexture(const std::string& ID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	this->Texture2D.clear();
+	this->Texture.erase(ID);
 }
-
-std::hash_set<std::string> ObjectEntity::GetTextureCube()
+void ObjectEntity::EmptyTexture()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	return this->TextureCube;
-}
-void ObjectEntity::SetTextureCube(const std::hash_set<std::string>& v)
-{
-	std::lock_guard<std::mutex> lock(this->metux);
-	this->TextureCube = v;
-}
-void ObjectEntity::AddTextureCube(const std::string& ID)
-{
-	std::lock_guard<std::mutex> lock(this->metux);
-	this->TextureCube.insert(ID);
-}
-void ObjectEntity::DeleteTextureCube(const std::string& ID)
-{
-	std::lock_guard<std::mutex> lock(this->metux);
-	this->TextureCube.erase(ID);
-}
-void ObjectEntity::EmptyTextureCube()
-{
-	std::lock_guard<std::mutex> lock(this->metux);
-	this->TextureCube.clear();
+	this->Texture.clear();
 }
 
-std::hash_map<std::string, std::vector<char>> ObjectEntity::GetUserData()
+std::hash_map<std::string, std::shared_ptr<Object>> ObjectEntity::GetUserData()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->UserData;
 }
-void ObjectEntity::SetUserData(std::hash_map<std::string, std::vector<char>> v)
+void ObjectEntity::SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->UserData = v;
 }
-bool ObjectEntity::FindUserData(const std::string& ID, std::vector<char>& v)
+std::shared_ptr<Object> ObjectEntity::FindUserData(const std::string& ID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+
+	std::shared_ptr<Object> returnValue;
 	auto iter = this->UserData.find(ID);
 	if(iter != this->UserData.end())
 	{
-		v = iter->second;
-		return true;
+		returnValue = iter->second;
 	}
-	return false;
+	return returnValue;
 }
-void ObjectEntity::SetUserData(const std::string& ID, const std::vector<char>& data)
+void ObjectEntity::SetUserData(const std::string& ID, const std::shared_ptr<Object>& data)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->UserData[ID] = data;
@@ -212,6 +233,28 @@ void ObjectEntity::EmptyUserData()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->UserData.clear();
+}
+
+ObjectEntity::FILL_MODE ObjectEntity::GetFillMode()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->FillMode;
+}
+void ObjectEntity::SetFillMode(const ObjectEntity::FILL_MODE& v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->FillMode = v;
+}
+
+ObjectEntity::CULL_MODE ObjectEntity::GetCullMode()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->CullMode;
+}
+void ObjectEntity::SetCullMode(const ObjectEntity::CULL_MODE& v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->CullMode = v;
 }
 
 std::shared_ptr<ObjectEntity> ObjectEntity::Spawn()

@@ -69,9 +69,9 @@ namespace LuaGraphic
 		returnValue["Y"] = y;
 		return returnValue;
 	}
-	void SetScreenTexture(GenericLuaObject tx)
+	void SetMainCamera(const GenericLuaObject& cam)
 	{
-		GraphicSettings::SetScreenTexture(tx.ID);
+		GraphicSettings::SetMainCamera(cam.GetID());
 	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
@@ -89,7 +89,7 @@ namespace LuaGraphic
 			luabind::def("GetWindowsSize", LuaGraphic::GetWindowsSize),
 			luabind::def("GetClientsSize", LuaGraphic::GetClientsSize),
 			luabind::def("GetWindowsLocs", LuaGraphic::GetWindowsLoc),
-			luabind::def("SetScreenTexture", LuaGraphic::SetScreenTexture)
+			luabind::def("SetMainCamera", LuaGraphic::SetMainCamera)
 		];
 	}
 };

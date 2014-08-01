@@ -52,27 +52,27 @@ LuaCamera::LuaCamera(const luabind::object& table)
 		else if(key == Keys::Camera::GLOBAL2DTEXTURE)
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
-				Logger::LogError("Wrong paramter for " + Keys::ObjectInfo::TEXTURE2DOBJ + " , please send in a table");
+				Logger::LogError("Wrong paramter for " + Keys::Camera::GLOBAL2DTEXTURE + " , please send in a table");
 
 			for(luabind::iterator txIter(*it); txIter != luabind::iterator(); ++txIter)
 			{
-				texture2D.insert(luabind::object_cast<GenericLuaObject>(*txIter).ID);
+				texture2D.insert(luabind::object_cast<GenericLuaObject>(*txIter).GetID());
 			}
 		}
 		else if(key == Keys::Camera::GLOBALCUBETEXTURE)
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
-				Logger::LogError("Wrong paramter for " + Keys::ObjectInfo::TEXTURECUBEOBJ + " , please send in a table");
+				Logger::LogError("Wrong paramter for " + Keys::Camera::GLOBALCUBETEXTURE + " , please send in a table");
 
 			for(luabind::iterator txIter(*it); txIter != luabind::iterator(); ++txIter)
 			{
-				textureCube.insert(luabind::object_cast<GenericLuaObject>(*txIter).ID);
+				textureCube.insert(luabind::object_cast<GenericLuaObject>(*txIter).GetID());
 			}
 		}
 		else if(key == Keys::ObjectInfo::USERDATA)
 		{
 			if(luabind::type(*it) != LUA_TTABLE)
-				Logger::LogError("Wrong paramter for " + Keys::ObjectInfo::TEXTURECUBEOBJ + " , please send in a table");
+				Logger::LogError("Wrong paramter for " + Keys::ObjectInfo::USERDATA + " , please send in a table");
 
 			for(luabind::iterator txIter(*it); txIter != luabind::iterator(); ++txIter)
 			{
@@ -95,8 +95,8 @@ LuaCamera::LuaCamera(const luabind::object& table)
 				it2 != luabind::iterator();
 				++it2)
 			{
-				std::string objID = luabind::object_cast<GenericLuaObject>(*it2).ID;
-				InclusionList.insert(objID);
+				std::string c = luabind::object_cast<std::string>(*it2);
+				InclusionList.insert(c);
 			}
 		}
 	}
@@ -318,7 +318,7 @@ void LuaCamera::SetGlobalTexture2D(const luabind::object& v)
 			it != luabind::iterator();
 			++it)
 		{
-			std::string id = luabind::object_cast<GenericLuaObject>(*it).ID;
+			std::string id = luabind::object_cast<GenericLuaObject>(*it).GetID();
 			list.insert(id);
 		}
 		obj->SetGlobalTexture2D(list);
@@ -328,14 +328,14 @@ void LuaCamera::AddGlobalTexture2D(const GenericLuaObject& v)
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
-		obj->AddGlobalTexture2D(v.ID);
+		obj->AddGlobalTexture2D(GenericLuaObject(v.GetID()));
 	}
 }
 void LuaCamera::DeleteGlobalTexture2D(const GenericLuaObject& v)
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
-		obj->DeleteGlobalTexture2D(v.ID);
+		obj->DeleteGlobalTexture2D(v.GetID());
 	}
 }
 void LuaCamera::EmptyGlobalTexture2D()
@@ -374,7 +374,7 @@ void LuaCamera::SetGlobalTextureCube(const luabind::object& v)
 			it != luabind::iterator();
 			++it)
 		{
-			std::string id = luabind::object_cast<GenericLuaObject>(*it).ID;
+			std::string id = luabind::object_cast<GenericLuaObject>(*it).GetID();
 			list.insert(id);
 		}
 		obj->SetGlobalTextureCube(list);
@@ -384,14 +384,14 @@ void LuaCamera::AddGlobalTextureCube(const GenericLuaObject& v)
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
-		obj->AddGlobalTextureCube(v.ID);
+		obj->AddGlobalTextureCube(v.GetID());
 	}
 }
 void LuaCamera::DeleteGlobalTextureCube(const GenericLuaObject& v)
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
-		obj->DeleteGlobalTextureCube(v.ID);
+		obj->DeleteGlobalTextureCube(v.GetID());
 	}
 }
 void LuaCamera::EmptyGlobalTextureCube()
@@ -454,7 +454,7 @@ void LuaCamera::SetInclusionList(const luabind::object& v)
 			it != luabind::iterator();
 			++it)
 		{
-			std::string id = luabind::object_cast<GenericLuaObject>(*it).ID;
+			std::string id = luabind::object_cast<GenericLuaObject>(*it).GetID();
 			list.insert(id);
 		}
 		obj->SetInclusionList(list);
@@ -464,14 +464,14 @@ void LuaCamera::AddInclusionList(const GenericLuaObject& v)
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
-		obj->AddInclusionList(v.ID);
+		obj->AddInclusionList(v.GetID());
 	}
 }
 void LuaCamera::DeleteInclusionList(const GenericLuaObject& v)
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
-		obj->DeleteInclusionList(v.ID);
+		obj->DeleteInclusionList(v.GetID());
 	}
 }
 void LuaCamera::EmptyInclusionList()
@@ -491,10 +491,20 @@ void LuaCamera::Release()
 	this->wp_Obj.reset();
 }
 
+std::string LuaCamera::GetID() const
+{
+	std::string returnValue;
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		returnValue = obj->GetID();
+	}
+	return returnValue;
+}
+
 void LuaCamera::Register(lua_State *lua)
 {
 	luabind::module(lua) [
-		luabind::class_<LuaCamera>("Camera")
+		luabind::class_<LuaCamera, GenericLuaObject>("Camera")
 			.def(luabind::constructor<>())
 			.def(luabind::constructor<const luabind::object&>())
 			.property("Eye", &LuaCamera::GetEye, &LuaCamera::SetEye)

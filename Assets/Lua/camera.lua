@@ -2,7 +2,7 @@ local ScreenWidth = GetClientsSize()["Width"];
 local ScreenHeight = GetClientsSize()["Height"];
 
 regularCam = Camera({
-                    [Keys["Camera"]["Eye"]]             = Vector4(-100, 5.0, -60.0, 0.0),
+                    [Keys["Camera"]["Eye"]]             = Vector4(0, 5.0, -60.0, 0.0),
                     [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
                     [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
                     [Keys["Camera"]["Roll"]]            = 0.0,
@@ -12,8 +12,10 @@ regularCam = Camera({
                     [Keys["Camera"]["NearZ"]]           = 0.01,              
                     [Keys["Camera"]["FarZ"]]            = 5000.0,
                     [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
+                    [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
+                    [Keys["Camera"]["InclusionList"]]   = {},
                    }); 
---regularCam:SetAsMain();
+SetMainCamera(regularCam);
 
 local CamLeftButton   = false;    local CamRightButton  = false;
 local CamUpButton     = false;    local CamDownButton   = false;
@@ -36,11 +38,11 @@ function UpdateCamera(time, ID)
     
     if(CamUpButton == true) then
         local moveDistance = 0.05 * time;
-        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagintude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
+        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
     end
     if(CamDownButton == true) then
         local moveDistance = -0.05 * time;
-        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagintude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
+        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
     end
 end
 

@@ -9,7 +9,7 @@
 #include <CameraEntity.h>
 #include <GenericLuaObject.h>
 
-class ScriptEntityDLL_API LuaCamera
+class ScriptEntityDLL_API LuaCamera : public GenericLuaObject
 {
 protected:
 	std::weak_ptr<CameraEntity> wp_Obj;
@@ -76,6 +76,8 @@ public:
 	void EmptyInclusionList();
 
 	void Release();
+
+	std::string GetID() const;
 
 	static void Register(lua_State *lua);
 

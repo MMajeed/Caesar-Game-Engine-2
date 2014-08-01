@@ -1,13 +1,17 @@
-skyBoxDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"),
-                                      [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                      [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_5_SkyMap.cso",
-                                      [Keys["BasicDrawable"]["CullMode"]]         = CullMode["Front"],
-                                      [Keys["BasicDrawable"]["FillMode"]]         = FillMode["Solid"],});
+require("Helper")
 
-skyBoxTexture = BasicTexture("Assets/Texture/Sky/Sky.dds");
+local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
+local PSTextureShader = PixelShader("Assets/ShaderFiles/PS_SkyMap.cso");
+local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"));
+local skyBoxTexture = BasicTexture("Assets/Texture/Sky/Sky.dds");
 
-skyBoxObject = Object({[Keys["ObjectInfo"]["Scale"]]          = Vector4(2000.0, 2000.0, 2000.0),
-                       [Keys["ObjectInfo"]["DrawableObj"]]    = skyBoxDrawable,
-                       [Keys["ObjectInfo"]["TextureCubeObj"]] = skyBoxTexture,
-                       [Keys["ObjectInfo"]["Light"]]          = false,
-                       [Keys["ObjectInfo"]["Shadow"]]         = false,});
+local skybox = Object({
+                        [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.0, 0.0),
+                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(1000.0, 1000.0, 1000.0),
+                        [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = skyBoxTexture },
+                        [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Solid"],
+                        [Keys["ObjectInfo"]["CullMode"]]     = CullMode["Front"],
+                        });

@@ -2,15 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="GraphicManager.h" />
-    <ClInclude Include="Drawable.h">
-      <Filter>Item Drawing\Drawable</Filter>
-    </ClInclude>
-    <ClInclude Include="BasicDrawable.h">
-      <Filter>Item Drawing\Drawable\BasicDrawable</Filter>
-    </ClInclude>
-    <ClInclude Include="Buffers.h">
-      <Filter>D3D Tools\Buffers</Filter>
-    </ClInclude>
     <ClInclude Include="DX11Helper.h">
       <Filter>D3D Tools\DX11Helper</Filter>
     </ClInclude>
@@ -31,10 +22,7 @@
       <Filter>Light\PointLight</Filter>
     </ClInclude>
     <ClInclude Include="BasicTexture.h">
-      <Filter>Item Drawing\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadowFilter.h">
-      <Filter>Scene\SceneFilter\ShadowFilter</Filter>
+      <Filter>Drawable\Texture</Filter>
     </ClInclude>
     <ClInclude Include="ScreenShot.h">
       <Filter>ScreenShot</Filter>
@@ -66,29 +54,20 @@
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="SceneInfo.h">
-      <Filter>Scene\SceneInfo</Filter>
-    </ClInclude>
-    <ClInclude Include="Process2D.h">
-      <Filter>Scene\SceneFilter\Process2D</Filter>
-    </ClInclude>
     <ClInclude Include="XNAConverter.h">
       <Filter>D3D Tools\XNAConverter</Filter>
     </ClInclude>
     <ClInclude Include="3DMath.h">
       <Filter>D3D Tools\3DMath</Filter>
     </ClInclude>
-    <ClInclude Include="WithinRange.h">
-      <Filter>Scene\SceneFilter\WithinRange</Filter>
-    </ClInclude>
     <ClInclude Include="PixelShader.h">
-      <Filter>Item Drawing\Shader\Shaders\PixelShader</Filter>
+      <Filter>Drawable\Shader\Shaders\PixelShader</Filter>
     </ClInclude>
     <ClInclude Include="VertexShader.h">
-      <Filter>Item Drawing\Shader\Shaders\VertexShader</Filter>
+      <Filter>Drawable\Shader\Shaders\VertexShader</Filter>
     </ClInclude>
     <ClInclude Include="GeometryShader.h">
-      <Filter>Item Drawing\Shader\Shaders\GeometryShader</Filter>
+      <Filter>Drawable\Shader\Shaders\GeometryShader</Filter>
     </ClInclude>
     <ClInclude Include="COMSharedPtr.h">
       <Filter>D3D Tools\COMSharedPtr</Filter>
@@ -96,27 +75,39 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>ResourceManager</Filter>
     </ClInclude>
-    <ClInclude Include="ShaderSetup.h">
-      <Filter>Item Drawing\Shader\ShaderSetup</Filter>
+    <ClInclude Include="GraphicObjectEntity.h">
+      <Filter>Scene\GraphicEntity\GraphicObjectEntity</Filter>
     </ClInclude>
-    <ClInclude Include="CBufferSetup.h">
-      <Filter>Item Drawing\Shader\CBufferSetup</Filter>
+    <ClInclude Include="GraphicCameraEntity.h">
+      <Filter>Scene\GraphicEntity\GraphicCameraEntity</Filter>
     </ClInclude>
-    <ClInclude Include="CBufferVariables.h">
-      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp</Filter>
+    <ClInclude Include="GraphicModel.h">
+      <Filter>Drawable\GraphicModel</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexLayout.h">
+      <Filter>Drawable\GraphicModel\VertexLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureSetup.h">
+      <Filter>Drawable\Shader\TextureSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer.h">
+      <Filter>Drawable\Rastertzer</Filter>
     </ClInclude>
     <ClInclude Include="CBHardVariables.h">
-      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBHardVariables</Filter>
+      <Filter>Drawable\Shader\CBSetup\CBVariables\CBHardVariables</Filter>
     </ClInclude>
     <ClInclude Include="CBWeakVariables.h">
-      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBWeakVariables</Filter>
+      <Filter>Drawable\Shader\CBSetup\CBVariables\CBWeakVariables</Filter>
+    </ClInclude>
+    <ClInclude Include="CBVariables.h">
+      <Filter>Drawable\Shader\CBSetup\CBVariables</Filter>
+    </ClInclude>
+    <ClInclude Include="CBSetup.h">
+      <Filter>Drawable\Shader\CBSetup</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
-    <ClCompile Include="BasicDrawable.cpp">
-      <Filter>Item Drawing\Drawable\BasicDrawable</Filter>
-    </ClCompile>
     <ClCompile Include="DX11Helper.cpp">
       <Filter>D3D Tools\DX11Helper</Filter>
     </ClCompile>
@@ -133,10 +124,7 @@
       <Filter>Light\PointLight</Filter>
     </ClCompile>
     <ClCompile Include="BasicTexture.cpp">
-      <Filter>Item Drawing\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="ShadowFilter.cpp">
-      <Filter>Scene\SceneFilter\ShadowFilter</Filter>
+      <Filter>Drawable\Texture</Filter>
     </ClCompile>
     <ClCompile Include="ShadowScreenShot.cpp">
       <Filter>ScreenShot\ShadowScreenShot</Filter>
@@ -162,52 +150,55 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Process2D.cpp">
-      <Filter>Scene\SceneFilter\Process2D</Filter>
-    </ClCompile>
     <ClCompile Include="XNAConverter.cpp">
       <Filter>D3D Tools\XNAConverter</Filter>
     </ClCompile>
     <ClCompile Include="3DMath.cpp">
       <Filter>D3D Tools\3DMath</Filter>
     </ClCompile>
-    <ClCompile Include="WithinRange.cpp">
-      <Filter>Scene\SceneFilter\WithinRange</Filter>
-    </ClCompile>
     <ClCompile Include="PixelShader.cpp">
-      <Filter>Item Drawing\Shader\Shaders\PixelShader</Filter>
+      <Filter>Drawable\Shader\Shaders\PixelShader</Filter>
     </ClCompile>
     <ClCompile Include="VertexShader.cpp">
-      <Filter>Item Drawing\Shader\Shaders\VertexShader</Filter>
+      <Filter>Drawable\Shader\Shaders\VertexShader</Filter>
     </ClCompile>
     <ClCompile Include="GeometryShader.cpp">
-      <Filter>Item Drawing\Shader\Shaders\GeometryShader</Filter>
+      <Filter>Drawable\Shader\Shaders\GeometryShader</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderSetup.cpp">
-      <Filter>Item Drawing\Shader\ShaderSetup</Filter>
+    <ClCompile Include="GraphicObjectEntity.cpp">
+      <Filter>Scene\GraphicEntity\GraphicObjectEntity</Filter>
     </ClCompile>
-    <ClCompile Include="CBufferSetup.cpp">
-      <Filter>Item Drawing\Shader\CBufferSetup</Filter>
+    <ClCompile Include="GraphicCameraEntity.cpp">
+      <Filter>Scene\GraphicEntity\GraphicCameraEntity</Filter>
     </ClCompile>
-    <ClCompile Include="CBufferVariables.cpp">
-      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp</Filter>
+    <ClCompile Include="GraphicModel.cpp">
+      <Filter>Drawable\GraphicModel</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureSetup.cpp">
+      <Filter>Drawable\Shader\TextureSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="Rasterizer.cpp">
+      <Filter>Drawable\Rastertzer</Filter>
     </ClCompile>
     <ClCompile Include="CBHardVariables.cpp">
-      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBHardVariables</Filter>
+      <Filter>Drawable\Shader\CBSetup\CBVariables\CBHardVariables</Filter>
     </ClCompile>
     <ClCompile Include="CBWeakVariables.cpp">
-      <Filter>Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBWeakVariables</Filter>
+      <Filter>Drawable\Shader\CBSetup\CBVariables\CBWeakVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="CBVariables.cpp">
+      <Filter>Drawable\Shader\CBSetup\CBVariables</Filter>
+    </ClCompile>
+    <ClCompile Include="CBSetup.cpp">
+      <Filter>Drawable\Shader\CBSetup</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="D3D Tools">
       <UniqueIdentifier>{454d39e7-3edc-445d-9a62-b7e0b96c73f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D Tools\Buffers">
-      <UniqueIdentifier>{69747fe4-1464-495f-9fbd-495549793ef2}</UniqueIdentifier>
     </Filter>
     <Filter Include="D3D Tools\DX11Helper">
       <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
@@ -254,32 +245,8 @@
     <Filter Include="ScreenShot\ShadowScreenShot">
       <UniqueIdentifier>{9c0a465f-98e0-46ce-a6b0-f62e01836c5c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing">
-      <UniqueIdentifier>{fdf0a7c1-100d-4697-b1b8-2ace4e0a2c5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Item Drawing\Texture">
-      <UniqueIdentifier>{eee8a27b-c3c2-4638-b09a-37f490eeae54}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Item Drawing\Drawable">
-      <UniqueIdentifier>{22ac4106-ee8b-4168-9dc3-462a360f8166}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Item Drawing\Drawable\BasicDrawable">
-      <UniqueIdentifier>{6ecccf77-6892-4631-b816-96f01f8ff2b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{bea3c4dd-524f-4282-b497-ddddbe8f9936}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneFilter">
-      <UniqueIdentifier>{fac8230d-2ee1-45c5-86f2-2b49d40524ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneInfo">
-      <UniqueIdentifier>{340657a4-41eb-411e-85ec-aa2a699e2acc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneFilter\ShadowFilter">
-      <UniqueIdentifier>{f888f210-0c24-4dbb-832b-e3cb55473b18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\SceneFilter\Process2D">
-      <UniqueIdentifier>{0349d70a-1c60-4ed8-b7ae-b639907f6c14}</UniqueIdentifier>
     </Filter>
     <Filter Include="D3D Tools\XNAConverter">
       <UniqueIdentifier>{8d106226-d622-40e9-9d4a-c28273282255}</UniqueIdentifier>
@@ -287,55 +254,65 @@
     <Filter Include="D3D Tools\3DMath">
       <UniqueIdentifier>{014e0cba-67d4-447c-b2c7-f01494f9a965}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\SceneFilter\WithinRange">
-      <UniqueIdentifier>{632cd6dc-400c-4ea7-97ac-b6ef3a793197}</UniqueIdentifier>
-    </Filter>
     <Filter Include="D3D Tools\COMSharedPtr">
       <UniqueIdentifier>{4bf21998-4e84-4b75-aa90-ea731067fc4a}</UniqueIdentifier>
     </Filter>
     <Filter Include="ResourceManager">
       <UniqueIdentifier>{30f8f52f-587e-4147-91d5-2ddfa3956a3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader">
+    <Filter Include="Scene\GraphicEntity">
+      <UniqueIdentifier>{db42c558-ca2d-4215-afec-6ce7f2943c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GraphicEntity\GraphicObjectEntity">
+      <UniqueIdentifier>{fe417e46-8e79-400a-a977-30e4855aed42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GraphicEntity\GraphicCameraEntity">
+      <UniqueIdentifier>{64e29595-a13c-4561-8a75-e643137e6cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable">
+      <UniqueIdentifier>{fdf0a7c1-100d-4697-b1b8-2ace4e0a2c5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\Texture">
+      <UniqueIdentifier>{eee8a27b-c3c2-4638-b09a-37f490eeae54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\Shader">
       <UniqueIdentifier>{5a69b6cb-a360-4ff9-897a-855c9ccb9626}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\Shaders">
+    <Filter Include="Drawable\Shader\Shaders">
       <UniqueIdentifier>{c1df2eaf-85e8-4503-81ca-c8c3eff5dbc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\Shaders\GeometryShader">
+    <Filter Include="Drawable\Shader\Shaders\GeometryShader">
       <UniqueIdentifier>{5bbc9321-ffd9-4f77-b070-419372526768}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\Shaders\VertexShader">
+    <Filter Include="Drawable\Shader\Shaders\VertexShader">
       <UniqueIdentifier>{253d31b8-5d85-4135-b398-cc386d997e27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\Shaders\PixelShader">
+    <Filter Include="Drawable\Shader\Shaders\PixelShader">
       <UniqueIdentifier>{c0eea300-bcb6-4bd7-9a52-97dd5bd49758}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\ShaderSetup">
-      <UniqueIdentifier>{50544b97-8678-446a-99df-8369fbece1ae}</UniqueIdentifier>
+    <Filter Include="Drawable\GraphicModel">
+      <UniqueIdentifier>{56b71978-f50e-4155-bd36-fcd25bcfa26a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\ShaderSetup\FX">
-      <UniqueIdentifier>{4117cb26-78f9-409e-915c-f47019ce0ddc}</UniqueIdentifier>
+    <Filter Include="Drawable\GraphicModel\VertexLayout">
+      <UniqueIdentifier>{090385ab-5d0d-4df1-a8bc-1bfb731c87a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\CBufferSetup">
+    <Filter Include="Drawable\Shader\TextureSetup">
+      <UniqueIdentifier>{51655230-6852-4013-8b08-9781c1e0038c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\Rastertzer">
+      <UniqueIdentifier>{ffac656d-7446-4313-9007-83cf097728c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Drawable\Shader\CBSetup">
       <UniqueIdentifier>{4f8ae00f-23ef-4d09-8dc2-41468966f37e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp">
+    <Filter Include="Drawable\Shader\CBSetup\CBVariables">
       <UniqueIdentifier>{c21721f5-33f6-4b27-8fb9-f3e8fc89838b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBHardVariables">
-      <UniqueIdentifier>{f946b745-aac8-4c62-bee9-8c87e83500c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Item Drawing\Shader\CBufferSetup\CBufferVariables.cpp\CBWeakVariables">
+    <Filter Include="Drawable\Shader\CBSetup\CBVariables\CBWeakVariables">
       <UniqueIdentifier>{41a9a63a-5119-4d04-892b-393f5be5dc8c}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="VSDefault.fx">
-      <Filter>Item Drawing\Shader\ShaderSetup\FX</Filter>
-    </CustomBuild>
-    <CustomBuild Include="PSDefault.fx">
-      <Filter>Item Drawing\Shader\ShaderSetup\FX</Filter>
-    </CustomBuild>
+    <Filter Include="Drawable\Shader\CBSetup\CBVariables\CBHardVariables">
+      <UniqueIdentifier>{f946b745-aac8-4c62-bee9-8c87e83500c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

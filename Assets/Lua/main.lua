@@ -2,42 +2,93 @@
 --require("Information")
 require("camera")
 --require("LightSetup")
---require("SkyBox")
---require("floor")
+require("SkyBox")
+require("floor")
 --require("PhysicsDemo")
 ----require("RandomAnimation")
 --require("StickPerson")
 require("Helper")
 
---local ironManMesh =  BasicDrawableObject({
---                                        [Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"),
---                                        [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
---                                        [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",
---                                        [Keys["BasicDrawable"]["FillMode"]]         = FillMode["Wireframe"],
---                                        [Keys["BasicDrawable"]["CullMode"]]         = FillMode["CullMode"]});
---local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
+local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
+local ironManMesh = GraphicModel(LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"));
+local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"));
+local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
+local PSColorShader = PixelShader("Assets/ShaderFiles/PS_Color.cso");
+local PSTextureShader = PixelShader("Assets/ShaderFiles/PS_Texture.cso");
 
---local ironMan = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(0.0, 0.2, -15.0),
---                        [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.15, 0.15, 0.15, 1.0),
---                        [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.0, 0.0, 0.0),
---                        [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.1),
---                        [Keys["ObjectInfo"]["DrawableObj"]] = ironManMesh,
---                        [Keys["ObjectInfo"]["Texture2DObj"]]= ironManTexture,
---                        [Keys["ObjectInfo"]["Depth"]]       = false,
---                        [Keys["ObjectInfo"]["UserData"]]    = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,  },
---                        });
-
-sphereDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"),});
+local ironMan = Object({
+                        [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.5, -30.0),
+                        [Keys["ObjectInfo"]["GraphicModel"]] = ironManMesh,
+                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                        [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = ironManTexture },
+                        });
+                        
 for zIndex = 0, 2, 1 do
     for xIndex = 1, 10, 1 do
         local x = ((xIndex % 10) - 5) * 4;
         local y = 2;
         local z = -20 + (zIndex * 20);
-        local sphereObject = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(x, y, z),
-                                     [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,});
+        local sphereObject = Object({
+                                    [Keys["ObjectInfo"]["Location"]]     = Vector4(x, y, z),
+                                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                                    [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                                    [Keys["ObjectInfo"]["PixelShader"]]  = PSColorShader,
+                                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                                    });
     end
 end
 
+
+
+local lastTimeCheck = 0.0;
+local lastGraphicFrameCheck = GetGraphicFrame();
+local lastInputFrameCheck = GetInputFrame();
+local lastScriptFrameCheck = GetScriptFrame();
+local lastAnimationFrameCheck = GetAnimationFrame();
+local lastPhysicsFrameCheck = GetPhysicsFrame();
+
+function UpdateFrameText()
+    local currentTime = GetTimeSinceStart();
+    local timeDifference = currentTime - lastTimeCheck;
+    lastTimeCheck = currentTime;
+    
+    local graphicFrameCount = GetGraphicFrame();
+    local graphicFrameDifference = graphicFrameCount - lastGraphicFrameCheck;
+    lastGraphicFrameCheck = graphicFrameCount;
+    local graphicFrame = graphicFrameDifference / timeDifference;
+    
+    local inputFrameCount = GetInputFrame();
+    local inputFrameDifference = inputFrameCount - lastInputFrameCheck;
+    lastInputFrameCheck = inputFrameCount;
+    local inputFrame = inputFrameDifference / timeDifference;
+    
+    local scriptFrameCount = GetScriptFrame();
+    local scriptFrameDifference =  scriptFrameCount - lastScriptFrameCheck;
+    lastScriptFrameCheck =  scriptFrameCount;
+    local scriptFrame = scriptFrameDifference / timeDifference;
+    
+    local animationFrameCount = GetAnimationFrame();
+    local animationFrameDifference =  animationFrameCount - lastAnimationFrameCheck;
+    lastAnimationFrameCheck =  animationFrameCount;
+    local animationFrame = animationFrameDifference / timeDifference;
+    
+    local physicFrameCount = GetPhysicsFrame();
+    local physicFrameDifference =  physicFrameCount - lastPhysicsFrameCheck;
+    lastPhysicsFrameCheck =  physicFrameCount;
+    local physicFrame = physicFrameDifference / timeDifference;
+    
+    local message = "Frame Rate:" .. 
+                    " Graphic: " .. string.format("%3.2f", graphicFrame) .. 
+                    " Input: " .. string.format("%3.2f", inputFrame) .. 
+                    " Script: " .. string.format("%3.2f", scriptFrame).. 
+                    " Animation: " .. string.format("%3.2f", animationFrame) ..
+                    " Physics: " .. string.format("%3.2f", physicFrame) ;
+    SetWindowsTitle(message);
+end
+UpdateFrameText();
+LoopCall(1000, UpdateFrameText);
 --lightPos = 10.0;
 --OnKeyDown(KeyCode["B"], 
 --    function()   

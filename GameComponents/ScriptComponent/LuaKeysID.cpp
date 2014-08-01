@@ -10,41 +10,6 @@ namespace LuaKeysID
 	{
 		luabind::object luaKeyTable = luabind::newtable(lua);
 	
-		luaKeyTable[Keys::ID]    = Keys::ID;
-		luaKeyTable[Keys::Class] = Keys::Class;
-
-		luabind::object classTable = luabind::newtable(lua);
-			classTable[Keys::ClassType::Object]      = Keys::ClassType::Object;
-			classTable[Keys::ClassType::Camera]      = Keys::ClassType::Camera;
-			classTable[Keys::ClassType::Prespective] = Keys::ClassType::Prespective;
-			classTable[Keys::ClassType::WindowInfo]  = Keys::ClassType::WindowInfo;
-			classTable[Keys::ClassType::Light]       = Keys::ClassType::Light;
-		luaKeyTable["class"] = classTable;
-
-		luabind::object lightTable = luabind::newtable(lua);
-			lightTable[Keys::Light::LIGHTTYPE] = Keys::Light::LIGHTTYPE;
-			luabind::object lightTypeTable       = luabind::newtable(lua);
-				lightTypeTable[Keys::Light::LightTypes::DIRECTIONAL] = Keys::Light::LightTypes::DIRECTIONAL;
-				lightTypeTable[Keys::Light::LightTypes::POINT]       = Keys::Light::LightTypes::POINT;
-				lightTypeTable[Keys::Light::LightTypes::SPOT]        = Keys::Light::LightTypes::SPOT;
-			lightTable["Types"]                  = lightTypeTable;
-			lightTable[Keys::Light::DIFFUSE]     = Keys::Light::DIFFUSE;
-			lightTable[Keys::Light::AMBIENT]     = Keys::Light::AMBIENT;
-			lightTable[Keys::Light::SPECULAR]    = Keys::Light::SPECULAR;
-			lightTable[Keys::Light::DIRECTION]   = Keys::Light::DIRECTION;
-			lightTable[Keys::Light::RANGE]       = Keys::Light::RANGE;
-			lightTable[Keys::Light::ATTENUATION] = Keys::Light::ATTENUATION;
-			lightTable[Keys::Light::SPOT]        = Keys::Light::SPOT;
-			lightTable[Keys::Light::POSITION]    = Keys::Light::POSITION;
-			lightTable[Keys::Light::HASHADOW]    = Keys::Light::HASHADOW;
-		luaKeyTable["Light"] = lightTable;
-
-		luabind::object windowTable = luabind::newtable(lua);
-			windowTable[Keys::Window::WIDTH]  = Keys::Window::WIDTH;
-			windowTable[Keys::Window::HEIGHT] = Keys::Window::HEIGHT;
-			windowTable[Keys::Window::HWND]   = Keys::Window::HWND;
-		luaKeyTable["Window"] = windowTable;
-
 		luabind::object cameraTable = luabind::newtable(lua);
 			cameraTable[Keys::Camera::EYE]               = Keys::Camera::EYE;
 			cameraTable[Keys::Camera::TARGETMAGNITUDE]   = Keys::Camera::TARGETMAGNITUDE;
@@ -62,18 +27,7 @@ namespace LuaKeysID
 			cameraTable[Keys::Camera::INCLUSIONSTATE]    = Keys::Camera::INCLUSIONSTATE;
 			cameraTable[Keys::Camera::INCLUSIONLIST]     = Keys::Camera::INCLUSIONLIST;
 		luaKeyTable["Camera"] = cameraTable;
-
-		luabind::object BasicDrawableTable = luabind::newtable(lua);
-			BasicDrawableTable[Keys::BasicDrawable::DRAWABLEOBJ]            = Keys::BasicDrawable::DRAWABLEOBJ;
-			BasicDrawableTable[Keys::BasicDrawable::MODEL]                  = Keys::BasicDrawable::MODEL;
-			BasicDrawableTable[Keys::BasicDrawable::VERTEXSHADERFILE]       = Keys::BasicDrawable::VERTEXSHADERFILE;
-			BasicDrawableTable[Keys::BasicDrawable::PIXELSHADERFILE]        = Keys::BasicDrawable::PIXELSHADERFILE;
-			BasicDrawableTable[Keys::BasicDrawable::GEOMETRYSHADERFILE]     = Keys::BasicDrawable::GEOMETRYSHADERFILE;
-			BasicDrawableTable[Keys::BasicDrawable::CULLMODE]               = Keys::BasicDrawable::CULLMODE;
-			BasicDrawableTable[Keys::BasicDrawable::FILLMODE]               = Keys::BasicDrawable::FILLMODE;
-			BasicDrawableTable[Keys::BasicDrawable::DIMENSION]		        = Keys::BasicDrawable::DIMENSION;
-		luaKeyTable["BasicDrawable"] = BasicDrawableTable;
-
+		
 		luabind::object BasicTextureTable = luabind::newtable(lua);
 			BasicTextureTable[Keys::BasicTexture::TEXTUREFILE] = Keys::BasicTexture::TEXTUREFILE;
 			BasicTextureTable[Keys::BasicTexture::TEXTUREOBJ]  = Keys::BasicTexture::TEXTUREOBJ;
@@ -83,14 +37,18 @@ namespace LuaKeysID
 			ObjectInfoTable[Keys::ObjectInfo::LOCATION]       = Keys::ObjectInfo::LOCATION;
 			ObjectInfoTable[Keys::ObjectInfo::ROTATION]       = Keys::ObjectInfo::ROTATION;
 			ObjectInfoTable[Keys::ObjectInfo::SCALE]          = Keys::ObjectInfo::SCALE;
-			ObjectInfoTable[Keys::ObjectInfo::DRAWABLEOBJ]    = Keys::ObjectInfo::DRAWABLEOBJ;
+			ObjectInfoTable[Keys::ObjectInfo::GRAPHICMODEL]   = Keys::ObjectInfo::GRAPHICMODEL;
+			ObjectInfoTable[Keys::ObjectInfo::VERTEXSHADER]   = Keys::ObjectInfo::VERTEXSHADER;
+			ObjectInfoTable[Keys::ObjectInfo::GEOMETRYSHADER] = Keys::ObjectInfo::GEOMETRYSHADER;
+			ObjectInfoTable[Keys::ObjectInfo::PIXELSHADER]    = Keys::ObjectInfo::PIXELSHADER;
 			ObjectInfoTable[Keys::ObjectInfo::ANIMATIONOBJ]   = Keys::ObjectInfo::ANIMATIONOBJ;
 			ObjectInfoTable[Keys::ObjectInfo::ANIMATIONJOINT] = Keys::ObjectInfo::ANIMATIONJOINT;
 			ObjectInfoTable[Keys::ObjectInfo::RIGIDBODY]      = Keys::ObjectInfo::RIGIDBODY;
-			ObjectInfoTable[Keys::ObjectInfo::TEXTURE2DOBJ]   = Keys::ObjectInfo::TEXTURE2DOBJ;
-			ObjectInfoTable[Keys::ObjectInfo::TEXTURECUBEOBJ] = Keys::ObjectInfo::TEXTURECUBEOBJ;
+			ObjectInfoTable[Keys::ObjectInfo::TEXTURE]        = Keys::ObjectInfo::TEXTURE;
 			ObjectInfoTable[Keys::ObjectInfo::GROUP]          = Keys::ObjectInfo::GROUP;
 			ObjectInfoTable[Keys::ObjectInfo::USERDATA]       = Keys::ObjectInfo::USERDATA;
+			ObjectInfoTable[Keys::ObjectInfo::FILLMODE]       = Keys::ObjectInfo::FILLMODE;
+			ObjectInfoTable[Keys::ObjectInfo::CULLMODE]       = Keys::ObjectInfo::CULLMODE;
 		luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 		luabind::object BasicScreenShot = luabind::newtable(lua);

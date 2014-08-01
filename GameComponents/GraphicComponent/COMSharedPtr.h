@@ -26,6 +26,8 @@ public:
 	std::shared_ptr<T> operator->() const{ return ptr; }
 	operator T*(){ return ptr.get(); }
 
+	void reset(){ ptr.reset(); }
+
 	T* get() const{ return ptr.get(); }
 
 	operator bool() const{ return (bool)ptr; }

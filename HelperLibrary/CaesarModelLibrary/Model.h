@@ -13,24 +13,18 @@ namespace CHL
 	public:
 		Model();
 
-		struct VerticesInfo
-		{
-			CML::Vec3 Point;
-			CML::Vec3 Normal;
-			CML::Vec3 Texture;
-		};
-		std::vector<VerticesInfo> Vertices;
+		std::vector<CML::Vec3> Vertices;
+		std::vector<CML::Vec3> Normal;
+		std::vector<CML::Vec3> Tangents;
+		std::vector<CML::Vec3> Bitangents;
+		std::vector<CML::Vec4> Color;
+		std::vector<CML::Vec3> Texture;
+
 		std::vector<unsigned int> Faces;
 		unsigned int NumberOfFaces;
+
 		std::string name;
 	};
-
-	/*class Animation
-	{
-	public:
-		Animation();
-
-	};*/
 }
 
 #endif //__Model__

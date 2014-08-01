@@ -18,14 +18,15 @@ std::shared_ptr<ConvexHullShape> ConvexHullShape::Spawn(std::shared_ptr<CHL::Mod
 
 	returnValue->Info.stride = model->NumberOfFaces;
 
-	std::vector<CHL::Model::VerticesInfo>& vertices = model->Vertices;
-	for(auto iter = vertices.begin();
-		iter != vertices.end();
+	const std::vector<CML::Vec3>& vertices = model->Vertices;
+	for(auto iter = vertices.cbegin();
+		iter != vertices.cend();
 		++iter)
 	{
-		returnValue->Info.points.push_back((float)iter->Point(0));
-		returnValue->Info.points.push_back((float)iter->Point(1));
-		returnValue->Info.points.push_back((float)iter->Point(2));
+		const CML::Vec3& v = *iter;
+		returnValue->Info.points.push_back((float)v(0));
+		returnValue->Info.points.push_back((float)v(1));
+		returnValue->Info.points.push_back((float)v(2));
 	}
 	
 	returnValue->Init();

@@ -5,22 +5,26 @@
 #include "COMSharedPtr.h"
 #include <string>
 #include <ObjectEntity.h>
-#include "SceneInfo.h"
-#include "CBufferSetup.h"
+#include "CBSetup.h"
+#include "TextureSetup.h"
 
 class GraphicComponentDLL_API PixelShader
 {
 protected:
 	PixelShader(){}
-	void Init(const std::vector<char>& compiledShader);
+	void Init();
 public:
-	void Setup(std::shared_ptr<ObjectEntity> object, const SceneInfo& si);
+	void Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
 
 	static std::shared_ptr<PixelShader> Spawn(const std::vector<char>& compiledPixelShader);
+	static std::shared_ptr<PixelShader> Spawn(const std::string& fileName);
 protected:
 	COMSharedPtr<ID3D11PixelShader>		pPixelShader;
 	COMSharedPtr<ID3D11Buffer>			pConstantBuffer;
-	std::shared_ptr<CBufferSetup>		pCBufferSetup;
+	std::shared_ptr<CBSetup>		pCBSetup;
+	std::vector<char>					CompiledShader;
+
+	std::shared_ptr<TextureSetup>		pTexture;
 };
 
 
