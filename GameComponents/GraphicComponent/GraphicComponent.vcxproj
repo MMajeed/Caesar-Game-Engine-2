@@ -299,7 +299,6 @@
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="TextureSetup.h" />
-    <ClInclude Include="Vertex.h" />
     <ClInclude Include="VertexLayout.h" />
     <ClInclude Include="VertexShader.h" />
     <ClInclude Include="XNAConverter.h" />

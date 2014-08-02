@@ -1,5 +1,4 @@
 #include "GraphicModelConfig.h"
-#include <Vertex.h>
 #include <GraphicModel.h>
 #include <GraphicManager.h>
 #include <GenerateGUID.h>

@@ -1,9 +1,9 @@
--- --------------------------- Floor -------------------------------------
-local floorDrawable = BasicDrawableObject({
-                            [Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Box.ply"),
-                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+require("Helper")
 
+local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
+local PSColorShader = PixelShader("Assets/ShaderFiles/PS_Color.cso");
+
+-- --------------------------- Floor -------------------------------------
 local floorBoxCollisionShape = CreateBoxShape(Vector4(50.0, 0.25, 50.0));
 local floorBoxRididBody = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 0.0, 0.0),
@@ -26,24 +26,23 @@ local floorBoxRididBody = RididBody({
 -- --------------------------- Floor -------------------------------------
 
 -- --------------------------- Main Body -------------------------------------
-local mainBodyDrawable = BasicDrawableObject({
-                            [Keys["BasicDrawable"]["MODEL"]]            = LoadDefaultModel("Assets/Models/Box.ply"),
-                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+
 local mainBodyCollisionShape = CreateBoxShape(Vector4(1.5, 0.5, 2.0));
 local mainBodyRididBody = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 5.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 10.0,
-                [Keys["RigidBody"]["CollisionShape"]] = mainBodyCollisionShape,});   
+                [Keys["RigidBody"]["CollisionShape"]] = mainBodyCollisionShape,});
+local mainBodyDrawable = GraphicModel(LoadDefaultModel("Assets/Models/Box.ply"));
 local mainBody = Object({
-                [Keys["ObjectInfo"]["Rotation"]]    =  Vector4(0.0, 0.0, 0.0),
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(3.0, 1.0, 4.0),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.7, 0.1, 0.1, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.2, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = boxDrawable,
-                [Keys["ObjectInfo"]["RigidBody"]]   = mainBodyRididBody,});     
+                        [Keys["ObjectInfo"]["Rotation"]]        =  Vector4(0.0, 0.0, 0.0),
+                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(3.0, 1.0, 4.0),
+                        [Keys["ObjectInfo"]["GraphicModel"]]    = mainBodyDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(1.0, 0.0, 0.0) },
+                        [Keys["ObjectInfo"]["RigidBody"]]       = mainBodyRididBody,
+                        });
 -- --------------------------- Main Body -------------------------------------
 
 -- --------------------------- Tires -------------------------------------
@@ -56,11 +55,9 @@ local MaxMotorImpulse = 2.0;
 
 local SizeOfCylinder = 0.5 ;
 
+
 local cylinderModel = LoadDefaultModel("Assets/Models/Cylinder_1x1.ply");
-local cylinderDrawable = BasicDrawableObject({
-                            [Keys["BasicDrawable"]["MODEL"]]            = cylinderModel,
-                            [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                            [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+local cylinderDrawable = GraphicModel(cylinderModel);
 local cylinderShape =   CreateCylinderShape(Vector4( SizeOfCylinder, SizeOfCylinder, SizeOfCylinder));
 
 local tire1RididBody = RididBody({
@@ -81,16 +78,16 @@ local tire1Constraint = Hinge({
                 [Keys["Constraint"]["BiasFactor"]]          = BiasFactor,
                 [Keys["Constraint"]["RelaxationFactor"]]    = RelaxationFactor,
                 [Keys["Constraint"]["MaxMotorImpulse"]]     = MaxMotorImpulse,
-                });       
+                });     
 local objTire1 = Object({
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
-                [Keys["ObjectInfo"]["Rotation"]]    = Vector4(0.0, 0.0, 1.57),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(1.0, 0.1, 0.1, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.4, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = cylinderDrawable,
-                [Keys["ObjectInfo"]["RigidBody"]]   = tire1RididBody,});  
-                
+                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
+                        [Keys["ObjectInfo"]["Rotation"]]        = Vector4(0.0, 0.0, 1.57),
+                        [Keys["ObjectInfo"]["GraphicModel"]]    = cylinderDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(1.0, 0.0, 0.0) },
+                        [Keys["ObjectInfo"]["RigidBody"]]       = tire1RididBody,  
+                        });                
 local tire2RididBody = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(-105.0, 2.5, -5.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 1.57),
@@ -111,14 +108,14 @@ local tire2Constraint = Hinge({
                 [Keys["Constraint"]["MaxMotorImpulse"]]     = MaxMotorImpulse,
                 });        
 local objTire2 = Object({
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
-                [Keys["ObjectInfo"]["Rotation"]]    = Vector4(0.0, 0.0, 1.57),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(1.0, 0.1, 0.1, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.4, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = cylinderDrawable,
-                [Keys["ObjectInfo"]["RigidBody"]]   = tire2RididBody,});  
-
+                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
+                        [Keys["ObjectInfo"]["Rotation"]]        = Vector4(0.0, 0.0, 1.57),
+                        [Keys["ObjectInfo"]["GraphicModel"]]    = cylinderDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(1.0, 0.0, 0.0) },
+                        [Keys["ObjectInfo"]["RigidBody"]]       = tire2RididBody,  
+                        });    
 local tire3RididBody = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(-95.0, 2.5, -5.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 1.57),
@@ -139,13 +136,14 @@ local tire3Constraint = Hinge({
                 [Keys["Constraint"]["MaxMotorImpulse"]]     = MaxMotorImpulse,
                 });        
 local objTire3 = Object({
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
-                [Keys["ObjectInfo"]["Rotation"]]    = Vector4(0.0, 0.0, 1.57),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(1.0, 0.1, 0.1, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.4, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = cylinderDrawable,
-                [Keys["ObjectInfo"]["RigidBody"]]   = tire3RididBody,});  
+                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
+                        [Keys["ObjectInfo"]["Rotation"]]        = Vector4(0.0, 0.0, 1.57),
+                        [Keys["ObjectInfo"]["GraphicModel"]]    = cylinderDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(1.0, 0.0, 0.0) },
+                        [Keys["ObjectInfo"]["RigidBody"]]       = tire3RididBody,  
+                        });    
                 
 local tire4RididBody = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(-95.0, 2.5, 5.0),
@@ -165,15 +163,16 @@ local tire4Constraint = Hinge({
                 [Keys["Constraint"]["BiasFactor"]]          = BiasFactor,
                 [Keys["Constraint"]["RelaxationFactor"]]    = RelaxationFactor,
                 [Keys["Constraint"]["MaxMotorImpulse"]]     = MaxMotorImpulse,
-                });   
-local objTire4 = Object({
-                [Keys["ObjectInfo"]["Scale"]]       = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
-                [Keys["ObjectInfo"]["Rotation"]]    = Vector4(0.0, 0.0, 1.57),
-                [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(1.0, 0.1, 0.1, 1.0),
-                [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.4, 0.1, 0.1),
-                [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.1, 0.1, 0.1, 0.001),
-                [Keys["ObjectInfo"]["DrawableObj"]] = cylinderDrawable,
-                [Keys["ObjectInfo"]["RigidBody"]]   = tire4RididBody,});  
+                }); 
+local objTire3 = Object({
+                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(SizeOfCylinder, SizeOfCylinder, SizeOfCylinder),
+                        [Keys["ObjectInfo"]["Rotation"]]        = Vector4(0.0, 0.0, 1.57),
+                        [Keys["ObjectInfo"]["GraphicModel"]]    = cylinderDrawable,
+                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(1.0, 0.0, 0.0) },
+                        [Keys["ObjectInfo"]["RigidBody"]]       = tire4RididBody,  
+                        });      
 -- --------------------------- Tires -------------------------------------
 
 

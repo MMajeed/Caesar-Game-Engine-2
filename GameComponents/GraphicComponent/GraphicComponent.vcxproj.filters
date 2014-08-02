@@ -5,9 +5,6 @@
     <ClInclude Include="DX11Helper.h">
       <Filter>D3D Tools\DX11Helper</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>D3D Tools\Vertex</Filter>
-    </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="SpotLight.h">
       <Filter>Light\SpotLight</Filter>
@@ -202,9 +199,6 @@
     </Filter>
     <Filter Include="D3D Tools\DX11Helper">
       <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D Tools\Vertex">
-      <UniqueIdentifier>{247a606b-cc65-4896-9752-f731be732ff2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Light">
       <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>

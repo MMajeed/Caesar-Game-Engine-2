@@ -1,3 +1,7 @@
+require("Helper")
+
+local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
+local PSColorShader = PixelShader("Assets/ShaderFiles/PS_Color.cso");
 
 local WalkScene = LoadScene("Assets/Animation/walk.BVH");
 local runScene = LoadScene("Assets/Animation/Run1.bvh");
@@ -24,19 +28,19 @@ local stickLocation = Vector4(100.0, 0.0, -40.0);
 local stickFigerObjNodes = {};    
 function RecursiveLoadJoint(joint)
     local meshes = joint.Meshes;
-    local runManDrawable =  BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = mesh[meshes[1]],
-                                                 [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                                 [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+    local meshGraphic = GraphicModel(mesh[meshes[1]]);
+    stickFigerObjNodes[joint.Name] = Object({
+                        [Keys["ObjectInfo"]["Location"]]        = stickLocation,
+                        [Keys["ObjectInfo"]["Rotation"]]        = stickRotation,
+                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
+                        [Keys["ObjectInfo"]["GraphicModel"]]    = meshGraphic,
+                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(0.0, 1.0, 0.0) },
+                        [Keys["ObjectInfo"]["AnimationJoint"]]  =  joint.Name,
+                        [Keys["ObjectInfo"]["AnimationObj"]]    =  StickPersonAnimationController,
+                        });
 
-    stickFigerObjNodes[joint.Name]
-                    =   Object({
-                                [Keys["ObjectInfo"]["Location"]]        = stickLocation,
-                                [Keys["ObjectInfo"]["Rotation"]]        = stickRotation,
-                                [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
-                                [Keys["ObjectInfo"]["DrawableObj"]]     = runManDrawable,
-                                [Keys["ObjectInfo"]["AnimationJoint"]]  = {StickPersonAnimationController,  joint.Name},
-                                [Keys["ObjectInfo"]["Light"]]           = false,
-                            });
     for key,value in pairs(joint.Childern) do 
         RecursiveLoadJoint(value);
     end

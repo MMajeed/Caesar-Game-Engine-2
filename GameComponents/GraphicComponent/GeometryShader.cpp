@@ -62,7 +62,7 @@ void GeometryShader::Setup(const GraphicCameraEntity& camera, const GraphicObjec
 	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, object);
 	for(const TextureInfo& ti : textures)
 	{
-		auto pTexture = ti.Texture->D3DInfo.pTexture;
+		ID3D11ShaderResourceView* pTexture = ti.Texture->pTexture;
 		graphicD3D.pImmediateContext->GSSetShaderResources(ti.Slot, 1, &pTexture);
 	}
 }

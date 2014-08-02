@@ -4,9 +4,9 @@ require("camera")
 --require("LightSetup")
 require("SkyBox")
 require("floor")
---require("PhysicsDemo")
+require("PhysicsDemo")
 ----require("RandomAnimation")
---require("StickPerson")
+require("StickPerson")
 require("Helper")
 
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
