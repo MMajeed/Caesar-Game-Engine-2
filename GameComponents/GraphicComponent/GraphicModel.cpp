@@ -36,6 +36,11 @@ void GraphicModel::InitIndexBuffer()
 {
 	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 
+	if(this->Model->NumberOfFaces == 0 || this->Model->NumberOfFaces >= 4){ Logger::LogError("Number of indices has invalid value"); }
+	else if(this->Model->NumberOfFaces == 1){ this->Topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; }
+	else if(this->Model->NumberOfFaces == 2){ this->Topology = D3D11_PRIMITIVE_TOPOLOGY_LINELIST; }
+	else if(this->Model->NumberOfFaces == 3){ this->Topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST; }
+
 	std::vector<WORD> indices;
 	indices.resize(this->Model->Faces.size());
 	std::copy(this->Model->Faces.begin(), this->Model->Faces.end(), indices.begin());
@@ -44,7 +49,7 @@ void GraphicModel::InitIndexBuffer()
 	D3D11_BUFFER_DESC bd;
 	ZeroMemory(&bd, sizeof(bd));
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	bd.ByteWidth = sizeof(WORD)* indices.size();
+	bd.ByteWidth = sizeof(WORD) * indices.size();
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	D3D11_SUBRESOURCE_DATA InitData;
@@ -65,7 +70,7 @@ void GraphicModel::Setup(const GraphicCameraEntity& camera, const GraphicObjectE
 	ID3D11Buffer* pV = this->pVertexBuffer;
 	pImmediateContext->IASetVertexBuffers(0, 1, &pV, &stride, &offset);
 	pImmediateContext->IASetIndexBuffer(this->pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
-	pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	pImmediateContext->IASetPrimitiveTopology(this->Topology);
 }
 
 std::vector<VertexLayout> GraphicModel::GetVertexLayout()

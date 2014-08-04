@@ -211,10 +211,10 @@ void GraphicCameraEntity::UpdateView()
 	vTM += vEye;
 
 	XMStoreFloat4x4(&returnValue, XMMatrixLookAtLH(vEye, vTM, vUp));
-	
+
 	this->view = returnValue;
 }
-void GraphicCameraEntity::UpdateProjection()
+void GraphicCameraEntity::UpdatePerspective()
 {
 	XMFLOAT4X4 returnValue;
 
@@ -224,13 +224,28 @@ void GraphicCameraEntity::UpdateProjection()
 													  this->GetNearZ(), this->GetFarZ());
 	XMStoreFloat4x4(&returnValue, xmPrespective);
 
-	this->projection = returnValue;
+	this->perspective = returnValue;
+}
+void GraphicCameraEntity::UpdateOrthogonal()
+{
+	XMFLOAT4X4 returnValue;
+
+	auto window = GraphicManager::GetInstance().window;
+	XMMATRIX xmPrespective = XMMatrixOrthographicLH((float)window.width , (float)window.height,
+													 this->GetNearZ(), this->GetFarZ());
+	XMStoreFloat4x4(&returnValue, xmPrespective);
+
+	this->orthogonal = returnValue;
 }
 XMFLOAT4X4 GraphicCameraEntity::GetView() const
 {
 	return this->view;
 }
-XMFLOAT4X4 GraphicCameraEntity::GetProjection() const
+XMFLOAT4X4 GraphicCameraEntity::GetPerspective() const
 {
-	return this->projection;
+	return this->perspective;
+}
+XMFLOAT4X4 GraphicCameraEntity::GetOrthogonal() const
+{
+	return this->orthogonal;
 }

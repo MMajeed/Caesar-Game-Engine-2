@@ -21,33 +21,20 @@ namespace LuaModel
 	{
 		return this->model;
 	}
-	/*void Model::SetVertices(luabind::object const& table)
-	{
-		if(luabind::type(table) != LUA_TTABLE)
-			Logger::LogError("Wrong paramter for Model::SetVertices, please send in a table");
 
-		this->model->Vertices.clear();
-		for(luabind::iterator it(table);
-			it != luabind::iterator();
-			++it)
-		{
-			Vertices ver = luabind::object_cast<Vertices>(*it);
-			this->model->Vertices.push_back(ver);
-		}
+	unsigned int Model::GetNumberFaces()
+	{
+		return this->model->NumberOfFaces;
 	}
-	luabind::object Model::GetVertices()
+	void Model::SetNumberFaces(const luabind::object& v)
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
-
-		for(std::size_t i = 0; i < this->model->Vertices.size(); ++i)
-		{
-			returnValue[i] = Vertices(this->model->Vertices[i]);
-		}
-
-		return returnValue;
+		if(boost::optional<unsigned int> value = luabind::object_cast_nothrow<unsigned int>(v))
+			this->model->NumberOfFaces = *value;
+		else
+			Logger::LogError("Wrong paramter type");
 	}
 
-	void Model::SeFaces(luabind::object const& table)
+	void Model::SetFaces(luabind::object const& table)
 	{
 		if(luabind::type(table) != LUA_TTABLE)
 			Logger::LogError("Wrong paramter for Model::SeFaces, please send in a table");
@@ -71,75 +58,183 @@ namespace LuaModel
 		}
 
 		return returnValue;
-	}*/
+	}
+
+	void Model::SetVertices(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for Model::SeVertices, please send in a table");
+
+		this->model->Vertices.clear();
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			CML::Vec4 ver = luabind::object_cast<LuaMath::Vector4>(*it);
+			this->model->Vertices.push_back(ver);
+		}
+	}
+	luabind::object Model::GetVertices()
+	{
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+
+		for(std::size_t i = 0; i < this->model->Vertices.size(); ++i)
+		{
+			returnValue[i] = this->model->Vertices[i];
+		}
+
+		return returnValue;
+	}
+
+	void Model::SetNormal(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for Model::SeNormal, please send in a table");
+
+		this->model->Normal.clear();
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			CML::Vec4 ver = luabind::object_cast<LuaMath::Vector4>(*it);
+			this->model->Normal.push_back(ver);
+		}
+	}
+	luabind::object Model::GetNormal()
+	{
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+
+		for(std::size_t i = 0; i < this->model->Normal.size(); ++i)
+		{
+			returnValue[i] = this->model->Normal[i];
+		}
+
+		return returnValue;
+	}
+
+	void Model::SetTangents(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for Model::SeTangents, please send in a table");
+
+		this->model->Tangents.clear();
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			CML::Vec4 ver = luabind::object_cast<LuaMath::Vector4>(*it);
+			this->model->Tangents.push_back(ver);
+		}
+	}
+	luabind::object Model::GetTangents()
+	{
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+
+		for(std::size_t i = 0; i < this->model->Tangents.size(); ++i)
+		{
+			returnValue[i] = this->model->Tangents[i];
+		}
+
+		return returnValue;
+	}
+
+	void Model::SetBitangents(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for Model::SeBitangents, please send in a table");
+
+		this->model->Bitangents.clear();
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			CML::Vec4 ver = luabind::object_cast<LuaMath::Vector4>(*it);
+			this->model->Bitangents.push_back(ver);
+		}
+	}
+	luabind::object Model::GetBitangents()
+	{
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+
+		for(std::size_t i = 0; i < this->model->Bitangents.size(); ++i)
+		{
+			returnValue[i] = this->model->Bitangents[i];
+		}
+
+		return returnValue;
+	}
+
+	void Model::SetColor(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for Model::SeColor, please send in a table");
+
+		this->model->Color.clear();
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			CML::Vec4 ver = luabind::object_cast<LuaMath::Vector4>(*it);
+			this->model->Color.push_back(ver);
+		}
+	}
+	luabind::object Model::GetColor()
+	{
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+
+		for(std::size_t i = 0; i < this->model->Color.size(); ++i)
+		{
+			returnValue[i] = this->model->Color[i];
+		}
+
+		return returnValue;
+	}
+
+	void Model::SetTexture(luabind::object const& table)
+	{
+		if(luabind::type(table) != LUA_TTABLE)
+			Logger::LogError("Wrong paramter for Model::SeTexture, please send in a table");
+
+		this->model->Texture.clear();
+		for(luabind::iterator it(table);
+			it != luabind::iterator();
+			++it)
+		{
+			CML::Vec4 ver = luabind::object_cast<LuaMath::Vector4>(*it);
+			this->model->Texture.push_back(ver);
+		}
+	}
+	luabind::object Model::GetTexture()
+	{
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+
+		for(std::size_t i = 0; i < this->model->Texture.size(); ++i)
+		{
+			returnValue[i] = this->model->Texture[i];
+		}
+
+		return returnValue;
+	}
 
 	void Model::Register(lua_State *lua)
 	{
 		luabind::module(lua)[
 			luabind::class_<LuaModel::Model>("Model")
 				.def(luabind::constructor<>())
-				/*.property("Vertices", &LuaModel::Model::GetVertices, &LuaModel::Model::SetVertices)
-				.property("Faces", &LuaModel::Model::GetFaces, &LuaModel::Model::SeFaces)*/
+				.property("NumberFaces", &LuaModel::Model::GetNumberFaces, &LuaModel::Model::SetNumberFaces)
+				.property("Faces", &LuaModel::Model::GetFaces, &LuaModel::Model::SetFaces)
+				.property("Vertices", &LuaModel::Model::GetVertices, &LuaModel::Model::SetVertices)
+				.property("Normal", &LuaModel::Model::GetNormal, &LuaModel::Model::SetNormal)
+				.property("Tangents", &LuaModel::Model::GetTangents, &LuaModel::Model::SetTangents)
+				.property("Bitangents", &LuaModel::Model::GetBitangents, &LuaModel::Model::SetBitangents)
+				.property("Color", &LuaModel::Model::GetColor, &LuaModel::Model::SetColor)
+				.property("Texture", &LuaModel::Model::GetTexture, &LuaModel::Model::SetTexture)
 		];
 	}
 	//-----------------------------End Model--------------------------------------//
 
-	////-----------------------------Start Vertices--------------------------------------//
-	//Vertices::Vertices()
-	//{
-	//	this->Point = {0.0, 0.0, 0.0, 0.0};
-	//	this->Normal = {0.0, 0.0, 0.0, 0.0};
-	//	this->Texture = {0.0, 0.0, 0.0, 0.0};
-	//}
-	//Vertices::Vertices(luabind::object const& table)
-	//{
-	//	if(luabind::type(table) != LUA_TTABLE)
-	//		Logger::LogError("Wrong paramter for Vertices, please send in a table");
-
-	//	this->Point = {0.0, 0.0, 0.0, 0.0};
-	//	this->Normal = {0.0, 0.0, 0.0, 0.0};
-	//	this->Texture = {0.0, 0.0, 0.0, 0.0};
-
-	//	for(luabind::iterator it(table);
-	//		it != luabind::iterator();
-	//		++it)
-	//	{
-	//		std::string key = luabind::object_cast<std::string>(it.key());
-
-	//		if(key == "Point")		{ this->Point = luabind::object_cast<LuaMath::Vector4>(*it); }
-	//		else if(key == "Normal")	{ this->Normal = luabind::object_cast<LuaMath::Vector4>(*it); }
-	//		else if(key == "Texture")	{ this->Texture = luabind::object_cast<LuaMath::Vector4>(*it); }
-	//	}
-	//}
-	//Vertices::Vertices(CHL::Model::VerticesInfo vertices)
-	//	: Point(vertices.Point), Normal(vertices.Normal), Texture(vertices.Texture)
-	//{
-	//}
-	//Vertices::operator CHL::Model::VerticesInfo()
-	//{
-	//	CHL::Model::VerticesInfo returnValue;
-	//	returnValue.Point = this->Point.vector;
-	//	returnValue.Normal = this->Normal.vector;
-	//	returnValue.Texture = this->Texture.vector;
-	//	return returnValue;
-	//}
-
-	//void Vertices::Register(lua_State *lua)
-	//{
-	//	luabind::module(lua)[
-	//		luabind::class_<LuaModel::Vertices>("Vertice")
-	//			.def(luabind::constructor<>())
-	//			.def(luabind::constructor<luabind::object const&>())
-	//			.property("Point", &LuaModel::Vertices::Point)
-	//			.property("Normal", &LuaModel::Vertices::Normal)
-	//			.property("Texture", &LuaModel::Vertices::Texture)
-	//	];
-	//}
-	////----------------------------End Vertices-----------------------------------//
-
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		LuaModel::Model::Register(lua);
-		//LuaModel::Vertices::Register(lua);
 	}
 }

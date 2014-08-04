@@ -36,12 +36,15 @@ public:
 	std::vector<GraphicObjectEntity> FilterInclusionList(std::hash_map<std::string, GraphicObjectEntity> list) const;
 protected:
 	XMFLOAT4X4 view;
-	XMFLOAT4X4 projection;
+	XMFLOAT4X4 perspective;
+	XMFLOAT4X4 orthogonal;
 public:
 	void UpdateView();
-	void UpdateProjection();
+	void UpdatePerspective();
+	void UpdateOrthogonal();
 	XMFLOAT4X4 GetView() const;
-	XMFLOAT4X4 GetProjection() const;
+	XMFLOAT4X4 GetPerspective() const;
+	XMFLOAT4X4 GetOrthogonal() const;
 };
 
 

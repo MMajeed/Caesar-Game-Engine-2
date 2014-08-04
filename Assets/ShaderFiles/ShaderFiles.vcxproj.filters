@@ -13,6 +13,12 @@
     <FxCompile Include="PS_SkyMap.fx">
       <Filter>PS</Filter>
     </FxCompile>
+    <FxCompile Include="PS_Font.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="VS_Font.fx">
+      <Filter>VS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="VS">

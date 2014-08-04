@@ -6,6 +6,7 @@
 #include <memory>
 #include <mutex>
 #include <chrono>
+#include <atomic>
 #include "Message.h"
 
 class CommonDLL_API Interface
@@ -30,7 +31,8 @@ public:
 	struct
 	{
 		std::chrono::time_point<std::chrono::system_clock> start;
-		long long	FrameCount;
+		std::atomic<long long>		FrameCount;
+		std::atomic<unsigned int>	NumberOfFramePerSeconds;
 	} timer;
 
 	std::mutex mutex;

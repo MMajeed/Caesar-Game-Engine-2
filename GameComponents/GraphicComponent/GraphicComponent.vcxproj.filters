@@ -6,18 +6,6 @@
       <Filter>D3D Tools\DX11Helper</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="SpotLight.h">
-      <Filter>Light\SpotLight</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectLight.h">
-      <Filter>Light\DirectLight</Filter>
-    </ClInclude>
-    <ClInclude Include="SetupLight.h">
-      <Filter>Light</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>Light\PointLight</Filter>
-    </ClInclude>
     <ClInclude Include="BasicTexture.h">
       <Filter>Drawable\Texture</Filter>
     </ClInclude>
@@ -108,18 +96,6 @@
     <ClCompile Include="DX11Helper.cpp">
       <Filter>D3D Tools\DX11Helper</Filter>
     </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
-      <Filter>Light\SpotLight</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectLight.cpp">
-      <Filter>Light\DirectLight</Filter>
-    </ClCompile>
-    <ClCompile Include="SetupLight.cpp">
-      <Filter>Light</Filter>
-    </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>Light\PointLight</Filter>
-    </ClCompile>
     <ClCompile Include="BasicTexture.cpp">
       <Filter>Drawable\Texture</Filter>
     </ClCompile>
@@ -199,18 +175,6 @@
     </Filter>
     <Filter Include="D3D Tools\DX11Helper">
       <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Light">
-      <UniqueIdentifier>{bd7603b0-a605-4c21-9c82-959a2bc8a686}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Light\SpotLight">
-      <UniqueIdentifier>{d147f29e-caed-400a-8896-c8cb7bf0938e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Light\DirectLight">
-      <UniqueIdentifier>{0217d582-611d-4dfd-917f-b715c41066ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Light\PointLight">
-      <UniqueIdentifier>{de21ae03-3721-427d-9d24-d9ef44206c8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ScreenCapture">
       <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>

@@ -11,6 +11,7 @@ Interface::Interface()
 	this->running = true;
 	this->timer.FrameCount = 0;
 	this->timer.start = std::chrono::system_clock::now();
+	this->timer.NumberOfFramePerSeconds = 1000;
 }
 
 void Interface::Run()
@@ -18,14 +19,14 @@ void Interface::Run()
 	try
 	{
 		// setup the frame timer
-		std::chrono::time_point<std::chrono::system_clock> start, end;
-		start = std::chrono::system_clock::now();
+		std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
+		std::chrono::time_point<std::chrono::system_clock> end = std::chrono::system_clock::now();
 
 		while( running == true )
 		{
 			// update timer
-			end = std::chrono::system_clock::now();
-			std::chrono::duration<double> elapsed_seconds = end - start;
+			start = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsed_seconds = start - end;
 			double frameTime = elapsed_seconds.count();
 			double deltaTime = frameTime;
 
@@ -39,20 +40,20 @@ void Interface::Run()
 			this->Work(frameTime, deltaTime);
 			this->ProccessMessages();
 
-			// update fps
-			start = end;
-			++(timer.FrameCount);
-
 			// update timer
-			std::chrono::time_point<std::chrono::system_clock> afterProcessTime = std::chrono::system_clock::now();
-			std::chrono::duration<double> elapsedProcessTime = afterProcessTime - end;
+			std::chrono::time_point<std::chrono::system_clock> afterWork = std::chrono::system_clock::now();
+			std::chrono::duration<double> elapsedWorkTime = afterWork - end;
 
-			static const double minWorkTime = 10;
-			if(elapsedProcessTime.count() < minWorkTime)
+			const double minWorkTime = 1000 / this->timer.NumberOfFramePerSeconds;
+			if(elapsedWorkTime.count() <= minWorkTime)
 			{
-				int timeToSleep = (int)(minWorkTime - elapsedProcessTime.count());
-				std::this_thread::sleep_for(std::chrono::milliseconds(timeToSleep));
+				double timeToSleep = minWorkTime - elapsedWorkTime.count();
+				std::this_thread::sleep_for(std::chrono::milliseconds((long long)timeToSleep));
 			}
+
+			// update fps
+			end = start;
+			timer.FrameCount += 1;
 		}
 	}
 	catch(const std::exception& ex)

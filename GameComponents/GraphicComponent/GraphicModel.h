@@ -30,6 +30,7 @@ protected:
 	COMSharedPtr<ID3D11Buffer>	pIndexBuffer;
 	std::vector<VertexLayout>	VertexLayoutList;
 	std::shared_ptr<CHL::Model> Model;
+	D3D_PRIMITIVE_TOPOLOGY		Topology;
 
 	virtual void SetupModelLayout();
 	virtual std::vector<char> GetVerticeByte();

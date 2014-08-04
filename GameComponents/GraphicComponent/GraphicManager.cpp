@@ -4,7 +4,6 @@
 #include "3DMath.h"
 #include "XNAConverter.h"
 #include "DX11Helper.h"
-#include "SetupLight.h"
 #include <algorithm>
 #include <CameraEntity.h>
 #include <ObjectEntity.h>
@@ -47,8 +46,9 @@ void GraphicManager::ProcessDrawing()
 	auto camera = Scene::GetCamera(this->DefaultCamera);
 	std::hash_map<std::string, GraphicObjectEntity> objects = Scene::GetAllObjectEntities();
 
-	camera.UpdateProjection();
 	camera.UpdateView();
+	camera.UpdatePerspective();
+	camera.UpdateOrthogonal();
 
 	Scene::ClearScreen(camera);
 	Scene::DrawObjects(camera, objects);

@@ -37,6 +37,17 @@ public:
 	static std::string Name() { return "World"; }
 };
 
+class GraphicComponentDLL_API CBufferWorld2D : public CBHardVariables
+{
+protected:
+	CBufferWorld2D(std::vector<char>& bytes, const unsigned int StartOffset);
+public:
+	virtual void Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
+	virtual std::string VName() const { return Name(); }
+	static std::string Name() { return "World2D"; }
+};
+
 class GraphicComponentDLL_API CBufferView : public CBHardVariables
 {
 protected:
@@ -48,15 +59,26 @@ public:
 	static std::string Name() { return "View"; }
 };
 
-class GraphicComponentDLL_API CBufferProjection : public CBHardVariables
+class GraphicComponentDLL_API CBufferPerspective : public CBHardVariables
 {
 protected:
-	CBufferProjection(std::vector<char>& bytes, const unsigned int StartOffset);
+	CBufferPerspective(std::vector<char>& bytes, const unsigned int StartOffset);
 public:
 	virtual void Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
 	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
 	std::string VName() const { return Name(); }
-	static std::string Name() { return "Projection"; }
+	static std::string Name() { return "Perspective"; }
+};
+
+class GraphicComponentDLL_API CBufferOrthogonal : public CBHardVariables
+{
+protected:
+	CBufferOrthogonal(std::vector<char>& bytes, const unsigned int StartOffset);
+public:
+	virtual void Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
+	std::string VName() const { return Name(); }
+	static std::string Name() { return "Orthogonal"; }
 };
 
 class GraphicComponentDLL_API CBufferWVP : public CBHardVariables
@@ -68,6 +90,17 @@ public:
 	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
 	virtual std::string VName() const { return Name(); }
 	static std::string Name() { return "WVP"; }
+};
+
+class GraphicComponentDLL_API CBufferWVO : public CBHardVariables
+{
+protected:
+	CBufferWVO(std::vector<char>& bytes, const unsigned int StartOffset);
+public:
+	virtual void Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
+	virtual std::string VName() const { return Name(); }
+	static std::string Name() { return "WVO"; }
 };
 
 class GraphicComponentDLL_API CBufferEye : public CBHardVariables

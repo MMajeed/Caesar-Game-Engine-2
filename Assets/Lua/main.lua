@@ -1,5 +1,5 @@
 --require("Text")
---require("Information")
+require("Information")
 require("camera")
 --require("LightSetup")
 require("SkyBox")
@@ -23,6 +23,8 @@ local ironMan = Object({
                         [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
                         [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                         [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = ironManTexture },
+                        [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Wireframe"],
+                        [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
                         });
                         
 for zIndex = 0, 2, 1 do
@@ -40,55 +42,6 @@ for zIndex = 0, 2, 1 do
     end
 end
 
-
-
-local lastTimeCheck = 0.0;
-local lastGraphicFrameCheck = GetGraphicFrame();
-local lastInputFrameCheck = GetInputFrame();
-local lastScriptFrameCheck = GetScriptFrame();
-local lastAnimationFrameCheck = GetAnimationFrame();
-local lastPhysicsFrameCheck = GetPhysicsFrame();
-
-function UpdateFrameText()
-    local currentTime = GetTimeSinceStart();
-    local timeDifference = currentTime - lastTimeCheck;
-    lastTimeCheck = currentTime;
-    
-    local graphicFrameCount = GetGraphicFrame();
-    local graphicFrameDifference = graphicFrameCount - lastGraphicFrameCheck;
-    lastGraphicFrameCheck = graphicFrameCount;
-    local graphicFrame = graphicFrameDifference / timeDifference;
-    
-    local inputFrameCount = GetInputFrame();
-    local inputFrameDifference = inputFrameCount - lastInputFrameCheck;
-    lastInputFrameCheck = inputFrameCount;
-    local inputFrame = inputFrameDifference / timeDifference;
-    
-    local scriptFrameCount = GetScriptFrame();
-    local scriptFrameDifference =  scriptFrameCount - lastScriptFrameCheck;
-    lastScriptFrameCheck =  scriptFrameCount;
-    local scriptFrame = scriptFrameDifference / timeDifference;
-    
-    local animationFrameCount = GetAnimationFrame();
-    local animationFrameDifference =  animationFrameCount - lastAnimationFrameCheck;
-    lastAnimationFrameCheck =  animationFrameCount;
-    local animationFrame = animationFrameDifference / timeDifference;
-    
-    local physicFrameCount = GetPhysicsFrame();
-    local physicFrameDifference =  physicFrameCount - lastPhysicsFrameCheck;
-    lastPhysicsFrameCheck =  physicFrameCount;
-    local physicFrame = physicFrameDifference / timeDifference;
-    
-    local message = "Frame Rate:" .. 
-                    " Graphic: " .. string.format("%3.2f", graphicFrame) .. 
-                    " Input: " .. string.format("%3.2f", inputFrame) .. 
-                    " Script: " .. string.format("%3.2f", scriptFrame).. 
-                    " Animation: " .. string.format("%3.2f", animationFrame) ..
-                    " Physics: " .. string.format("%3.2f", physicFrame) ;
-    SetWindowsTitle(message);
-end
-UpdateFrameText();
-LoopCall(1000, UpdateFrameText);
 --lightPos = 10.0;
 --OnKeyDown(KeyCode["B"], 
 --    function()   

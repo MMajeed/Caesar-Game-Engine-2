@@ -102,65 +102,82 @@ FontDataTable["|"] 	= FontData(0.571289, 0.572266, 1);
 FontDataTable["}"] 	= FontData(0.573242, 0.576172, 3);
 FontDataTable["~"] 	= FontData(0.577148, 0.583984, 7);
 
+local SpriteTexture = BasicTexture("Assets/Font/font.dds");
+local VSTextShader = VertexShader("Assets/ShaderFiles/VS_Font.cso");
+local PSFontShader = PixelShader("Assets/ShaderFiles/PS_Font.cso");
+
 Text2D = class(function(self, text, location) 
                 self.Text = text;
-                self.SpriteModel = Model();
-                self.SpriteDrawable = BasicDrawableObject({[Keys["BasicDrawable"]["Dimension"]]        = Dimension["2D"],
-                                                           [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_1_Font.cso",
-                                                          });
-                self.SpriteTexture = BasicTexture("Assets/Font/font.dds");
                 
-                self.SpriteObj = Object({[Keys["ObjectInfo"]["Location"]]     = location,
-                                         [Keys["ObjectInfo"]["DrawableObj"]]  = self.SpriteDrawable,
-                                         [Keys["ObjectInfo"]["Texture2DObj"]] = self.SpriteTexture,
-                                         [Keys["ObjectInfo"]["Diffuse"]]      = Vector4(1.0, 1.0, 1.0, 1.0),
-                                        });
+                self.SpriteObj = Object({
+                                    [Keys["ObjectInfo"]["Location"]]     = location,
+                                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                                    [Keys["ObjectInfo"]["VertexShader"]] = VSTextShader,
+                                    [Keys["ObjectInfo"]["PixelShader"]]  = PSFontShader,
+                                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                                    [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = SpriteTexture },
+                                    });
                 self:Set();
              end)
 
 function Text2D:Set()
+    if(self.grahpicSpriteModel ~= nil) then
+        self.grahpicSpriteModel:Release();
+    end
+    
     local Length = string.len(self.Text)
     
-    local verticeArray = {};
-    
-    local drawX = 0.0; local drawY = 0.0;
-    local index = 1;
-    for i = 1, Length do
-        local char = string.sub(self.Text, i, i);
-        local fontChar = FontDataTable[char];
-        if(fontChar ~= nil) then
-            verticeArray[index] = Vertice({["Point"] = Vector4(drawX, drawY, 0.0), 
-                                           ["Texture"] = Vector4(fontChar.Left, 0.0, 0.0), });
-            index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), (drawY + 16), 0.0), 
-                                           ["Texture"] = Vector4(fontChar.Right, 1.0, 0.0), });
-            index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4(drawX, (drawY + 16), 0.0), 
-                                           ["Texture"] = Vector4(fontChar.Left, 1.0, 0.0), });
-            index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4(drawX, drawY, 0.0), 
-                                           ["Texture"] = Vector4(fontChar.Left, 0.0, 0.0), });
-            index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), drawY, 0.0), 
-                                           ["Texture"] = Vector4(fontChar.Right, 0.0, 0.0), });
-            index = index + 1;
-            verticeArray[index] = Vertice({["Point"] = Vector4( (drawX + fontChar.Size), (drawY + 16), 0.0), 
-                                           ["Texture"] = Vector4(fontChar.Right, 1.0, 0.0), });
-            index = index + 1;
-            drawX = drawX + fontChar.Size + 1.0;
-        else
-            drawX = drawX + 3;
-        end        
-    end
-    local faces = {};
-    for i = -1, index do
-        table.insert(faces,i - 1);
-    end
-    
-    local spriteModel = Model();
-    spriteModel.Vertices = verticeArray;
-    spriteModel.Faces = faces;
-    self.SpriteDrawable:ChangeModel(spriteModel);
+    if(Length > 0) then
+        local verticeArray = {};
+        local textureArray = {};
+        
+        local drawX = 0.0; local drawY = 0.0;
+        local index = 1;
+        for i = 1, Length do
+            local char = string.sub(self.Text, i, i);
+            local fontChar = FontDataTable[char];
+            if(fontChar ~= nil) then
+                verticeArray[index] = Vector4(drawX, drawY, -20.0);
+                textureArray[index] = Vector4(fontChar.Left, 0.0, 0.0);
+                index = index + 1;
+                
+                verticeArray[index] = Vector4((drawX + fontChar.Size), (drawY + 16), -20.0);
+                textureArray[index] = Vector4(fontChar.Right, 1.0, 0.0);
+                index = index + 1;
+                
+                verticeArray[index] = Vector4(drawX, (drawY + 16), -20.0);
+                textureArray[index] = Vector4(fontChar.Left, 1.0, 0.0);
+                index = index + 1;
+                
+                verticeArray[index] = Vector4(drawX, drawY, -20.0);
+                textureArray[index] = Vector4(fontChar.Left, 0.0, 0.0);
+                index = index + 1;
+                
+                verticeArray[index] = Vector4( (drawX + fontChar.Size), drawY, -20.0);
+                textureArray[index] = Vector4(fontChar.Right, 0.0, 0.0);
+                index = index + 1;
+                
+                verticeArray[index] = Vector4((drawX + fontChar.Size), (drawY + 16), -20.0);
+                textureArray[index] = Vector4(fontChar.Right, 1.0, 0.0);
+                index = index + 1;
+                
+                drawX = drawX + fontChar.Size + 1.0;
+            else
+                drawX = drawX + 3;
+            end        
+        end
+        local faces = {};
+        for i = -1, index do
+            table.insert(faces,i - 1);
+        end
+        
+        local spriteModel = Model();
+        spriteModel.Faces = faces;
+        spriteModel.Vertices = verticeArray;
+        spriteModel.Texture = textureArray;
+        self.grahpicSpriteModel = GraphicModel(spriteModel);
+        self.SpriteObj.GraphicModel = self.grahpicSpriteModel;
+    end;
 end
 
 function Text2D:EditText(text)

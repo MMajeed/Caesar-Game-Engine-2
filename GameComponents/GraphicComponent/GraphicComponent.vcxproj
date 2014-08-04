@@ -288,15 +288,11 @@
     <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="CubeScreenShot.h" />
     <ClInclude Include="DepthScreenShot.h" />
-    <ClInclude Include="DirectLight.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="DX11Helper.h" />
     <ClInclude Include="GraphicManager.h" />
-    <ClInclude Include="PointLight.h" />
     <ClInclude Include="ScreenShot.h" />
-    <ClInclude Include="SetupLight.h" />
     <ClInclude Include="ShadowScreenShot.h" />
-    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="TextureSetup.h" />
     <ClInclude Include="VertexLayout.h" />
@@ -315,7 +311,6 @@
     <ClCompile Include="DepthScreenCapture.cpp" />
     <ClCompile Include="CubeScreenShot.cpp" />
     <ClCompile Include="DepthScreenShot.cpp" />
-    <ClCompile Include="DirectLight.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GeometryShader.cpp" />
     <ClCompile Include="GraphicCameraEntity.cpp" />
@@ -324,13 +319,10 @@
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="BasicTexture.cpp" />
     <ClCompile Include="PixelShader.cpp" />
-    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SetupLight.cpp" />
     <ClCompile Include="ShadowScreenShot.cpp" />
-    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="TextureSetup.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="XNAConverter.cpp" />

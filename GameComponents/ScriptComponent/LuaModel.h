@@ -10,20 +10,6 @@
 
 namespace LuaModel
 {
-	/*class ScriptComponentDLL_API  Vertices
-	{
-	public:
-		Vertices();
-		Vertices(luabind::object const& table);
-		Vertices(CHL::Model::VerticesInfo vertices);
-		operator CHL::Model::VerticesInfo();
-
-		LuaMath::Vector4 Point;
-		LuaMath::Vector4 Normal;
-		LuaMath::Vector4 Texture;
-
-		static void Register(lua_State *lua);
-	};*/
 	class ScriptComponentDLL_API  Model
 	{
 	public:
@@ -31,10 +17,29 @@ namespace LuaModel
 		Model(std::shared_ptr<CHL::Model> model);
 		operator std::shared_ptr<CHL::Model>();
 
-		//void SetVertices(luabind::object const& table);
-		//luabind::object GetVertices();
-		//void SeFaces(luabind::object const& table);
-		//luabind::object GetFaces();
+		unsigned int GetNumberFaces();
+		void SetNumberFaces(const luabind::object& v);
+
+		void SetFaces(luabind::object const& table);
+		luabind::object GetFaces();
+
+		void SetVertices(luabind::object const& table);
+		luabind::object GetVertices();
+
+		void SetNormal(luabind::object const& table);
+		luabind::object GetNormal();
+
+		void SetTangents(luabind::object const& table);
+		luabind::object GetTangents();
+
+		void SetBitangents(luabind::object const& table);
+		luabind::object GetBitangents();
+
+		void SetColor(luabind::object const& table);
+		luabind::object GetColor();
+
+		void SetTexture(luabind::object const& table);
+		luabind::object GetTexture();
 
 		std::shared_ptr<CHL::Model> model;
 
