@@ -29,7 +29,7 @@ public:
 	virtual void Shutdown();
 	
 	virtual void ProcessDrawing();
-	virtual void RunAllCapture(std::hash_map<std::string, SP_INFO>& objects);
+	virtual void RunAllCapture(const std::hash_map<std::string, GraphicObjectEntity>& list);
 
 	virtual void InitWindow();
 	virtual void InitDevice();

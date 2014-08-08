@@ -17,7 +17,7 @@ class PixelShader;
 class GraphicComponentDLL_API GraphicObjectEntity
 {
 protected:
-	std::weak_ptr<ObjectEntity> wp_Obj;
+	std::shared_ptr<ObjectEntity> obj;
 public:
 	GraphicObjectEntity();
 	GraphicObjectEntity(std::weak_ptr<ObjectEntity> v);
@@ -33,7 +33,7 @@ public:
 	XMFLOAT4 GetRotation() const;
 	XMFLOAT4 GetScale() const;
 	bool HasDepth() const;
-	std::string GetGraphicModelID() const;
+	std::string GetVertexShaderID() const;
 	std::shared_ptr<GraphicModel> GetGraphicModel() const;
 	std::shared_ptr<VertexShader> GetVertexShader() const;
 	std::shared_ptr<GeometryShader> GetGeometryShader() const;

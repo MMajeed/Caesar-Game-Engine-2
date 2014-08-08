@@ -1,13 +1,14 @@
---require("Text")
+require("Text")
 require("Information")
 require("camera")
---require("LightSetup")
 require("SkyBox")
 require("floor")
 require("PhysicsDemo")
-----require("RandomAnimation")
 require("StickPerson")
 require("Helper")
+require("SphereMirror")
+--require("RandomAnimation")
+--require("LightSetup")
 
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
 local ironManMesh = GraphicModel(LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"));
@@ -42,6 +43,8 @@ for zIndex = 0, 2, 1 do
     end
 end
 
+OnKeyDown(KeyCode["ESCAPE"], function() Quit(); end);-- Left
+
 --lightPos = 10.0;
 --OnKeyDown(KeyCode["B"], 
 --    function()   
@@ -67,39 +70,3 @@ end
 --        textExample:Release();
 --    end);
 --end);
-
---mirrorSphereCam1 = Camera({[Keys["Camera"]["Eye"]]        = Vector4(40, 20, 0),
---                           [Keys["Camera"]["NearZ"]]      = 0.01,              
---                           [Keys["Camera"]["FarZ"]]       = 5000.0,
---                           [Keys["Camera"]["ClearColor"]] = Vector4(1.0, 0.5, 0.5, 1.0),
---                           [Keys["Camera"]["Process2D"]]  = false,
---                            });
---mirrorSphereSC = CubeScreenCapture({[Keys["ScreenShot"]["Width"]]   = 512,
---                                    [Keys["ScreenShot"]["Height"]]   =512,
---                                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
---local mirrorSphere1 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(40, 20, 0),
---                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
---                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,
---                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
---                              [Keys["ObjectInfo"]["Light"]]       = false,});
---mirrorSphere1:AddCubeTexture(mirrorSphereSC:GetTexture());
-
---mirrorSphereCam2 = Camera({[Keys["Camera"]["Eye"]]        = Vector4(-40, 20, 0),
---                           [Keys["Camera"]["NearZ"]]      = 0.01,              
---                           [Keys["Camera"]["FarZ"]]       = 5000.0,
---                           [Keys["Camera"]["ClearColor"]] = Vector4(0.5, 0.5, 0.5, 1.0),
---                           [Keys["Camera"]["Process2D"]]  = false,
---                            });
---mirrorSphereSC2 = CubeScreenCapture({[Keys["ScreenShot"]["Width"]]   = 512,
---                                     [Keys["ScreenShot"]["Height"]]   = 512,
---                                     [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam2, });
---local mirrorSphere2 = Object({[Keys["ObjectInfo"]["Location"]]    = Vector4(-40, 20, 0),
---                              [Keys["ObjectInfo"]["Diffuse"]]     = Vector4(0.51, 0.53, 0.58, 1.0),
---                              [Keys["ObjectInfo"]["Ambient"]]     = Vector4(0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["Specular"]]    = Vector4(0.5, 0.5, 0.5, 0.5),
---                              [Keys["ObjectInfo"]["DrawableObj"]] = sphereDrawable,
---                              [Keys["ObjectInfo"]["Scale"]]       = Vector4(10.0, 10.0, 10.0),
---                              [Keys["ObjectInfo"]["Light"]]       = false,});
---mirrorSphere2:AddCubeTexture(mirrorSphereSC2:GetTexture());

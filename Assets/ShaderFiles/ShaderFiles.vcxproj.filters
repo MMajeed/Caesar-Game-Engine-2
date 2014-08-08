@@ -19,6 +19,9 @@
     <FxCompile Include="VS_Font.fx">
       <Filter>VS</Filter>
     </FxCompile>
+    <FxCompile Include="PS_CubeTexture.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="VS">

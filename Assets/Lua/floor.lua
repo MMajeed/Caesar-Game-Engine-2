@@ -33,12 +33,26 @@ local floor3 = Object({
                                  
 OnKeyDown(KeyCode["Z"], 
     function() 
-        local myTexture = TakeScreenShot({[Keys["ScreenShot"]["Width"]]    = 1024,
-                                          [Keys["ScreenShot"]["Height"]]   = 1024,
-                                          [Keys["ScreenShot"]["CameraID"]] = regularCam, });
+    local tempCam = Camera({
+                    [Keys["Camera"]["Eye"]]             = regularCam.Eye,
+                    [Keys["Camera"]["TargetMagnitude"]] = regularCam.TargetMagnitude,
+                    [Keys["Camera"]["Up"]]              = regularCam.Up,
+                    [Keys["Camera"]["Roll"]]            = regularCam.Roll,
+                    [Keys["Camera"]["Pitch"]]           = regularCam.Pitch,
+                    [Keys["Camera"]["Yaw"]]             = regularCam.Yaw,
+                    [Keys["Camera"]["NearZ"]]           = 0.01,              
+                    [Keys["Camera"]["FarZ"]]            = 5000.0,
+                    [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
+                    [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
+                    [Keys["Camera"]["InclusionList"]]   = {"Text"},
+                   }); 
+        local screenTexture = TakeScreenShot({
+                                          [Keys["ScreenShot"]["Width"]]    = 1024,
+                                          [Keys["ScreenShot"]["Height"]]   = 768,
+                                          [Keys["ScreenShot"]["CameraID"]] = tempCam, });
         WaitToProcessGraphic(
             function()
-                floor1.Texture = { ["Texture"] = myTexture };
+                floor2.Texture = { ["Texture"] = screenTexture; };
             end
         );
     end
@@ -46,7 +60,6 @@ OnKeyDown(KeyCode["Z"],
 
 OnKeyDown(KeyCode["X"], 
     function() 
-       floor1.Texture = { };
+        floor2.Texture = { ["Texture"] = tilesTexture };
     end
 );
-

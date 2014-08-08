@@ -12,6 +12,7 @@ class ScriptGraphicDLL_API LuaBasicTexture : public GenericLuaObject
 public:
 	LuaBasicTexture(){};
 	LuaBasicTexture(std::string textureFile);
+	LuaBasicTexture(const GenericLuaObject& v);
 	void Release();
 
 	static void Register(lua_State *lua);

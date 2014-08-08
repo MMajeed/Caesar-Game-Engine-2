@@ -11,6 +11,7 @@ void LuaBasicTexture::Release()
 	BasicTextureConfig::Release(this->ID);
 	this->ID = "";
 }
+LuaBasicTexture::LuaBasicTexture(const GenericLuaObject& v) : GenericLuaObject(v){}
 void LuaBasicTexture::Register(lua_State *lua)
 {
 	luabind::module(lua) [

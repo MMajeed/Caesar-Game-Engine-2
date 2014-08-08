@@ -14,8 +14,8 @@ protected:
 public:
 	GenericLuaObject() = default;
 	GenericLuaObject(const std::string& ID);
-	virtual operator std::string();
-	virtual std::string GetID() const;
+	operator std::string();
+	std::string GetID() const;
 
 	virtual ~GenericLuaObject(){}
 	static void RegisterAllLuaFunction(lua_State *lua);

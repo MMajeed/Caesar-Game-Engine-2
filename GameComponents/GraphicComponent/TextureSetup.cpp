@@ -37,6 +37,10 @@ std::vector<TextureInfo> TextureSetup::Setup(const GraphicCameraEntity& camera, 
 		{
 			returnValue.push_back({tx, ti.Slot});
 		}
+		else
+		{
+			returnValue.push_back({nullptr, ti.Slot});
+		}
 	}
 
 	return returnValue;

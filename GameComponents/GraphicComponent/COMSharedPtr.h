@@ -9,7 +9,10 @@ struct ComReleaser
 {
 	void operator()(T* p) const
 	{
-		if(p){ p->Release(); }
+		if(p)
+		{ 
+			p->Release(); 
+		}
 	}
 };
 

@@ -114,6 +114,7 @@ Text2D = class(function(self, text, location)
                                     [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
                                     [Keys["ObjectInfo"]["VertexShader"]] = VSTextShader,
                                     [Keys["ObjectInfo"]["PixelShader"]]  = PSFontShader,
+                                    [Keys["ObjectInfo"]["Group"]]        = { "Text" },
                                     [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = SpriteTexture },
                                     });
@@ -175,8 +176,16 @@ function Text2D:Set()
         spriteModel.Faces = faces;
         spriteModel.Vertices = verticeArray;
         spriteModel.Texture = textureArray;
-        self.grahpicSpriteModel = GraphicModel(spriteModel);
-        self.SpriteObj.GraphicModel = self.grahpicSpriteModel;
+        
+        local graphicSpriteModel = GraphicModel(spriteModel);
+        WaitToProcessGraphic(
+            function()
+                if(self.grahpicSpriteModel ~= nil) then
+                    self.grahpicSpriteModel:Release();
+                end
+                self.SpriteObj.GraphicModel = graphicSpriteModel;
+            end
+        );
     end;
 end
 

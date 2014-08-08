@@ -39,7 +39,7 @@ PS_INPUT main(VS_INPUT input)
 	output.NormalWorld = normalize(output.NormalWorld);
 
 	// Pass the texture coordinates to the pixel shader
-	output.tex = (float3)input.tex;
+	output.tex = input.tex.xyz;
 
 	return output;
 }

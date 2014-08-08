@@ -41,6 +41,14 @@
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="PS_CubeTexture.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="PS_Font.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Pixel</ShaderType>

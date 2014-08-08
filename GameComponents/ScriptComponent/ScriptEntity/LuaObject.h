@@ -59,8 +59,8 @@ public:
 	
 	luabind::object GetGroupList();
 	void SetGroupList(const luabind::object& v);
-	void AddGroupList(const GenericLuaObject& v);
-	void DeleteGroupList(const GenericLuaObject& v);
+	void AddGroupList(const luabind::object& v);
+	void DeleteGroupList(const luabind::object& v);
 	void EmptyGroupList();
 
 	luabind::object GetAllTexture();
@@ -84,8 +84,6 @@ public:
 	void SetCullMode(const luabind::object& v);
 
 	void Release();
-
-	virtual std::string GetID() const;
 
 	static void Register(lua_State *lua);
 	static inline void RegisterAllLuaFunction(lua_State *lua)

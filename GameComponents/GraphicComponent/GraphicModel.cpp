@@ -71,6 +71,10 @@ void GraphicModel::Setup(const GraphicCameraEntity& camera, const GraphicObjectE
 	pImmediateContext->IASetVertexBuffers(0, 1, &pV, &stride, &offset);
 	pImmediateContext->IASetIndexBuffer(this->pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
 	pImmediateContext->IASetPrimitiveTopology(this->Topology);
+
+	// Set the input layout
+	COMSharedPtr<ID3D11InputLayout> inputLayout = this->GetVertexLayout(camera, object);
+	pImmediateContext->IASetInputLayout(inputLayout);
 }
 
 std::vector<VertexLayout> GraphicModel::GetVertexLayout()
@@ -174,4 +178,25 @@ std::shared_ptr<GraphicModel> GraphicModel::Spawn(std::shared_ptr<CHL::Model> mo
 	newObject->InitIndexBuffer();
 
 	return newObject;
+}
+
+COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+{
+	COMSharedPtr<ID3D11InputLayout> returnValue;
+
+	auto inputLayoutIter = this->InputLayoutMap.find(object.GetVertexShaderID());
+	if(inputLayoutIter != this->InputLayoutMap.end())
+	{
+		returnValue = inputLayoutIter->second;
+	}
+	else
+	{
+		if(std::shared_ptr<VertexShader> vs = object.GetVertexShader())
+		{
+			returnValue = vs->GenerateInputLayout(object.GetGraphicModel());
+			this->InputLayoutMap[object.GetVertexShaderID()] = returnValue;
+		}
+	}
+
+	return returnValue;
 }

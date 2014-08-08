@@ -26,7 +26,7 @@ std::shared_ptr<BasicTexture> BasicTexture::Spawn(const std::string& fileName)
 
 	return newTexture;
 }
-std::shared_ptr<BasicTexture> BasicTexture::Spawn(ID3D11ShaderResourceView* texture)
+std::shared_ptr<BasicTexture> BasicTexture::Spawn(COMSharedPtr<ID3D11ShaderResourceView> texture)
 {
 	std::shared_ptr<BasicTexture> newTexture(new BasicTexture());
 	newTexture->pTexture = texture;

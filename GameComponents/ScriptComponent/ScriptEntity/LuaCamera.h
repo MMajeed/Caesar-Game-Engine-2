@@ -77,8 +77,6 @@ public:
 
 	void Release();
 
-	std::string GetID() const;
-
 	static void Register(lua_State *lua);
 
 	static inline void RegisterAllLuaFunction(lua_State *lua)

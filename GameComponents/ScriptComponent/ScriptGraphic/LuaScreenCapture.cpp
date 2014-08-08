@@ -36,8 +36,8 @@ void LuaScreenCapture::BasicScreenCapture::SetCameraID(GenericLuaObject cameraID
 }
 LuaBasicTexture LuaScreenCapture::BasicScreenCapture::GetTexture()
 {
-	LuaBasicTexture texture;
-	texture.GetID() = this->TextureID;
+	GenericLuaObject g(this->TextureID);
+	LuaBasicTexture texture(g);
 	return texture;
 }
 void LuaScreenCapture::BasicScreenCapture::Release()
@@ -88,8 +88,8 @@ void LuaScreenCapture::DepthScreenCapture::SetCameraID(GenericLuaObject cameraID
 }
 LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 {
-	LuaBasicTexture texture;
-	texture.GetID() = this->TextureID;
+	GenericLuaObject g(this->TextureID);
+	LuaBasicTexture texture(g);
 	return texture;
 }
 void LuaScreenCapture::DepthScreenCapture::Release()
@@ -140,8 +140,8 @@ void LuaScreenCapture::CubeScreenCapture::SetCameraID(GenericLuaObject cameraID)
 }
 LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 {
-	LuaBasicTexture texture;
-	texture.GetID() = this->TextureID;
+	GenericLuaObject g(this->TextureID);
+	LuaBasicTexture texture(g);
 	return texture;
 }
 void LuaScreenCapture::CubeScreenCapture::Release()

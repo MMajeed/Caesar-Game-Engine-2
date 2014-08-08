@@ -7,7 +7,7 @@ struct PS_INPUT
 	float3 tex						: TEXCOORD0;
 };
 
-Texture2D Texture : register(t0);
+TextureCube Texture : register(t0);
 
 SamplerState samAnisotropic
 {
@@ -17,7 +17,8 @@ SamplerState samAnisotropic
 	AddressW = Wrap;
 };
 
+
 float4 main(PS_INPUT input) : SV_Target
 {
-	return Texture.Sample(samAnisotropic, input.tex.xy);
+	return Texture.Sample(samAnisotropic, input.NormalWorld.xyz);
 }

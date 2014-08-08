@@ -292,7 +292,6 @@
     <ClInclude Include="DX11Helper.h" />
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="ScreenShot.h" />
-    <ClInclude Include="ShadowScreenShot.h" />
     <ClInclude Include="BasicTexture.h" />
     <ClInclude Include="TextureSetup.h" />
     <ClInclude Include="VertexLayout.h" />
@@ -322,7 +321,6 @@
     <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="ShadowScreenShot.cpp" />
     <ClCompile Include="TextureSetup.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="XNAConverter.cpp" />

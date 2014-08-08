@@ -36,12 +36,17 @@ namespace Scene
 
 		// Clear the back buffer 
 		auto c = Camera.GetClearColor();
-		float ClearColor[4] = {c[0], c[1], c[2], c[3]};
-		d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, ClearColor);
+		d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, c.data());
 		d3dStuff.pImmediateContext->ClearDepthStencilView(d3dStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
+		ID3D11RenderTargetView* pTempRenderTargetView = d3dStuff.pRenderTargetView;
+		ID3D11DepthStencilView* pTempDepthStencilView = d3dStuff.pDepthStencilView;
+		d3dStuff.pImmediateContext->OMSetRenderTargets(1, &pTempRenderTargetView, pTempDepthStencilView);
+		d3dStuff.pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthStencilState, 1);
+		d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
+		// Set the depth stencil state.
 	}
-	void DrawObjects(const GraphicCameraEntity& Camera, std::hash_map<std::string, GraphicObjectEntity>& list)
+	void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
 	{
 		ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 

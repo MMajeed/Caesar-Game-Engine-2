@@ -28,8 +28,8 @@ LuaBasicTexture LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 	}
 
 	std::string textureID = ScreenShotConfig::Basic(width, height, cameraID);
-	LuaBasicTexture texture;
-	texture.GetID() = textureID;
+	GenericLuaObject g(textureID);
+	LuaBasicTexture texture(g);
 	return texture;
 }
 
@@ -51,13 +51,13 @@ LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
 
 			if(key == Keys::ScreenShot::WIDTH)			{ width = luabind::object_cast<int>(*it); }
 			else if(key == Keys::ScreenShot::HEIGHT)    { height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject*>(*it)->GetID(); }
 		}
 	}
 
 	std::string textureID = ScreenShotConfig::Depth(width, height, cameraID);
-	LuaBasicTexture texture;
-	texture.GetID() = textureID;
+	GenericLuaObject g(textureID);
+	LuaBasicTexture texture(g);
 	return texture;
 }
 
@@ -84,8 +84,8 @@ LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
 	}
 
 	std::string textureID = ScreenShotConfig::Cube(width, height, cameraID);
-	LuaBasicTexture texture;
-	texture.GetID() = textureID;
+	GenericLuaObject g(textureID);
+	LuaBasicTexture texture(g);
 	return texture;
 }
 

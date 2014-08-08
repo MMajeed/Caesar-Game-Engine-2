@@ -41,30 +41,33 @@ void GraphicManager::Shutdown()
 
 }
 
+bool h = true;
 void GraphicManager::ProcessDrawing()
 {
-	auto camera = Scene::GetCamera(this->DefaultCamera);
-	std::hash_map<std::string, GraphicObjectEntity> objects = Scene::GetAllObjectEntities();
+	if(h == true)
+	{
+		auto camera = Scene::GetCamera(this->DefaultCamera);
+		std::hash_map<std::string, GraphicObjectEntity> objects = Scene::GetAllObjectEntities();
 
-	camera.UpdateView();
-	camera.UpdatePerspective();
-	camera.UpdateOrthogonal();
+		this->RunAllCapture(objects);
 
-	Scene::ClearScreen(camera);
-	Scene::DrawObjects(camera, objects);
+		Scene::ClearScreen(camera);
+		Scene::DrawObjects(camera, objects);
 
-	// Present the information rendered to the back buffer to the front buffer (the screen)
-	this->D3DStuff.pSwapChain->Present(0, 0);
+		// Present the information rendered to the back buffer to the front buffer (the screen)
+
+		this->D3DStuff.pSwapChain->Present(0, 0);
+	}
 }
 
-void GraphicManager::RunAllCapture(std::hash_map<std::string, SP_INFO>& objects)
+void GraphicManager::RunAllCapture(const std::hash_map<std::string, GraphicObjectEntity>& list)
 {
 	auto& screenCaptures = ResourceManager::ScreenCaptureList.All();
 	for(auto iter = screenCaptures.begin();
 		iter != screenCaptures.end();
 		++iter)
 	{
-		iter->second->Snap(objects);
+		iter->second->Snap(list);
 	}
 }
 

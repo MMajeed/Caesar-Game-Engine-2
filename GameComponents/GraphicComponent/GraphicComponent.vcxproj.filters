@@ -12,9 +12,6 @@
     <ClInclude Include="ScreenShot.h">
       <Filter>ScreenShot</Filter>
     </ClInclude>
-    <ClInclude Include="ShadowScreenShot.h">
-      <Filter>ScreenShot\ShadowScreenShot</Filter>
-    </ClInclude>
     <ClInclude Include="DepthScreenShot.h">
       <Filter>ScreenShot\DepthScreenShot</Filter>
     </ClInclude>
@@ -98,9 +95,6 @@
     </ClCompile>
     <ClCompile Include="BasicTexture.cpp">
       <Filter>Drawable\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="ShadowScreenShot.cpp">
-      <Filter>ScreenShot\ShadowScreenShot</Filter>
     </ClCompile>
     <ClCompile Include="DepthScreenShot.cpp">
       <Filter>ScreenShot\DepthScreenShot</Filter>
@@ -199,9 +193,6 @@
     </Filter>
     <Filter Include="ScreenShot\CubeScreenShot">
       <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenShot\ShadowScreenShot">
-      <UniqueIdentifier>{9c0a465f-98e0-46ce-a6b0-f62e01836c5c}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{bea3c4dd-524f-4282-b497-ddddbe8f9936}</UniqueIdentifier>

@@ -58,12 +58,23 @@ void GeometryShader::Setup(const GraphicCameraEntity& camera, const GraphicObjec
 			tempCB, 0, NULL, this->pCBSetup->GetCBData().data(), 0, 0);
 		graphicD3D.pImmediateContext->GSSetConstantBuffers(0, 1, &tempCB);
 	}
+	else
+	{
+		graphicD3D.pImmediateContext->GSSetConstantBuffers(0, 0, nullptr);
+	}
 
 	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, object);
 	for(const TextureInfo& ti : textures)
 	{
-		ID3D11ShaderResourceView* pTexture = ti.Texture->pTexture;
-		graphicD3D.pImmediateContext->GSSetShaderResources(ti.Slot, 1, &pTexture);
+		if(ti.Texture)
+		{
+			ID3D11ShaderResourceView* pTexture = ti.Texture->pTexture;
+			graphicD3D.pImmediateContext->GSSetShaderResources(ti.Slot, 1, &pTexture);
+		}
+		else
+		{
+			graphicD3D.pImmediateContext->GSSetShaderResources(ti.Slot, 0, nullptr);
+		}
 	}
 }
 

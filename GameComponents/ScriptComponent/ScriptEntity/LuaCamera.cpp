@@ -13,6 +13,7 @@ LuaCamera::LuaCamera()
 	std::shared_ptr<CameraEntity> obj = CameraEntity::Spawn();
 	CameraEntities::Add(obj);
 	this->wp_Obj = obj;
+	this->ID = obj->GetID();
 }
 LuaCamera::LuaCamera(const luabind::object& table)
 {
@@ -104,6 +105,7 @@ LuaCamera::LuaCamera(const luabind::object& table)
 	std::shared_ptr<CameraEntity> obj = CameraEntity::Spawn();
 	CameraEntities::Add(obj);
 	this->wp_Obj = obj;
+	this->ID = obj->GetID();
 
 	obj->SetEye(eye);
 	obj->SetTargetMagnitude(targetMagnitude);
@@ -489,16 +491,6 @@ void LuaCamera::Release()
 		ObjectEntities::Remove(obj->GetID());
 	}
 	this->wp_Obj.reset();
-}
-
-std::string LuaCamera::GetID() const
-{
-	std::string returnValue;
-	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
-	{
-		returnValue = obj->GetID();
-	}
-	return returnValue;
 }
 
 void LuaCamera::Register(lua_State *lua)

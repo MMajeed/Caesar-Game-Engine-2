@@ -31,13 +31,13 @@ namespace BasicScreenCaptureConfig
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-		/*		std::shared_ptr<BasicTexture> newTexture =
+				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn();
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				std::shared_ptr<BasicScreenCapture> newBasicScreenShot =
 					BasicScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
-				ResourceManager::ScreenCaptureList.Insert(this->ID, newBasicScreenShot);*/
+				ResourceManager::ScreenCaptureList.Insert(this->ID, newBasicScreenShot);
 
 				return Message::Status::Complete;
 			}
@@ -69,7 +69,7 @@ namespace BasicScreenCaptureConfig
 
 			Message::Status Work()
 			{
-				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
 				if(screenCapture)
@@ -80,7 +80,7 @@ namespace BasicScreenCaptureConfig
 						cast->cameraID = this->cameraID;
 					}
 				}
-				*/
+				
 				return Message::Status::Complete;
 			}
 			std::string ID;

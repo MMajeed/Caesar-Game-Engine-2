@@ -6,6 +6,7 @@
 #include <GenerateGUID.h>
 #include <BasicTexture.h>
 #include <ResourceManager.h>
+#include <D3DX11tex.h>
 
 namespace ScreenShotConfig
 {
@@ -28,21 +29,17 @@ namespace ScreenShotConfig
 
 			Message::Status Work()
 			{
-				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-				auto allObjects = EntityConfig::GetAllEntity();
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicScreenShot> newBasicScreenShot =
 					BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
-				newBasicScreenShot->Snap(allObjects);
+				newBasicScreenShot->Snap();
 
-				auto texture = newBasicScreenShot->GetScreenTexture();
+				auto texture = newBasicScreenShot->pScreenTexture;
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
-
-				newBasicScreenShot->Release();*/
-
+				
 				return Message::Status::Complete;
 			}
 
@@ -56,6 +53,7 @@ namespace ScreenShotConfig
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->newTextureID;
 	}
+
 	std::string Depth(unsigned int width,
 					  unsigned int height,
 					  const std::string& cameraID)
@@ -75,21 +73,17 @@ namespace ScreenShotConfig
 
 			Message::Status Work()
 			{
-				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-				auto allObjects = EntityConfig::GetAllEntity();
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<DepthScreenShot> newBasicScreenShot =
 					DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
-				newBasicScreenShot->Snap(allObjects);
+				newBasicScreenShot->Snap();
 
-				auto texture = newBasicScreenShot->GetScreenTexture();
+				auto texture = newBasicScreenShot->pScreenTexture;
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
-				newBasicScreenShot->Release();
-*/
 				return Message::Status::Complete;
 			}
 
@@ -120,21 +114,17 @@ namespace ScreenShotConfig
 
 			Message::Status Work()
 			{
-				/*std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-				auto allObjects = EntityConfig::GetAllEntity();
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<CubeScreenShot> newBasicScreenShot =
 					CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
-				newBasicScreenShot->Snap(allObjects);
+				newBasicScreenShot->Snap();
 
-				auto texture = newBasicScreenShot->GetScreenTexture();
+				auto texture = newBasicScreenShot->pScreenTexture;
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
-				newBasicScreenShot->Release();
-*/
 				return Message::Status::Complete;
 			}
 

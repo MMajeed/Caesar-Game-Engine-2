@@ -17,7 +17,7 @@ namespace Scene
 	GraphicComponentDLL_API
 		void ClearScreen(const GraphicCameraEntity& Camera);
 	GraphicComponentDLL_API
-		void DrawObjects(const GraphicCameraEntity& Camera, std::hash_map<std::string, GraphicObjectEntity>& list);
+		void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
 };
 
 #endif //__Scene__

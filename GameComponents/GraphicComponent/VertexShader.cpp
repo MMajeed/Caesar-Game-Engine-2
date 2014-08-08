@@ -58,18 +58,24 @@ void VertexShader::Setup(const GraphicCameraEntity& camera, const GraphicObjectE
 		graphicD3D.pImmediateContext->UpdateSubresource(
 			tempCB, 0, NULL, this->pCBSetup->GetCBData().data(), 0, 0);
 		graphicD3D.pImmediateContext->VSSetConstantBuffers(0, 1, &tempCB);
-
-		// Set the input layout
-		std::string modelID = object.GetGraphicModelID();
-		COMSharedPtr<ID3D11InputLayout> inputLayout = this->GetVertexLayout(modelID);
-		graphicD3D.pImmediateContext->IASetInputLayout(inputLayout);
+	}
+	else
+	{
+		graphicD3D.pImmediateContext->VSSetConstantBuffers(0, 0, nullptr);
 	}
 
 	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, object);
 	for(const TextureInfo& ti : textures)
 	{
-		ID3D11ShaderResourceView* pTexture = ti.Texture->pTexture;
-		graphicD3D.pImmediateContext->VSSetShaderResources(ti.Slot, 1, &pTexture);
+		if(ti.Texture)
+		{
+			ID3D11ShaderResourceView* pTexture = ti.Texture->pTexture;
+			graphicD3D.pImmediateContext->VSSetShaderResources(ti.Slot, 1, &pTexture);
+		}
+		else
+		{
+			graphicD3D.pImmediateContext->VSSetShaderResources(ti.Slot, 0, nullptr);
+		}
 	}
 }
 
@@ -89,28 +95,11 @@ std::shared_ptr<VertexShader> VertexShader::Spawn(const std::string& fileName)
 	return VertexShader::Spawn(shaderBytes);
 }
 
-COMSharedPtr<ID3D11InputLayout> VertexShader::GetVertexLayout(std::string ID)
-{
-	COMSharedPtr<ID3D11InputLayout> returnValue;
-
-	auto inputLayoutIter = this->InputLayoutMap.find(ID);
-	if(inputLayoutIter != this->InputLayoutMap.end())
-	{
-		returnValue = inputLayoutIter->second;
-	}
-	else
-	{
-		returnValue = this->GenerateInputLayout(ID);
-		this->InputLayoutMap[ID] = returnValue;
-	}
-
-	return returnValue;
-}
-COMSharedPtr<ID3D11InputLayout> VertexShader::GenerateInputLayout(std::string ID)
+COMSharedPtr<ID3D11InputLayout> VertexShader::GenerateInputLayout(std::shared_ptr<GraphicModel> model)
 {
 	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 
-	std::shared_ptr<GraphicModel> gm = ResourceManager::GraphicModelList.Find(ID);
+	std::shared_ptr<GraphicModel> gm = model;
 	if(gm == false){ Logger::LogError("ErrorException: Could not locate graphic model while creating the Input Layout"); }
 
 	std::vector<VertexLayout> vertexLayoutList = gm->GetVertexLayout();

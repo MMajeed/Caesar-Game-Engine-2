@@ -15,3 +15,8 @@ local skybox = Object({
                         [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Solid"],
                         [Keys["ObjectInfo"]["CullMode"]]     = CullMode["Front"],
                         });
+                        
+function UpdateSkyBox()
+    skybox.Location = regularCam.Eye;
+end
+LoopCall(1, UpdateSkyBox);

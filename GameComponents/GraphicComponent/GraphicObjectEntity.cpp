@@ -12,7 +12,13 @@
 #include <PhysicsCommunicator\RigidBodyConfig.h>
 
 GraphicObjectEntity::GraphicObjectEntity(){}
-GraphicObjectEntity::GraphicObjectEntity(std::weak_ptr<ObjectEntity> v) : wp_Obj(v){}
+GraphicObjectEntity::GraphicObjectEntity(std::weak_ptr<ObjectEntity> v)
+{
+	if(std::shared_ptr<ObjectEntity> spV = v.lock())
+	{
+		this->obj = std::dynamic_pointer_cast<ObjectEntity>(spV->Clone());
+	}
+}
 
 bool GraphicObjectEntity::IsValidToDraw(const GraphicCameraEntity& camera) const
 {
@@ -67,45 +73,45 @@ void GraphicObjectEntity::SetupModel(const GraphicCameraEntity& camera) const
 XMFLOAT4 GraphicObjectEntity::GetLocation() const
 {
 	XMFLOAT4 returnValue(0.0, 0.0, 0.0, 0.0);
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = ConvertVec4(obj->GetLocation());
+		returnValue = ConvertVec4(this->obj->GetLocation());
 	}
 	return returnValue;
 }
 XMFLOAT4 GraphicObjectEntity::GetRotation() const
 {
 	XMFLOAT4 returnValue(0.0, 0.0, 0.0, 0.0);
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = ConvertVec4(obj->GetRotation());
+		returnValue = ConvertVec4(this->obj->GetRotation());
 	}
 	return returnValue;
 }
 XMFLOAT4 GraphicObjectEntity::GetScale() const
 {
 	XMFLOAT4 returnValue(1.0, 1.0, 1.0, 1.0);
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = ConvertVec4(obj->GetScale());
+		returnValue = ConvertVec4(this->obj->GetScale());
 	}
 	return returnValue;
 }
 bool GraphicObjectEntity::HasDepth() const
 {
 	bool returnValue = true;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = obj->GetDepth();
+		returnValue = this->obj->GetDepth();
 	}
 	return returnValue;
 }
-std::string GraphicObjectEntity::GetGraphicModelID() const
+std::string GraphicObjectEntity::GetVertexShaderID() const
 {
 	std::string returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetGraphicModelID();
+		std::string id = this->obj->GetVertexShaderID();
 		returnValue = id;
 	}
 	return returnValue;
@@ -113,9 +119,9 @@ std::string GraphicObjectEntity::GetGraphicModelID() const
 std::shared_ptr<GraphicModel> GraphicObjectEntity::GetGraphicModel() const
 {
 	std::shared_ptr<GraphicModel> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetGraphicModelID();
+		std::string id = this->obj->GetGraphicModelID();
 		returnValue = ResourceManager::GraphicModelList.Find(id);
 	}
 	return returnValue;
@@ -123,9 +129,9 @@ std::shared_ptr<GraphicModel> GraphicObjectEntity::GetGraphicModel() const
 std::shared_ptr<VertexShader> GraphicObjectEntity::GetVertexShader() const
 {
 	std::shared_ptr<VertexShader> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetVertexShaderID();
+		std::string id = this->obj->GetVertexShaderID();
 		returnValue = ResourceManager::VertexShaderList.Find(id);
 	}
 	return returnValue;
@@ -133,9 +139,9 @@ std::shared_ptr<VertexShader> GraphicObjectEntity::GetVertexShader() const
 std::shared_ptr<GeometryShader> GraphicObjectEntity::GetGeometryShader() const
 {
 	std::shared_ptr<GeometryShader> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetGeometryShaderID();
+		std::string id = this->obj->GetGeometryShaderID();
 		returnValue = ResourceManager::GeometryShaderList.Find(id);
 	}
 	return returnValue;
@@ -143,9 +149,9 @@ std::shared_ptr<GeometryShader> GraphicObjectEntity::GetGeometryShader() const
 std::shared_ptr<PixelShader> GraphicObjectEntity::GetPixelShader() const
 {
 	std::shared_ptr<PixelShader> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetPixelShaderID();
+		std::string id = this->obj->GetPixelShaderID();
 		returnValue = ResourceManager::PixelShaderList.Find(id);
 	}
 	return returnValue;
@@ -153,9 +159,9 @@ std::shared_ptr<PixelShader> GraphicObjectEntity::GetPixelShader() const
 std::hash_map<std::string, XMFLOAT4X4> GraphicObjectEntity::GetAnimation() const
 {
 	std::hash_map<std::string, XMFLOAT4X4> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetAnimationID();
+		std::string id = this->obj->GetAnimationID();
 		// to do
 	}
 	return returnValue;
@@ -163,10 +169,10 @@ std::hash_map<std::string, XMFLOAT4X4> GraphicObjectEntity::GetAnimation() const
 XMFLOAT4X4 GraphicObjectEntity::GetJointAnimation() const
 {
 	XMFLOAT4X4 returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetAnimationID();
-		std::string jointName = obj->GetJointName();
+		std::string id = this->obj->GetAnimationID();
+		std::string jointName = this->obj->GetJointName();
 		CML::Matrix4x4 jaMatrix = AnimationControllerConfig::GetSingleJoint(id, jointName);
 		returnValue = Convert4x4(jaMatrix);
 	}
@@ -175,9 +181,9 @@ XMFLOAT4X4 GraphicObjectEntity::GetJointAnimation() const
 XMFLOAT4X4 GraphicObjectEntity::GetRigidBody() const
 {
 	XMFLOAT4X4 returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		std::string id = obj->GetRigidBodyID();
+		std::string id = this->obj->GetRigidBodyID();
 		CML::Matrix4x4 jaMatrix = RigidBodyConfig::GetTranslation(id);
 		returnValue = Convert4x4(jaMatrix);
 	}
@@ -186,9 +192,9 @@ XMFLOAT4X4 GraphicObjectEntity::GetRigidBody() const
 std::hash_set<std::string> GraphicObjectEntity::GetGroupList() const
 {
 	std::hash_set<std::string> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = obj->GetGroupList();
+		returnValue = this->obj->GetGroupList();
 	}
 	return returnValue;
 }
@@ -196,10 +202,10 @@ std::shared_ptr<BasicTexture> GraphicObjectEntity::FindTexture(std::string Name)
 {
 	std::shared_ptr<BasicTexture> returnValue;
 
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
 		std::string ID;
-		if(obj->FindTexture(Name, ID))
+		if(this->obj->FindTexture(Name, ID))
 		{
 			returnValue = ResourceManager::TextureList.Find(ID);
 		}
@@ -210,36 +216,36 @@ std::shared_ptr<BasicTexture> GraphicObjectEntity::FindTexture(std::string Name)
 std::hash_map<std::string, std::shared_ptr<Object>> GraphicObjectEntity::GetUserData() const
 {
 	std::hash_map<std::string, std::shared_ptr<Object>>  returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = obj->GetUserData();
+		returnValue = this->obj->GetUserData();
 	}
 	return returnValue;
 }
 std::shared_ptr<Object> GraphicObjectEntity::FindUserData(std::string ID) const
 {
 	std::shared_ptr<Object> returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = obj->FindUserData(ID);
+		returnValue = this->obj->FindUserData(ID);
 	}
 	return returnValue;
 }
 D3D11_FILL_MODE GraphicObjectEntity::GetFillMode() const
 {
 	D3D11_FILL_MODE returnValue = D3D11_FILL_SOLID;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = static_cast<D3D11_FILL_MODE>(obj->GetFillMode());
+		returnValue = static_cast<D3D11_FILL_MODE>(this->obj->GetFillMode());
 	}
 	return returnValue;
 }
 D3D11_CULL_MODE GraphicObjectEntity::GetCullMode() const
 {
 	D3D11_CULL_MODE returnValue = D3D11_CULL_BACK;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
-		returnValue = static_cast<D3D11_CULL_MODE>(obj->GetCullMode());
+		returnValue = static_cast<D3D11_CULL_MODE>(this->obj->GetCullMode());
 	}
 	return returnValue;
 }
@@ -247,7 +253,7 @@ D3D11_CULL_MODE GraphicObjectEntity::GetCullMode() const
 XMFLOAT4X4 GraphicObjectEntity::GetLRS() const
 {
 	XMFLOAT4X4 returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
 		
 		XMFLOAT4 location = this->GetLocation();
@@ -285,7 +291,7 @@ XMFLOAT4X4 GraphicObjectEntity::GetLRS() const
 XMFLOAT4X4 GraphicObjectEntity::GetWorldTransformation() const
 {
 	XMFLOAT4X4 returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	if(this->obj)
 	{
 		XMFLOAT4X4 animation = this->GetJointAnimation();
 		XMFLOAT4X4 rigidBody = this->GetRigidBody();

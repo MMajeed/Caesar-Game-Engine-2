@@ -11,7 +11,7 @@ Interface::Interface()
 	this->running = true;
 	this->timer.FrameCount = 0;
 	this->timer.start = std::chrono::system_clock::now();
-	this->timer.NumberOfFramePerSeconds = 1000;
+	this->timer.NumberOfFramePerSeconds = 120;
 }
 
 void Interface::Run()
@@ -44,13 +44,12 @@ void Interface::Run()
 			std::chrono::time_point<std::chrono::system_clock> afterWork = std::chrono::system_clock::now();
 			std::chrono::duration<double> elapsedWorkTime = afterWork - end;
 
-			const double minWorkTime = 1000 / this->timer.NumberOfFramePerSeconds;
-			if(elapsedWorkTime.count() <= minWorkTime)
+			std::chrono::duration<double> minWorkTime(2. / this->timer.NumberOfFramePerSeconds);
+			if(elapsedWorkTime < minWorkTime)
 			{
-				double timeToSleep = minWorkTime - elapsedWorkTime.count();
-				std::this_thread::sleep_for(std::chrono::milliseconds((long long)timeToSleep));
+				std::chrono::duration<double, std::milli> timeToSleep = minWorkTime - elapsedWorkTime;
+				std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::milliseconds>(timeToSleep));
 			}
-
 			// update fps
 			end = start;
 			timer.FrameCount += 1;
@@ -72,10 +71,16 @@ void Interface::ProccessMessages()
 		{
 			std::lock_guard<std::mutex> lock(this->messageMutex);
 			msg = this->QueueMessages.front();
-			this->QueueMessages.pop();
 		}
 		
-		msg->Proccess();
+		if(msg)
+		{
+			msg->Proccess();
+
+			std::lock_guard<std::mutex> lock(this->messageMutex);
+			this->QueueMessages.pop();
+		}
+
 	}
 }
 

@@ -13,6 +13,7 @@ LuaObject::LuaObject()
 	std::shared_ptr<ObjectEntity> obj = ObjectEntity::Spawn();
 	ObjectEntities::Add(obj);
 	this->wp_Obj = obj;
+	this->ID = obj->GetID();
 }
 LuaObject::LuaObject(const luabind::object& table)
 {
@@ -22,6 +23,7 @@ LuaObject::LuaObject(const luabind::object& table)
 	std::shared_ptr<ObjectEntity> obj = ObjectEntity::Spawn();
 	ObjectEntities::Add(obj);
 	this->wp_Obj = obj;
+	this->ID = obj->GetID();
 
 	for (luabind::iterator it(table);
 		it != luabind::iterator();
@@ -368,31 +370,36 @@ void LuaObject::SetGroupList(const luabind::object& v)
 {
 	if(luabind::type(v) != LUA_TTABLE){ Logger::LogError("Wrong paramter type"); }
 
+	this->EmptyGroupList();
+
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
-		std::hash_set<std::string> list;
 		for(luabind::iterator it(v);
 			it != luabind::iterator();
 			++it)
 		{
-			std::string id = luabind::object_cast<GenericLuaObject>(*it).GetID();
-			list.insert(id);
+			this->AddGroupList(*it);
 		}
-		obj->SetGroupList(list);
 	}
 }
-void LuaObject::AddGroupList(const GenericLuaObject& v)
+void LuaObject::AddGroupList(const luabind::object& v)
 {
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
-		obj->AddGroupList(GenericLuaObject(v.GetID()));
+		if(boost::optional<std::string> value = luabind::object_cast_nothrow<std::string>(v))
+			obj->AddGroupList(*value);
+		else
+			Logger::LogError("Wrong paramter type");
 	}
 }
-void LuaObject::DeleteGroupList(const GenericLuaObject& v)
+void LuaObject::DeleteGroupList(const luabind::object& v)
 {
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
-		obj->DeleteGroupList(GenericLuaObject(v.GetID()));
+		if(boost::optional<std::string> value = luabind::object_cast_nothrow<std::string>(v))
+			obj->DeleteGroupList(*value);
+		else
+			Logger::LogError("Wrong paramter type");
 	}
 }
 void LuaObject::EmptyGroupList()
@@ -419,6 +426,8 @@ luabind::object LuaObject::GetAllTexture()
 void LuaObject::SetAllTexture(const luabind::object& v)
 {
 	if(luabind::type(v) != LUA_TTABLE){ Logger::LogError("Wrong paramter type"); }
+
+	this->EmptyTexture();
 
 	std::hash_map<std::string, std::shared_ptr<Object>> Texture;
 	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
@@ -485,6 +494,8 @@ luabind::object LuaObject::GetAllUserData()
 void LuaObject::SetAllUserData(const luabind::object& v)
 {
 	if(luabind::type(v) != LUA_TTABLE){ Logger::LogError("Wrong paramter type"); }
+
+	this->EmptyUserData();
 
 	std::hash_map<std::string, std::shared_ptr<Object>> userData;
 	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
@@ -596,16 +607,6 @@ void LuaObject::SetCullMode(const luabind::object& v)
 	}
 }
 
-std::string LuaObject::GetID() const
-{
-	std::string returnValue;
-	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
-	{
-		returnValue = obj->GetID();
-	}
-	return returnValue;
-}
-
 void LuaObject::Release()
 {
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
@@ -667,7 +668,3 @@ void LuaObject::Register(lua_State *lua)
 	fillMode["Solid"] = 3;
 	luabind::globals(lua)["FillMode"] = fillMode;
 }
-//void LuaObject::GetDrawObjIDs()
-//{
-//	
-//}

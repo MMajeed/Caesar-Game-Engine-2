@@ -6,7 +6,12 @@
 #include "GraphicManager.h"
 
 GraphicCameraEntity::GraphicCameraEntity(){}
-GraphicCameraEntity::GraphicCameraEntity(std::weak_ptr<CameraEntity> v) : wp_Obj(v){}
+GraphicCameraEntity::GraphicCameraEntity(std::weak_ptr<CameraEntity> v) : wp_Obj(v)
+{
+	this->UpdateView();
+	this->UpdatePerspective();
+	this->UpdateOrthogonal();
+}
 
 XMFLOAT4 GraphicCameraEntity::GetEye() const
 {

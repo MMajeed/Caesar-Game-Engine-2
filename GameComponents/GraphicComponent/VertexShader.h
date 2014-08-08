@@ -11,6 +11,7 @@
 #include "CBSetup.h"
 #include "TextureSetup.h"
 
+class GraphicModel;
 class GraphicComponentDLL_API VertexShader
 {
 protected:
@@ -21,18 +22,15 @@ public:
 
 	static std::shared_ptr<VertexShader> Spawn(const std::vector<char>& CompiledShader);
 	static std::shared_ptr<VertexShader> Spawn(const std::string& fileName);
+
+	COMSharedPtr<ID3D11InputLayout> GenerateInputLayout(std::shared_ptr<GraphicModel> model);
 protected:
 	COMSharedPtr<ID3D11VertexShader>	pVertexShader;
 	COMSharedPtr<ID3D11Buffer>			pConstantBuffer;
 	std::shared_ptr<CBSetup>		pCBSetup;
 	std::vector<char>					CompiledShader;
 
-	COMSharedPtr<ID3D11InputLayout> GetVertexLayout(std::string ID);
-	COMSharedPtr<ID3D11InputLayout> GenerateInputLayout(std::string ID);
-
 	std::shared_ptr<TextureSetup>		pTexture;
-
-	std::hash_map<std::string, COMSharedPtr<ID3D11InputLayout>> InputLayoutMap;
 };
 
 
