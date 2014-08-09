@@ -1,8 +1,8 @@
 cbuffer cbObject : register(b0)
 {
-	matrix World2D;
+	matrix World;
+	matrix View2D;
 	matrix Orthogonal;
-	matrix WVP;
 };
 
 struct VS_INPUT
@@ -23,9 +23,9 @@ PS_INPUT main(VS_INPUT input)
 	PS_INPUT output = (PS_INPUT)0;
 
 	output.PosWVP = input.VertexPos;
-	output.PosWVP = mul(output.PosWVP, World2D);
+	output.PosWVP = mul(output.PosWVP, World);
+	output.PosWVP = mul(output.PosWVP, View2D);
 	output.PosWVP = mul(output.PosWVP, Orthogonal);
-	//output.PosWVP = mul(input.VertexPos, WVP);
 
 	// Pass the texture coordinates to the pixel shader
 	output.tex = (float3)input.tex;

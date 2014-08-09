@@ -46,12 +46,12 @@ void CBWeakVariables::Update(const GraphicCameraEntity& camera, const GraphicObj
 	}
 	else // If we didn't find it in object, check camera
 	{
-		std::hash_map<std::string, std::vector<char>> cameraUserData = camera.GetUserData();
+		/*std::hash_map<std::string, std::vector<char>> cameraUserData = camera.GetUserData();
 		auto iter = cameraUserData.find(this->Name);
 		if(iter != cameraUserData.end())
 		{
 			dataToCopy = iter->second;
-		}
+		}*/
 	}
 
 	if(dataToCopy.size() > 0)

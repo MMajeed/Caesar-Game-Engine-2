@@ -91,7 +91,7 @@ void BasicScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<Grap
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	auto camera = Scene::GetCamera(this->cameraID);
+	auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
 
 	this->SetupSnapShot(camera, list);
 	this->TakeScreenSnapShot(camera, list);

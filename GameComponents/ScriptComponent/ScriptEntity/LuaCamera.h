@@ -18,61 +18,42 @@ public:
 	LuaCamera(const luabind::object& table);
 
 	LuaMath::Vector4 GetEye();
-	void SetEye(const LuaMath::Vector4& v);
+	void SetEye(const luabind::object& v);
 
 	LuaMath::Vector4 GetTargetMagnitude();
-	void SetTargetMagnitude(const LuaMath::Vector4& v);
+	void SetTargetMagnitude(const luabind::object& v);
 
 	LuaMath::Vector4 GetUp();
-	void SetUp(const LuaMath::Vector4& v);
+	void SetUp(const luabind::object& v);
 
 	double GetRoll();
-	void SetRoll(double v);
+	void SetRoll(const luabind::object& v);
 
 	double GetPitch();
-	void SetPitch(double v);
+	void SetPitch(const luabind::object& v);
 
 	double GetYaw();
-	void SetYaw(double v);
+	void SetYaw(const luabind::object& v);
 
-	double GetFovAngle();
-	void SetFovAngle(double v);
+	double GetFovAngleY();
+	void SetFovAngleY(const luabind::object& v);
 
 	double GetNearZ();
-	void SetNearZ(double v);
+	void SetNearZ(const luabind::object& v);
 
 	double GetFarZ();
-	void SetFarZ(double v);
+	void SetFarZ(const luabind::object& v);
 
 	LuaMath::Vector4 GetClearColor();
-	void SetClearColor(const LuaMath::Vector4& v);
+	void SetClearColor(const luabind::object& v);
 
-	luabind::object GetGlobalTexture2D();
-	void SetGlobalTexture2D(const luabind::object& v);
-	void AddGlobalTexture2D(const GenericLuaObject& v);
-	void DeleteGlobalTexture2D(const GenericLuaObject& v);
-	void EmptyGlobalTexture2D();
-
-	luabind::object GetGlobalTextureCube();
-	void SetGlobalTextureCube(const luabind::object& v);
-	void AddGlobalTextureCube(const GenericLuaObject& v);
-	void DeleteGlobalTextureCube(const GenericLuaObject& v);
-	void EmptyGlobalTextureCube();
-
-	/*luabind::object GetUserData();
-	void SetUserData(const luabind::object& v)
-	bool FindUserData(const std::string& ID, std::vector<char>& v);
-	void SetUserData(const std::string& ID, const std::vector<char>& data);
-	void DeleteUserData(const std::string& ID);
-	void EmptyUserData();*/
-	
 	int GetInclusionState();
-	void SetInclusionState(int v);
+	void SetInclusionState(const luabind::object& v);
 
 	luabind::object GetInclusionList();
 	void SetInclusionList(const luabind::object& v);
-	void AddInclusionList(const GenericLuaObject& v);
-	void DeleteInclusionList(const GenericLuaObject& v);
+	void AddInclusionList(const luabind::object& v);
+	void DeleteInclusionList(const luabind::object& v);
 	void EmptyInclusionList();
 
 	void Release();

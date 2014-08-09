@@ -9,8 +9,8 @@
 
 namespace Scene
 {
-	GraphicComponentDLL_API 
-		GraphicCameraEntity GetCamera(const std::string& ID);
+	GraphicComponentDLL_API
+		GraphicCameraEntity GetCamera(const std::string& ID, unsigned int width, unsigned int height);
 	GraphicComponentDLL_API 
 		const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& GetAllObjectEntities();
 

@@ -27,6 +27,7 @@ local ironMan = Object({
                         [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Wireframe"],
                         [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
                         [Keys["ObjectInfo"]["Depth"]]        = false,
+                        [Keys["ObjectInfo"]["Priority"]]     = -1000.0,
                         });
                         
 for zIndex = 0, 2, 1 do

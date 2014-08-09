@@ -7,14 +7,11 @@
 
 namespace Scene
 {
-	GraphicCameraEntity GetCamera(const std::string& ID)
+	GraphicCameraEntity GetCamera(const std::string& ID, unsigned int width, unsigned int height)
 	{
-		GraphicCameraEntity returnValue;
-
 		std::weak_ptr<CameraEntity> wpCE;
-		if(CameraEntities::Find(ID, wpCE) == true){ returnValue = wpCE; }
-
-		return returnValue;
+		if(CameraEntities::Find(ID, wpCE) == true){ return GraphicCameraEntity(wpCE.lock(), width, height); }
+		else { return GraphicCameraEntity(); }
 	}
 
 	static std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> ObjectEntities;

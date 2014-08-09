@@ -13,39 +13,86 @@ class GraphicObjectEntity;
 
 class GraphicComponentDLL_API GraphicCameraEntity
 {
-protected:
-	std::weak_ptr<CameraEntity> wp_Obj;
 public:
 	GraphicCameraEntity();
-	GraphicCameraEntity(std::weak_ptr<CameraEntity> v);
+	GraphicCameraEntity(std::shared_ptr<CameraEntity> v, unsigned int width, unsigned int height);
 
-	XMFLOAT4 GetEye() const;
-	XMFLOAT4 GetTargetMagnitude() const;
-	XMFLOAT4 GetUp() const;
-	float GetRoll() const;
-	float GetPitch() const;
-	float GetYaw() const;
-	float GetFovAngleY() const;
-	float GetNearZ() const;
-	float GetFarZ() const;
-	std::array<float, 4> GetClearColor() const;
-	std::hash_set<std::shared_ptr<BasicTexture>> GetGlobalTexture2D() const;
-	std::hash_set<std::shared_ptr<BasicTexture>> GetGlobalTextureCube() const;
-	std::hash_map<std::string, std::vector<char>> GetUserData() const;
-	CameraEntity::InclusionType GetInclusionState() const;
-	std::vector<std::shared_ptr<GraphicObjectEntity>> FilterInclusionList
-		(std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const;
-protected:
-	XMFLOAT4X4 view;
-	XMFLOAT4X4 perspective;
-	XMFLOAT4X4 orthogonal;
+	void Update(std::shared_ptr<CameraEntity> v, unsigned int width, unsigned int height);
 public:
-	void UpdateView();
-	void UpdatePerspective();
-	void UpdateOrthogonal();
-	XMFLOAT4X4 GetView() const;
-	XMFLOAT4X4 GetPerspective() const;
-	XMFLOAT4X4 GetOrthogonal() const;
+	std::vector<std::shared_ptr<GraphicObjectEntity>> 
+		FilterInclusionList(std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const;
+
+private:	XMFLOAT4 Eye;
+			void UpdateEye(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4 GetEye() const;
+
+private:	XMFLOAT4 TargetMagnitude;
+			void UpdateTargetMagnitude(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4 GetTargetMagnitude() const;
+
+private:	XMFLOAT4 Up;
+			void UpdateUp(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4 GetUp() const;
+
+private:	float Roll;
+			void UpdateRoll(std::shared_ptr<CameraEntity> obj);
+public:		float GetRoll() const;
+
+private:	float Pitch;
+			void UpdatePitch(std::shared_ptr<CameraEntity> obj);
+public:		float GetPitch() const;
+
+private:	float Yaw;
+			void UpdateYaw(std::shared_ptr<CameraEntity> obj);
+public:		float GetYaw() const;
+
+private:	float FovAngleY;
+			void UpdateFovAngleY(std::shared_ptr<CameraEntity> obj);
+public:		float GetFovAngleY() const;
+
+private:	float NearZ;
+			void UpdateNearZ(std::shared_ptr<CameraEntity> obj);
+public:		float GetNearZ() const;
+
+private:	float FarZ;
+			void UpdateFarZ(std::shared_ptr<CameraEntity> obj);
+public:		float GetFarZ() const;
+
+private:	std::array<float, 4> ClearColor;
+			void UpdateClearColor(std::shared_ptr<CameraEntity> obj);
+public:		std::array<float, 4> GetClearColor() const;
+
+private:	CameraEntity::InclusionType InclusionState;
+			void UpdateInclusionState(std::shared_ptr<CameraEntity> obj);
+public:		CameraEntity::InclusionType GetInclusionState() const;
+
+private:	std::hash_set<std::string> InclusionList;
+			void UpdateInclusionList(std::shared_ptr<CameraEntity> obj);
+public:		std::hash_set<std::string> GetInclusionList() const;
+
+private:	unsigned int Width;
+			void UpdateWidth(unsigned int v);
+public:		unsigned int GetWidth() const;
+
+private:	unsigned int Height;
+			void UpdateHeight(unsigned int v);
+public:		unsigned int GetHeight() const;
+
+private:	XMFLOAT4X4 View;
+			void UpdateView(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4X4 GetView() const;
+
+private:	XMFLOAT4X4 View2D;
+			void UpdateView2D(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4X4 GetView2D() const;
+
+private:	XMFLOAT4X4 Perspective;
+			void UpdatePerspective(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4X4 GetPerspective() const;
+
+private:	XMFLOAT4X4 Orthogonal;
+			void UpdateOrthogonal(std::shared_ptr<CameraEntity> obj);
+public:		XMFLOAT4X4 GetOrthogonal() const;
 };
 
 

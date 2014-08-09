@@ -43,62 +43,6 @@ std::shared_ptr<CBHardVariables> CBufferWorld::Spawn(std::vector<char>& bytes, c
 
 //---------------------------------------------------------------------
 
-CBufferWorld2D::CBufferWorld2D(std::vector<char>& bytes, const unsigned int StartOffset) : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
-{
-}
-void CBufferWorld2D::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
-{
-	static const unsigned int sizeOfValue = this->sizeOfValue;
-	const unsigned int copyStartingAt = this->StartOffset;
-
-	auto window = GraphicManager::GetInstance().window;
-
-	XMFLOAT4X4 animation = object.GetAnimationJoint();
-	XMFLOAT4X4 rigidBody = object.GetRigidBody();
-
-	XMFLOAT4 location = object.GetLocation();
-
-	location.x = location.x - window.width / 2.0f;
-	location.y = (location.y * -1.0f) + (window.height / 2.0f);
-	location.z = location.z;
-
-	XMFLOAT4 rotation = object.GetRotation();
-	XMFLOAT4 scale = object.GetScale();
-
-	XMMATRIX xmTranslate = XMMatrixIdentity();
-	XMMATRIX xmRotateX = XMMatrixIdentity();	XMMATRIX xmRotateY = XMMatrixIdentity();	XMMATRIX xmRotateZ = XMMatrixIdentity();
-	XMMATRIX xmScaling = XMMatrixIdentity();
-	XMMATRIX xmObjectFinal = XMMatrixIdentity();
-
-	xmTranslate = XMMatrixTranslation(location.x, location.y, location.z);
-	xmRotateX = XMMatrixRotationX(rotation.x + 3.14159265359f);
-	xmRotateY = XMMatrixRotationY(rotation.y);
-	xmRotateZ = XMMatrixRotationZ(rotation.z);
-
-	xmScaling = XMMatrixScaling(scale.x, scale.y, scale.z);
-
-
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmScaling);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateX);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
-	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
-
-
-	XMMATRIX value = xmObjectFinal;
-
-	value = XMMatrixTranspose(value);
-
-	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
-}
-std::shared_ptr<CBHardVariables> CBufferWorld2D::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
-{
-	std::shared_ptr<CBHardVariables> returnValue(new CBufferWorld2D(bytes, StartOffset));
-	return returnValue;
-}
-
-//---------------------------------------------------------------------
-
 CBufferView::CBufferView(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
@@ -117,6 +61,29 @@ void CBufferView::Update(const GraphicCameraEntity& camera, const GraphicObjectE
 std::shared_ptr<CBHardVariables> CBufferView::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
 	std::shared_ptr<CBHardVariables> returnValue(new CBufferView(bytes, StartOffset));
+	return returnValue;
+}
+
+//---------------------------------------------------------------------
+
+CBufferView2D::CBufferView2D(std::vector<char>& bytes, const unsigned int StartOffset)
+	: CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
+{
+}
+void CBufferView2D::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+{
+	static const unsigned int sizeOfValue = this->sizeOfValue;
+	const unsigned int copyStartingAt = this->StartOffset;
+
+	XMFLOAT4X4 valueXM = camera.GetView2D();
+	XMMATRIX value = XMLoadFloat4x4(&valueXM);
+
+	value = XMMatrixTranspose(value);
+	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+}
+std::shared_ptr<CBHardVariables> CBufferView2D::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
+{
+	std::shared_ptr<CBHardVariables> returnValue(new CBufferView2D(bytes, StartOffset));
 	return returnValue;
 }
 
@@ -246,8 +213,8 @@ std::hash_map<const std::string, VariableCreatorFunction> PopulateVariableTypes(
 	std::hash_map<const std::string, VariableCreatorFunction> returnValue;
 
 	returnValue[CBufferWorld::Name()] = CBufferWorld::Spawn;
-	returnValue[CBufferWorld2D::Name()] = CBufferWorld2D::Spawn;
 	returnValue[CBufferView::Name()] = CBufferView::Spawn;
+	returnValue[CBufferView2D::Name()] = CBufferView2D::Spawn;
 	returnValue[CBufferPerspective::Name()] = CBufferPerspective::Spawn;
 	returnValue[CBufferOrthogonal::Name()] = CBufferOrthogonal::Spawn;
 	returnValue[CBufferWVP::Name()] = CBufferWVP::Spawn;

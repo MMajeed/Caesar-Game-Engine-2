@@ -30,8 +30,6 @@ function RecursiveLoadJoint(joint)
     local meshes = joint.Meshes;
     local meshGraphic = GraphicModel(mesh[meshes[1]]);
     stickFigerObjNodes[joint.Name] = Object({
-                        [Keys["ObjectInfo"]["Location"]]        = stickLocation,
-                        [Keys["ObjectInfo"]["Rotation"]]        = stickRotation,
                         [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
                         [Keys["ObjectInfo"]["GraphicModel"]]    = meshGraphic,
                         [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
@@ -39,6 +37,7 @@ function RecursiveLoadJoint(joint)
                         [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(0.0, 1.0, 0.0) },
                         [Keys["ObjectInfo"]["AnimationJoint"]]  =  joint.Name,
                         [Keys["ObjectInfo"]["AnimationObj"]]    =  StickPersonAnimationController,
+                        [Keys["ObjectInfo"]["RigidBody"]]       = mainBodyRididBody,
                         });
 
     for key,value in pairs(joint.Childern) do 

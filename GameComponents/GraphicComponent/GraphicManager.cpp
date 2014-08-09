@@ -43,7 +43,7 @@ void GraphicManager::Shutdown()
 
 void GraphicManager::ProcessDrawing()
 {
-	auto camera = Scene::GetCamera(this->DefaultCamera);
+	auto camera = Scene::GetCamera(this->DefaultCamera, this->window.width, this->window.height);
 	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
 
 	this->RunAllCapture(objects);

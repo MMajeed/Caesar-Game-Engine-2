@@ -191,7 +191,7 @@ GraphicCameraEntity CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr
 	cam->SetRoll(roll);
 	cam->SetFovAngleY(1.5707963267948966192313216916398);
 	
-	return cam;
+	return GraphicCameraEntity(cam, this->width, this->height);
 }
 void CubeScreenShot::SetupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
