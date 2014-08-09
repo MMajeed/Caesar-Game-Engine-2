@@ -4,6 +4,7 @@
 #include "XNAConverter.h"
 #include "ResourceManager.h"
 #include "GraphicManager.h"
+#include "3DMath.h"
 
 GraphicCameraEntity::GraphicCameraEntity(){}
 GraphicCameraEntity::GraphicCameraEntity(std::weak_ptr<CameraEntity> v) : wp_Obj(v)
@@ -195,6 +196,19 @@ std::vector<std::shared_ptr<GraphicObjectEntity>> GraphicCameraEntity::FilterInc
 			returnValue.push_back(iter->second);
 		}
 	}
+
+	XMFLOAT4 eye = this->GetEye();
+	std::sort(returnValue.begin(), returnValue.end(),
+			  [&eye](const std::shared_ptr<GraphicObjectEntity>& a, const std::shared_ptr<GraphicObjectEntity>& b) -> bool
+	{
+		float rankA = Length(eye, a->GetLocation());
+		float rankB = Length(eye, b->GetLocation());
+
+		rankA += a->GetPriority();
+		rankB += b->GetPriority();
+
+		return rankA > rankB;
+	});
 
 	return returnValue;
 }

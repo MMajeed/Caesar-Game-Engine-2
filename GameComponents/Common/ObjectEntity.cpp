@@ -7,6 +7,7 @@ ObjectEntity::ObjectEntity()
 	this->Rotation	= {0.0, 0.0, 0.0, 1.0};
 	this->Scale		= {1.0, 1.0, 1.0, 1.0};
 	this->Depth		= true;
+	this->Priority	= 0;
 	this->FillMode	= FILL_MODE::FILL_SOLID;
 	this->CullMode	= CULL_MODE::CULL_BACK;
 	this->Tracker	= 0;
@@ -67,13 +68,25 @@ void ObjectEntity::SetScale(const CML::Vec4& v)
 bool ObjectEntity::GetDepth()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
-	return this->Depth; 
+	return this->Depth;
 }
 void ObjectEntity::SetDepth(bool v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->PrivateUpdateTracker();
-	this->Depth = v; 
+	this->Depth = v;
+}
+
+double ObjectEntity::GetPriority()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->Priority;
+}
+void ObjectEntity::SetPriority(double v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
+	this->Priority = v;
 }
 
 std::string ObjectEntity::GetGraphicModelID()

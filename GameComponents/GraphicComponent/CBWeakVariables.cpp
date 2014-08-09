@@ -1,7 +1,6 @@
 #include "CBWeakVariables.h"
 
 #include "XNAConverter.h"
-#include "3DMath.h"
 #include <Windows.h>
 #include <xnamath.h>
 #include <Logger.h>

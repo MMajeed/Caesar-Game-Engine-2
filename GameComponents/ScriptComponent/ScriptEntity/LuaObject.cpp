@@ -35,6 +35,7 @@ LuaObject::LuaObject(const luabind::object& table)
 		else if(key == Keys::ObjectInfo::ROTATION)		{ this->SetRotation(*it); }
 		else if(key == Keys::ObjectInfo::SCALE)			{ this->SetScale(*it); }
 		else if(key == Keys::ObjectInfo::DEPTH)			{ this->SetDepth(*it); }
+		else if(key == Keys::ObjectInfo::PRIORITY)		{ this->SetPriority(*it); }
 		else if(key == Keys::ObjectInfo::GRAPHICMODEL)	{ this->SetGraphicModelID(*it); }
 		else if(key == Keys::ObjectInfo::VERTEXSHADER)	{ this->SetVertexShaderID(*it); }
 		else if(key == Keys::ObjectInfo::GEOMETRYSHADER){ this->SetGeometryShaderID(*it); }
@@ -119,12 +120,33 @@ bool LuaObject::GetDepth()
 	}
 	return returnValue;
 }
+
 void LuaObject::SetDepth(const luabind::object& v)
 {
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
 		if(boost::optional<bool> value = luabind::object_cast_nothrow<bool>(v))
 			obj->SetDepth(*value);
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+
+double LuaObject::GetPriority()
+{
+	double returnValue = true;
+	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	{
+		returnValue = obj->GetPriority();
+	}
+	return returnValue;
+}
+void LuaObject::SetPriority(const luabind::object& v)
+{
+	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<double> value = luabind::object_cast_nothrow<double>(v))
+			obj->SetPriority(*value);
 		else
 			Logger::LogError("Wrong paramter type");
 	}

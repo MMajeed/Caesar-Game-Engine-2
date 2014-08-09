@@ -28,6 +28,9 @@ public:
 
 	bool GetDepth();
 	void SetDepth(const luabind::object& v);
+	
+	double GetPriority();
+	void SetPriority(const luabind::object& v);
 
 	void GetGraphicModelID();
 	void SetGraphicModelID(const luabind::object& v);

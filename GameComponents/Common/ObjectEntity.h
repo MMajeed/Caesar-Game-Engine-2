@@ -38,6 +38,10 @@ private:	bool Depth;
 public:		bool GetDepth();
 			void SetDepth(bool v);
 
+private:	double Priority;
+public:		double GetPriority();
+			void SetPriority(double v);
+
 private:	std::string GraphicModelID;
 public:		std::string GetGraphicModelID();
 			void SetGraphicModelID(const std::string& v);

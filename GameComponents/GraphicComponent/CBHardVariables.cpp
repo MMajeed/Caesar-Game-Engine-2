@@ -1,7 +1,6 @@
 #include "CBHardVariables.h"
 
 #include "XNAConverter.h"
-#include "3DMath.h"
 #include "GraphicManager.h"
 #include <Windows.h>
 #include <xnamath.h>

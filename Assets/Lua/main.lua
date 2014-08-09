@@ -26,6 +26,7 @@ local ironMan = Object({
                         [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = ironManTexture },
                         [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Wireframe"],
                         [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
+                        [Keys["ObjectInfo"]["Depth"]]        = false,
                         });
                         
 for zIndex = 0, 2, 1 do

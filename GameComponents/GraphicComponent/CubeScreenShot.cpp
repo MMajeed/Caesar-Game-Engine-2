@@ -1,7 +1,6 @@
 #include "CubeScreenShot.h"
 
 #include "GraphicManager.h"
-#include "3DMath.h"
 #include "Scene.h"
 #include <EntityList.h>
 #include <Object.h>

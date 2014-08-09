@@ -20,16 +20,11 @@ GraphicObjectEntity::GraphicObjectEntity(std::shared_ptr<ObjectEntity> v)
 	this->Update(v);
 }
 
-bool GraphicObjectEntity::IsValidToDraw(const GraphicCameraEntity& camera) const
-{
-	if(this->GetVertexShader() == false){ return false; }
-	if(this->GetPixelShader() == false){ return false; }
-	if(this->GetGraphicModel() == false){ return false; }
-	return true;
-}
+
 void GraphicObjectEntity::Draw(const GraphicCameraEntity& camera) const
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
+	auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
+	ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;
 	
 	std::shared_ptr<VertexShader> vertexShader = this->GetVertexShader();
 	std::shared_ptr<GeometryShader> geometryShader = this->GetGeometryShader();
@@ -40,6 +35,8 @@ void GraphicObjectEntity::Draw(const GraphicCameraEntity& camera) const
 	if(pixelShader == false){ return; }
 	if(model == false){ return; }
 
+	if(this->Depth == true)	{ pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthStencilState, 1); }
+	else					{ pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthDisabledStencilState, 1); }
 		
 	vertexShader->Setup(camera, *this);
 	if(geometryShader)	{ geometryShader->Setup(camera, *this);	}
@@ -51,34 +48,6 @@ void GraphicObjectEntity::Draw(const GraphicCameraEntity& camera) const
 
 	pImmediateContext->DrawIndexed(model->GetNumberFaces(), 0, 0);
 }
-void GraphicObjectEntity::SetupVertexShader(const GraphicCameraEntity& camera) const
-{
-	if(std::shared_ptr<VertexShader> vertexShader = this->GetVertexShader())
-	{
-		vertexShader->Setup(camera, *this);
-	}
-}
-void GraphicObjectEntity::SetupGeometryShader(const GraphicCameraEntity& camera) const
-{
-	if(std::shared_ptr<GeometryShader> geometryShader = this->GetGeometryShader())
-	{
-		geometryShader->Setup(camera, *this);
-	}
-}
-void GraphicObjectEntity::SetupPixelShader(const GraphicCameraEntity& camera) const
-{
-	if(std::shared_ptr<PixelShader> pixelShader = this->GetPixelShader())
-	{
-		pixelShader->Setup(camera, *this);
-	}
-}
-void GraphicObjectEntity::SetupModel(const GraphicCameraEntity& camera) const
-{
-	if(std::shared_ptr<GraphicModel> model = this->GetGraphicModel())
-	{
-		model->Setup(camera, *this);
-	}
-}
 
 void GraphicObjectEntity::Update(std::shared_ptr<ObjectEntity> v)
 {
@@ -86,6 +55,8 @@ void GraphicObjectEntity::Update(std::shared_ptr<ObjectEntity> v)
 	this->UpdateLocation(v);
 	this->UpdateRotation(v);
 	this->UpdateScale(v);
+	this->UpdateDepth(v);
+	this->UpdatePriority(v);
 	this->UpdateGraphicModelID(v);
 	this->UpdateVertexShaderID(v);
 	this->UpdateGeometryShaderID(v);
@@ -149,6 +120,16 @@ void GraphicObjectEntity::UpdateDepth(std::shared_ptr<ObjectEntity> obj)
 bool GraphicObjectEntity::GetDepth() const
 {
 	return this->Depth;
+}
+
+void GraphicObjectEntity::UpdatePriority(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->Priority = (float)obj->GetPriority(); }
+	else	{ this->Priority = true; }
+}
+float GraphicObjectEntity::GetPriority() const
+{
+	return this->Priority;
 }
 
 void GraphicObjectEntity::UpdateGraphicModelID(std::shared_ptr<ObjectEntity> obj)

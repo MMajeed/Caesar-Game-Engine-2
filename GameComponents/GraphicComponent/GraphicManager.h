@@ -32,10 +32,18 @@ public:
 	virtual void RunAllCapture(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
 	virtual void InitWindow();
+	virtual void InitD3D();
+
+protected:
 	virtual void InitDevice();
+	virtual void InitRenderTarget();
+	virtual void InitDepthStencilView();
+	virtual void InitDepthStencilStates();
+	virtual void InitViewPort();
 
+public:
 	virtual void Resize(unsigned int width, unsigned int height);
-
+	
 	// DirectX stuff
 	struct
 	{
@@ -66,6 +74,7 @@ public:
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	static void MesageBoxError(std::string s);
+
 };
 
 #endif //__GraphicManager__

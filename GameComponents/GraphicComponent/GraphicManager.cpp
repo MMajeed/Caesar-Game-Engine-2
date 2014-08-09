@@ -20,7 +20,7 @@ GraphicManager::GraphicManager()
 void GraphicManager::Init()
 {
 	this->InitWindow();
-	this->InitDevice();
+	this->InitD3D();
 }
 
 void GraphicManager::Work(double realTime, double deltaTime)
@@ -112,6 +112,17 @@ void GraphicManager::InitWindow()
 
 	ShowWindow(this->window.hWnd, SW_SHOWNORMAL);
 }
+void GraphicManager::InitD3D()
+{
+	this->InitDevice();
+	this->InitRenderTarget();
+	this->InitDepthStencilView();
+	this->InitDepthStencilStates();
+	this->InitViewPort();
+
+	this->D3DStuff.IsInitialized = true;
+}
+
 void GraphicManager::InitDevice()
 {
 	unsigned int& Width = this->window.width;
@@ -166,22 +177,30 @@ void GraphicManager::InitDevice()
 		if(SUCCEEDED(hr))
 			break;
 	}
-	if(FAILED(hr)){ Logger::LogError("Failed at creating device and SwapChain"); }
 	this->D3DStuff.pd3dDevice = pd3dDevice;
 	this->D3DStuff.pImmediateContext = pImmediateContext;
 	this->D3DStuff.pSwapChain = pSwapChain;
+}
+void GraphicManager::InitRenderTarget()
+{
+	HRESULT hr = S_OK;
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
 	hr = this->D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-	if(FAILED(hr))
-		Logger::LogError("Failed at creating back buffer");
+	if(FAILED(hr)){ Logger::LogError("Failed at creating back buffer"); }
 
 	ID3D11RenderTargetView*	pRenderTargetView = nullptr;
 	hr = this->D3DStuff.pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
 	pBackBuffer->Release();
 	if(FAILED(hr)){ Logger::LogError("Failed at creating Render Target view"); }
 	this->D3DStuff.pRenderTargetView = pRenderTargetView;
+}
+void GraphicManager::InitDepthStencilView()
+{
+	unsigned int& Width = this->window.width;
+	unsigned int& Height = this->window.height;
+	HRESULT hr = S_OK;
 
 	// Set up depth & stencil buffer
 	// Initialize the description of the depth buffer.
@@ -201,47 +220,58 @@ void GraphicManager::InitDevice()
 	depthBufferDesc.CPUAccessFlags = 0;
 	depthBufferDesc.MiscFlags = 0;
 
-	ID3D11Texture2D* pDepthStencilBuffer = nullptr;
 	// Create the texture for the depth buffer using the filled out description.
+	ID3D11Texture2D* pDepthStencilBuffer = nullptr;
 	hr = this->D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &pDepthStencilBuffer);
 	if(FAILED(hr)){ Logger::LogError("Failed at creating dept buffer"); }
 	this->D3DStuff.pDepthStencilBuffer = pDepthStencilBuffer;
 
+	// Initialize the depth stencil view.
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+	// Set up the depth stencil view description.
+	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+	// Create the depth stencil view.
+	ID3D11DepthStencilView* pDepthStencilView = nullptr;
+	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilView(this->D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &pDepthStencilView);
+	if(FAILED(hr)){ Logger::LogError("Failed at creating depth stencil view"); }
+	this->D3DStuff.pDepthStencilView = pDepthStencilView;
+
+}
+void GraphicManager::InitDepthStencilStates()
+{	
+	HRESULT hr = S_OK;
+
 	// Initialize the description of the stencil state.
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
-
-	// Set up the description of the stencil state.
 	depthStencilDesc.DepthEnable = true;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
-
 	depthStencilDesc.StencilEnable = true;
 	depthStencilDesc.StencilReadMask = 0xFF;
 	depthStencilDesc.StencilWriteMask = 0xFF;
-
-	// Stencil operations if pixel is front-facing.
 	depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
 	depthStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-
-	// Stencil operations if pixel is back-facing.
 	depthStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
 	depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-	ID3D11DepthStencilState* pDepthStencilState = nullptr;
 	// Create the depth stencil state.
+	ID3D11DepthStencilState* pDepthStencilState = nullptr;
 	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &pDepthStencilState);
 	if(FAILED(hr)) { Logger::LogError("Failed at creating Dept stencil State"); }
 	this->D3DStuff.pDepthStencilState = pDepthStencilState;
 
+	// Set up the depth stencil view description.
 	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
 	ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
-
-	// Set up the depth stencil view description.
 	depthDisabledStencilDesc.DepthEnable = false;
 	depthDisabledStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	depthDisabledStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
@@ -257,34 +287,16 @@ void GraphicManager::InitDevice()
 	depthDisabledStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 	depthDisabledStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
+	// Create the depth stencil view.
 	ID3D11DepthStencilState* pDepthDisabledStencilState = nullptr;
-	// Create the depth stencil view.
 	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthDisabledStencilDesc, &pDepthDisabledStencilState);
-	if(FAILED(hr)){ Logger::LogError("Failed at creating no depth state"); }
+	if(FAILED(hr)){	Logger::LogError("Failed at creating no depth state");}
 	this->D3DStuff.pDepthDisabledStencilState = pDepthDisabledStencilState;
-
-	// Set the depth stencil state.
-	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
-
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
-	// Initialize the depth stencil view.
-	ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
-
-	// Set up the depth stencil view description.
-	depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depthStencilViewDesc.Texture2D.MipSlice = 0;
-
-	ID3D11DepthStencilView* pDepthStencilView = nullptr;
-	// Create the depth stencil view.
-	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilView(this->D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &pDepthStencilView);
-	if(FAILED(hr)){ Logger::LogError("Failed at creating depth stencil view"); }
-	this->D3DStuff.pDepthStencilView = pDepthStencilView;
-
-	// Set the depth stencil state.
-	this->D3DStuff.pImmediateContext->OMSetDepthStencilState(this->D3DStuff.pDepthStencilState, 1);
-
-	this->D3DStuff.pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
+}
+void GraphicManager::InitViewPort()
+{
+	unsigned int& Width = this->window.width;
+	unsigned int& Height = this->window.height;
 
 	// Setup the viewport
 	this->D3DStuff.vp.Width = (FLOAT)Width;
@@ -294,8 +306,6 @@ void GraphicManager::InitDevice()
 	this->D3DStuff.vp.TopLeftX = 0;
 	this->D3DStuff.vp.TopLeftY = 0;
 	this->D3DStuff.pImmediateContext->RSSetViewports(1, &(this->D3DStuff.vp));
-
-	this->D3DStuff.IsInitialized = true;
 }
 
 void GraphicManager::MesageBoxError(std::string s)

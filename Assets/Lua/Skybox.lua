@@ -14,6 +14,7 @@ local skybox = Object({
                         [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = skyBoxTexture },
                         [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Solid"],
                         [Keys["ObjectInfo"]["CullMode"]]     = CullMode["Front"],
+                        [Keys["ObjectInfo"]["Priority"]]     = 1000.0,
                         });
                         
 function UpdateSkyBox()

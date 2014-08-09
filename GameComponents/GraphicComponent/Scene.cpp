@@ -34,7 +34,7 @@ namespace Scene
 				{
 					if(obj->GetTracker() != iter->second->GetTracker()) // check if it has been changed
 					{
-						ObjectEntities[iter->first] = std::make_shared<GraphicObjectEntity>(obj);
+						iter->second->Update(obj);
 					}
 					currentList.erase(iter); // erease it as we don't need it anymore
 				}
@@ -70,7 +70,6 @@ namespace Scene
 		ID3D11RenderTargetView* pTempRenderTargetView = d3dStuff.pRenderTargetView;
 		ID3D11DepthStencilView* pTempDepthStencilView = d3dStuff.pDepthStencilView;
 		d3dStuff.pImmediateContext->OMSetRenderTargets(1, &pTempRenderTargetView, pTempDepthStencilView);
-		d3dStuff.pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthStencilState, 1);
 		d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 
 	}

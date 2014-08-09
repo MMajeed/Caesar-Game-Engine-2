@@ -20,12 +20,7 @@ public:
 	GraphicObjectEntity();
 	GraphicObjectEntity(std::shared_ptr<ObjectEntity> v);
 
-	bool IsValidToDraw(const GraphicCameraEntity& camera) const;
 	void Draw(const GraphicCameraEntity& camera) const;
-	void SetupVertexShader(const GraphicCameraEntity& camera) const;
-	void SetupGeometryShader(const GraphicCameraEntity& camera) const;
-	void SetupPixelShader(const GraphicCameraEntity& camera) const;
-	void SetupModel(const GraphicCameraEntity& camera) const;
 
 public:		void Update(std::shared_ptr<ObjectEntity> v);
 
@@ -48,6 +43,10 @@ public:		XMFLOAT4 GetScale() const;
 private:	bool Depth;
 			void UpdateDepth(std::shared_ptr<ObjectEntity> obj);
 public:		bool GetDepth() const;
+
+private:	float Priority;
+			void UpdatePriority(std::shared_ptr<ObjectEntity> obj);
+public:		float GetPriority() const;
 
 private:	std::string GraphicModelID;
 			void UpdateGraphicModelID(std::shared_ptr<ObjectEntity> obj);

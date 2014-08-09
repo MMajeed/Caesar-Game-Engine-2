@@ -37,6 +37,8 @@ namespace LuaKeysID
 			ObjectInfoTable[Keys::ObjectInfo::LOCATION]       = Keys::ObjectInfo::LOCATION;
 			ObjectInfoTable[Keys::ObjectInfo::ROTATION]       = Keys::ObjectInfo::ROTATION;
 			ObjectInfoTable[Keys::ObjectInfo::SCALE]          = Keys::ObjectInfo::SCALE;
+			ObjectInfoTable[Keys::ObjectInfo::DEPTH]          = Keys::ObjectInfo::DEPTH;
+			ObjectInfoTable[Keys::ObjectInfo::PRIORITY]       = Keys::ObjectInfo::PRIORITY;
 			ObjectInfoTable[Keys::ObjectInfo::GRAPHICMODEL]   = Keys::ObjectInfo::GRAPHICMODEL;
 			ObjectInfoTable[Keys::ObjectInfo::VERTEXSHADER]   = Keys::ObjectInfo::VERTEXSHADER;
 			ObjectInfoTable[Keys::ObjectInfo::GEOMETRYSHADER] = Keys::ObjectInfo::GEOMETRYSHADER;

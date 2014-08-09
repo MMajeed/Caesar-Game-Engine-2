@@ -36,6 +36,7 @@ namespace Keys
 		const static std::string ROTATION       = "Rotation";
 		const static std::string SCALE          = "Scale";
 		const static std::string DEPTH          = "Depth";
+		const static std::string PRIORITY		= "Priority";
 		const static std::string GRAPHICMODEL	= "GraphicModel";
 		const static std::string VERTEXSHADER	= "VertexShader";
 		const static std::string GEOMETRYSHADER	= "GeometryShader";
