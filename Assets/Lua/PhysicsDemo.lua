@@ -5,20 +5,20 @@ local PSColorShader = PixelShader("Assets/ShaderFiles/PS_Color.cso");
 
 -- --------------------------- Floor -------------------------------------
 local floorBoxCollisionShape = CreateBoxShape(Vector4(50.0, 0.25, 50.0));
-local floorBoxRididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 0.0, 0.0),
+local floorBoxRididBody1 = RididBody({
+                [Keys["RigidBody"]["Position"]]       = Vector4(100.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Inertia"]]        = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 0.0,
                 [Keys["RigidBody"]["CollisionShape"]] = floorBoxCollisionShape,});
-local floorBoxRididBody = RididBody({
+local floorBoxRididBody2 = RididBody({
                 [Keys["RigidBody"]["Position"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Inertia"]]        = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 0.0,
                 [Keys["RigidBody"]["CollisionShape"]] = floorBoxCollisionShape,});
-local floorBoxRididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(100.0, 0.0, 0.0),
+local floorBoxRididBody3 = RididBody({
+                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Inertia"]]        = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 0.0,
@@ -29,7 +29,7 @@ local floorBoxRididBody = RididBody({
 
 local mainBodyCollisionShape = CreateBoxShape(Vector4(1.5, 0.5, 2.0));
 local mainBodyRididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-100.0, 5.0, 0.0),
+                [Keys["RigidBody"]["Position"]]       = Vector4(100.0, 5.0, 0.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 0.0),
                 [Keys["RigidBody"]["Mass"]]           = 10.0,
                 [Keys["RigidBody"]["CollisionShape"]] = mainBodyCollisionShape,});
@@ -61,7 +61,7 @@ local cylinderDrawable = GraphicModel(cylinderModel);
 local cylinderShape =   CreateCylinderShape(Vector4( SizeOfCylinder, SizeOfCylinder, SizeOfCylinder));
 
 local tire1RididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-105.0, 2.5, 5.0),
+                [Keys["RigidBody"]["Position"]]       = Vector4(105.0, 2.5, 5.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 1.57),
                 [Keys["RigidBody"]["Mass"]]           = 10.0,
                 [Keys["RigidBody"]["CollisionShape"]] = cylinderShape,});  
@@ -89,7 +89,7 @@ local objTire1 = Object({
                         [Keys["ObjectInfo"]["RigidBody"]]       = tire1RididBody,  
                         });                
 local tire2RididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-105.0, 2.5, -5.0),
+                [Keys["RigidBody"]["Position"]]       = Vector4(105.0, 2.5, -5.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 1.57),
                 [Keys["RigidBody"]["Mass"]]           = 10.0,
                 [Keys["RigidBody"]["CollisionShape"]] = cylinderShape,});  
@@ -117,7 +117,7 @@ local objTire2 = Object({
                         [Keys["ObjectInfo"]["RigidBody"]]       = tire2RididBody,  
                         });    
 local tire3RididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-95.0, 2.5, -5.0),
+                [Keys["RigidBody"]["Position"]]       = Vector4(95.0, 2.5, -5.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 1.57),
                 [Keys["RigidBody"]["Mass"]]           = 10.0,
                 [Keys["RigidBody"]["CollisionShape"]] = cylinderShape,});   
@@ -146,7 +146,7 @@ local objTire3 = Object({
                         });    
                 
 local tire4RididBody = RididBody({
-                [Keys["RigidBody"]["Position"]]       = Vector4(-95.0, 2.5, 5.0),
+                [Keys["RigidBody"]["Position"]]       = Vector4(95.0, 2.5, 5.0),
                 [Keys["RigidBody"]["Rotation"]]       = Vector4(0.0, 0.0, 1.57),
                 [Keys["RigidBody"]["Mass"]]           = 10.0,
                 [Keys["RigidBody"]["CollisionShape"]] = cylinderShape,});   

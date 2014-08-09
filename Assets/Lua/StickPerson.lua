@@ -23,8 +23,8 @@ local StickPersonAnimationController = AnimationController({
                                     [Keys["AnimationController"]["Speed"]]            = 1.0,
                                     });
 
-local stickRotation = Vector4(0.0, -3.14, 0.0);
-local stickLocation = Vector4(100.0, 0.0, -40.0);
+local stickRotation = Vector4(0.0, 0.0, 0.0);
+local stickLocation = Vector4(-100.0, 0.0, -40.0);
 local stickFigerObjNodes = {};    
 function RecursiveLoadJoint(joint)
     local meshes = joint.Meshes;
@@ -79,7 +79,7 @@ function IdleStateUpdate(time)
 end;
 function WalkToIdleStateUpdate(time)
     local precentageSinceStart = timeSinceStateStart / (WalkToIdleLength  * 1000);
-    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, -1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01 * (1.0 - precentageSinceStart)));
+    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, 1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01 * (1.0 - precentageSinceStart)));
     
     if(precentageSinceStart > 1.0) then
         currentState = IdleStateUpdate;
@@ -88,7 +88,7 @@ function WalkToIdleStateUpdate(time)
 end;
 function IdleToWalkStateUpdate(time)
     local precentageSinceStart = timeSinceStateStart /(IdleToWalkLength * 1000) ;
-    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, -1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01 * precentageSinceStart));
+    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, 1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01 * precentageSinceStart));
     
     if(precentageSinceStart > 1.0) then
         currentState = WalkStateUpdate;
@@ -96,7 +96,7 @@ function IdleToWalkStateUpdate(time)
     end;
 end
 function WalkStateUpdate(time)
-    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, -1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01));
+    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, 1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01));
     
     if(StickForwardButton == false) then
         StickPersonAnimationController:ChangeAnimation({
@@ -120,7 +120,7 @@ function WalkStateUpdate(time)
 end;
 function WalkToRunStateUpdate(time)
     local precentageSinceStart = timeSinceStateStart /(WalkToRunLength * 1000) ;
-    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, -1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * (0.01 * precentageSinceStart) + (time * 0.01)));
+    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, 1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * (0.01 * precentageSinceStart) + (time * 0.01)));
     
     if(precentageSinceStart > 1.0) then
         currentState = RunStateUpdate;
@@ -128,7 +128,7 @@ function WalkToRunStateUpdate(time)
     end;
 end;
 function RunStateUpdate(time)
-    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, -1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.02));
+    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, 1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.02));
     
     if(StickForwardButton == false or StickRunButton == false) then
         StickPersonAnimationController:ChangeAnimation({
@@ -143,7 +143,7 @@ function RunStateUpdate(time)
 end; 
 function RunToWalkStateUpdate(time)
     local precentageSinceStart = timeSinceStateStart /(RunToWalkLength * 1000) ;
-    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, -1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01 * (1.0 - precentageSinceStart) + (time * 0.01)));
+    stickLocation = MoveObject(stickLocation, Vector4(0.0, 0.0, 1.0), stickRotation.X, stickRotation.Y, stickRotation.Z, (time * 0.01 * (1.0 - precentageSinceStart) + (time * 0.01)));
     
     if(precentageSinceStart > 1.0) then
         currentState = WalkStateUpdate;
@@ -159,10 +159,10 @@ function UpdateStickFigure(time, ID)
     currentState(time);
     
     if(StickLeftButton == true) then
-        stickRotation.y = stickRotation.y + (time * -0.001);
+        stickRotation.y = stickRotation.y + (time * 0.001);
     end
     if(StickkRightButton == true) then
-        stickRotation.y = stickRotation.y + (time * 0.001);
+        stickRotation.y = stickRotation.y + (time * -0.001);
     end
 end
 

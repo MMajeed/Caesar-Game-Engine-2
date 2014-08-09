@@ -238,7 +238,7 @@ void GraphicCameraEntity::UpdateView(std::shared_ptr<CameraEntity> obj)
 
 	vTM += vEye;
 
-	XMStoreFloat4x4(&this->View, XMMatrixLookAtLH(vEye, vTM, vUp));
+	XMStoreFloat4x4(&this->View, XMMatrixLookAtRH(vEye, vTM, vUp));
 }
 XMFLOAT4X4 GraphicCameraEntity::GetView() const
 {
@@ -250,12 +250,12 @@ void GraphicCameraEntity::UpdateView2D(std::shared_ptr<CameraEntity> obj)
 	float widthHalf = this->Width / 2.f;
 	float heightHalf = this->Height / 2.f;
 	XMVECTOR vEye = XMVectorSet(widthHalf, heightHalf, 0.0, 0.0);
-	XMVECTOR vTM = XMVectorSet(0.0, 0.0, -1.0, 0.0);
-	XMVECTOR vUp = XMVectorSet(0.0, -1.0, -.0, 0.0);
+	XMVECTOR vTM = XMVectorSet(0.0, 0.0, 1.0, 0.0);
+	XMVECTOR vUp = XMVectorSet(0.0, -1.0, 0.0, 0.0);
 
 	vTM += vEye;
 
-	XMStoreFloat4x4(&this->View2D, XMMatrixLookAtLH(vEye, vTM, vUp));
+	XMStoreFloat4x4(&this->View2D, XMMatrixLookAtRH(vEye, vTM, vUp));
 }
 XMFLOAT4X4 GraphicCameraEntity::GetView2D() const
 {
@@ -264,7 +264,7 @@ XMFLOAT4X4 GraphicCameraEntity::GetView2D() const
 
 void GraphicCameraEntity::UpdatePerspective(std::shared_ptr<CameraEntity> obj)
 {
-	XMMATRIX xmPrespective = XMMatrixPerspectiveFovLH(this->GetFovAngleY(),
+	XMMATRIX xmPrespective = XMMatrixPerspectiveFovRH(this->GetFovAngleY(),
 													  (float)this->Width / (float)this->Height,
 													  this->NearZ, this->FarZ);
 	XMStoreFloat4x4(&this->Perspective, xmPrespective);
@@ -276,7 +276,7 @@ XMFLOAT4X4 GraphicCameraEntity::GetPerspective() const
 
 void GraphicCameraEntity::UpdateOrthogonal(std::shared_ptr<CameraEntity> obj)
 {
-	XMMATRIX xmPrespective = XMMatrixOrthographicLH((float)this->Width, (float)this->Height,
+	XMMATRIX xmPrespective = XMMatrixOrthographicRH((float)this->Width, (float)this->Height,
 													this->NearZ, this->FarZ);
 	XMStoreFloat4x4(&this->Orthogonal, xmPrespective);
 }

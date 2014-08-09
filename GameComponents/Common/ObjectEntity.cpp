@@ -9,7 +9,7 @@ ObjectEntity::ObjectEntity()
 	this->Depth		= true;
 	this->Priority	= 0;
 	this->FillMode	= FILL_MODE::FILL_SOLID;
-	this->CullMode	= CULL_MODE::CULL_BACK;
+	this->CullMode	= CULL_MODE::CULL_FRONT;
 	this->Tracker	= 0;
 }
 

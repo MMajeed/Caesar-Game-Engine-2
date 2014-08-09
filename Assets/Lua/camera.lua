@@ -23,10 +23,10 @@ local CamPgUpButton   = false;    local CamPgDownButton = false;
 
 function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
-        regularCam.Yaw = regularCam.Yaw - (0.001 * time);
+        regularCam.Yaw = regularCam.Yaw + (0.001 * time);
     end
     if(CamRightButton == true) then
-        regularCam.Yaw = regularCam.Yaw + (0.001 * time);
+        regularCam.Yaw = regularCam.Yaw - (0.001 * time);
     end
     
     if(CamPgUpButton == true) then

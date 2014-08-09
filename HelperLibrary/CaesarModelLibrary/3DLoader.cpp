@@ -169,7 +169,7 @@ namespace CHL
 					std::shared_ptr<CHL::Node>& rootNode)
 	{
 		int i = 4 + 5;
-		unsigned int pFlags = aiProcessPreset_TargetRealtime_MaxQuality | aiProcess_ConvertToLeftHanded & (~aiProcess_SplitLargeMeshes);
+		unsigned int pFlags = aiProcessPreset_TargetRealtime_MaxQuality  & (~aiProcess_SplitLargeMeshes);
 		const aiScene* scene = aiImportFile(fileName.c_str(), pFlags);
 
 		if(scene == 0){ Logger::LogError("ErrorException with loading model " + fileName + "\n" + aiGetErrorString()); }

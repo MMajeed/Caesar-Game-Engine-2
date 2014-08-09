@@ -19,6 +19,7 @@ local PSTextureShader = PixelShader("Assets/ShaderFiles/PS_Texture.cso");
 
 local ironMan = Object({
                         [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.5, -30.0),
+                        [Keys["ObjectInfo"]["Rotation"]]     = Vector4(0.0, 3.14, 0.0),
                         [Keys["ObjectInfo"]["GraphicModel"]] = ironManMesh,
                         [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
                         [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,

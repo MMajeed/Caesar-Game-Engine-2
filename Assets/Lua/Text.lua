@@ -117,6 +117,7 @@ Text2D = class(function(self, text, location)
                                     [Keys["ObjectInfo"]["Group"]]        = { "Text" },
                                     [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = SpriteTexture },
+                                    [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
                                     });
                 self:Set();
              end)
