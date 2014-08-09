@@ -11,13 +11,13 @@
 #include <AnimationCommunicator\AnimationControllerConfig.h>
 #include <PhysicsCommunicator\RigidBodyConfig.h>
 
-GraphicObjectEntity::GraphicObjectEntity(){}
-GraphicObjectEntity::GraphicObjectEntity(std::weak_ptr<ObjectEntity> v)
+GraphicObjectEntity::GraphicObjectEntity()
 {
-	if(std::shared_ptr<ObjectEntity> spV = v.lock())
-	{
-		this->obj = std::dynamic_pointer_cast<ObjectEntity>(spV->Clone());
-	}
+	this->Update(nullptr);
+}
+GraphicObjectEntity::GraphicObjectEntity(std::shared_ptr<ObjectEntity> v)
+{
+	this->Update(v);
 }
 
 bool GraphicObjectEntity::IsValidToDraw(const GraphicCameraEntity& camera) const
@@ -30,16 +30,26 @@ bool GraphicObjectEntity::IsValidToDraw(const GraphicCameraEntity& camera) const
 void GraphicObjectEntity::Draw(const GraphicCameraEntity& camera) const
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
-	if(this->IsValidToDraw(camera))
-	{
-		this->SetupVertexShader(camera);
-		this->SetupGeometryShader(camera);
-		this->SetupPixelShader(camera);
-		this->SetupModel(camera);
-		Rasterizer::Setup(camera, *this);
-		std::shared_ptr<GraphicModel> model = this->GetGraphicModel();
-		pImmediateContext->DrawIndexed(model->GetNumberFaces(), 0, 0);
-	}
+	
+	std::shared_ptr<VertexShader> vertexShader = this->GetVertexShader();
+	std::shared_ptr<GeometryShader> geometryShader = this->GetGeometryShader();
+	std::shared_ptr<PixelShader> pixelShader = this->GetPixelShader();
+	std::shared_ptr<GraphicModel> model = this->GetGraphicModel();
+
+	if(vertexShader == false){ return; }
+	if(pixelShader == false){ return; }
+	if(model == false){ return; }
+
+		
+	vertexShader->Setup(camera, *this);
+	if(geometryShader)	{ geometryShader->Setup(camera, *this);	}
+	else				{ pImmediateContext->GSSetConstantBuffers(0, 0, nullptr); }
+	pixelShader->Setup(camera, *this);
+	model->Setup(camera, *this);
+
+	Rasterizer::Setup(camera, *this);
+
+	pImmediateContext->DrawIndexed(model->GetNumberFaces(), 0, 0);
 }
 void GraphicObjectEntity::SetupVertexShader(const GraphicCameraEntity& camera) const
 {
@@ -70,242 +80,312 @@ void GraphicObjectEntity::SetupModel(const GraphicCameraEntity& camera) const
 	}
 }
 
+void GraphicObjectEntity::Update(std::shared_ptr<ObjectEntity> v)
+{
+	this->UpdateTracker(v);
+	this->UpdateLocation(v);
+	this->UpdateRotation(v);
+	this->UpdateScale(v);
+	this->UpdateGraphicModelID(v);
+	this->UpdateVertexShaderID(v);
+	this->UpdateGeometryShaderID(v);
+	this->UpdatePixelShaderID(v);
+	this->UpdateAnimationID(v);
+	this->UpdateAnimationJointName(v);
+	this->UpdateRigidBodyID(v);
+	this->UpdateGroupList(v);
+	this->UpdateTextureList(v);
+	this->UpdateUserData(v);
+	this->UpdateFillMode(v);
+	this->UpdateCullMode(v);
+	this->UpdateLRS(v);
+}
+
+void GraphicObjectEntity::UpdateTracker(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->Tracker = obj->GetTracker();; }
+	else	{ this->Tracker = 0; }
+}
+unsigned int GraphicObjectEntity::GetTracker() const
+{
+	return this->Tracker;
+}
+
+void GraphicObjectEntity::UpdateLocation(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->Location = ConvertVec4(obj->GetLocation()); }
+	else	{ this->Location = XMFLOAT4(0.0, 0.0, 0.0, 1.0); }
+}
 XMFLOAT4 GraphicObjectEntity::GetLocation() const
 {
-	XMFLOAT4 returnValue(0.0, 0.0, 0.0, 0.0);
-	if(this->obj)
-	{
-		returnValue = ConvertVec4(this->obj->GetLocation());
-	}
-	return returnValue;
+	return this->Location;
+}
+
+void GraphicObjectEntity::UpdateRotation(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->Rotation = ConvertVec4(obj->GetRotation()); }
+	else	{ this->Rotation = XMFLOAT4(0.0, 0.0, 0.0, 1.0); }
 }
 XMFLOAT4 GraphicObjectEntity::GetRotation() const
 {
-	XMFLOAT4 returnValue(0.0, 0.0, 0.0, 0.0);
-	if(this->obj)
-	{
-		returnValue = ConvertVec4(this->obj->GetRotation());
-	}
-	return returnValue;
+	return this->Rotation;
+}
+
+void GraphicObjectEntity::UpdateScale(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->Scale = ConvertVec4(obj->GetScale()); }
+	else	{ this->Scale = XMFLOAT4(1.0, 1.0, 1.0, 1.0); }
 }
 XMFLOAT4 GraphicObjectEntity::GetScale() const
 {
-	XMFLOAT4 returnValue(1.0, 1.0, 1.0, 1.0);
-	if(this->obj)
-	{
-		returnValue = ConvertVec4(this->obj->GetScale());
-	}
-	return returnValue;
+	return this->Scale;
 }
-bool GraphicObjectEntity::HasDepth() const
+
+void GraphicObjectEntity::UpdateDepth(std::shared_ptr<ObjectEntity> obj)
 {
-	bool returnValue = true;
-	if(this->obj)
-	{
-		returnValue = this->obj->GetDepth();
-	}
-	return returnValue;
+	if(obj)	{ this->Depth = obj->GetDepth(); }
+	else	{ this->Depth = true; }
 }
-std::string GraphicObjectEntity::GetVertexShaderID() const
+bool GraphicObjectEntity::GetDepth() const
 {
-	std::string returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetVertexShaderID();
-		returnValue = id;
-	}
-	return returnValue;
+	return this->Depth;
+}
+
+void GraphicObjectEntity::UpdateGraphicModelID(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->GraphicModelID = obj->GetGraphicModelID(); }
+}
+std::string GraphicObjectEntity::GetGraphicModelID() const
+{
+	return this->GraphicModelID;
 }
 std::shared_ptr<GraphicModel> GraphicObjectEntity::GetGraphicModel() const
 {
-	std::shared_ptr<GraphicModel> returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetGraphicModelID();
-		returnValue = ResourceManager::GraphicModelList.Find(id);
-	}
+	const std::string& id = this->GraphicModelID;
+	std::shared_ptr<GraphicModel> returnValue = ResourceManager::GraphicModelList.Find(id);
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdateVertexShaderID(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->VertexShaderID = obj->GetVertexShaderID(); }
+}
+std::string GraphicObjectEntity::GetVertexShaderID() const
+{
+	return this->VertexShaderID;
 }
 std::shared_ptr<VertexShader> GraphicObjectEntity::GetVertexShader() const
 {
-	std::shared_ptr<VertexShader> returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetVertexShaderID();
-		returnValue = ResourceManager::VertexShaderList.Find(id);
-	}
+	const std::string& id = this->VertexShaderID;
+	std::shared_ptr<VertexShader> returnValue = ResourceManager::VertexShaderList.Find(id);
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdateGeometryShaderID(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->GeometryShaderID = obj->GetGeometryShaderID(); }
+}
+std::string GraphicObjectEntity::GetGeometryShaderID() const
+{
+	return this->GeometryShaderID;
 }
 std::shared_ptr<GeometryShader> GraphicObjectEntity::GetGeometryShader() const
 {
-	std::shared_ptr<GeometryShader> returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetGeometryShaderID();
-		returnValue = ResourceManager::GeometryShaderList.Find(id);
-	}
+	const std::string& id = this->GeometryShaderID;
+	std::shared_ptr<GeometryShader> returnValue = ResourceManager::GeometryShaderList.Find(id);
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdatePixelShaderID(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->PixelShaderID = obj->GetPixelShaderID(); }
+}
+std::string GraphicObjectEntity::GetPixelShaderID() const
+{
+	return this->PixelShaderID;
 }
 std::shared_ptr<PixelShader> GraphicObjectEntity::GetPixelShader() const
 {
-	std::shared_ptr<PixelShader> returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetPixelShaderID();
-		returnValue = ResourceManager::PixelShaderList.Find(id);
-	}
+	const std::string& id = this->PixelShaderID;
+	std::shared_ptr<PixelShader> returnValue = ResourceManager::PixelShaderList.Find(id);
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdateAnimationID(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->AnimationID = obj->GetAnimationID(); }
+}
+std::string GraphicObjectEntity::GetAnimationID() const
+{
+	return this->AnimationID;
 }
 std::hash_map<std::string, XMFLOAT4X4> GraphicObjectEntity::GetAnimation() const
 {
 	std::hash_map<std::string, XMFLOAT4X4> returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetAnimationID();
-		// to do
-	}
+	throw "To do: GetAnimation()";
 	return returnValue;
 }
-XMFLOAT4X4 GraphicObjectEntity::GetJointAnimation() const
+
+void GraphicObjectEntity::UpdateAnimationJointName(std::shared_ptr<ObjectEntity> obj)
 {
-	XMFLOAT4X4 returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetAnimationID();
-		std::string jointName = this->obj->GetJointName();
-		CML::Matrix4x4 jaMatrix = AnimationControllerConfig::GetSingleJoint(id, jointName);
-		returnValue = Convert4x4(jaMatrix);
-	}
+	if(obj)	{ this->AnimationJointName = obj->GetJointName(); }
+}
+std::string GraphicObjectEntity::GetAnimationJointName() const
+{
+	return this->AnimationJointName;
+}
+XMFLOAT4X4 GraphicObjectEntity::GetAnimationJoint() const
+{
+	const std::string& id = this->AnimationID;
+	const std::string& jointName = this->AnimationJointName;
+	CML::Matrix4x4 jaMatrix = AnimationControllerConfig::GetSingleJoint(id, jointName);
+	XMFLOAT4X4 returnValue = Convert4x4(jaMatrix);
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdateRigidBodyID(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->RigidBodyID = obj->GetRigidBodyID(); }
+}
+std::string GraphicObjectEntity::GetRigidBodyID() const
+{
+	return this->RigidBodyID;
 }
 XMFLOAT4X4 GraphicObjectEntity::GetRigidBody() const
 {
-	XMFLOAT4X4 returnValue;
-	if(this->obj)
-	{
-		std::string id = this->obj->GetRigidBodyID();
-		CML::Matrix4x4 jaMatrix = RigidBodyConfig::GetTranslation(id);
-		returnValue = Convert4x4(jaMatrix);
-	}
+	const std::string& id = this->RigidBodyID;
+	CML::Matrix4x4 jaMatrix = RigidBodyConfig::GetTranslation(id);
+	XMFLOAT4X4 returnValue = Convert4x4(jaMatrix);
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdateGroupList(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->GroupList = obj->GetGroupList(); }
 }
 std::hash_set<std::string> GraphicObjectEntity::GetGroupList() const
 {
-	std::hash_set<std::string> returnValue;
-	if(this->obj)
+	return this->GroupList;
+}
+
+void GraphicObjectEntity::UpdateTextureList(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->TextureList = obj->GetTexture(); }
+}
+std::hash_map<std::string, std::string> GraphicObjectEntity::GetTextureList() const
+{
+	return this->TextureList;
+}
+std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicObjectEntity::GetTexture() const
+{
+	std::hash_map<std::string, std::shared_ptr<BasicTexture>> returnValue;
+
+	for(const auto& iter : this->TextureList)
 	{
-		returnValue = this->obj->GetGroupList();
+		returnValue[iter.first] = this->FindTexture(iter.second);
 	}
+
 	return returnValue;
 }
-std::shared_ptr<BasicTexture> GraphicObjectEntity::FindTexture(std::string Name) const
+std::shared_ptr<BasicTexture> GraphicObjectEntity::FindTexture(const std::string& ID) const
 {
 	std::shared_ptr<BasicTexture> returnValue;
 
-	if(this->obj)
+	auto iter = this->TextureList.find(ID);
+	if(iter != this->TextureList.end())
 	{
-		std::string ID;
-		if(this->obj->FindTexture(Name, ID))
-		{
-			returnValue = ResourceManager::TextureList.Find(ID);
-		}
+		returnValue = ResourceManager::TextureList.Find(iter->second);
 	}
-
 	return returnValue;
+}
+
+void GraphicObjectEntity::UpdateUserData(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->UserData = obj->GetUserData(); }
 }
 std::hash_map<std::string, std::shared_ptr<Object>> GraphicObjectEntity::GetUserData() const
 {
-	std::hash_map<std::string, std::shared_ptr<Object>>  returnValue;
-	if(this->obj)
+	return this->UserData;
+}
+std::shared_ptr<Object> GraphicObjectEntity::FindUserData(const std::string& ID) const
+{
+	std::shared_ptr<Object> returnValue;
+	auto iter = this->UserData.find(ID);
+	if(iter != this->UserData.cend())
 	{
-		returnValue = this->obj->GetUserData();
+		returnValue = iter->second;
 	}
 	return returnValue;
 }
-std::shared_ptr<Object> GraphicObjectEntity::FindUserData(std::string ID) const
+
+void GraphicObjectEntity::UpdateFillMode(std::shared_ptr<ObjectEntity> obj)
 {
-	std::shared_ptr<Object> returnValue;
-	if(this->obj)
-	{
-		returnValue = this->obj->FindUserData(ID);
-	}
-	return returnValue;
+	if(obj)	{ this->FillMode = static_cast<D3D11_FILL_MODE>(obj->GetFillMode()); }
 }
 D3D11_FILL_MODE GraphicObjectEntity::GetFillMode() const
 {
-	D3D11_FILL_MODE returnValue = D3D11_FILL_SOLID;
-	if(this->obj)
-	{
-		returnValue = static_cast<D3D11_FILL_MODE>(this->obj->GetFillMode());
-	}
-	return returnValue;
+	return this->FillMode;
+}
+
+void GraphicObjectEntity::UpdateCullMode(std::shared_ptr<ObjectEntity> obj)
+{
+	if(obj)	{ this->CullMode = static_cast<D3D11_CULL_MODE>(obj->GetCullMode()); }
 }
 D3D11_CULL_MODE GraphicObjectEntity::GetCullMode() const
 {
-	D3D11_CULL_MODE returnValue = D3D11_CULL_BACK;
-	if(this->obj)
-	{
-		returnValue = static_cast<D3D11_CULL_MODE>(this->obj->GetCullMode());
-	}
-	return returnValue;
+	return this->CullMode;
 }
 
+void GraphicObjectEntity::UpdateLRS(std::shared_ptr<ObjectEntity> obj)
+{
+	XMFLOAT4 location = this->GetLocation();
+	XMFLOAT4 rotation = this->GetRotation();
+	XMFLOAT4 scale = this->GetScale();
+	
+	XMMATRIX xmTranslate = XMMatrixTranslation(location.x, location.y, location.z);
+
+	XMMATRIX xmRotateX = XMMatrixRotationX(rotation.x);
+	XMMATRIX xmRotateY = XMMatrixRotationY(rotation.y);
+	XMMATRIX xmRotateZ = XMMatrixRotationZ(rotation.z);
+
+	XMMATRIX xmScaling = XMMatrixScaling(scale.x, scale.y, scale.z);
+
+	XMMATRIX xmObjectFinal = XMMatrixIdentity();
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmScaling);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateX);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
+	xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
+
+	XMStoreFloat4x4(&this->LRS, xmObjectFinal);
+}
 XMFLOAT4X4 GraphicObjectEntity::GetLRS() const
 {
-	XMFLOAT4X4 returnValue;
-	if(this->obj)
-	{
-		
-		XMFLOAT4 location = this->GetLocation();
-		XMFLOAT4 rotation = this->GetRotation();
-		XMFLOAT4 scale = this->GetScale();
-		
-		XMMATRIX xmTranslate = XMMatrixIdentity();
-		XMMATRIX xmRotateX = XMMatrixIdentity();	XMMATRIX xmRotateY = XMMatrixIdentity();	XMMATRIX xmRotateZ = XMMatrixIdentity();
-		XMMATRIX xmScaling = XMMatrixIdentity();
-		XMMATRIX xmObjectFinal = XMMatrixIdentity();
-
-		xmTranslate = XMMatrixTranslation(location.x, location.y, location.z);
-
-		xmRotateX = XMMatrixRotationX(rotation.x);
-		xmRotateY = XMMatrixRotationY(rotation.y);
-		xmRotateZ = XMMatrixRotationZ(rotation.z);
-
-		xmScaling = XMMatrixScaling(scale.x, scale.y, scale.z);
-
-
-		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmScaling);
-		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateX);
-		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateY);
-		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmRotateZ);
-		xmObjectFinal = XMMatrixMultiply(xmObjectFinal, xmTranslate);
-
-		XMStoreFloat4x4(&returnValue, xmObjectFinal);
-	}
-	else
-	{
-		XMStoreFloat4x4(&returnValue, XMMatrixIdentity());
-	}
-	return returnValue;
+	return this->LRS;
 }
-XMFLOAT4X4 GraphicObjectEntity::GetWorldTransformation() const
+
+XMFLOAT4X4 GraphicObjectEntity::GetWorld() const
 {
-	XMFLOAT4X4 returnValue;
-	if(this->obj)
+	XMMATRIX worldMatrix = XMMatrixIdentity();
+
+	if(this->AnimationID.empty() != true &&
+	   this->AnimationJointName.empty() != true)
 	{
-		XMFLOAT4X4 animation = this->GetJointAnimation();
-		XMFLOAT4X4 rigidBody = this->GetRigidBody();
-		XMFLOAT4X4 LRS = this->GetLRS();
-
-		XMMATRIX worldMatrix = XMLoadFloat4x4(&animation) * XMLoadFloat4x4(&LRS) * XMLoadFloat4x4(&rigidBody);
-
-		XMStoreFloat4x4(&returnValue, worldMatrix);
+		XMFLOAT4X4 animation = this->GetAnimationJoint();
+		worldMatrix = XMLoadFloat4x4(&animation);
 	}
-	else
-	{
-		XMStoreFloat4x4(&returnValue, XMMatrixIdentity());
-	}
-	return returnValue;
-
 	
+	
+	XMFLOAT4X4 LRS = this->GetLRS();
+	worldMatrix = worldMatrix * XMLoadFloat4x4(&LRS);
+
+	if(this->RigidBodyID.empty() != true)
+	{
+		XMFLOAT4X4 rigidBody = this->GetRigidBody();
+		worldMatrix = worldMatrix * XMLoadFloat4x4(&rigidBody);
+	}
+
+	XMFLOAT4X4 world;
+	XMStoreFloat4x4(&world, worldMatrix);
+	return world;
 }

@@ -13,7 +13,7 @@ void BasicScreenCapture::Init()
 	this->ScreenShot[0] = BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
 	this->ScreenShot[1] = BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
-void BasicScreenCapture::Snap(const std::hash_map<std::string, GraphicObjectEntity>& list)
+void BasicScreenCapture::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }

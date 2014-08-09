@@ -28,6 +28,14 @@ namespace ObjectEntities
 		std::lock_guard<std::mutex> lock(objectEntitiesMutex);
 		objectEntitiesList[objEntity->GetID()] = objEntity;
 	}
+	bool Find(const std::string& ID, std::shared_ptr<ObjectEntity>& returnObj)
+	{
+		std::lock_guard<std::mutex> lock(objectEntitiesMutex);
+		auto objEntitiesIter = objectEntitiesList.find(ID);
+		if(objEntitiesIter == objectEntitiesList.end())	{ return false; }
+		returnObj = objEntitiesIter->second;
+		return true;
+	}
 	bool Find(const std::string& ID, std::weak_ptr<ObjectEntity>& returnObj)
 	{
 		std::lock_guard<std::mutex> lock(objectEntitiesMutex);

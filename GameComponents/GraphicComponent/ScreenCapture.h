@@ -13,7 +13,7 @@ class GraphicComponentDLL_API ScreenCapture
 public:
 	virtual void Init()                                                 = 0;
 	
-	virtual void Snap(const std::hash_map<std::string, GraphicObjectEntity>& list)     = 0;
+	virtual void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)     = 0;
 	virtual std::shared_ptr<ScreenCapture> clone() const                = 0;
 	virtual ~ScreenCapture(){}
 

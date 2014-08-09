@@ -17,6 +17,11 @@ protected:
 	ObjectEntity(const ObjectEntity& c) = default;
 	ObjectEntity& operator=(const ObjectEntity&) = delete;
 
+private:	unsigned int Tracker;
+			void PrivateUpdateTracker(); // Call this from within the class
+public:		unsigned int GetTracker();
+			void UpdateTracker(); // Call this from outside the class
+
 private:	CML::Vec4 Location;
 public:		CML::Vec4 GetLocation();
 			void SetLocation(const CML::Vec4& v);

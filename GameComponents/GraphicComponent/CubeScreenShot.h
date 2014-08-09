@@ -11,12 +11,12 @@ protected:
 public:
 	void Init();
 	void Snap();
-	void Snap(const std::hash_map<std::string, GraphicObjectEntity>& list);
+	void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
 	GraphicCameraEntity CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr<CameraEntity>& cam);
-	void SetupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
-	void TakeScreenSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
-	void CleanupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
+	void SetupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void TakeScreenSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void CleanupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 	
 	static std::shared_ptr<CubeScreenShot> Spawn(unsigned int width, unsigned int height, const std::string& cameraID);
 	std::shared_ptr<ScreenShot> clone() const;

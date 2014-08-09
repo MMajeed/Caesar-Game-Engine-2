@@ -9,6 +9,22 @@ ObjectEntity::ObjectEntity()
 	this->Depth		= true;
 	this->FillMode	= FILL_MODE::FILL_SOLID;
 	this->CullMode	= CULL_MODE::CULL_BACK;
+	this->Tracker	= 0;
+}
+
+unsigned int ObjectEntity::GetTracker()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->Tracker;
+}
+void ObjectEntity::PrivateUpdateTracker()
+{
+	(this->Tracker)++;
+}
+void ObjectEntity::UpdateTracker()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 }
 
 CML::Vec4 ObjectEntity::GetLocation()
@@ -19,6 +35,7 @@ CML::Vec4 ObjectEntity::GetLocation()
 void ObjectEntity::SetLocation(const CML::Vec4& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Location = v; 
 }
 
@@ -30,6 +47,7 @@ CML::Vec4 ObjectEntity::GetRotation()
 void ObjectEntity::SetRotation(const CML::Vec4& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Rotation = v; 
 }
 
@@ -42,6 +60,7 @@ CML::Vec4 ObjectEntity::GetScale()
 void ObjectEntity::SetScale(const CML::Vec4& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Scale = v; 
 }
 
@@ -53,6 +72,7 @@ bool ObjectEntity::GetDepth()
 void ObjectEntity::SetDepth(bool v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Depth = v; 
 }
 
@@ -64,6 +84,7 @@ std::string ObjectEntity::GetGraphicModelID()
 void ObjectEntity::SetGraphicModelID(const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->GraphicModelID = v;
 }
 
@@ -75,6 +96,7 @@ std::string ObjectEntity::GetVertexShaderID()
 void ObjectEntity::SetVertexShaderID(const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->VertexShaderID = v;
 }
 
@@ -86,6 +108,7 @@ std::string ObjectEntity::GetGeometryShaderID()
 void ObjectEntity::SetGeometryShaderID(const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->GeometryShaderID = v;
 }
 
@@ -97,6 +120,7 @@ std::string ObjectEntity::GetPixelShaderID()
 void ObjectEntity::SetPixelShaderID(const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->PixelShaderID = v;
 }
 
@@ -108,6 +132,7 @@ std::string ObjectEntity::GetAnimationID()
 void ObjectEntity::SetAnimationID(const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->AnimationID = v;
 }
 
@@ -118,7 +143,8 @@ std::string ObjectEntity::GetJointName()
 }
 void ObjectEntity::SetJointName(const std::string& v)
 {
-	std::lock_guard<std::mutex> lock(this->metux); 
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->JointName = v;
 }
 
@@ -129,7 +155,8 @@ std::string ObjectEntity::GetRigidBodyID()
 }
 void ObjectEntity::SetRigidBodyID(const std::string& v)
 {
-	std::lock_guard<std::mutex> lock(this->metux); 
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->RigidBodyID = v;
 }
 
@@ -141,21 +168,25 @@ std::hash_set<std::string> ObjectEntity::GetGroupList()
 void ObjectEntity::SetGroupList(const std::hash_set<std::string>& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->GroupList = v;
 }
 void ObjectEntity::AddGroupList(std::string ID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->GroupList.insert(ID);
 }
 void ObjectEntity::DeleteGroupList(std::string ID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->GroupList.erase(ID);
 }
 void ObjectEntity::EmptyGroupList()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->GroupList.clear();
 }
 
@@ -167,11 +198,13 @@ std::hash_map<std::string, std::string> ObjectEntity::GetTexture()
 void ObjectEntity::SetTexture(std::hash_map<std::string, std::string> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Texture = v;
 }
 bool ObjectEntity::FindTexture(const std::string& ID, std::string& returnTextureID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	bool returnValue = false;
 	auto iter = this->Texture.find(ID);
 	if(iter != this->Texture.end())
@@ -184,6 +217,7 @@ bool ObjectEntity::FindTexture(const std::string& ID, std::string& returnTexture
 void ObjectEntity::SetTexture(const std::string& ID, const std::string& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Texture[ID] = v;
 }
 void ObjectEntity::DeleteTexture(const std::string& ID)
@@ -194,6 +228,7 @@ void ObjectEntity::DeleteTexture(const std::string& ID)
 void ObjectEntity::EmptyTexture()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->Texture.clear();
 }
 
@@ -205,11 +240,13 @@ std::hash_map<std::string, std::shared_ptr<Object>> ObjectEntity::GetUserData()
 void ObjectEntity::SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->UserData = v;
 }
 std::shared_ptr<Object> ObjectEntity::FindUserData(const std::string& ID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 
 	std::shared_ptr<Object> returnValue;
 	auto iter = this->UserData.find(ID);
@@ -227,11 +264,13 @@ void ObjectEntity::SetUserData(const std::string& ID, const std::shared_ptr<Obje
 void ObjectEntity::DeleteUserData(const std::string& ID)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->UserData.erase(ID);
 }
 void ObjectEntity::EmptyUserData()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->UserData.clear();
 }
 
@@ -243,6 +282,7 @@ ObjectEntity::FILL_MODE ObjectEntity::GetFillMode()
 void ObjectEntity::SetFillMode(const ObjectEntity::FILL_MODE& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->FillMode = v;
 }
 
@@ -254,6 +294,7 @@ ObjectEntity::CULL_MODE ObjectEntity::GetCullMode()
 void ObjectEntity::SetCullMode(const ObjectEntity::CULL_MODE& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
+	this->PrivateUpdateTracker();
 	this->CullMode = v;
 }
 

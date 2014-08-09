@@ -233,7 +233,6 @@ namespace RigidBodyConfig
 	}
 	CML::Matrix4x4 GetTranslation(std::string ID)
 	{
-		CML::Matrix4x4 returnValue;
 		PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);
@@ -244,9 +243,9 @@ namespace RigidBodyConfig
 		auto iter = rididBodies.find(ID);
 		if(iter != rididBodies.end())
 		{
-			returnValue = iter->second->GetTranMatrix();
+			return iter->second->GetTranMatrix();
 		}
-		return returnValue;
+		else { return CML::Matrix4x4(); }
 	}
 
 	void Release(std::string ID)

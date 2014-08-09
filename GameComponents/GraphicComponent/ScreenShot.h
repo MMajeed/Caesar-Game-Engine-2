@@ -15,7 +15,7 @@ class GraphicComponentDLL_API ScreenShot
 protected:
 	ScreenShot(){}
 public:
-	virtual void Snap(const std::hash_map<std::string, GraphicObjectEntity>& list) = 0;
+	virtual void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list) = 0;
 	virtual ~ScreenShot(){}
 
 	COMSharedPtr<ID3D11ShaderResourceView>	pScreenTexture;

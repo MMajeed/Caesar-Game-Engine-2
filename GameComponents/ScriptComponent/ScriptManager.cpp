@@ -77,7 +77,7 @@ void ScriptManager::Work(double realTime, double deltaTime)
 		++iterProccessers)
 	{
 		iterProccessers->second->Action(this->lua);
-		if(iterProccessers->second->IsInfiniteLoop() == false)
+		if(iterProccessers->second->DoDelete() == true)
 		{
 			removeProcessesStack.push(iterProccessers->second->ID);
 		}

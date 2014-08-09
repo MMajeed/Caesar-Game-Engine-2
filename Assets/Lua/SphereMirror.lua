@@ -2,6 +2,9 @@ local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere_Smooth
 local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
 local PSCubeShader = PixelShader("Assets/ShaderFiles/PS_CubeTexture.cso");
 
+local mirrorWidth = 1024 / 2;
+local mirrorHeight = 1024 / 2;
+
 local mirrorSphereCam1 = Camera({
                     [Keys["Camera"]["Eye"]]             = Vector4(40, 20, 0),
                     [Keys["Camera"]["NearZ"]]           = 1.0,              
@@ -12,8 +15,8 @@ local mirrorSphereCam1 = Camera({
                    }); 
                    
 local mirrorSphereSC1 = CubeScreenCapture({
-                                    [Keys["ScreenShot"]["Width"]]    = 1024,
-                                    [Keys["ScreenShot"]["Height"]]   = 1024,
+                                    [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
+                                    [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
                                     [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
                                     
                                     
@@ -37,8 +40,8 @@ local mirrorSphereCam2 = Camera({
                    }); 
                    
 local mirrorSphereSC2 = CubeScreenCapture({
-                                    [Keys["ScreenShot"]["Width"]]    = 1024,
-                                    [Keys["ScreenShot"]["Height"]]   = 1024,
+                                    [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
+                                    [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
                                     [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam2, });
                                     
                                     

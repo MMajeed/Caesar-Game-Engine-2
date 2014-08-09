@@ -8,7 +8,6 @@ LuaSleep::LuaSleep(double inputMilliseconds, luabind::object inputFunction)
 	this->milliseconds = inputMilliseconds;
 	this->function = inputFunction;
 	this->timeSinceLastCall = 0.0;
-	this->InfiniteLoop = false;
 }
 
 void LuaSleep::Update(double realTime, double deltaTime)
@@ -22,6 +21,8 @@ void LuaSleep::Action(lua_State *lua)
 		try
 		{
 			luabind::call_function<void>(this->function, this->timeSinceLastCall, this->ID);
+
+			this->Delete = true;
 		}
 		catch(...)
 		{

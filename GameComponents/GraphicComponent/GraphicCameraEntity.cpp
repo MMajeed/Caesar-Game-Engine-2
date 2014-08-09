@@ -158,9 +158,11 @@ CameraEntity::InclusionType GraphicCameraEntity::GetInclusionState() const
 	}
 	return returnValue;
 }
-std::vector<GraphicObjectEntity> GraphicCameraEntity::FilterInclusionList(std::hash_map<std::string, GraphicObjectEntity> list) const
+std::vector<std::shared_ptr<GraphicObjectEntity>> GraphicCameraEntity::FilterInclusionList
+	(std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const
 {
-	std::vector<GraphicObjectEntity> returnValue;
+	std::vector<std::shared_ptr<GraphicObjectEntity>> returnValue;
+	returnValue.reserve(list.size());
 
 	if(std::shared_ptr<CameraEntity> cam = this->wp_Obj.lock())
 	{
@@ -168,7 +170,7 @@ std::vector<GraphicObjectEntity> GraphicCameraEntity::FilterInclusionList(std::h
 		std::hash_set<std::string> cameraInclusionList = cam->GetInclusionList();
 		for(auto iter = list.begin(); iter != list.end(); ++iter)
 		{
-			std::hash_set<std::string> objGroup = iter->second.GetGroupList();
+			std::hash_set<std::string> objGroup = iter->second->GetGroupList();
 
 			std::vector<std::string> groupDifference;
 			std::set_intersection(objGroup.begin(), objGroup.end(),
@@ -183,14 +185,14 @@ std::vector<GraphicObjectEntity> GraphicCameraEntity::FilterInclusionList(std::h
 			{ // It has to be on the list for it to be added
 				if(groupDifference.size() == 0){ continue; }
 			}
-			returnValue.push_back(GraphicObjectEntity(iter->second));
+			returnValue.push_back(iter->second);
 		}
 	}
 	else
 	{
 		for(auto iter = list.begin(); iter != list.end(); ++iter)
 		{
-			returnValue.push_back(GraphicObjectEntity(iter->second));
+			returnValue.push_back(iter->second);
 		}
 	}
 

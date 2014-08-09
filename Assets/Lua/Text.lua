@@ -180,8 +180,8 @@ function Text2D:Set()
         local graphicSpriteModel = GraphicModel(spriteModel);
         WaitToProcessGraphic(
             function()
-                if(self.grahpicSpriteModel ~= nil) then
-                    self.grahpicSpriteModel:Release();
+                if(self.SpriteObj.GraphicModel ~= nil) then
+                    self.SpriteObj.GraphicModel:Release();
                 end
                 self.SpriteObj.GraphicModel = graphicSpriteModel;
             end
@@ -205,7 +205,6 @@ function Text2D:Scale(size)
 end;
 
 function Text2D:Release()
-    self.SpriteDrawable:Release();
-    self.SpriteTexture:Release();    
+    self.SpriteObj.GraphicModel:Release();
     self.SpriteObj:Release();
 end

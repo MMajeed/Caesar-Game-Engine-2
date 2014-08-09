@@ -12,12 +12,12 @@ namespace Scene
 	GraphicComponentDLL_API 
 		GraphicCameraEntity GetCamera(const std::string& ID);
 	GraphicComponentDLL_API 
-		std::hash_map<std::string, GraphicObjectEntity> GetAllObjectEntities();
+		const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& GetAllObjectEntities();
 
 	GraphicComponentDLL_API
 		void ClearScreen(const GraphicCameraEntity& Camera);
 	GraphicComponentDLL_API
-		void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
+		void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 };
 
 #endif //__Scene__

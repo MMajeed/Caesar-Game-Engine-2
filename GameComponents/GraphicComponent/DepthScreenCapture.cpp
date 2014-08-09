@@ -11,7 +11,7 @@ void DepthScreenCapture::Init()
 {
 	this->ScreenShot = DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
-void DepthScreenCapture::Snap(const std::hash_map<std::string, GraphicObjectEntity>& list)
+void DepthScreenCapture::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->ScreenShot->cameraID = this->cameraID;
 	this->ScreenShot->Snap(list);

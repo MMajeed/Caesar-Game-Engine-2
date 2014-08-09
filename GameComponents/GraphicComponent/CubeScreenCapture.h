@@ -10,7 +10,7 @@ protected:
 	CubeScreenCapture();
 public:
 	virtual void Init();
-	virtual void Snap(const std::hash_map<std::string, GraphicObjectEntity>& list);
+	virtual void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 	virtual std::shared_ptr<ScreenCapture> clone() const;
 	virtual ~CubeScreenCapture(){}
 

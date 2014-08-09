@@ -11,11 +11,11 @@ protected:
 public:
 	void Init();
 	void Snap();
-	void Snap(const std::hash_map<std::string, GraphicObjectEntity>& list);
+	void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
-	void SetupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
-	void TakeScreenSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
-	void CleanupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list);
+	void SetupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void TakeScreenSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void CleanupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
 	static std::shared_ptr<DepthScreenShot> Spawn(unsigned int width, unsigned int height, const std::string& cameraID);
 	std::shared_ptr<ScreenShot> clone() const;

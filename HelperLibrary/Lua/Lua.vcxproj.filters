@@ -76,6 +76,7 @@
     <ClInclude Include="lua5.1.5\lzio.h">
       <Filter>lua5.1.5</Filter>
     </ClInclude>
+    <ClInclude Include="Linker.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="lua5.1.5\lapi.c">

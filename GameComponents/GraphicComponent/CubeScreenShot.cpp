@@ -111,10 +111,10 @@ void CubeScreenShot::Init()
 }
 void CubeScreenShot::Snap()
 {
-	std::hash_map<std::string, GraphicObjectEntity> objects = Scene::GetAllObjectEntities();
+	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
 	this->Snap(objects);
 }
-void CubeScreenShot::Snap(const std::hash_map<std::string, GraphicObjectEntity>& list)
+void CubeScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -194,7 +194,7 @@ GraphicCameraEntity CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr
 	
 	return cam;
 }
-void CubeScreenShot::SetupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+void CubeScreenShot::SetupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
@@ -207,13 +207,13 @@ void CubeScreenShot::SetupSnapShot(std::size_t side, const GraphicCameraEntity& 
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport);
 }
-void CubeScreenShot::TakeScreenSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+void CubeScreenShot::TakeScreenSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::DrawObjects(Camera, list);
 }
-void CubeScreenShot::CleanupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+void CubeScreenShot::CleanupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;

@@ -6,7 +6,7 @@ require("floor")
 require("PhysicsDemo")
 require("StickPerson")
 require("Helper")
-require("SphereMirror")
+--require("SphereMirror")
 --require("RandomAnimation")
 --require("LightSetup")
 
@@ -63,10 +63,10 @@ OnKeyDown(KeyCode["ESCAPE"], function() Quit(); end);-- Left
 --);
 
 
---Sleep(5000, function (time)
---    local textExample = Text2D("Hello!",  Vector4(50.0, 200.0, 0.0));
---    textExample:Scale(Vector4(5.0, 5.0, 5.0));
---    Sleep(5000, function (time)
---        textExample:Release();
---    end);
---end);
+Sleep(5000, function (time)
+    local textExample = Text2D("Hello!",  Vector4(50.0, 200.0, 0.0));
+    textExample:Scale(Vector4(5.0, 5.0, 5.0));
+    Sleep(5000, function (time)
+        textExample:Release();
+    end);
+end);

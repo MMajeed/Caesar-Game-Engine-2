@@ -10,8 +10,8 @@
 class ScriptComponentDLL_API LuaProcesses
 {
 protected:
-	LuaProcesses(){ this->ID = CHL::GenerateGUID(); this->InfiniteLoop = true; }
-	bool InfiniteLoop;
+	LuaProcesses(){ this->ID = CHL::GenerateGUID(); this->Delete = false; }
+	bool Delete;
 public:
 	virtual void Update(double realTime, double deltaTime) = 0;
 
@@ -19,7 +19,7 @@ public:
 
 	std::string ID;
 
-	virtual bool IsInfiniteLoop(){ return this->InfiniteLoop; }
+	virtual bool DoDelete(){ return this->Delete; }
 
 	virtual ~LuaProcesses(){}
 };

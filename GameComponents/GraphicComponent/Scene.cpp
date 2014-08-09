@@ -3,6 +3,7 @@
 #include "GraphicManager.h"
 #include "ResourceManager.h"
 #include <EntityList.h>
+#include <set>
 
 namespace Scene
 {
@@ -15,18 +16,45 @@ namespace Scene
 
 		return returnValue;
 	}
-	std::hash_map<std::string, GraphicObjectEntity> GetAllObjectEntities()
+
+	static std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> ObjectEntities;
+
+	void UpdateObjectEntities()
 	{
-		std::hash_map<std::string, GraphicObjectEntity> returnValue;
+		std::hash_map<std::string, std::weak_ptr<ObjectEntity>> newestObjectList = ObjectEntities::GetAll(); // Get the latest list
+		
+		std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> currentList = ObjectEntities; // Make a copy of our current list
 
-		std::hash_map<std::string, std::weak_ptr<ObjectEntity>> ObjectEntityList = ObjectEntities::GetAll();
-		returnValue.reserve(ObjectEntityList.size());
-		for(auto iter = ObjectEntityList.begin(); iter != ObjectEntityList.end(); ++iter)
+		for(const auto& objectIter : newestObjectList) // go through the latest list
 		{
-			returnValue[iter->first] = GraphicObjectEntity(iter->second);
+			if(auto obj = objectIter.second.lock())
+			{
+				auto iter = currentList.find(objectIter.first);
+				if(iter != currentList.end()) // if we already have this object
+				{
+					if(obj->GetTracker() != iter->second->GetTracker()) // check if it has been changed
+					{
+						ObjectEntities[iter->first] = std::make_shared<GraphicObjectEntity>(obj);
+					}
+					currentList.erase(iter); // erease it as we don't need it anymore
+				}
+				else // We don't have this one, so add it
+				{
+					ObjectEntities[obj->GetID()] = std::make_shared<GraphicObjectEntity>(obj);
+				}
+			}
 		}
+		
+		for(const auto& objectIter : currentList)
+		{ // currentList now only has items that are no longer in the latest list so let go through each one and delete them from our list
+			ObjectEntities.erase(objectIter.first);
+		}
+	}
 
-		return returnValue;
+	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& GetAllObjectEntities()
+	{
+		UpdateObjectEntities();
+		return ObjectEntities;
 	}
 
 	void ClearScreen(const GraphicCameraEntity& Camera)
@@ -44,16 +72,16 @@ namespace Scene
 		d3dStuff.pImmediateContext->OMSetRenderTargets(1, &pTempRenderTargetView, pTempDepthStencilView);
 		d3dStuff.pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthStencilState, 1);
 		d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
-		// Set the depth stencil state.
+
 	}
-	void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+	void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 	{
 		ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
-		std::vector<GraphicObjectEntity> objects = Camera.FilterInclusionList(list);
-		for(const GraphicObjectEntity& object : objects)
+		std::vector<std::shared_ptr<GraphicObjectEntity>> objects = Camera.FilterInclusionList(list);
+		for(const std::shared_ptr<GraphicObjectEntity>& object : objects)
 		{
-			object.Draw(Camera);
+			object->Draw(Camera);
 		}
 	}
 };

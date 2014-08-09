@@ -16,11 +16,9 @@ class PixelShader;
 
 class GraphicComponentDLL_API GraphicObjectEntity
 {
-protected:
-	std::shared_ptr<ObjectEntity> obj;
-public:
+public:		
 	GraphicObjectEntity();
-	GraphicObjectEntity(std::weak_ptr<ObjectEntity> v);
+	GraphicObjectEntity(std::shared_ptr<ObjectEntity> v);
 
 	bool IsValidToDraw(const GraphicCameraEntity& camera) const;
 	void Draw(const GraphicCameraEntity& camera) const;
@@ -29,27 +27,91 @@ public:
 	void SetupPixelShader(const GraphicCameraEntity& camera) const;
 	void SetupModel(const GraphicCameraEntity& camera) const;
 
-	XMFLOAT4 GetLocation() const;
-	XMFLOAT4 GetRotation() const;
-	XMFLOAT4 GetScale() const;
-	bool HasDepth() const;
-	std::string GetVertexShaderID() const;
-	std::shared_ptr<GraphicModel> GetGraphicModel() const;
-	std::shared_ptr<VertexShader> GetVertexShader() const;
-	std::shared_ptr<GeometryShader> GetGeometryShader() const;
-	std::shared_ptr<PixelShader> GetPixelShader() const;
-	std::hash_map<std::string, XMFLOAT4X4> GetAnimation() const;
-	XMFLOAT4X4 GetJointAnimation() const;
-	XMFLOAT4X4 GetRigidBody() const;
-	std::hash_set<std::string> GetGroupList() const;
-	std::shared_ptr<BasicTexture> FindTexture(std::string ID) const;
-	std::hash_map<std::string, std::shared_ptr<Object>> GetUserData() const;
-	std::shared_ptr<Object> FindUserData(std::string ID) const;
-	D3D11_FILL_MODE GetFillMode() const;
-	D3D11_CULL_MODE GetCullMode() const;
+public:		void Update(std::shared_ptr<ObjectEntity> v);
 
-	XMFLOAT4X4 GetLRS() const;
-	XMFLOAT4X4 GetWorldTransformation() const;
+private:	unsigned int Tracker;
+			void UpdateTracker(std::shared_ptr<ObjectEntity> obj);
+public:		unsigned int GetTracker() const;
+
+private:	XMFLOAT4 Location;
+			void UpdateLocation(std::shared_ptr<ObjectEntity> obj);
+public:		XMFLOAT4 GetLocation() const;
+
+private:	XMFLOAT4 Rotation;
+			void UpdateRotation(std::shared_ptr<ObjectEntity> obj);
+public:		XMFLOAT4 GetRotation() const;
+
+private:	XMFLOAT4 Scale;
+			void UpdateScale(std::shared_ptr<ObjectEntity> obj);
+public:		XMFLOAT4 GetScale() const;
+
+private:	bool Depth;
+			void UpdateDepth(std::shared_ptr<ObjectEntity> obj);
+public:		bool GetDepth() const;
+
+private:	std::string GraphicModelID;
+			void UpdateGraphicModelID(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetGraphicModelID() const;
+			std::shared_ptr<GraphicModel> GetGraphicModel() const;
+
+private:	std::string VertexShaderID;
+			void UpdateVertexShaderID(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetVertexShaderID() const;
+			std::shared_ptr<VertexShader> GetVertexShader() const;
+
+private:	std::string GeometryShaderID;
+			void UpdateGeometryShaderID(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetGeometryShaderID() const;
+			std::shared_ptr<GeometryShader> GetGeometryShader() const;
+
+private:	std::string PixelShaderID;
+			void UpdatePixelShaderID(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetPixelShaderID() const;
+			std::shared_ptr<PixelShader> GetPixelShader() const;
+
+private:	std::string AnimationID;
+			void UpdateAnimationID(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetAnimationID() const;
+			std::hash_map<std::string, XMFLOAT4X4> GetAnimation() const;
+
+private:	std::string AnimationJointName;
+			void UpdateAnimationJointName(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetAnimationJointName() const;
+			XMFLOAT4X4 GetAnimationJoint() const;
+
+private:	std::string RigidBodyID;
+			void UpdateRigidBodyID(std::shared_ptr<ObjectEntity> obj);
+public:		std::string GetRigidBodyID() const;
+			XMFLOAT4X4 GetRigidBody() const;
+
+private:	std::hash_set<std::string> GroupList;
+			void UpdateGroupList(std::shared_ptr<ObjectEntity> obj);
+public:		std::hash_set<std::string> GetGroupList() const;
+
+private:	std::hash_map<std::string, std::string> TextureList;
+			void UpdateTextureList(std::shared_ptr<ObjectEntity> obj);
+public:		std::hash_map<std::string, std::string> GetTextureList() const;
+			std::hash_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
+			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
+
+private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
+			void UpdateUserData(std::shared_ptr<ObjectEntity> obj);
+public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData() const;
+			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
+
+private:	D3D11_FILL_MODE FillMode;
+			void UpdateFillMode(std::shared_ptr<ObjectEntity> obj);
+public:		D3D11_FILL_MODE GetFillMode() const;
+
+private:	D3D11_CULL_MODE CullMode;
+			void UpdateCullMode(std::shared_ptr<ObjectEntity> obj);
+public:		D3D11_CULL_MODE GetCullMode() const;
+
+private:	XMFLOAT4X4 LRS; // Location, Rotation, Scale
+			void UpdateLRS(std::shared_ptr<ObjectEntity> obj);
+public:		XMFLOAT4X4 GetLRS() const;
+
+public:		XMFLOAT4X4 GetWorld() const;// Animation, LRS, RigidBody, st;
 };
 
 

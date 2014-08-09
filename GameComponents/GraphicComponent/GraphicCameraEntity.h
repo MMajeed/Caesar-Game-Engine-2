@@ -33,7 +33,8 @@ public:
 	std::hash_set<std::shared_ptr<BasicTexture>> GetGlobalTextureCube() const;
 	std::hash_map<std::string, std::vector<char>> GetUserData() const;
 	CameraEntity::InclusionType GetInclusionState() const;
-	std::vector<GraphicObjectEntity> FilterInclusionList(std::hash_map<std::string, GraphicObjectEntity> list) const;
+	std::vector<std::shared_ptr<GraphicObjectEntity>> FilterInclusionList
+		(std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const;
 protected:
 	XMFLOAT4X4 view;
 	XMFLOAT4X4 perspective;

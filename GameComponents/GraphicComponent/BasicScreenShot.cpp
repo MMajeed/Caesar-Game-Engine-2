@@ -84,10 +84,10 @@ void BasicScreenShot::Init()
 }
 void BasicScreenShot::Snap()
 {
-	std::hash_map<std::string, GraphicObjectEntity> objects = Scene::GetAllObjectEntities();
+	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
 	this->Snap( objects);
 }
-void BasicScreenShot::Snap(const std::hash_map<std::string, GraphicObjectEntity>& list)
+void BasicScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -98,7 +98,7 @@ void BasicScreenShot::Snap(const std::hash_map<std::string, GraphicObjectEntity>
 	this->CleanupSnapShot(camera, list);
 }
 
-void BasicScreenShot::SetupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+void BasicScreenShot::SetupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
@@ -112,13 +112,13 @@ void BasicScreenShot::SetupSnapShot(const GraphicCameraEntity& Camera, const std
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport); 	
 }
-void BasicScreenShot::TakeScreenSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+void BasicScreenShot::TakeScreenSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::DrawObjects(Camera, list);
 }
-void BasicScreenShot::CleanupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, GraphicObjectEntity>& list)
+void BasicScreenShot::CleanupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;

@@ -13,7 +13,7 @@ void CubeScreenCapture::Init()
 	this->ScreenShot[0] = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
 	this->ScreenShot[1] = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
-void CubeScreenCapture::Snap(const std::hash_map<std::string, GraphicObjectEntity>& list)
+void CubeScreenCapture::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }

@@ -29,7 +29,7 @@ void CBufferWorld::Update(const GraphicCameraEntity& camera, const GraphicObject
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 valueXM = object.GetWorldTransformation();
+	XMFLOAT4X4 valueXM = object.GetWorld();
 	XMMATRIX value = XMLoadFloat4x4(&valueXM);
 
 	value = XMMatrixTranspose(value);
@@ -54,7 +54,7 @@ void CBufferWorld2D::Update(const GraphicCameraEntity& camera, const GraphicObje
 
 	auto window = GraphicManager::GetInstance().window;
 
-	XMFLOAT4X4 animation = object.GetJointAnimation();
+	XMFLOAT4X4 animation = object.GetAnimationJoint();
 	XMFLOAT4X4 rigidBody = object.GetRigidBody();
 
 	XMFLOAT4 location = object.GetLocation();
@@ -178,7 +178,7 @@ void CBufferWVP::Update(const GraphicCameraEntity& camera, const GraphicObjectEn
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 worldMatrix = object.GetWorldTransformation();
+	XMFLOAT4X4 worldMatrix = object.GetWorld();
 	XMFLOAT4X4 prespectiveMatrix = camera.GetPerspective();
 	XMFLOAT4X4 viewMatrix = camera.GetView();
 
@@ -204,7 +204,7 @@ void CBufferWVO::Update(const GraphicCameraEntity& camera, const GraphicObjectEn
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 worldMatrix = object.GetWorldTransformation();
+	XMFLOAT4X4 worldMatrix = object.GetWorld();
 	XMFLOAT4X4 prespectiveMatrix = camera.GetOrthogonal();
 	XMFLOAT4X4 viewMatrix = camera.GetView();
 
