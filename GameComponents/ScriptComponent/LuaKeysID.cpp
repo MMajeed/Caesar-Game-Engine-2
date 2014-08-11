@@ -21,11 +21,14 @@ namespace LuaKeysID
 			cameraTable[Keys::Camera::NEARZ]             = Keys::Camera::NEARZ;
 			cameraTable[Keys::Camera::FARZ]              = Keys::Camera::FARZ;
 			cameraTable[Keys::Camera::CLEARCOLOR]        = Keys::Camera::CLEARCOLOR;
-			cameraTable[Keys::Camera::GLOBAL2DTEXTURE]   = Keys::Camera::GLOBAL2DTEXTURE;
-			cameraTable[Keys::Camera::GLOBALCUBETEXTURE] = Keys::Camera::GLOBALCUBETEXTURE;
-			cameraTable[Keys::Camera::GLOBALUSERDATA]    = Keys::Camera::GLOBALUSERDATA;
+			cameraTable[Keys::Camera::TEXTURE]			 = Keys::Camera::TEXTURE;
+			cameraTable[Keys::Camera::USERDATA]			 = Keys::Camera::USERDATA;
 			cameraTable[Keys::Camera::INCLUSIONSTATE]    = Keys::Camera::INCLUSIONSTATE;
 			cameraTable[Keys::Camera::INCLUSIONLIST]     = Keys::Camera::INCLUSIONLIST;
+			cameraTable[Keys::Camera::VERTEXSHADER]      = Keys::Camera::VERTEXSHADER;
+			cameraTable[Keys::Camera::VERTEXSHADERSTATE] = Keys::Camera::VERTEXSHADERSTATE;
+			cameraTable[Keys::Camera::PIXELSHADER]       = Keys::Camera::PIXELSHADER;
+			cameraTable[Keys::Camera::PIXELSHADERSTATE]  = Keys::Camera::PIXELSHADERSTATE;
 		luaKeyTable["Camera"] = cameraTable;
 		
 		luabind::object BasicTextureTable = luabind::newtable(lua);

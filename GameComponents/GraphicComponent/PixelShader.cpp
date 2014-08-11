@@ -41,7 +41,7 @@ void PixelShader::Init()
 	}
 }
 
-void PixelShader::Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void PixelShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 

@@ -14,6 +14,7 @@ regularCam = Camera({
                     [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
                     [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
                     [Keys["Camera"]["InclusionList"]]   = {},
+                    [Keys["Camera"]["UserData"]]        = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                    }); 
 SetMainCamera(regularCam);
 
@@ -23,17 +24,17 @@ local CamPgUpButton   = false;    local CamPgDownButton = false;
 
 function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
-        regularCam.Yaw = regularCam.Yaw + (0.001 * time);
+        regularCam.Yaw = regularCam.Yaw + (0.002 * time);
     end
     if(CamRightButton == true) then
-        regularCam.Yaw = regularCam.Yaw - (0.001 * time);
+        regularCam.Yaw = regularCam.Yaw - (0.002 * time);
     end
     
     if(CamPgUpButton == true) then
-        regularCam.Pitch = regularCam.Pitch - (0.001 * time);
+        regularCam.Pitch = regularCam.Pitch - (0.002 * time);
     end
     if(CamPgDownButton == true) then
-        regularCam.Pitch = regularCam.Pitch + (0.001 * time);
+        regularCam.Pitch = regularCam.Pitch + (0.002 * time);
     end
     
     if(CamUpButton == true) then
@@ -46,7 +47,7 @@ function UpdateCamera(time, ID)
     end
 end
 
-LoopCall(15, UpdateCamera);
+LoopCall(1, UpdateCamera);
 
 OnKeyDown(KeyCode["A"], function() CamLeftButton = true; end);-- Left
 OnKeyDown(KeyCode["D"], function() CamRightButton = true; end);-- Right

@@ -14,7 +14,7 @@ protected:
 	GeometryShader(){}
 	void Init();
 public:
-	void Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 
 	static std::shared_ptr<GeometryShader> Spawn(const std::vector<char>& compiledGeometryShader);
 	static std::shared_ptr<GeometryShader> Spawn(const std::string& fileName);

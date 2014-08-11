@@ -21,9 +21,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Keys.h">
-      <Filter>Keys</Filter>
-    </ClInclude>
     <ClInclude Include="Message.h">
       <Filter>Message</Filter>
     </ClInclude>
@@ -45,6 +42,9 @@
     </ClInclude>
     <ClInclude Include="CameraEntity.h">
       <Filter>Entity List\Entity\CameraEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="Keys.h">
+      <Filter>Keys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

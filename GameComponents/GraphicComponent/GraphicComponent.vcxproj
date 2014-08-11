@@ -277,6 +277,7 @@
     <ClInclude Include="COMSharedPtr.h" />
     <ClInclude Include="CubeScreenCapture.h" />
     <ClInclude Include="DepthScreenCapture.h" />
+    <ClInclude Include="Draw.h" />
     <ClInclude Include="GeometryShader.h" />
     <ClInclude Include="GraphicCameraEntity.h" />
     <ClInclude Include="GraphicModel.h" />
@@ -310,6 +311,7 @@
     <ClCompile Include="DepthScreenCapture.cpp" />
     <ClCompile Include="CubeScreenShot.cpp" />
     <ClCompile Include="DepthScreenShot.cpp" />
+    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GeometryShader.cpp" />
     <ClCompile Include="GraphicCameraEntity.cpp" />

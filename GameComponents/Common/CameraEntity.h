@@ -4,6 +4,7 @@
 #include "Linker.h"
 
 #include "Entity.h"
+#include <Object.h>
 #include <Vector.h>
 #include <hash_set>
 #include <hash_map>
@@ -67,6 +68,42 @@ public:		std::hash_set<std::string> GetInclusionList();
 			void AddInclusionList(std::string ID);
 			void DeleteInclusionList(std::string ID);
 			void EmptyInclusionList(); 
+
+private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
+public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData();
+			void SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v);
+			std::shared_ptr<Object> FindUserData(const std::string& ID);
+			void SetUserData(const std::string& ID, const std::shared_ptr<Object>& data);
+			void DeleteUserData(const std::string& ID);
+			void EmptyUserData();
+
+private:	std::hash_map<std::string, std::string> Texture;
+public:		std::hash_map<std::string, std::string> GetTexture();
+			void SetTexture(std::hash_map<std::string, std::string> v);
+			bool FindTexture(const std::string& ID, std::string& returnTextureID);
+			void SetTexture(const std::string& ID, const std::string& v);
+			void DeleteTexture(const std::string& ID);
+			void EmptyTexture();
+
+public:		enum class CAMERA_SHADER_TYPE { DEFAULT = 0, FORCE = 1 };
+
+private:	std::string VertexShaderID;
+public:		std::string GetVertexShaderID();
+			void SetVertexShaderID(const std::string& v);
+
+private:	CameraEntity::CAMERA_SHADER_TYPE VertexShaderState;
+public:		CameraEntity::CAMERA_SHADER_TYPE GetVertexShaderState();
+			void SetVertexShaderState(const CameraEntity::CAMERA_SHADER_TYPE& v);
+			
+private:	std::string PixelShaderID;
+public:		std::string GetPixelShaderID();
+			void SetPixelShaderID(const std::string& v);
+
+private:	CameraEntity::CAMERA_SHADER_TYPE PixelShaderState;
+public:		CameraEntity::CAMERA_SHADER_TYPE GetPixelShaderState();
+			void SetPixelShaderState(const CameraEntity::CAMERA_SHADER_TYPE& v);
+
+
 public:
 	static std::shared_ptr<CameraEntity> Spawn();
 	virtual std::shared_ptr<Entity> Clone();

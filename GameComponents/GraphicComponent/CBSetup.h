@@ -15,7 +15,7 @@ protected:
 	CBSetup();
 	void Init(const std::vector<char>& compiledShader, unsigned int bufferNum);
 public:
-	void Run(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	void Run(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 	static std::shared_ptr<CBSetup> Spawn(const std::vector<char>& compiledGeometryShader, unsigned int bufferNum);
 
 	const std::vector<char>& GetCBData();

@@ -10,6 +10,10 @@
 #include <ObjectEntity.h>
 
 class GraphicObjectEntity;
+class GraphicModel;
+class VertexShader;
+class GeometryShader;
+class PixelShader;
 
 class GraphicComponentDLL_API GraphicCameraEntity
 {
@@ -68,7 +72,36 @@ public:		CameraEntity::InclusionType GetInclusionState() const;
 
 private:	std::hash_set<std::string> InclusionList;
 			void UpdateInclusionList(std::shared_ptr<CameraEntity> obj);
-public:		std::hash_set<std::string> GetInclusionList() const;
+public:		std::hash_set<std::string> GetInclusionList() const; 
+
+private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
+			void UpdateUserData(std::shared_ptr<CameraEntity> obj);
+public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData() const;
+			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
+
+private:	std::hash_map<std::string, std::string> TextureList;
+			void UpdateTextureList(std::shared_ptr<CameraEntity> obj);
+public:		std::hash_map<std::string, std::string> GetTextureList() const;
+			std::hash_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
+			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
+
+private:	std::string VertexShaderID;
+			void UpdateVertexShaderID(std::shared_ptr<CameraEntity> obj);
+public:		std::string GetVertexShaderID() const;
+			std::shared_ptr<VertexShader> GetVertexShader() const;
+
+private:	CameraEntity::CAMERA_SHADER_TYPE VertexShaderState;
+			void UpdateVertexShaderState(std::shared_ptr<CameraEntity> obj);
+public:		CameraEntity::CAMERA_SHADER_TYPE GetVertexShaderState() const;
+
+private:	std::string PixelShaderID;
+			void UpdatePixelShaderID(std::shared_ptr<CameraEntity> obj);
+public:		std::string GetPixelShaderID() const;
+			std::shared_ptr<PixelShader> GetPixelShader() const;
+
+private:	CameraEntity::CAMERA_SHADER_TYPE PixelShaderState;
+			void UpdatePixelShaderState(std::shared_ptr<CameraEntity> obj);
+public:		CameraEntity::CAMERA_SHADER_TYPE GetPixelShaderState() const;
 
 private:	unsigned int Width;
 			void UpdateWidth(unsigned int v);

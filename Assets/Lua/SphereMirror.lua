@@ -1,4 +1,6 @@
-local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"));
+require("Helper")
+
+local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere.obj"));
 local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
 local PSCubeShader = PixelShader("Assets/ShaderFiles/PS_CubeTexture.cso");
 
@@ -15,19 +17,20 @@ local mirrorSphereCam1 = Camera({
                    }); 
                    
 local mirrorSphereSC1 = CubeScreenCapture({
-                                    [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
-                                    [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
-                                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
+                    [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
+                    [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
+                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
                                     
                                     
 local mirrorSphere1 = Object({
-                        [Keys["ObjectInfo"]["Location"]]     = Vector4(40, 20, 0),
-                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(10.0, 10.0, 10.0),
-                        [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
-                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
-                        [Keys["ObjectInfo"]["PixelShader"]]  = PSCubeShader,
-                        [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
-                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = mirrorSphereSC1:GetTexture() },
+                    [Keys["ObjectInfo"]["Location"]]     = Vector4(40, 20, 0),
+                    [Keys["ObjectInfo"]["Rotation"]]     = Vector4(2, 20, 0),
+                    [Keys["ObjectInfo"]["Scale"]]        = Vector4(10.0, 10.0, 10.0),
+                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                    [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                    [Keys["ObjectInfo"]["PixelShader"]]  = PSCubeShader,
+                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                    [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = mirrorSphereSC1:GetTexture() },
                         });
                         
 local mirrorSphereCam2 = Camera({
@@ -40,17 +43,17 @@ local mirrorSphereCam2 = Camera({
                    }); 
                    
 local mirrorSphereSC2 = CubeScreenCapture({
-                                    [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
-                                    [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
-                                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam2, });
+                    [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
+                    [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
+                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam2, });
                                     
                                     
 local mirrorSphere2 = Object({
-                        [Keys["ObjectInfo"]["Location"]]     = Vector4(-40, 20, 0),
-                        [Keys["ObjectInfo"]["Scale"]]        = Vector4(10.0, 10.0, 10.0),
-                        [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
-                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
-                        [Keys["ObjectInfo"]["PixelShader"]]  = PSCubeShader,
-                        [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
-                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = mirrorSphereSC2:GetTexture() },
+                    [Keys["ObjectInfo"]["Location"]]     = Vector4(-40, 20, 0),
+                    [Keys["ObjectInfo"]["Scale"]]        = Vector4(10.0, 10.0, 10.0),
+                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                    [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                    [Keys["ObjectInfo"]["PixelShader"]]  = PSCubeShader,
+                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                    [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = mirrorSphereSC2:GetTexture() },
                         });

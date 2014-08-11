@@ -18,9 +18,9 @@ local walkBasicAnimation = BasicAnimation(walkAnimation[1]);
 local runBasicAnimation = BasicAnimation(runAnimation[1]); 
 local boardBasicAnimation = BasicAnimation(boardAnimation[1]); 
 local StickPersonAnimationController = AnimationController({
-                                    [Keys["AnimationController"]["BasicAnimation"]]   = boardBasicAnimation,
-                                    [Keys["AnimationController"]["RootNode"]]         = rootNode,
-                                    [Keys["AnimationController"]["Speed"]]            = 1.0,
+                    [Keys["AnimationController"]["BasicAnimation"]]   = boardBasicAnimation,
+                    [Keys["AnimationController"]["RootNode"]]         = rootNode,
+                    [Keys["AnimationController"]["Speed"]]            = 1.0,
                                     });
 
 local stickRotation = Vector4(0.0, 0.0, 0.0);
@@ -30,14 +30,14 @@ function RecursiveLoadJoint(joint)
     local meshes = joint.Meshes;
     local meshGraphic = GraphicModel(mesh[meshes[1]]);
     stickFigerObjNodes[joint.Name] = Object({
-                        [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
-                        [Keys["ObjectInfo"]["GraphicModel"]]    = meshGraphic,
-                        [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
-                        [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
-                        [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(0.0, 1.0, 0.0) },
-                        [Keys["ObjectInfo"]["AnimationJoint"]]  =  joint.Name,
-                        [Keys["ObjectInfo"]["AnimationObj"]]    =  StickPersonAnimationController,
-                        [Keys["ObjectInfo"]["RigidBody"]]       = mainBodyRididBody,
+                    [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
+                    [Keys["ObjectInfo"]["GraphicModel"]]    = meshGraphic,
+                    [Keys["ObjectInfo"]["VertexShader"]]    = VSShader,
+                    [Keys["ObjectInfo"]["PixelShader"]]     = PSColorShader,
+                    [Keys["ObjectInfo"]["UserData"]]        = { ["Color"] = Vector4(0.0, 1.0, 0.0) },
+                    [Keys["ObjectInfo"]["AnimationJoint"]]  =  joint.Name,
+                    [Keys["ObjectInfo"]["AnimationObj"]]    =  StickPersonAnimationController,
+                    [Keys["ObjectInfo"]["RigidBody"]]       = mainBodyRididBody,
                         });
 
     for key,value in pairs(joint.Childern) do 
@@ -68,10 +68,10 @@ local timeSinceStateStart = 0.0;
 function IdleStateUpdate(time)
     if(StickForwardButton == true) then
         StickPersonAnimationController:ChangeAnimation({
-                                                    [Keys["AnimationController"]["BasicAnimation"]]     = walkBasicAnimation,
-                                                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["CrossFade"],
-                                                    [Keys["AnimationController"]["TransitionLength"]]   = IdleToWalkLength,
-                                                    --[Keys["AnimationController"]["StartOnNextPhase"]]   = true,
+                    [Keys["AnimationController"]["BasicAnimation"]]     = walkBasicAnimation,
+                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["CrossFade"],
+                    [Keys["AnimationController"]["TransitionLength"]]   = IdleToWalkLength,
+                    --[Keys["AnimationController"]["StartOnNextPhase"]]   = true,
                                                     });
         currentState = IdleToWalkStateUpdate;
         timeSinceStateStart = 0.0;
@@ -100,19 +100,19 @@ function WalkStateUpdate(time)
     
     if(StickForwardButton == false) then
         StickPersonAnimationController:ChangeAnimation({
-                                                    [Keys["AnimationController"]["BasicAnimation"]]     = boardBasicAnimation,
-                                                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["SnapShot"],
-                                                    [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
-                                                    [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
+                    [Keys["AnimationController"]["BasicAnimation"]]     = boardBasicAnimation,
+                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["SnapShot"],
+                    [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
+                    [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
                                                     });
         currentState = WalkToIdleStateUpdate;
         timeSinceStateStart = 0.0;
     elseif(StickRunButton == true) then
         StickPersonAnimationController:ChangeAnimation({
-                                                    [Keys["AnimationController"]["BasicAnimation"]]     = runBasicAnimation,
-                                                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["TimeSync"],
-                                                    [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
-                                                    [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
+                    [Keys["AnimationController"]["BasicAnimation"]]     = runBasicAnimation,
+                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["TimeSync"],
+                    [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
+                    [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
                                                     });
         currentState = WalkToRunStateUpdate;
         timeSinceStateStart = 0.0;
@@ -132,10 +132,10 @@ function RunStateUpdate(time)
     
     if(StickForwardButton == false or StickRunButton == false) then
         StickPersonAnimationController:ChangeAnimation({
-                                                    [Keys["AnimationController"]["BasicAnimation"]]     = walkBasicAnimation,
-                                                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["TimeSync"],
-                                                    [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
-                                                    [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
+                    [Keys["AnimationController"]["BasicAnimation"]]     = walkBasicAnimation,
+                    [Keys["AnimationController"]["TransitionType"]]     = TransitionType["TimeSync"],
+                    [Keys["AnimationController"]["TransitionLength"]]   = WalkToIdleLength,
+                    [Keys["AnimationController"]["StartOnNextPhase"]]   = true,
                                                     });
         currentState = RunToWalkStateUpdate;
         timeSinceStateStart = 0.0;
@@ -186,10 +186,10 @@ OnKeyDown(KeyCode["U"],
     function() 
         if(minorAnimationID == "") then
             minorAnimationID = StickPersonAnimationController:AddMinorAnimation({
-                                                    [Keys["AnimationController"]["BasicAnimation"]] = boardBasicAnimation,
-                                                    [Keys["AnimationController"]["StartNodeName"]]  = "chest",
-                                                    [Keys["AnimationController"]["StartRatio"]]     = 0.3,
-                                                    [Keys["AnimationController"]["StepRatio"]]      = 0.2,
+                    [Keys["AnimationController"]["BasicAnimation"]] = boardBasicAnimation,
+                    [Keys["AnimationController"]["StartNodeName"]]  = "chest",
+                    [Keys["AnimationController"]["StartRatio"]]     = 0.3,
+                    [Keys["AnimationController"]["StepRatio"]]      = 0.2,
                                                          });
         else
             StickPersonAnimationController:RemoveMinorAnimation(minorAnimationID);

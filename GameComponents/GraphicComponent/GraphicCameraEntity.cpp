@@ -29,6 +29,12 @@ void GraphicCameraEntity::Update(std::shared_ptr<CameraEntity> v, unsigned int w
 	this->UpdateClearColor(v);
 	this->UpdateInclusionState(v);
 	this->UpdateInclusionList(v);
+	this->UpdateTextureList(v);
+	this->UpdateUserData(v);
+	this->UpdateVertexShaderID(v);
+	this->UpdateVertexShaderState(v);
+	this->UpdatePixelShaderID(v);
+	this->UpdatePixelShaderState(v);
 	this->UpdateWidth(width);
 	this->UpdateHeight(height);
 	this->UpdateView(v);
@@ -202,6 +208,106 @@ void GraphicCameraEntity::UpdateInclusionList(std::shared_ptr<CameraEntity> obj)
 std::hash_set<std::string> GraphicCameraEntity::GetInclusionList() const
 {
 	return this->InclusionList;
+}
+
+void GraphicCameraEntity::UpdateTextureList(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj)	{ this->TextureList = obj->GetTexture(); }
+}
+std::hash_map<std::string, std::string> GraphicCameraEntity::GetTextureList() const
+{
+	return this->TextureList;
+}
+std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicCameraEntity::GetTexture() const
+{
+	std::hash_map<std::string, std::shared_ptr<BasicTexture>> returnValue;
+
+	for(const auto& iter : this->TextureList)
+	{
+		returnValue[iter.first] = this->FindTexture(iter.second);
+	}
+
+	return returnValue;
+}
+std::shared_ptr<BasicTexture> GraphicCameraEntity::FindTexture(const std::string& ID) const
+{
+	std::shared_ptr<BasicTexture> returnValue;
+
+	auto iter = this->TextureList.find(ID);
+	if(iter != this->TextureList.end())
+	{
+		returnValue = ResourceManager::TextureList.Find(iter->second);
+	}
+	return returnValue;
+}
+
+void GraphicCameraEntity::UpdateUserData(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj)	{ this->UserData = obj->GetUserData(); }
+}
+std::hash_map<std::string, std::shared_ptr<Object>> GraphicCameraEntity::GetUserData() const
+{
+	return this->UserData;
+}
+std::shared_ptr<Object> GraphicCameraEntity::FindUserData(const std::string& ID) const
+{
+	std::shared_ptr<Object> returnValue;
+	auto iter = this->UserData.find(ID);
+	if(iter != this->UserData.cend())
+	{
+		returnValue = iter->second;
+	}
+	return returnValue;
+}
+
+void GraphicCameraEntity::UpdateVertexShaderID(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj)	{ this->VertexShaderID = obj->GetVertexShaderID(); }
+}
+std::string GraphicCameraEntity::GetVertexShaderID() const
+{
+	return this->VertexShaderID;
+}
+std::shared_ptr<VertexShader> GraphicCameraEntity::GetVertexShader() const
+{
+	const std::string& id = this->VertexShaderID;
+	std::shared_ptr<VertexShader> returnValue = ResourceManager::VertexShaderList.Find(id);
+	return returnValue;
+}
+
+void GraphicCameraEntity::UpdateVertexShaderState(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj)	{ this->VertexShaderState = obj->GetVertexShaderState(); }
+	else { this->VertexShaderState = CameraEntity::CAMERA_SHADER_TYPE::DEFAULT; }
+}
+CameraEntity::CAMERA_SHADER_TYPE GraphicCameraEntity::GetVertexShaderState() const
+{
+	return this->VertexShaderState;
+}
+
+void GraphicCameraEntity::UpdatePixelShaderID(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj)	{ this->PixelShaderID = obj->GetPixelShaderID(); }
+}
+std::string GraphicCameraEntity::GetPixelShaderID() const
+{
+	return this->PixelShaderID;
+}
+std::shared_ptr<PixelShader> GraphicCameraEntity::GetPixelShader() const
+{
+	const std::string& id = this->PixelShaderID;
+	std::shared_ptr<PixelShader> returnValue = ResourceManager::PixelShaderList.Find(id);
+	return returnValue;
+}
+
+void GraphicCameraEntity::UpdatePixelShaderState(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj)	{ this->PixelShaderState = obj->GetPixelShaderState(); }
+	else { this->PixelShaderState = CameraEntity::CAMERA_SHADER_TYPE::DEFAULT; }
+}
+CameraEntity::CAMERA_SHADER_TYPE GraphicCameraEntity::GetPixelShaderState() const
+{
+	return this->PixelShaderState;
 }
 
 void GraphicCameraEntity::UpdateWidth(unsigned int v)

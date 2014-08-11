@@ -19,55 +19,52 @@ CBWeakVariables::CBWeakVariables(std::vector<char>& bytes,
 		Logger::LogError("Failed at creating dynamic constant buffer as size of the buffer was not large enough for " + this->Name);
 	}
 }
-void CBWeakVariables::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBWeakVariables::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	std::vector<char> dataToCopy(this->sizeOfValue);
 
-	std::shared_ptr<Object> objectUserData = object.FindUserData(this->Name);
-	if(objectUserData)
+	std::shared_ptr<Object> objectUserData = object->FindUserData(this->Name);
+	if(objectUserData == false)
+	{// If we didn't find it in object, check camera
+		objectUserData = camera->FindUserData(this->Name);
+	}
+
+
+	if(std::shared_ptr<GenericObj<float>> value = GenericObj<float>::Cast(objectUserData))
 	{
-		if(std::shared_ptr<GenericObj<float>> value = GenericObj<float>::Cast(objectUserData))
-		{
-			float tempV = *value;
-			CHL::ByteCopy(tempV, dataToCopy);
-		}
-		else if(std::shared_ptr<GenericObj<CML::Vec4>> value = GenericObj<CML::Vec4>::Cast(objectUserData))
-		{
-			XMFLOAT4 tempV = ConvertVec4(*value);
-			CHL::ByteCopy(tempV, dataToCopy);
-		}
-		else if(std::shared_ptr<GenericObj<CML::Matrix4x4>> value = GenericObj<CML::Matrix4x4>::Cast(objectUserData))
-		{
-			XMFLOAT4X4 xm4x4Value = Convert4x4(*value);
-			XMMATRIX tempV = XMLoadFloat4x4(&xm4x4Value);
-			tempV = XMMatrixTranspose(tempV);
-			CHL::ByteCopy(tempV, dataToCopy);
-		}
+		float tempV = *value;
+		CHL::ByteCopy(tempV, dataToCopy);
 	}
-	else // If we didn't find it in object, check camera
+	else if(std::shared_ptr<GenericObj<CML::Vec4>> value = GenericObj<CML::Vec4>::Cast(objectUserData))
 	{
-		/*std::hash_map<std::string, std::vector<char>> cameraUserData = camera.GetUserData();
-		auto iter = cameraUserData.find(this->Name);
-		if(iter != cameraUserData.end())
-		{
-			dataToCopy = iter->second;
-		}*/
+		XMFLOAT4 tempV = ConvertVec4(*value);
+		CHL::ByteCopy(tempV, dataToCopy);
+	}
+	else if(std::shared_ptr<GenericObj<CML::Matrix4x4>> value = GenericObj<CML::Matrix4x4>::Cast(objectUserData))
+	{
+		XMFLOAT4X4 xm4x4Value = Convert4x4(*value);
+		XMMATRIX tempV = XMLoadFloat4x4(&xm4x4Value);
+		tempV = XMMatrixTranspose(tempV);
+		CHL::ByteCopy(tempV, dataToCopy);
+	}
+	else
+	{
+		XMMATRIX tempV = XMMatrixIdentity();
+		tempV = XMMatrixTranspose(tempV);
+		CHL::ByteCopy(tempV, dataToCopy);
 	}
 
-	if(dataToCopy.size() > 0)
-	{ // if it found some value
-		auto beginCopy = dataToCopy.begin();
-		auto endCopy = dataToCopy.end();
+	auto beginCopy = dataToCopy.begin();
+	auto endCopy = dataToCopy.end();
 
-		if(this->sizeOfValue < dataToCopy.size())
-		{ // This data is too big, let us copy only what we can
-			endCopy = beginCopy + (this->sizeOfValue - 1);
-		}
-
-		auto copyTo = this->bytes.begin() + this->StartOffset;
-
-		std::copy(beginCopy, endCopy, copyTo);
+	if(this->sizeOfValue < dataToCopy.size())
+	{ // This data is too big, let us copy only what we can
+		endCopy = beginCopy + (this->sizeOfValue - 1);
 	}
+
+	auto copyTo = this->bytes.begin() + this->StartOffset;
+
+	std::copy(beginCopy, endCopy, copyTo);
 }
 std::shared_ptr<CBWeakVariables> CBWeakVariables::Spawn(std::vector<char>& bytes,
 																	const unsigned int StartOffset,

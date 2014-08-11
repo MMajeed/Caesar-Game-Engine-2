@@ -43,6 +43,12 @@ LuaCamera::LuaCamera(const luabind::object& table)
 		else if(key == Keys::Camera::CLEARCOLOR)		{ this->SetClearColor(*it); }
 		else if(key == Keys::Camera::INCLUSIONSTATE)	{ this->SetInclusionState(*it); }
 		else if(key == Keys::Camera::INCLUSIONLIST)		{ this->SetInclusionList(*it); }
+		else if(key == Keys::Camera::USERDATA)			{ this->SetAllUserData(*it); }
+		else if(key == Keys::Camera::TEXTURE)			{ this->SetAllTexture(*it); }
+		else if(key == Keys::Camera::VERTEXSHADER)		{ this->SetVertexShaderID(*it); }
+		else if(key == Keys::Camera::VERTEXSHADERSTATE)	{ this->SetVertexShaderState(*it); }
+		else if(key == Keys::Camera::PIXELSHADER)		{ this->SetPixelShaderID(*it); }
+		else if(key == Keys::Camera::PIXELSHADERSTATE)	{ this->SetPixelShaderState(*it); }
 	}
 }
 
@@ -305,6 +311,263 @@ void LuaCamera::EmptyInclusionList()
 	}
 }
 
+luabind::object LuaCamera::GetAllUserData()
+{
+	luabind::object luaUserData = luabind::newtable(ScriptManager::GetInstance().lua);
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		auto list = obj->GetUserData();
+		for(auto iter = list.begin(); iter != list.end(); ++iter)
+		{
+			luaUserData[iter->first] = this->FindUserData(iter->first);
+		}
+	}
+	return luaUserData;
+}
+void LuaCamera::SetAllUserData(const luabind::object& v)
+{
+	if(luabind::type(v) != LUA_TTABLE){ Logger::LogError("Wrong paramter type"); }
+
+	this->EmptyUserData();
+
+	std::hash_map<std::string, std::shared_ptr<Object>> userData;
+	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
+	{
+		std::string userDataKey = luabind::object_cast<std::string>(it.key());
+
+		this->SetUserData(userDataKey, *it);
+	}
+
+}
+luabind::object LuaCamera::FindUserData(const std::string& ID)
+{
+	lua_State* lua = ScriptManager::GetInstance().lua;
+
+	luabind::object returnValue;
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(std::shared_ptr<Object> objUserData = obj->FindUserData(ID))
+		{
+			if(std::shared_ptr<GenericObj<float>> value = GenericObj<float>::Cast(objUserData))
+			{
+				float tempV = *value;
+				returnValue = luabind::object(lua, tempV);
+			}
+			else if(std::shared_ptr<GenericObj<CML::Vec4>> value = GenericObj<CML::Vec4>::Cast(objUserData))
+			{
+				LuaMath::Vector4 tempV = *value;
+				returnValue = luabind::object(lua, tempV);
+			}
+			else if(std::shared_ptr<GenericObj<CML::Matrix4x4>> value = GenericObj<CML::Matrix4x4>::Cast(objUserData))
+			{
+				LuaMath::Matrix4x4 tempV = *value;
+				returnValue = luabind::object(lua, tempV);
+			}
+		}
+	}
+	return returnValue;
+}
+void LuaCamera::SetUserData(const std::string& ID, const luabind::object& data)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<float> optionalValue = luabind::object_cast_nothrow<float>(data))
+		{
+			obj->SetUserData(ID, GenericObj<float>::CreateNew(optionalValue.get()));
+		}
+		else if(boost::optional<LuaMath::Vector4> optionalValue = luabind::object_cast_nothrow<LuaMath::Vector4>(data))
+		{
+			obj->SetUserData(ID, GenericObj<CML::Vec4>::CreateNew(optionalValue.get()));
+		}
+		else if(boost::optional<LuaMath::Matrix4x4> optionalValue = luabind::object_cast_nothrow<LuaMath::Matrix4x4>(data))
+		{
+			obj->SetUserData(ID, GenericObj<CML::Matrix4x4>::CreateNew(optionalValue.get()));
+		}
+	}
+}
+void LuaCamera::DeleteUserData(const std::string& ID)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		obj->DeleteUserData(ID);
+	}
+}
+void LuaCamera::EmptyUserData()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		obj->EmptyUserData();
+	}
+}
+
+luabind::object LuaCamera::GetAllTexture()
+{
+	luabind::object luaTexture = luabind::newtable(ScriptManager::GetInstance().lua);
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		auto list = obj->GetTexture();
+		for(auto iter = list.begin(); iter != list.end(); ++iter)
+		{
+			luaTexture[iter->first] = this->FindTexture(iter->first);
+		}
+	}
+	return luaTexture;
+}
+void LuaCamera::SetAllTexture(const luabind::object& v)
+{
+	if(luabind::type(v) != LUA_TTABLE){ Logger::LogError("Wrong paramter type"); }
+
+	this->EmptyTexture();
+
+	std::hash_map<std::string, std::shared_ptr<Object>> Texture;
+	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
+	{
+		std::string TextureKey = luabind::object_cast<std::string>(it.key());
+
+		this->SetTexture(TextureKey, *it);
+	}
+
+}
+luabind::object LuaCamera::FindTexture(const std::string& ID)
+{
+	lua_State* lua = ScriptManager::GetInstance().lua;
+
+	luabind::object returnValue;
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		std::string objTexture;
+		if(obj->FindTexture(ID, objTexture))
+		{
+			returnValue = luabind::object(lua, objTexture);
+		}
+	}
+	return returnValue;
+}
+void LuaCamera::SetTexture(const std::string& ID, const luabind::object& v)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<GenericLuaObject> value = luabind::object_cast_nothrow<GenericLuaObject>(v))
+			obj->SetTexture(ID, value->GetID());
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+void LuaCamera::DeleteTexture(const std::string& ID)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		obj->DeleteTexture(ID);
+	}
+}
+void LuaCamera::EmptyTexture()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		obj->EmptyTexture();
+	}
+}
+
+void LuaCamera::GetVertexShaderID()
+{
+	lua_State* lua = ScriptManager::GetInstance().lua;
+
+	std::string id;
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock()){ id = obj->GetVertexShaderID(); }
+
+	// We don't have access to the class so we create it using lua
+	lua_getglobal(lua, "VertexShader");		// The class we want
+	lua_getglobal(lua, "GenericLuaObject"); // GenericLuaObject will be the paramter 
+	lua_pushstring(lua, id.c_str());        // Paramter to GenericLuaObject
+	lua_call(lua, 1, 1);					// Creating GenericLuaObject
+	lua_call(lua, 1, 1);					// The return value
+}
+void LuaCamera::SetVertexShaderID(const luabind::object& v)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<GenericLuaObject> value = luabind::object_cast_nothrow<GenericLuaObject>(v))
+			obj->SetVertexShaderID(*value);
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+void LuaCamera::RemoveVertexShaderID()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		obj->SetVertexShaderID("");
+	}
+}
+
+int LuaCamera::GetVertexShaderState()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+		return static_cast<int>(obj->GetVertexShaderState());
+	else
+		return 0;
+}
+void LuaCamera::SetVertexShaderState(const luabind::object& v)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<int> value = luabind::object_cast_nothrow<int>(v))
+			obj->SetVertexShaderState(static_cast<CameraEntity::CAMERA_SHADER_TYPE>(*value));
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+
+void LuaCamera::GetPixelShaderID()
+{
+	lua_State* lua = ScriptManager::GetInstance().lua;
+
+	std::string id;
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock()){ id = obj->GetPixelShaderID(); }
+
+	// We don't have access to the class so we create it using lua
+	lua_getglobal(lua, "PixelShader");		// The class we want
+	lua_getglobal(lua, "GenericLuaObject"); // GenericLuaObject will be the paramter 
+	lua_pushstring(lua, id.c_str());        // Paramter to GenericLuaObject
+	lua_call(lua, 1, 1);					// Creating GenericLuaObject
+	lua_call(lua, 1, 1);					// The return value
+}
+void LuaCamera::SetPixelShaderID(const luabind::object& v)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<GenericLuaObject> value = luabind::object_cast_nothrow<GenericLuaObject>(v))
+			obj->SetPixelShaderID(*value);
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+void LuaCamera::RemovePixelShaderID()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		obj->SetPixelShaderID("");
+	}
+}
+
+int LuaCamera::GetPixelShaderState()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+		return static_cast<int>(obj->GetPixelShaderState());
+	else
+		return 0;
+}
+void LuaCamera::SetPixelShaderState(const luabind::object& v)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<int> value = luabind::object_cast_nothrow<int>(v))
+			obj->SetPixelShaderState(static_cast<CameraEntity::CAMERA_SHADER_TYPE>(*value));
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+
 void LuaCamera::Release()
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
@@ -335,6 +598,22 @@ void LuaCamera::Register(lua_State *lua)
 			.def("AddInclusionList", &LuaCamera::AddInclusionList)
 			.def("DeleteInclusionList", &LuaCamera::DeleteInclusionList)
 			.def("EmptyInclusionList", &LuaCamera::EmptyInclusionList)
+			.property("UserData", &LuaCamera::GetAllUserData, &LuaCamera::SetAllUserData)
+			.def("FindUserData", &LuaCamera::FindUserData)
+			.def("SetUserData", &LuaCamera::SetUserData)
+			.def("DeleteUserData", &LuaCamera::DeleteUserData)
+			.def("EmptyUserData", &LuaCamera::EmptyUserData)
+			.property("Texture", &LuaCamera::GetAllTexture, &LuaCamera::SetAllTexture)
+			.def("FindTexture", &LuaCamera::FindTexture)
+			.def("SetTexture", &LuaCamera::SetTexture)
+			.def("DeleteTexture", &LuaCamera::DeleteTexture)
+			.def("EmptyTexture", &LuaCamera::EmptyTexture)
+			.property("VertexShader", &LuaCamera::GetVertexShaderID, &LuaCamera::SetVertexShaderID)
+			.def("RemoveVertexShader", &LuaCamera::RemoveVertexShaderID)
+			.property("VertexShaderState", &LuaCamera::GetVertexShaderState, &LuaCamera::SetVertexShaderState)
+			.property("PixelShader", &LuaCamera::GetPixelShaderID, &LuaCamera::SetPixelShaderID)
+			.def("RemovePixelShader", &LuaCamera::RemovePixelShaderID)
+			.property("PixelShaderState", &LuaCamera::GetPixelShaderState, &LuaCamera::SetPixelShaderState)
 			.def("Release", &LuaCamera::Release)
 	  ];
 
@@ -342,4 +621,9 @@ void LuaCamera::Register(lua_State *lua)
 	inclusionType["Exclude"] = 0;
 	inclusionType["Include"] = 1;
 	luabind::globals(lua)["InclusionType"] = inclusionType;
+
+	luabind::object shaderType = luabind::newtable(lua);
+	shaderType["Default"] = 0;
+	shaderType["Force"] = 1;
+	luabind::globals(lua)["ShaderType"] = shaderType;
 }

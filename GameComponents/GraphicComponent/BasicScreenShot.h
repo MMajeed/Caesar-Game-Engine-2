@@ -13,9 +13,9 @@ public:
 	void Snap();
 	void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
-	void SetupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
-	void TakeScreenSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
-	void CleanupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
 	static std::shared_ptr<BasicScreenShot> Spawn(unsigned int width, unsigned int height, const std::string& cameraID);
 	std::shared_ptr<ScreenShot> clone() const;

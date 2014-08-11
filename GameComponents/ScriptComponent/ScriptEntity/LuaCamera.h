@@ -56,6 +56,34 @@ public:
 	void DeleteInclusionList(const luabind::object& v);
 	void EmptyInclusionList();
 
+	luabind::object GetAllUserData();
+	void SetAllUserData(const luabind::object& v);
+	luabind::object FindUserData(const std::string& ID);
+	void SetUserData(const std::string& ID, const luabind::object& data);
+	void DeleteUserData(const std::string& ID);
+	void EmptyUserData();
+
+	luabind::object GetAllTexture();
+	void SetAllTexture(const luabind::object& v);
+	luabind::object FindTexture(const std::string& ID);
+	void SetTexture(const std::string& ID, const luabind::object& v);
+	void DeleteTexture(const std::string& ID);
+	void EmptyTexture();
+
+	void GetVertexShaderID();
+	void SetVertexShaderID(const luabind::object& v);
+	void RemoveVertexShaderID();
+
+	int GetVertexShaderState();
+	void SetVertexShaderState(const luabind::object& v);
+
+	void GetPixelShaderID();
+	void SetPixelShaderID(const luabind::object& v);
+	void RemovePixelShaderID();
+
+	int GetPixelShaderState();
+	void SetPixelShaderState(const luabind::object& v);
+
 	void Release();
 
 	static void Register(lua_State *lua);

@@ -98,13 +98,13 @@ void BasicScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<Grap
 	this->CleanupSnapShot(camera, list);
 }
 
-void BasicScreenShot::SetupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
 	// Clear the back buffer 
-	auto c = Camera.GetClearColor();
+	auto c = Camera->GetClearColor();
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV, c.data());
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
@@ -112,13 +112,13 @@ void BasicScreenShot::SetupSnapShot(const GraphicCameraEntity& Camera, const std
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport); 	
 }
-void BasicScreenShot::TakeScreenSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::DrawObjects(Camera, list);
 }
-void BasicScreenShot::CleanupSnapShot(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;

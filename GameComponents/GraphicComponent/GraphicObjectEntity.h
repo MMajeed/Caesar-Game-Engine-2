@@ -20,8 +20,6 @@ public:
 	GraphicObjectEntity();
 	GraphicObjectEntity(std::shared_ptr<ObjectEntity> v);
 
-	void Draw(const GraphicCameraEntity& camera) const;
-
 public:		void Update(std::shared_ptr<ObjectEntity> v);
 
 private:	unsigned int Tracker;

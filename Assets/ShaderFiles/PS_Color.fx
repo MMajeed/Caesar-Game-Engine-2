@@ -10,6 +10,7 @@ struct PS_INPUT
 	float4 Normal					: NORMAL1;
 	float4 NormalWorld				: NORMAL2;
 	float3 tex						: TEXCOORD0;
+	float2 vPos : VPOS;
 };
 
 float4 main(PS_INPUT input) : SV_Target

@@ -20,35 +20,6 @@ GraphicObjectEntity::GraphicObjectEntity(std::shared_ptr<ObjectEntity> v)
 	this->Update(v);
 }
 
-
-void GraphicObjectEntity::Draw(const GraphicCameraEntity& camera) const
-{
-	auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
-	ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;
-	
-	std::shared_ptr<VertexShader> vertexShader = this->GetVertexShader();
-	std::shared_ptr<GeometryShader> geometryShader = this->GetGeometryShader();
-	std::shared_ptr<PixelShader> pixelShader = this->GetPixelShader();
-	std::shared_ptr<GraphicModel> model = this->GetGraphicModel();
-
-	if(vertexShader == false){ return; }
-	if(pixelShader == false){ return; }
-	if(model == false){ return; }
-
-	if(this->Depth == true)	{ pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthStencilState, 1); }
-	else					{ pImmediateContext->OMSetDepthStencilState(d3dStuff.pDepthDisabledStencilState, 1); }
-		
-	vertexShader->Setup(camera, *this);
-	if(geometryShader)	{ geometryShader->Setup(camera, *this);	}
-	else				{ pImmediateContext->GSSetConstantBuffers(0, 0, nullptr); }
-	pixelShader->Setup(camera, *this);
-	model->Setup(camera, *this);
-
-	Rasterizer::Setup(camera, *this);
-
-	pImmediateContext->DrawIndexed(model->GetNumberFaces(), 0, 0);
-}
-
 void GraphicObjectEntity::Update(std::shared_ptr<ObjectEntity> v)
 {
 	this->UpdateTracker(v);

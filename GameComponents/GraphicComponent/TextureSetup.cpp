@@ -27,20 +27,20 @@ void TextureSetup::Init(const std::vector<char>& compiledShader)
 	}
 	
 }
-std::vector<TextureInfo> TextureSetup::Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+std::vector<TextureInfo> TextureSetup::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	std::vector<TextureInfo> returnValue;
 
 	for(const TextureSetup::Textures& ti : this->shaderTextures)
 	{
-		if(std::shared_ptr<BasicTexture> tx = object.FindTexture(ti.Name))
+		std::shared_ptr<BasicTexture> tx = object->FindTexture(ti.Name);
+
+		if(tx == false)
 		{
-			returnValue.push_back({tx, ti.Slot});
+			tx = camera->FindTexture(ti.Name);
 		}
-		else
-		{
-			returnValue.push_back({nullptr, ti.Slot});
-		}
+		
+		returnValue.push_back({tx, ti.Slot});
 	}
 
 	return returnValue;

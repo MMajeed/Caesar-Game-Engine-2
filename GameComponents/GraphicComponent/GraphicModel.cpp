@@ -61,7 +61,7 @@ void GraphicModel::InitIndexBuffer()
 	this->pIndexBuffer = buffer;
 }
 
-void GraphicModel::Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void GraphicModel::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -180,21 +180,21 @@ std::shared_ptr<GraphicModel> GraphicModel::Spawn(std::shared_ptr<CHL::Model> mo
 	return newObject;
 }
 
-COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	COMSharedPtr<ID3D11InputLayout> returnValue;
 
-	auto inputLayoutIter = this->InputLayoutMap.find(object.GetVertexShaderID());
+	auto inputLayoutIter = this->InputLayoutMap.find(object->GetVertexShaderID());
 	if(inputLayoutIter != this->InputLayoutMap.end())
 	{
 		returnValue = inputLayoutIter->second;
 	}
 	else
 	{
-		if(std::shared_ptr<VertexShader> vs = object.GetVertexShader())
+		if(std::shared_ptr<VertexShader> vs = object->GetVertexShader())
 		{
-			returnValue = vs->GenerateInputLayout(object.GetGraphicModel());
-			this->InputLayoutMap[object.GetVertexShaderID()] = returnValue;
+			returnValue = vs->GenerateInputLayout(object->GetGraphicModel());
+			this->InputLayoutMap[object->GetVertexShaderID()] = returnValue;
 		}
 	}
 

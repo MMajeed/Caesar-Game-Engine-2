@@ -44,7 +44,7 @@ void VertexShader::Init()
 	}
 }
 
-void VertexShader::Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void VertexShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 

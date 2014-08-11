@@ -14,7 +14,7 @@ protected:
 	PixelShader(){}
 	void Init();
 public:
-	void Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 
 	static std::shared_ptr<PixelShader> Spawn(const std::vector<char>& compiledPixelShader);
 	static std::shared_ptr<PixelShader> Spawn(const std::string& fileName);

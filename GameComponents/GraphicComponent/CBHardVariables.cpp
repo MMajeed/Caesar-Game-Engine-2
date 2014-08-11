@@ -23,17 +23,20 @@ CBHardVariables::CBHardVariables(std::vector<char>& bytes, const unsigned int St
 CBufferWorld::CBufferWorld(std::vector<char>& bytes, const unsigned int StartOffset) : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferWorld::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferWorld::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 valueXM = object.GetWorld();
-	XMMATRIX value = XMLoadFloat4x4(&valueXM);
+	if(object)
+	{
+		XMFLOAT4X4 valueXM = object->GetWorld();
+		XMMATRIX value = XMLoadFloat4x4(&valueXM);
 
-	value = XMMatrixTranspose(value);
+		value = XMMatrixTranspose(value);
 
-	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferWorld::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -47,16 +50,25 @@ CBufferView::CBufferView(std::vector<char>& bytes, const unsigned int StartOffse
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferView::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferView::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 valueXM = camera.GetView();
-	XMMATRIX value = XMLoadFloat4x4(&valueXM);
+	if(camera)
+	{
+		XMFLOAT4X4 valueXM = camera->GetView();
+		XMMATRIX value = XMLoadFloat4x4(&valueXM);
 
-	value = XMMatrixTranspose(value);
-	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		XMMATRIX value = XMMatrixIdentity();
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferView::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -70,16 +82,25 @@ CBufferView2D::CBufferView2D(std::vector<char>& bytes, const unsigned int StartO
 	: CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferView2D::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferView2D::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 valueXM = camera.GetView2D();
-	XMMATRIX value = XMLoadFloat4x4(&valueXM);
+	if(object)
+	{
+		XMFLOAT4X4 valueXM = camera->GetView2D();
+		XMMATRIX value = XMLoadFloat4x4(&valueXM);
 
-	value = XMMatrixTranspose(value);
-	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		XMMATRIX value = XMMatrixIdentity();
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferView2D::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -93,16 +114,25 @@ CBufferPerspective::CBufferPerspective(std::vector<char>& bytes, const unsigned 
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferPerspective::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferPerspective::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 valueXM = camera.GetPerspective();
-	XMMATRIX value = XMLoadFloat4x4(&valueXM);
+	if(camera)
+	{
+		XMFLOAT4X4 valueXM = camera->GetPerspective();
+		XMMATRIX value = XMLoadFloat4x4(&valueXM);
 
-	value = XMMatrixTranspose(value);
-	memcpy(&bytes[copyStartingAt], &value, sizeOfValue);
+		value = XMMatrixTranspose(value);
+		memcpy(&bytes[copyStartingAt], &value, sizeOfValue);
+	}
+	else
+	{
+		XMMATRIX value = XMMatrixIdentity();
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferPerspective::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -116,16 +146,25 @@ CBufferOrthogonal::CBufferOrthogonal(std::vector<char>& bytes, const unsigned in
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferOrthogonal::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferOrthogonal::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 valueXM = camera.GetOrthogonal();
-	XMMATRIX value = XMLoadFloat4x4(&valueXM);
+	if(camera)
+	{
+		XMFLOAT4X4 valueXM = camera->GetOrthogonal();
+		XMMATRIX value = XMLoadFloat4x4(&valueXM);
 
-	value = XMMatrixTranspose(value);
-	memcpy(&bytes[copyStartingAt], &value, sizeOfValue);
+		value = XMMatrixTranspose(value);
+		memcpy(&bytes[copyStartingAt], &value, sizeOfValue);
+	}
+	else
+	{
+		XMMATRIX value = XMMatrixIdentity();
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferOrthogonal::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -139,19 +178,28 @@ CBufferWVP::CBufferWVP(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferWVP::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferWVP::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 worldMatrix = object.GetWorld();
-	XMFLOAT4X4 prespectiveMatrix = camera.GetPerspective();
-	XMFLOAT4X4 viewMatrix = camera.GetView();
+	if(object && camera)
+	{
+		XMFLOAT4X4 worldMatrix = object->GetWorld();
+		XMFLOAT4X4 prespectiveMatrix = camera->GetPerspective();
+		XMFLOAT4X4 viewMatrix = camera->GetView();
 
-	XMMATRIX value = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
+		XMMATRIX value = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
 
-	value = XMMatrixTranspose(value);
-	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		XMMATRIX value = XMMatrixIdentity();
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferWVP::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -165,19 +213,28 @@ CBufferWVO::CBufferWVO(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferWVO::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferWVO::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4X4 worldMatrix = object.GetWorld();
-	XMFLOAT4X4 prespectiveMatrix = camera.GetOrthogonal();
-	XMFLOAT4X4 viewMatrix = camera.GetView();
+	if(object && camera)
+	{
+		XMFLOAT4X4 worldMatrix = object->GetWorld();
+		XMFLOAT4X4 prespectiveMatrix = camera->GetOrthogonal();
+		XMFLOAT4X4 viewMatrix = camera->GetView();
 
-	XMMATRIX value = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
+		XMMATRIX value = XMLoadFloat4x4(&worldMatrix) * XMLoadFloat4x4(&viewMatrix) * XMLoadFloat4x4(&prespectiveMatrix);
 
-	value = XMMatrixTranspose(value);
-	CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		XMMATRIX value = XMMatrixIdentity();
+		value = XMMatrixTranspose(value);
+		CHL::ByteCopy<XMMATRIX>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferWVO::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {
@@ -191,14 +248,21 @@ CBufferEye::CBufferEye(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMFLOAT4))
 {
 }
-void CBufferEye::Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBufferEye::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
 
-	XMFLOAT4 value = camera.GetEye();
-
-	CHL::ByteCopy<XMFLOAT4>(value, bytes, copyStartingAt);
+	if(camera)
+	{
+		XMFLOAT4 value = camera->GetEye();
+		CHL::ByteCopy<XMFLOAT4>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		XMFLOAT4 value(0.0f, 0.0f, 0.0f, 1.0f);
+		CHL::ByteCopy<XMFLOAT4>(value, bytes, copyStartingAt);
+	}
 }
 std::shared_ptr<CBHardVariables> CBufferEye::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
 {

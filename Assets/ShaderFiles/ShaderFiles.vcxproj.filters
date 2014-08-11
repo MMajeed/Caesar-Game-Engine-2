@@ -22,6 +22,9 @@
     <FxCompile Include="PS_CubeTexture.fx">
       <Filter>PS</Filter>
     </FxCompile>
+    <FxCompile Include="PS_Deferred.fx">
+      <Filter>PS\Deferred</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="VS">
@@ -29,6 +32,9 @@
     </Filter>
     <Filter Include="PS">
       <UniqueIdentifier>{26278e21-d733-407e-80ac-04ed108e1350}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PS\Deferred">
+      <UniqueIdentifier>{ce197322-8029-4e14-b4bf-07452bb0a4e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

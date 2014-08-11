@@ -49,7 +49,6 @@ void CubeScreenShot::Init()
 		ID3D11RenderTargetView* pTempColorMapRTV;
 		rtvDesc.Texture2DArray.FirstArraySlice = i;
 		hr = d3dStuff.pd3dDevice->CreateRenderTargetView(colorMap, &rtvDesc, &pTempColorMapRTV);
-
 		if(FAILED(hr)){ Logger::LogError("Failed at creating render target view"); }
 		this->pColorMapRTV[i] = pTempColorMapRTV;
 	}
@@ -126,14 +125,14 @@ void CubeScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<Graph
 
 	for(std::size_t i = 0; i < 6; ++i)
 	{
-		GraphicCameraEntity si = this->SetupScene(i, spCE);
+		std::shared_ptr<GraphicCameraEntity> si = this->SetupScene(i, spCE);
 		this->SetupSnapShot(i, si, list);
 		this->TakeScreenSnapShot(i, si, list);
 		this->CleanupSnapShot(i, si, list);
 	}
 }
 
-GraphicCameraEntity CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr<CameraEntity>& cam)
+std::shared_ptr<GraphicCameraEntity> CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr<CameraEntity>& cam)
 {
 	// This call needs to be called six times, for each direction of the camera.
 	// You set the back buffer to be the particular direction in the cube map
@@ -144,44 +143,48 @@ GraphicCameraEntity CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr
 	static enum enumCamDirection
 	{
 		X_POS = 0,
-		X_NEG,	// = 1
-		Y_POS,	// = 2
-		Y_NEG,	// = 3
-		Z_POS,	// = 4
-		Z_NEG	// = 5 
+		X_NEG = 1,
+		Y_POS = 2,
+		Y_NEG = 3,
+		Z_POS = 4,
+		Z_NEG = 5,
 	};
 
 	CML::Vec4 vTM;
 	CML::Vec4 vUp;
 	double pitch = 0.0;	double yaw = 0.0;	double roll = 0.0;
-	double fovAngle = 0.0;
 	// Draw the scene with the exception of the center sphere to this cube map face.
 	switch(side)
 	{
 		case X_POS:		// 0
-			vUp = {0.0, 1.0, 0.0, 0.0};
-			vTM = {1.0, 0.0, 0.0, 0.0};
+			vUp = {1.0, 1.0, 0.0, 0.0};
+			vTM = {-0.01, 0.0, 0.0, 0.0};
+			yaw = 3.14f;
 			break;
 		case X_NEG:		// 1	
 			vUp = {0.0, 1.0, 0.0, 0.0};
-			vTM = {-1.0, 0.0, 0.0, 0.0};
+			vTM = {0.01, 0.0, 0.0, 0.0};
+			yaw = 3.14f;
 			break;
 		case Y_POS:		// 2
 			vUp = {0.0, 0.0, 1.0, 0.0};
 			vTM = {0.0, 0.01, 0.0, 0.0};
-			yaw = 3.14f;
+			yaw = 0.0f;
 			break;
 		case Y_NEG:		// 3
 			vUp = {0.0, 0.0, 1.0, 0.0};
 			vTM = {0.0, -0.01, 0.0, 0.0};
+			yaw = 3.14f;
 			break;
 		case Z_POS:		// 4
 			vUp = {0.0, 1.0, 0.0, 0.0};
 			vTM = {0.0, 0.0, 0.01, 0.0};
+			yaw = 3.14f;
 			break;
 		case Z_NEG:		// 5
 			vUp = {0.0, 1.0, 0.0, 0.0};
 			vTM = {0.0, 0.0, -0.01, 0.0};
+			yaw = 3.14f;
 			break;
 	}
 	cam->SetTargetMagnitude(vTM);
@@ -191,14 +194,14 @@ GraphicCameraEntity CubeScreenShot::SetupScene(std::size_t side, std::shared_ptr
 	cam->SetRoll(roll);
 	cam->SetFovAngleY(1.5707963267948966192313216916398);
 	
-	return GraphicCameraEntity(cam, this->width, this->height);
+	return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(cam, this->width, this->height));
 }
-void CubeScreenShot::SetupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
-	auto c = Camera.GetClearColor();
+	auto c = Camera->GetClearColor();
 	d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV[side], c.data());
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
@@ -206,13 +209,13 @@ void CubeScreenShot::SetupSnapShot(std::size_t side, const GraphicCameraEntity& 
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport);
 }
-void CubeScreenShot::TakeScreenSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::TakeScreenSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::DrawObjects(Camera, list);
 }
-void CubeScreenShot::CleanupSnapShot(std::size_t side, const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;

@@ -16,23 +16,24 @@ for k,v in pairs(fileNames) do
     local rootNode = animationScene["RootNode"];
     local BasicAnimation = BasicAnimation(animation[1]); 
     local AnimationController = AnimationController({
-                                    [Keys["AnimationController"]["BasicAnimation"]]   = BasicAnimation,
-                                    [Keys["AnimationController"]["RootNode"]]         = rootNode,
-                                    [Keys["AnimationController"]["Speed"]]            = speed,
+                    [Keys["AnimationController"]["BasicAnimation"]]   = BasicAnimation,
+                    [Keys["AnimationController"]["RootNode"]]         = rootNode,
+                    [Keys["AnimationController"]["Speed"]]            = speed,
                                     });
 
     function RecursiveLoadJoint(joint)
         local meshes = joint.Meshes;
-        local ManDrawable =  BasicDrawableObject({[Keys["BasicDrawable"]["MODEL"]]            = mesh[meshes[1]],
-                                                  [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
-                                                  [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
+        local ManDrawable =  BasicDrawableObject({
+                    [Keys["BasicDrawable"]["MODEL"]]            = mesh[meshes[1]],
+                    [Keys["BasicDrawable"]["VertexShaderFile"]] = "Assets/ShaderFiles/VS_0_Regular.cso",
+                    [Keys["BasicDrawable"]["PixelShaderFile"]]  = "Assets/ShaderFiles/PS_0_Generic.cso",});
 
         local ManObj =   Object({
-                            [Keys["ObjectInfo"]["Location"]]        = Vector4(70, 0.0, zPosition),
-                            [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
-                            [Keys["ObjectInfo"]["DrawableObj"]]     = ManDrawable,
-                            [Keys["ObjectInfo"]["AnimationJoint"]]  = {AnimationController,  joint.Name},
-                            [Keys["ObjectInfo"]["Light"]]           = false,
+                    [Keys["ObjectInfo"]["Location"]]        = Vector4(70, 0.0, zPosition),
+                    [Keys["ObjectInfo"]["Scale"]]           = Vector4(0.1, 0.1, 0.1),
+                    [Keys["ObjectInfo"]["DrawableObj"]]     = ManDrawable,
+                    [Keys["ObjectInfo"]["AnimationJoint"]]  = {AnimationController,  joint.Name},
+                    [Keys["ObjectInfo"]["Light"]]           = false,
                                 });
         for key,value in pairs(joint.Childern) do 
             RecursiveLoadJoint(value);

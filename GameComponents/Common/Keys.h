@@ -17,11 +17,14 @@ namespace Keys
 		const static std::string NEARZ			    = "NearZ";
 		const static std::string FARZ               = "FarZ";
 		const static std::string CLEARCOLOR         = "ClearColor";
-		const static std::string GLOBAL2DTEXTURE    = "Global2DTexture";
-		const static std::string GLOBALCUBETEXTURE  = "GlobalCubeTexture";
-		const static std::string GLOBALUSERDATA     = "GlobalUserData";
+		const static std::string TEXTURE		    = "Texture";
+		const static std::string USERDATA			= "UserData";
 		const static std::string INCLUSIONSTATE     = "InclusionState";
 		const static std::string INCLUSIONLIST		= "InclusionList";
+		const static std::string VERTEXSHADER		= "VertexShader";
+		const static std::string VERTEXSHADERSTATE	= "VertexShaderState";
+		const static std::string PIXELSHADER		= "PixelShader";
+		const static std::string PIXELSHADERSTATE	= "PixelShaderState";
 	};
 	
 	namespace BasicTexture

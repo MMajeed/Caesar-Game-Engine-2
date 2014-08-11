@@ -1,6 +1,6 @@
+require("camera")
 require("Text")
 require("Information")
-require("camera")
 require("SkyBox")
 require("floor")
 require("PhysicsDemo")
@@ -18,17 +18,17 @@ local PSColorShader = PixelShader("Assets/ShaderFiles/PS_Color.cso");
 local PSTextureShader = PixelShader("Assets/ShaderFiles/PS_Texture.cso");
 
 local ironMan = Object({
-                        [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.5, -30.0),
-                        [Keys["ObjectInfo"]["Rotation"]]     = Vector4(0.0, 3.14, 0.0),
-                        [Keys["ObjectInfo"]["GraphicModel"]] = ironManMesh,
-                        [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
-                        [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
-                        [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
-                        [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = ironManTexture },
-                        [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Wireframe"],
-                        [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
-                        [Keys["ObjectInfo"]["Depth"]]        = false,
-                        [Keys["ObjectInfo"]["Priority"]]     = -1000.0,
+                    [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.5, -30.0),
+                    [Keys["ObjectInfo"]["Rotation"]]     = Vector4(0.0, 3.14, 0.0),
+                    [Keys["ObjectInfo"]["GraphicModel"]] = ironManMesh,
+                    [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                    [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                    [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = ironManTexture },
+                    [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Wireframe"],
+                    [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
+                    [Keys["ObjectInfo"]["Depth"]]        = false,
+                    [Keys["ObjectInfo"]["Priority"]]     = -1000.0,
                         });
                         
 for zIndex = 0, 2, 1 do
@@ -37,11 +37,11 @@ for zIndex = 0, 2, 1 do
         local y = 2;
         local z = -20 + (zIndex * 20);
         local sphereObject = Object({
-                                    [Keys["ObjectInfo"]["Location"]]     = Vector4(x, y, z),
-                                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
-                                    [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
-                                    [Keys["ObjectInfo"]["PixelShader"]]  = PSColorShader,
-                                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                    [Keys["ObjectInfo"]["Location"]]     = Vector4(x, y, z),
+                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                    [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
+                    [Keys["ObjectInfo"]["PixelShader"]]  = PSColorShader,
+                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                                     });
     end
 end

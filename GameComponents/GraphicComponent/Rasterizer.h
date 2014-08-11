@@ -2,13 +2,14 @@
 #define __Rasterizer__
 
 #include "Linker.h"
+#include <memory>
 
 class GraphicCameraEntity;
 class GraphicObjectEntity;
 
 namespace Rasterizer
 {
-	void Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	GraphicComponentDLL_API void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 };
 
 

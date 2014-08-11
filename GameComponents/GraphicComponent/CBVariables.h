@@ -12,7 +12,7 @@ class GraphicComponentDLL_API CBVariables
 protected:
 	CBVariables(std::vector<char>& bytes, const unsigned int StartOffset);
 public:
-	virtual void Update(const GraphicCameraEntity& camera, const GraphicObjectEntity& object) = 0;
+	virtual void Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object) = 0;
 
 	std::vector<char>& bytes;
 	const unsigned int StartOffset;

@@ -18,7 +18,7 @@ protected:
 	virtual void InitVertexBuffer();
 	virtual void InitIndexBuffer();
 public:
-	void Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 
 	std::vector<VertexLayout> GetVertexLayout();
 	unsigned int GetNumberFaces();
@@ -40,7 +40,7 @@ protected:
 
 	std::hash_map<std::string, COMSharedPtr<ID3D11InputLayout>> InputLayoutMap;
 
-	COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 };
 
 

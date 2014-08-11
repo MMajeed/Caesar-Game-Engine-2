@@ -87,6 +87,9 @@
     <ClInclude Include="3DMath.h">
       <Filter>D3D Tools\3DMath</Filter>
     </ClInclude>
+    <ClInclude Include="Draw.h">
+      <Filter>Scene\Draw</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -161,6 +164,9 @@
     </ClCompile>
     <ClCompile Include="3DMath.cpp">
       <Filter>D3D Tools\3DMath</Filter>
+    </ClCompile>
+    <ClCompile Include="Draw.cpp">
+      <Filter>Scene\Draw</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,6 +268,9 @@
     </Filter>
     <Filter Include="Drawable\Shader\CBSetup\CBVariables\CBHardVariables">
       <UniqueIdentifier>{f946b745-aac8-4c62-bee9-8c87e83500c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Draw">
+      <UniqueIdentifier>{17ac3a2d-712b-4d6e-a28e-34549b745be3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

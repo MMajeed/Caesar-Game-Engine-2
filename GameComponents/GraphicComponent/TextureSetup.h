@@ -20,7 +20,7 @@ protected:
 	TextureSetup();
 	void Init(const std::vector<char>& compiledShader);
 public:
-	std::vector<TextureInfo> Setup(const GraphicCameraEntity& camera, const GraphicObjectEntity& object);
+	std::vector<TextureInfo> Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 	static std::shared_ptr<TextureSetup> Spawn(const std::vector<char>& compiledGeometryShader);
 protected:
 	

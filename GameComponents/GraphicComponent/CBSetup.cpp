@@ -55,7 +55,7 @@ void CBSetup::Init(const std::vector<char>& compiledShader, unsigned int bufferN
 		}
 	}
 }
-void CBSetup::Run(const GraphicCameraEntity& camera, const GraphicObjectEntity& object)
+void CBSetup::Run(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 {
 	for(auto variableIter = this->variables.begin();
 		variableIter != this->variables.end();

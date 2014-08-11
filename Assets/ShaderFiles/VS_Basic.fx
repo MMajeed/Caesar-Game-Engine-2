@@ -31,10 +31,12 @@ PS_INPUT main(VS_INPUT input)
 	output.PosWorld = mul(input.VertexPos, World);
 
 	output.Normal = input.VertexNorm;
+
 	matrix worldNoTranslation = World;
 	worldNoTranslation[3][0] = 0.0;
 	worldNoTranslation[3][1] = 0.0;
 	worldNoTranslation[3][2] = 0.0;
+	worldNoTranslation[3][3] = 1.0;
 	output.NormalWorld = mul(input.VertexNorm, worldNoTranslation);
 	output.NormalWorld = normalize(output.NormalWorld);
 

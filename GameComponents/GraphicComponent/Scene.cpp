@@ -2,16 +2,18 @@
 
 #include "GraphicManager.h"
 #include "ResourceManager.h"
+#include "Rasterizer.h"
+#include "Draw.h"
 #include <EntityList.h>
 #include <set>
 
 namespace Scene
 {
-	GraphicCameraEntity GetCamera(const std::string& ID, unsigned int width, unsigned int height)
+	std::shared_ptr<GraphicCameraEntity> GetCamera(const std::string& ID, unsigned int width, unsigned int height)
 	{
 		std::weak_ptr<CameraEntity> wpCE;
-		if(CameraEntities::Find(ID, wpCE) == true){ return GraphicCameraEntity(wpCE.lock(), width, height); }
-		else { return GraphicCameraEntity(); }
+		if(CameraEntities::Find(ID, wpCE) == true){ return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(wpCE.lock(), width, height)); }
+		else { return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity()); }
 	}
 
 	static std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> ObjectEntities;
@@ -54,13 +56,13 @@ namespace Scene
 		return ObjectEntities;
 	}
 
-	void ClearScreen(const GraphicCameraEntity& Camera)
+	void ClearScreen(std::shared_ptr<GraphicCameraEntity> Camera)
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
 		auto& d3dStuff = graphic.D3DStuff;
 
 		// Clear the back buffer 
-		auto c = Camera.GetClearColor();
+		auto c = Camera->GetClearColor();
 		d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, c.data());
 		d3dStuff.pImmediateContext->ClearDepthStencilView(d3dStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
@@ -70,14 +72,15 @@ namespace Scene
 		d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 
 	}
-	void DrawObjects(const GraphicCameraEntity& Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+	void DrawObjects(std::shared_ptr<GraphicCameraEntity> camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 	{
-		ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
+		auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
+		ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;
 
-		std::vector<std::shared_ptr<GraphicObjectEntity>> objects = Camera.FilterInclusionList(list);
-		for(const std::shared_ptr<GraphicObjectEntity>& object : objects)
+		std::vector<std::shared_ptr<GraphicObjectEntity>> objects = camera->FilterInclusionList(list);
+		for(const std::shared_ptr<GraphicObjectEntity> object : objects)
 		{
-			object->Draw(Camera);
+			Draw::Setup(camera, object);
 		}
 	}
 };

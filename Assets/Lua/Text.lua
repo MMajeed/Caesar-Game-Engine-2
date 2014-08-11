@@ -107,20 +107,20 @@ local VSTextShader = VertexShader("Assets/ShaderFiles/VS_Font.cso");
 local PSFontShader = PixelShader("Assets/ShaderFiles/PS_Font.cso");
 
 Text2D = class(function(self, text, location) 
-                self.Text = text;
-                
-                self.SpriteObj = Object({
-                                    [Keys["ObjectInfo"]["Location"]]     = location,
-                                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
-                                    [Keys["ObjectInfo"]["VertexShader"]] = VSTextShader,
-                                    [Keys["ObjectInfo"]["PixelShader"]]  = PSFontShader,
-                                    [Keys["ObjectInfo"]["Group"]]        = { "Text" },
-                                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
-                                    [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = SpriteTexture },
-                                    [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
-                                    });
-                self:Set();
-             end)
+        self.Text = text;
+        
+        self.SpriteObj = Object({
+                    [Keys["ObjectInfo"]["Location"]]     = location,
+                    [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
+                    [Keys["ObjectInfo"]["VertexShader"]] = VSTextShader,
+                    [Keys["ObjectInfo"]["PixelShader"]]  = PSFontShader,
+                    [Keys["ObjectInfo"]["Group"]]        = { "Text" },
+                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                    [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = SpriteTexture },
+                    [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
+                            });
+        self:Set();
+     end)
 
 function Text2D:Set()
     if(self.grahpicSpriteModel ~= nil) then

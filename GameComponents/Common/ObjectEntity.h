@@ -3,12 +3,12 @@
 
 #include "Linker.h"
 #include "Entity.h"
+#include <Object.h>
 #include <Vector.h>
 #include <Matrix.h>
 #include <vector>
 #include <hash_set>
 #include <hash_map>
-#include <Object.h>
 
 class CommonDLL_API ObjectEntity : public Entity
 {
