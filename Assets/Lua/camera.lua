@@ -13,7 +13,7 @@ regularCam = Camera({
                     [Keys["Camera"]["FarZ"]]            = 1100.0,
                     [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
                     [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
-                    [Keys["Camera"]["InclusionList"]]   = {},
+                    [Keys["Camera"]["InclusionList"]]   = { "NoMainDraw" },
                     [Keys["Camera"]["UserData"]]        = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                    }); 
 SetMainCamera(regularCam);
@@ -21,6 +21,12 @@ SetMainCamera(regularCam);
 local CamLeftButton   = false;    local CamRightButton  = false;
 local CamUpButton     = false;    local CamDownButton   = false;
 local CamPgUpButton   = false;    local CamPgDownButton = false;
+
+local CallOnUpdate = {};
+
+function AddToCallOnCameraUpdate(func)
+      table.insert(CallOnUpdate, func)
+end
 
 function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
@@ -45,6 +51,7 @@ function UpdateCamera(time, ID)
         local moveDistance = -0.05 * time;
         regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
     end
+    for key,value in pairs(CallOnUpdate) do value(time, ID) end
 end
 
 LoopCall(1, UpdateCamera);

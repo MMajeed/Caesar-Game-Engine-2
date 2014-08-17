@@ -8,6 +8,7 @@
 
 CubeScreenShot::CubeScreenShot()
 {
+	this->pScreenTexture.resize(1);
 }
 
 void CubeScreenShot::Init()
@@ -63,7 +64,7 @@ void CubeScreenShot::Init()
 	ID3D11ShaderResourceView* pTempScreenTexture;
 	hr = d3dStuff.pd3dDevice->CreateShaderResourceView(colorMap, &srvDesc, &pTempScreenTexture);
 	if(FAILED(hr)){ Logger::LogError("Failed at creating shader resource view"); }
-	this->pScreenTexture = pTempScreenTexture;
+	this->pScreenTexture[0] = pTempScreenTexture;
 
 	// View saves a reference to the texture so we can release our reference.
 	colorMap->Release();
@@ -109,10 +110,13 @@ void CubeScreenShot::Init()
 }
 void CubeScreenShot::Snap()
 {
-	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
+	Scene::UpdateCameraEntities();
+	Scene::UpdateObjectEntities();
+
+	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
 	this->Snap(objects);
 }
-void CubeScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -196,31 +200,33 @@ std::shared_ptr<GraphicCameraEntity> CubeScreenShot::SetupScene(std::size_t side
 	
 	return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(cam, this->width, this->height));
 }
-void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
-
-	auto c = Camera->GetClearColor();
-	d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV[side], c.data());
+	if(Camera->GetClearScreen() == true)
+	{
+		auto c = Camera->GetClearColor();
+		d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV[side], c.data());
+	}
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 	ID3D11RenderTargetView* renderTargets[1] = {this->pColorMapRTV[side]};
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport);
 }
-void CubeScreenShot::TakeScreenSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::TakeScreenSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::DrawObjects(Camera, list);
 }
-void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
-	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
+	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture[0]);
 }
 
 std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(unsigned int width, unsigned int height, const std::string& cameraID)

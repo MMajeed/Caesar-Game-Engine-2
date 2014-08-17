@@ -5,17 +5,18 @@
 
 #include <Message.h>
 #include <string>
-#include <Vector.h>
-#include <Vector.h>
+#include <vector>
 
 namespace BasicScreenCaptureConfig
 {
 	GraphicCommunicatorDLL_API 
 		void Create(unsigned int width,
 					unsigned int height,
+					unsigned int priority,
 					const std::string& cameraID,
+					unsigned int numberOfTargets,
 					std::string& ID,
-					std::string& textureID);
+					std::vector<std::string>& textureID);
 	GraphicCommunicatorDLL_API void SetCameraID(const std::string& id, const std::string& cameraid);
 	GraphicCommunicatorDLL_API void Release(std::string ID);
 };

@@ -43,10 +43,14 @@ void GraphicManager::Shutdown()
 
 void GraphicManager::ProcessDrawing()
 {
-	auto camera = Scene::GetCamera(this->DefaultCamera, this->window.width, this->window.height);
-	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
+	Scene::UpdateObjectEntities();
+	Scene::UpdateCameraEntities();
+
+	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
 
 	this->RunAllCapture(objects);
+
+	auto camera = Scene::GetCamera(this->DefaultCamera, this->window.width, this->window.height);
 
 	Scene::ClearScreen(camera);
 	Scene::DrawObjects(camera, objects);
@@ -56,14 +60,26 @@ void GraphicManager::ProcessDrawing()
 	this->D3DStuff.pSwapChain->Present(0, 0);
 }
 
-void GraphicManager::RunAllCapture(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void GraphicManager::RunAllCapture(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
-	auto& screenCaptures = ResourceManager::ScreenCaptureList.All();
-	for(auto iter = screenCaptures.begin();
-		iter != screenCaptures.end();
+	const auto& screenCapturesMap = ResourceManager::ScreenCaptureList.All();
+	std::vector<std::shared_ptr<ScreenCapture>> screenCapturesVector;
+	for(auto it = screenCapturesMap.begin(); it != screenCapturesMap.end(); ++it) 
+	{
+		screenCapturesVector.push_back(it->second);
+	}
+
+	std::sort(screenCapturesVector.begin(), screenCapturesVector.end(),
+			  [](const std::shared_ptr<ScreenCapture>& lhs, const std::shared_ptr<ScreenCapture>& rhs) -> bool
+				{
+					return lhs->Priority < rhs->Priority;
+				});
+
+	for(auto iter = screenCapturesVector.begin();
+		iter != screenCapturesVector.end();
 		++iter)
 	{
-		iter->second->Snap(list);
+		(*iter)->Snap(list);
 	}
 }
 

@@ -7,8 +7,9 @@
 #include <Vector.h>
 #include <Matrix.h>
 #include <vector>
-#include <hash_set>
-#include <hash_map>
+#include <set>
+#include <unordered_set>
+#include <unordered_map>
 
 class CommonDLL_API ObjectEntity : public Entity
 {
@@ -70,24 +71,24 @@ private:	std::string RigidBodyID;
 public:		std::string GetRigidBodyID();
 			void SetRigidBodyID(const std::string& v);
 
-private:	std::hash_set<std::string> GroupList;
-public:		std::hash_set<std::string> GetGroupList();
-			void SetGroupList(const std::hash_set<std::string>& v);
+private:	std::set<std::string> GroupList;
+public:		std::set<std::string> GetGroupList();
+			void SetGroupList(const std::set<std::string>& v);
 			void AddGroupList(std::string ID);
 			void DeleteGroupList(std::string ID);
 			void EmptyGroupList();
 
-private:	std::hash_map<std::string, std::string> Texture;
-public:		std::hash_map<std::string, std::string> GetTexture();
-			void SetTexture(std::hash_map<std::string, std::string> v);
+private:	std::unordered_map<std::string, std::string> Texture;
+public:		std::unordered_map<std::string, std::string> GetTexture();
+			void SetTexture(std::unordered_map<std::string, std::string> v);
 			bool FindTexture(const std::string& ID, std::string& returnTextureID);
 			void SetTexture(const std::string& ID, const std::string& v);
 			void DeleteTexture(const std::string& ID);
 			void EmptyTexture();
 
-private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
-public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData();
-			void SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v);
+private:	std::unordered_map<std::string, std::shared_ptr<Object>> UserData;
+public:		std::unordered_map<std::string, std::shared_ptr<Object>> GetUserData();
+			void SetUserData(std::unordered_map<std::string, std::shared_ptr<Object>> v);
 			std::shared_ptr<Object> FindUserData(const std::string& ID);
 			void SetUserData(const std::string& ID, const std::shared_ptr<Object>& data);
 			void DeleteUserData(const std::string& ID);

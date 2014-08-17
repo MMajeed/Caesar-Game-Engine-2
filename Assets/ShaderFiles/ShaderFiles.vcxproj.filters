@@ -16,13 +16,22 @@
     <FxCompile Include="PS_Font.fx">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="VS_Font.fx">
-      <Filter>VS</Filter>
-    </FxCompile>
     <FxCompile Include="PS_CubeTexture.fx">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="PS_Deferred.fx">
+    <FxCompile Include="VS_2D.fx">
+      <Filter>VS</Filter>
+    </FxCompile>
+    <FxCompile Include="2_PS_DirectionalLight.fx">
+      <Filter>PS\Deferred</Filter>
+    </FxCompile>
+    <FxCompile Include="PS_Light.fx">
+      <Filter>PS</Filter>
+    </FxCompile>
+    <FxCompile Include="1_PS_DeferredLight.fx">
+      <Filter>PS\Deferred</Filter>
+    </FxCompile>
+    <FxCompile Include="3_PS_PointLight.fx">
       <Filter>PS\Deferred</Filter>
     </FxCompile>
   </ItemGroup>

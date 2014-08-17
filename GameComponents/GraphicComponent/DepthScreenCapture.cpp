@@ -6,24 +6,21 @@
 
 DepthScreenCapture::DepthScreenCapture()
 {
+	this->TextureID.resize(1);
 }
 void DepthScreenCapture::Init()
 {
 	this->ScreenShot = DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
 }
-void DepthScreenCapture::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void DepthScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->ScreenShot->cameraID = this->cameraID;
 	this->ScreenShot->Snap(list);
 
-	auto texture = ResourceManager::TextureList.Find(this->TextureID);
+	auto texture = ResourceManager::TextureList.Find(this->TextureID[0]);
 	if(texture)
 	{
-		auto basicTexture = std::dynamic_pointer_cast<BasicTexture>(texture);
-		if(basicTexture != 0)
-		{
-			basicTexture->pTexture = this->ScreenShot->pScreenTexture;
-		}
+		texture->pTexture = this->ScreenShot->pScreenTexture[0];
 	}
 }
 std::shared_ptr<ScreenCapture> DepthScreenCapture::clone() const
@@ -37,14 +34,16 @@ std::shared_ptr<ScreenCapture> DepthScreenCapture::clone() const
 std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(const std::string& textureID,
 															  unsigned int width,
 															  unsigned int height,
+															  unsigned int Priority,
 															  std::string CameraID)
 {
 	std::shared_ptr<DepthScreenCapture> newObject(new DepthScreenCapture());
 
-	newObject->TextureID = textureID;
+	newObject->TextureID[0] = textureID;
 	newObject->width = width;
 	newObject->height = height;
 	newObject->cameraID = CameraID;
+	newObject->Priority = Priority;
 
 	newObject->Init();
 

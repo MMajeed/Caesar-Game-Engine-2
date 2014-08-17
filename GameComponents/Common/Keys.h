@@ -16,6 +16,7 @@ namespace Keys
 		const static std::string FOVANGLE		    = "FovAngle";
 		const static std::string NEARZ			    = "NearZ";
 		const static std::string FARZ               = "FarZ";
+		const static std::string CLEARSCREEN        = "ClearScreen";
 		const static std::string CLEARCOLOR         = "ClearColor";
 		const static std::string TEXTURE		    = "Texture";
 		const static std::string USERDATA			= "UserData";
@@ -61,6 +62,8 @@ namespace Keys
 		const static std::string HEIGHT            = "Height";
 		const static std::string CAMERAID          = "CameraID";
 		const static std::string EYE               = "Eye";
+		const static std::string NUMOFTARGETS	   = "NumOfTargets";
+		const static std::string PRIORITY		   = "Priority";
 	};
 
 	namespace AnimationController

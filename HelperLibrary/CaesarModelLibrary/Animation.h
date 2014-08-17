@@ -4,7 +4,7 @@
 #include "Linker.h"
 #include <Vector.h>
 #include <string>
-#include <hash_map>
+#include <unordered_map>
 
 namespace CHL
 {
@@ -28,7 +28,7 @@ namespace CHL
 			std::vector<QuaKey> Rotation;
 			std::vector<Key> Scale;
 		};
-		std::hash_map<std::string, Joint> vecJoints;
+		std::unordered_map<std::string, Joint> vecJoints;
 		double duration;
 		std::string name;
 

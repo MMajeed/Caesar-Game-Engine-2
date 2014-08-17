@@ -1,21 +1,22 @@
 require("camera")
+require("LightSetup")
+require("Helper")
 require("Text")
 require("Information")
 require("SkyBox")
 require("floor")
-require("PhysicsDemo")
-require("StickPerson")
-require("Helper")
 --require("SphereMirror")
+--require("PhysicsDemo")
+--require("StickPerson")
 --require("RandomAnimation")
---require("LightSetup")
 
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
 local ironManMesh = GraphicModel(LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"));
-local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere_Smooth.ply"));
+local sphereGraphic = GraphicModel(LoadDefaultModel("Assets/Models/Sphere.obj"));
 local VSShader = VertexShader("Assets/ShaderFiles/VS_Basic.cso");
 local PSColorShader = PixelShader("Assets/ShaderFiles/PS_Color.cso");
 local PSTextureShader = PixelShader("Assets/ShaderFiles/PS_Texture.cso");
+local PSLightShader = PixelShader("Assets/ShaderFiles/PS_Light.cso");
 
 local ironMan = Object({
                     [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.5, -30.0),
@@ -27,9 +28,13 @@ local ironMan = Object({
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = ironManTexture },
                     [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Wireframe"],
                     [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],
-                    [Keys["ObjectInfo"]["Depth"]]        = false,
+                    [Keys["ObjectInfo"]["Depth"]]        = true,
                     [Keys["ObjectInfo"]["Priority"]]     = -1000.0,
-                        });
+                    [Keys["ObjectInfo"]["UserData"]]     = { 
+                                                              ["Diffuse"]   = Vector4(0.51, 0.53, 0.58, 0.5),
+                                                              ["Ambient"]   = Vector4(0.5, 0.5, 0.5),
+                                                              ["Specular"]  = Vector4(0.5, 0.5, 0.5, 0.5) },
+                     });
                         
 for zIndex = 0, 2, 1 do
     for xIndex = 1, 10, 1 do
@@ -40,11 +45,23 @@ for zIndex = 0, 2, 1 do
                     [Keys["ObjectInfo"]["Location"]]     = Vector4(x, y, z),
                     [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
                     [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
-                    [Keys["ObjectInfo"]["PixelShader"]]  = PSColorShader,
-                    [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                    [Keys["ObjectInfo"]["PixelShader"]]  = PSLightShader,
+                    [Keys["ObjectInfo"]["UserData"]]     = { 
+                                                              ["Color"]     = Vector4(1.0, 1.0, 1.0),
+                                                              ["Diffuse"]   = Vector4(0.51, 0.53, 0.58, 0.5),
+                                                              ["Ambient"]   = Vector4(0.5, 0.5, 0.5),
+                                                              ["Specular"]  = Vector4(0.5, 0.5, 0.5, 0.5) },
                                     });
     end
 end
+
+Sleep(5000, function (time)
+    local textExample = Text2D("Hello!",  Vector4(50.0, 200.0, 0.0));
+    textExample:Scale(Vector4(5.0, 5.0, 5.0));
+    Sleep(5000, function (time)
+        textExample:Release();
+    end);
+end);
 
 OnKeyDown(KeyCode["ESCAPE"], function() Quit(); end);-- Left
 
@@ -63,13 +80,5 @@ OnKeyDown(KeyCode["ESCAPE"], function() Quit(); end);-- Left
 --                       [Keys["Light"]["HasShadow"]]   = true,});    
 --      lightPos = lightPos - 20.0;
 --    end
---);
+----);
 
-
-Sleep(5000, function (time)
-    local textExample = Text2D("Hello!",  Vector4(50.0, 200.0, 0.0));
-    textExample:Scale(Vector4(5.0, 5.0, 5.0));
-    Sleep(5000, function (time)
-        textExample:Release();
-    end);
-end);

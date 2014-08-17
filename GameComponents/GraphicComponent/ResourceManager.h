@@ -2,7 +2,7 @@
 #define __ResourceManager__
 
 #include "Linker.h"
-#include <hash_map>
+#include <unordered_map>
 #include <string>
 #include "GraphicModel.h"
 #include "BasicTexture.h"
@@ -17,7 +17,7 @@ namespace ResourceManager
 	class Resource
 	{
 	public:
-		std::hash_map<std::string, std::shared_ptr<T>> objList;
+		std::unordered_map<std::string, std::shared_ptr<T>> objList;
 
 		void Insert(const std::string& ID, std::shared_ptr<T> obj)
 		{
@@ -43,7 +43,7 @@ namespace ResourceManager
 				this->objList.erase(iter);
 			}
 		}
-		const std::hash_map<std::string, std::shared_ptr<T>>& All()
+		const std::unordered_map<std::string, std::shared_ptr<T>>& All()
 		{
 			return this->objList;
 		}

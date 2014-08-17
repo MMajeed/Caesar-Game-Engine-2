@@ -171,9 +171,9 @@ std::string GraphicObjectEntity::GetAnimationID() const
 {
 	return this->AnimationID;
 }
-std::hash_map<std::string, XMFLOAT4X4> GraphicObjectEntity::GetAnimation() const
+std::unordered_map<std::string, XMFLOAT4X4> GraphicObjectEntity::GetAnimation() const
 {
-	std::hash_map<std::string, XMFLOAT4X4> returnValue;
+	std::unordered_map<std::string, XMFLOAT4X4> returnValue;
 	throw "To do: GetAnimation()";
 	return returnValue;
 }
@@ -215,7 +215,7 @@ void GraphicObjectEntity::UpdateGroupList(std::shared_ptr<ObjectEntity> obj)
 {
 	if(obj)	{ this->GroupList = obj->GetGroupList(); }
 }
-std::hash_set<std::string> GraphicObjectEntity::GetGroupList() const
+std::set<std::string> GraphicObjectEntity::GetGroupList() const
 {
 	return this->GroupList;
 }
@@ -224,13 +224,13 @@ void GraphicObjectEntity::UpdateTextureList(std::shared_ptr<ObjectEntity> obj)
 {
 	if(obj)	{ this->TextureList = obj->GetTexture(); }
 }
-std::hash_map<std::string, std::string> GraphicObjectEntity::GetTextureList() const
+std::unordered_map<std::string, std::string> GraphicObjectEntity::GetTextureList() const
 {
 	return this->TextureList;
 }
-std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicObjectEntity::GetTexture() const
+std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GraphicObjectEntity::GetTexture() const
 {
-	std::hash_map<std::string, std::shared_ptr<BasicTexture>> returnValue;
+	std::unordered_map<std::string, std::shared_ptr<BasicTexture>> returnValue;
 
 	for(const auto& iter : this->TextureList)
 	{
@@ -255,7 +255,7 @@ void GraphicObjectEntity::UpdateUserData(std::shared_ptr<ObjectEntity> obj)
 {
 	if(obj)	{ this->UserData = obj->GetUserData(); }
 }
-std::hash_map<std::string, std::shared_ptr<Object>> GraphicObjectEntity::GetUserData() const
+std::unordered_map<std::string, std::shared_ptr<Object>> GraphicObjectEntity::GetUserData() const
 {
 	return this->UserData;
 }

@@ -104,9 +104,9 @@ void AnimationController::UpdatePlayers(double delta)
 }
 void AnimationController::UpdateMainJoints()
 {
-	std::hash_map<std::string, CML::Vec3>& CurrentTranslationJoint = this->MainAnimation->CurrentTranslationJoint;
-	std::hash_map<std::string, CML::Vec4>& CurrentRotationJoint = this->MainAnimation->CurrentRotationJoint;
-	std::hash_map<std::string, CML::Vec3>& CurrentScaleJoint = this->MainAnimation->CurrentScaleJoint;
+	std::unordered_map<std::string, CML::Vec3>& CurrentTranslationJoint = this->MainAnimation->CurrentTranslationJoint;
+	std::unordered_map<std::string, CML::Vec4>& CurrentRotationJoint = this->MainAnimation->CurrentRotationJoint;
+	std::unordered_map<std::string, CML::Vec3>& CurrentScaleJoint = this->MainAnimation->CurrentScaleJoint;
 
 	for(auto jointIter = this->AllNodes.begin();
 		jointIter != this->AllNodes.end();
@@ -124,9 +124,9 @@ void AnimationController::UpdateTransitionJoints()
 		|| this->TransitionStage.State == Transition::TransitionState::TimeSyncNext
 		|| this->TransitionStage.State == Transition::TransitionState::SnapShotNext){ return; }
 
-	std::hash_map<std::string, CML::Vec3>& CurrentTranslationJoint = this->TransitionStage.TransitionAnimation->CurrentTranslationJoint;
-	std::hash_map<std::string, CML::Vec4>& CurrentRotationJoint = this->TransitionStage.TransitionAnimation->CurrentRotationJoint;
-	std::hash_map<std::string, CML::Vec3>& CurrentScaleJoint = this->TransitionStage.TransitionAnimation->CurrentScaleJoint;
+	std::unordered_map<std::string, CML::Vec3>& CurrentTranslationJoint = this->TransitionStage.TransitionAnimation->CurrentTranslationJoint;
+	std::unordered_map<std::string, CML::Vec4>& CurrentRotationJoint = this->TransitionStage.TransitionAnimation->CurrentRotationJoint;
+	std::unordered_map<std::string, CML::Vec3>& CurrentScaleJoint = this->TransitionStage.TransitionAnimation->CurrentScaleJoint;
 
 	double t = this->TransitionStage.TimeSinceStart / this->TransitionStage.MaxLength;
 	for(auto jointIter = this->AllNodes.begin();
@@ -365,7 +365,7 @@ void AnimationController::SetJoint(std::string name, const CML::Matrix4x4& mat)
 
 	this->jointsAnimated[name] = mat;
 }
-const std::hash_map<std::string, CML::Matrix4x4>& AnimationController::JointsAnimatedTransformation() const
+const std::unordered_map<std::string, CML::Matrix4x4>& AnimationController::JointsAnimatedTransformation() const
 {
 	return this->jointsAnimated;
 }

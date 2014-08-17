@@ -13,6 +13,7 @@ namespace DepthScreenCaptureConfig
 	GraphicCommunicatorDLL_API 
 		void Create(unsigned int width,
 					unsigned int height,
+					unsigned int priority,
 					const std::string& cameraID,
 					std::string& ID,
 					std::string& textureID);

@@ -13,7 +13,8 @@ local mirrorSphereCam1 = Camera({
                     [Keys["Camera"]["FarZ"]]            = 2000.0,
                     [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
                     [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
-                    [Keys["Camera"]["InclusionList"]]   = {"Text"},
+                    [Keys["Camera"]["InclusionList"]]    = {"Text", "NoMainDraw"},
+                    [Keys["Camera"]["Texture"]]          = regularCam.Texture,
                    }); 
                    
 local mirrorSphereSC1 = CubeScreenCapture({
@@ -24,13 +25,13 @@ local mirrorSphereSC1 = CubeScreenCapture({
                                     
 local mirrorSphere1 = Object({
                     [Keys["ObjectInfo"]["Location"]]     = Vector4(40, 20, 0),
-                    [Keys["ObjectInfo"]["Rotation"]]     = Vector4(2, 20, 0),
                     [Keys["ObjectInfo"]["Scale"]]        = Vector4(10.0, 10.0, 10.0),
                     [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
                     [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSCubeShader,
                     [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = mirrorSphereSC1:GetTexture() },
+                    [Keys["ObjectInfo"]["Group"]]        = { "NoLight"},
                         });
                         
 local mirrorSphereCam2 = Camera({
@@ -39,7 +40,8 @@ local mirrorSphereCam2 = Camera({
                     [Keys["Camera"]["FarZ"]]            = 2000.0,
                     [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
                     [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
-                    [Keys["Camera"]["InclusionList"]]   = {"Text"},
+                    [Keys["Camera"]["InclusionList"]]    = {"Text", "NoMainDraw"},
+                    [Keys["Camera"]["Texture"]]          = regularCam.Texture,
                    }); 
                    
 local mirrorSphereSC2 = CubeScreenCapture({
@@ -56,4 +58,5 @@ local mirrorSphere2 = Object({
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSCubeShader,
                     [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = mirrorSphereSC2:GetTexture() },
+                    [Keys["ObjectInfo"]["Group"]]        = { "NoLight"},
                         });

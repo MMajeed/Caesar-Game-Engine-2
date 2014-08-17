@@ -37,7 +37,7 @@ void AnimationManager::RemoveAnimation(const std::string& ID)
 		this->AnimationsContainer.erase(iter);
 	}
 }
-const std::hash_map<std::string, std::shared_ptr<BasicAnimation>>& AnimationManager::AllAnimation()
+const std::unordered_map<std::string, std::shared_ptr<BasicAnimation>>& AnimationManager::AllAnimation()
 {
 	return this->AnimationsContainer;
 }
@@ -55,7 +55,7 @@ void AnimationManager::RemoveAnimationController(const std::string& ID)
 		this->AnimationControllerContainer.erase(iter);
 	}
 }
-const std::hash_map<std::string, std::shared_ptr<AnimationController>>& AnimationManager::AllAnimationController()
+const std::unordered_map<std::string, std::shared_ptr<AnimationController>>& AnimationManager::AllAnimationController()
 {
 	return this->AnimationControllerContainer;
 }

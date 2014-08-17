@@ -5,7 +5,7 @@
 
 #include <Interface.h>
 #include <Singleton.h>
-#include <hash_map>
+#include <unordered_map>
 #include "BasicAnimation.h"
 #include "AnimationPlayer.h"
 #include "AnimationController.h"
@@ -22,15 +22,15 @@ public:
 	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 
-	std::hash_map<std::string, std::shared_ptr<BasicAnimation>> AnimationsContainer;
+	std::unordered_map<std::string, std::shared_ptr<BasicAnimation>> AnimationsContainer;
 	void InsertAnimation(const std::string& ID, std::shared_ptr<BasicAnimation> obj);
 	void RemoveAnimation(const std::string& ID);
-	const std::hash_map<std::string, std::shared_ptr<BasicAnimation>>& AllAnimation();
+	const std::unordered_map<std::string, std::shared_ptr<BasicAnimation>>& AllAnimation();
 
-	std::hash_map<std::string, std::shared_ptr<AnimationController>> AnimationControllerContainer;
+	std::unordered_map<std::string, std::shared_ptr<AnimationController>> AnimationControllerContainer;
 	void InsertAnimationController(const std::string& ID, std::shared_ptr<AnimationController> obj);
 	void RemoveAnimationController(const std::string& ID);
-	const std::hash_map<std::string, std::shared_ptr<AnimationController>>& AllAnimationController();
+	const std::unordered_map<std::string, std::shared_ptr<AnimationController>>& AllAnimationController();
 };
 
 #endif //__AnimationManager__

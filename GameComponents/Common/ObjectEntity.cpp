@@ -173,12 +173,12 @@ void ObjectEntity::SetRigidBodyID(const std::string& v)
 	this->RigidBodyID = v;
 }
 
-std::hash_set<std::string> ObjectEntity::GetGroupList()
+std::set<std::string> ObjectEntity::GetGroupList()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->GroupList;
 }
-void ObjectEntity::SetGroupList(const std::hash_set<std::string>& v)
+void ObjectEntity::SetGroupList(const std::set<std::string>& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->PrivateUpdateTracker();
@@ -203,12 +203,12 @@ void ObjectEntity::EmptyGroupList()
 	this->GroupList.clear();
 }
 
-std::hash_map<std::string, std::string> ObjectEntity::GetTexture()
+std::unordered_map<std::string, std::string> ObjectEntity::GetTexture()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->Texture;
 }
-void ObjectEntity::SetTexture(std::hash_map<std::string, std::string> v)
+void ObjectEntity::SetTexture(std::unordered_map<std::string, std::string> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->PrivateUpdateTracker();
@@ -245,12 +245,12 @@ void ObjectEntity::EmptyTexture()
 	this->Texture.clear();
 }
 
-std::hash_map<std::string, std::shared_ptr<Object>> ObjectEntity::GetUserData()
+std::unordered_map<std::string, std::shared_ptr<Object>> ObjectEntity::GetUserData()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->UserData;
 }
-void ObjectEntity::SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v)
+void ObjectEntity::SetUserData(std::unordered_map<std::string, std::shared_ptr<Object>> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->PrivateUpdateTracker();

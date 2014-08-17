@@ -15,6 +15,7 @@ local skybox = Object({
                     [Keys["ObjectInfo"]["FillMode"]]     = FillMode["Solid"],
                     [Keys["ObjectInfo"]["CullMode"]]     = CullMode["Back"],
                     [Keys["ObjectInfo"]["Priority"]]     = 1000.0,
+                    [Keys["ObjectInfo"]["Group"]]        = { "NoLight" },
                         });
                         
 function UpdateSkyBox()

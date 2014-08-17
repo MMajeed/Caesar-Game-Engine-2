@@ -8,53 +8,66 @@
 namespace BasicScreenCaptureConfig
 {
 	void Create(unsigned int width,
-				unsigned int height, 
+				unsigned int height,
+				unsigned int priority,
 				const std::string& cameraID,
+				unsigned int numberOfTargets,
 				std::string& ID,
-				std::string& textureID)
+				std::vector<std::string>& textureID)
 	{
 		class AddBasicScreenCapture : public Message
 		{
 		public:
-			AddBasicScreenCapture(unsigned int width, 
+			AddBasicScreenCapture(unsigned int width,
 								  unsigned int height,
+								  unsigned int priority,
+								  unsigned int numberOfTargets,
 								  const std::string& cameraID)
 			{
+				this->cameraID = cameraID;
 				this->width = width;
 				this->height = height;
-				this->cameraID = cameraID;
-				this->newTextureID = CHL::GenerateGUID();
+				this->priority = priority;
+				this->numberOfTargets = numberOfTargets;
 				this->ID = CHL::GenerateGUID();
+				for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+				{
+					this->textureID.push_back(CHL::GenerateGUID());
+				}
 			}
 
 			Message::Status Work()
 			{
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn();
-				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
+				for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+				{
+					std::shared_ptr<BasicTexture> newTexture = BasicTexture::Spawn();
+					ResourceManager::TextureList.Insert(this->textureID[i], newTexture);
+				}
 
 				std::shared_ptr<BasicScreenCapture> newBasicScreenShot =
-					BasicScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
+					BasicScreenCapture::Spawn(this->textureID, this->width, this->height, this->numberOfTargets, this->priority, this->cameraID);
 				ResourceManager::ScreenCaptureList.Insert(this->ID, newBasicScreenShot);
 
 				return Message::Status::Complete;
 			}
 
 
-			std::string cameraID;
-			std::string newTextureID;
-			std::string ID;
 			unsigned int width;
 			unsigned int height;
+			unsigned int priority;
+			std::string cameraID;
+			unsigned int numberOfTargets;
+			std::string ID;
+			std::vector<std::string> textureID;
 		};
 
 		std::shared_ptr<AddBasicScreenCapture> msg
-			(new AddBasicScreenCapture(width, height, cameraID));
+			(new AddBasicScreenCapture(width, height, priority, numberOfTargets, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		ID = msg->ID;
-		textureID = msg->newTextureID;
+		textureID = msg->textureID;
 	}
 	void SetCameraID(const std::string& id, const std::string& cameraID)
 	{

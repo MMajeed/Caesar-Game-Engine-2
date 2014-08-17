@@ -103,7 +103,7 @@ FontDataTable["}"] 	= FontData(0.573242, 0.576172, 3);
 FontDataTable["~"] 	= FontData(0.577148, 0.583984, 7);
 
 local SpriteTexture = BasicTexture("Assets/Font/font.dds");
-local VSTextShader = VertexShader("Assets/ShaderFiles/VS_Font.cso");
+local VSTextShader = VertexShader("Assets/ShaderFiles/VS_2D.cso");
 local PSFontShader = PixelShader("Assets/ShaderFiles/PS_Font.cso");
 
 Text2D = class(function(self, text, location) 
@@ -114,7 +114,7 @@ Text2D = class(function(self, text, location)
                     [Keys["ObjectInfo"]["GraphicModel"]] = sphereGraphic,
                     [Keys["ObjectInfo"]["VertexShader"]] = VSTextShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSFontShader,
-                    [Keys["ObjectInfo"]["Group"]]        = { "Text" },
+                    [Keys["ObjectInfo"]["Group"]]        = { "Text", "NoLight"},
                     [Keys["ObjectInfo"]["UserData"]]     = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = SpriteTexture },
                     [Keys["ObjectInfo"]["CullMode"]]     = CullMode["None"],

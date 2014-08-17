@@ -9,7 +9,7 @@
 
 namespace LuaScreenShot
 {
-	ScriptGraphicDLL_API LuaBasicTexture TakeScreenSnapShot(luabind::object const& table);
+	ScriptGraphicDLL_API luabind::object TakeScreenSnapShot(luabind::object const& table);
 	ScriptGraphicDLL_API LuaBasicTexture TakeDepthSnapShot(luabind::object const& table);
 	ScriptGraphicDLL_API LuaBasicTexture TakeCubeSnapShot(luabind::object const& table);
 

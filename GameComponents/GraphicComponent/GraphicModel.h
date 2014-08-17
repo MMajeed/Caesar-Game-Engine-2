@@ -38,7 +38,7 @@ protected:
 	virtual void AddInputLayout(std::string Name, DXGI_FORMAT format, unsigned int Size);
 	virtual unsigned int GetInputLayoutSize();
 
-	std::hash_map<std::string, COMSharedPtr<ID3D11InputLayout>> InputLayoutMap;
+	std::unordered_map<std::string, COMSharedPtr<ID3D11InputLayout>> InputLayoutMap;
 
 	COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
 };

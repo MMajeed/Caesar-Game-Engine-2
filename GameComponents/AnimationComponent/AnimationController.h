@@ -4,11 +4,11 @@
 #include "Linker.h"
 
 #include <memory>
-#include <hash_map>
+#include <unordered_map>
 #include <Matrix.h>
 #include "AnimationPlayer.h"
 #include <vector>
-#include <hash_map>
+#include <unordered_map>
 
 class AnimationComponentDLL_API AnimationController
 {
@@ -53,12 +53,12 @@ public:
 	void SetSpeed(double speed);
 	double GetSpeed();
 
-	const std::hash_map<std::string, CML::Matrix4x4>& JointsAnimatedTransformation() const;
+	const std::unordered_map<std::string, CML::Matrix4x4>& JointsAnimatedTransformation() const;
 	CML::Matrix4x4 GetSingleJoint(std::string jointName);
 	void SetJoint(std::string name, const CML::Matrix4x4& mat);
 protected:
 	std::shared_ptr<AnimationPlayer> MainAnimation;
-	std::hash_map<std::string, MinorAnimation> AllMinorAnimations;
+	std::unordered_map<std::string, MinorAnimation> AllMinorAnimations;
 
 	struct Transition
 	{
@@ -72,14 +72,14 @@ protected:
 		double TimeSinceStart;
 	}TransitionStage;
 
-	std::hash_map<std::string, CML::Vec3> TranslationJoint;
-	std::hash_map<std::string, CML::Vec4> RotationJoint;
-	std::hash_map<std::string, CML::Vec3> ScaleJoint;
+	std::unordered_map<std::string, CML::Vec3> TranslationJoint;
+	std::unordered_map<std::string, CML::Vec4> RotationJoint;
+	std::unordered_map<std::string, CML::Vec3> ScaleJoint;
 
-	std::hash_map<std::string, CML::Matrix4x4> jointsAnimated;
+	std::unordered_map<std::string, CML::Matrix4x4> jointsAnimated;
 
 	std::shared_ptr<AnimationController::Node> RootNode;
-	std::hash_map<std::string, std::shared_ptr<AnimationController::Node>> AllNodes;
+	std::unordered_map<std::string, std::shared_ptr<AnimationController::Node>> AllNodes;
 
 	double	AnimRate;
 };

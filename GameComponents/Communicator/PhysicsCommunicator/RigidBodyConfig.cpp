@@ -74,7 +74,7 @@ namespace RigidBodyConfig
 
 				std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-				const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+				const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 					physicsManager.RigidBodyObjs;
 
 				auto iter = rididBodies.find(ID);
@@ -109,7 +109,7 @@ namespace RigidBodyConfig
 
 				std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-				const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+				const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 					physicsManager.RigidBodyObjs;
 
 				auto iter = rididBodies.find(ID);
@@ -144,7 +144,7 @@ namespace RigidBodyConfig
 
 				std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-				const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+				const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 					physicsManager.RigidBodyObjs;
 
 				auto iter = rididBodies.find(ID);
@@ -170,7 +170,7 @@ namespace RigidBodyConfig
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+		const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 			physicsManager.RigidBodyObjs;
 
 		auto iter = rididBodies.find(ID);
@@ -187,7 +187,7 @@ namespace RigidBodyConfig
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+		const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 			physicsManager.RigidBodyObjs;
 
 		auto iter = rididBodies.find(ID);
@@ -204,7 +204,7 @@ namespace RigidBodyConfig
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+		const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 			physicsManager.RigidBodyObjs;
 
 		auto iter = rididBodies.find(ID);
@@ -221,7 +221,7 @@ namespace RigidBodyConfig
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+		const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 			physicsManager.RigidBodyObjs;
 
 		auto iter = rididBodies.find(ID);
@@ -237,7 +237,7 @@ namespace RigidBodyConfig
 
 		std::lock_guard<std::mutex> lock(physicsManager.mutex);
 
-		const std::hash_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
+		const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 			physicsManager.RigidBodyObjs;
 
 		auto iter = rididBodies.find(ID);

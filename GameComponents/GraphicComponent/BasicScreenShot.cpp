@@ -6,13 +6,19 @@
 
 BasicScreenShot::BasicScreenShot()
 {
+	this->numberOfTargets = 1;
 }
 void BasicScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
+	
+	HRESULT hr;
 
-	ID3D11Texture2D* colorMap = 0;
+	this->pScreenTexture.resize(this->numberOfTargets);
+	this->pColorMapRTV.resize(this->numberOfTargets);
+
+	std::vector<ID3D11Texture2D*> colorMap(this->numberOfTargets);
 
 	D3D11_TEXTURE2D_DESC texDesc;
 	ZeroMemory(&texDesc, sizeof(texDesc));
@@ -28,24 +34,37 @@ void BasicScreenShot::Init()
 	texDesc.CPUAccessFlags = 0;
 	texDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
 
-	HRESULT hr;
-	hr = d3dStuff.pd3dDevice->CreateTexture2D(&texDesc, 0, &colorMap);
-	if(FAILED(hr)){ Logger::LogError("Failed at creating the texture 2d for the BasicScreenShot"); }
+	
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+	{
+		hr = d3dStuff.pd3dDevice->CreateTexture2D(&texDesc, 0, &colorMap[i]);
+		if(FAILED(hr)){ Logger::LogError("Failed at creating the texture 2d for the BasicScreenShot"); }
+	}
 
-	// Null description means to create a view to all mipmap levels
-	// using the format the texture was created with.
-	ID3D11RenderTargetView*	pTempColorMapRTV;
-	hr = d3dStuff.pd3dDevice->CreateRenderTargetView(colorMap, 0, &pTempColorMapRTV);
-	if(FAILED(hr)){ Logger::LogError("Failed at creating render target view"); }
-	this->pColorMapRTV = pTempColorMapRTV;
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+	{	
+		// Null description means to create a view to all mipmap levels
+		// using the format the texture was created with.
+		ID3D11RenderTargetView*	pTempColorMapRTV;
+		hr = d3dStuff.pd3dDevice->CreateRenderTargetView(colorMap[i], 0, &pTempColorMapRTV);
+		if(FAILED(hr)){ Logger::LogError("Failed at creating render target view"); }
+		this->pColorMapRTV[i] = pTempColorMapRTV;
 
-	ID3D11ShaderResourceView* pTempScreenTexture;
-	hr = d3dStuff.pd3dDevice->CreateShaderResourceView(colorMap, 0, &pTempScreenTexture);
-	if(FAILED(hr)){ Logger::LogError("Failed at creating shader resource view"); }
-	this->pScreenTexture = pTempScreenTexture;
+	}
 
-	// View saves a reference to the texture so we can release our reference.
-	colorMap->Release();
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+	{
+		ID3D11ShaderResourceView* pTempScreenTexture;
+		hr = d3dStuff.pd3dDevice->CreateShaderResourceView(colorMap[i], 0, &pTempScreenTexture);
+		if(FAILED(hr)){ Logger::LogError("Failed at creating shader resource view"); }
+		this->pScreenTexture[i] = pTempScreenTexture;
+	}
+
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+	{
+		// View saves a reference to the texture so we can release our reference.
+		colorMap[i]->Release();
+	}
 
 	ID3D11Texture2D* depthMap = 0;
 	ZeroMemory(&texDesc, sizeof(texDesc));
@@ -84,54 +103,70 @@ void BasicScreenShot::Init()
 }
 void BasicScreenShot::Snap()
 {
-	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
+	Scene::UpdateCameraEntities();
+	Scene::UpdateObjectEntities();
+
+	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
 	this->Snap( objects);
 }
-void BasicScreenShot::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
+		auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
 
-	this->SetupSnapShot(camera, list);
-	this->TakeScreenSnapShot(camera, list);
-	this->CleanupSnapShot(camera, list);
+		this->SetupSnapShot(camera, list);
+		this->TakeScreenSnapShot(camera, list);
+		this->CleanupSnapShot(camera, list);
 }
 
-void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
-	// Clear the back buffer 
+	std::vector<ID3D11RenderTargetView*> renderTargets;
+
 	auto c = Camera->GetClearColor();
-	d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV, c.data());
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+	{
+		if(Camera->GetClearScreen() == true)
+		{
+			// Clear the back buffer 
+			d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV[i], c.data());
+		}
+		renderTargets.push_back(this->pColorMapRTV[i]);
+	}
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
-	ID3D11RenderTargetView* renderTargets[1] = {this->pColorMapRTV};
-	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
+	d3dStuff.pImmediateContext->OMSetRenderTargets(renderTargets.size(), renderTargets.data(), this->pDepthMapDSV);
+	
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport); 	
 }
-void BasicScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	Scene::DrawObjects(Camera, list);
 }
-void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
-	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture);
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+	{
+		d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture[i]);
+	}
 }
 
-std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(unsigned int width, unsigned int height, const std::string& cameraID)
+std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(unsigned int width, unsigned int height, unsigned int numberOfTargets, const std::string& cameraID)
 {
 	std::shared_ptr<BasicScreenShot> newObject(new BasicScreenShot());
 	newObject->cameraID = cameraID;
 	newObject->width = width;
 	newObject->height = height;
+	newObject->numberOfTargets = numberOfTargets;
 
 	newObject->Init();
 

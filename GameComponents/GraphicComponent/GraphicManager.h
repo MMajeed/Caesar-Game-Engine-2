@@ -14,7 +14,7 @@
 #include <Object.h>
 #include <Interface.h>
 #include <Entity.h>
-#include <hash_map>
+#include <unordered_map>
 
 class GraphicComponentDLL_API GraphicManager : public Interface, public CHL::Singleton<GraphicManager>
 {
@@ -29,7 +29,7 @@ public:
 	virtual void Shutdown();
 	
 	virtual void ProcessDrawing();
-	virtual void RunAllCapture(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	virtual void RunAllCapture(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
 	virtual void InitWindow();
 	virtual void InitD3D();

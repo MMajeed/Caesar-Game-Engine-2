@@ -6,7 +6,7 @@
 #include <memory>
 #include <Animation.h>
 #include <Node.h>
-#include <hash_map>
+#include <unordered_map>
 
 class AnimationComponentDLL_API BasicAnimation
 {
@@ -34,7 +34,7 @@ public:
 		std::string Name;
 	};
 	double Duration;
-	std::hash_map<std::string, BasicAnimation::Joint> AllNodes;
+	std::unordered_map<std::string, BasicAnimation::Joint> AllNodes;
 };
 
 

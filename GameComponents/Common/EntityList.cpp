@@ -4,14 +4,14 @@
 
 namespace ObjectEntities
 {
-	std::hash_map<std::string, std::shared_ptr<ObjectEntity>> objectEntitiesList;
+	std::unordered_map<std::string, std::shared_ptr<ObjectEntity>> objectEntitiesList;
 	std::mutex objectEntitiesMutex;
 
-	std::hash_map<std::string, std::weak_ptr<ObjectEntity>> GetAll()
+	std::unordered_map<std::string, std::weak_ptr<ObjectEntity>> GetAll()
 	{
 		std::lock_guard<std::mutex> lock(objectEntitiesMutex);
 
-		std::hash_map<std::string, std::weak_ptr<ObjectEntity>> returnValue;
+		std::unordered_map<std::string, std::weak_ptr<ObjectEntity>> returnValue;
 		returnValue.reserve(objectEntitiesList.size());
 
 		for(auto objEntitiesIter = objectEntitiesList.cbegin();
@@ -56,14 +56,14 @@ namespace ObjectEntities
 
 namespace CameraEntities
 {
-	std::hash_map<std::string, std::shared_ptr<CameraEntity>> cameraEntitiesList;
+	std::unordered_map<std::string, std::shared_ptr<CameraEntity>> cameraEntitiesList;
 	std::mutex cameraEntitiesMutex;
 
-	std::hash_map<std::string, std::weak_ptr<CameraEntity>> GetAll()
+	std::unordered_map<std::string, std::weak_ptr<CameraEntity>> GetAll()
 	{
 		std::lock_guard<std::mutex> lock(cameraEntitiesMutex);
 
-		std::hash_map<std::string, std::weak_ptr<CameraEntity>> returnValue;
+		std::unordered_map<std::string, std::weak_ptr<CameraEntity>> returnValue;
 		returnValue.reserve(cameraEntitiesList.size());
 
 		for(auto objEntitiesIter = cameraEntitiesList.cbegin();

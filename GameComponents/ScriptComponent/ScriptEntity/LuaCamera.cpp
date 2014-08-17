@@ -21,7 +21,6 @@ LuaCamera::LuaCamera(const luabind::object& table)
 		Logger::LogError("Wrong paramter type");
 
 	std::shared_ptr<CameraEntity> obj = CameraEntity::Spawn();
-	CameraEntities::Add(obj);
 	this->wp_Obj = obj;
 	this->ID = obj->GetID();
 
@@ -40,6 +39,7 @@ LuaCamera::LuaCamera(const luabind::object& table)
 		else if(key == Keys::Camera::FOVANGLE)		    { this->SetFovAngleY(*it); }
 		else if(key == Keys::Camera::NEARZ)		        { this->SetNearZ(*it); }
 		else if(key == Keys::Camera::FARZ)		        { this->SetFarZ(*it); }
+		else if(key == Keys::Camera::CLEARSCREEN)		{ this->SetClearScreen(*it); }
 		else if(key == Keys::Camera::CLEARCOLOR)		{ this->SetClearColor(*it); }
 		else if(key == Keys::Camera::INCLUSIONSTATE)	{ this->SetInclusionState(*it); }
 		else if(key == Keys::Camera::INCLUSIONLIST)		{ this->SetInclusionList(*it); }
@@ -50,6 +50,8 @@ LuaCamera::LuaCamera(const luabind::object& table)
 		else if(key == Keys::Camera::PIXELSHADER)		{ this->SetPixelShaderID(*it); }
 		else if(key == Keys::Camera::PIXELSHADERSTATE)	{ this->SetPixelShaderState(*it); }
 	}
+
+	CameraEntities::Add(obj);
 }
 
 LuaMath::Vector4 LuaCamera::GetEye()
@@ -214,6 +216,24 @@ void LuaCamera::SetFarZ(const luabind::object& v)
 	}
 }
 
+bool LuaCamera::GetClearScreen()
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+		return obj->GetClearScreen();
+	else
+		return bool();
+}
+void LuaCamera::SetClearScreen(const luabind::object& v)
+{
+	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
+	{
+		if(boost::optional<bool> value = luabind::object_cast_nothrow<bool>(v))
+			obj->SetClearScreen(*value);
+		else
+			Logger::LogError("Wrong paramter type");
+	}
+}
+
 LuaMath::Vector4 LuaCamera::GetClearColor()
 {
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
@@ -256,7 +276,7 @@ luabind::object LuaCamera::GetInclusionList()
 	if(std::shared_ptr<CameraEntity> obj = this->wp_Obj.lock())
 	{
 		int keyCounter = 1;
-		std::hash_set<std::string> list = obj->GetInclusionList();
+		std::set<std::string> list = obj->GetInclusionList();
 		for(auto iter = list.begin();
 			iter != list.end();
 			++iter, ++keyCounter)
@@ -330,7 +350,7 @@ void LuaCamera::SetAllUserData(const luabind::object& v)
 
 	this->EmptyUserData();
 
-	std::hash_map<std::string, std::shared_ptr<Object>> userData;
+	std::unordered_map<std::string, std::shared_ptr<Object>> userData;
 	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
 	{
 		std::string userDataKey = luabind::object_cast<std::string>(it.key());
@@ -419,7 +439,6 @@ void LuaCamera::SetAllTexture(const luabind::object& v)
 
 	this->EmptyTexture();
 
-	std::hash_map<std::string, std::shared_ptr<Object>> Texture;
 	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
 	{
 		std::string TextureKey = luabind::object_cast<std::string>(it.key());
@@ -438,7 +457,7 @@ luabind::object LuaCamera::FindTexture(const std::string& ID)
 		std::string objTexture;
 		if(obj->FindTexture(ID, objTexture))
 		{
-			returnValue = luabind::object(lua, objTexture);
+			returnValue = luabind::object(lua, GenericLuaObject(objTexture));
 		}
 	}
 	return returnValue;
@@ -592,6 +611,7 @@ void LuaCamera::Register(lua_State *lua)
 			.property("FovAngle", &LuaCamera::GetFovAngleY, &LuaCamera::SetFovAngleY)
 			.property("NearZ", &LuaCamera::GetNearZ, &LuaCamera::SetNearZ)
 			.property("FarZ", &LuaCamera::GetFarZ, &LuaCamera::SetFarZ)
+			.property("ClearScreen", &LuaCamera::GetClearScreen, &LuaCamera::SetClearScreen)
 			.property("ClearColor", &LuaCamera::GetClearColor, &LuaCamera::SetClearColor)
 			.property("InclusionState", &LuaCamera::GetInclusionState, &LuaCamera::SetInclusionState)
 			.property("InclusionList", &LuaCamera::GetInclusionList, &LuaCamera::SetInclusionList)

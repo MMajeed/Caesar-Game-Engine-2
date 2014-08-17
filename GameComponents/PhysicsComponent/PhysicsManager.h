@@ -3,7 +3,7 @@
 
 #include "Linker.h"
 
-#include <hash_map>
+#include <unordered_map>
 #include <string>
 #include <Interface.h>
 #include <Singleton.h>
@@ -24,15 +24,15 @@ public:
 	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 
-	std::hash_map<std::string, std::shared_ptr<CollisionShape>> CollisionShapeObjs;
+	std::unordered_map<std::string, std::shared_ptr<CollisionShape>> CollisionShapeObjs;
 	void InsertCollisionShapeObj(const std::string& ID, std::shared_ptr<CollisionShape> obj);
 	void RemoveCollisionShapeObj(const std::string& ID);
 
-	std::hash_map<std::string, std::shared_ptr<RigidBody>> RigidBodyObjs;
+	std::unordered_map<std::string, std::shared_ptr<RigidBody>> RigidBodyObjs;
 	void InsertRigidBodyObj(const std::string& ID, std::shared_ptr<RigidBody> obj);
 	void RemoveRigidBodyObj(const std::string& ID);
 
-	std::hash_map<std::string, std::shared_ptr<Constraint>> ConstraintObjs;
+	std::unordered_map<std::string, std::shared_ptr<Constraint>> ConstraintObjs;
 	void InsertConstraintObj(const std::string& ID, std::shared_ptr<Constraint> obj);
 	void RemoveConstraintObj(const std::string& ID);
 

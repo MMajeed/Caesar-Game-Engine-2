@@ -10,21 +10,27 @@
 
 namespace ScreenShotConfig
 {
-	std::string Basic(unsigned int width,
-					  unsigned int height,
-					  const std::string& cameraID)
+	std::vector<std::string> Basic(unsigned int width,
+								   unsigned int height,
+								   unsigned int numberOfTargets,
+								   const std::string& cameraID)
 	{
 		class TakeBasicScreenShot : public Message
 		{
 		public:
 			TakeBasicScreenShot(unsigned int width,
 								unsigned int height,
+								unsigned int numberOfTargets,
 								const std::string& cameraID)
 			{
 				this->cameraID = cameraID;
-				this->newTextureID = CHL::GenerateGUID();
 				this->width = width;
 				this->height = height;
+				this->numberOfTargets = numberOfTargets;
+				for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+				{
+					this->newTextureID.push_back(CHL::GenerateGUID());
+				}
 			}
 
 			Message::Status Work()
@@ -32,24 +38,27 @@ namespace ScreenShotConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicScreenShot> newBasicScreenShot =
-					BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
+					BasicScreenShot::Spawn(this->width, this->height, this->numberOfTargets, this->cameraID);
 				newBasicScreenShot->Snap();
 
-				auto texture = newBasicScreenShot->pScreenTexture;
-				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn(texture);
-				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
+				for(unsigned int i = 0; i < this->numberOfTargets; ++i)
+				{
+					auto texture = newBasicScreenShot->pScreenTexture[i];
+					std::shared_ptr<BasicTexture> newTexture = BasicTexture::Spawn(texture);
+					ResourceManager::TextureList.Insert(this->newTextureID[i], newTexture);
+				}
 				
 				return Message::Status::Complete;
 			}
 
-			std::string newTextureID;
+			std::vector<std::string> newTextureID;
 			unsigned int width;
 			unsigned int height;
+			unsigned int numberOfTargets;
 			std::string cameraID;
 		};
 
-		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, cameraID));
+		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, numberOfTargets, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->newTextureID;
 	}
@@ -79,7 +88,7 @@ namespace ScreenShotConfig
 					DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
 				newBasicScreenShot->Snap();
 
-				auto texture = newBasicScreenShot->pScreenTexture;
+				auto texture = newBasicScreenShot->pScreenTexture[0];
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
@@ -120,7 +129,7 @@ namespace ScreenShotConfig
 					CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
 				newBasicScreenShot->Snap();
 
-				auto texture = newBasicScreenShot->pScreenTexture;
+				auto texture = newBasicScreenShot->pScreenTexture[0];
 				std::shared_ptr<BasicTexture> newTexture =
 					BasicTexture::Spawn(texture);
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);

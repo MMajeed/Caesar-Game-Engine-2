@@ -5,9 +5,10 @@
 
 #include "BasicTexture.h"
 #include <CameraEntity.h>
+#include <ObjectEntity.h>
+#include <string>
 #include <Windows.h>
 #include <xnamath.h>
-#include <ObjectEntity.h>
 
 class GraphicObjectEntity;
 class GraphicModel;
@@ -24,7 +25,7 @@ public:
 	void Update(std::shared_ptr<CameraEntity> v, unsigned int width, unsigned int height);
 public:
 	std::vector<std::shared_ptr<GraphicObjectEntity>> 
-		FilterInclusionList(std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const;
+		FilterInclusionList(std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const;
 
 private:	XMFLOAT4 Eye;
 			void UpdateEye(std::shared_ptr<CameraEntity> obj);
@@ -62,6 +63,10 @@ private:	float FarZ;
 			void UpdateFarZ(std::shared_ptr<CameraEntity> obj);
 public:		float GetFarZ() const;
 
+private:	bool ClearScreen;
+			void UpdateClearScreen(std::shared_ptr<CameraEntity> obj);
+public:		bool GetClearScreen() const;
+
 private:	std::array<float, 4> ClearColor;
 			void UpdateClearColor(std::shared_ptr<CameraEntity> obj);
 public:		std::array<float, 4> GetClearColor() const;
@@ -70,19 +75,19 @@ private:	CameraEntity::InclusionType InclusionState;
 			void UpdateInclusionState(std::shared_ptr<CameraEntity> obj);
 public:		CameraEntity::InclusionType GetInclusionState() const;
 
-private:	std::hash_set<std::string> InclusionList;
+private:	std::set<std::string> InclusionList;
 			void UpdateInclusionList(std::shared_ptr<CameraEntity> obj);
-public:		std::hash_set<std::string> GetInclusionList() const; 
+public:		std::set<std::string> GetInclusionList() const; 
 
-private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
+private:	std::unordered_map<std::string, std::shared_ptr<Object>> UserData;
 			void UpdateUserData(std::shared_ptr<CameraEntity> obj);
-public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData() const;
+public:		std::unordered_map<std::string, std::shared_ptr<Object>> GetUserData() const;
 			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
 
-private:	std::hash_map<std::string, std::string> TextureList;
+private:	std::unordered_map<std::string, std::string> TextureList;
 			void UpdateTextureList(std::shared_ptr<CameraEntity> obj);
-public:		std::hash_map<std::string, std::string> GetTextureList() const;
-			std::hash_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
+public:		std::unordered_map<std::string, std::string> GetTextureList() const;
+			std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
 			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
 
 private:	std::string VertexShaderID;
@@ -104,28 +109,28 @@ private:	CameraEntity::CAMERA_SHADER_TYPE PixelShaderState;
 public:		CameraEntity::CAMERA_SHADER_TYPE GetPixelShaderState() const;
 
 private:	unsigned int Width;
-			void UpdateWidth(unsigned int v);
-public:		unsigned int GetWidth() const;
+public:		void UpdateWidth(unsigned int v);
+			unsigned int GetWidth() const;
 
 private:	unsigned int Height;
-			void UpdateHeight(unsigned int v);
-public:		unsigned int GetHeight() const;
+public:		void UpdateHeight(unsigned int v);
+			unsigned int GetHeight() const;
 
 private:	XMFLOAT4X4 View;
-			void UpdateView(std::shared_ptr<CameraEntity> obj);
-public:		XMFLOAT4X4 GetView() const;
+public:		void UpdateView(std::shared_ptr<CameraEntity> obj);
+			XMFLOAT4X4 GetView() const;
 
 private:	XMFLOAT4X4 View2D;
-			void UpdateView2D(std::shared_ptr<CameraEntity> obj);
-public:		XMFLOAT4X4 GetView2D() const;
+public:		void UpdateView2D(std::shared_ptr<CameraEntity> obj);
+			XMFLOAT4X4 GetView2D() const;
 
 private:	XMFLOAT4X4 Perspective;
-			void UpdatePerspective(std::shared_ptr<CameraEntity> obj);
-public:		XMFLOAT4X4 GetPerspective() const;
+public:		void UpdatePerspective(std::shared_ptr<CameraEntity> obj);
+			XMFLOAT4X4 GetPerspective() const;
 
 private:	XMFLOAT4X4 Orthogonal;
-			void UpdateOrthogonal(std::shared_ptr<CameraEntity> obj);
-public:		XMFLOAT4X4 GetOrthogonal() const;
+public:		void UpdateOrthogonal(std::shared_ptr<CameraEntity> obj);
+			XMFLOAT4X4 GetOrthogonal() const;
 };
 
 

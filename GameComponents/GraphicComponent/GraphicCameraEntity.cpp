@@ -17,7 +17,7 @@ GraphicCameraEntity::GraphicCameraEntity(std::shared_ptr<CameraEntity> v, unsign
 
 void GraphicCameraEntity::Update(std::shared_ptr<CameraEntity> v, unsigned int width, unsigned int height)
 {
-	this->UpdateEye(v);
+ 	this->UpdateEye(v);
 	this->UpdateTargetMagnitude(v);
 	this->UpdateUp(v);
 	this->UpdateRoll(v);
@@ -26,6 +26,7 @@ void GraphicCameraEntity::Update(std::shared_ptr<CameraEntity> v, unsigned int w
 	this->UpdateFovAngleY(v);
 	this->UpdateNearZ(v);
 	this->UpdateFarZ(v);
+	this->UpdateClearScreen(v);
 	this->UpdateClearColor(v);
 	this->UpdateInclusionState(v);
 	this->UpdateInclusionList(v);
@@ -44,21 +45,21 @@ void GraphicCameraEntity::Update(std::shared_ptr<CameraEntity> v, unsigned int w
 }
 
 std::vector<std::shared_ptr<GraphicObjectEntity>> 
-	GraphicCameraEntity::FilterInclusionList(std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const
+	GraphicCameraEntity::FilterInclusionList(std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const
 {
 	std::vector<std::shared_ptr<GraphicObjectEntity>> returnValue;
 	returnValue.reserve(list.size());
 
 	const CameraEntity::InclusionType& inclusionState = this->InclusionState;
-	const std::hash_set<std::string>& cameraInclusionList = this->InclusionList;
+	const std::set<std::string>& cameraInclusionList = this->InclusionList;
 	for(auto iter = list.begin(); iter != list.end(); ++iter)
 	{
-		std::hash_set<std::string> objGroup = iter->second->GetGroupList();
+		std::set<std::string> objGroup = iter->second->GetGroupList();
 
 		std::vector<std::string> groupDifference;
 		std::set_intersection(objGroup.cbegin(), objGroup.cend(),
-								cameraInclusionList.cbegin(), cameraInclusionList.cend(),
-								std::back_inserter(groupDifference));
+							  cameraInclusionList.cbegin(), cameraInclusionList.cend(),
+							  std::back_inserter(groupDifference));
 
 		if(inclusionState == CameraEntity::InclusionType::Exclude)
 		{// if CANT be on the list
@@ -177,6 +178,16 @@ float GraphicCameraEntity::GetFarZ() const
 	return this->FarZ;
 }
 
+void GraphicCameraEntity::UpdateClearScreen(std::shared_ptr<CameraEntity> obj)
+{
+	if(obj) { this->ClearScreen = obj->GetClearScreen(); }
+	else	{ this->ClearScreen =  true; }
+}
+bool GraphicCameraEntity::GetClearScreen() const
+{
+	return this->ClearScreen;
+}
+
 void GraphicCameraEntity::UpdateClearColor(std::shared_ptr<CameraEntity> obj)
 {
 	if(obj)	
@@ -205,7 +216,7 @@ void GraphicCameraEntity::UpdateInclusionList(std::shared_ptr<CameraEntity> obj)
 {
 	if(obj)	{ this->InclusionList = obj->GetInclusionList(); }
 }
-std::hash_set<std::string> GraphicCameraEntity::GetInclusionList() const
+std::set<std::string> GraphicCameraEntity::GetInclusionList() const
 {
 	return this->InclusionList;
 }
@@ -214,13 +225,13 @@ void GraphicCameraEntity::UpdateTextureList(std::shared_ptr<CameraEntity> obj)
 {
 	if(obj)	{ this->TextureList = obj->GetTexture(); }
 }
-std::hash_map<std::string, std::string> GraphicCameraEntity::GetTextureList() const
+std::unordered_map<std::string, std::string> GraphicCameraEntity::GetTextureList() const
 {
 	return this->TextureList;
 }
-std::hash_map<std::string, std::shared_ptr<BasicTexture>> GraphicCameraEntity::GetTexture() const
+std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GraphicCameraEntity::GetTexture() const
 {
-	std::hash_map<std::string, std::shared_ptr<BasicTexture>> returnValue;
+	std::unordered_map<std::string, std::shared_ptr<BasicTexture>> returnValue;
 
 	for(const auto& iter : this->TextureList)
 	{
@@ -245,7 +256,7 @@ void GraphicCameraEntity::UpdateUserData(std::shared_ptr<CameraEntity> obj)
 {
 	if(obj)	{ this->UserData = obj->GetUserData(); }
 }
-std::hash_map<std::string, std::shared_ptr<Object>> GraphicCameraEntity::GetUserData() const
+std::unordered_map<std::string, std::shared_ptr<Object>> GraphicCameraEntity::GetUserData() const
 {
 	return this->UserData;
 }
@@ -330,11 +341,11 @@ unsigned int GraphicCameraEntity::GetHeight() const
 
 void GraphicCameraEntity::UpdateView(std::shared_ptr<CameraEntity> obj)
 {
-	XMFLOAT4 f4Eye = this->GetEye();
+	const XMFLOAT4& f4Eye = this->Eye;
 	XMVECTOR vEye = XMVectorSet(f4Eye.x, f4Eye.y, f4Eye.z, f4Eye.w);
-	XMFLOAT4 f4Up = this->GetUp();
+	const XMFLOAT4& f4Up = this->Up;
 	XMVECTOR vUp = XMVectorSet(f4Up.x, f4Up.y, f4Up.z, f4Up.w);
-	XMFLOAT4 f4TM = this->GetTargetMagnitude();
+	const XMFLOAT4& f4TM = this->TargetMagnitude;
 	XMVECTOR vTM = XMVectorSet(f4TM.x, f4TM.y, f4TM.z, f4TM.w);
 
 	XMMATRIX RotationMatrix = XMMatrixRotationRollPitchYaw(this->GetPitch(), this->GetYaw(), this->GetRoll());
@@ -370,7 +381,7 @@ XMFLOAT4X4 GraphicCameraEntity::GetView2D() const
 
 void GraphicCameraEntity::UpdatePerspective(std::shared_ptr<CameraEntity> obj)
 {
-	XMMATRIX xmPrespective = XMMatrixPerspectiveFovRH(this->GetFovAngleY(),
+	XMMATRIX xmPrespective = XMMatrixPerspectiveFovRH(this->FovAngleY,
 													  (float)this->Width / (float)this->Height,
 													  this->NearZ, this->FarZ);
 	XMStoreFloat4x4(&this->Perspective, xmPrespective);

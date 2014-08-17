@@ -21,7 +21,6 @@ LuaObject::LuaObject(const luabind::object& table)
 		Logger::LogError("Wrong paramter type");
 
 	std::shared_ptr<ObjectEntity> obj = ObjectEntity::Spawn();
-	ObjectEntities::Add(obj);
 	this->wp_Obj = obj;
 	this->ID = obj->GetID();
 
@@ -49,6 +48,8 @@ LuaObject::LuaObject(const luabind::object& table)
 		else if(key == Keys::ObjectInfo::FILLMODE)		{ this->SetFillMode(*it); }
 		else if(key == Keys::ObjectInfo::CULLMODE)		{ this->SetCullMode(*it); }
 	}
+
+	ObjectEntities::Add(obj);
 }
 
 LuaMath::Vector4 LuaObject::GetLocation()
@@ -377,7 +378,7 @@ luabind::object LuaObject::GetGroupList()
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
 		int keyCounter = 1;
-		std::hash_set<std::string> list = obj->GetGroupList();
+		std::set<std::string> list = obj->GetGroupList();
 		for(auto iter = list.begin();
 			iter != list.end();
 			++iter, ++keyCounter)
@@ -451,7 +452,7 @@ void LuaObject::SetAllTexture(const luabind::object& v)
 
 	this->EmptyTexture();
 
-	std::hash_map<std::string, std::shared_ptr<Object>> Texture;
+	std::unordered_map<std::string, std::shared_ptr<Object>> Texture;
 	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
 	{
 		std::string TextureKey = luabind::object_cast<std::string>(it.key());
@@ -519,7 +520,7 @@ void LuaObject::SetAllUserData(const luabind::object& v)
 
 	this->EmptyUserData();
 
-	std::hash_map<std::string, std::shared_ptr<Object>> userData;
+	std::unordered_map<std::string, std::shared_ptr<Object>> userData;
 	for(luabind::iterator it(v); it != luabind::iterator(); ++it)
 	{
 		std::string userDataKey = luabind::object_cast<std::string>(it.key());

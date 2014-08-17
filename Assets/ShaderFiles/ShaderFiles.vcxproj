@@ -27,6 +27,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="3_PS_PointLight.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="PS_Color.fx">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
@@ -55,7 +63,21 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="PS_Deferred.fx">
+    <FxCompile Include="2_PS_DirectionalLight.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="1_PS_DeferredLight.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">Pixel</ShaderType>
@@ -76,6 +98,20 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="PS_Light.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release Static|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="PS_SkyMap.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Pixel</ShaderType>
@@ -101,7 +137,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug Static|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O Static|Win32'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="VS_Font.fx">
+    <FxCompile Include="VS_2D.fx">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release DLL|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='R!O DLL|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug DLL|Win32'">Vertex</ShaderType>

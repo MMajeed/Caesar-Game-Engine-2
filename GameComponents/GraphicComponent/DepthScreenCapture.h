@@ -10,7 +10,7 @@ protected:
 	DepthScreenCapture();
 public:
 	virtual void Init();
-	virtual void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	virtual void Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 	virtual std::shared_ptr<ScreenCapture> clone() const;
 	virtual ~DepthScreenCapture(){}
 
@@ -18,6 +18,7 @@ public:
 		const std::string& textureID,
 		unsigned int width,
 		unsigned int height,
+		unsigned int Priority,
 		std::string CameraID);
 
 	std::shared_ptr<DepthScreenShot>	ScreenShot;

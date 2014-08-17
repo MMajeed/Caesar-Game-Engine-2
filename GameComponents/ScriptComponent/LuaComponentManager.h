@@ -27,6 +27,8 @@ namespace LuaComponentManager
 	ScriptComponentDLL_API double GetAnimationFrame();
 	ScriptComponentDLL_API double GetPhysicsFrame();
 
+	ScriptComponentDLL_API std::string GenerateGUID();
+
 	ScriptComponentDLL_API void RegisterAllLuaFunction(lua_State *lua);
 };
 

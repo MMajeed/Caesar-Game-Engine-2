@@ -3,11 +3,12 @@
 #include "ProcessMessage.h"
 #include "LuaWaitForProcess.h"
 #include <Logger.h>
+#include "ScriptManager.h"
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <InputCommunicator\InputCommunicator.h>
-#include "ScriptManager.h"
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
+#include <GenerateGUID.h>
 
 namespace LuaComponentManager
 {
@@ -83,6 +84,11 @@ namespace LuaComponentManager
 		return (double)PhysicsCommunicator::GetComponent()->timer.FrameCount;
 	}
 
+	std::string GenerateGUID()
+	{
+		return CHL::GenerateGUID();
+	}
+
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		luabind::module(lua)[
@@ -99,7 +105,8 @@ namespace LuaComponentManager
 			luabind::def("GetInputFrame", LuaComponentManager::GetInputFrame),
 			luabind::def("GetScriptFrame", LuaComponentManager::GetScriptFrame),
 			luabind::def("GetAnimationFrame", LuaComponentManager::GetAnimationFrame),
-			luabind::def("GetPhysicsFrame", LuaComponentManager::GetPhysicsFrame)
+			luabind::def("GetPhysicsFrame", LuaComponentManager::GetPhysicsFrame),
+			luabind::def("GenerateGUID", LuaComponentManager::GenerateGUID)
 		];
 	}
 };

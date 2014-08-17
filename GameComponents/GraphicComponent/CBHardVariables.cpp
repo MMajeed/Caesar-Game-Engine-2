@@ -272,9 +272,9 @@ std::shared_ptr<CBHardVariables> CBufferEye::Spawn(std::vector<char>& bytes, con
 
 //---------------------------------------------------------------------
 
-std::hash_map<const std::string, VariableCreatorFunction> PopulateVariableTypes()
+std::unordered_map<std::string, VariableCreatorFunction> PopulateVariableTypes()
 {
-	std::hash_map<const std::string, VariableCreatorFunction> returnValue;
+	std::unordered_map<std::string, VariableCreatorFunction> returnValue;
 
 	returnValue[CBufferWorld::Name()] = CBufferWorld::Spawn;
 	returnValue[CBufferView::Name()] = CBufferView::Spawn;
@@ -288,7 +288,7 @@ std::hash_map<const std::string, VariableCreatorFunction> PopulateVariableTypes(
 	return returnValue;
 }
 
-std::hash_map<const std::string, VariableCreatorFunction> VariableTypes = PopulateVariableTypes();
+std::unordered_map<std::string, VariableCreatorFunction> VariableTypes = PopulateVariableTypes();
 
 VariableCreatorFunction FindCBHardVariable(std::string Name)
 {

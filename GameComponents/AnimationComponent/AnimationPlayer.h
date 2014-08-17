@@ -5,7 +5,7 @@
 
 #include <memory>
 #include "BasicAnimation.h"
-#include <hash_map>
+#include <unordered_map>
 
 class AnimationComponentDLL_API AnimationPlayer
 {
@@ -17,9 +17,9 @@ public:
 	double GetCurrentPhase() const;
 	void SetCurrentPhase(double phasePercentage);
 
-	std::hash_map<std::string, CML::Vec3> CurrentTranslationJoint;
-	std::hash_map<std::string, CML::Vec4> CurrentRotationJoint;
-	std::hash_map<std::string, CML::Vec3> CurrentScaleJoint;
+	std::unordered_map<std::string, CML::Vec3> CurrentTranslationJoint;
+	std::unordered_map<std::string, CML::Vec4> CurrentRotationJoint;
+	std::unordered_map<std::string, CML::Vec3> CurrentScaleJoint;
 
 	static std::shared_ptr<AnimationPlayer> Spawn(std::string basicAnimationID, double startPhase);
 protected:
@@ -27,13 +27,13 @@ protected:
 	CML::Vec4 CaluclateRotationJoint(const BasicAnimation::Joint& ACNode);
 	CML::Vec3 CaluclateScaleJoint(const BasicAnimation::Joint& ACNode);
 
-	std::hash_map<std::string, unsigned int>		LastTranslationFrame;
-	std::hash_map<std::string, unsigned int>		LastRotationFrame;
-	std::hash_map<std::string, unsigned int>		LastScaleFrame;
+	std::unordered_map<std::string, unsigned int>		LastTranslationFrame;
+	std::unordered_map<std::string, unsigned int>		LastRotationFrame;
+	std::unordered_map<std::string, unsigned int>		LastScaleFrame;
 
-	std::hash_map<std::string, unsigned int>		CurrentTranslationFrame;
-	std::hash_map<std::string, unsigned int>		CurrentRotationFrame;
-	std::hash_map<std::string, unsigned int>		CurrentScaleFrame;
+	std::unordered_map<std::string, unsigned int>		CurrentTranslationFrame;
+	std::unordered_map<std::string, unsigned int>		CurrentRotationFrame;
+	std::unordered_map<std::string, unsigned int>		CurrentScaleFrame;
 
 	double	AnimTime;
 

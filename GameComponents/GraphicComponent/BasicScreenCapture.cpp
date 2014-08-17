@@ -10,10 +10,10 @@ BasicScreenCapture::BasicScreenCapture()
 }
 void BasicScreenCapture::Init()
 {
-	this->ScreenShot[0] = BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
-	this->ScreenShot[1] = BasicScreenShot::Spawn(this->width, this->height, this->cameraID);
+	this->ScreenShot[0] = BasicScreenShot::Spawn(this->width, this->height, this->numberOfTargets, this->cameraID);
+	this->ScreenShot[1] = BasicScreenShot::Spawn(this->width, this->height, this->numberOfTargets, this->cameraID);
 }
-void BasicScreenCapture::Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->current += 1;
 	if(this->current >= 2){ this->current = 0; }
@@ -21,13 +21,12 @@ void BasicScreenCapture::Snap(const std::hash_map<std::string, std::shared_ptr<G
 	this->ScreenShot[this->current]->cameraID = this->cameraID;
 	this->ScreenShot[this->current]->Snap(list);
 
-	auto texture = ResourceManager::TextureList.Find(this->TextureID);
-	if(texture)
+	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
 	{
-		auto basicTexture = std::dynamic_pointer_cast<BasicTexture>(texture);
-		if(basicTexture != 0)
+		auto texture = ResourceManager::TextureList.Find(this->TextureID[i]);
+		if(texture)
 		{
-			basicTexture->pTexture = this->ScreenShot[this->current]->pScreenTexture;
+			texture->pTexture = this->ScreenShot[this->current]->pScreenTexture[i];
 		}
 	}
 }
@@ -39,17 +38,23 @@ std::shared_ptr<ScreenCapture> BasicScreenCapture::clone() const
 
 }
 
-std::shared_ptr<BasicScreenCapture> BasicScreenCapture::Spawn(const std::string& textureID,
+std::shared_ptr<BasicScreenCapture> BasicScreenCapture::Spawn(const std::vector<std::string>& textureID,
 															  unsigned int width,
 															  unsigned int height,
-															  std::string CameraID)
+															  unsigned int numberOfTargets,
+															  unsigned int Priority,
+															  const std::string& cameraID)
 {
 	std::shared_ptr<BasicScreenCapture> newObject(new BasicScreenCapture());
+
+	if(textureID.size() != numberOfTargets){ Logger::LogError("Error, the number of textures sent to basic screen capture did not match the number of targets"); }
 
 	newObject->TextureID = textureID;
 	newObject->width = width;
 	newObject->height = height;
-	newObject->cameraID = CameraID;
+	newObject->cameraID = cameraID;
+	newObject->numberOfTargets = numberOfTargets;
+	newObject->Priority = Priority;
 
 	newObject->Init();
 

@@ -6,7 +6,7 @@
 #include <Lua.hpp>
 #include <luabind\luabind.hpp>
 #include <Singleton.h>
-#include <hash_map>
+#include <unordered_map>
 #include <memory>
 #include <functional>
 #include <Interface.h>
@@ -32,7 +32,7 @@ public:
 	virtual void RemoveProcesses(std::string ID);
 
 protected:
-	std::hash_map<std::string, std::shared_ptr<LuaProcesses>> allProcesses;
+	std::unordered_map<std::string, std::shared_ptr<LuaProcesses>> allProcesses;
 };
 
 #endif //__ScriptManager__

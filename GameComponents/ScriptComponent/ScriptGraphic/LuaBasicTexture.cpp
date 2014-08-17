@@ -16,7 +16,9 @@ void LuaBasicTexture::Register(lua_State *lua)
 {
 	luabind::module(lua) [
 		luabind::class_<LuaBasicTexture, GenericLuaObject>("BasicTexture")
+		  .def(luabind::constructor<>())
 		  .def(luabind::constructor<std::string>())
+		  .def(luabind::constructor<const GenericLuaObject&>())
 		  .def("Release", &LuaBasicTexture::Release)
 	  ];
 }

@@ -9,6 +9,7 @@ namespace DepthScreenCaptureConfig
 {
 	void Create(unsigned int width,
 				unsigned int height,
+				unsigned int priority,
 				const std::string& cameraID,
 				std::string& ID,
 				std::string& textureID)
@@ -16,10 +17,14 @@ namespace DepthScreenCaptureConfig
 		class AddDepthScreenCapture : public Message
 		{
 		public:
-			AddDepthScreenCapture(unsigned int width, unsigned int height, const std::string& cameraID)
+			AddDepthScreenCapture(unsigned int width, 
+								  unsigned int height,
+								  unsigned int priority,
+								  const std::string& cameraID)
 			{
 				this->width = width;
 				this->height = height;
+				this->priority = priority;
 				this->cameraID = cameraID;
 				this->newTextureID = CHL::GenerateGUID();
 				this->ID = CHL::GenerateGUID();
@@ -34,7 +39,7 @@ namespace DepthScreenCaptureConfig
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
-					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->cameraID);
+					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->priority, this->cameraID);
 				ResourceManager::ScreenCaptureList.Insert(this->ID, newDepthScreenShot);
 
 				return Message::Status::Complete;
@@ -46,9 +51,10 @@ namespace DepthScreenCaptureConfig
 			std::string ID;
 			unsigned int width;
 			unsigned int height;
+			unsigned int priority;
 		};
 		std::shared_ptr<AddDepthScreenCapture> msg
-			(new AddDepthScreenCapture(width, height, cameraID));
+			(new AddDepthScreenCapture(width, height, priority, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		ID = msg->ID;
 		textureID = msg->newTextureID;

@@ -7,11 +7,11 @@
 #include "COMSharedPtr.h"
 #include <sstream>
 #include <D3D11.h>
-#include <hash_map>
+#include <unordered_map>
 
 namespace Rasterizer
 {
-	static std::hash_map<unsigned int, COMSharedPtr<ID3D11RasterizerState>> RasterizerList;
+	static std::unordered_map<unsigned int, COMSharedPtr<ID3D11RasterizerState>> RasterizerList;
 
 	unsigned int GenerateValue(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
 	{

@@ -9,20 +9,51 @@
 
 namespace Scene
 {
-	std::shared_ptr<GraphicCameraEntity> GetCamera(const std::string& ID, unsigned int width, unsigned int height)
+	static std::unordered_map<std::string, std::shared_ptr<GraphicCameraEntity>> cameraEntities;
+
+	void UpdateCameraEntities()
 	{
-		std::weak_ptr<CameraEntity> wpCE;
-		if(CameraEntities::Find(ID, wpCE) == true){ return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(wpCE.lock(), width, height)); }
-		else { return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity()); }
+		cameraEntities.clear();
+
+		std::unordered_map<std::string, std::weak_ptr<CameraEntity>> newestCameraList = CameraEntities::GetAll(); // Get the latest list
+		
+		for(auto& cameraIter : newestCameraList)
+		{
+			if(std::shared_ptr<CameraEntity> cam = cameraIter.second.lock())
+			{
+				cameraEntities[cameraIter.first] = std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(cam, 0, 0));
+			}
+		}
 	}
 
-	static std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> ObjectEntities;
+	std::shared_ptr<GraphicCameraEntity> GetCamera(const std::string& ID, unsigned int width, unsigned int height)
+	{
+		auto iter = cameraEntities.find(ID);
+
+		if(iter != cameraEntities.end())
+		{
+			std::shared_ptr<GraphicCameraEntity> cam = iter->second;
+			cam->UpdateHeight(height);
+			cam->UpdateWidth(width);
+			cam->UpdateView(nullptr);
+			cam->UpdateView2D(nullptr);
+			cam->UpdatePerspective(nullptr);
+			cam->UpdateOrthogonal(nullptr);
+			return cam;
+		}
+		else 
+		{ 
+			return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(nullptr, width, height)); 
+		}
+	}
+
+	static std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> ObjectEntities;
 
 	void UpdateObjectEntities()
 	{
-		std::hash_map<std::string, std::weak_ptr<ObjectEntity>> newestObjectList = ObjectEntities::GetAll(); // Get the latest list
+		std::unordered_map<std::string, std::weak_ptr<ObjectEntity>> newestObjectList = ObjectEntities::GetAll(); // Get the latest list
 		
-		std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>> currentList = ObjectEntities; // Make a copy of our current list
+		std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> currentList = ObjectEntities; // Make a copy of our current list
 
 		for(const auto& objectIter : newestObjectList) // go through the latest list
 		{
@@ -50,9 +81,8 @@ namespace Scene
 		}
 	}
 
-	const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& GetAllObjectEntities()
+	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& GetAllObjectEntities()
 	{
-		UpdateObjectEntities();
 		return ObjectEntities;
 	}
 
@@ -61,9 +91,12 @@ namespace Scene
 		GraphicManager& graphic = GraphicManager::GetInstance();
 		auto& d3dStuff = graphic.D3DStuff;
 
-		// Clear the back buffer 
-		auto c = Camera->GetClearColor();
-		d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, c.data());
+		if(Camera->GetClearScreen() == true)
+		{
+			// Clear the back buffer 
+			auto c = Camera->GetClearColor();
+			d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, c.data());
+		}
 		d3dStuff.pImmediateContext->ClearDepthStencilView(d3dStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 		ID3D11RenderTargetView* pTempRenderTargetView = d3dStuff.pRenderTargetView;
@@ -72,7 +105,7 @@ namespace Scene
 		d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 
 	}
-	void DrawObjects(std::shared_ptr<GraphicCameraEntity> camera, const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+	void DrawObjects(std::shared_ptr<GraphicCameraEntity> camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 	{
 		auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
 		ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;

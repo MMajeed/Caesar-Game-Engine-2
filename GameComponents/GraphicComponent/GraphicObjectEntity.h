@@ -69,7 +69,7 @@ public:		std::string GetPixelShaderID() const;
 private:	std::string AnimationID;
 			void UpdateAnimationID(std::shared_ptr<ObjectEntity> obj);
 public:		std::string GetAnimationID() const;
-			std::hash_map<std::string, XMFLOAT4X4> GetAnimation() const;
+			std::unordered_map<std::string, XMFLOAT4X4> GetAnimation() const;
 
 private:	std::string AnimationJointName;
 			void UpdateAnimationJointName(std::shared_ptr<ObjectEntity> obj);
@@ -81,19 +81,19 @@ private:	std::string RigidBodyID;
 public:		std::string GetRigidBodyID() const;
 			XMFLOAT4X4 GetRigidBody() const;
 
-private:	std::hash_set<std::string> GroupList;
+private:	std::set<std::string> GroupList;
 			void UpdateGroupList(std::shared_ptr<ObjectEntity> obj);
-public:		std::hash_set<std::string> GetGroupList() const;
+public:		std::set<std::string> GetGroupList() const;
 
-private:	std::hash_map<std::string, std::string> TextureList;
+private:	std::unordered_map<std::string, std::string> TextureList;
 			void UpdateTextureList(std::shared_ptr<ObjectEntity> obj);
-public:		std::hash_map<std::string, std::string> GetTextureList() const;
-			std::hash_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
+public:		std::unordered_map<std::string, std::string> GetTextureList() const;
+			std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
 			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
 
-private:	std::hash_map<std::string, std::shared_ptr<Object>> UserData;
+private:	std::unordered_map<std::string, std::shared_ptr<Object>> UserData;
 			void UpdateUserData(std::shared_ptr<ObjectEntity> obj);
-public:		std::hash_map<std::string, std::shared_ptr<Object>> GetUserData() const;
+public:		std::unordered_map<std::string, std::shared_ptr<Object>> GetUserData() const;
 			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
 
 private:	D3D11_FILL_MODE FillMode;

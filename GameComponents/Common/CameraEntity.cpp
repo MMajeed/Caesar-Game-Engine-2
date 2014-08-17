@@ -11,6 +11,7 @@ CameraEntity::CameraEntity()
 	this->FovAngleY = 0.785398163;
 	this->NearZ = 0.01;
 	this->FarZ = 5000.0;
+	this->ClearScreen = true;
 	this->ClearColor = {0.5, 0.5, 0.5, 1.0};
 	this->VertexShaderState = CameraEntity::CAMERA_SHADER_TYPE::DEFAULT;
 	this->PixelShaderState = CameraEntity::CAMERA_SHADER_TYPE::DEFAULT;
@@ -115,6 +116,17 @@ void CameraEntity::SetFarZ(double v)
 	this->FarZ = v;
 }
 
+bool CameraEntity::GetClearScreen()
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	return this->ClearScreen;
+}
+void CameraEntity::SetClearScreen(const bool& v)
+{
+	std::lock_guard<std::mutex> lock(this->metux);
+	this->ClearScreen = v;
+}
+
 CML::Vec4 CameraEntity::GetClearColor()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
@@ -137,12 +149,12 @@ void CameraEntity::SetInclusionState(InclusionType v)
 	this->InclusionState = v;
 }
 
-std::hash_set<std::string> CameraEntity::GetInclusionList()
+std::set<std::string> CameraEntity::GetInclusionList()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->InclusionList;
 }
-void CameraEntity::SetInclusionList(const std::hash_set<std::string>& v)
+void CameraEntity::SetInclusionList(const std::set<std::string>& v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->InclusionList = v;
@@ -163,12 +175,12 @@ void CameraEntity::EmptyInclusionList()
 	this->InclusionList.clear();
 }
 
-std::hash_map<std::string, std::shared_ptr<Object>> CameraEntity::GetUserData()
+std::unordered_map<std::string, std::shared_ptr<Object>> CameraEntity::GetUserData()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->UserData;
 }
-void CameraEntity::SetUserData(std::hash_map<std::string, std::shared_ptr<Object>> v)
+void CameraEntity::SetUserData(std::unordered_map<std::string, std::shared_ptr<Object>> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->UserData = v;
@@ -201,12 +213,12 @@ void CameraEntity::EmptyUserData()
 	this->UserData.clear();
 }
 
-std::hash_map<std::string, std::string> CameraEntity::GetTexture()
+std::unordered_map<std::string, std::string> CameraEntity::GetTexture()
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	return this->Texture;
 }
-void CameraEntity::SetTexture(std::hash_map<std::string, std::string> v)
+void CameraEntity::SetTexture(std::unordered_map<std::string, std::string> v)
 {
 	std::lock_guard<std::mutex> lock(this->metux);
 	this->Texture = v;

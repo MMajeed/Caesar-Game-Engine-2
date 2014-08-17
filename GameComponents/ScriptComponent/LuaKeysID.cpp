@@ -61,6 +61,8 @@ namespace LuaKeysID
 			BasicScreenShot[Keys::ScreenShot::WIDTH]         = Keys::ScreenShot::WIDTH;
 			BasicScreenShot[Keys::ScreenShot::HEIGHT]        = Keys::ScreenShot::HEIGHT;
 			BasicScreenShot[Keys::ScreenShot::CAMERAID]		 = Keys::ScreenShot::CAMERAID;
+			BasicScreenShot[Keys::ScreenShot::NUMOFTARGETS]	 = Keys::ScreenShot::NUMOFTARGETS;
+			BasicScreenShot[Keys::ScreenShot::PRIORITY]	     = Keys::ScreenShot::PRIORITY;
 		luaKeyTable["ScreenShot"] = BasicScreenShot;
 
 		luabind::object AnimationController = luabind::newtable(lua);

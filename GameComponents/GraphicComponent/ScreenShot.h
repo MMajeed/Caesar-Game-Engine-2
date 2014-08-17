@@ -7,7 +7,7 @@
 #include "GraphicCameraEntity.h"
 #include <D3D11.h>
 #include <string>
-#include <hash_map>
+#include <vector>
 #include <memory>
 
 class GraphicComponentDLL_API ScreenShot
@@ -15,10 +15,10 @@ class GraphicComponentDLL_API ScreenShot
 protected:
 	ScreenShot(){}
 public:
-	virtual void Snap(const std::hash_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list) = 0;
+	virtual void Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list) = 0;
 	virtual ~ScreenShot(){}
 
-	COMSharedPtr<ID3D11ShaderResourceView>	pScreenTexture;
+	std::vector<COMSharedPtr<ID3D11ShaderResourceView>>	pScreenTexture;
 };
 
 

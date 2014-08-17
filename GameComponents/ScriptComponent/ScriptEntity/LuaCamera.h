@@ -44,6 +44,9 @@ public:
 	double GetFarZ();
 	void SetFarZ(const luabind::object& v);
 
+	bool GetClearScreen();
+	void SetClearScreen(const luabind::object& v);
+
 	LuaMath::Vector4 GetClearColor();
 	void SetClearColor(const luabind::object& v);
 

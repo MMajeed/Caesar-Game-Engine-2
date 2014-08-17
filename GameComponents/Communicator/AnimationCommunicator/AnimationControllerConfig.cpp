@@ -253,7 +253,7 @@ namespace AnimationControllerConfig
 
 		std::lock_guard<std::mutex> lock(animationManager.mutex);
 		
-		const std::hash_map<std::string, std::shared_ptr<AnimationController>>& animController =
+		const std::unordered_map<std::string, std::shared_ptr<AnimationController>>& animController =
 			animationManager.AllAnimationController();
 
 		auto iter = animController.find(ID);
