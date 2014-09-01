@@ -20,6 +20,7 @@ namespace LuaKeysID
 			cameraTable[Keys::Camera::FOVANGLE]          = Keys::Camera::FOVANGLE;
 			cameraTable[Keys::Camera::NEARZ]             = Keys::Camera::NEARZ;
 			cameraTable[Keys::Camera::FARZ]              = Keys::Camera::FARZ;
+			cameraTable[Keys::Camera::CLEARSCREEN]		 = Keys::Camera::CLEARSCREEN;
 			cameraTable[Keys::Camera::CLEARCOLOR]        = Keys::Camera::CLEARCOLOR;
 			cameraTable[Keys::Camera::TEXTURE]			 = Keys::Camera::TEXTURE;
 			cameraTable[Keys::Camera::USERDATA]			 = Keys::Camera::USERDATA;

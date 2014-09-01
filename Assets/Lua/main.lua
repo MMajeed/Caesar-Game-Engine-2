@@ -1,5 +1,4 @@
 require("camera")
-require("LightSetup")
 require("Helper")
 require("Text")
 require("Information")
@@ -9,6 +8,36 @@ require("floor")
 --require("PhysicsDemo")
 --require("StickPerson")
 --require("RandomAnimation")
+require("LightSetup")
+require("LightClasses/DirectionalLight")
+require("LightClasses/PointLight")
+require("LightClasses/SpotLight")
+
+         
+local light1 = DirectionalLight({
+                    ["Diffuse"]   = Vector4(1.0, 1.0, 1.0),
+                    ["Ambient"]   = Vector4(0.5, 0.5, 0.5),
+                    ["Specular"]  = Vector4(0.1, 0.1, 0.1),
+                    ["Direction"] = Vector4(0.0, 0.785, 0.1)});
+AddLight(light1);
+local light2 = PointLight({
+                    ["Diffuse"]     = Vector4(0.8, 0.8, 0.0),
+                    ["Ambient"]     = Vector4(0.3, 0.3, 0.0),
+                    ["Specular"]    = Vector4(0.0, 0.0, 0.0),
+                    ["Position"]    = Vector4(0.0, 10.0, -45.0),
+                    ["Range"]       = 40,
+                    ["Attenuation"] = Vector4(1.0, 0.0, 0.0)});
+AddLight(light2);
+local light3 = SpotLight({
+                    ["Diffuse"]     = Vector4(0.0, 0.0, 0.8),
+                    ["Ambient"]     = Vector4(0.0, 0.0, 0.1),
+                    ["Specular"]    = Vector4(0.0, 0.0, 1.0),
+                    ["Position"]    = Vector4(0.0, 10.0, 30.0),
+                    ["Direction"]   = Vector4(0.7853, -3.14, -3.14),
+                    ["Attenuation"] = Vector4(0.0, 0.1, 0.0),
+                    ["Spot"]        = 0.5,
+                    ["Range"]       = 20,});
+AddLight(light3);
 
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");
 local ironManMesh = GraphicModel(LoadDefaultModel("Assets/Models/Iron_Man_mark_4.obj"));

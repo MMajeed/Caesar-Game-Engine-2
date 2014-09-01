@@ -5,8 +5,10 @@ cbuffer cbObject : register(b0)
 	float4 Ambient;
 	float4 Specular;
 	float4 Position;
+	float4 Direction;
 	float4 Attenuation;
 	float Range;
+	float Spot;
 	float HasPrivousLight;
 };
 
@@ -48,7 +50,7 @@ float4 main(PS_INPUT input) : SV_Target
 
 	// Range test.
 	if(d > Range)
-		total = float4(0.0, 0.0, 0.0, 1.0);
+		total = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	else
 	{
 		// Normalize the light vector.
@@ -77,21 +79,22 @@ float4 main(PS_INPUT input) : SV_Target
 			spec = specFactor * oSpecular * Specular;
 		}
 
-		// Attenuate
-		float att = 1.0f / dot(Attenuation, float4(1.0f, d, d*d, 0.0));
+		// Scale by spotlight factor and attenuate.
+		float spot = pow(max(dot(-lightVec, Direction), 0.0f), Spot);
 
+		// Scale by spotlight factor and attenuate.
+		float att = spot / dot(Attenuation, float4(1.0f, d, d*d, 0.0));
+
+		ambient *= spot;
 		diffuse *= att;
 		spec *= att;
 
 		total = (ambient + diffuse + spec);
-		
-		
 	}
-	
+
 	if(HasPrivousLight != 0)
 	{
 		total += PrivousLightTexture.Sample(TextureSampler, input.tex.xy);
 	}
-
 	return total;
 }

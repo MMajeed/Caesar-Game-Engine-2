@@ -38,10 +38,13 @@ void GraphicCameraEntity::Update(std::shared_ptr<CameraEntity> v, unsigned int w
 	this->UpdatePixelShaderState(v);
 	this->UpdateWidth(width);
 	this->UpdateHeight(height);
-	this->UpdateView(v);
-	this->UpdateView2D(v);
-	this->UpdatePerspective(v);
-	this->UpdateOrthogonal(v);
+	if(width != 0 || height != 0)
+	{
+		this->UpdateView(v);
+		this->UpdateView2D(v);
+		this->UpdatePerspective(v);
+		this->UpdateOrthogonal(v);
+	}
 }
 
 std::vector<std::shared_ptr<GraphicObjectEntity>> 

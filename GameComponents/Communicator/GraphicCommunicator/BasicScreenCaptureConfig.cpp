@@ -47,7 +47,7 @@ namespace BasicScreenCaptureConfig
 				}
 
 				std::shared_ptr<BasicScreenCapture> newBasicScreenShot =
-					BasicScreenCapture::Spawn(this->textureID, this->width, this->height, this->numberOfTargets, this->priority, this->cameraID);
+					BasicScreenCapture::Spawn(this->textureID, this->width, this->height, this->priority, this->cameraID);
 				ResourceManager::ScreenCaptureList.Insert(this->ID, newBasicScreenShot);
 
 				return Message::Status::Complete;

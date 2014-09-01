@@ -23,9 +23,7 @@ spriteModel.Texture = textureArray;
 local graphicSpriteModel = GraphicModel(spriteModel);
 local VS2DShader = VertexShader("Assets/ShaderFiles/VS_2D.cso");
 local PSDeferredDirectionalLight = PixelShader("Assets/ShaderFiles/1_PS_DeferredDirectionalLight.cso");
-local PSDirectionalLight = PixelShader("Assets/ShaderFiles/2_PS_DirectionalLight.cso");
-
-local GUIDID = GenerateGUID();
+local PSDirectionalLight = PixelShader("Assets/ShaderFiles/4_PS_SpotLight.cso");
 
 local CamDeferredGenerator = Camera({
                 [Keys["Camera"]["Eye"]]             = regularCam.Eye,
@@ -60,10 +58,13 @@ AddToCallOnCameraUpdate(UpdateDeferredCam)
 local DefferredGenerator = BasicScreenCapture({
                     [Keys["ScreenShot"]["Width"]]         = 1024,
                     [Keys["ScreenShot"]["Height"]]        = 768,
-                    [Keys["ScreenShot"]["Priority"]]      = 1,
+                    [Keys["ScreenShot"]["Priority"]]      = 0,
                     [Keys["ScreenShot"]["NumOfTargets"]]  = 5,
                     [Keys["ScreenShot"]["CameraID"]]      = CamDeferredGenerator, });
                     
+
+local GUIDID = GenerateGUID();
+
 local SpriteObj = Object({
                     [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.0, 0.0, 1.0),
                     [Keys["ObjectInfo"]["Scale"]]        = Vector4(1024, 768, 0.0, 1.0),
@@ -82,57 +83,57 @@ local SpriteObj = Object({
                                                               },
                             });  
 
-local CamLightCalculator = Camera({
-                [Keys["Camera"]["Eye"]]             = regularCam.Eye,
-                [Keys["Camera"]["TargetMagnitude"]] = regularCam.TargetMagnitude,
-                [Keys["Camera"]["Up"]]              = regularCam.Up,
-                [Keys["Camera"]["Roll"]]            = regularCam.Roll,
-                [Keys["Camera"]["Pitch"]]           = regularCam.Pitch,
-                [Keys["Camera"]["Yaw"]]             = regularCam.Yaw,
-                [Keys["Camera"]["NearZ"]]           = 0.01,              
-                [Keys["Camera"]["FarZ"]]            = 5000.0,
-                [Keys["Camera"]["ClearColor"]]      = Vector4(1.0, 0.0, 0.0, 1.0),
-                [Keys["Camera"]["InclusionState"]]  = InclusionType["Include"],
-                [Keys["Camera"]["InclusionList"]]   = { GUIDID },
-                [Keys["Camera"]["UserData"]]        = {
-                                                      ["Diffuse"]   = Vector4(1.0, 1.0, 1.0),
-                                                      ["Ambient"]   = Vector4(0.5, 0.5, 0.5),
-                                                      ["Specular"]  = Vector4(0.1, 0.1, 0.1),
-                                                      ["Direction"] = Vector4(0.0, 0.785, 0.1),
-                                                      ["CameraEye"] = regularCam.Eye, }
-               }); 
-local LightCalculator = BasicScreenCapture({
-                    [Keys["ScreenShot"]["Width"]]         = 1024,
-                    [Keys["ScreenShot"]["Height"]]        = 768,
-                    [Keys["ScreenShot"]["Priority"]]      = 2,
-                    [Keys["ScreenShot"]["NumOfTargets"]]  = 1,
-                    [Keys["ScreenShot"]["CameraID"]]      = CamLightCalculator, 
-                    });
+Light = class(function(self, LightInfo) 
+        local userData = LightInfo:GetResource();
+        userData["CameraEye"] = regularCam.Eye;
+        
+        self.CamLightCalculator = Camera({
+                   [Keys["Camera"]["ClearColor"]]      = Vector4(0.0, 0.0, 0.0, 1.0),
+                   [Keys["Camera"]["InclusionState"]]  = InclusionType["Include"],
+                   [Keys["Camera"]["InclusionList"]]   = { GUIDID },                
+                   [Keys["Camera"]["PixelShader"]]     = LightInfo:GetShader(),
+                   [Keys["Camera"]["PixelShaderState"]]= ShaderType["Force"],
+                   [Keys["Camera"]["UserData"]]        = userData
+                  }); 
+        self.LightCalculator = BasicScreenCapture({
+                   [Keys["ScreenShot"]["Width"]]         = 1024,
+                   [Keys["ScreenShot"]["Height"]]        = 768,
+                   [Keys["ScreenShot"]["Priority"]]      = 200,
+                   [Keys["ScreenShot"]["NumOfTargets"]]  = 1,
+                   [Keys["ScreenShot"]["CameraID"]]      = self.CamLightCalculator, 
+                   });
+                   
+        function UpdateLightEye(time, ID)
+            self.CamLightCalculator:SetUserData("CameraEye", regularCam.Eye);
+        end
+        AddToCallOnCameraUpdate(UpdateLightEye)
+        
+        function UpdateLightResource(ID, Value)
+            self.CamLightCalculator:SetUserData(ID, Value);
+        end
+        LightInfo:AddToCallOnUpdate(UpdateLightResource);
+     end)
+     
 
-                         
-regularCam.Texture = { ["LightTexture"] =  LightCalculator:GetTexture() };
---floor2.Texture = { ["Texture"] =  LightCalculator:GetTexture() };
+local LightArray = {};
 
---directionLight = DirectionalLight({[Keys["Light"]["Diffuse"]]   = Vector4(1.0, 1.0, 1.0),
---                                   [Keys["Light"]["Ambient"]]   = Vector4(0.5, 0.5, 0.5),
---                                   [Keys["Light"]["Specular"]]  = Vector4(0.1, 0.1, 0.1),
---                                   [Keys["Light"]["Direction"]] = Vector4(0.0, 0.785, 0.1),
---                                   [Keys["Light"]["HasShadow"]] = true,});
+function SetupLight()
+    local lastLookedUpValue = nil;
+    for key,value in pairs(LightArray) do 
+        if(lastLookedUpValue == nil) then -- First variable
+            value.CamLightCalculator:SetUserData("HasPrivousLight", 0);
+        else
+            value.CamLightCalculator:SetUserData("HasPrivousLight", 1);
+            value.CamLightCalculator:SetTexture("PrivousLightTexture", lastLookedUpValue.LightCalculator:GetTexture());
+        end
+        lastLookedUpValue = value;
+    end
+    
+    regularCam.Texture = { ["LightTexture"] =  lastLookedUpValue.LightCalculator:GetTexture() };
+end
 
---pointLight = PointLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.8, 0.8, 0.0),
---                         [Keys["Light"]["Ambient"]]     = Vector4(0.3, 0.3, 0.0),
---                         [Keys["Light"]["Specular"]]    = Vector4(0.0, 0.0, 0.0),
---                         [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, -45.0),
---                         [Keys["Light"]["Range"]]       = 40,
---                         [Keys["Light"]["Attenuation"]] = Vector4(1.0, 0.0, 0.0),});
-            
---spotLight = SpotLight({[Keys["Light"]["Diffuse"]]     = Vector4(0.0, 0.0, 0.8),
---                       [Keys["Light"]["Ambient"]]     = Vector4(0.0, 0.0, 0.1),
---                       [Keys["Light"]["Specular"]]    = Vector4(0.0, 0.0, 1.0),
---                       [Keys["Light"]["Position"]]    = Vector4(0.0, 10.0, 30.0),
---                       [Keys["Light"]["Direction"]]   = Vector4(0.7853, -3.14, -3.14),
---                       [Keys["Light"]["Attenuation"]] = Vector4(0.0, 0.1, 0.0),
---                       [Keys["Light"]["Spot"]]        = 0.5,
---                       [Keys["Light"]["Range"]]       = 20,
---                       [Keys["Light"]["HasShadow"]]   = fal,});
-
+function AddLight(LightInfo)
+    local l = Light(LightInfo);
+    table.insert(LightArray, l)
+    SetupLight();
+end

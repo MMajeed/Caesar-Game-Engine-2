@@ -17,15 +17,13 @@ public:
 	static std::shared_ptr<BasicScreenCapture> Spawn(const std::vector<std::string>& textureID,
 													 unsigned int width,
 													 unsigned int height,
-													 unsigned int numberOfTargets,
 													 unsigned int Priority,
 													 const std::string& cameraID);
 
-	std::shared_ptr<BasicScreenShot>	ScreenShot[2];
+	std::shared_ptr<BasicScreenShot>	ScreenShot;
 	std::string							cameraID;
 	unsigned int						width;
 	unsigned int						height;
-	unsigned int						numberOfTargets;
 	unsigned int						current;
 };
 

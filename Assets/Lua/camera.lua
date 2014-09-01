@@ -12,6 +12,7 @@ regularCam = Camera({
                     [Keys["Camera"]["NearZ"]]           = 0.01,              
                     [Keys["Camera"]["FarZ"]]            = 1100.0,
                     [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
+                    [Keys["Camera"]["ClearScreen"]]     = true,
                     [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
                     [Keys["Camera"]["InclusionList"]]   = { "NoMainDraw" },
                     [Keys["Camera"]["UserData"]]        = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
