@@ -30,11 +30,11 @@ Texture2D PrivousLightTexture : register(t5);
 
 float4 main(PS_INPUT input) : SV_Target
 {
-	float4 oLocation = LocationTexture.Sample(TextureSampler, input.tex.xy);
-	float4 oNormal = NormalTexture.Sample(TextureSampler, input.tex.xy);
-	float4 oDiffuse = DiffuseTexture.Sample(TextureSampler, input.tex.xy);
-	float4 oAmbient = AmbientTexture.Sample(TextureSampler, input.tex.xy);
-	float4 oSpecular = SpecularTexture.Sample(TextureSampler, input.tex.xy);
+	float4 oLocation = LocationTexture.Load(float3(input.PosWVP.xy, 0.0));
+	float4 oNormal = NormalTexture.Load(float3(input.PosWVP.xy, 0.0));
+	float4 oDiffuse = DiffuseTexture.Load(float3(input.PosWVP.xy, 0.0));
+	float4 oAmbient = AmbientTexture.Load(float3(input.PosWVP.xy, 0.0));
+	float4 oSpecular = SpecularTexture.Load(float3(input.PosWVP.xy, 0.0));
 
 	float4 toEye = normalize(CameraEye - oLocation);
 
@@ -62,7 +62,7 @@ float4 main(PS_INPUT input) : SV_Target
 	
 	if(HasPrivousLight != 0)
 	{
-		total += PrivousLightTexture.Sample(TextureSampler, input.tex.xy);
+		total += PrivousLightTexture.Load(float3(input.PosWVP.xy, 0.0));
 	}
 
 	return (ambient + diffuse + spec);

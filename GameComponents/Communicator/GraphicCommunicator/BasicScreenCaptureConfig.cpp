@@ -104,6 +104,41 @@ namespace BasicScreenCaptureConfig
 			(new ChangeCameraMatrix(id, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
+	void SetPriority(const std::string& id, int p)
+	{
+		class SetPriorityMessage : public Message
+		{
+		public:
+			SetPriorityMessage(const std::string& id, int p)
+			{
+				this->ID = id;
+				this->p = p;
+			}
+
+			Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
+				if(screenCapture)
+				{
+					std::shared_ptr<BasicScreenCapture> cast = std::dynamic_pointer_cast<BasicScreenCapture>(screenCapture);
+					if(cast)
+					{
+						cast->Priority = this->p;
+					}
+				}
+
+				return Message::Status::Complete;
+			}
+			std::string ID;
+			int p;
+		};
+
+		std::shared_ptr<SetPriorityMessage> msg
+			(new SetPriorityMessage(id, p));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
 	void Release(std::string ID)
 	{
 		class ReleaseCapture : public Message

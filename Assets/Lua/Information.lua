@@ -7,7 +7,7 @@ local clientSizeText = Text2D("",  Vector4(0.0, 60.0, 0.0));
 local frameRate = Text2D("",  Vector4(0.0, 80.0, 0.0));
 
 MoveWindow(200, 100);
-ReizeClient(768, 1024);
+ReizeClient(712, 1080);
 --FullScreen();
 
 function UpdateText()

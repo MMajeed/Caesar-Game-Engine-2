@@ -1,3 +1,6 @@
+local textureWidth = 1080;
+local textureHeight = 712;
+
 local verticeArray = {};
 local textureArray = {};
         
@@ -22,7 +25,7 @@ spriteModel.Texture = textureArray;
 
 local graphicSpriteModel = GraphicModel(spriteModel);
 local VS2DShader = VertexShader("Assets/ShaderFiles/VS_2D.cso");
-local PSDeferredDirectionalLight = PixelShader("Assets/ShaderFiles/1_PS_DeferredDirectionalLight.cso");
+local PSDeferredDirectionalLight = PixelShader("Assets/ShaderFiles/1_PS_DeferredLight.cso");
 local PSDirectionalLight = PixelShader("Assets/ShaderFiles/4_PS_SpotLight.cso");
 
 local CamDeferredGenerator = Camera({
@@ -56,8 +59,8 @@ end
 AddToCallOnCameraUpdate(UpdateDeferredCam)
 
 local DefferredGenerator = BasicScreenCapture({
-                    [Keys["ScreenShot"]["Width"]]         = 1024,
-                    [Keys["ScreenShot"]["Height"]]        = 768,
+                    [Keys["ScreenShot"]["Width"]]         = textureWidth,
+                    [Keys["ScreenShot"]["Height"]]        = textureHeight,
                     [Keys["ScreenShot"]["Priority"]]      = 0,
                     [Keys["ScreenShot"]["NumOfTargets"]]  = 5,
                     [Keys["ScreenShot"]["CameraID"]]      = CamDeferredGenerator, });
@@ -67,7 +70,7 @@ local GUIDID = GenerateGUID();
 
 local SpriteObj = Object({
                     [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.0, 0.0, 1.0),
-                    [Keys["ObjectInfo"]["Scale"]]        = Vector4(1024, 768, 0.0, 1.0),
+                    [Keys["ObjectInfo"]["Scale"]]        = Vector4(textureWidth, textureHeight, 0.0, 1.0),
                     [Keys["ObjectInfo"]["GraphicModel"]] = graphicSpriteModel,
                     [Keys["ObjectInfo"]["VertexShader"]] = VS2DShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSDirectionalLight,
@@ -88,7 +91,7 @@ Light = class(function(self, LightInfo)
         userData["CameraEye"] = regularCam.Eye;
         
         self.CamLightCalculator = Camera({
-                   [Keys["Camera"]["ClearColor"]]      = Vector4(0.0, 0.0, 0.0, 1.0),
+                   [Keys["Camera"]["ClearColor"]]      = Vector4(1.0, 1.0, 1.0, 1.0),
                    [Keys["Camera"]["InclusionState"]]  = InclusionType["Include"],
                    [Keys["Camera"]["InclusionList"]]   = { GUIDID },                
                    [Keys["Camera"]["PixelShader"]]     = LightInfo:GetShader(),
@@ -96,8 +99,8 @@ Light = class(function(self, LightInfo)
                    [Keys["Camera"]["UserData"]]        = userData
                   }); 
         self.LightCalculator = BasicScreenCapture({
-                   [Keys["ScreenShot"]["Width"]]         = 1024,
-                   [Keys["ScreenShot"]["Height"]]        = 768,
+                   [Keys["ScreenShot"]["Width"]]         = textureWidth,
+                   [Keys["ScreenShot"]["Height"]]        = textureHeight,
                    [Keys["ScreenShot"]["Priority"]]      = 200,
                    [Keys["ScreenShot"]["NumOfTargets"]]  = 1,
                    [Keys["ScreenShot"]["CameraID"]]      = self.CamLightCalculator, 
@@ -118,6 +121,8 @@ Light = class(function(self, LightInfo)
 local LightArray = {};
 
 function SetupLight()
+    local counter = 100;
+
     local lastLookedUpValue = nil;
     for key,value in pairs(LightArray) do 
         if(lastLookedUpValue == nil) then -- First variable
@@ -127,6 +132,8 @@ function SetupLight()
             value.CamLightCalculator:SetTexture("PrivousLightTexture", lastLookedUpValue.LightCalculator:GetTexture());
         end
         lastLookedUpValue = value;
+        value.LightCalculator:SetPriority(counter);
+        counter = counter + 10;
     end
     
     regularCam.Texture = { ["LightTexture"] =  lastLookedUpValue.LightCalculator:GetTexture() };

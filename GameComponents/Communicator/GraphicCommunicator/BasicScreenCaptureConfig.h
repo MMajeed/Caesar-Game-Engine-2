@@ -18,6 +18,7 @@ namespace BasicScreenCaptureConfig
 					std::string& ID,
 					std::vector<std::string>& textureID);
 	GraphicCommunicatorDLL_API void SetCameraID(const std::string& id, const std::string& cameraid);
+	GraphicCommunicatorDLL_API void SetPriority(const std::string& id, int p);
 	GraphicCommunicatorDLL_API void Release(std::string ID);
 };
 

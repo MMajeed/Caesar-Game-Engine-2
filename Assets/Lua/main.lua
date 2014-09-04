@@ -36,7 +36,7 @@ local light3 = SpotLight({
                     ["Direction"]   = Vector4(0.7853, -3.14, -3.14),
                     ["Attenuation"] = Vector4(0.0, 0.1, 0.0),
                     ["Spot"]        = 0.5,
-                    ["Range"]       = 20,});
+                    ["Range"]       = 20,});     
 AddLight(light3);
 
 local ironManTexture= BasicTexture("Assets/Texture/Iron_Man_mark_4_D.jpg");

@@ -272,6 +272,63 @@ std::shared_ptr<CBHardVariables> CBufferEye::Spawn(std::vector<char>& bytes, con
 
 //---------------------------------------------------------------------
 
+CBufferScreenWidth::CBufferScreenWidth(std::vector<char>& bytes, const unsigned int StartOffset)
+	: CBHardVariables(bytes, StartOffset, sizeof(float))
+{
+}
+void CBufferScreenWidth::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+{
+	static const unsigned int sizeOfValue = this->sizeOfValue;
+	const unsigned int copyStartingAt = this->StartOffset;
+
+	if(camera)
+	{
+		float value = (float)camera->GetWidth();
+		CHL::ByteCopy<float>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		float value = 0.0f;
+		CHL::ByteCopy<float>(value, bytes, copyStartingAt);
+	}
+}
+std::shared_ptr<CBHardVariables> CBufferScreenWidth::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
+{
+	std::shared_ptr<CBHardVariables> returnValue(new CBufferScreenWidth(bytes, StartOffset));
+	return returnValue;
+}
+
+//---------------------------------------------------------------------
+
+CBufferScreenHeight::CBufferScreenHeight(std::vector<char>& bytes, const unsigned int StartOffset)
+	: CBHardVariables(bytes, StartOffset, sizeof(float))
+{
+}
+void CBufferScreenHeight::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+{
+	static const unsigned int sizeOfValue = this->sizeOfValue;
+	const unsigned int copyStartingAt = this->StartOffset;
+
+	if(camera)
+	{
+		float value = (float)camera->GetHeight();
+		CHL::ByteCopy<float>(value, bytes, copyStartingAt);
+	}
+	else
+	{
+		float value = 0.0f;
+		CHL::ByteCopy<float>(value, bytes, copyStartingAt);
+	}
+}
+std::shared_ptr<CBHardVariables> CBufferScreenHeight::Spawn(std::vector<char>& bytes, const unsigned int StartOffset)
+{
+	std::shared_ptr<CBHardVariables> returnValue(new CBufferScreenHeight(bytes, StartOffset));
+	return returnValue;
+}
+
+//---------------------------------------------------------------------
+
+
 std::unordered_map<std::string, VariableCreatorFunction> PopulateVariableTypes()
 {
 	std::unordered_map<std::string, VariableCreatorFunction> returnValue;
@@ -284,6 +341,8 @@ std::unordered_map<std::string, VariableCreatorFunction> PopulateVariableTypes()
 	returnValue[CBufferWVP::Name()] = CBufferWVP::Spawn;
 	returnValue[CBufferWVO::Name()] = CBufferWVO::Spawn;
 	returnValue[CBufferEye::Name()] = CBufferEye::Spawn;
+	returnValue[CBufferScreenWidth::Name()] = CBufferScreenWidth::Spawn;
+	returnValue[CBufferScreenHeight::Name()] = CBufferScreenHeight::Spawn;
 
 	return returnValue;
 }

@@ -114,6 +114,28 @@ public:
 	static std::string Name() { return "Eye"; }
 };
 
+class GraphicComponentDLL_API CBufferScreenWidth : public CBHardVariables
+{
+protected:
+	CBufferScreenWidth(std::vector<char>& bytes, const unsigned int StartOffset);
+public:
+	virtual void Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
+	virtual std::string VName() const { return Name(); }
+	static std::string Name() { return "ScreenWidth"; }
+};
+
+class GraphicComponentDLL_API CBufferScreenHeight : public CBHardVariables
+{
+protected:
+	CBufferScreenHeight(std::vector<char>& bytes, const unsigned int StartOffset);
+public:
+	virtual void Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	static std::shared_ptr<CBHardVariables> Spawn(std::vector<char>& bytes, const unsigned int StartOffset);
+	virtual std::string VName() const { return Name(); }
+	static std::string Name() { return "ScreenHeight"; }
+};
+
 using VariableCreatorFunction = std::function<std::shared_ptr<CBHardVariables>(std::vector<char>&, const unsigned int)>;
 VariableCreatorFunction FindCBHardVariable(std::string Name);
 

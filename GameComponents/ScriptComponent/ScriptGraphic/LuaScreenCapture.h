@@ -17,6 +17,7 @@ namespace LuaScreenCapture
 		BasicScreenCapture(const luabind::object& table);
 
 		void SetCameraID(GenericLuaObject cameraID);
+		void SetPriority(const luabind::object& v);
 
 		luabind::object GetTexture();
 		void Release();

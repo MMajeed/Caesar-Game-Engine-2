@@ -22,6 +22,8 @@ namespace LuaGraphic
 	ScriptGraphicDLL_API luabind::object GetWindowsSize();
 	ScriptGraphicDLL_API luabind::object GetWindowsLoc();
 	ScriptGraphicDLL_API void SetMainCamera(const GenericLuaObject& tx);
+	ScriptGraphicDLL_API void SetCameraUpdate(bool v);
+	ScriptGraphicDLL_API void SetObjectUpdate(bool v);
 
 	ScriptGraphicDLL_API void RegisterAllLuaFunction(lua_State *lua);
 };

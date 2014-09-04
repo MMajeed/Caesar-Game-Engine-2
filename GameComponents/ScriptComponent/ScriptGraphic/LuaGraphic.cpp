@@ -73,6 +73,14 @@ namespace LuaGraphic
 	{
 		GraphicSettings::SetMainCamera(cam.GetID());
 	}
+	void SetCameraUpdate(bool v)
+	{
+		GraphicSettings::SetCameraUpdate(v);
+	}
+	void SetObjectUpdate(bool v)
+	{
+		GraphicSettings::SetObjectUpdate(v);
+	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
@@ -89,7 +97,9 @@ namespace LuaGraphic
 			luabind::def("GetWindowsSize", LuaGraphic::GetWindowsSize),
 			luabind::def("GetClientsSize", LuaGraphic::GetClientsSize),
 			luabind::def("GetWindowsLocs", LuaGraphic::GetWindowsLoc),
-			luabind::def("SetMainCamera", LuaGraphic::SetMainCamera)
+			luabind::def("SetMainCamera", LuaGraphic::SetMainCamera),
+			luabind::def("SetCameraUpdate", LuaGraphic::SetCameraUpdate),
+			luabind::def("SetObjectUpdate", LuaGraphic::SetObjectUpdate)
 		];
 	}
 };

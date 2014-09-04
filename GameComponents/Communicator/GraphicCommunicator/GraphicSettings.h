@@ -21,6 +21,9 @@ namespace GraphicSettings
 	GraphicCommunicatorDLL_API void GetWindowsWindowSize(unsigned int& height, unsigned int& width);
 	GraphicCommunicatorDLL_API void GetWindowsLocation(unsigned int& x, unsigned int& y);
 	GraphicCommunicatorDLL_API void GetPosRelativeToClient(int& x, int& y);
+
+	GraphicCommunicatorDLL_API void SetCameraUpdate(bool v);
+	GraphicCommunicatorDLL_API void SetObjectUpdate(bool v);
 }
 
 #endif //__GraphicSettings__

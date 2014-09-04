@@ -13,5 +13,5 @@ float4 main(PS_INPUT input) : SV_Target
 {
 	float4 light = LightTexture.Load(float3(input.PosWVP.xy, 0.0));
 
-	return LightTexture.Load(input.PosWVP.xyz);
+	return light;
 }

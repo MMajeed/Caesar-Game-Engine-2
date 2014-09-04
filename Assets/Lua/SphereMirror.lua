@@ -20,7 +20,7 @@ local mirrorSphereCam1 = Camera({
 local mirrorSphereSC1 = CubeScreenCapture({
                     [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
                     [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
-                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam1, });
+                    [Keys["ScreenShot"]["Priority"]] = mirrorSphereCam1, });
                                     
                                     
 local mirrorSphere1 = Object({
@@ -47,7 +47,7 @@ local mirrorSphereCam2 = Camera({
 local mirrorSphereSC2 = CubeScreenCapture({
                     [Keys["ScreenShot"]["Width"]]    = mirrorWidth,
                     [Keys["ScreenShot"]["Height"]]   = mirrorHeight,
-                    [Keys["ScreenShot"]["CameraID"]] = mirrorSphereCam2, });
+                    [Keys["ScreenShot"]["Priority"]] = mirrorSphereCam2, });
                                     
                                     
 local mirrorSphere2 = Object({

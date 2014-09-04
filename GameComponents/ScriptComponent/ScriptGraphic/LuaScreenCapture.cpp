@@ -42,6 +42,11 @@ namespace LuaScreenCapture
 	{
 		BasicScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
 	}
+	void BasicScreenCapture::SetPriority(const luabind::object& v)
+	{
+		int p = this->GetPriority(v);
+		BasicScreenCaptureConfig::SetPriority(this->ID, p);
+	}
 	luabind::object BasicScreenCapture::GetTexture()
 	{
 		lua_State* lua = ScriptManager::GetInstance().lua;
@@ -81,6 +86,7 @@ namespace LuaScreenCapture
 			luabind::class_<LuaScreenCapture::BasicScreenCapture>("BasicScreenCapture")
 				.def(luabind::constructor<luabind::object const&>())
 				.def("SetCamera", &LuaScreenCapture::BasicScreenCapture::SetCameraID)
+				.def("SetPriority", &LuaScreenCapture::BasicScreenCapture::SetPriority)
 				.def("GetTexture", &LuaScreenCapture::BasicScreenCapture::GetTexture)
 				.def("Release", &LuaScreenCapture::BasicScreenCapture::Release)
 		];

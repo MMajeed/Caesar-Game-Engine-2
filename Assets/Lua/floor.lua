@@ -11,6 +11,7 @@ local floor1 = Object({
                     [Keys["ObjectInfo"]["GraphicModel"]] = boxDrawable,
                     [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                    [Keys["ObjectInfo"]["Group"]]        = { "NoLight"},
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = tilesTexture },
                     });
                  
@@ -20,6 +21,7 @@ floor2 = Object({
                     [Keys["ObjectInfo"]["GraphicModel"]] = boxDrawable,
                     [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                    [Keys["ObjectInfo"]["Group"]]        = { "NoLight"},
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = tilesTexture },
                     });
 
@@ -29,6 +31,7 @@ local floor3 = Object({
                     [Keys["ObjectInfo"]["GraphicModel"]] = boxDrawable,
                     [Keys["ObjectInfo"]["VertexShader"]] = VSShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSTextureShader,
+                    [Keys["ObjectInfo"]["Group"]]        = { "NoLight"},
                     [Keys["ObjectInfo"]["Texture"]]      = { ["Texture"] = tilesTexture },
                     });
               
@@ -51,7 +54,7 @@ OnKeyDown(KeyCode["Z"],
         local screenTexture = TakeScreenShot({
                                           [Keys["ScreenShot"]["Width"]]         = 1024,
                                           [Keys["ScreenShot"]["Height"]]        = 768,
-                                          [Keys["ScreenShot"]["CameraID"]]      = tempCam, });
+                                          [Keys["ScreenShot"]["Priority"]]      = tempCam, });
         WaitToProcessGraphic(
             function()
                 floor2.Texture = { ["Texture"] = screenTexture; };

@@ -3,6 +3,7 @@
 #include <Converter.h>
 #include <GraphicManager.h>
 #include <Logger.h>
+#include <Scene.h>
 
 namespace GraphicSettings
 {
@@ -321,5 +322,48 @@ namespace GraphicSettings
 			x = -1;
 			y = -1;
 		}
+	}
+
+	void SetCameraUpdate(bool v)
+	{
+		class SetCameraUpdateMessage : public Message
+		{
+		public:
+			SetCameraUpdateMessage(bool v) :
+				v(v){}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				Scene::SetCameraUpdate(this->v);
+				return Message::Status::Complete;
+			}
+			bool v;
+		};
+
+		std::shared_ptr<SetCameraUpdateMessage> msg(new SetCameraUpdateMessage(v));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
+	void SetObjectUpdate(bool v)
+	{
+		class SetCameraUpdateMessage : public Message
+		{
+		public:
+			SetCameraUpdateMessage(bool v) :
+				v(v){}
+
+			virtual Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				Scene::SetCameraUpdate(this->v);
+				return Message::Status::Complete;
+			}
+			bool v;
+		};
+
+		std::shared_ptr<SetCameraUpdateMessage> msg(new SetCameraUpdateMessage(v));
+		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 }

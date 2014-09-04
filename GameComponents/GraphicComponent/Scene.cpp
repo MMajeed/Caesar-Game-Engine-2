@@ -9,19 +9,34 @@
 
 namespace Scene
 {
+	static bool CameraUpdate = true;
+	void SetCameraUpdate(bool v)
+	{
+		CameraUpdate = v;
+	}
+
+	static bool ObjectUpdate = true;
+	void SetObjectUpdate(bool v)
+	{
+		ObjectUpdate = v;
+	}
+
 	static std::unordered_map<std::string, std::shared_ptr<GraphicCameraEntity>> cameraEntities;
 
 	void UpdateCameraEntities()
 	{
-		cameraEntities.clear();
-
-		std::unordered_map<std::string, std::weak_ptr<CameraEntity>> newestCameraList = CameraEntities::GetAll(); // Get the latest list
-		
-		for(auto& cameraIter : newestCameraList)
+		if(CameraUpdate)
 		{
-			if(std::shared_ptr<CameraEntity> cam = cameraIter.second.lock())
+			cameraEntities.clear();
+
+			std::unordered_map<std::string, std::weak_ptr<CameraEntity>> newestCameraList = CameraEntities::GetAll(); // Get the latest list
+
+			for(auto& cameraIter : newestCameraList)
 			{
-				cameraEntities[cameraIter.first] = std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(cam, 0, 0));
+				if(std::shared_ptr<CameraEntity> cam = cameraIter.second.lock())
+				{
+					cameraEntities[cameraIter.first] = std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(cam, 0, 0));
+				}
 			}
 		}
 	}
@@ -41,9 +56,9 @@ namespace Scene
 			cam->UpdateOrthogonal(nullptr);
 			return cam;
 		}
-		else 
-		{ 
-			return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(nullptr, width, height)); 
+		else
+		{
+			return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(nullptr, width, height));
 		}
 	}
 
@@ -51,33 +66,36 @@ namespace Scene
 
 	void UpdateObjectEntities()
 	{
-		std::unordered_map<std::string, std::weak_ptr<ObjectEntity>> newestObjectList = ObjectEntities::GetAll(); // Get the latest list
-		
-		std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> currentList = ObjectEntities; // Make a copy of our current list
-
-		for(const auto& objectIter : newestObjectList) // go through the latest list
+		if(ObjectUpdate)
 		{
-			if(auto obj = objectIter.second.lock())
+			std::unordered_map<std::string, std::weak_ptr<ObjectEntity>> newestObjectList = ObjectEntities::GetAll(); // Get the latest list
+
+			std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> currentList = ObjectEntities; // Make a copy of our current list
+
+			for(const auto& objectIter : newestObjectList) // go through the latest list
 			{
-				auto iter = currentList.find(objectIter.first);
-				if(iter != currentList.end()) // if we already have this object
+				if(auto obj = objectIter.second.lock())
 				{
-					if(obj->GetTracker() != iter->second->GetTracker()) // check if it has been changed
+					auto iter = currentList.find(objectIter.first);
+					if(iter != currentList.end()) // if we already have this object
 					{
-						iter->second->Update(obj);
+						if(obj->GetTracker() != iter->second->GetTracker()) // check if it has been changed
+						{
+							iter->second->Update(obj);
+						}
+						currentList.erase(iter); // erease it as we don't need it anymore
 					}
-					currentList.erase(iter); // erease it as we don't need it anymore
-				}
-				else // We don't have this one, so add it
-				{
-					ObjectEntities[obj->GetID()] = std::make_shared<GraphicObjectEntity>(obj);
+					else // We don't have this one, so add it
+					{
+						ObjectEntities[obj->GetID()] = std::make_shared<GraphicObjectEntity>(obj);
+					}
 				}
 			}
-		}
-		
-		for(const auto& objectIter : currentList)
-		{ // currentList now only has items that are no longer in the latest list so let go through each one and delete them from our list
-			ObjectEntities.erase(objectIter.first);
+
+			for(const auto& objectIter : currentList)
+			{ // currentList now only has items that are no longer in the latest list so let go through each one and delete them from our list
+				ObjectEntities.erase(objectIter.first);
+			}
 		}
 	}
 

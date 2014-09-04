@@ -261,13 +261,15 @@ std::unordered_map<std::string, std::shared_ptr<Object>> GraphicObjectEntity::Ge
 }
 std::shared_ptr<Object> GraphicObjectEntity::FindUserData(const std::string& ID) const
 {
-	std::shared_ptr<Object> returnValue;
 	auto iter = this->UserData.find(ID);
 	if(iter != this->UserData.cend())
 	{
-		returnValue = iter->second;
+		return iter->second;
 	}
-	return returnValue;
+	else
+	{
+		return nullptr;
+	}
 }
 
 void GraphicObjectEntity::UpdateFillMode(std::shared_ptr<ObjectEntity> obj)
