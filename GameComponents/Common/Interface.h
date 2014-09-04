@@ -41,6 +41,7 @@ public:
 	bool running;	
 
 	bool AnyMessage();
+	std::weak_ptr<Message> GetBackMessage();
 protected:
 	std::queue<std::shared_ptr<Message>> QueueMessages;	
 };

@@ -18,13 +18,6 @@ struct PS_INPUT
 	float3 tex		: TEXCOORD0;
 };
 
-SamplerState TextureSampler
-{
-	Filter = Linear;
-	AddressU = Wrap;
-	AddressV = Wrap;
-};
-
 Texture2D LocationTexture : register(t0);
 Texture2D NormalTexture : register(t1);
 Texture2D DiffuseTexture : register(t2);
@@ -35,11 +28,7 @@ Texture2D PrivousLightTexture : register(t5);
 float4 main(PS_INPUT input) : SV_Target
 {
 	float4 oLocation = LocationTexture.Load(float3(input.PosWVP.xy, 0.0));
-	float4 oNormal = NormalTexture.Load(float3(input.PosWVP.xy, 0.0));
-	float4 oDiffuse = DiffuseTexture.Load(float3(input.PosWVP.xy, 0.0));
-	float4 oAmbient = AmbientTexture.Load(float3(input.PosWVP.xy, 0.0));
-	float4 oSpecular = SpecularTexture.Load(float3(input.PosWVP.xy, 0.0));
-
+	
 	// The vector from the surface to the light.
 	float4 lightVec = Position - oLocation;
 
@@ -53,6 +42,12 @@ float4 main(PS_INPUT input) : SV_Target
 		total = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	else
 	{
+		float4 oNormal = NormalTexture.Load(float3(input.PosWVP.xy, 0.0));
+		float4 oDiffuse = DiffuseTexture.Load(float3(input.PosWVP.xy, 0.0));
+		float4 oAmbient = AmbientTexture.Load(float3(input.PosWVP.xy, 0.0));
+		float4 oSpecular = SpecularTexture.Load(float3(input.PosWVP.xy, 0.0));
+
+
 		// Normalize the light vector.
 		lightVec /= d;
 

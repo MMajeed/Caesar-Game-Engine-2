@@ -9,9 +9,6 @@
 
 namespace Scene
 {
-	GraphicComponentDLL_API void SetCameraUpdate(bool v);
-	GraphicComponentDLL_API void SetObjectUpdate(bool v);
-
 	GraphicComponentDLL_API void UpdateCameraEntities();
 	GraphicComponentDLL_API void UpdateObjectEntities();
 

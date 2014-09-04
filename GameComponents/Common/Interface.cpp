@@ -100,6 +100,19 @@ bool Interface::AnyMessage()
 {
 	return this->QueueMessages.empty();
 }
+std::weak_ptr<Message> Interface::GetBackMessage()
+{
+	std::lock_guard<std::mutex> lock(this->messageMutex);
+	if(!(this->QueueMessages.empty()))
+	{
+		return this->QueueMessages.back();
+	}
+	else
+	{
+
+		return std::weak_ptr<Message>();
+	}
+}
 
 Interface::~Interface()
 {

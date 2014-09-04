@@ -65,5 +65,5 @@ float4 main(PS_INPUT input) : SV_Target
 		total += PrivousLightTexture.Load(float3(input.PosWVP.xy, 0.0));
 	}
 
-	return (ambient + diffuse + spec);
+	return total;
 }

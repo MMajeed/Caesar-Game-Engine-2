@@ -52,9 +52,9 @@ OnKeyDown(KeyCode["Z"],
                     [Keys["Camera"]["Texture"]]         = regularCam.Texture,
                    }); 
         local screenTexture = TakeScreenShot({
-                                          [Keys["ScreenShot"]["Width"]]         = 1024,
-                                          [Keys["ScreenShot"]["Height"]]        = 768,
-                                          [Keys["ScreenShot"]["Priority"]]      = tempCam, });
+                                          [Keys["ScreenShot"]["Width"]]         = 1080,
+                                          [Keys["ScreenShot"]["Height"]]        = 712,
+                                          [Keys["ScreenShot"]["CameraID"]]      = tempCam, });
         WaitToProcessGraphic(
             function()
                 floor2.Texture = { ["Texture"] = screenTexture; };

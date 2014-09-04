@@ -12,31 +12,32 @@ LuaWaitForProcess::LuaWaitForProcess(LuaWaitForProcess::ProcessType type, luabin
 {
 	this->type = type;
 	this->function = inputFunction;
+
+	switch(this->type)
+	{
+		case LuaWaitForProcess::ProcessType::Graphic:
+			msg = GraphicCommunicator::GetComponent()->GetBackMessage();
+			break;
+		case LuaWaitForProcess::ProcessType::Input:
+			msg = InputCommunicator::GetComponent()->GetBackMessage();
+			break;
+		case LuaWaitForProcess::ProcessType::Script:
+			msg = ScriptManager::GetInstance().GetBackMessage();
+			break;
+		case LuaWaitForProcess::ProcessType::Animation:
+			msg = AnimationCommunicator::GetComponent()->GetBackMessage();
+			break;
+		case LuaWaitForProcess::ProcessType::Physics:
+			msg = PhysicsCommunicator::GetComponent()->GetBackMessage();
+			break;
+
+	}
 }
 
 void LuaWaitForProcess::Action(lua_State *lua)
 {
-	bool empty = false;
-	switch(this->type)
-	{
-		case LuaWaitForProcess::ProcessType::Graphic:
-			empty = GraphicCommunicator::GetComponent()->AnyMessage();
-			break;
-		case LuaWaitForProcess::ProcessType::Input:
-			empty = InputCommunicator::GetComponent()->AnyMessage();
-			break;
-		case LuaWaitForProcess::ProcessType::Script:
-			empty = ScriptManager::GetInstance().AnyMessage();
-			break;
-		case LuaWaitForProcess::ProcessType::Animation:
-			empty = AnimationCommunicator::GetComponent()->AnyMessage();
-			break;
-		case LuaWaitForProcess::ProcessType::Physics:
-			empty = PhysicsCommunicator::GetComponent()->AnyMessage();
-			break;
 
-	}
-	if(empty == true)
+	if(msg.expired())
 	{
 		try
 		{
@@ -46,7 +47,7 @@ void LuaWaitForProcess::Action(lua_State *lua)
 		{
 			Logger::LogError(LuaError::GetLuaError(lua));
 		}
-		ProcessMessage::Remove(this->ID);
+		this->Delete = true;
 	}
 }
 

@@ -30,7 +30,6 @@ function AddToCallOnCameraUpdate(func)
 end
 
 function UpdateCamera(time, ID)
-    SetCameraUpdate(false);
     if(CamLeftButton == true) then
         regularCam.Yaw = regularCam.Yaw + (0.002 * time);
     end
@@ -46,15 +45,14 @@ function UpdateCamera(time, ID)
     end
     
     if(CamUpButton == true) then
-        local moveDistance = 0.1 * time;
+        local moveDistance = 0.05 * time;
         regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
     end
     if(CamDownButton == true) then
-        local moveDistance = -0.1 * time;
+        local moveDistance = -0.05 * time;
         regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
     end
     for key,value in pairs(CallOnUpdate) do value(time, ID) end
-    SetCameraUpdate(true);
 end
 
 LoopCall(16, UpdateCamera);

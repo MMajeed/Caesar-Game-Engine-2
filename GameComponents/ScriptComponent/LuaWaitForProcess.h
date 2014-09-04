@@ -5,6 +5,7 @@
 #include <string>
 #include <luabind\luabind.hpp>
 #include <InputKeysEnum.h>
+#include <Message.h>
 
 class ScriptComponentDLL_API LuaWaitForProcess : public LuaProcesses
 {
@@ -16,6 +17,8 @@ public:
 	virtual void Action(lua_State *lua);
 
 	ProcessType type;
+	std::weak_ptr<Message> msg;
+
 	luabind::object function;
 };
 
