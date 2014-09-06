@@ -20,11 +20,10 @@ public:
 													unsigned int Priority,
 													const std::string& cameraID);
 
-	std::shared_ptr<CubeScreenShot>	ScreenShot[2];
+	std::shared_ptr<CubeScreenShot>	ScreenShot;
 	std::string						cameraID;
 	unsigned int					width;
 	unsigned int					height;
-	unsigned int					current;
 };
 
 

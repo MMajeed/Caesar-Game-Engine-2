@@ -88,8 +88,8 @@ void GraphicManager::InitWindow()
 	Logger::AddErrorLogger(MesageBoxError);
 
 	this->window.hInst = GetModuleHandle(NULL);
-	this->window.height = 768;
-	this->window.width = 2048;
+	this->window.height = 712;
+	this->window.width = 1080;
 
 	// Register class
 	WNDCLASSEX wcex;

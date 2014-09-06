@@ -24,7 +24,6 @@ public:
 	std::string							cameraID;
 	unsigned int						width;
 	unsigned int						height;
-	unsigned int						current;
 };
 
 

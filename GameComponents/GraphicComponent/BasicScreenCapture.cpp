@@ -6,7 +6,6 @@
 
 BasicScreenCapture::BasicScreenCapture()
 {
-	this->current = 0;
 }
 void BasicScreenCapture::Init()
 {

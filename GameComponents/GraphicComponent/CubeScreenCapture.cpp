@@ -6,27 +6,24 @@
 
 CubeScreenCapture::CubeScreenCapture()
 {
-	this->current = 0;
 	this->TextureID.resize(1);
+	
 }
 void CubeScreenCapture::Init()
 {
-	this->ScreenShot[0] = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
-	this->ScreenShot[1] = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
-}
-void CubeScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
-{
-	this->current += 1;
-	if(this->current >= 2){ this->current = 0; }
-
-	this->ScreenShot[this->current]->cameraID = this->cameraID;
-	this->ScreenShot[this->current]->Snap(list);
-
+	this->ScreenShot = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
 	auto texture = ResourceManager::TextureList.Find(this->TextureID[0]);
 	if(texture)
 	{
-		texture->pTexture = this->ScreenShot[this->current]->pScreenTexture[0];
+		texture->pTexture = this->ScreenShot->pScreenTexture[0];
 	}
+}
+void CubeScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+{
+	this->ScreenShot->cameraID = this->cameraID;
+	this->ScreenShot->Snap(list);
+
+	
 }
 std::shared_ptr<ScreenCapture> CubeScreenCapture::clone() const
 {
