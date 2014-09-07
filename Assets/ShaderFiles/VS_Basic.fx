@@ -32,11 +32,12 @@ PS_INPUT main(VS_INPUT input)
 
 	output.Normal = input.VertexNorm;
 
-	matrix worldNoTranslation = World;
-	worldNoTranslation[3][0] = 0.0;
-	worldNoTranslation[3][1] = 0.0;
-	worldNoTranslation[3][2] = 0.0;
-	worldNoTranslation[3][3] = 1.0;
+	matrix worldNoTranslation = 
+		{	World[0][0], World[0][1], World[0][2], 0.0,
+			World[1][0], World[1][1], World[1][2], 0.0,
+			World[2][0], World[2][1], World[2][2], 0.0,
+			0.0, 0.0, 0.0, 0.0};
+
 	output.NormalWorld = mul(input.VertexNorm, worldNoTranslation);
 	output.NormalWorld = normalize(output.NormalWorld);
 

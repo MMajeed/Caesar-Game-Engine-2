@@ -31,35 +31,6 @@ namespace GraphicSettings
 		std::shared_ptr<SetMainCameraMessage> msg(new SetMainCameraMessage(cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
-	void Resize(unsigned int widthInput, unsigned int heightInput)
-	{
-		class OnResize : public Message
-		{
-		public:
-			OnResize(unsigned int widthInput, unsigned int heightInput)
-			{
-				this->width = widthInput;
-				this->height = heightInput;
-			}
-
-			virtual Message::Status Work()
-			{
-				GraphicManager& graphic = GraphicManager::GetInstance();
-
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-				graphic.Resize(this->width, this->height);
-
-				return Message::Status::Complete;
-			}
-
-			unsigned int width;
-			unsigned int height;
-		};
-
-		std::shared_ptr<OnResize> msg(new OnResize(widthInput, heightInput));
-		GraphicManager::GetInstance().SubmitMessage(msg);
-	}
 	void ChangeWindowsText(std::string s)
 	{
 		class SetTitle : public Message
@@ -131,7 +102,7 @@ namespace GraphicSettings
 
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
-				SetWindowPos(graphic.window.hWnd, 0, 0, 0, this->width, this->height, SWP_NOMOVE | SWP_NOZORDER);
+				graphic.ResizeWindow(this->width, this->height);
 
 				return Message::Status::Complete;
 			}
@@ -159,14 +130,8 @@ namespace GraphicSettings
 				GraphicManager& graphic = GraphicManager::GetInstance();
 
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-				RECT rcClient, rcWind;
-				POINT ptDiff;
-				GetClientRect(graphic.window.hWnd, &rcClient);
-				GetWindowRect(graphic.window.hWnd, &rcWind);
-				ptDiff.x = (rcWind.right - rcWind.left) - rcClient.right;
-				ptDiff.y = (rcWind.bottom - rcWind.top) - rcClient.bottom;
 
-				SetWindowPos(graphic.window.hWnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y, SWP_NOMOVE | SWP_NOZORDER);
+				graphic.ResizeClient(this->width, this->height);
 
 				return Message::Status::Complete;
 			}
@@ -176,6 +141,34 @@ namespace GraphicSettings
 		};
 
 		std::shared_ptr<Resize> msg(new Resize(height, width));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
+	void ResizeRender(unsigned int height, unsigned int width)
+	{
+		class ResizeRenderMessage : public Message
+		{
+		public:
+			ResizeRenderMessage(unsigned int height, unsigned int width)
+			{
+				this->width = width;
+				this->height = height;
+			}
+
+			virtual Message::Status Work()
+			{
+				GraphicManager& graphic = GraphicManager::GetInstance();
+
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+				graphic.ResizeRender(width, height);
+
+				return Message::Status::Complete;
+			}
+
+			unsigned int width;
+			unsigned int height;
+		};
+
+		std::shared_ptr<ResizeRenderMessage> msg(new ResizeRenderMessage(height, width));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 	void DisableResize()
@@ -272,14 +265,14 @@ namespace GraphicSettings
 		graphic.D3DStuff.pSwapChain->GetFullscreenState(&status, NULL);
 		return status != 0; 
 	}
-	void GetWindowsClientSize(unsigned int& height, unsigned int& width)
+	void GetClientSize(unsigned int& height, unsigned int& width)
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
 		std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 		height = graphic.window.height;
 		width = graphic.window.width;
 	}
-	void GetWindowsWindowSize(unsigned int& height, unsigned int& width)
+	void GetWindowSize(unsigned int& height, unsigned int& width)
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
 		std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
@@ -289,6 +282,13 @@ namespace GraphicSettings
 			width = rect.right - rect.left;
 			height = rect.bottom - rect.top;
 		}
+	}
+	void GetRenderSize(unsigned int& height, unsigned int& width)
+	{
+		GraphicManager& graphic = GraphicManager::GetInstance();
+		std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+		height = (unsigned int)graphic.D3DStuff.vp.Height;
+		width = (unsigned int)graphic.D3DStuff.vp.Width;
 	}
 	void GetWindowsLocation(unsigned int& x, unsigned int& y)
 	{
@@ -322,5 +322,29 @@ namespace GraphicSettings
 			x = -1;
 			y = -1;
 		}
+	}
+	void VSync(bool v)
+	{
+		class VSyncMessage : public Message
+		{
+		public:
+			VSyncMessage(bool v) :
+				v(v){}
+
+			virtual Message::Status Work()
+			{
+				GraphicManager& graphic = GraphicManager::GetInstance();
+
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				graphic.D3DStuff.VSync = (int)v;
+
+				return Message::Status::Complete;
+			}
+			bool v;
+		};
+
+		std::shared_ptr<VSyncMessage> msg(new VSyncMessage(v));
+		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 }

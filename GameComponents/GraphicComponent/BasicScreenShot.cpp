@@ -113,11 +113,11 @@ void BasicScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-		auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
+	auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
 
-		this->SetupSnapShot(camera, list);
-		this->TakeScreenSnapShot(camera, list);
-		this->CleanupSnapShot(camera, list);
+	this->SetupSnapShot(camera, list);
+	this->TakeScreenSnapShot(camera, list);
+	this->CleanupSnapShot(camera, list);
 }
 
 void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)

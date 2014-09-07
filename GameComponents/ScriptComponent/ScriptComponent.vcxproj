@@ -249,6 +249,7 @@
     <ClInclude Include="LuaMath.h" />
     <ClInclude Include="LuaModel.h" />
     <ClInclude Include="LuaNode.h" />
+    <ClInclude Include="LuaOnResize.h" />
     <ClInclude Include="LuaSleep.h" />
     <ClInclude Include="LuaThreadSetup.h" />
     <ClInclude Include="LuaWaitForProcess.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="LuaMath.cpp" />
     <ClCompile Include="LuaModel.cpp" />
     <ClCompile Include="LuaNode.cpp" />
+    <ClCompile Include="LuaOnResize.cpp" />
     <ClCompile Include="LuaSleep.cpp" />
     <ClCompile Include="LuaThreadSetup.cpp" />
     <ClCompile Include="LuaWaitForProcess.cpp" />

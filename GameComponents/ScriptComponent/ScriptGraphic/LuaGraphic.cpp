@@ -3,9 +3,16 @@
 #include <GraphicCommunicator\GraphicSettings.h>
 #include <GraphicCommunicator\GraphicCommunicator.h>
 #include <Keys.h>
+#include <LuaOnResize.h>
+#include <ProcessMessage.h>
+#include <Logger.h>
 
 namespace LuaGraphic
 {
+	void SetMainCamera(const GenericLuaObject& cam)
+	{
+		GraphicSettings::SetMainCamera(cam.GetID());
+	}
 	void ChangeWindowsTitle(std::string title)
 	{
 		GraphicSettings::ChangeWindowsText(title);
@@ -21,6 +28,10 @@ namespace LuaGraphic
 	void ResizeClient(unsigned int height, unsigned int width)
 	{
 		GraphicSettings::ResizeClient(height, width);
+	}
+	void ResizeRender(unsigned int height, unsigned int width)
+	{
+		GraphicSettings::ResizeRender(height, width);
 	}
 	void DiableResize()
 	{
@@ -42,25 +53,34 @@ namespace LuaGraphic
 	{
 		return GraphicSettings::IsFullScreen();
 	}
-	luabind::object GetClientsSize()
+	luabind::object GetClientSize()
 	{
 		unsigned int height; unsigned int width;
-		GraphicSettings::GetWindowsClientSize(height, width);
+		GraphicSettings::GetClientSize(height, width);
 		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
 	}
-	luabind::object GetWindowsSize()
+	luabind::object GetWindowSize()
 	{
 		unsigned int height; unsigned int width;
-		GraphicSettings::GetWindowsWindowSize(height, width);
+		GraphicSettings::GetWindowSize(height, width);
 		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
 	}
-	luabind::object GetWindowsLoc()
+	luabind::object GetRenderSize()
+	{
+		unsigned int height; unsigned int width;
+		GraphicSettings::GetRenderSize(height, width);
+		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		returnValue["Height"] = height;
+		returnValue["Width"] = width;
+		return returnValue;
+	}
+	luabind::object GetWindowLoc()
 	{
 		unsigned int x; unsigned int y;
 		GraphicSettings::GetWindowsLocation(x, y); 
@@ -69,27 +89,42 @@ namespace LuaGraphic
 		returnValue["Y"] = y;
 		return returnValue;
 	}
-	void SetMainCamera(const GenericLuaObject& cam)
+	void CallOnResize(luabind::object const& function)
 	{
-		GraphicSettings::SetMainCamera(cam.GetID());
+		if(luabind::type(function) != LUA_TFUNCTION)
+		{
+			Logger::LogError("Wrong paramter for LoopCall, Please pass in how many seconds apart and function");
+		}
+
+		std::shared_ptr<LuaOnResize> process(new LuaOnResize(function));
+
+		ProcessMessage::Add(process);
+	}
+	void VSync(bool v)
+	{
+		GraphicSettings::VSync(v);
 	}
 
 	void RegisterAllLuaFunction(lua_State *lua)
 	{
 		luabind::module(lua)[
+			luabind::def("SetMainCamera", LuaGraphic::SetMainCamera),
 			luabind::def("SetWindowsTitle", LuaGraphic::ChangeWindowsTitle),
 			luabind::def("MoveWindow", LuaGraphic::MoveWindow),
 			luabind::def("ReizeWindow", LuaGraphic::ResizeWindow),
+			luabind::def("ResizeRender", LuaGraphic::ResizeRender),
 			luabind::def("ReizeClient", LuaGraphic::ResizeClient),
 			luabind::def("FullScreen", LuaGraphic::FullScreen),
 			luabind::def("DiableResize", LuaGraphic::DiableResize),
 			luabind::def("EnableResize", LuaGraphic::EnableResize),
 			luabind::def("LeaveFullScreen", LuaGraphic::LeaveFullScreen),
 			luabind::def("IsFullScreen", LuaGraphic::IsFullScreen),
-			luabind::def("GetWindowsSize", LuaGraphic::GetWindowsSize),
-			luabind::def("GetClientsSize", LuaGraphic::GetClientsSize),
-			luabind::def("GetWindowsLocs", LuaGraphic::GetWindowsLoc),
-			luabind::def("SetMainCamera", LuaGraphic::SetMainCamera)
+			luabind::def("GetWindowSize", LuaGraphic::GetWindowSize),
+			luabind::def("GetClientSize", LuaGraphic::GetClientSize),
+			luabind::def("GetRenderSize", LuaGraphic::GetRenderSize),
+			luabind::def("GetWindowLocs", LuaGraphic::GetWindowLoc),
+			luabind::def("CallOnResize", LuaGraphic::CallOnResize),
+			luabind::def("VSync", LuaGraphic::VSync)
 		];
 	}
 };

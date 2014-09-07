@@ -54,6 +54,9 @@
       <Filter>Lua Class/Function\LuaThreadSetup</Filter>
     </ClInclude>
     <ClInclude Include="ScriptManager.h" />
+    <ClInclude Include="LuaOnResize.h">
+      <Filter>Lua Processes\LuaOnResize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaKeyAction.cpp">
@@ -104,6 +107,9 @@
     <ClCompile Include="ScriptManager.cpp" />
     <ClCompile Include="LuaNode.cpp">
       <Filter>Lua Class/Function\Lua3DFile\LuaNode</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaOnResize.cpp">
+      <Filter>Lua Processes\LuaOnResize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +166,9 @@
     </Filter>
     <Filter Include="Lua Class/Function\GenericLuaObject">
       <UniqueIdentifier>{ce047446-452c-4f86-ae49-0d623a546e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Lua Processes\LuaOnResize">
+      <UniqueIdentifier>{10612ff9-e0f9-48c2-bacb-af51ef3d2bfc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

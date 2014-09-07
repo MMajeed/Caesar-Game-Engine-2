@@ -78,8 +78,6 @@ float4 main(PS_INPUT input) : SV_Target
 		spec *= att;
 
 		total = (ambient + diffuse + spec);
-		
-		
 	}
 	
 	if(HasPrivousLight != 0)

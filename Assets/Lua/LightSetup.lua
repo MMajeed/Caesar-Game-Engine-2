@@ -1,5 +1,5 @@
-local textureWidth = 1080;
-local textureHeight = 712;
+local textureWidth = GetClientSize()["Width"];
+local textureHeight = GetClientSize()["Height"];
 
 local verticeArray = {};
 local textureArray = {};
@@ -144,3 +144,42 @@ function AddLight(LightInfo)
     table.insert(LightArray, l)
     SetupLight();
 end
+
+                            
+function ResizeLightFunction(ID, Width, Height)
+    DefferredGenerator:GetTexture()[1]:Release();
+    DefferredGenerator:GetTexture()[2]:Release();
+    DefferredGenerator:GetTexture()[3]:Release();
+    DefferredGenerator:GetTexture()[4]:Release();
+    DefferredGenerator:GetTexture()[5]:Release();
+    DefferredGenerator:Release();
+    DefferredGenerator = BasicScreenCapture({
+                    [Keys["ScreenShot"]["Width"]]         = Width,
+                    [Keys["ScreenShot"]["Height"]]        = Height,
+                    [Keys["ScreenShot"]["Priority"]]      = 0,
+                    [Keys["ScreenShot"]["NumOfTargets"]]  = 5,
+                    [Keys["ScreenShot"]["CameraID"]]      = CamDeferredGenerator, });
+
+    SpriteObj.Scale = Vector4(Width, Height, 0.0, 1.0);
+    SpriteObj.Texture =  {
+                   ["LocationTexture"]    = DefferredGenerator:GetTexture()[1],
+                   ["NormalTexture"]      = DefferredGenerator:GetTexture()[2],
+                   ["DiffuseTexture"]     = DefferredGenerator:GetTexture()[3],
+                   ["AmbientTexture"]     = DefferredGenerator:GetTexture()[4],
+                   ["SpecularTexture"]    = DefferredGenerator:GetTexture()[5],
+            };
+    for key,value in pairs(LightArray) do 
+        value.LightCalculator:GetTexture():Release();
+        value.LightCalculator:Release();
+        value.LightCalculator = BasicScreenCapture({
+                   [Keys["ScreenShot"]["Width"]]         = Width,
+                   [Keys["ScreenShot"]["Height"]]        = Height,
+                   [Keys["ScreenShot"]["Priority"]]      = 200,
+                   [Keys["ScreenShot"]["NumOfTargets"]]  = 1,
+                   [Keys["ScreenShot"]["CameraID"]]      = value.CamLightCalculator, 
+                   });
+    end
+    
+    SetupLight();
+end
+CallOnResize(ResizeLightFunction);

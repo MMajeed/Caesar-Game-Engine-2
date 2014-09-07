@@ -15,6 +15,7 @@
 GraphicManager::GraphicManager()
 {
 	this->D3DStuff.IsInitialized = false;
+	this->D3DStuff.VSync = 0;
 }
 
 void GraphicManager::Init()
@@ -50,14 +51,13 @@ void GraphicManager::ProcessDrawing()
 
 	this->RunAllCapture(objects);
 
-	auto camera = Scene::GetCamera(this->DefaultCamera, this->window.width, this->window.height);
+	auto camera = Scene::GetCamera(this->DefaultCamera, (unsigned int)this->D3DStuff.vp.Width, (unsigned int)this->D3DStuff.vp.Height);
 
 	Scene::ClearScreen(camera);
 	Scene::DrawObjects(camera, objects);
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)
-
-	this->D3DStuff.pSwapChain->Present(0, 0);
+	this->D3DStuff.pSwapChain->Present(this->D3DStuff.VSync, 0);
 }
 
 void GraphicManager::RunAllCapture(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
@@ -336,6 +336,8 @@ void GraphicManager::MesageBoxError(std::string s)
 
 LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	GraphicManager& graphic = GraphicManager::GetInstance();
+
 	switch(message)
 	{
 		case WM_DESTROY:
@@ -354,7 +356,8 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 			}
 			if(width != 0 || height != 0)
 			{
-				GraphicManager::GetInstance().Resize(width, height);
+				graphic.window.width = width;
+				graphic.window.height = height;
 			}
 			break;
 		}
@@ -365,7 +368,23 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 	return 0;
 }
 
-void GraphicManager::Resize(unsigned int width, unsigned int height)
+void GraphicManager::ResizeWindow(unsigned int width, unsigned int height)
+{
+	SetWindowPos(this->window.hWnd, 0, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER);
+}
+void GraphicManager::ResizeClient(unsigned int width, unsigned int height)
+{
+	RECT rcClient, rcWind;
+	POINT ptDiff;
+	GetClientRect(this->window.hWnd, &rcClient);
+	GetWindowRect(this->window.hWnd, &rcWind);
+	ptDiff.x = (rcWind.right - rcWind.left) - rcClient.right;
+	ptDiff.y = (rcWind.bottom - rcWind.top) - rcClient.bottom;
+
+	SetWindowPos(this->window.hWnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y, SWP_NOMOVE | SWP_NOZORDER);
+
+}
+void GraphicManager::ResizeRender(unsigned int width, unsigned int height)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
@@ -374,6 +393,9 @@ void GraphicManager::Resize(unsigned int width, unsigned int height)
 		graphic.D3DStuff.pRenderTargetView.reset();
 		graphic.D3DStuff.pDepthStencilBuffer.reset();
 		graphic.D3DStuff.pDepthStencilView.reset();
+
+		if(width == 0){ width = this->window.width; }
+		if(height == 0){ height = this->window.height; }
 
 		// Resize the swap chain and recreate the render target view.
 		HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
@@ -440,8 +462,5 @@ void GraphicManager::Resize(unsigned int width, unsigned int height)
 		graphic.D3DStuff.vp.TopLeftX = 0;
 		graphic.D3DStuff.vp.TopLeftY = 0;
 		graphic.D3DStuff.pImmediateContext->RSSetViewports(1, &(graphic.D3DStuff.vp));
-
-		graphic.window.width = width;
-		graphic.window.height = height;
 	}
 }

@@ -42,7 +42,9 @@ protected:
 	virtual void InitViewPort();
 
 public:
-	virtual void Resize(unsigned int width, unsigned int height);
+	virtual void ResizeWindow(unsigned int width, unsigned int height);
+	virtual void ResizeClient(unsigned int width, unsigned int height);
+	virtual void ResizeRender(unsigned int width, unsigned int height);
 	
 	// DirectX stuff
 	struct
@@ -59,6 +61,7 @@ public:
 		COMSharedPtr<ID3D11DepthStencilState>	pDepthDisabledStencilState;
 		COMSharedPtr<ID3D11DepthStencilView>	pDepthStencilView;
 		bool									IsInitialized;
+		int										VSync;
 	} D3DStuff;
 
 	// Windows stuff
@@ -69,7 +72,7 @@ public:
 		UINT		width;
 		UINT		height;
 	} window;
-
+	
 	std::string DefaultCamera;
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

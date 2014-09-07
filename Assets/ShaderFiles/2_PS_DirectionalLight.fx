@@ -32,9 +32,7 @@ float4 main(PS_INPUT input) : SV_Target
 {
 	float4 oLocation = LocationTexture.Load(float3(input.PosWVP.xy, 0.0));
 	float4 oNormal = NormalTexture.Load(float3(input.PosWVP.xy, 0.0));
-	float4 oDiffuse = DiffuseTexture.Load(float3(input.PosWVP.xy, 0.0));
 	float4 oAmbient = AmbientTexture.Load(float3(input.PosWVP.xy, 0.0));
-	float4 oSpecular = SpecularTexture.Load(float3(input.PosWVP.xy, 0.0));
 
 	float4 toEye = normalize(CameraEye - oLocation);
 
@@ -51,6 +49,9 @@ float4 main(PS_INPUT input) : SV_Target
 	[flatten]
 	if(diffuseFactor > 0.0f)
 	{
+		float4 oDiffuse = DiffuseTexture.Load(float3(input.PosWVP.xy, 0.0));
+		float4 oSpecular = SpecularTexture.Load(float3(input.PosWVP.xy, 0.0));
+
 		float4 v = reflect(-Direction, oNormal);
 		float specFactor = pow(max(dot(v, toEye), 0.0f), oSpecular.w);
 

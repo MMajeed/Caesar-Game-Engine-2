@@ -1,5 +1,5 @@
-local ScreenWidth = GetClientsSize()["Width"];
-local ScreenHeight = GetClientsSize()["Height"];
+local ScreenWidth = GetClientSize()["Width"];
+local ScreenHeight = GetClientSize()["Height"];
 
 regularCam = Camera({
                     [Keys["Camera"]["Eye"]]             = Vector4(0, 5.0, -60.0, 0.0),
