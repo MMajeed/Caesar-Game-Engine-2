@@ -37,7 +37,7 @@ local CamDeferredGenerator = Camera({
                 [Keys["Camera"]["Yaw"]]             = regularCam.Yaw,
                 [Keys["Camera"]["NearZ"]]           = 0.01,              
                 [Keys["Camera"]["FarZ"]]            = 5000.0,
-                [Keys["Camera"]["ClearColor"]]      = Vector4(0.0, 0.0, 0.0, 1.0),
+                [Keys["Camera"]["ClearColor"]]      = Vector4(-1.0, -1.0, -1.0, 1.0),
                 [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
                 [Keys["Camera"]["InclusionList"]]   = { "NoLight" },
                 [Keys["Camera"]["PixelShader"]]     = PSDeferredDirectionalLight,
@@ -91,7 +91,7 @@ Light = class(function(self, LightInfo)
         userData["CameraEye"] = regularCam.Eye;
         
         self.CamLightCalculator = Camera({
-                   [Keys["Camera"]["ClearColor"]]      = Vector4(1.0, 1.0, 1.0, 1.0),
+                   [Keys["Camera"]["ClearColor"]]      = Vector4(0.0, 0.0, 0.0, 1.0),
                    [Keys["Camera"]["InclusionState"]]  = InclusionType["Include"],
                    [Keys["Camera"]["InclusionList"]]   = { GUIDID },                
                    [Keys["Camera"]["PixelShader"]]     = LightInfo:GetShader(),
