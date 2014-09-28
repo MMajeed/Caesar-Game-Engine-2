@@ -42,7 +42,7 @@ void GeometryShader::Init()
 	}
 }
 
-void GeometryShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void GeometryShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 
@@ -50,7 +50,7 @@ void GeometryShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::sha
 
 	if(this->pConstantBuffer)
 	{
-		this->pCBSetup->Run(camera, object);
+		this->pCBSetup->Run(camera, drawSettings, object);
 
 		ID3D11Buffer* tempCB = this->pConstantBuffer;
 
@@ -63,7 +63,7 @@ void GeometryShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::sha
 		graphicD3D.pImmediateContext->GSSetConstantBuffers(0, 0, nullptr);
 	}
 
-	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, object);
+	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, drawSettings, object);
 	for(const TextureInfo& ti : textures)
 	{
 		if(ti.Texture)

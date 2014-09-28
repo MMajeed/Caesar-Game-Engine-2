@@ -16,16 +16,20 @@ namespace Keys
 		const static std::string FOVANGLE		    = "FovAngle";
 		const static std::string NEARZ			    = "NearZ";
 		const static std::string FARZ               = "FarZ";
-		const static std::string CLEARSCREEN        = "ClearScreen";
-		const static std::string CLEARCOLOR         = "ClearColor";
-		const static std::string TEXTURE		    = "Texture";
-		const static std::string USERDATA			= "UserData";
-		const static std::string INCLUSIONSTATE     = "InclusionState";
-		const static std::string INCLUSIONLIST		= "InclusionList";
-		const static std::string VERTEXSHADER		= "VertexShader";
-		const static std::string VERTEXSHADERSTATE	= "VertexShaderState";
-		const static std::string PIXELSHADER		= "PixelShader";
-		const static std::string PIXELSHADERSTATE	= "PixelShaderState";
+	};
+
+	namespace DrawSettings
+	{
+		const static std::string CLEARSCREEN       = "ClearScreen";
+		const static std::string CLEARCOLOR        = "ClearColor";
+		const static std::string TEXTURE           = "Texture";
+		const static std::string USERDATA          = "UserData";
+		const static std::string INCLUSIONSTATE    = "InclusionState";
+		const static std::string INCLUSIONLIST     = "InclusionList";
+		const static std::string VERTEXSHADER      = "VertexShader";
+		const static std::string VERTEXSHADERSTATE = "VertexShaderState";
+		const static std::string PIXELSHADER       = "PixelShader";
+		const static std::string PIXELSHADERSTATE  = "PixelShaderState";
 	};
 	
 	namespace BasicTexture
@@ -61,6 +65,7 @@ namespace Keys
 		const static std::string WIDTH             = "Width";
 		const static std::string HEIGHT            = "Height";
 		const static std::string CAMERAID          = "CameraID";
+		const static std::string DRAWSETTINGSID    = "DrawSettingsID";
 		const static std::string EYE               = "Eye";
 		const static std::string NUMOFTARGETS	   = "NumOfTargets";
 		const static std::string PRIORITY		   = "Priority";

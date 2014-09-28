@@ -6,6 +6,7 @@
 #include <string>
 #include "ObjectEntity.h"
 #include "CameraEntity.h"
+#include "DrawSettingsEntity.h"
 
 
 namespace ObjectEntities
@@ -24,5 +25,12 @@ namespace CameraEntities
 	CommonDLL_API void Remove(const std::string& ID);
 }
 
+namespace DrawSettingsEntities
+{
+	CommonDLL_API std::unordered_map<std::string, std::weak_ptr<DrawSettingsEntity>> GetAll();
+	CommonDLL_API void Add(std::shared_ptr<DrawSettingsEntity> objEntity);
+	CommonDLL_API bool Find(const std::string& ID, std::weak_ptr<DrawSettingsEntity>& returnObj);
+	CommonDLL_API void Remove(const std::string& ID);
+}
 
 #endif //__EntityList__

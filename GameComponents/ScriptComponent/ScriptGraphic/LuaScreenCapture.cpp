@@ -17,6 +17,7 @@ namespace LuaScreenCapture
 		unsigned int height = 1028;
 		unsigned int priority = 1000;
 		std::string cameraID;
+		std::string drawSettingsID;
 		unsigned int numOfTagrets = 1;
 
 		if(luabind::type(table) == LUA_TTABLE)
@@ -29,18 +30,23 @@ namespace LuaScreenCapture
 
 					 if(key == Keys::ScreenShot::WIDTH)			{ width = this->GetWidth(*it); }
 				else if(key == Keys::ScreenShot::HEIGHT)		{ height = this->GetHeight(*it); }
-				else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID = this->GetCameraID(*it); }
+				else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID = this->GetDrawSettingsID(*it); }
+				else if(key == Keys::ScreenShot::DRAWSETTINGSID){ drawSettingsID = this->GetCameraID(*it); }
 				else if(key == Keys::ScreenShot::NUMOFTARGETS)	{ numOfTagrets = this->GetNumOfTargets(*it); }
 				else if(key == Keys::ScreenShot::PRIORITY)		{ priority = this->GetPriority(*it); }
 			}
 		}
 
-		BasicScreenCaptureConfig::Create(width, height, priority, cameraID, numOfTagrets, this->ID, this->TextureID);
+		BasicScreenCaptureConfig::Create(width, height, priority, cameraID, drawSettingsID, numOfTagrets, this->ID, this->TextureID);
 	}
 
 	void BasicScreenCapture::SetCameraID(GenericLuaObject cameraID)
 	{
 		BasicScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
+	}
+	void BasicScreenCapture::SetDrawSettingsID(GenericLuaObject dsID)
+	{
+		BasicScreenCaptureConfig::SetDrawSettingsID(this->ID, dsID.GetID());
 	}
 	void BasicScreenCapture::SetPriority(const luabind::object& v)
 	{
@@ -86,6 +92,7 @@ namespace LuaScreenCapture
 			luabind::class_<LuaScreenCapture::BasicScreenCapture>("BasicScreenCapture")
 				.def(luabind::constructor<luabind::object const&>())
 				.def("SetCamera", &LuaScreenCapture::BasicScreenCapture::SetCameraID)
+				.def("SetDrawSettingsID", &LuaScreenCapture::BasicScreenCapture::SetDrawSettingsID)
 				.def("SetPriority", &LuaScreenCapture::BasicScreenCapture::SetPriority)
 				.def("GetTexture", &LuaScreenCapture::BasicScreenCapture::GetTexture)
 				.def("Release", &LuaScreenCapture::BasicScreenCapture::Release)
@@ -132,6 +139,17 @@ namespace LuaScreenCapture
 	{
 		std::string returnValue;
 
+		if(boost::optional<GenericLuaObject*> value = luabind::object_cast_nothrow<GenericLuaObject*>(v))
+			returnValue = (*value)->GetID();
+		else
+			Logger::LogError("Wrong paramter type");
+
+		return returnValue;
+	}
+	std::string BasicScreenCapture::GetDrawSettingsID(const luabind::object& v) const
+	{
+		std::string returnValue;
+
 		if(boost::optional<GenericLuaObject> value = luabind::object_cast_nothrow<GenericLuaObject>(v))
 			returnValue = value->GetID();
 		else
@@ -148,6 +166,7 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 	unsigned int height = 1028;
 	unsigned int priority = 1000;
 	std::string cameraID;
+	std::string drawSettingsID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -157,19 +176,24 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
-			else if(key == Keys::ScreenShot::PRIORITY)	{ priority = luabind::object_cast<int>(*it); }
+				 if(key == Keys::ScreenShot::WIDTH)			{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)		{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			else if(key == Keys::ScreenShot::DRAWSETTINGSID){ drawSettingsID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			else if(key == Keys::ScreenShot::PRIORITY)		{ priority = luabind::object_cast<int>(*it); }
 		}
 	}
 	
-	DepthScreenCaptureConfig::Create(width, height, priority, cameraID, this->ID, this->TextureID);
+	DepthScreenCaptureConfig::Create(width, height, priority, cameraID, drawSettingsID, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::DepthScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
 	DepthScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
+}
+void LuaScreenCapture::DepthScreenCapture::SetDrawSettingsID(GenericLuaObject dsID)
+{
+	DepthScreenCaptureConfig::SetDrawSettingsID(this->ID, dsID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 {
@@ -190,6 +214,7 @@ void LuaScreenCapture::DepthScreenCapture::Register(lua_State *lua)
 		luabind::class_<LuaScreenCapture::DepthScreenCapture>("DepthScreenCapture")
 			.def(luabind::constructor<luabind::object const&>())
 			.def("SetCamera", &LuaScreenCapture::DepthScreenCapture::SetCameraID)
+			.def("SetDrawSettingsID", &LuaScreenCapture::BasicScreenCapture::SetDrawSettingsID)
 			.def("GetTexture", &LuaScreenCapture::DepthScreenCapture::GetTexture)
 			.def("Release", &LuaScreenCapture::DepthScreenCapture::Release)
 	];
@@ -202,6 +227,7 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 	unsigned int height = 1028;
 	unsigned int priority = 1000;
 	std::string cameraID;
+	std::string drawSettingsID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -211,19 +237,24 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)	{ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
-			else if(key == Keys::ScreenShot::PRIORITY)	{ priority = luabind::object_cast<int>(*it); }
+				 if(key == Keys::ScreenShot::WIDTH)			{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)		{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			else if(key == Keys::ScreenShot::DRAWSETTINGSID){ drawSettingsID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			else if(key == Keys::ScreenShot::PRIORITY)		{ priority = luabind::object_cast<int>(*it); }
 		}
 	}
 
-	CubeScreenCaptureConfig::Create(width, height, priority, cameraID, this->ID, this->TextureID);
+	CubeScreenCaptureConfig::Create(width, height, priority, cameraID, drawSettingsID, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::CubeScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
 	CubeScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
+}
+void LuaScreenCapture::CubeScreenCapture::SetDrawSettingsID(GenericLuaObject dsID)
+{
+	CubeScreenCaptureConfig::SetDrawSettingsID(this->ID, dsID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 {
@@ -244,6 +275,7 @@ void LuaScreenCapture::CubeScreenCapture::Register(lua_State *lua)
 		luabind::class_<LuaScreenCapture::CubeScreenCapture>("CubeScreenCapture")
 			.def(luabind::constructor<luabind::object const&>())
 			.def("SetCamera", &LuaScreenCapture::CubeScreenCapture::SetCameraID)
+			.def("SetDrawSettingsID", &LuaScreenCapture::BasicScreenCapture::SetDrawSettingsID)
 			.def("GetTexture", &LuaScreenCapture::CubeScreenCapture::GetTexture)
 			.def("Release", &LuaScreenCapture::CubeScreenCapture::Release)
 	];

@@ -20,18 +20,21 @@ namespace LuaKeysID
 			cameraTable[Keys::Camera::FOVANGLE]          = Keys::Camera::FOVANGLE;
 			cameraTable[Keys::Camera::NEARZ]             = Keys::Camera::NEARZ;
 			cameraTable[Keys::Camera::FARZ]              = Keys::Camera::FARZ;
-			cameraTable[Keys::Camera::CLEARSCREEN]		 = Keys::Camera::CLEARSCREEN;
-			cameraTable[Keys::Camera::CLEARCOLOR]        = Keys::Camera::CLEARCOLOR;
-			cameraTable[Keys::Camera::TEXTURE]			 = Keys::Camera::TEXTURE;
-			cameraTable[Keys::Camera::USERDATA]			 = Keys::Camera::USERDATA;
-			cameraTable[Keys::Camera::INCLUSIONSTATE]    = Keys::Camera::INCLUSIONSTATE;
-			cameraTable[Keys::Camera::INCLUSIONLIST]     = Keys::Camera::INCLUSIONLIST;
-			cameraTable[Keys::Camera::VERTEXSHADER]      = Keys::Camera::VERTEXSHADER;
-			cameraTable[Keys::Camera::VERTEXSHADERSTATE] = Keys::Camera::VERTEXSHADERSTATE;
-			cameraTable[Keys::Camera::PIXELSHADER]       = Keys::Camera::PIXELSHADER;
-			cameraTable[Keys::Camera::PIXELSHADERSTATE]  = Keys::Camera::PIXELSHADERSTATE;
 		luaKeyTable["Camera"] = cameraTable;
-		
+
+		luabind::object DrawSettingsTable = luabind::newtable(lua);
+			DrawSettingsTable[Keys::DrawSettings::CLEARSCREEN]		 = Keys::DrawSettings::CLEARSCREEN;
+			DrawSettingsTable[Keys::DrawSettings::CLEARCOLOR]        = Keys::DrawSettings::CLEARCOLOR;
+			DrawSettingsTable[Keys::DrawSettings::TEXTURE]			 = Keys::DrawSettings::TEXTURE;
+			DrawSettingsTable[Keys::DrawSettings::USERDATA]			 = Keys::DrawSettings::USERDATA;
+			DrawSettingsTable[Keys::DrawSettings::INCLUSIONSTATE]    = Keys::DrawSettings::INCLUSIONSTATE;
+			DrawSettingsTable[Keys::DrawSettings::INCLUSIONLIST]     = Keys::DrawSettings::INCLUSIONLIST;
+			DrawSettingsTable[Keys::DrawSettings::VERTEXSHADER]      = Keys::DrawSettings::VERTEXSHADER;
+			DrawSettingsTable[Keys::DrawSettings::VERTEXSHADERSTATE] = Keys::DrawSettings::VERTEXSHADERSTATE;
+			DrawSettingsTable[Keys::DrawSettings::PIXELSHADER]       = Keys::DrawSettings::PIXELSHADER;
+			DrawSettingsTable[Keys::DrawSettings::PIXELSHADERSTATE]  = Keys::DrawSettings::PIXELSHADERSTATE;
+		luaKeyTable["DrawSettings"] = DrawSettingsTable;
+
 		luabind::object BasicTextureTable = luabind::newtable(lua);
 			BasicTextureTable[Keys::BasicTexture::TEXTUREFILE] = Keys::BasicTexture::TEXTUREFILE;
 			BasicTextureTable[Keys::BasicTexture::TEXTUREOBJ]  = Keys::BasicTexture::TEXTUREOBJ;
@@ -58,12 +61,13 @@ namespace LuaKeysID
 		luaKeyTable["ObjectInfo"] = ObjectInfoTable;
 
 		luabind::object BasicScreenShot = luabind::newtable(lua);
-			BasicScreenShot[Keys::ScreenShot::ScreenShotOBJ] = Keys::ScreenShot::ScreenShotOBJ;
-			BasicScreenShot[Keys::ScreenShot::WIDTH]         = Keys::ScreenShot::WIDTH;
-			BasicScreenShot[Keys::ScreenShot::HEIGHT]        = Keys::ScreenShot::HEIGHT;
-			BasicScreenShot[Keys::ScreenShot::CAMERAID]		 = Keys::ScreenShot::CAMERAID;
-			BasicScreenShot[Keys::ScreenShot::NUMOFTARGETS]	 = Keys::ScreenShot::NUMOFTARGETS;
-			BasicScreenShot[Keys::ScreenShot::PRIORITY]	     = Keys::ScreenShot::PRIORITY;
+			BasicScreenShot[Keys::ScreenShot::ScreenShotOBJ]  = Keys::ScreenShot::ScreenShotOBJ;
+			BasicScreenShot[Keys::ScreenShot::WIDTH]          = Keys::ScreenShot::WIDTH;
+			BasicScreenShot[Keys::ScreenShot::HEIGHT]         = Keys::ScreenShot::HEIGHT;
+			BasicScreenShot[Keys::ScreenShot::CAMERAID]		  = Keys::ScreenShot::CAMERAID;
+			BasicScreenShot[Keys::ScreenShot::DRAWSETTINGSID] = Keys::ScreenShot::DRAWSETTINGSID;
+			BasicScreenShot[Keys::ScreenShot::NUMOFTARGETS]	  = Keys::ScreenShot::NUMOFTARGETS;
+			BasicScreenShot[Keys::ScreenShot::PRIORITY]	      = Keys::ScreenShot::PRIORITY;
 		luaKeyTable["ScreenShot"] = BasicScreenShot;
 
 		luabind::object AnimationController = luabind::newtable(lua);

@@ -41,7 +41,7 @@ void PixelShader::Init()
 	}
 }
 
-void PixelShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void PixelShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 
@@ -49,7 +49,7 @@ void PixelShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared
 
 	if(this->pConstantBuffer)
 	{
-		this->pCBSetup->Run(camera, object);
+		this->pCBSetup->Run(camera, drawSettings, object);
 
 		ID3D11Buffer* tempCB = this->pConstantBuffer;
 
@@ -62,7 +62,7 @@ void PixelShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared
 		graphicD3D.pImmediateContext->PSSetConstantBuffers(0, 0, nullptr);
 	}
 
-	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, object);
+	std::vector<TextureInfo> textures = this->pTexture->Setup(camera, drawSettings, object);
 	for(const TextureInfo& ti : textures)
 	{
 		if(ti.Texture)

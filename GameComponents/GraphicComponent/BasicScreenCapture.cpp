@@ -9,7 +9,7 @@ BasicScreenCapture::BasicScreenCapture()
 }
 void BasicScreenCapture::Init()
 {
-	this->ScreenShot = BasicScreenShot::Spawn(this->width, this->height, this->TextureID.size(), this->cameraID);
+	this->ScreenShot = BasicScreenShot::Spawn(this->width, this->height, this->TextureID.size(), this->cameraID, this->drawSettingsID);
 	for(unsigned int i = 0; i < this->TextureID.size(); ++i)
 	{
 		auto texture = ResourceManager::TextureList.Find(this->TextureID[i]);
@@ -22,6 +22,7 @@ void BasicScreenCapture::Init()
 void BasicScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->ScreenShot->cameraID = this->cameraID;
+	this->ScreenShot->drawSettingsID = this->drawSettingsID;
 	this->ScreenShot->Snap(list);
 }
 std::shared_ptr<ScreenCapture> BasicScreenCapture::clone() const
@@ -36,7 +37,8 @@ std::shared_ptr<BasicScreenCapture> BasicScreenCapture::Spawn(const std::vector<
 															  unsigned int width,
 															  unsigned int height,
 															  unsigned int Priority,
-															  const std::string& cameraID)
+															  const std::string& cameraID,
+															  const std::string& drawSettingsID)
 {
 	std::shared_ptr<BasicScreenCapture> newObject(new BasicScreenCapture());
 
@@ -44,6 +46,7 @@ std::shared_ptr<BasicScreenCapture> BasicScreenCapture::Spawn(const std::vector<
 	newObject->width = width;
 	newObject->height = height;
 	newObject->cameraID = cameraID;
+	newObject->drawSettingsID = drawSettingsID;
 	newObject->Priority = Priority;
 
 	newObject->Init();

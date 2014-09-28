@@ -1,7 +1,16 @@
 local ScreenWidth = GetClientSize()["Width"];
 local ScreenHeight = GetClientSize()["Height"];
 
-regularCam = Camera({
+MainDrawSettings = DrawSettings({
+                    [Keys["DrawSettings"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
+                    [Keys["DrawSettings"]["ClearScreen"]]     = true,
+                    [Keys["DrawSettings"]["InclusionState"]]  = InclusionType["Exclude"],
+                    [Keys["DrawSettings"]["InclusionList"]]   = { "NoMainDraw" },
+                    [Keys["DrawSettings"]["UserData"]]        = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
+                   }); 
+SetMainDrawSettings(MainDrawSettings);
+
+MainCamera = Camera({
                     [Keys["Camera"]["Eye"]]             = Vector4(0, 5.0, -60.0, 0.0),
                     [Keys["Camera"]["TargetMagnitude"]] = Vector4(0.0, 0.0, 1.0, 0.0),
                     [Keys["Camera"]["Up"]]              = Vector4(0.0, 1.0, 0.0, 0.0),
@@ -11,13 +20,8 @@ regularCam = Camera({
                     [Keys["Camera"]["FovAngle"]]        = 0.785398163,
                     [Keys["Camera"]["NearZ"]]           = 0.01,              
                     [Keys["Camera"]["FarZ"]]            = 1100.0,
-                    [Keys["Camera"]["ClearColor"]]      = Vector4(0.5, 0.5, 0.5, 1.0),
-                    [Keys["Camera"]["ClearScreen"]]     = true,
-                    [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
-                    [Keys["Camera"]["InclusionList"]]   = { "NoMainDraw" },
-                    [Keys["Camera"]["UserData"]]        = { ["Color"] = Vector4(1.0, 1.0, 1.0) },
                    }); 
-SetMainCamera(regularCam);
+SetMainCamera(MainCamera);
 
 local CamLeftButton   = false;    local CamRightButton  = false;
 local CamUpButton     = false;    local CamDownButton   = false;
@@ -31,26 +35,26 @@ end
 
 function UpdateCamera(time, ID)
     if(CamLeftButton == true) then
-        regularCam.Yaw = regularCam.Yaw + (0.002 * time);
+        MainCamera.Yaw = MainCamera.Yaw + (0.002 * time);
     end
     if(CamRightButton == true) then
-        regularCam.Yaw = regularCam.Yaw - (0.002 * time);
+        MainCamera.Yaw = MainCamera.Yaw - (0.002 * time);
     end
     
     if(CamPgUpButton == true) then
-        regularCam.Pitch = regularCam.Pitch - (0.002 * time);
+        MainCamera.Pitch = MainCamera.Pitch - (0.002 * time);
     end
     if(CamPgDownButton == true) then
-        regularCam.Pitch = regularCam.Pitch + (0.002 * time);
+        MainCamera.Pitch = MainCamera.Pitch + (0.002 * time);
     end
     
     if(CamUpButton == true) then
         local moveDistance = 0.05 * time;
-        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
+        MainCamera.Eye = MoveObject(MainCamera.Eye, MainCamera.TargetMagnitude, MainCamera.Pitch,  MainCamera.Yaw,  MainCamera.Roll, moveDistance)
     end
     if(CamDownButton == true) then
         local moveDistance = -0.05 * time;
-        regularCam.Eye = MoveObject(regularCam.Eye, regularCam.TargetMagnitude, regularCam.Pitch,  regularCam.Yaw,  regularCam.Roll, moveDistance)
+        MainCamera.Eye = MoveObject(MainCamera.Eye, MainCamera.TargetMagnitude, MainCamera.Pitch,  MainCamera.Yaw,  MainCamera.Roll, moveDistance)
     end
     for key,value in pairs(CallOnUpdate) do value(time, ID) end
 end

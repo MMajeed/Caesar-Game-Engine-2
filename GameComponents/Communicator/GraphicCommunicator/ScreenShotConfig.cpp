@@ -13,7 +13,8 @@ namespace ScreenShotConfig
 	std::vector<std::string> Basic(unsigned int width,
 								   unsigned int height,
 								   unsigned int numberOfTargets,
-								   const std::string& cameraID)
+								   const std::string& cameraID,
+								   const std::string& drawSettingsID)
 	{
 		class TakeBasicScreenShot : public Message
 		{
@@ -21,9 +22,11 @@ namespace ScreenShotConfig
 			TakeBasicScreenShot(unsigned int width,
 								unsigned int height,
 								unsigned int numberOfTargets,
-								const std::string& cameraID)
+								const std::string& cameraID,
+								const std::string& drawSettingsID)
 			{
 				this->cameraID = cameraID;
+				this->drawSettingsID = drawSettingsID;
 				this->width = width;
 				this->height = height;
 				this->numberOfTargets = numberOfTargets;
@@ -38,7 +41,7 @@ namespace ScreenShotConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<BasicScreenShot> newBasicScreenShot =
-					BasicScreenShot::Spawn(this->width, this->height, this->numberOfTargets, this->cameraID);
+					BasicScreenShot::Spawn(this->width, this->height, this->numberOfTargets, this->cameraID, this->drawSettingsID);
 				newBasicScreenShot->Snap();
 
 				for(unsigned int i = 0; i < this->numberOfTargets; ++i)
@@ -56,25 +59,29 @@ namespace ScreenShotConfig
 			unsigned int height;
 			unsigned int numberOfTargets;
 			std::string cameraID;
+			std::string drawSettingsID;
 		};
 
-		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, numberOfTargets, cameraID));
+		std::shared_ptr<TakeBasicScreenShot> msg(new TakeBasicScreenShot(width, height, numberOfTargets, cameraID, drawSettingsID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->newTextureID;
 	}
 
 	std::string Depth(unsigned int width,
 					  unsigned int height,
-					  const std::string& cameraID)
+					  const std::string& cameraID,
+					  const std::string& drawSettingsID)
 	{
 		class TakeDepthScreenShot : public Message
 		{
 		public:
 			TakeDepthScreenShot(unsigned int width,
 								unsigned int height,
-								const std::string& cameraID)
+								const std::string& cameraID,
+								const std::string& drawSettingsID)
 			{
 				this->cameraID = cameraID;
+				this->drawSettingsID = drawSettingsID;
 				this->newTextureID = CHL::GenerateGUID();
 				this->width = width;
 				this->height = height;
@@ -85,7 +92,7 @@ namespace ScreenShotConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<DepthScreenShot> newBasicScreenShot =
-					DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
+					DepthScreenShot::Spawn(this->width, this->height, this->cameraID, this->drawSettingsID);
 				newBasicScreenShot->Snap();
 
 				auto texture = newBasicScreenShot->pScreenTexture[0];
@@ -100,25 +107,28 @@ namespace ScreenShotConfig
 			unsigned int height;
 			std::string newTextureID;
 			std::string cameraID;
+			std::string drawSettingsID;
 		};
 
-		std::shared_ptr<TakeDepthScreenShot> msg(new TakeDepthScreenShot(width, height, cameraID));
+		std::shared_ptr<TakeDepthScreenShot> msg(new TakeDepthScreenShot(width, height, cameraID, drawSettingsID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->newTextureID;
 	}
 
 	std::string Cube(unsigned int width,
 					 unsigned int height,
-					 const std::string& cameraID)
+					 const std::string& cameraID,
+					 const std::string& drawSettingsID)
 	{
 		class TakeCubeScreenShot : public Message
 		{
 		public:
-			TakeCubeScreenShot(unsigned int width, unsigned int height, const std::string& cameraID)
+			TakeCubeScreenShot(unsigned int width, unsigned int height, const std::string& cameraID, const std::string& drawSettingsID)
 			{
 				this->width = width;
 				this->height = height;
 				this->cameraID = cameraID;
+				this->drawSettingsID = drawSettingsID;
 			}
 
 			Message::Status Work()
@@ -126,7 +136,7 @@ namespace ScreenShotConfig
 				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
 
 				std::shared_ptr<CubeScreenShot> newBasicScreenShot =
-					CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
+					CubeScreenShot::Spawn(this->width, this->height, this->cameraID, this->drawSettingsID);
 				newBasicScreenShot->Snap();
 
 				auto texture = newBasicScreenShot->pScreenTexture[0];
@@ -141,9 +151,10 @@ namespace ScreenShotConfig
 			unsigned int height;
 			std::string newTextureID;
 			std::string cameraID;
+			std::string drawSettingsID;
 		};
 
-		std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, cameraID));
+		std::shared_ptr<TakeCubeScreenShot> msg(new TakeCubeScreenShot(width, height, cameraID, drawSettingsID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		return msg->newTextureID;
 	}

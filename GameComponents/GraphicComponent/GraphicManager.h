@@ -74,6 +74,7 @@ public:
 	} window;
 	
 	std::string DefaultCamera;
+	std::string DefaultDrawSettings;
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 	static void MesageBoxError(std::string s);

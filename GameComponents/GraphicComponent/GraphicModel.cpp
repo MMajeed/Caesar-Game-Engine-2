@@ -61,7 +61,7 @@ void GraphicModel::InitIndexBuffer()
 	this->pIndexBuffer = buffer;
 }
 
-void GraphicModel::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void GraphicModel::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
 
@@ -73,7 +73,7 @@ void GraphicModel::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::share
 	pImmediateContext->IASetPrimitiveTopology(this->Topology);
 
 	// Set the input layout
-	COMSharedPtr<ID3D11InputLayout> inputLayout = this->GetVertexLayout(camera, object);
+	COMSharedPtr<ID3D11InputLayout> inputLayout = this->GetVertexLayout(camera, drawSettings, object);
 	pImmediateContext->IASetInputLayout(inputLayout);
 }
 
@@ -180,7 +180,7 @@ std::shared_ptr<GraphicModel> GraphicModel::Spawn(std::shared_ptr<CHL::Model> mo
 	return newObject;
 }
 
-COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	COMSharedPtr<ID3D11InputLayout> returnValue;
 

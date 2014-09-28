@@ -8,6 +8,7 @@
 #include <D3D11.h>
 #include <Model.h>
 #include "GraphicCameraEntity.h"
+#include "GraphicDrawSettingsEntity.h"
 #include "GraphicObjectEntity.h"
 #include "VertexLayout.h"
 
@@ -18,7 +19,7 @@ protected:
 	virtual void InitVertexBuffer();
 	virtual void InitIndexBuffer();
 public:
-	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object);
 
 	std::vector<VertexLayout> GetVertexLayout();
 	unsigned int GetNumberFaces();
@@ -40,7 +41,7 @@ protected:
 
 	std::unordered_map<std::string, COMSharedPtr<ID3D11InputLayout>> InputLayoutMap;
 
-	COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	COMSharedPtr<ID3D11InputLayout> GraphicModel::GetVertexLayout(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object);
 };
 
 

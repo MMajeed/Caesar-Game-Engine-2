@@ -11,6 +11,7 @@ namespace DepthScreenCaptureConfig
 				unsigned int height,
 				unsigned int priority,
 				const std::string& cameraID,
+				const std::string& drawSettingsID,
 				std::string& ID,
 				std::string& textureID)
 	{
@@ -20,12 +21,14 @@ namespace DepthScreenCaptureConfig
 			AddDepthScreenCapture(unsigned int width, 
 								  unsigned int height,
 								  unsigned int priority,
-								  const std::string& cameraID)
+								  const std::string& cameraID,
+								  const std::string& drawSettingsID)
 			{
 				this->width = width;
 				this->height = height;
 				this->priority = priority;
 				this->cameraID = cameraID;
+				this->drawSettingsID = drawSettingsID;
 				this->newTextureID = CHL::GenerateGUID();
 				this->ID = CHL::GenerateGUID();
 			}
@@ -39,7 +42,7 @@ namespace DepthScreenCaptureConfig
 				ResourceManager::TextureList.Insert(this->newTextureID, newTexture);
 
 				std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
-					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->priority, this->cameraID);
+					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->priority, this->cameraID, this->drawSettingsID);
 				ResourceManager::ScreenCaptureList.Insert(this->ID, newDepthScreenShot);
 
 				return Message::Status::Complete;
@@ -47,6 +50,7 @@ namespace DepthScreenCaptureConfig
 
 
 			std::string cameraID;
+			std::string drawSettingsID;
 			std::string newTextureID;
 			std::string ID;
 			unsigned int width;
@@ -54,7 +58,7 @@ namespace DepthScreenCaptureConfig
 			unsigned int priority;
 		};
 		std::shared_ptr<AddDepthScreenCapture> msg
-			(new AddDepthScreenCapture(width, height, priority, cameraID));
+			(new AddDepthScreenCapture(width, height, priority, cameraID, drawSettingsID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		ID = msg->ID;
 		textureID = msg->newTextureID;
@@ -94,7 +98,41 @@ namespace DepthScreenCaptureConfig
 			(new ChangeCameraMatrix(id, cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
-	
+	void SetDrawSettingsID(const std::string& id, const std::string& dsID)
+	{
+		class ChangeDrawSettingsMessage : public Message
+		{
+		public:
+			ChangeDrawSettingsMessage(const std::string& id, const std::string& DrawSettingsID)
+			{
+				this->ID = id;
+				this->DrawSettingsID = DrawSettingsID;
+			}
+
+			Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
+				if(screenCapture)
+				{
+					std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture);
+					if(cast)
+					{
+						cast->drawSettingsID = this->DrawSettingsID;
+					}
+				}
+
+				return Message::Status::Complete;
+			}
+			std::string ID;
+			std::string DrawSettingsID;
+		};
+
+		std::shared_ptr<ChangeDrawSettingsMessage> msg
+			(new ChangeDrawSettingsMessage(id, dsID));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
 	void Release(std::string ID)
 	{
 		class ReleaseCapture : public Message

@@ -29,11 +29,13 @@
   <ItemGroup>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaCamera.h" />
+    <ClInclude Include="LuaDrawSettings.h" />
     <ClInclude Include="LuaObject.h" />
     <ClInclude Include="ScriptEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaCamera.cpp" />
+    <ClCompile Include="LuaDrawSettings.cpp" />
     <ClCompile Include="LuaObject.cpp" />
     <ClCompile Include="ScriptEntity.cpp" />
   </ItemGroup>

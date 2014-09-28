@@ -68,6 +68,7 @@ void DepthScreenShot::Init()
 void DepthScreenShot::Snap()
 {
 	Scene::UpdateCameraEntities();
+	Scene::UpdateDrawSettingsEntities();
 	Scene::UpdateObjectEntities();
 
 	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
@@ -79,13 +80,14 @@ void DepthScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
+	auto drawSettings = Scene::GetDrawSettings(this->drawSettingsID);
 
-	this->SetupSnapShot(camera, list);
-	this->TakeScreenSnapShot(camera, list);
-	this->CleanupSnapShot(camera, list);
+	this->SetupSnapShot(camera, drawSettings, list);
+	this->TakeScreenSnapShot(camera, drawSettings, list);
+	this->CleanupSnapShot(camera, drawSettings, list);
 }
 
-void DepthScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void DepthScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto d3dStuff = graphic.D3DStuff;
@@ -98,13 +100,13 @@ void DepthScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera,
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
-void DepthScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void DepthScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	Scene::DrawObjects(Camera, list);
+	Scene::DrawObjects(Camera, drawSettings, list);
 }
-void DepthScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void DepthScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
@@ -112,10 +114,14 @@ void DepthScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camer
 	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture[0]);
 }
 
-std::shared_ptr<DepthScreenShot> DepthScreenShot::Spawn(unsigned int width, unsigned int height, const std::string& cameraID)
+std::shared_ptr<DepthScreenShot> DepthScreenShot::Spawn(unsigned int width,
+														unsigned int height,
+														const std::string& cameraID,
+														const std::string& drawSettingsID)
 {
 	std::shared_ptr<DepthScreenShot> newObject(new DepthScreenShot());
 	newObject->cameraID = cameraID;
+	newObject->drawSettingsID = drawSettingsID;
 	newObject->width = width;
 	newObject->height = height;
 

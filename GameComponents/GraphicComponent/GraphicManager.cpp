@@ -45,6 +45,7 @@ void GraphicManager::Shutdown()
 void GraphicManager::ProcessDrawing()
 {
 	Scene::UpdateObjectEntities();
+	Scene::UpdateDrawSettingsEntities();
 	Scene::UpdateCameraEntities();
 
 	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
@@ -52,9 +53,10 @@ void GraphicManager::ProcessDrawing()
 	this->RunAllCapture(objects);
 
 	auto camera = Scene::GetCamera(this->DefaultCamera, (unsigned int)this->D3DStuff.vp.Width, (unsigned int)this->D3DStuff.vp.Height);
-
-	Scene::ClearScreen(camera);
-	Scene::DrawObjects(camera, objects);
+	auto drawSettings = Scene::GetDrawSettings(this->DefaultDrawSettings);
+	
+	Scene::ClearScreen(camera, drawSettings);
+	Scene::DrawObjects(camera, drawSettings, objects);
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)
 	this->D3DStuff.pSwapChain->Present(this->D3DStuff.VSync, 0);

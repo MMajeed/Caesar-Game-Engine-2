@@ -243,6 +243,7 @@
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="ObjectEntity.cpp" />
+    <ClCompile Include="DrawSettingsEntity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraEntity.h" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Message.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ObjectEntity.h" />
+    <ClInclude Include="DrawSettingsEntity.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

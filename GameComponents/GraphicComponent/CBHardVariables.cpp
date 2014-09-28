@@ -23,7 +23,7 @@ CBHardVariables::CBHardVariables(std::vector<char>& bytes, const unsigned int St
 CBufferWorld::CBufferWorld(std::vector<char>& bytes, const unsigned int StartOffset) : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferWorld::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferWorld::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -50,7 +50,7 @@ CBufferView::CBufferView(std::vector<char>& bytes, const unsigned int StartOffse
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferView::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferView::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -82,7 +82,7 @@ CBufferView2D::CBufferView2D(std::vector<char>& bytes, const unsigned int StartO
 	: CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferView2D::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferView2D::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -114,7 +114,7 @@ CBufferPerspective::CBufferPerspective(std::vector<char>& bytes, const unsigned 
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferPerspective::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferPerspective::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -146,7 +146,7 @@ CBufferOrthogonal::CBufferOrthogonal(std::vector<char>& bytes, const unsigned in
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferOrthogonal::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferOrthogonal::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -178,7 +178,7 @@ CBufferWVP::CBufferWVP(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferWVP::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferWVP::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -213,7 +213,7 @@ CBufferWVO::CBufferWVO(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMMATRIX))
 {
 }
-void CBufferWVO::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferWVO::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -248,7 +248,7 @@ CBufferEye::CBufferEye(std::vector<char>& bytes, const unsigned int StartOffset)
 : CBHardVariables(bytes, StartOffset, sizeof(XMFLOAT4))
 {
 }
-void CBufferEye::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferEye::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -276,7 +276,7 @@ CBufferScreenWidth::CBufferScreenWidth(std::vector<char>& bytes, const unsigned 
 	: CBHardVariables(bytes, StartOffset, sizeof(float))
 {
 }
-void CBufferScreenWidth::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferScreenWidth::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;
@@ -304,7 +304,7 @@ CBufferScreenHeight::CBufferScreenHeight(std::vector<char>& bytes, const unsigne
 	: CBHardVariables(bytes, StartOffset, sizeof(float))
 {
 }
-void CBufferScreenHeight::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBufferScreenHeight::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	static const unsigned int sizeOfValue = this->sizeOfValue;
 	const unsigned int copyStartingAt = this->StartOffset;

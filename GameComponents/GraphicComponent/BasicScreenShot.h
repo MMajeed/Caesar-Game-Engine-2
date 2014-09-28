@@ -13,11 +13,15 @@ public:
 	void Snap();
 	void Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
-	void SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
-	void TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
-	void CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
+	void CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list);
 
-	static std::shared_ptr<BasicScreenShot> Spawn(unsigned int width, unsigned int height, unsigned int numberOfTargets, const std::string& cameraIDs);
+	static std::shared_ptr<BasicScreenShot> Spawn(unsigned int width, 
+												  unsigned int height, 
+												  unsigned int numberOfTargets, 
+												  const std::string& cameraID,
+												  const std::string& drawSettingsID);
 	std::shared_ptr<ScreenShot> clone() const;
 	
 	std::vector<COMSharedPtr<ID3D11RenderTargetView>>	pColorMapRTV;
@@ -27,6 +31,7 @@ public:
 	unsigned int	height;
 	unsigned int	numberOfTargets;
 	std::string		cameraID;
+	std::string		drawSettingsID;
 };
 
 

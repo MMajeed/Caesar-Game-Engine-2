@@ -11,7 +11,7 @@ CubeScreenCapture::CubeScreenCapture()
 }
 void CubeScreenCapture::Init()
 {
-	this->ScreenShot = CubeScreenShot::Spawn(this->width, this->height, this->cameraID);
+	this->ScreenShot = CubeScreenShot::Spawn(this->width, this->height, this->cameraID, this->drawSettingsID);
 	auto texture = ResourceManager::TextureList.Find(this->TextureID[0]);
 	if(texture)
 	{
@@ -21,6 +21,7 @@ void CubeScreenCapture::Init()
 void CubeScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->ScreenShot->cameraID = this->cameraID;
+	this->ScreenShot->drawSettingsID = this->drawSettingsID;
 	this->ScreenShot->Snap(list);
 
 	
@@ -37,7 +38,8 @@ std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(const std::string& t
 															unsigned int width,
 															unsigned int height,
 															unsigned int Priority,
-															const std::string& cameraID)
+															const std::string& cameraID,
+															const std::string& drawSettingsID)
 {
 	std::shared_ptr<CubeScreenCapture> newObject(new CubeScreenCapture());
 
@@ -45,6 +47,7 @@ std::shared_ptr<CubeScreenCapture> CubeScreenCapture::Spawn(const std::string& t
 	newObject->width = width;
 	newObject->height = height;
 	newObject->cameraID = cameraID;
+	newObject->drawSettingsID = drawSettingsID;
 	newObject->Priority = Priority;
 
 	newObject->Init();

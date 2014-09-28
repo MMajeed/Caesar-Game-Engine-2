@@ -19,14 +19,14 @@ CBWeakVariables::CBWeakVariables(std::vector<char>& bytes,
 		Logger::LogError("Failed at creating dynamic constant buffer as size of the buffer was not large enough for " + this->Name);
 	}
 }
-void CBWeakVariables::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBWeakVariables::Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	std::vector<char> dataToCopy(this->sizeOfValue);
 
 	std::shared_ptr<Object> objectUserData = object->FindUserData(this->Name);
 	if(objectUserData == false)
 	{// If we didn't find it in object, check camera
-		objectUserData = camera->FindUserData(this->Name);
+		objectUserData = drawSettings->FindUserData(this->Name);
 	}
 
 

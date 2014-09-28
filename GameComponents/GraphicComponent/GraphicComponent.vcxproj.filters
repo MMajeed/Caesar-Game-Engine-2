@@ -90,6 +90,9 @@
     <ClInclude Include="Draw.h">
       <Filter>Scene\Draw</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicDrawSettingsEntity.h">
+      <Filter>Scene\GraphicEntity\GraphicDrawSettingsEntity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
@@ -167,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="Draw.cpp">
       <Filter>Scene\Draw</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicDrawSettingsEntity.cpp">
+      <Filter>Scene\GraphicEntity\GraphicDrawSettingsEntity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -271,6 +277,9 @@
     </Filter>
     <Filter Include="Scene\Draw">
       <UniqueIdentifier>{17ac3a2d-712b-4d6e-a28e-34549b745be3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\GraphicEntity\GraphicDrawSettingsEntity">
+      <UniqueIdentifier>{7109547b-ae9d-4050-9ff3-ec589543ef11}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

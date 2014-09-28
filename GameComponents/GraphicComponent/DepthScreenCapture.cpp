@@ -10,11 +10,12 @@ DepthScreenCapture::DepthScreenCapture()
 }
 void DepthScreenCapture::Init()
 {
-	this->ScreenShot = DepthScreenShot::Spawn(this->width, this->height, this->cameraID);
+	this->ScreenShot = DepthScreenShot::Spawn(this->width, this->height, this->cameraID, this->drawSettingsID);
 }
 void DepthScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	this->ScreenShot->cameraID = this->cameraID;
+	this->ScreenShot->drawSettingsID = this->drawSettingsID;
 	this->ScreenShot->Snap(list);
 
 	auto texture = ResourceManager::TextureList.Find(this->TextureID[0]);
@@ -35,7 +36,8 @@ std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(const std::string&
 															  unsigned int width,
 															  unsigned int height,
 															  unsigned int Priority,
-															  std::string CameraID)
+															  const std::string& CameraID,
+															  const std::string& drawSettingsID)
 {
 	std::shared_ptr<DepthScreenCapture> newObject(new DepthScreenCapture());
 
@@ -43,6 +45,7 @@ std::shared_ptr<DepthScreenCapture> DepthScreenCapture::Spawn(const std::string&
 	newObject->width = width;
 	newObject->height = height;
 	newObject->cameraID = CameraID;
+	newObject->drawSettingsID = drawSettingsID;
 	newObject->Priority = Priority;
 
 	newObject->Init();

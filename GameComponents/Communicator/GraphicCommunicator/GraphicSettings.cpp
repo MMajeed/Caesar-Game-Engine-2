@@ -31,6 +31,30 @@ namespace GraphicSettings
 		std::shared_ptr<SetMainCameraMessage> msg(new SetMainCameraMessage(cameraID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
+	GraphicCommunicatorDLL_API void SetMainDrawSettings(std::string drawSettingsID)
+	{
+		class SetMainDrawSettingsMessage : public Message
+		{
+		public:
+			SetMainDrawSettingsMessage(std::string DrawSettingsID) :
+				DrawSettingsID(DrawSettingsID){}
+
+			virtual Message::Status Work()
+			{
+				GraphicManager& graphic = GraphicManager::GetInstance();
+
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				graphic.DefaultDrawSettings = DrawSettingsID;
+
+				return Message::Status::Complete;
+			}
+			std::string DrawSettingsID;
+		};
+
+		std::shared_ptr<SetMainDrawSettingsMessage> msg(new SetMainDrawSettingsMessage(drawSettingsID));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
 	void ChangeWindowsText(std::string s)
 	{
 		class SetTitle : public Message

@@ -10,6 +10,7 @@
 namespace LuaGraphic
 {
 	ScriptGraphicDLL_API void SetMainCamera(const GenericLuaObject& tx);
+	ScriptGraphicDLL_API void SetMainDrawSettings(const GenericLuaObject& tx);
 	ScriptGraphicDLL_API void ChangeWindowsTitle(std::string title);
 	ScriptGraphicDLL_API void MoveWindow(unsigned int x, unsigned int y);
 	ScriptGraphicDLL_API void ResizeWindow(unsigned int height, unsigned int width);

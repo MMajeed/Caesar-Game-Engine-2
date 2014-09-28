@@ -25,7 +25,7 @@ namespace Scene
 			}
 		}
 	}
-
+	
 	std::shared_ptr<GraphicCameraEntity> GetCamera(const std::string& ID, unsigned int width, unsigned int height)
 	{
 		auto iter = cameraEntities.find(ID);
@@ -44,6 +44,36 @@ namespace Scene
 		else
 		{
 			return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(nullptr, width, height));
+		}
+	}
+
+	static std::unordered_map<std::string, std::shared_ptr<GraphicDrawSettingsEntity>> DrawSettingsEntities;
+
+	void UpdateDrawSettingsEntities()
+	{
+		DrawSettingsEntities.clear();
+
+		std::unordered_map<std::string, std::weak_ptr<DrawSettingsEntity>> newestDrawSettingsList = DrawSettingsEntities::GetAll(); // Get the latest list
+
+		for(auto& DrawSettingsIter : newestDrawSettingsList)
+		{
+			if(std::shared_ptr<DrawSettingsEntity> cam = DrawSettingsIter.second.lock())
+			{
+				DrawSettingsEntities[DrawSettingsIter.first] = std::make_shared<GraphicDrawSettingsEntity>(GraphicDrawSettingsEntity(cam));
+			}
+		}
+	}
+
+	std::shared_ptr<GraphicDrawSettingsEntity> GetDrawSettings(const std::string& ID)
+	{
+		auto iter = DrawSettingsEntities.find(ID);
+		if(iter != DrawSettingsEntities.end())
+		{
+			return iter->second;
+		}
+		else
+		{
+			return std::make_shared<GraphicDrawSettingsEntity>(GraphicDrawSettingsEntity(nullptr));
 		}
 	}
 
@@ -87,15 +117,15 @@ namespace Scene
 		return ObjectEntities;
 	}
 
-	void ClearScreen(std::shared_ptr<GraphicCameraEntity> Camera)
+	void ClearScreen(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings)
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
 		auto& d3dStuff = graphic.D3DStuff;
 
-		if(Camera->GetClearScreen() == true)
+		if(drawSettings->GetClearScreen() == true)
 		{
 			// Clear the back buffer 
-			auto c = Camera->GetClearColor();
+			auto c = drawSettings->GetClearColor();
 			d3dStuff.pImmediateContext->ClearRenderTargetView(d3dStuff.pRenderTargetView, c.data());
 		}
 		d3dStuff.pImmediateContext->ClearDepthStencilView(d3dStuff.pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -106,15 +136,17 @@ namespace Scene
 		d3dStuff.pImmediateContext->RSSetViewports(1, &d3dStuff.vp);
 
 	}
-	void DrawObjects(std::shared_ptr<GraphicCameraEntity> camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+	void DrawObjects(std::shared_ptr<GraphicCameraEntity> camera,
+					 std::shared_ptr<GraphicDrawSettingsEntity> drawSettings,
+					 const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 	{
 		auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
 		ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;
 
-		std::vector<std::shared_ptr<GraphicObjectEntity>> objects = camera->FilterInclusionList(list);
+		std::vector<std::shared_ptr<GraphicObjectEntity>> objects = drawSettings->FilterInclusionList(list);
 		for(const std::shared_ptr<GraphicObjectEntity> object : objects)
 		{
-			Draw::Setup(camera, object);
+			Draw::Setup(camera, drawSettings, object);
 		}
 	}
 };

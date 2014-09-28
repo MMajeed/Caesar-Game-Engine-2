@@ -19,7 +19,7 @@ protected:
 						  const unsigned int sizeOfValue, 
 						  const std::string Name);
 public:
-	virtual void Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	virtual void Update(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object);
 	static std::shared_ptr<CBWeakVariables> Spawn(std::vector<char>& bytes,
 														const unsigned int StartOffset,
 														const unsigned int sizeOfValue,

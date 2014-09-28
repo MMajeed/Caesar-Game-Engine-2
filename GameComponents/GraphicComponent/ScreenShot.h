@@ -4,6 +4,7 @@
 #include "Linker.h"
 #include "COMSharedPtr.h"
 #include "GraphicObjectEntity.h"
+#include "GraphicDrawSettingsEntity.h"
 #include "GraphicCameraEntity.h"
 #include <D3D11.h>
 #include <string>

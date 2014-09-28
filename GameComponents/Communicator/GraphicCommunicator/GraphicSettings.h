@@ -7,6 +7,7 @@
 namespace GraphicSettings
 {
 	GraphicCommunicatorDLL_API void SetMainCamera(std::string cameraID);
+	GraphicCommunicatorDLL_API void SetMainDrawSettings(std::string drawSettingsID);
 	GraphicCommunicatorDLL_API void ChangeWindowsText(std::string s);
 	GraphicCommunicatorDLL_API void MoveWindow(unsigned int x, unsigned int y);
 	GraphicCommunicatorDLL_API void ResizeWindow(unsigned int height, unsigned int width);

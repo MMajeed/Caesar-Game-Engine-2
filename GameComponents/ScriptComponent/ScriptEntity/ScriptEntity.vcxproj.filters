@@ -9,6 +9,9 @@
       <Filter>LuaObject</Filter>
     </ClInclude>
     <ClInclude Include="ScriptEntity.h" />
+    <ClInclude Include="LuaDrawSettings.h">
+      <Filter>LuaDrawSettings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="LuaCamera">
@@ -16,6 +19,9 @@
     </Filter>
     <Filter Include="LuaObject">
       <UniqueIdentifier>{41253e20-6956-4ca0-8e1f-6a6d11a749d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LuaDrawSettings">
+      <UniqueIdentifier>{b6b024d7-96f1-40f4-8594-eb6be1b34024}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,5 +32,8 @@
       <Filter>LuaObject</Filter>
     </ClCompile>
     <ClCompile Include="ScriptEntity.cpp" />
+    <ClCompile Include="LuaDrawSettings.cpp">
+      <Filter>LuaDrawSettings</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

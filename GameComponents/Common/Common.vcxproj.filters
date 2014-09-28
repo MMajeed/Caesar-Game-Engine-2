@@ -19,6 +19,9 @@
     <ClCompile Include="CameraEntity.cpp">
       <Filter>Entity List\Entity\CameraEntity</Filter>
     </ClCompile>
+    <ClCompile Include="DrawSettingsEntity.cpp">
+      <Filter>Entity List\Entity\DrawSettingsEntity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Message.h">
@@ -46,6 +49,9 @@
     <ClInclude Include="Keys.h">
       <Filter>Keys</Filter>
     </ClInclude>
+    <ClInclude Include="DrawSettingsEntity.h">
+      <Filter>Entity List\Entity\DrawSettingsEntity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Keys">
@@ -71,6 +77,9 @@
     </Filter>
     <Filter Include="Entity List\Entity\CameraEntity">
       <UniqueIdentifier>{263ccd96-3cc0-462a-ac09-6b4fb46e4501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity List\Entity\DrawSettingsEntity">
+      <UniqueIdentifier>{3ab339d8-73e8-4707-97b8-9ab7c698bc8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

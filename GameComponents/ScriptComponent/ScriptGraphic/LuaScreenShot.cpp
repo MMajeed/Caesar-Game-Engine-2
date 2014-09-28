@@ -11,6 +11,7 @@ luabind::object LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 	unsigned int width = 1028;
 	unsigned int height = 1028;
 	std::string cameraID;
+	std::string drawSettingsID;
 	unsigned int numOfTagrets = 1;
 
 	if (luabind::type(table) == LUA_TTABLE)
@@ -21,14 +22,15 @@ luabind::object LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-				 if(key == Keys::ScreenShot::WIDTH)				{ width = luabind::object_cast<int>(*it); }
-				 else if(key == Keys::ScreenShot::HEIGHT)		{ height = luabind::object_cast<int>(*it); }
-				 else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID =luabind::object_cast<GenericLuaObject>(*it).GetID(); }
-				 else if(key == Keys::ScreenShot::NUMOFTARGETS)	{ numOfTagrets = luabind::object_cast<int>(*it); }
+				 if(key == Keys::ScreenShot::WIDTH)				{	 width = luabind::object_cast<int>(*it); }
+				 else if(key == Keys::ScreenShot::HEIGHT)			{ height = luabind::object_cast<int>(*it); }
+				 else if(key == Keys::ScreenShot::CAMERAID)			{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+				 else if(key == Keys::ScreenShot::DRAWSETTINGSID)	{ drawSettingsID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+				 else if(key == Keys::ScreenShot::NUMOFTARGETS)		{ numOfTagrets = luabind::object_cast<int>(*it); }
 		}
 	}
 
-	std::vector<std::string> textureID = ScreenShotConfig::Basic(width, height, numOfTagrets, cameraID);
+	std::vector<std::string> textureID = ScreenShotConfig::Basic(width, height, numOfTagrets, cameraID, drawSettingsID);
 
 	lua_State* lua = ScriptManager::GetInstance().lua;
 
@@ -62,6 +64,7 @@ LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
 	unsigned int width = 1028;
 	unsigned int height = 1028;
 	std::string cameraID;
+	std::string drawSettingsID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -71,13 +74,15 @@ LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-			if(key == Keys::ScreenShot::WIDTH)			{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT)    { height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject*>(*it)->GetID(); }
+			if(key == Keys::ScreenShot::WIDTH)				{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)		{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID = luabind::object_cast<GenericLuaObject*>(*it)->GetID(); }
+			else if(key == Keys::ScreenShot::DRAWSETTINGSID){ drawSettingsID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+
 		}
 	}
 
-	std::string textureID = ScreenShotConfig::Depth(width, height, cameraID);
+	std::string textureID = ScreenShotConfig::Depth(width, height, cameraID, drawSettingsID);
 	GenericLuaObject g(textureID);
 	LuaBasicTexture texture(g);
 	return texture;
@@ -90,6 +95,7 @@ LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
 	unsigned int width = 1028;
 	unsigned int height = 1028;
 	std::string cameraID;
+	std::string drawSettingsID;
 
 	if(luabind::type(table) == LUA_TTABLE)
 	{
@@ -99,13 +105,14 @@ LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
 		{
 			std::string key = luabind::object_cast<std::string>(it.key());
 
-			if(key == Keys::ScreenShot::WIDTH)		{ width = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::HEIGHT){ height = luabind::object_cast<int>(*it); }
-			else if(key == Keys::ScreenShot::CAMERAID)	{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			if(key == Keys::ScreenShot::WIDTH)				{ width = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::HEIGHT)		{ height = luabind::object_cast<int>(*it); }
+			else if(key == Keys::ScreenShot::CAMERAID)		{ cameraID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
+			else if(key == Keys::ScreenShot::DRAWSETTINGSID){ drawSettingsID = luabind::object_cast<GenericLuaObject>(*it).GetID(); }
 		}
 	}
 
-	std::string textureID = ScreenShotConfig::Cube(width, height, cameraID);
+	std::string textureID = ScreenShotConfig::Cube(width, height, cameraID, drawSettingsID);
 	GenericLuaObject g(textureID);
 	LuaBasicTexture texture(g);
 	return texture;

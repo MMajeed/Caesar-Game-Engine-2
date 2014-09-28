@@ -4,6 +4,7 @@
 #include "Linker.h"
 
 #include "GraphicCameraEntity.h"
+#include "GraphicDrawSettingsEntity.h"
 #include "GraphicObjectEntity.h"
 #include <vector>
 #include <memory>
@@ -20,7 +21,7 @@ protected:
 	TextureSetup();
 	void Init(const std::vector<char>& compiledShader);
 public:
-	std::vector<TextureInfo> Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	std::vector<TextureInfo> Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object);
 	static std::shared_ptr<TextureSetup> Spawn(const std::vector<char>& compiledGeometryShader);
 protected:
 	

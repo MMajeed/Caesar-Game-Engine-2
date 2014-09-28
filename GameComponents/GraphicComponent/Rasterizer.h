@@ -5,11 +5,12 @@
 #include <memory>
 
 class GraphicCameraEntity;
+class GraphicDrawSettingsEntity;
 class GraphicObjectEntity;
 
 namespace Rasterizer
 {
-	GraphicComponentDLL_API void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	GraphicComponentDLL_API void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object);
 };
 
 

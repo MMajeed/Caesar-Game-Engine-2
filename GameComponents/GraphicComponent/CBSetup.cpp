@@ -55,13 +55,13 @@ void CBSetup::Init(const std::vector<char>& compiledShader, unsigned int bufferN
 		}
 	}
 }
-void CBSetup::Run(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+void CBSetup::Run(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
 	for(auto variableIter = this->variables.begin();
 		variableIter != this->variables.end();
 		++variableIter)
 	{
-		(*variableIter)->Update(camera, object);
+		(*variableIter)->Update(camera, drawSettings, object);
 	}
 }
 const std::vector<char>& CBSetup::GetCBData()

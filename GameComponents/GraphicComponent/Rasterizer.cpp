@@ -1,6 +1,7 @@
 #include "Rasterizer.h"
 
 #include "GraphicCameraEntity.h"
+#include "GraphicDrawSettingsEntity.h"
 #include "GraphicObjectEntity.h"
 
 #include "GraphicManager.h"
@@ -13,7 +14,7 @@ namespace Rasterizer
 {
 	static std::unordered_map<unsigned int, COMSharedPtr<ID3D11RasterizerState>> RasterizerList;
 
-	unsigned int GenerateValue(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+	unsigned int GenerateValue(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 	{
 		unsigned int value = 0;
 
@@ -26,11 +27,11 @@ namespace Rasterizer
 		return value;
 	}
 
-	COMSharedPtr<ID3D11RasterizerState> GetRasterizer(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+	COMSharedPtr<ID3D11RasterizerState> GetRasterizer(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 	{
 		COMSharedPtr<ID3D11RasterizerState> returnValue;
 
-		unsigned int value = GenerateValue(camera, object);
+		unsigned int value = GenerateValue(camera, drawSettings, object);
 
 		auto iter = RasterizerList.find(value);
 		if(iter != RasterizerList.end())
@@ -57,11 +58,11 @@ namespace Rasterizer
 		return returnValue;
 	}
 
-	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object)
+	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 	{
 		auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
 
-		COMSharedPtr<ID3D11RasterizerState> rasterizer = GetRasterizer(camera, object);
+		COMSharedPtr<ID3D11RasterizerState> rasterizer = GetRasterizer(camera, drawSettings, object);
 		ID3D11RasterizerState* rs = rasterizer;
 		graphicD3D.pImmediateContext->RSSetState(rs);
 	}

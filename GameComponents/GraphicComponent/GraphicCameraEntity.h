@@ -24,8 +24,6 @@ public:
 
 	void Update(std::shared_ptr<CameraEntity> v, unsigned int width, unsigned int height);
 public:
-	std::vector<std::shared_ptr<GraphicObjectEntity>> 
-		FilterInclusionList(std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>> list) const;
 
 private:	XMFLOAT4 Eye;
 			void UpdateEye(std::shared_ptr<CameraEntity> obj);
@@ -62,51 +60,6 @@ public:		float GetNearZ() const;
 private:	float FarZ;
 			void UpdateFarZ(std::shared_ptr<CameraEntity> obj);
 public:		float GetFarZ() const;
-
-private:	bool ClearScreen;
-			void UpdateClearScreen(std::shared_ptr<CameraEntity> obj);
-public:		bool GetClearScreen() const;
-
-private:	std::array<float, 4> ClearColor;
-			void UpdateClearColor(std::shared_ptr<CameraEntity> obj);
-public:		std::array<float, 4> GetClearColor() const;
-
-private:	CameraEntity::InclusionType InclusionState;
-			void UpdateInclusionState(std::shared_ptr<CameraEntity> obj);
-public:		CameraEntity::InclusionType GetInclusionState() const;
-
-private:	std::set<std::string> InclusionList;
-			void UpdateInclusionList(std::shared_ptr<CameraEntity> obj);
-public:		std::set<std::string> GetInclusionList() const; 
-
-private:	std::unordered_map<std::string, std::shared_ptr<Object>> UserData;
-			void UpdateUserData(std::shared_ptr<CameraEntity> obj);
-public:		std::unordered_map<std::string, std::shared_ptr<Object>> GetUserData() const;
-			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
-
-private:	std::unordered_map<std::string, std::string> TextureList;
-			void UpdateTextureList(std::shared_ptr<CameraEntity> obj);
-public:		std::unordered_map<std::string, std::string> GetTextureList() const;
-			std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
-			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
-
-private:	std::string VertexShaderID;
-			void UpdateVertexShaderID(std::shared_ptr<CameraEntity> obj);
-public:		std::string GetVertexShaderID() const;
-			std::shared_ptr<VertexShader> GetVertexShader() const;
-
-private:	CameraEntity::CAMERA_SHADER_TYPE VertexShaderState;
-			void UpdateVertexShaderState(std::shared_ptr<CameraEntity> obj);
-public:		CameraEntity::CAMERA_SHADER_TYPE GetVertexShaderState() const;
-
-private:	std::string PixelShaderID;
-			void UpdatePixelShaderID(std::shared_ptr<CameraEntity> obj);
-public:		std::string GetPixelShaderID() const;
-			std::shared_ptr<PixelShader> GetPixelShader() const;
-
-private:	CameraEntity::CAMERA_SHADER_TYPE PixelShaderState;
-			void UpdatePixelShaderState(std::shared_ptr<CameraEntity> obj);
-public:		CameraEntity::CAMERA_SHADER_TYPE GetPixelShaderState() const;
 
 private:	unsigned int Width;
 public:		void UpdateWidth(unsigned int v);

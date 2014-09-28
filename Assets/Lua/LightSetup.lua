@@ -28,49 +28,31 @@ local VS2DShader = VertexShader("Assets/ShaderFiles/VS_2D.cso");
 local PSDeferredDirectionalLight = PixelShader("Assets/ShaderFiles/1_PS_DeferredLight.cso");
 local PSDirectionalLight = PixelShader("Assets/ShaderFiles/4_PS_SpotLight.cso");
 
-local CamDeferredGenerator = Camera({
-                [Keys["Camera"]["Eye"]]             = regularCam.Eye,
-                [Keys["Camera"]["TargetMagnitude"]] = regularCam.TargetMagnitude,
-                [Keys["Camera"]["Up"]]              = regularCam.Up,
-                [Keys["Camera"]["Roll"]]            = regularCam.Roll,
-                [Keys["Camera"]["Pitch"]]           = regularCam.Pitch,
-                [Keys["Camera"]["Yaw"]]             = regularCam.Yaw,
-                [Keys["Camera"]["NearZ"]]           = 0.01,              
-                [Keys["Camera"]["FarZ"]]            = 5000.0,
-                [Keys["Camera"]["ClearColor"]]      = Vector4(-1.0, -1.0, -1.0, 1.0),
-                [Keys["Camera"]["InclusionState"]]  = InclusionType["Exclude"],
-                [Keys["Camera"]["InclusionList"]]   = { "NoLight" },
-                [Keys["Camera"]["PixelShader"]]     = PSDeferredDirectionalLight,
-                [Keys["Camera"]["PixelShaderState"]]= ShaderType["Force"],
-                [Keys["Camera"]["UserData"]]        = {
+local DrawSettingsDeferredGenerator = DrawSettings({
+                [Keys["DrawSettings"]["ClearColor"]]      = Vector4(-1.0, -1.0, -1.0, 1.0),
+                [Keys["DrawSettings"]["InclusionState"]]  = InclusionType["Exclude"],
+                [Keys["DrawSettings"]["InclusionList"]]   = { "NoLight" },
+                [Keys["DrawSettings"]["PixelShader"]]     = PSDeferredDirectionalLight,
+                [Keys["DrawSettings"]["PixelShaderState"]]= ShaderType["Force"],
+                [Keys["DrawSettings"]["UserData"]]        = {
                                                       ["Diffuse"]   = Vector4(1.0, 1.0, 1.0),
                                                       ["Ambient"]   = Vector4(1.0, 1.0, 1.0),
                                                       ["Specular"]  = Vector4(1.0, 1.0, 1.0),}
                }); 
                
-function UpdateDeferredCam(time, ID)
-    CamDeferredGenerator.Eye = regularCam.Eye;
-    CamDeferredGenerator.TargetMagnitude = regularCam.TargetMagnitude;
-    CamDeferredGenerator.Up = regularCam.Up;
-    CamDeferredGenerator.Roll = regularCam.Roll;
-    CamDeferredGenerator.Pitch = regularCam.Pitch;
-    CamDeferredGenerator.Yaw = regularCam.Yaw;
-end
-AddToCallOnCameraUpdate(UpdateDeferredCam)
-
 local DefferredGenerator = BasicScreenCapture({
                     [Keys["ScreenShot"]["Width"]]         = textureWidth,
                     [Keys["ScreenShot"]["Height"]]        = textureHeight,
                     [Keys["ScreenShot"]["Priority"]]      = 0,
                     [Keys["ScreenShot"]["NumOfTargets"]]  = 5,
-                    [Keys["ScreenShot"]["CameraID"]]      = CamDeferredGenerator, });
-                    
+                    [Keys["ScreenShot"]["CameraID"]]      = MainCamera,
+                    [Keys["ScreenShot"]["DrawSettingsID"]]= DrawSettingsDeferredGenerator, });   
 
 local GUIDID = GenerateGUID();
 
 local SpriteObj = Object({
                     [Keys["ObjectInfo"]["Location"]]     = Vector4(0.0, 0.0, 0.0, 1.0),
-                    [Keys["ObjectInfo"]["Scale"]]        = Vector4(textureWidth, textureHeight, 0.0, 1.0),
+                    [Keys["ObjectInfo"]["Scale"]]        = Vector4(1366, 768, 0.0, 1.0),
                     [Keys["ObjectInfo"]["GraphicModel"]] = graphicSpriteModel,
                     [Keys["ObjectInfo"]["VertexShader"]] = VS2DShader,
                     [Keys["ObjectInfo"]["PixelShader"]]  = PSDirectionalLight,
@@ -88,31 +70,27 @@ local SpriteObj = Object({
 
 Light = class(function(self, LightInfo) 
         local userData = LightInfo:GetResource();
-        userData["CameraEye"] = regularCam.Eye;
+        userData["CameraEye"] = MainCamera.Eye;
         
-        self.CamLightCalculator = Camera({
-                   [Keys["Camera"]["ClearColor"]]      = Vector4(0.0, 0.0, 0.0, 1.0),
-                   [Keys["Camera"]["InclusionState"]]  = InclusionType["Include"],
-                   [Keys["Camera"]["InclusionList"]]   = { GUIDID },                
-                   [Keys["Camera"]["PixelShader"]]     = LightInfo:GetShader(),
-                   [Keys["Camera"]["PixelShaderState"]]= ShaderType["Force"],
-                   [Keys["Camera"]["UserData"]]        = userData
+        self.DrawSettingsLightCalculator = DrawSettings({
+                   [Keys["DrawSettings"]["ClearColor"]]      = Vector4(0.0, 0.0, 0.0, 1.0),
+                   [Keys["DrawSettings"]["InclusionState"]]  = InclusionType["Include"],
+                   [Keys["DrawSettings"]["InclusionList"]]   = { GUIDID },                
+                   [Keys["DrawSettings"]["PixelShader"]]     = LightInfo:GetShader(),
+                   [Keys["DrawSettings"]["PixelShaderState"]]= ShaderType["Force"],
+                   [Keys["DrawSettings"]["UserData"]]        = userData
                   }); 
         self.LightCalculator = BasicScreenCapture({
                    [Keys["ScreenShot"]["Width"]]         = textureWidth,
                    [Keys["ScreenShot"]["Height"]]        = textureHeight,
                    [Keys["ScreenShot"]["Priority"]]      = 200,
                    [Keys["ScreenShot"]["NumOfTargets"]]  = 1,
-                   [Keys["ScreenShot"]["CameraID"]]      = self.CamLightCalculator, 
+                   [Keys["ScreenShot"]["CameraID"]]      = MainCamera,
+                   [Keys["ScreenShot"]["DrawSettingsID"]]= self.DrawSettingsLightCalculator, 
                    });
-                   
-        function UpdateLightEye(time, ID)
-            self.CamLightCalculator:SetUserData("CameraEye", regularCam.Eye);
-        end
-        AddToCallOnCameraUpdate(UpdateLightEye)
-        
+                           
         function UpdateLightResource(ID, Value)
-            self.CamLightCalculator:SetUserData(ID, Value);
+            self.DrawSettingsLightCalculator:SetUserData(ID, Value);
         end
         LightInfo:AddToCallOnUpdate(UpdateLightResource);
      end)
@@ -126,17 +104,17 @@ function SetupLight()
     local lastLookedUpValue = nil;
     for key,value in pairs(LightArray) do 
         if(lastLookedUpValue == nil) then -- First variable
-            value.CamLightCalculator:SetUserData("HasPrivousLight", 0);
+            value.DrawSettingsLightCalculator:SetUserData("HasPrivousLight", 0);
         else
-            value.CamLightCalculator:SetUserData("HasPrivousLight", 1);
-            value.CamLightCalculator:SetTexture("PrivousLightTexture", lastLookedUpValue.LightCalculator:GetTexture());
+            value.DrawSettingsLightCalculator:SetUserData("HasPrivousLight", 1);
+            value.DrawSettingsLightCalculator:SetTexture("PrivousLightTexture", lastLookedUpValue.LightCalculator:GetTexture());
         end
         lastLookedUpValue = value;
         value.LightCalculator:SetPriority(counter);
         counter = counter + 10;
     end
     
-    regularCam.Texture = { ["LightTexture"] =  lastLookedUpValue.LightCalculator:GetTexture() };
+    MainDrawSettings.Texture = { ["LightTexture"] =  lastLookedUpValue.LightCalculator:GetTexture() };
 end
 
 function AddLight(LightInfo)
@@ -158,7 +136,8 @@ function ResizeLightFunction(ID, Width, Height)
                     [Keys["ScreenShot"]["Height"]]        = Height,
                     [Keys["ScreenShot"]["Priority"]]      = 0,
                     [Keys["ScreenShot"]["NumOfTargets"]]  = 5,
-                    [Keys["ScreenShot"]["CameraID"]]      = CamDeferredGenerator, });
+                    [Keys["ScreenShot"]["CameraID"]]      = MainCamera, 
+                    [Keys["ScreenShot"]["DrawSettingsID"]]= DrawSettingsDeferredGenerator, });
 
     SpriteObj.Scale = Vector4(Width, Height, 0.0, 1.0);
     SpriteObj.Texture =  {
@@ -176,10 +155,10 @@ function ResizeLightFunction(ID, Width, Height)
                    [Keys["ScreenShot"]["Height"]]        = Height,
                    [Keys["ScreenShot"]["Priority"]]      = 200,
                    [Keys["ScreenShot"]["NumOfTargets"]]  = 1,
-                   [Keys["ScreenShot"]["CameraID"]]      = value.CamLightCalculator, 
+                   [Keys["ScreenShot"]["CameraID"]]      = MainCamera,
+                   [Keys["ScreenShot"]["DrawSettingsID"]]= value.DrawSettingsLightCalculator, 
                    });
     end
-    
     SetupLight();
 end
 CallOnResize(ResizeLightFunction);

@@ -19,6 +19,6 @@ local skybox = Object({
                         });
                         
 function UpdateSkyBox()
-    skybox.Location = regularCam.Eye;
+    skybox.Location = MainCamera.Eye;
 end
 LoopCall(1, UpdateSkyBox);

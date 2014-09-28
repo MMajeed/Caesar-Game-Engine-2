@@ -6,6 +6,7 @@
 
 #include "LuaCamera.h"
 #include "LuaObject.h"
+#include "LuaDrawSettings.h"
 
 ScriptEntity::ScriptEntity()
 {
@@ -19,4 +20,5 @@ void ScriptEntity::Init(lua_State *lua)
 {
 	LuaCamera::RegisterAllLuaFunction(lua);
 	LuaObject::RegisterAllLuaFunction(lua);
+	LuaDrawSettings::RegisterAllLuaFunction(lua);
 }

@@ -18,10 +18,12 @@ public:
 													unsigned int width,
 													unsigned int height,
 													unsigned int Priority,
-													const std::string& cameraID);
+													const std::string& cameraID,
+													const std::string& drawSettingsID);
 
 	std::shared_ptr<CubeScreenShot>	ScreenShot;
 	std::string						cameraID;
+	std::string						drawSettingsID;
 	unsigned int					width;
 	unsigned int					height;
 };

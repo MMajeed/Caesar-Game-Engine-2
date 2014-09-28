@@ -18,7 +18,7 @@ protected:
 	VertexShader(){}
 	void Init();
 public:
-	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicObjectEntity> object);
+	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object);
 
 	static std::shared_ptr<VertexShader> Spawn(const std::vector<char>& CompiledShader);
 	static std::shared_ptr<VertexShader> Spawn(const std::string& fileName);

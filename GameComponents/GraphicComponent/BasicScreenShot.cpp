@@ -104,6 +104,7 @@ void BasicScreenShot::Init()
 void BasicScreenShot::Snap()
 {
 	Scene::UpdateCameraEntities();
+	Scene::UpdateDrawSettingsEntities();
 	Scene::UpdateObjectEntities();
 
 	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
@@ -114,23 +115,24 @@ void BasicScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
 	auto camera = Scene::GetCamera(this->cameraID, this->width, this->height);
+	auto drawSettings = Scene::GetDrawSettings(this->drawSettingsID);
 
-	this->SetupSnapShot(camera, list);
-	this->TakeScreenSnapShot(camera, list);
-	this->CleanupSnapShot(camera, list);
+	this->SetupSnapShot(camera, drawSettings, list);
+	this->TakeScreenSnapShot(camera, drawSettings, list);
+	this->CleanupSnapShot(camera, drawSettings, list);
 }
 
-void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
 
 	std::vector<ID3D11RenderTargetView*> renderTargets;
 
-	auto c = Camera->GetClearColor();
+	auto c = drawSettings->GetClearColor();
 	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
 	{
-		if(Camera->GetClearScreen() == true)
+		if(drawSettings->GetClearScreen() == true)
 		{
 			// Clear the back buffer 
 			d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV[i], c.data());
@@ -143,13 +145,13 @@ void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera,
 	
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport); 	
 }
-void BasicScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	Scene::DrawObjects(Camera, list);
+	Scene::DrawObjects(Camera, drawSettings, list);
 }
-void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
@@ -160,10 +162,15 @@ void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camer
 	}
 }
 
-std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(unsigned int width, unsigned int height, unsigned int numberOfTargets, const std::string& cameraID)
+std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(unsigned int width, 
+														unsigned int height, 
+														unsigned int numberOfTargets, 
+														const std::string& cameraID,
+														const std::string& drawSettingsID)
 {
 	std::shared_ptr<BasicScreenShot> newObject(new BasicScreenShot());
 	newObject->cameraID = cameraID;
+	newObject->drawSettingsID = drawSettingsID;
 	newObject->width = width;
 	newObject->height = height;
 	newObject->numberOfTargets = numberOfTargets;

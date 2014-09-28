@@ -11,6 +11,7 @@ namespace BasicScreenCaptureConfig
 				unsigned int height,
 				unsigned int priority,
 				const std::string& cameraID,
+				const std::string& drawSettingsID,
 				unsigned int numberOfTargets,
 				std::string& ID,
 				std::vector<std::string>& textureID)
@@ -22,9 +23,11 @@ namespace BasicScreenCaptureConfig
 								  unsigned int height,
 								  unsigned int priority,
 								  unsigned int numberOfTargets,
-								  const std::string& cameraID)
+								  const std::string& cameraID,
+								  const std::string& drawSettingsID )
 			{
 				this->cameraID = cameraID;
+				this->drawSettingsID = drawSettingsID;
 				this->width = width;
 				this->height = height;
 				this->priority = priority;
@@ -47,7 +50,7 @@ namespace BasicScreenCaptureConfig
 				}
 
 				std::shared_ptr<BasicScreenCapture> newBasicScreenShot =
-					BasicScreenCapture::Spawn(this->textureID, this->width, this->height, this->priority, this->cameraID);
+					BasicScreenCapture::Spawn(this->textureID, this->width, this->height, this->priority, this->cameraID, this->drawSettingsID);
 				ResourceManager::ScreenCaptureList.Insert(this->ID, newBasicScreenShot);
 
 				return Message::Status::Complete;
@@ -58,23 +61,24 @@ namespace BasicScreenCaptureConfig
 			unsigned int height;
 			unsigned int priority;
 			std::string cameraID;
+			std::string drawSettingsID;
 			unsigned int numberOfTargets;
 			std::string ID;
 			std::vector<std::string> textureID;
 		};
 
 		std::shared_ptr<AddBasicScreenCapture> msg
-			(new AddBasicScreenCapture(width, height, priority, numberOfTargets, cameraID));
+			(new AddBasicScreenCapture(width, height, priority, numberOfTargets, cameraID, drawSettingsID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 		ID = msg->ID;
 		textureID = msg->textureID;
 	}
 	void SetCameraID(const std::string& id, const std::string& cameraID)
 	{
-		class ChangeCameraMatrix : public Message
+		class ChangeCameraMessage : public Message
 		{
 		public:
-			ChangeCameraMatrix(const std::string& id, const std::string& cameraID)
+			ChangeCameraMessage(const std::string& id, const std::string& cameraID)
 			{
 				this->ID = id;
 				this->cameraID = cameraID;
@@ -100,8 +104,43 @@ namespace BasicScreenCaptureConfig
 			std::string cameraID;
 		};
 
-		std::shared_ptr<ChangeCameraMatrix> msg
-			(new ChangeCameraMatrix(id, cameraID));
+		std::shared_ptr<ChangeCameraMessage> msg
+			(new ChangeCameraMessage(id, cameraID));
+		GraphicManager::GetInstance().SubmitMessage(msg);
+	}
+	void SetDrawSettingsID(const std::string& id, const std::string& dsID)
+	{
+		class ChangeDrawSettingsMessage : public Message
+		{
+		public:
+			ChangeDrawSettingsMessage(const std::string& id, const std::string& DrawSettingsID)
+			{
+				this->ID = id;
+				this->DrawSettingsID = DrawSettingsID;
+			}
+
+			Message::Status Work()
+			{
+				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+
+				auto screenCapture = ResourceManager::ScreenCaptureList.Find(this->ID);
+				if(screenCapture)
+				{
+					std::shared_ptr<BasicScreenCapture> cast = std::dynamic_pointer_cast<BasicScreenCapture>(screenCapture);
+					if(cast)
+					{
+						cast->drawSettingsID = this->DrawSettingsID;
+					}
+				}
+
+				return Message::Status::Complete;
+			}
+			std::string ID;
+			std::string DrawSettingsID;
+		};
+
+		std::shared_ptr<ChangeDrawSettingsMessage> msg
+			(new ChangeDrawSettingsMessage(id, dsID));
 		GraphicManager::GetInstance().SubmitMessage(msg);
 	}
 	void SetPriority(const std::string& id, int p)

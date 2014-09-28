@@ -17,6 +17,7 @@ namespace LuaScreenCapture
 		BasicScreenCapture(const luabind::object& table);
 
 		void SetCameraID(GenericLuaObject cameraID);
+		void SetDrawSettingsID(GenericLuaObject dsID);
 		void SetPriority(const luabind::object& v);
 
 		luabind::object GetTexture();
@@ -28,6 +29,7 @@ namespace LuaScreenCapture
 		unsigned int GetPriority(const luabind::object& v) const;
 		unsigned int GetNumOfTargets(const luabind::object& v) const;
 		std::string GetCameraID(const luabind::object& v) const;
+		std::string GetDrawSettingsID(const luabind::object& v) const;
 	public:
 		std::string ID;
 		std::vector<std::string> TextureID;
@@ -41,6 +43,7 @@ namespace LuaScreenCapture
 		DepthScreenCapture(luabind::object const& table);
 
 		void SetCameraID(GenericLuaObject cameraID);
+		void SetDrawSettingsID(GenericLuaObject dsID);
 		LuaBasicTexture GetTexture();
 		void Release();
 
@@ -56,6 +59,7 @@ namespace LuaScreenCapture
 		CubeScreenCapture(luabind::object const& table);
 
 		void SetCameraID(GenericLuaObject cameraID);
+		void SetDrawSettingsID(GenericLuaObject dsID);
 		LuaBasicTexture GetTexture();
 		void Release();
 

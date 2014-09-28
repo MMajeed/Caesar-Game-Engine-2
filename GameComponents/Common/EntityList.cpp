@@ -99,3 +99,49 @@ namespace CameraEntities
 		cameraEntitiesList.erase(ID);
 	}
 }
+
+namespace DrawSettingsEntities
+{
+	std::unordered_map<std::string, std::shared_ptr<DrawSettingsEntity>> DrawSettingsEntitiesList;
+	std::mutex DrawSettingsEntitiesMutex;
+
+	std::unordered_map<std::string, std::weak_ptr<DrawSettingsEntity>> GetAll()
+	{
+		std::lock_guard<std::mutex> lock(DrawSettingsEntitiesMutex);
+
+		std::unordered_map<std::string, std::weak_ptr<DrawSettingsEntity>> returnValue;
+		returnValue.reserve(DrawSettingsEntitiesList.size());
+
+		for(auto objEntitiesIter = DrawSettingsEntitiesList.cbegin();
+			objEntitiesIter != DrawSettingsEntitiesList.cend();
+			++objEntitiesIter)
+		{
+			returnValue[objEntitiesIter->first] = objEntitiesIter->second;
+		}
+
+		return returnValue;
+	}
+	void Add(std::shared_ptr<DrawSettingsEntity> objEntity)
+	{
+		std::lock_guard<std::mutex> lock(DrawSettingsEntitiesMutex);
+		DrawSettingsEntitiesList[objEntity->GetID()] = objEntity;
+	}
+	bool Find(const std::string& ID, std::weak_ptr<DrawSettingsEntity>& returnObj)
+	{
+		std::lock_guard<std::mutex> lock(DrawSettingsEntitiesMutex);
+
+		auto objEntitiesIter = DrawSettingsEntitiesList.find(ID);
+		if(objEntitiesIter == DrawSettingsEntitiesList.end())
+		{
+			return false;
+		}
+		returnObj = objEntitiesIter->second;
+		return true;
+	}
+	void Remove(const std::string& ID)
+	{
+		std::lock_guard<std::mutex> lock(DrawSettingsEntitiesMutex);
+
+		DrawSettingsEntitiesList.erase(ID);
+	}
+}

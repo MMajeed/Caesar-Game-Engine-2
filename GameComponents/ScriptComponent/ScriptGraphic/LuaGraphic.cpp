@@ -13,6 +13,10 @@ namespace LuaGraphic
 	{
 		GraphicSettings::SetMainCamera(cam.GetID());
 	}
+	void SetMainDrawSettings(const GenericLuaObject& ds)
+	{
+		GraphicSettings::SetMainDrawSettings(ds.GetID());
+	}
 	void ChangeWindowsTitle(std::string title)
 	{
 		GraphicSettings::ChangeWindowsText(title);
@@ -109,6 +113,7 @@ namespace LuaGraphic
 	{
 		luabind::module(lua)[
 			luabind::def("SetMainCamera", LuaGraphic::SetMainCamera),
+			luabind::def("SetMainDrawSettings", LuaGraphic::SetMainDrawSettings),
 			luabind::def("SetWindowsTitle", LuaGraphic::ChangeWindowsTitle),
 			luabind::def("MoveWindow", LuaGraphic::MoveWindow),
 			luabind::def("ReizeWindow", LuaGraphic::ResizeWindow),

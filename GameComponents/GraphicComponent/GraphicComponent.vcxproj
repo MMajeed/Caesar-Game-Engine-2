@@ -280,6 +280,7 @@
     <ClInclude Include="Draw.h" />
     <ClInclude Include="GeometryShader.h" />
     <ClInclude Include="GraphicCameraEntity.h" />
+    <ClInclude Include="GraphicDrawSettingsEntity.h" />
     <ClInclude Include="GraphicModel.h" />
     <ClInclude Include="GraphicObjectEntity.h" />
     <ClInclude Include="PixelShader.h" />
@@ -315,6 +316,7 @@
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GeometryShader.cpp" />
     <ClCompile Include="GraphicCameraEntity.cpp" />
+    <ClCompile Include="GraphicDrawSettingsEntity.cpp" />
     <ClCompile Include="GraphicModel.cpp" />
     <ClCompile Include="GraphicObjectEntity.cpp" />
     <ClCompile Include="GraphicManager.cpp" />

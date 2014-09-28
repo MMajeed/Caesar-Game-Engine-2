@@ -14,15 +14,16 @@ public:
 	virtual std::shared_ptr<ScreenCapture> clone() const;
 	virtual ~DepthScreenCapture(){}
 
-	static std::shared_ptr<DepthScreenCapture> Spawn(
-		const std::string& textureID,
-		unsigned int width,
-		unsigned int height,
-		unsigned int Priority,
-		std::string CameraID);
+	static std::shared_ptr<DepthScreenCapture> Spawn(const std::string& textureID,
+													 unsigned int width,
+													 unsigned int height,
+													 unsigned int Priority,
+													 const std::string& CameraID,
+													 const std::string& drawSettingsID);
 
 	std::shared_ptr<DepthScreenShot>	ScreenShot;
 	std::string							cameraID;
+	std::string							drawSettingsID;
 	unsigned int						width;
 	unsigned int						height;
 };

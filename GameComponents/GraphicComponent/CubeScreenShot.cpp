@@ -111,6 +111,7 @@ void CubeScreenShot::Init()
 void CubeScreenShot::Snap()
 {
 	Scene::UpdateCameraEntities();
+	Scene::UpdateDrawSettingsEntities();
 	Scene::UpdateObjectEntities();
 
 	const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& objects = Scene::GetAllObjectEntities();
@@ -119,6 +120,8 @@ void CubeScreenShot::Snap()
 void CubeScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
+
+	auto drawSettings = Scene::GetDrawSettings(this->drawSettingsID);
 
 	std::weak_ptr<CameraEntity> wpCE;
 	CameraEntities::Find(this->cameraID, wpCE);
@@ -130,9 +133,9 @@ void CubeScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr<
 	for(std::size_t i = 0; i < 6; ++i)
 	{
 		std::shared_ptr<GraphicCameraEntity> si = this->SetupScene(i, spCE);
-		this->SetupSnapShot(i, si, list);
-		this->TakeScreenSnapShot(i, si, list);
-		this->CleanupSnapShot(i, si, list);
+		this->SetupSnapShot(i, si, drawSettings, list);
+		this->TakeScreenSnapShot(i, si, drawSettings, list);
+		this->CleanupSnapShot(i, si, drawSettings, list);
 	}
 }
 
@@ -200,13 +203,13 @@ std::shared_ptr<GraphicCameraEntity> CubeScreenShot::SetupScene(std::size_t side
 	
 	return std::make_shared<GraphicCameraEntity>(GraphicCameraEntity(cam, this->width, this->height));
 }
-void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
-	if(Camera->GetClearScreen() == true)
+	if(drawSettings->GetClearScreen() == true)
 	{
-		auto c = Camera->GetClearColor();
+		auto c = drawSettings->GetClearColor();
 		d3dStuff.pImmediateContext->ClearRenderTargetView(this->pColorMapRTV[side], c.data());
 	}
 	d3dStuff.pImmediateContext->ClearDepthStencilView(this->pDepthMapDSV, D3D11_CLEAR_DEPTH, 1.0f, 0);
@@ -215,13 +218,13 @@ void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCame
 	d3dStuff.pImmediateContext->OMSetRenderTargets(1, renderTargets, this->pDepthMapDSV);
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport);
 }
-void CubeScreenShot::TakeScreenSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::TakeScreenSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	Scene::DrawObjects(Camera, list);
+	Scene::DrawObjects(Camera, drawSettings, list);
 }
-void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
+void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 	auto& d3dStuff = graphic.D3DStuff;
@@ -229,10 +232,14 @@ void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCa
 	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture[0]);
 }
 
-std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(unsigned int width, unsigned int height, const std::string& cameraID)
+std::shared_ptr<CubeScreenShot> CubeScreenShot::Spawn(unsigned int width,
+													  unsigned int height,
+													  const std::string& cameraID,
+													  const std::string& drawSettingsID)
 {
 	std::shared_ptr<CubeScreenShot> newObject(new CubeScreenShot());
 	newObject->cameraID = cameraID;
+	newObject->drawSettingsID = drawSettingsID;
 	newObject->width = width;
 	newObject->height = height;
 
