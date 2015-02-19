@@ -1,12 +1,14 @@
 #ifndef __LuaKeyAction__
 #define __LuaKeyAction__
 
-#include "LuaProcesses.h"
+#include "Linker.h"
+
+#include <LuaProcesses.h>
 #include <string>
 #include <luabind\luabind.hpp>
-#include <InputKeysEnum.h>
+#include "InputKeysEnum.h"
 
-class ScriptComponentDLL_API LuaKeyAction : public LuaProcesses
+class ScriptInputDLL_API LuaKeyAction : public LuaProcesses
 {
 public:
 	LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeyStatus inputWanted, luabind::object inputFunction);

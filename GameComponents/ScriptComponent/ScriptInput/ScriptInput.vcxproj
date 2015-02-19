@@ -27,13 +27,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InputKeysEnum.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaInputKeyActionSetup.h" />
+    <ClInclude Include="LuaKeyAction.h" />
     <ClInclude Include="LuaMouse.h" />
     <ClInclude Include="ScriptInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="LuaInputKeyActionSetup.cpp" />
+    <ClCompile Include="LuaKeyAction.cpp" />
     <ClCompile Include="LuaMouse.cpp" />
     <ClCompile Include="ScriptInput.cpp" />
   </ItemGroup>

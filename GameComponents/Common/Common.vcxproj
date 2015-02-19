@@ -248,7 +248,6 @@
   <ItemGroup>
     <ClInclude Include="CameraEntity.h" />
     <ClInclude Include="EntityList.h" />
-    <ClInclude Include="InputKeysEnum.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Keys.h" />

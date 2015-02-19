@@ -39,7 +39,6 @@ LoopCall(50, UpdateText);
 
 local lastTimeCheck = 0.0;
 local lastGraphicFrameCheck = GetGraphicFrame();
-local lastInputFrameCheck = GetInputFrame();
 local lastScriptFrameCheck = GetScriptFrame();
 local lastAnimationFrameCheck = GetAnimationFrame();
 local lastPhysicsFrameCheck = GetPhysicsFrame();
@@ -53,12 +52,7 @@ function UpdateFrameText()
 	local graphicFrameDifference = graphicFrameCount - lastGraphicFrameCheck;
 	lastGraphicFrameCheck = graphicFrameCount;
 	local graphicFrame = graphicFrameDifference / timeDifference;
-
-	local inputFrameCount = GetInputFrame();
-	local inputFrameDifference = inputFrameCount - lastInputFrameCheck;
-	lastInputFrameCheck = inputFrameCount;
-	local inputFrame = inputFrameDifference / timeDifference;
-
+    
 	local scriptFrameCount = GetScriptFrame();
 	local scriptFrameDifference = scriptFrameCount - lastScriptFrameCheck;
 	lastScriptFrameCheck = scriptFrameCount;
@@ -76,7 +70,6 @@ function UpdateFrameText()
 
 	local message = "Frame Rate:" ..
 	" Graphic: " .. string.format("%3.2f", graphicFrame) ..
-	" Input: " .. string.format("%3.2f", inputFrame) ..
 	" Script: " .. string.format("%3.2f", scriptFrame) ..
 	" Animation: " .. string.format("%3.2f", animationFrame) ..
 	" Physics: " .. string.format("%3.2f", physicFrame);

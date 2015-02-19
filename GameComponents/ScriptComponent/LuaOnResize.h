@@ -4,7 +4,6 @@
 #include "LuaProcesses.h"
 #include <string>
 #include <luabind\luabind.hpp>
-#include <InputKeysEnum.h>
 #include <Message.h>
 
 class ScriptComponentDLL_API LuaOnResize : public LuaProcesses

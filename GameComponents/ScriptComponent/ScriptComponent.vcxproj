@@ -256,7 +256,6 @@
     <ClInclude Include="ProcessMessage.h" />
     <ClInclude Include="LuaError.h" />
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="LuaKeyAction.h" />
     <ClInclude Include="LuaLoopCall.h" />
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="LuaProcesses.h" />
@@ -277,7 +276,6 @@
     <ClCompile Include="LuaWaitForProcess.cpp" />
     <ClCompile Include="ProcessMessage.cpp" />
     <ClCompile Include="LuaError.cpp" />
-    <ClCompile Include="LuaKeyAction.cpp" />
     <ClCompile Include="LuaLoopCall.cpp" />
     <ClCompile Include="ScriptManager.cpp" />
   </ItemGroup>

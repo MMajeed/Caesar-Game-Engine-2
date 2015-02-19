@@ -1,7 +1,6 @@
 #include "LuaWaitForProcess.h"
 #include "LuaError.h"
 #include <GraphicCommunicator\GraphicCommunicator.h>
-#include <InputCommunicator\InputCommunicator.h>
 #include <AnimationCommunicator\AnimationCommunicator.h>
 #include <PhysicsCommunicator\PhysicsCommunicator.h>
 #include "ScriptManager.h"
@@ -17,9 +16,6 @@ LuaWaitForProcess::LuaWaitForProcess(LuaWaitForProcess::ProcessType type, luabin
 	{
 		case LuaWaitForProcess::ProcessType::Graphic:
 			msg = GraphicCommunicator::GetComponent()->GetBackMessage();
-			break;
-		case LuaWaitForProcess::ProcessType::Input:
-			msg = InputCommunicator::GetComponent()->GetBackMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Script:
 			msg = ScriptManager::GetInstance().GetBackMessage();

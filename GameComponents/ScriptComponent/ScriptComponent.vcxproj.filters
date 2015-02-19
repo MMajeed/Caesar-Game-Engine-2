@@ -4,9 +4,6 @@
     <ClInclude Include="LuaProcesses.h">
       <Filter>Lua Processes</Filter>
     </ClInclude>
-    <ClInclude Include="LuaKeyAction.h">
-      <Filter>Lua Processes\LuaKeyAction</Filter>
-    </ClInclude>
     <ClInclude Include="LuaLoopCall.h">
       <Filter>Lua Processes\LuaLoopCall</Filter>
     </ClInclude>
@@ -59,9 +56,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaKeyAction.cpp">
-      <Filter>Lua Processes\LuaKeyAction</Filter>
-    </ClCompile>
     <ClCompile Include="LuaLoopCall.cpp">
       <Filter>Lua Processes\LuaLoopCall</Filter>
     </ClCompile>
@@ -121,9 +115,6 @@
     </Filter>
     <Filter Include="Lua Processes">
       <UniqueIdentifier>{e732ad2c-146e-4f56-8285-24980eed85be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Lua Processes\LuaKeyAction">
-      <UniqueIdentifier>{066781f6-0fc4-46de-8fae-591dcdbacb65}</UniqueIdentifier>
     </Filter>
     <Filter Include="Lua Processes\LuaLoopCall">
       <UniqueIdentifier>{12120ca4-4311-4d8b-95d6-baf25a7e4c90}</UniqueIdentifier>

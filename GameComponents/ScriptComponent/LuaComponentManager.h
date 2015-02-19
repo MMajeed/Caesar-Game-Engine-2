@@ -11,7 +11,6 @@
 namespace LuaComponentManager
 {
 	ScriptComponentDLL_API void WaitToProcessGraphic(luabind::object const& function);
-	ScriptComponentDLL_API void WaitToProcessInput(luabind::object const& function);
 	ScriptComponentDLL_API void WaitToProcessScript(luabind::object const& function);
 	ScriptComponentDLL_API void WaitToProcessAnimation(luabind::object const& function);
 	ScriptComponentDLL_API void WaitToProcessPhysics(luabind::object const& function);
@@ -22,7 +21,6 @@ namespace LuaComponentManager
 
 	ScriptComponentDLL_API double GetTimeSinceStart();
 	ScriptComponentDLL_API double GetGraphicFrame();
-	ScriptComponentDLL_API double GetInputFrame();
 	ScriptComponentDLL_API double GetScriptFrame();
 	ScriptComponentDLL_API double GetAnimationFrame();
 	ScriptComponentDLL_API double GetPhysicsFrame();

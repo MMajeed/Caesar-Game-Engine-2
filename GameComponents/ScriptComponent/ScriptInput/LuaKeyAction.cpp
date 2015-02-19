@@ -1,6 +1,6 @@
 #include "LuaKeyAction.h"
 #include "LuaError.h"
-#include <InputCommunicator\GetKeyStatus.h>
+#include <Windows.h>
 #include <Logger.h>
 
 LuaKeyAction::LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeyStatus inputWanted, luabind::object inputFunction)
@@ -8,12 +8,30 @@ LuaKeyAction::LuaKeyAction(InputKeysEnum::KeyCode inputKey, InputKeysEnum::KeySt
 	this->key = inputKey;
 	this->wanted = inputWanted;
 	this->function = inputFunction;
-	this->lastKeyState = GetKeyStatus::GetKey(this->key);
+	short state = GetAsyncKeyState(static_cast<int>(this->key));
+	if(state < 0)
+	{
+		this->lastKeyState = InputKeysEnum::KeyStatus::KeyDown;
+	}
+	else
+	{
+		this->lastKeyState = InputKeysEnum::KeyStatus::KeyUp;
+	}
 }
 
 void LuaKeyAction::Action(lua_State *lua)
 {
-	InputKeysEnum::KeyStatus keyStatus = GetKeyStatus::GetKey(this->key);
+	InputKeysEnum::KeyStatus keyStatus = InputKeysEnum::KeyStatus::KeyDown;
+
+	short state = GetAsyncKeyState(static_cast<int>(key));
+	if(state < 0)
+	{
+		keyStatus = InputKeysEnum::KeyStatus::KeyDown;
+	}
+	else
+	{
+		keyStatus = InputKeysEnum::KeyStatus::KeyUp;
+	}
 
 	if(this->lastKeyState != keyStatus) // If it has changed
 	{

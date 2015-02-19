@@ -31,9 +31,6 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
-    <ClInclude Include="InputKeysEnum.h">
-      <Filter>InputKeysEnum</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Entity List\Entity</Filter>
     </ClInclude>
@@ -62,9 +59,6 @@
     </Filter>
     <Filter Include="Message">
       <UniqueIdentifier>{9f928656-2491-4f9c-889a-a462f19ee5cb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="InputKeysEnum">
-      <UniqueIdentifier>{699fa837-8bdb-4586-b9c8-5a625a7d7ea0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Entity List">
       <UniqueIdentifier>{e9ecd327-a7b9-4646-a664-7d2e4d3fec83}</UniqueIdentifier>

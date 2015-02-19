@@ -4,13 +4,12 @@
 #include "LuaProcesses.h"
 #include <string>
 #include <luabind\luabind.hpp>
-#include <InputKeysEnum.h>
 #include <Message.h>
 
 class ScriptComponentDLL_API LuaWaitForProcess : public LuaProcesses
 {
 public:
-	enum class ProcessType { Graphic, Input, Script, Animation, Physics };
+	enum class ProcessType { Graphic, Script, Animation, Physics };
 	LuaWaitForProcess(ProcessType type, luabind::object inputFunction);
 
 	virtual void Update(double realTime, double deltaTime);
