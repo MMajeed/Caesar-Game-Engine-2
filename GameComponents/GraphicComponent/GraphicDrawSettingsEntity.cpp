@@ -2,7 +2,7 @@
 
 #include "GraphicObjectEntity.h"
 #include "XNAConverter.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 #include "GraphicManager.h"
 #include "3DMath.h"
 
@@ -130,19 +130,19 @@ std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GraphicDrawSettin
 
 	for(const auto& iter : this->TextureList)
 	{
-		returnValue[iter.first] = this->FindTexture(iter.second);
+		returnValue[iter.first] = this->findTexture(iter.second);
 	}
 
 	return returnValue;
 }
-std::shared_ptr<BasicTexture> GraphicDrawSettingsEntity::FindTexture(const std::string& ID) const
+std::shared_ptr<BasicTexture> GraphicDrawSettingsEntity::findTexture(const std::string& ID) const
 {
 	std::shared_ptr<BasicTexture> returnValue;
 
 	auto iter = this->TextureList.find(ID);
 	if(iter != this->TextureList.end())
 	{
-		returnValue = ResourceManager::TextureList.Find(iter->second);
+		returnValue = Resource::TextureList.find(iter->second)->second;
 	}
 	return returnValue;
 }
@@ -155,7 +155,7 @@ std::unordered_map<std::string, std::shared_ptr<Object>> GraphicDrawSettingsEnti
 {
 	return this->UserData;
 }
-std::shared_ptr<Object> GraphicDrawSettingsEntity::FindUserData(const std::string& ID) const
+std::shared_ptr<Object> GraphicDrawSettingsEntity::findUserData(const std::string& ID) const
 {
 	std::shared_ptr<Object> returnValue;
 	auto iter = this->UserData.find(ID);
@@ -177,7 +177,7 @@ std::string GraphicDrawSettingsEntity::GetVertexShaderID() const
 std::shared_ptr<VertexShader> GraphicDrawSettingsEntity::GetVertexShader() const
 {
 	const std::string& id = this->VertexShaderID;
-	std::shared_ptr<VertexShader> returnValue = ResourceManager::VertexShaderList.Find(id);
+	std::shared_ptr<VertexShader> returnValue = Resource::VertexShaderList.find(id)->second;
 	return returnValue;
 }
 
@@ -202,7 +202,7 @@ std::string GraphicDrawSettingsEntity::GetPixelShaderID() const
 std::shared_ptr<PixelShader> GraphicDrawSettingsEntity::GetPixelShader() const
 {
 	const std::string& id = this->PixelShaderID;
-	std::shared_ptr<PixelShader> returnValue = ResourceManager::PixelShaderList.Find(id);
+	std::shared_ptr<PixelShader> returnValue = Resource::PixelShaderList.find(id)->second;
 	return returnValue;
 }
 

@@ -3,8 +3,6 @@
 
 #include "Linker.h"
 
-#include <Lua.hpp>
-#include <luabind\luabind.hpp>
 #include <Singleton.h>
 #include <unordered_map>
 #include <memory>
@@ -24,15 +22,10 @@ public:
 	virtual void Work(double realTime, double deltaTime);
 	virtual void Shutdown();
 
-	lua_State *lua;
-
 	virtual void ActivateLuaClassesNFunction();
 
 	virtual void SubmitProcesses(std::string ID, std::shared_ptr<LuaProcesses> process);
 	virtual void RemoveProcesses(std::string ID);
-
-protected:
-	std::unordered_map<std::string, std::shared_ptr<LuaProcesses>> allProcesses;
 };
 
 #endif //__ScriptManager__

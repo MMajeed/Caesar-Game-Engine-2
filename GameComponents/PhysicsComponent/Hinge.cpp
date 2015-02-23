@@ -1,6 +1,7 @@
 #include "Hinge.h"
 
 #include "PhysicsManager.h"
+#include "Resource.h"
 #include <Logger.h>
 
 Hinge::Hinge()
@@ -47,7 +48,7 @@ void Hinge::Init()
 		newConstraint->setMaxMotorImpulse((float)this->Info.MaxMotorImpulse);
 
 		this->pConstraint = newConstraint;
-		physicsManager.Info.dynamicsWorld->addConstraint(this->pConstraint.get());
+		Resource::dynamicsWorld->addConstraint(this->pConstraint.get());
 	}
 }
 
@@ -57,7 +58,7 @@ void Hinge::Destory()
 
 	if(this->pConstraint)
 	{
-		physicsManager.Info.dynamicsWorld->removeConstraint(this->pConstraint.get());
+		Resource::dynamicsWorld->removeConstraint(this->pConstraint.get());
 	}
 }
 
@@ -75,8 +76,8 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 
 	std::shared_ptr<Hinge> newObject(new Hinge());
 
-	auto iter = physicsManager.RigidBodyObjs.find(RigidBodyIDA);
-	if(iter != physicsManager.RigidBodyObjs.end())
+	auto iter = Resource::RigidBodyList.find(RigidBodyIDA);
+	if(iter != Resource::RigidBodyList.end())
 	{
 		newObject->Info.RigidBodyA = std::pair<std::string, std::weak_ptr<RigidBody>>(RigidBodyIDA, iter->second);
 	}
@@ -89,8 +90,8 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 	newObject->Info.AxesA = AxesA;
 
 
-	iter = physicsManager.RigidBodyObjs.find(RigidBodyIDB);
-	if(iter != physicsManager.RigidBodyObjs.end())
+	iter = Resource::RigidBodyList.find(RigidBodyIDB);
+	if(iter != Resource::RigidBodyList.end())
 	{
 		newObject->Info.RigidBodyB = std::pair<std::string, std::weak_ptr<RigidBody>>(RigidBodyIDB, iter->second);
 	}
@@ -127,8 +128,8 @@ std::shared_ptr<Hinge> Hinge::Spawn(std::string RigidBodyIDA, CML::Vec3 PivotPoi
 
 	std::shared_ptr<Hinge> newObject(new Hinge());
 
-	auto iter = physicsManager.RigidBodyObjs.find(RigidBodyIDA);
-	if(iter != physicsManager.RigidBodyObjs.end())
+	auto iter = Resource::RigidBodyList.find(RigidBodyIDA);
+	if(iter != Resource::RigidBodyList.end())
 	{
 		newObject->Info.RigidBodyA = std::pair<std::string, std::weak_ptr<RigidBody>>(RigidBodyIDA, iter->second);
 	}

@@ -3,142 +3,190 @@
   <ItemGroup>
     <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="CollisionShape.h">
-      <Filter>CollisionShape</Filter>
+      <Filter>Component\CollisionShape</Filter>
     </ClInclude>
     <ClInclude Include="SphereShape.h">
-      <Filter>CollisionShape\Primitives\SphereShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\SphereShape</Filter>
     </ClInclude>
     <ClInclude Include="BoxShape.h">
-      <Filter>CollisionShape\Primitives\BoxShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\BoxShape</Filter>
     </ClInclude>
     <ClInclude Include="CylinderShape.h">
-      <Filter>CollisionShape\Primitives\CylinderShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\CylinderShape</Filter>
     </ClInclude>
     <ClInclude Include="CapsuleShape.h">
-      <Filter>CollisionShape\Primitives\CapsuleShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\CapsuleShape</Filter>
     </ClInclude>
     <ClInclude Include="ConeShape.h">
-      <Filter>CollisionShape\Primitives\ConeShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\ConeShape</Filter>
     </ClInclude>
     <ClInclude Include="ConvexHullShape.h">
-      <Filter>CollisionShape\Meshes\ConvexHullShape</Filter>
+      <Filter>Component\CollisionShape\Meshes\ConvexHullShape</Filter>
     </ClInclude>
     <ClInclude Include="ConvexTriangleMeshShape.h">
-      <Filter>CollisionShape\Meshes\ConvexTriangleMeshShape</Filter>
+      <Filter>Component\CollisionShape\Meshes\ConvexTriangleMeshShape</Filter>
     </ClInclude>
     <ClInclude Include="RigidBody.h">
-      <Filter>RigidBody</Filter>
+      <Filter>Component\RigidBody</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="SliderBodyToBody.h">
-      <Filter>Constraint\SliderBodyToBody</Filter>
+      <Filter>Component\Constraint\SliderBodyToBody</Filter>
     </ClInclude>
     <ClInclude Include="Constraint.h">
-      <Filter>Constraint</Filter>
+      <Filter>Component\Constraint</Filter>
     </ClInclude>
     <ClInclude Include="BallSocket.h">
-      <Filter>Constraint\BallSocket</Filter>
+      <Filter>Component\Constraint\BallSocket</Filter>
     </ClInclude>
     <ClInclude Include="ConeTwist.h">
-      <Filter>Constraint\ConeTwist</Filter>
+      <Filter>Component\Constraint\ConeTwist</Filter>
     </ClInclude>
     <ClInclude Include="Hinge.h">
-      <Filter>Constraint\Hinge</Filter>
+      <Filter>Component\Constraint\Hinge</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsFactorySetup.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionShapeFactory.h">
+      <Filter>Factory\CollisionShapeFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstraintFactory.h">
+      <Filter>Factory\ConstraintFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBodyFactory.h">
+      <Filter>Factory\RigidBodyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="CollisionShape.cpp">
-      <Filter>CollisionShape</Filter>
+      <Filter>Component\CollisionShape</Filter>
     </ClCompile>
     <ClCompile Include="SphereShape.cpp">
-      <Filter>CollisionShape\Primitives\SphereShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\SphereShape</Filter>
     </ClCompile>
     <ClCompile Include="BoxShape.cpp">
-      <Filter>CollisionShape\Primitives\BoxShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\BoxShape</Filter>
     </ClCompile>
     <ClCompile Include="CylinderShape.cpp">
-      <Filter>CollisionShape\Primitives\CylinderShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\CylinderShape</Filter>
     </ClCompile>
     <ClCompile Include="CapsuleShape.cpp">
-      <Filter>CollisionShape\Primitives\CapsuleShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\CapsuleShape</Filter>
     </ClCompile>
     <ClCompile Include="ConeShape.cpp">
-      <Filter>CollisionShape\Primitives\ConeShape</Filter>
+      <Filter>Component\CollisionShape\Primitives\ConeShape</Filter>
     </ClCompile>
     <ClCompile Include="ConvexHullShape.cpp">
-      <Filter>CollisionShape\Meshes\ConvexHullShape</Filter>
+      <Filter>Component\CollisionShape\Meshes\ConvexHullShape</Filter>
     </ClCompile>
     <ClCompile Include="ConvexTriangleMeshShape.cpp">
-      <Filter>CollisionShape\Meshes\ConvexTriangleMeshShape</Filter>
+      <Filter>Component\CollisionShape\Meshes\ConvexTriangleMeshShape</Filter>
     </ClCompile>
     <ClCompile Include="RigidBody.cpp">
-      <Filter>RigidBody</Filter>
+      <Filter>Component\RigidBody</Filter>
     </ClCompile>
     <ClCompile Include="SliderBodyToBody.cpp">
-      <Filter>Constraint\SliderBodyToBody</Filter>
+      <Filter>Component\Constraint\SliderBodyToBody</Filter>
     </ClCompile>
     <ClCompile Include="Constraint.cpp">
-      <Filter>Constraint</Filter>
+      <Filter>Component\Constraint</Filter>
     </ClCompile>
     <ClCompile Include="BallSocket.cpp">
-      <Filter>Constraint\BallSocket</Filter>
+      <Filter>Component\Constraint\BallSocket</Filter>
     </ClCompile>
     <ClCompile Include="ConeTwist.cpp">
-      <Filter>Constraint\ConeTwist</Filter>
+      <Filter>Component\Constraint\ConeTwist</Filter>
     </ClCompile>
     <ClCompile Include="Hinge.cpp">
-      <Filter>Constraint\Hinge</Filter>
+      <Filter>Component\Constraint\Hinge</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFactorySetup.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionShapeFactory.cpp">
+      <Filter>Factory\CollisionShapeFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstraintFactory.cpp">
+      <Filter>Factory\ConstraintFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="RigidBodyFactory.cpp">
+      <Filter>Factory\RigidBodyFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="CollisionShape">
+    <Filter Include="Component">
+      <UniqueIdentifier>{be9fe790-db8b-4a47-9831-65bca4ead83e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{25aee842-098c-4158-b454-fc83fbada736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{3d9de48d-8224-4759-829e-33cbd706faa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\CollisionShape">
       <UniqueIdentifier>{7b888793-e3d9-40d8-a236-3dd7afcc3ce8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Primitives">
+    <Filter Include="Component\CollisionShape\Primitives">
       <UniqueIdentifier>{cbcd61d4-d712-422c-8b54-09a916ae80bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Primitives\SphereShape">
+    <Filter Include="Component\CollisionShape\Primitives\SphereShape">
       <UniqueIdentifier>{96ff94b0-b46d-4818-b919-21d913be0307}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Primitives\BoxShape">
+    <Filter Include="Component\CollisionShape\Primitives\BoxShape">
       <UniqueIdentifier>{8c85171c-357c-41a5-b47e-108dbeef6f82}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Primitives\CylinderShape">
+    <Filter Include="Component\CollisionShape\Primitives\CylinderShape">
       <UniqueIdentifier>{e62745ec-c60c-40d1-8a3d-228a3c0027bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Primitives\CapsuleShape">
+    <Filter Include="Component\CollisionShape\Primitives\CapsuleShape">
       <UniqueIdentifier>{51f729c3-9d3c-4d54-9a23-5e3b124ac4bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Primitives\ConeShape">
+    <Filter Include="Component\CollisionShape\Primitives\ConeShape">
       <UniqueIdentifier>{0dd18e38-f821-43ef-a537-4cd3772b36f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Meshes">
+    <Filter Include="Component\CollisionShape\Meshes">
       <UniqueIdentifier>{d0ef213d-23c9-4960-ab53-f42aa374cb6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Meshes\ConvexHullShape">
+    <Filter Include="Component\CollisionShape\Meshes\ConvexHullShape">
       <UniqueIdentifier>{f49cc353-b2d1-444d-a0ac-b5a6a326bbf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="CollisionShape\Meshes\ConvexTriangleMeshShape">
+    <Filter Include="Component\CollisionShape\Meshes\ConvexTriangleMeshShape">
       <UniqueIdentifier>{58448746-19f8-4493-8f37-eb18838290a3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint">
+    <Filter Include="Component\Constraint">
       <UniqueIdentifier>{d1de9f85-72e9-4ca9-8bec-57944dd51fbc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\SliderBodyToBody">
+    <Filter Include="Component\Constraint\SliderBodyToBody">
       <UniqueIdentifier>{1cbbcc8f-b2eb-4b51-b3a1-2da95a81ec21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\BallSocket">
+    <Filter Include="Component\Constraint\BallSocket">
       <UniqueIdentifier>{ab573d41-deaf-4389-9685-225e5b5609dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\ConeTwist">
+    <Filter Include="Component\Constraint\ConeTwist">
       <UniqueIdentifier>{f7f1b90f-37ef-4541-92bd-3d082414e49b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Constraint\Hinge">
+    <Filter Include="Component\Constraint\Hinge">
       <UniqueIdentifier>{ce19b6a3-296a-4c40-81bf-afd5d03cf4ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RigidBody">
+    <Filter Include="Component\RigidBody">
       <UniqueIdentifier>{0a7990aa-2fb4-4b03-b104-0c5a79454ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\CollisionShapeFactory">
+      <UniqueIdentifier>{b1fc5aa8-45d7-4059-923a-1ec27890cc27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ConstraintFactory">
+      <UniqueIdentifier>{0c96a411-89fe-454e-a323-4553f3477665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\RigidBodyFactory">
+      <UniqueIdentifier>{586635fc-2aa3-449b-9a65-708bbea3b3c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

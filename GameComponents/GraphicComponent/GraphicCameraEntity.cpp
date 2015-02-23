@@ -2,7 +2,7 @@
 
 #include "GraphicObjectEntity.h"
 #include "XNAConverter.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 #include "GraphicManager.h"
 #include "3DMath.h"
 

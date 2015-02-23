@@ -1,5 +1,6 @@
 #include "DepthScreenShot.h"
 #include "GraphicManager.h"
+#include "Resource.h"
 #include <Object.h>
 #include <GenerateGUID.h>
 #include "Scene.h"
@@ -13,7 +14,7 @@ DepthScreenShot::DepthScreenShot()
 void DepthScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 
 	// Use typeless format because the DSV is going to interpret
 	// the bits as DXGI_FORMAT_D24_UNORM_S8_UINT, whereas the SRV is going to interpret
@@ -90,7 +91,7 @@ void DepthScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr
 void DepthScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto d3dStuff = graphic.D3DStuff;
+	auto d3dStuff = Resource::D3DStuff;
 
 	d3dStuff.pImmediateContext->RSSetViewports(1, &this->Viewport);
 
@@ -109,7 +110,7 @@ void DepthScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Ca
 void DepthScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 
 	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture[0]);
 }

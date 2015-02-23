@@ -4,9 +4,7 @@
 #include "LuaWaitForProcess.h"
 #include <Logger.h>
 #include "ScriptManager.h"
-#include <GraphicCommunicator\GraphicCommunicator.h>
-#include <AnimationCommunicator\AnimationCommunicator.h>
-#include <PhysicsCommunicator\PhysicsCommunicator.h>
+#include <Components.h>
 #include <GenerateGUID.h>
 
 namespace LuaComponentManager
@@ -58,19 +56,19 @@ namespace LuaComponentManager
 	}
 	double GetGraphicFrame()
 	{
-		return (double)GraphicCommunicator::GetComponent()->timer.FrameCount;
+		return (double)Components::Graphic->GetComponent()->timer.FrameCount;
 	}
-		double GetScriptFrame()
+	double GetScriptFrame()
 	{
 		return (double)ScriptManager::GetInstance().timer.FrameCount;
 	}
 	double GetAnimationFrame()
 	{
-		return (double)AnimationCommunicator::GetComponent()->timer.FrameCount;
+		return (double)Components::Animation->GetComponent()->timer.FrameCount;
 	}
 	double GetPhysicsFrame()
 	{
-		return (double)PhysicsCommunicator::GetComponent()->timer.FrameCount;
+		return (double)Components::Physics->GetComponent()->timer.FrameCount;
 	}
 
 	std::string GenerateGUID()

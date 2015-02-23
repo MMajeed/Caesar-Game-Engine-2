@@ -17,4 +17,6 @@ public:
 	static void Init(lua_State *lua);
 };
 
+
+
 #endif //__ScriptAnimation__

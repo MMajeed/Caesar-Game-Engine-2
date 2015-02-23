@@ -1,14 +1,14 @@
 #include "LuaBasicTexture.h"
 
-#include <GraphicCommunicator\BasicTextureConfig.h>
+#include <Components.h>
 
 LuaBasicTexture::LuaBasicTexture(std::string textureFile)
 {
-	this->ID = BasicTextureConfig::Create(textureFile);
+	this->ID = Components::Graphic->TextureFactory()->Create(textureFile);
 }
 void LuaBasicTexture::Release()
 {
-	BasicTextureConfig::Release(this->ID);
+	Components::Graphic->TextureFactory()->Release(this->ID);
 	this->ID = "";
 }
 LuaBasicTexture::LuaBasicTexture(const GenericLuaObject& v) : GenericLuaObject(v){}

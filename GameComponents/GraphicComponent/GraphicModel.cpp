@@ -4,6 +4,7 @@
 #include "GeometryShader.h"
 #include "PixelShader.h"
 #include "GraphicManager.h"
+#include "Resource.h"
 #include <Logger.h>
 #include <Windows.h>
 #include <xnamath.h>
@@ -13,7 +14,7 @@ GraphicModel::GraphicModel(){}
 
 void GraphicModel::InitVertexBuffer()
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	std::vector<char> verticeBytes = this->GetVerticeByte();
 
@@ -34,7 +35,7 @@ void GraphicModel::InitVertexBuffer()
 }
 void GraphicModel::InitIndexBuffer()
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	if(this->Model->NumberOfFaces == 0 || this->Model->NumberOfFaces >= 4){ Logger::LogError("Number of indices has invalid value"); }
 	else if(this->Model->NumberOfFaces == 1){ this->Topology = D3D11_PRIMITIVE_TOPOLOGY_POINTLIST; }
@@ -63,7 +64,7 @@ void GraphicModel::InitIndexBuffer()
 
 void GraphicModel::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
-	ID3D11DeviceContext* pImmediateContext = GraphicManager::GetInstance().D3DStuff.pImmediateContext;
+	ID3D11DeviceContext* pImmediateContext = Resource::D3DStuff.pImmediateContext;
 
 	UINT stride = this->GetInputLayoutSize();
 	UINT offset = 0;

@@ -2,7 +2,7 @@
 #include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 BasicScreenCapture::BasicScreenCapture()
 {
@@ -12,10 +12,10 @@ void BasicScreenCapture::Init()
 	this->ScreenShot = BasicScreenShot::Spawn(this->width, this->height, this->TextureID.size(), this->cameraID, this->drawSettingsID);
 	for(unsigned int i = 0; i < this->TextureID.size(); ++i)
 	{
-		auto texture = ResourceManager::TextureList.Find(this->TextureID[i]);
-		if(texture)
+		auto texture = Resource::TextureList.find(this->TextureID[i]);
+		if(texture != Resource::TextureList.end())
 		{
-			texture->pTexture = this->ScreenShot->pScreenTexture[i];
+			texture->second->pTexture = this->ScreenShot->pScreenTexture[i];
 		}
 	}
 }

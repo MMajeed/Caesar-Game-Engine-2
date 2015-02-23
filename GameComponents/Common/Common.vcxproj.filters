@@ -22,6 +22,21 @@
     <ClCompile Include="DrawSettingsEntity.cpp">
       <Filter>Entity List\Entity\DrawSettingsEntity</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationFactory.cpp">
+      <Filter>Factory\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Components.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsFactory.cpp">
+      <Filter>Factory\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptFactory.cpp">
+      <Filter>Factory\Script</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicFactory.cpp">
+      <Filter>Factory\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Message.h">
@@ -49,6 +64,60 @@
     <ClInclude Include="DrawSettingsEntity.h">
       <Filter>Entity List\Entity\DrawSettingsEntity</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationFactory.h">
+      <Filter>Factory\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Components.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="iAnimationControllerFactory.h">
+      <Filter>Factory\Animation\iAnimationControllerFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iBasicAnimationFactory.h">
+      <Filter>Factory\Animation\iBasicAnimationFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsFactory.h">
+      <Filter>Factory\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="iCollisionShapeFactory.h">
+      <Filter>Factory\Physics\iCollisionShapeFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iConstraintFactory.h">
+      <Filter>Factory\Physics\iConstraintFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iRigidBodyFactory.h">
+      <Filter>Factory\Physics\iRigidBodyFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptFactory.h">
+      <Filter>Factory\Script</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicFactory.h">
+      <Filter>Factory\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="iGraphicModelFactory.h">
+      <Filter>Factory\Graphic\iGraphicModelFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iGraphicSettingsFactory.h">
+      <Filter>Factory\Graphic\iGraphicSettingsFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iShaderFactory.h">
+      <Filter>Factory\Graphic\iShaderFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iScreenShotFactory.h">
+      <Filter>Factory\Graphic\iScreenShotFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iTextureFactory.h">
+      <Filter>Factory\Graphic\iTextureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iBasicScreenCaptureFactory.h">
+      <Filter>Factory\Graphic\ScreenCaptureFactory\iBasicScreenCaptureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iCubeScreenCaptureFactory.h">
+      <Filter>Factory\Graphic\ScreenCaptureFactory\iCubeScreenCaptureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="iDepthScreenCaptureFactory.h">
+      <Filter>Factory\Graphic\ScreenCaptureFactory\iDepthScreenCaptureFactory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Keys">
@@ -74,6 +143,63 @@
     </Filter>
     <Filter Include="Entity List\Entity\DrawSettingsEntity">
       <UniqueIdentifier>{3ab339d8-73e8-4707-97b8-9ab7c698bc8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{e701b396-eb85-48f3-b8b9-3d7330bd9d6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Animation">
+      <UniqueIdentifier>{98d29a0d-4b23-4beb-b30a-b43c3818217e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Animation\iAnimationControllerFactory">
+      <UniqueIdentifier>{691785c8-83a2-4784-962c-232e4abbfaf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Animation\iBasicAnimationFactory">
+      <UniqueIdentifier>{30a0503f-0803-4668-b638-a8bbc20ae7a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Physics">
+      <UniqueIdentifier>{219ab7ed-1fb2-49d7-9499-4ee9c54311ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Physics\iCollisionShapeFactory">
+      <UniqueIdentifier>{bfbf3325-093b-4bbc-9b27-4defd0ef5987}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Physics\iConstraintFactory">
+      <UniqueIdentifier>{b37e03a0-536e-49fb-bf5b-19ca8ee104f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Physics\iRigidBodyFactory">
+      <UniqueIdentifier>{1a3d5451-b867-49f1-946b-b210b382462f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Script">
+      <UniqueIdentifier>{c5cd8c81-9766-489e-85e6-29de8e2f6de3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic">
+      <UniqueIdentifier>{9cbbf17f-5363-43da-93c3-4e84533b3da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\iGraphicModelFactory">
+      <UniqueIdentifier>{36612860-2a7f-48c2-ba44-eb5bb217356e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\iGraphicSettingsFactory">
+      <UniqueIdentifier>{da756a80-b59c-4f9c-a914-de9e87f62483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\iShaderFactory">
+      <UniqueIdentifier>{c256558a-fbc1-42fd-b181-45d798a4c1c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\iScreenShotFactory">
+      <UniqueIdentifier>{26bd4214-3c83-4529-871a-ef772db354d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\iTextureFactory">
+      <UniqueIdentifier>{5cc4d1ac-c588-4d14-ae4d-3f63eb1bdcf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\ScreenCaptureFactory">
+      <UniqueIdentifier>{6d9daaf7-2cc2-444d-b001-83089113b143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\ScreenCaptureFactory\iBasicScreenCaptureFactory">
+      <UniqueIdentifier>{c02348b3-fd3d-4004-a8bd-3df74d7eecd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\ScreenCaptureFactory\iCubeScreenCaptureFactory">
+      <UniqueIdentifier>{5434c32c-04a9-4b3c-952b-58f5e332ffbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\Graphic\ScreenCaptureFactory\iDepthScreenCaptureFactory">
+      <UniqueIdentifier>{06917bf0-ad78-4179-a78e-af05207d56ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

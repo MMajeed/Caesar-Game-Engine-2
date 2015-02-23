@@ -1,6 +1,7 @@
 #include "CubeScreenShot.h"
 
 #include "GraphicManager.h"
+#include "Resource.h"
 #include "Scene.h"
 #include <EntityList.h>
 #include <Object.h>
@@ -14,7 +15,7 @@ CubeScreenShot::CubeScreenShot()
 void CubeScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 
 	ID3D11Texture2D* colorMap = 0;
 
@@ -206,7 +207,7 @@ std::shared_ptr<GraphicCameraEntity> CubeScreenShot::SetupScene(std::size_t side
 void CubeScreenShot::SetupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 	if(drawSettings->GetClearScreen() == true)
 	{
 		auto c = drawSettings->GetClearColor();
@@ -227,7 +228,7 @@ void CubeScreenShot::TakeScreenSnapShot(std::size_t side, std::shared_ptr<Graphi
 void CubeScreenShot::CleanupSnapShot(std::size_t side, std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 
 	d3dStuff.pImmediateContext->GenerateMips(this->pScreenTexture[0]);
 }

@@ -2,7 +2,7 @@
 #include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 DepthScreenCapture::DepthScreenCapture()
 {
@@ -18,10 +18,10 @@ void DepthScreenCapture::Snap(const std::unordered_map<std::string, std::shared_
 	this->ScreenShot->drawSettingsID = this->drawSettingsID;
 	this->ScreenShot->Snap(list);
 
-	auto texture = ResourceManager::TextureList.Find(this->TextureID[0]);
-	if(texture)
+	auto texture = Resource::TextureList.find(this->TextureID[0]);
+	if(texture != Resource::TextureList.end())
 	{
-		texture->pTexture = this->ScreenShot->pScreenTexture[0];
+		texture->second->pTexture = this->ScreenShot->pScreenTexture[0];
 	}
 }
 std::shared_ptr<ScreenCapture> DepthScreenCapture::clone() const

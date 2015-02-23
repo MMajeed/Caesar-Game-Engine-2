@@ -10,12 +10,12 @@
 #include "Scene.h"
 #include <Logger.h>
 #include <sstream>
-#include "ResourceManager.h"
+#include "Resource.h"
 
 GraphicManager::GraphicManager()
 {
-	this->D3DStuff.IsInitialized = false;
-	this->D3DStuff.VSync = 0;
+	Resource::D3DStuff.IsInitialized = false;
+	Resource::D3DStuff.VSync = 0;
 }
 
 void GraphicManager::Init()
@@ -27,7 +27,7 @@ void GraphicManager::Init()
 void GraphicManager::Work(double realTime, double deltaTime)
 {
 	MSG msg = {0};
-	BOOL result = PeekMessage(&msg, this->window.hWnd, 0, 0, PM_REMOVE);
+	BOOL result = PeekMessage(&msg, Resource::window.hWnd, 0, 0, PM_REMOVE);
 	if(result == TRUE)
 	{
 		TranslateMessage(&msg);
@@ -52,19 +52,19 @@ void GraphicManager::ProcessDrawing()
 
 	this->RunAllCapture(objects);
 
-	auto camera = Scene::GetCamera(this->DefaultCamera, (unsigned int)this->D3DStuff.vp.Width, (unsigned int)this->D3DStuff.vp.Height);
-	auto drawSettings = Scene::GetDrawSettings(this->DefaultDrawSettings);
+	auto camera = Scene::GetCamera(Resource::DefaultCamera, (unsigned int)Resource::D3DStuff.vp.Width, (unsigned int)Resource::D3DStuff.vp.Height);
+	auto drawSettings = Scene::GetDrawSettings(Resource::DefaultDrawSettings);
 	
 	Scene::ClearScreen(camera, drawSettings);
 	Scene::DrawObjects(camera, drawSettings, objects);
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)
-	this->D3DStuff.pSwapChain->Present(this->D3DStuff.VSync, 0);
+	Resource::D3DStuff.pSwapChain->Present(Resource::D3DStuff.VSync, 0);
 }
 
 void GraphicManager::RunAllCapture(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
-	const auto& screenCapturesMap = ResourceManager::ScreenCaptureList.All();
+	const auto& screenCapturesMap = Resource::ScreenCaptureList;
 	std::vector<std::shared_ptr<ScreenCapture>> screenCapturesVector;
 	for(auto it = screenCapturesMap.begin(); it != screenCapturesMap.end(); ++it) 
 	{
@@ -89,9 +89,9 @@ void GraphicManager::InitWindow()
 {
 	Logger::AddErrorLogger(MesageBoxError);
 
-	this->window.hInst = GetModuleHandle(NULL);
-	this->window.height = 712;
-	this->window.width = 1080;
+	Resource::window.hInst = GetModuleHandle(NULL);
+	Resource::window.height = 712;
+	Resource::window.width = 1080;
 
 	// Register class
 	WNDCLASSEX wcex;
@@ -100,7 +100,7 @@ void GraphicManager::InitWindow()
 	wcex.lpfnWndProc = GraphicManager::WndProc;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;
-	wcex.hInstance = this->window.hInst;
+	wcex.hInstance = Resource::window.hInst;
 	wcex.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -114,21 +114,21 @@ void GraphicManager::InitWindow()
 	}
 
 	// Create window
-	this->window.hInst = this->window.hInst;
-	RECT rc = {0, 0, this->window.width, this->window.height};
+	Resource::window.hInst = Resource::window.hInst;
+	RECT rc = {0, 0, Resource::window.width, Resource::window.height};
 	AdjustWindowRect(&rc, WS_OVERLAPPEDWINDOW, FALSE);
-	this->window.hWnd = 0;
-	this->window.hWnd = CreateWindow(L"DirectX11Basic", L"Caesar Game Engine", WS_OVERLAPPEDWINDOW,
-									 CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, this->window.hInst,
+	Resource::window.hWnd = 0;
+	Resource::window.hWnd = CreateWindow(L"DirectX11Basic", L"Caesar Game Engine", WS_OVERLAPPEDWINDOW,
+									 CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, Resource::window.hInst,
 									 NULL);
 
 	// Try to create the window...
-	if(!(this->window.hWnd))
+	if(!(Resource::window.hWnd))
 	{
 		Logger::LogError("Failed at creating window");
 	}
 
-	ShowWindow(this->window.hWnd, SW_SHOWNORMAL);
+	ShowWindow(Resource::window.hWnd, SW_SHOWNORMAL);
 }
 void GraphicManager::InitD3D()
 {
@@ -138,14 +138,14 @@ void GraphicManager::InitD3D()
 	this->InitDepthStencilStates();
 	this->InitViewPort();
 
-	this->D3DStuff.IsInitialized = true;
+	Resource::D3DStuff.IsInitialized = true;
 }
 
 void GraphicManager::InitDevice()
 {
-	unsigned int& Width = this->window.width;
-	unsigned int& Height = this->window.height;
-	HWND& hwnd = this->window.hWnd;
+	unsigned int& Width = Resource::window.width;
+	unsigned int& Height = Resource::window.height;
+	HWND& hwnd = Resource::window.hWnd;
 
 	HRESULT hr = S_OK;
 
@@ -189,15 +189,15 @@ void GraphicManager::InitDevice()
 	IDXGISwapChain* pSwapChain = nullptr;
 	for(UINT driverTypeIndex = 0; driverTypeIndex < numDriverTypes; driverTypeIndex++)
 	{
-		this->D3DStuff.driverType = driverTypes[driverTypeIndex];
-		hr = D3D11CreateDeviceAndSwapChain(NULL, this->D3DStuff.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
-										   D3D11_SDK_VERSION, &sd, &pSwapChain, &pd3dDevice, &this->D3DStuff.featureLevel, &pImmediateContext);
+		Resource::D3DStuff.driverType = driverTypes[driverTypeIndex];
+		hr = D3D11CreateDeviceAndSwapChain(NULL, Resource::D3DStuff.driverType, NULL, createDeviceFlags, featureLevels, numFeatureLevels,
+										   D3D11_SDK_VERSION, &sd, &pSwapChain, &pd3dDevice, &Resource::D3DStuff.featureLevel, &pImmediateContext);
 		if(SUCCEEDED(hr))
 			break;
 	}
-	this->D3DStuff.pd3dDevice = pd3dDevice;
-	this->D3DStuff.pImmediateContext = pImmediateContext;
-	this->D3DStuff.pSwapChain = pSwapChain;
+	Resource::D3DStuff.pd3dDevice = pd3dDevice;
+	Resource::D3DStuff.pImmediateContext = pImmediateContext;
+	Resource::D3DStuff.pSwapChain = pSwapChain;
 }
 void GraphicManager::InitRenderTarget()
 {
@@ -205,19 +205,19 @@ void GraphicManager::InitRenderTarget()
 
 	// Create a render target view
 	ID3D11Texture2D* pBackBuffer = NULL;
-	hr = this->D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
+	hr = Resource::D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 	if(FAILED(hr)){ Logger::LogError("Failed at creating back buffer"); }
 
 	ID3D11RenderTargetView*	pRenderTargetView = nullptr;
-	hr = this->D3DStuff.pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
+	hr = Resource::D3DStuff.pd3dDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
 	pBackBuffer->Release();
 	if(FAILED(hr)){ Logger::LogError("Failed at creating Render Target view"); }
-	this->D3DStuff.pRenderTargetView = pRenderTargetView;
+	Resource::D3DStuff.pRenderTargetView = pRenderTargetView;
 }
 void GraphicManager::InitDepthStencilView()
 {
-	unsigned int& Width = this->window.width;
-	unsigned int& Height = this->window.height;
+	unsigned int& Width = Resource::window.width;
+	unsigned int& Height = Resource::window.height;
 	HRESULT hr = S_OK;
 
 	// Set up depth & stencil buffer
@@ -240,9 +240,9 @@ void GraphicManager::InitDepthStencilView()
 
 	// Create the texture for the depth buffer using the filled out description.
 	ID3D11Texture2D* pDepthStencilBuffer = nullptr;
-	hr = this->D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &pDepthStencilBuffer);
+	hr = Resource::D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &pDepthStencilBuffer);
 	if(FAILED(hr)){ Logger::LogError("Failed at creating dept buffer"); }
-	this->D3DStuff.pDepthStencilBuffer = pDepthStencilBuffer;
+	Resource::D3DStuff.pDepthStencilBuffer = pDepthStencilBuffer;
 
 	// Initialize the depth stencil view.
 	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
@@ -254,9 +254,9 @@ void GraphicManager::InitDepthStencilView()
 
 	// Create the depth stencil view.
 	ID3D11DepthStencilView* pDepthStencilView = nullptr;
-	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilView(this->D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &pDepthStencilView);
+	hr = Resource::D3DStuff.pd3dDevice->CreateDepthStencilView(Resource::D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &pDepthStencilView);
 	if(FAILED(hr)){ Logger::LogError("Failed at creating depth stencil view"); }
-	this->D3DStuff.pDepthStencilView = pDepthStencilView;
+	Resource::D3DStuff.pDepthStencilView = pDepthStencilView;
 
 }
 void GraphicManager::InitDepthStencilStates()
@@ -283,9 +283,9 @@ void GraphicManager::InitDepthStencilStates()
 
 	// Create the depth stencil state.
 	ID3D11DepthStencilState* pDepthStencilState = nullptr;
-	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &pDepthStencilState);
+	hr = Resource::D3DStuff.pd3dDevice->CreateDepthStencilState(&depthStencilDesc, &pDepthStencilState);
 	if(FAILED(hr)) { Logger::LogError("Failed at creating Dept stencil State"); }
-	this->D3DStuff.pDepthStencilState = pDepthStencilState;
+	Resource::D3DStuff.pDepthStencilState = pDepthStencilState;
 
 	// Set up the depth stencil view description.
 	D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
@@ -307,23 +307,23 @@ void GraphicManager::InitDepthStencilStates()
 
 	// Create the depth stencil view.
 	ID3D11DepthStencilState* pDepthDisabledStencilState = nullptr;
-	hr = this->D3DStuff.pd3dDevice->CreateDepthStencilState(&depthDisabledStencilDesc, &pDepthDisabledStencilState);
+	hr = Resource::D3DStuff.pd3dDevice->CreateDepthStencilState(&depthDisabledStencilDesc, &pDepthDisabledStencilState);
 	if(FAILED(hr)){	Logger::LogError("Failed at creating no depth state");}
-	this->D3DStuff.pDepthDisabledStencilState = pDepthDisabledStencilState;
+	Resource::D3DStuff.pDepthDisabledStencilState = pDepthDisabledStencilState;
 }
 void GraphicManager::InitViewPort()
 {
-	unsigned int& Width = this->window.width;
-	unsigned int& Height = this->window.height;
+	unsigned int& Width = Resource::window.width;
+	unsigned int& Height = Resource::window.height;
 
 	// Setup the viewport
-	this->D3DStuff.vp.Width = (FLOAT)Width;
-	this->D3DStuff.vp.Height = (FLOAT)Height;
-	this->D3DStuff.vp.MinDepth = 0.0f;
-	this->D3DStuff.vp.MaxDepth = 1.0f;
-	this->D3DStuff.vp.TopLeftX = 0;
-	this->D3DStuff.vp.TopLeftY = 0;
-	this->D3DStuff.pImmediateContext->RSSetViewports(1, &(this->D3DStuff.vp));
+	Resource::D3DStuff.vp.Width = (FLOAT)Width;
+	Resource::D3DStuff.vp.Height = (FLOAT)Height;
+	Resource::D3DStuff.vp.MinDepth = 0.0f;
+	Resource::D3DStuff.vp.MaxDepth = 1.0f;
+	Resource::D3DStuff.vp.TopLeftX = 0;
+	Resource::D3DStuff.vp.TopLeftY = 0;
+	Resource::D3DStuff.pImmediateContext->RSSetViewports(1, &(Resource::D3DStuff.vp));
 }
 
 void GraphicManager::MesageBoxError(std::string s)
@@ -358,8 +358,8 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 			}
 			if(width != 0 || height != 0)
 			{
-				graphic.window.width = width;
-				graphic.window.height = height;
+				Resource::window.width = width;
+				Resource::window.height = height;
 			}
 			break;
 		}
@@ -372,46 +372,46 @@ LRESULT CALLBACK GraphicManager::WndProc(HWND hWnd, UINT message, WPARAM wParam,
 
 void GraphicManager::ResizeWindow(unsigned int width, unsigned int height)
 {
-	SetWindowPos(this->window.hWnd, 0, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER);
+	SetWindowPos(Resource::window.hWnd, 0, 0, 0, width, height, SWP_NOMOVE | SWP_NOZORDER);
 }
 void GraphicManager::ResizeClient(unsigned int width, unsigned int height)
 {
 	RECT rcClient, rcWind;
 	POINT ptDiff;
-	GetClientRect(this->window.hWnd, &rcClient);
-	GetWindowRect(this->window.hWnd, &rcWind);
+	GetClientRect(Resource::window.hWnd, &rcClient);
+	GetWindowRect(Resource::window.hWnd, &rcWind);
 	ptDiff.x = (rcWind.right - rcWind.left) - rcClient.right;
 	ptDiff.y = (rcWind.bottom - rcWind.top) - rcClient.bottom;
 
-	SetWindowPos(this->window.hWnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y, SWP_NOMOVE | SWP_NOZORDER);
+	SetWindowPos(Resource::window.hWnd, 0, 0, 0, width + ptDiff.x, height + ptDiff.y, SWP_NOMOVE | SWP_NOZORDER);
 
 }
 void GraphicManager::ResizeRender(unsigned int width, unsigned int height)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
 
-	if(graphic.D3DStuff.IsInitialized == true)
+	if(Resource::D3DStuff.IsInitialized == true)
 	{
-		graphic.D3DStuff.pRenderTargetView.reset();
-		graphic.D3DStuff.pDepthStencilBuffer.reset();
-		graphic.D3DStuff.pDepthStencilView.reset();
+		Resource::D3DStuff.pRenderTargetView.reset();
+		Resource::D3DStuff.pDepthStencilBuffer.reset();
+		Resource::D3DStuff.pDepthStencilView.reset();
 
-		if(width == 0){ width = this->window.width; }
-		if(height == 0){ height = this->window.height; }
+		if(width == 0){ width = Resource::window.width; }
+		if(height == 0){ height = Resource::window.height; }
 
 		// Resize the swap chain and recreate the render target view.
-		HRESULT hr = graphic.D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+		HRESULT hr = Resource::D3DStuff.pSwapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
 		if(FAILED(hr)){ Logger::LogError("Failed at resizing swap chain buffer"); }
 
 		ID3D11Texture2D* pBuffer = NULL;
-		hr = graphic.D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
+		hr = Resource::D3DStuff.pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);
 		if(FAILED(hr)){ Logger::LogError("Failed at creating back buffer"); }
 
 		ID3D11RenderTargetView*	pRenderTargetView = nullptr;
-		hr = graphic.D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &pRenderTargetView);
+		hr = Resource::D3DStuff.pd3dDevice->CreateRenderTargetView(pBuffer, NULL, &pRenderTargetView);
 		pBuffer->Release();
 		if(FAILED(hr)){ Logger::LogError("Failed at creating Render Target view"); }
-		graphic.D3DStuff.pRenderTargetView = pRenderTargetView;
+		Resource::D3DStuff.pRenderTargetView = pRenderTargetView;
 
 		// Create the depth/stencil buffer and view.
 		D3D11_TEXTURE2D_DESC depthBufferDesc;
@@ -432,9 +432,9 @@ void GraphicManager::ResizeRender(unsigned int width, unsigned int height)
 
 		ID3D11Texture2D* pDepthStencilBuffer = nullptr;
 		// Create the texture for the depth buffer using the filled out description.
-		hr = graphic.D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &pDepthStencilBuffer);
+		hr = Resource::D3DStuff.pd3dDevice->CreateTexture2D(&depthBufferDesc, NULL, &pDepthStencilBuffer);
 		if(FAILED(hr)) { Logger::LogError("Failed at creating dept buffer"); }
-		graphic.D3DStuff.pDepthStencilBuffer = pDepthStencilBuffer;
+		Resource::D3DStuff.pDepthStencilBuffer = pDepthStencilBuffer;
 
 		D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 		// Initialize the depth stencil view.
@@ -447,22 +447,22 @@ void GraphicManager::ResizeRender(unsigned int width, unsigned int height)
 
 		ID3D11DepthStencilView* pDepthStencilView = nullptr;
 		// Create the depth stencil view.
-		hr = graphic.D3DStuff.pd3dDevice->CreateDepthStencilView(graphic.D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &pDepthStencilView);
+		hr = Resource::D3DStuff.pd3dDevice->CreateDepthStencilView(Resource::D3DStuff.pDepthStencilBuffer, &depthStencilViewDesc, &pDepthStencilView);
 		if(FAILED(hr)) { Logger::LogError("Failed at creating depth stencil view"); }
-		graphic.D3DStuff.pDepthStencilView = pDepthStencilView;
+		Resource::D3DStuff.pDepthStencilView = pDepthStencilView;
 
-		graphic.D3DStuff.pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
+		Resource::D3DStuff.pImmediateContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
 
 
 		// Set the viewport transform.
 
 		// Setup the viewport
-		graphic.D3DStuff.vp.Width = (FLOAT)width;
-		graphic.D3DStuff.vp.Height = (FLOAT)height;
-		graphic.D3DStuff.vp.MinDepth = 0.0f;
-		graphic.D3DStuff.vp.MaxDepth = 1.0f;
-		graphic.D3DStuff.vp.TopLeftX = 0;
-		graphic.D3DStuff.vp.TopLeftY = 0;
-		graphic.D3DStuff.pImmediateContext->RSSetViewports(1, &(graphic.D3DStuff.vp));
+		Resource::D3DStuff.vp.Width = (FLOAT)width;
+		Resource::D3DStuff.vp.Height = (FLOAT)height;
+		Resource::D3DStuff.vp.MinDepth = 0.0f;
+		Resource::D3DStuff.vp.MaxDepth = 1.0f;
+		Resource::D3DStuff.vp.TopLeftX = 0;
+		Resource::D3DStuff.vp.TopLeftY = 0;
+		Resource::D3DStuff.pImmediateContext->RSSetViewports(1, &(Resource::D3DStuff.vp));
 	}
 }

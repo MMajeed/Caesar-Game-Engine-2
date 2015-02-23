@@ -138,6 +138,6 @@ public:
 };
 
 using VariableCreatorFunction = std::function<std::shared_ptr<CBHardVariables>(std::vector<char>&, const unsigned int)>;
-VariableCreatorFunction FindCBHardVariable(std::string Name);
+VariableCreatorFunction findCBHardVariable(std::string Name);
 
 #endif //__CBHardVariables__

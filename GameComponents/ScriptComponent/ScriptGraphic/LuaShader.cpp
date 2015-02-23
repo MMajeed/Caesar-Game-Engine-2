@@ -1,16 +1,16 @@
 #include "LuaShader.h"
-#include <GraphicCommunicator\ShaderConfig.h>
+#include <Components.h>
 
 namespace LuaShader
 {
 	VertexShader::VertexShader(const GenericLuaObject& v) : GenericLuaObject(v){}
 	VertexShader::VertexShader(const std::string& fileName)
 	{
-		this->ID = ShaderConfig::Vertex::Create(fileName);
+		this->ID = Components::Graphic->ShaderFactory()->VertexCreate(fileName);
 	}
 	void VertexShader::Release()
 	{
-		ShaderConfig::Vertex::Release(this->ID);
+		Components::Graphic->ShaderFactory()->VertexRelease(this->ID);
 	}
 
 	void VertexShader::Register(lua_State *lua)
@@ -27,11 +27,11 @@ namespace LuaShader
 	PixelShader::PixelShader(const GenericLuaObject& v) : GenericLuaObject(v){}
 	PixelShader::PixelShader(const std::string& fileName)
 	{
-		this->ID = ShaderConfig::Pixel::Create(fileName);
+		this->ID = Components::Graphic->ShaderFactory()->PixelCreate(fileName);
 	}
 	void PixelShader::Release()
 	{
-		ShaderConfig::Pixel::Release(this->ID);
+		Components::Graphic->ShaderFactory()->PixelRelease(this->ID);
 	}
 
 	void PixelShader::Register(lua_State *lua)
@@ -49,11 +49,11 @@ namespace LuaShader
 	GeometryShader::GeometryShader(const GenericLuaObject& v) : GenericLuaObject(v){}
 	GeometryShader::GeometryShader(const std::string& fileName)
 	{
-		this->ID = ShaderConfig::Geometry::Create(fileName);
+		this->ID = Components::Graphic->ShaderFactory()->GeometryCreate(fileName);
 	}
 	void GeometryShader::Release()
 	{
-		ShaderConfig::Geometry::Release(this->ID);
+		Components::Graphic->ShaderFactory()->GeometryRelease(this->ID);
 	}
 
 	void GeometryShader::Register(lua_State *lua)

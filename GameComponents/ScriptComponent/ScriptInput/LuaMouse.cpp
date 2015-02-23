@@ -1,8 +1,9 @@
 #include "LuaMouse.h"
 
 #include "ScriptManager.h"
+#include <Resource.h>
 #include <Windows.h>
-#include <GraphicCommunicator\GraphicSettings.h>
+#include <Components.h>
 
 namespace LuaMouse
 {
@@ -12,8 +13,8 @@ namespace LuaMouse
 		GetCursorPos(&p);
 		int x = p.x;
 		int y = p.y;
-		GraphicSettings::GetPosRelativeToClient(x, y);
-		luabind::object keyState = luabind::newtable(ScriptManager::GetInstance().lua);
+		Components::Graphic->GraphicSettingsFactory()->GetPosRelativeToClient(x, y);
+		luabind::object keyState = luabind::newtable(Resource::lua);
 		keyState["X"] = x;
 		keyState["Y"] = y;
 		return keyState;

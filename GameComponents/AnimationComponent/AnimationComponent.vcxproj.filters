@@ -4,36 +4,75 @@
     <ClInclude Include="Linker.h" />
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="BasicAnimation.h">
-      <Filter>BasicAnimation</Filter>
+      <Filter>Component\BasicAnimation</Filter>
     </ClInclude>
     <ClInclude Include="AnimationPlayer.h">
-      <Filter>AnimationPlayer</Filter>
+      <Filter>Component\AnimationPlayer</Filter>
     </ClInclude>
     <ClInclude Include="AnimationController.h">
-      <Filter>AnimationController</Filter>
+      <Filter>Component\AnimationController</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationFactorySetup.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationControllerFactory.h">
+      <Filter>Factory\AnimationControllerFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicAnimationFactory.h">
+      <Filter>Factory\BasicAnimationFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="BasicAnimation.cpp">
-      <Filter>BasicAnimation</Filter>
+      <Filter>Component\BasicAnimation</Filter>
     </ClCompile>
     <ClCompile Include="AnimationPlayer.cpp">
-      <Filter>AnimationPlayer</Filter>
+      <Filter>Component\AnimationPlayer</Filter>
     </ClCompile>
     <ClCompile Include="AnimationController.cpp">
-      <Filter>AnimationController</Filter>
+      <Filter>Component\AnimationController</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationFactorySetup.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationControllerFactory.cpp">
+      <Filter>Factory\AnimationControllerFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicAnimationFactory.cpp">
+      <Filter>Factory\BasicAnimationFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="AnimationController">
+    <Filter Include="Factory">
+      <UniqueIdentifier>{92e296f5-9d91-40f3-b73a-aa1f14366da7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{a8f3f752-1cb9-4360-98e5-cf8f6fa12988}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{dd32f85e-2e3d-4d42-a603-32b345137130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\AnimationController">
       <UniqueIdentifier>{1e3d4516-c1ee-4af7-85ec-1380fa35060f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BasicAnimation">
+    <Filter Include="Component\AnimationPlayer">
+      <UniqueIdentifier>{a2566583-c642-4f57-8fd4-0072ecfdb754}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\BasicAnimation">
       <UniqueIdentifier>{dfa18a0d-9814-4398-9271-9996697db43d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AnimationPlayer">
-      <UniqueIdentifier>{a2566583-c642-4f57-8fd4-0072ecfdb754}</UniqueIdentifier>
+    <Filter Include="Factory\AnimationControllerFactory">
+      <UniqueIdentifier>{0f5ef6e1-3f20-4bd8-affb-e2c9b5afb5f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\BasicAnimationFactory">
+      <UniqueIdentifier>{b43d37d1-3583-4b49-932b-c45ff60c919c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

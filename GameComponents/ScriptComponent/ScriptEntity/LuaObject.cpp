@@ -7,6 +7,7 @@
 #include <ObjectEntity.h>
 #include <EntityList.h>
 #include <ScriptManager.h>
+#include <Resource.h>
 
 LuaObject::LuaObject()
 {
@@ -155,7 +156,7 @@ void LuaObject::SetPriority(const luabind::object& v)
 
 void LuaObject::GetGraphicModelID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock()){ id = obj->GetGraphicModelID(); }
@@ -187,7 +188,7 @@ void LuaObject::RemoveGraphicModelID()
 
 void LuaObject::GetVertexShaderID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock()){ id = obj->GetVertexShaderID(); }
@@ -219,7 +220,7 @@ void LuaObject::RemoveVertexShaderID()
 
 void LuaObject::GetGeometryShaderID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock()){ id = obj->GetGeometryShaderID(); }
@@ -251,7 +252,7 @@ void LuaObject::RemoveGeometryShaderID()
 
 void LuaObject::GetPixelShaderID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock()){ id = obj->GetPixelShaderID(); }
@@ -283,7 +284,7 @@ void LuaObject::RemovePixelShaderID()
 
 void LuaObject::GetAnimationID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock()){ id = obj->GetAnimationID(); }
@@ -342,7 +343,7 @@ void LuaObject::RemoveJointName()
 
 void LuaObject::GetRigidBodyID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock()){ id = obj->GetRigidBodyID(); }
@@ -374,7 +375,7 @@ void LuaObject::RemoveRigidBodyID()
 
 luabind::object LuaObject::GetGroupList()
 {
-	luabind::object luaTextureVec = luabind::newtable(ScriptManager::GetInstance().lua);
+	luabind::object luaTextureVec = luabind::newtable(Resource::lua);
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
 		int keyCounter = 1;
@@ -435,7 +436,7 @@ void LuaObject::EmptyGroupList()
 
 luabind::object LuaObject::GetAllTexture()
 {
-	luabind::object luaTexture = luabind::newtable(ScriptManager::GetInstance().lua);
+	luabind::object luaTexture = luabind::newtable(Resource::lua);
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
 		auto list = obj->GetTexture();
@@ -463,7 +464,7 @@ void LuaObject::SetAllTexture(const luabind::object& v)
 }
 luabind::object LuaObject::FindTexture(const std::string& ID)
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	luabind::object returnValue;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
@@ -503,7 +504,7 @@ void LuaObject::EmptyTexture()
 
 luabind::object LuaObject::GetAllUserData()
 {
-	luabind::object luaUserData = luabind::newtable(ScriptManager::GetInstance().lua);
+	luabind::object luaUserData = luabind::newtable(Resource::lua);
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())
 	{
 		auto list = obj->GetUserData();
@@ -531,7 +532,7 @@ void LuaObject::SetAllUserData(const luabind::object& v)
 }
 luabind::object LuaObject::FindUserData(const std::string& ID)
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	luabind::object returnValue;
 	if(std::shared_ptr<ObjectEntity> obj = this->wp_Obj.lock())

@@ -4,11 +4,11 @@
 #include "GraphicManager.h"
 #include "DX11Helper.h"
 #include "GraphicModel.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 void VertexShader::Init()
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	ID3D11VertexShader* shader;
 	HRESULT hr = graphicD3D.pd3dDevice->CreateVertexShader(this->CompiledShader.data(),
@@ -46,7 +46,7 @@ void VertexShader::Init()
 
 void VertexShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	graphicD3D.pImmediateContext->VSSetShader(this->pVertexShader, NULL, 0);
 
@@ -97,7 +97,7 @@ std::shared_ptr<VertexShader> VertexShader::Spawn(const std::string& fileName)
 
 COMSharedPtr<ID3D11InputLayout> VertexShader::GenerateInputLayout(std::shared_ptr<GraphicModel> model)
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	std::shared_ptr<GraphicModel> gm = model;
 	if(gm == false){ Logger::LogError("ErrorException: Could not locate graphic model while creating the Input Layout"); }

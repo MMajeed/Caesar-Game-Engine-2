@@ -1,6 +1,6 @@
 #include "LuaRigidBody.h"
 
-#include <PhysicsCommunicator\RigidBodyConfig.h>
+#include <Components.h>
 #include <Keys.h>
 #include <MathFunctions.h>
 #include "LuaCollisionShape.h"
@@ -32,43 +32,43 @@ namespace LuaRigidBody
 				else if(key == Keys::RigidBody::COLLISIONSHAPE)	{ collisionShape = luabind::object_cast<LuaCollisionShape::CollisionShape>(*it).GetID(); }
 			}
 		}
-
-		this->ID = RigidBodyConfig::Create(collisionShape, Location, Rotation, (float)mass, calculateInertia, Inertia);
+		
+		this->ID = Components::Physics->RigidBodyFactory()->Create(collisionShape, Location, Rotation, (float)mass, calculateInertia, Inertia);
 	}
 
 	void RididBody::ApplyTorque(LuaMath::Vector4 v)
 	{
-		RigidBodyConfig::ApplyTorque(this->ID, v.vector);
+		Components::Physics->RigidBodyFactory()->ApplyTorque(this->ID, v.vector);
 	}
 	void RididBody::ApplyCentralFroce(LuaMath::Vector4 v)
 	{
-		RigidBodyConfig::ApplyCentralFroce(this->ID, v.vector);
+		Components::Physics->RigidBodyFactory()->ApplyCentralFroce(this->ID, v.vector);
 	}
 	void RididBody::SetTorque(LuaMath::Vector4 v)
 	{
-		RigidBodyConfig::SetTorque(this->ID, v.vector);
+		Components::Physics->RigidBodyFactory()->SetTorque(this->ID, v.vector);
 	}
 
 	LuaMath::Vector4 RididBody::GetTorque()
 	{
-		return RigidBodyConfig::GetTorque(this->ID);;
+		return Components::Physics->RigidBodyFactory()->GetTorque(this->ID);;
 	}
 	LuaMath::Vector4 RididBody::GetForce()
 	{
-		return RigidBodyConfig::GetForce(this->ID);;
+		return Components::Physics->RigidBodyFactory()->GetForce(this->ID);;
 	}
 	LuaMath::Vector4 RididBody::GetQuaRotation()
 	{
-		return RigidBodyConfig::GetQuaRotation(this->ID);;
+		return Components::Physics->RigidBodyFactory()->GetQuaRotation(this->ID);;
 	}
 	LuaMath::Vector4 RididBody::GetLocation()
 	{
-		return RigidBodyConfig::GetLocation(this->ID);
+		return Components::Physics->RigidBodyFactory()->GetLocation(this->ID);
 	}
 
 	void RididBody::Release()
 	{
-		RigidBodyConfig::Release(this->ID);
+		Components::Physics->RigidBodyFactory()->Release(this->ID);
 	}
 
 	void RididBody::Register(lua_State *lua)

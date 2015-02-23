@@ -1,6 +1,7 @@
 #include "RigidBody.h"
 
 #include "PhysicsManager.h"
+#include "Resource.h"
 #include <MathFunctions.h>
 #include <Logger.h>
 #include <iostream>
@@ -33,7 +34,7 @@ void RigidBody::Init()
 		btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, pCollisionShape, fallInertia);
 		this->Info.Body = std::shared_ptr<btRigidBody>(new btRigidBody(fallRigidBodyCI));
 		
-		physicsManager.Info.dynamicsWorld->addRigidBody(this->Info.Body.get());
+		Resource::dynamicsWorld->addRigidBody(this->Info.Body.get());
 	}
 }
 void RigidBody::Destory()
@@ -42,7 +43,7 @@ void RigidBody::Destory()
 
 	if(this->Info.Body) 
 	{
-		physicsManager.Info.dynamicsWorld->removeRigidBody(this->Info.Body.get());
+		Resource::dynamicsWorld->removeRigidBody(this->Info.Body.get());
 	}
 }
 
@@ -110,8 +111,8 @@ std::shared_ptr<RigidBody> RigidBody::Spawn(std::string CollisionShapeID,
 
 	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
-	auto iter = physicsManager.CollisionShapeObjs.find(CollisionShapeID);
-	if(iter != physicsManager.CollisionShapeObjs.end())
+	auto iter = Resource::CollisionShapeList.find(CollisionShapeID);
+	if(iter != Resource::CollisionShapeList.end())
 	{
 		CML::Vec4 quaternionRotation = CML::PYRToQuaternion(PYRRotation(0), PYRRotation(1), PYRRotation(2));
 

@@ -7,6 +7,7 @@
 #include <ObjectEntity.h>
 #include <EntityList.h>
 #include <ScriptManager.h>
+#include <Resource.h>
 
 LuaDrawSettings::LuaDrawSettings()
 {
@@ -101,7 +102,7 @@ void LuaDrawSettings::SetInclusionState(const luabind::object& v)
 
 luabind::object LuaDrawSettings::GetInclusionList()
 {
-	luabind::object luaTextureVec = luabind::newtable(ScriptManager::GetInstance().lua);
+	luabind::object luaTextureVec = luabind::newtable(Resource::lua);
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock())
 	{
 		int keyCounter = 1;
@@ -162,7 +163,7 @@ void LuaDrawSettings::EmptyInclusionList()
 
 luabind::object LuaDrawSettings::GetAllUserData()
 {
-	luabind::object luaUserData = luabind::newtable(ScriptManager::GetInstance().lua);
+	luabind::object luaUserData = luabind::newtable(Resource::lua);
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock())
 	{
 		auto list = obj->GetUserData();
@@ -190,7 +191,7 @@ void LuaDrawSettings::SetAllUserData(const luabind::object& v)
 }
 luabind::object LuaDrawSettings::FindUserData(const std::string& ID)
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	luabind::object returnValue;
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock())
@@ -251,7 +252,7 @@ void LuaDrawSettings::EmptyUserData()
 
 luabind::object LuaDrawSettings::GetAllTexture()
 {
-	luabind::object luaTexture = luabind::newtable(ScriptManager::GetInstance().lua);
+	luabind::object luaTexture = luabind::newtable(Resource::lua);
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock())
 	{
 		auto list = obj->GetTexture();
@@ -278,7 +279,7 @@ void LuaDrawSettings::SetAllTexture(const luabind::object& v)
 }
 luabind::object LuaDrawSettings::FindTexture(const std::string& ID)
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	luabind::object returnValue;
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock())
@@ -318,7 +319,7 @@ void LuaDrawSettings::EmptyTexture()
 
 void LuaDrawSettings::GetVertexShaderID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock()){ id = obj->GetVertexShaderID(); }
@@ -368,7 +369,7 @@ void LuaDrawSettings::SetVertexShaderState(const luabind::object& v)
 
 void LuaDrawSettings::GetPixelShaderID()
 {
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	std::string id;
 	if(std::shared_ptr<DrawSettingsEntity> obj = this->wp_Obj.lock()){ id = obj->GetPixelShaderID(); }

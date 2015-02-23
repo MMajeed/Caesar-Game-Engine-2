@@ -1,5 +1,5 @@
 #include "LuaConstraint.h"
-#include <PhysicsCommunicator\ConstraintConfig.h>
+#include <Components.h>
 #include <Keys.h>
 #include <Logger.h>
 
@@ -34,16 +34,16 @@ namespace LuaConstraint
 		
 		if(RigidBodyIDB.empty())
 		{
-			this->ID = ConstraintConfig::CreateBallSocket(RigidBodyIDA, PivotPointA, breakingThreshold);
+			this->ID = Components::Physics->ConstraintFactory()->CreateBallSocket(RigidBodyIDA, PivotPointA, breakingThreshold);
 		}
 		else
 		{
-			this->ID = ConstraintConfig::CreateBallSocket(RigidBodyIDA, PivotPointA, RigidBodyIDB, PivotPointB, breakingThreshold);
+			this->ID = Components::Physics->ConstraintFactory()->CreateBallSocket(RigidBodyIDA, PivotPointA, RigidBodyIDB, PivotPointB, breakingThreshold);
 		}
 	}
 	void BallSocket::Release()
 	{
-		ConstraintConfig::Release(this->ID);
+		Components::Physics->ConstraintFactory()->Release(this->ID);
 	}
 	void BallSocket::Register(lua_State *lua)
 	{
@@ -94,7 +94,7 @@ namespace LuaConstraint
 
 		if(RigidBodyIDB.empty())
 		{
-			this->ID = ConstraintConfig::CreateHinge(RigidBodyIDA, PivotPointA, AxesA,
+			this->ID = Components::Physics->ConstraintFactory()->CreateHinge(RigidBodyIDA, PivotPointA, AxesA,
 													 BreakingThreshold,
 													 Low, High,
 													 Softness,
@@ -103,7 +103,7 @@ namespace LuaConstraint
 		}
 		else
 		{
-			this->ID = ConstraintConfig::CreateHinge(RigidBodyIDA, PivotPointA, AxesA, 
+			this->ID = Components::Physics->ConstraintFactory()->CreateHinge(RigidBodyIDA, PivotPointA, AxesA, 
 													 RigidBodyIDB, PivotPointB, AxesB, 
 													 BreakingThreshold,
 													 Low, High,
@@ -114,7 +114,7 @@ namespace LuaConstraint
 	}
 	void Hinge::Release()
 	{
-		ConstraintConfig::Release(this->ID);
+		Components::Physics->ConstraintFactory()->Release(this->ID);
 	}
 	void Hinge::Register(lua_State *lua)
 	{

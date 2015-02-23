@@ -89,12 +89,12 @@ private:	std::unordered_map<std::string, std::string> TextureList;
 			void UpdateTextureList(std::shared_ptr<ObjectEntity> obj);
 public:		std::unordered_map<std::string, std::string> GetTextureList() const;
 			std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
-			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
+			std::shared_ptr<BasicTexture> findTexture(const std::string& ID) const;
 
 private:	std::unordered_map<std::string, std::shared_ptr<Object>> UserData;
 			void UpdateUserData(std::shared_ptr<ObjectEntity> obj);
 public:		std::unordered_map<std::string, std::shared_ptr<Object>> GetUserData() const;
-			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
+			std::shared_ptr<Object> findUserData(const std::string& ID) const;
 
 private:	D3D11_FILL_MODE FillMode;
 			void UpdateFillMode(std::shared_ptr<ObjectEntity> obj);

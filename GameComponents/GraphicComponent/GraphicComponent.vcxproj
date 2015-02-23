@@ -268,6 +268,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="3DMath.h" />
+    <ClInclude Include="BasicScreenCaptureFactory.h" />
     <ClInclude Include="BasicScreenShot.h" />
     <ClInclude Include="BasicScreenCapture.h" />
     <ClInclude Include="CBHardVariables.h" />
@@ -276,16 +277,21 @@
     <ClInclude Include="CBWeakVariables.h" />
     <ClInclude Include="COMSharedPtr.h" />
     <ClInclude Include="CubeScreenCapture.h" />
+    <ClInclude Include="CubeScreenCaptureFactory.h" />
     <ClInclude Include="DepthScreenCapture.h" />
+    <ClInclude Include="DepthScreenCaptureFactory.h" />
     <ClInclude Include="Draw.h" />
     <ClInclude Include="GeometryShader.h" />
     <ClInclude Include="GraphicCameraEntity.h" />
     <ClInclude Include="GraphicDrawSettingsEntity.h" />
+    <ClInclude Include="GraphicFactorySetup.h" />
     <ClInclude Include="GraphicModel.h" />
+    <ClInclude Include="GraphicModelFactory.h" />
     <ClInclude Include="GraphicObjectEntity.h" />
+    <ClInclude Include="GraphicSettingsFactory.h" />
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Rasterizer.h" />
-    <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="ScreenCapture.h" />
     <ClInclude Include="CubeScreenShot.h" />
@@ -295,6 +301,9 @@
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="ScreenShot.h" />
     <ClInclude Include="BasicTexture.h" />
+    <ClInclude Include="ScreenShotFactory.h" />
+    <ClInclude Include="ShaderFactory.h" />
+    <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="TextureSetup.h" />
     <ClInclude Include="VertexLayout.h" />
     <ClInclude Include="VertexShader.h" />
@@ -302,6 +311,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3DMath.cpp" />
+    <ClCompile Include="BasicScreenCaptureFactory.cpp" />
     <ClCompile Include="BasicScreenShot.cpp" />
     <ClCompile Include="BasicScreenCapture.cpp" />
     <ClCompile Include="CBHardVariables.cpp" />
@@ -309,22 +319,30 @@
     <ClCompile Include="CBVariables.cpp" />
     <ClCompile Include="CBWeakVariables.cpp" />
     <ClCompile Include="CubeScreenCapture.cpp" />
+    <ClCompile Include="CubeScreenCaptureFactory.cpp" />
     <ClCompile Include="DepthScreenCapture.cpp" />
     <ClCompile Include="CubeScreenShot.cpp" />
+    <ClCompile Include="DepthScreenCaptureFactory.cpp" />
     <ClCompile Include="DepthScreenShot.cpp" />
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="DX11Helper.cpp" />
     <ClCompile Include="GeometryShader.cpp" />
     <ClCompile Include="GraphicCameraEntity.cpp" />
     <ClCompile Include="GraphicDrawSettingsEntity.cpp" />
+    <ClCompile Include="GraphicFactorySetup.cpp" />
     <ClCompile Include="GraphicModel.cpp" />
+    <ClCompile Include="GraphicModelFactory.cpp" />
     <ClCompile Include="GraphicObjectEntity.cpp" />
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="BasicTexture.cpp" />
+    <ClCompile Include="GraphicSettingsFactory.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Rasterizer.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ScreenShotFactory.cpp" />
+    <ClCompile Include="ShaderFactory.cpp" />
+    <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="TextureSetup.cpp" />
     <ClCompile Include="VertexShader.cpp" />
     <ClCompile Include="XNAConverter.cpp" />

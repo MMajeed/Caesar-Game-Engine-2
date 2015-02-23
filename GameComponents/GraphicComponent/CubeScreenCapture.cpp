@@ -2,7 +2,7 @@
 #include <GenerateGUID.h>
 #include "GraphicManager.h"
 #include "BasicTexture.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 
 CubeScreenCapture::CubeScreenCapture()
 {
@@ -12,10 +12,10 @@ CubeScreenCapture::CubeScreenCapture()
 void CubeScreenCapture::Init()
 {
 	this->ScreenShot = CubeScreenShot::Spawn(this->width, this->height, this->cameraID, this->drawSettingsID);
-	auto texture = ResourceManager::TextureList.Find(this->TextureID[0]);
-	if(texture)
+	auto texture = Resource::TextureList.find(this->TextureID[0]);
+	if(texture != Resource::TextureList.end())
 	{
-		texture->pTexture = this->ScreenShot->pScreenTexture[0];
+		texture->second->pTexture = this->ScreenShot->pScreenTexture[0];
 	}
 }
 void CubeScreenCapture::Snap(const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)

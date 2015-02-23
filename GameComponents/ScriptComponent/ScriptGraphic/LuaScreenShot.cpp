@@ -1,10 +1,11 @@
 #include "LuaScreenShot.h"
 #include <luabind\luabind.hpp>
-#include <GraphicCommunicator\ScreenShotConfig.h>
+#include <Components.h>
 #include <Keys.h>
 #include <LuaMath.h>
 #include <GenericLuaObject.h>
 #include <ScriptManager.h>
+#include <Resource.h>
 
 luabind::object LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 {
@@ -30,9 +31,9 @@ luabind::object LuaScreenShot::TakeScreenSnapShot(luabind::object const& table)
 		}
 	}
 
-	std::vector<std::string> textureID = ScreenShotConfig::Basic(width, height, numOfTagrets, cameraID, drawSettingsID);
+	std::vector<std::string> textureID = Components::Graphic->ScreenShotFactory()->Basic(width, height, numOfTagrets, cameraID, drawSettingsID);
 
-	lua_State* lua = ScriptManager::GetInstance().lua;
+	lua_State* lua = Resource::lua;
 
 	luabind::object returnValue;
 
@@ -82,7 +83,7 @@ LuaBasicTexture LuaScreenShot::TakeDepthSnapShot(luabind::object const& table)
 		}
 	}
 
-	std::string textureID = ScreenShotConfig::Depth(width, height, cameraID, drawSettingsID);
+	std::string textureID = Components::Graphic->ScreenShotFactory()->Depth(width, height, cameraID, drawSettingsID);
 	GenericLuaObject g(textureID);
 	LuaBasicTexture texture(g);
 	return texture;
@@ -112,7 +113,7 @@ LuaBasicTexture LuaScreenShot::TakeCubeSnapShot(luabind::object const& table)
 		}
 	}
 
-	std::string textureID = ScreenShotConfig::Cube(width, height, cameraID, drawSettingsID);
+	std::string textureID = Components::Graphic->ScreenShotFactory()->Cube(width, height, cameraID, drawSettingsID);
 	GenericLuaObject g(textureID);
 	LuaBasicTexture texture(g);
 	return texture;

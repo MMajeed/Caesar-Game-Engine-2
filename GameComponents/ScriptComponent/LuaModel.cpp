@@ -1,6 +1,7 @@
 #include "LuaModel.h"
 
 #include "ScriptManager.h"
+#include "Resource.h"
 #include <Model.h>
 #include <3DLoader.h>
 #include <string>
@@ -50,7 +51,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetFaces()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Faces.size(); ++i)
 		{
@@ -76,7 +77,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetVertices()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Vertices.size(); ++i)
 		{
@@ -102,7 +103,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetNormal()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Normal.size(); ++i)
 		{
@@ -128,7 +129,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetTangents()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Tangents.size(); ++i)
 		{
@@ -154,7 +155,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetBitangents()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Bitangents.size(); ++i)
 		{
@@ -180,7 +181,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetColor()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Color.size(); ++i)
 		{
@@ -206,7 +207,7 @@ namespace LuaModel
 	}
 	luabind::object Model::GetTexture()
 	{
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 
 		for(std::size_t i = 0; i < this->model->Texture.size(); ++i)
 		{

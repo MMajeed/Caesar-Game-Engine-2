@@ -1,10 +1,11 @@
 #include "PixelShader.h"
 
 #include "GraphicManager.h"
+#include "Resource.h"
 #include "DX11Helper.h"
 void PixelShader::Init()
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	ID3D11PixelShader* shader;
 	HRESULT hr = graphicD3D.pd3dDevice->CreatePixelShader(this->CompiledShader.data(),
@@ -43,7 +44,7 @@ void PixelShader::Init()
 
 void PixelShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	graphicD3D.pImmediateContext->PSSetShader(this->pPixelShader, NULL, 0);
 

@@ -1,6 +1,7 @@
 #include "BasicTexture.h"
 
 #include "GraphicManager.h"
+#include "Resource.h"
 #include "DX11Helper.h"
 #include <Converter.h>
 
@@ -9,7 +10,7 @@ BasicTexture::BasicTexture()
 }
 void BasicTexture::Init(const std::string& fileName)
 {
-	ID3D11Device* device = GraphicManager::GetInstance().D3DStuff.pd3dDevice;
+	ID3D11Device* device = Resource::D3DStuff.pd3dDevice;
 
 	if(!fileName.empty())
 	{

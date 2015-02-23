@@ -3,7 +3,7 @@
 #include <exception>
 #include <Converter.h>
 #include "ScriptManager.h"
-#include <GraphicCommunicator\GraphicModelConfig.h>
+#include <Components.h>
 #include <Keys.h>
 #include <stdexcept>
 #include <Logger.h>
@@ -13,12 +13,12 @@ namespace LuaGraphicModel
 {
 	GraphicModel::GraphicModel(const LuaModel::Model& model)
 	{
-		this->ID = GraphicModelConfig::Create(model.model);
+		this->ID = Components::Graphic->GraphicModelFactory()->Create(model.model);
 	}
 	GraphicModel::GraphicModel(const GenericLuaObject& v) : GenericLuaObject(v){}
 	void GraphicModel::Release()
 	{
-		GraphicModelConfig::Release(this->ID);
+		Components::Graphic->GraphicModelFactory()->Release(this->ID);
 	}
 	void GraphicModel::Register(lua_State *lua)
 	{

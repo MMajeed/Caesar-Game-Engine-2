@@ -31,16 +31,21 @@
     <ClInclude Include="BoxShape.h" />
     <ClInclude Include="CapsuleShape.h" />
     <ClInclude Include="CollisionShape.h" />
+    <ClInclude Include="CollisionShapeFactory.h" />
     <ClInclude Include="ConeShape.h" />
     <ClInclude Include="ConeTwist.h" />
     <ClInclude Include="Constraint.h" />
+    <ClInclude Include="ConstraintFactory.h" />
     <ClInclude Include="ConvexHullShape.h" />
     <ClInclude Include="ConvexTriangleMeshShape.h" />
     <ClInclude Include="CylinderShape.h" />
     <ClInclude Include="Hinge.h" />
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="PhysicsFactorySetup.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="RigidBody.h" />
+    <ClInclude Include="RigidBodyFactory.h" />
     <ClInclude Include="SliderBodyToBody.h" />
     <ClInclude Include="SphereShape.h" />
   </ItemGroup>
@@ -49,15 +54,20 @@
     <ClCompile Include="BoxShape.cpp" />
     <ClCompile Include="CapsuleShape.cpp" />
     <ClCompile Include="CollisionShape.cpp" />
+    <ClCompile Include="CollisionShapeFactory.cpp" />
     <ClCompile Include="ConeShape.cpp" />
     <ClCompile Include="ConeTwist.cpp" />
     <ClCompile Include="Constraint.cpp" />
+    <ClCompile Include="ConstraintFactory.cpp" />
     <ClCompile Include="ConvexHullShape.cpp" />
     <ClCompile Include="ConvexTriangleMeshShape.cpp" />
     <ClCompile Include="CylinderShape.cpp" />
     <ClCompile Include="Hinge.cpp" />
+    <ClCompile Include="PhysicsFactorySetup.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="RigidBody.cpp" />
+    <ClCompile Include="RigidBodyFactory.cpp" />
     <ClCompile Include="SliderBodyToBody.cpp" />
     <ClCompile Include="SphereShape.cpp" />
   </ItemGroup>

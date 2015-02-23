@@ -4,10 +4,10 @@
 #include <Converter.h>
 #include <Logger.h>
 
-#include <GraphicCommunicator\GraphicCommunicator.h>
-#include <ScriptCommunicator\ScriptCommunicator.h>
-#include <AnimationCommunicator\AnimationCommunicator.h>
-#include <PhysicsCommunicator\PhysicsCommunicator.h>
+#include <GraphicComponent\GraphicFactorySetup.h>
+#include <ScriptComponent\ScriptFactorySetup.h>
+#include <AnimationComponent\AnimationFactorySetup.h>
+#include <PhysicsComponent\PhysicsFactorySetup.h>
 
 #include <ScriptAnimation\ScriptAnimation.h>
 #include <ScriptEntity\ScriptEntity.h>
@@ -18,6 +18,8 @@
 #include <thread>
 #include <map>
 #include <iomanip>
+
+#include <Common\Components.h>
 
 void Print(std::string s)
 {
@@ -37,13 +39,25 @@ int main()
 	ScriptInput::GetInstance();
 	ScriptPhysics::GetInstance();
 
-	std::map<std::string, Interface*> vInterfaces;
+	Components::Animation = std::shared_ptr<AnimationFactory>(new AnimationFactory(AnimationFactorySetup::Load()));
+	if(Components::Animation == nullptr){ Logger::LogError("Failed to correctly load Animation"); }
+	Components::Graphic = std::shared_ptr<GraphicFactory>(new GraphicFactory(GraphicFactorySetup::Load()));
+	if(Components::Graphic == nullptr){ Logger::LogError("Failed to correctly load Graphic"); }
+	Components::Script = std::shared_ptr<ScriptFactory>(new ScriptFactory(ScriptFactorySetup::Load()));
+	if(Components::Script == nullptr){ Logger::LogError("Failed to correctly load Script"); }
+	Components::Physics = std::shared_ptr<PhysicsFactory>(new PhysicsFactory(PhysicsFactorySetup::Load()));
+	if(Components::Physics == nullptr){ Logger::LogError("Failed to correctly load Physics"); }
+
+
+	std::map<std::string, std::shared_ptr<Interface>> vInterfaces;
 	std::vector<std::shared_ptr<std::thread>> vThreads;
 
-	vInterfaces["Graphic"] = GraphicCommunicator::GetComponent();
-	vInterfaces["Lua"] = ScriptCommunicator::GetComponent();
-	vInterfaces["Animation"] = AnimationCommunicator::GetComponent();
-	vInterfaces["Physics"] = PhysicsCommunicator::GetComponent();
+	vInterfaces["Animation"] = Components::Animation->GetComponent();
+	vInterfaces["Graphic"] = Components::Graphic->GetComponent();
+	vInterfaces["Script"] = Components::Script->GetComponent();
+	vInterfaces["Physics"] = Components::Physics->GetComponent();
+	
+	std::shared_ptr<AnimationFactory> g = Components::Animation;
 
 	for(auto iter = vInterfaces.begin();
 		iter != vInterfaces.end();

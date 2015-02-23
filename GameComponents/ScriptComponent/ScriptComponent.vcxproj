@@ -257,6 +257,8 @@
     <ClInclude Include="LuaError.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="LuaLoopCall.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ScriptFactorySetup.h" />
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="LuaProcesses.h" />
   </ItemGroup>
@@ -277,6 +279,8 @@
     <ClCompile Include="ProcessMessage.cpp" />
     <ClCompile Include="LuaError.cpp" />
     <ClCompile Include="LuaLoopCall.cpp" />
+    <ClCompile Include="Resource.cpp" />
+    <ClCompile Include="ScriptFactorySetup.cpp" />
     <ClCompile Include="ScriptManager.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

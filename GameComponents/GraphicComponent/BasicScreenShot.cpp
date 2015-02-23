@@ -1,4 +1,5 @@
 #include "BasicScreenShot.h"
+#include "Resource.h"
 #include "GraphicManager.h"
 #include <Object.h>
 #include "Scene.h"
@@ -11,7 +12,7 @@ BasicScreenShot::BasicScreenShot()
 void BasicScreenShot::Init()
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 	
 	HRESULT hr;
 
@@ -125,7 +126,7 @@ void BasicScreenShot::Snap(const std::unordered_map<std::string, std::shared_ptr
 void BasicScreenShot::SetupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 
 	std::vector<ID3D11RenderTargetView*> renderTargets;
 
@@ -154,7 +155,7 @@ void BasicScreenShot::TakeScreenSnapShot(std::shared_ptr<GraphicCameraEntity> Ca
 void BasicScreenShot::CleanupSnapShot(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 {
 	GraphicManager& graphic = GraphicManager::GetInstance();
-	auto& d3dStuff = graphic.D3DStuff;
+	auto& d3dStuff = Resource::D3DStuff;
 
 	for(unsigned int i = 0; i < this->numberOfTargets; ++i)
 	{

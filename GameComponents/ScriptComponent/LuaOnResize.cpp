@@ -1,7 +1,7 @@
 #include "LuaOnResize.h"
 #include "LuaError.h"
-#include <GraphicCommunicator\GraphicSettings.h>
 #include "ScriptManager.h"
+#include <Components.h>
 #include <Logger.h>
 #include "ProcessMessage.h"
 
@@ -9,7 +9,7 @@ LuaOnResize::LuaOnResize(luabind::object inputFunction)
 {
 	this->function = inputFunction;
 
-	GraphicSettings::GetClientSize(this->lastCheckedHeight, this->lastCheckedWidth);
+	Components::Graphic->GraphicSettingsFactory()->GetClientSize(this->lastCheckedHeight, this->lastCheckedWidth);
 }
 
 void LuaOnResize::Action(lua_State *lua)
@@ -17,7 +17,7 @@ void LuaOnResize::Action(lua_State *lua)
 	unsigned int width;
 	unsigned int height;
 	
-	GraphicSettings::GetClientSize(height, width);
+	Components::Graphic->GraphicSettingsFactory()->GetClientSize(height, width);
 
 	if(this->lastCheckedHeight != height ||
 	   this->lastCheckedWidth != width)

@@ -1,12 +1,11 @@
 #include "LuaScreenCapture.h"
 #include <luabind\luabind.hpp>
-#include <GraphicCommunicator\DepthScreenCaptureConfig.h>
-#include <GraphicCommunicator\CubeScreenCaptureConfig.h>
-#include <GraphicCommunicator\BasicScreenCaptureConfig.h>
+#include <Components.h>
 #include <Keys.h>
 #include <LuaMath.h>
 #include <GenericLuaObject.h>
 #include <ScriptManager.h>
+#include <Resource.h>
 #include <Logger.h>
 
 namespace LuaScreenCapture
@@ -37,25 +36,25 @@ namespace LuaScreenCapture
 			}
 		}
 
-		BasicScreenCaptureConfig::Create(width, height, priority, cameraID, drawSettingsID, numOfTagrets, this->ID, this->TextureID);
+		Components::Graphic->BasicScreenCaptureFactory()->Create(width, height, priority, cameraID, drawSettingsID, numOfTagrets, this->ID, this->TextureID);
 	}
 
 	void BasicScreenCapture::SetCameraID(GenericLuaObject cameraID)
 	{
-		BasicScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
+		Components::Graphic->BasicScreenCaptureFactory()->SetCameraID(this->ID, cameraID.GetID());
 	}
 	void BasicScreenCapture::SetDrawSettingsID(GenericLuaObject dsID)
 	{
-		BasicScreenCaptureConfig::SetDrawSettingsID(this->ID, dsID.GetID());
+		Components::Graphic->BasicScreenCaptureFactory()->SetDrawSettingsID(this->ID, dsID.GetID());
 	}
 	void BasicScreenCapture::SetPriority(const luabind::object& v)
 	{
 		int p = this->GetPriority(v);
-		BasicScreenCaptureConfig::SetPriority(this->ID, p);
+		Components::Graphic->BasicScreenCaptureFactory()->SetPriority(this->ID, p);
 	}
 	luabind::object BasicScreenCapture::GetTexture()
 	{
-		lua_State* lua = ScriptManager::GetInstance().lua;
+		lua_State* lua = Resource::lua;
 
 		luabind::object returnValue;
 
@@ -81,7 +80,7 @@ namespace LuaScreenCapture
 	}
 	void BasicScreenCapture::Release()
 	{
-		BasicScreenCaptureConfig::Release(this->ID);
+		Components::Graphic->BasicScreenCaptureFactory()->Release(this->ID);
 		this->ID = "";
 		this->TextureID.clear();
 	}
@@ -184,16 +183,16 @@ LuaScreenCapture::DepthScreenCapture::DepthScreenCapture(luabind::object const& 
 		}
 	}
 	
-	DepthScreenCaptureConfig::Create(width, height, priority, cameraID, drawSettingsID, this->ID, this->TextureID);
+	Components::Graphic->DepthScreenCaptureFactory()->Create(width, height, priority, cameraID, drawSettingsID, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::DepthScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
-	DepthScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
+	Components::Graphic->DepthScreenCaptureFactory()->SetCameraID(this->ID, cameraID.GetID());
 }
 void LuaScreenCapture::DepthScreenCapture::SetDrawSettingsID(GenericLuaObject dsID)
 {
-	DepthScreenCaptureConfig::SetDrawSettingsID(this->ID, dsID.GetID());
+	Components::Graphic->DepthScreenCaptureFactory()->SetDrawSettingsID(this->ID, dsID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 {
@@ -203,7 +202,7 @@ LuaBasicTexture LuaScreenCapture::DepthScreenCapture::GetTexture()
 }
 void LuaScreenCapture::DepthScreenCapture::Release()
 {
-	DepthScreenCaptureConfig::Release(this->ID);
+	Components::Graphic->DepthScreenCaptureFactory()->Release(this->ID);
 	this->ID = "";
 	this->TextureID = "";
 }
@@ -244,17 +243,16 @@ LuaScreenCapture::CubeScreenCapture::CubeScreenCapture(luabind::object const& ta
 			else if(key == Keys::ScreenShot::PRIORITY)		{ priority = luabind::object_cast<int>(*it); }
 		}
 	}
-
-	CubeScreenCaptureConfig::Create(width, height, priority, cameraID, drawSettingsID, this->ID, this->TextureID);
+	Components::Graphic->CubeScreenCaptureFactory()->Create(width, height, priority, cameraID, drawSettingsID, this->ID, this->TextureID);
 }
 
 void LuaScreenCapture::CubeScreenCapture::SetCameraID(GenericLuaObject cameraID)
 {
-	CubeScreenCaptureConfig::SetCameraID(this->ID, cameraID.GetID());
+	Components::Graphic->CubeScreenCaptureFactory()->SetCameraID(this->ID, cameraID.GetID());
 }
 void LuaScreenCapture::CubeScreenCapture::SetDrawSettingsID(GenericLuaObject dsID)
 {
-	CubeScreenCaptureConfig::SetDrawSettingsID(this->ID, dsID.GetID());
+	Components::Graphic->CubeScreenCaptureFactory()->SetDrawSettingsID(this->ID, dsID.GetID());
 }
 LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 {
@@ -264,7 +262,7 @@ LuaBasicTexture LuaScreenCapture::CubeScreenCapture::GetTexture()
 }
 void LuaScreenCapture::CubeScreenCapture::Release()
 {
-	CubeScreenCaptureConfig::Release(this->ID);
+	Components::Graphic->CubeScreenCaptureFactory()->Release(this->ID);
 	this->ID = "";
 	this->TextureID = "";
 }

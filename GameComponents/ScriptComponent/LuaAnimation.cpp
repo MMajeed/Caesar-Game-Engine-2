@@ -1,6 +1,7 @@
 #include "LuaAnimation.h"
 
 #include "ScriptManager.h"
+#include "Resource.h"
 #include <Model.h>
 #include <3DLoader.h>
 #include <string>

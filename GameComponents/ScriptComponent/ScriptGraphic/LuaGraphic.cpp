@@ -1,7 +1,7 @@
 #include "LuaGraphic.h"
 #include "ScriptManager.h"
-#include <GraphicCommunicator\GraphicSettings.h>
-#include <GraphicCommunicator\GraphicCommunicator.h>
+#include <Resource.h>
+#include <Components.h>
 #include <Keys.h>
 #include <LuaOnResize.h>
 #include <ProcessMessage.h>
@@ -11,57 +11,57 @@ namespace LuaGraphic
 {
 	void SetMainCamera(const GenericLuaObject& cam)
 	{
-		GraphicSettings::SetMainCamera(cam.GetID());
+		Components::Graphic->GraphicSettingsFactory()->SetMainCamera(cam.GetID());
 	}
 	void SetMainDrawSettings(const GenericLuaObject& ds)
 	{
-		GraphicSettings::SetMainDrawSettings(ds.GetID());
+		Components::Graphic->GraphicSettingsFactory()->SetMainDrawSettings(ds.GetID());
 	}
 	void ChangeWindowsTitle(std::string title)
 	{
-		GraphicSettings::ChangeWindowsText(title);
+		Components::Graphic->GraphicSettingsFactory()->ChangeWindowsText(title);
 	}
 	void MoveWindow(unsigned int x, unsigned int y)
 	{
-		GraphicSettings::MoveWindow(x, y);
+		Components::Graphic->GraphicSettingsFactory()->MoveWindow(x, y);
 	}
 	void ResizeWindow(unsigned int height, unsigned int width)
 	{
-		GraphicSettings::ResizeWindow(height, width);
+		Components::Graphic->GraphicSettingsFactory()->ResizeWindow(height, width);
 	}
 	void ResizeClient(unsigned int height, unsigned int width)
 	{
-		GraphicSettings::ResizeClient(height, width);
+		Components::Graphic->GraphicSettingsFactory()->ResizeClient(height, width);
 	}
 	void ResizeRender(unsigned int height, unsigned int width)
 	{
-		GraphicSettings::ResizeRender(height, width);
+		Components::Graphic->GraphicSettingsFactory()->ResizeRender(height, width);
 	}
 	void DiableResize()
 	{
-		GraphicSettings::DisableResize();
+		Components::Graphic->GraphicSettingsFactory()->DisableResize();
 	}
 	void EnableResize()
 	{
-		GraphicSettings::EnableResize();
+		Components::Graphic->GraphicSettingsFactory()->EnableResize();
 	}
 	void FullScreen()
 	{
-		GraphicSettings::FullScreen();
+		Components::Graphic->GraphicSettingsFactory()->FullScreen();
 	}
 	void LeaveFullScreen()
 	{
-		GraphicSettings::LeaveFullScreen();
+		Components::Graphic->GraphicSettingsFactory()->LeaveFullScreen();
 	}
 	bool IsFullScreen()
 	{
-		return GraphicSettings::IsFullScreen();
+		return Components::Graphic->GraphicSettingsFactory()->IsFullScreen();
 	}
 	luabind::object GetClientSize()
 	{
 		unsigned int height; unsigned int width;
-		GraphicSettings::GetClientSize(height, width);
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		Components::Graphic->GraphicSettingsFactory()->GetClientSize(height, width);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
@@ -69,8 +69,8 @@ namespace LuaGraphic
 	luabind::object GetWindowSize()
 	{
 		unsigned int height; unsigned int width;
-		GraphicSettings::GetWindowSize(height, width);
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		Components::Graphic->GraphicSettingsFactory()->GetWindowSize(height, width);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
@@ -78,8 +78,8 @@ namespace LuaGraphic
 	luabind::object GetRenderSize()
 	{
 		unsigned int height; unsigned int width;
-		GraphicSettings::GetRenderSize(height, width);
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		Components::Graphic->GraphicSettingsFactory()->GetRenderSize(height, width);
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 		returnValue["Height"] = height;
 		returnValue["Width"] = width;
 		return returnValue;
@@ -87,8 +87,8 @@ namespace LuaGraphic
 	luabind::object GetWindowLoc()
 	{
 		unsigned int x; unsigned int y;
-		GraphicSettings::GetWindowsLocation(x, y); 
-		luabind::object returnValue = luabind::newtable(ScriptManager::GetInstance().lua);
+		Components::Graphic->GraphicSettingsFactory()->GetWindowsLocation(x, y); 
+		luabind::object returnValue = luabind::newtable(Resource::lua);
 		returnValue["X"] = x;
 		returnValue["Y"] = y;
 		return returnValue;
@@ -106,7 +106,7 @@ namespace LuaGraphic
 	}
 	void VSync(bool v)
 	{
-		GraphicSettings::VSync(v);
+		Components::Graphic->GraphicSettingsFactory()->VSync(v);
 	}
 
 	void RegisterAllLuaFunction(lua_State *lua)

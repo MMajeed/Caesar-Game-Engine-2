@@ -1,6 +1,6 @@
 #include "LuaCollisionShape.h"
 
-#include <PhysicsCommunicator\CollisionShapeConfig.h>
+#include <Components.h>
 
 namespace LuaCollisionShape
 {
@@ -15,7 +15,7 @@ namespace LuaCollisionShape
 	}
 	void CollisionShape::Release()
 	{
-		CollisionShapeConfig::Release(this->ID);
+		Components::Physics->CollisionShapeFactory()->Release(this->ID);
 	}
 	void CollisionShape::Register(lua_State *lua)
 	{
@@ -29,38 +29,38 @@ namespace LuaCollisionShape
 
 	CollisionShape CreateConvexHullShape(LuaModel::Model model)
 	{
-		std::string id = CollisionShapeConfig::CreateConvexHullShape(model);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateConvexHullShape(model);
 		return CollisionShape(id);
 	}
 	CollisionShape CreateConvexTriangleShape(LuaModel::Model model)
 	{
-		std::string id = CollisionShapeConfig::CreateConvexTriangleMesh(model);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateConvexTriangleMesh(model);
 		return CollisionShape(id);
 	}
 
 	CollisionShape CreateBoxShape(LuaMath::Vector4 HalfExtent)
 	{
-		std::string id = CollisionShapeConfig::CreateBoxShape(HalfExtent.vector);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateBoxShape(HalfExtent.vector);
 		return CollisionShape(id);
 	}
 	CollisionShape CreateCapsuleShape(double radius, double height)
 	{
-		std::string id = CollisionShapeConfig::CreateCapsuleShape(radius, height);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateCapsuleShape(radius, height);
 		return CollisionShape(id);
 	}
 	CollisionShape CreateConeShape(double radius, double height)
 	{
-		std::string id = CollisionShapeConfig::CreateConeShape(radius, height);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateConeShape(radius, height);
 		return CollisionShape(id);
 	}
 	CollisionShape CreateCylinderShape(LuaMath::Vector4 HalfExtent)
 	{
-		std::string id = CollisionShapeConfig::CreateCylinderShape(HalfExtent.vector);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateCylinderShape(HalfExtent.vector);
 		return CollisionShape(id);
 	}
 	CollisionShape CreateSphereShape(double radius)
 	{
-		std::string id = CollisionShapeConfig::CreateSphereShape(radius);
+		std::string id = Components::Physics->CollisionShapeFactory()->CreateSphereShape(radius);
 		return CollisionShape(id);
 	}
 

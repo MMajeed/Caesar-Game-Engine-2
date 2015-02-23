@@ -238,16 +238,37 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraEntity.cpp" />
+    <ClCompile Include="Components.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityList.cpp" />
+    <ClCompile Include="AnimationFactory.cpp" />
+    <ClCompile Include="GraphicFactory.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="ObjectEntity.cpp" />
     <ClCompile Include="DrawSettingsEntity.cpp" />
+    <ClCompile Include="PhysicsFactory.cpp" />
+    <ClCompile Include="ScriptFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="GraphicFactory.h" />
+    <ClInclude Include="iBasicAnimationFactory.h" />
+    <ClInclude Include="iAnimationControllerFactory.h" />
+    <ClInclude Include="AnimationFactory.h" />
     <ClInclude Include="CameraEntity.h" />
     <ClInclude Include="EntityList.h" />
+    <ClInclude Include="iCollisionShapeFactory.h" />
+    <ClInclude Include="iConstraintFactory.h" />
+    <ClInclude Include="iCubeScreenCaptureFactory.h" />
+    <ClInclude Include="iDepthScreenCaptureFactory.h" />
+    <ClInclude Include="iGraphicModelFactory.h" />
+    <ClInclude Include="iGraphicSettingsFactory.h" />
+    <ClInclude Include="iRigidBodyFactory.h" />
+    <ClInclude Include="iBasicScreenCaptureFactory.h" />
+    <ClInclude Include="iScreenShotFactory.h" />
+    <ClInclude Include="iShaderFactory.h" />
+    <ClInclude Include="iTextureFactory.h" />
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Interface.h" />
     <ClInclude Include="Keys.h" />
@@ -255,6 +276,8 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="ObjectEntity.h" />
     <ClInclude Include="DrawSettingsEntity.h" />
+    <ClInclude Include="PhysicsFactory.h" />
+    <ClInclude Include="ScriptFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

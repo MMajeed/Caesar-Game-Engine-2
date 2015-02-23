@@ -5,6 +5,7 @@
 #include "GraphicObjectEntity.h"
 
 #include "GraphicManager.h"
+#include "Resource.h"
 #include "COMSharedPtr.h"
 #include <sstream>
 #include <D3D11.h>
@@ -40,7 +41,7 @@ namespace Rasterizer
 		}
 		else
 		{
-			auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+			auto& graphicD3D = Resource::D3DStuff;
 
 			D3D11_RASTERIZER_DESC RSDesc;
 			memset(&RSDesc, 0, sizeof(D3D11_RASTERIZER_DESC));
@@ -60,7 +61,7 @@ namespace Rasterizer
 
 	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 	{
-		auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+		auto& graphicD3D = Resource::D3DStuff;
 
 		COMSharedPtr<ID3D11RasterizerState> rasterizer = GetRasterizer(camera, drawSettings, object);
 		ID3D11RasterizerState* rs = rasterizer;

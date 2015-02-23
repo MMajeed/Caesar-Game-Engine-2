@@ -46,13 +46,13 @@ public:		std::set<std::string> GetInclusionList() const;
 private:	std::unordered_map<std::string, std::shared_ptr<Object>> UserData;
 			void UpdateUserData(std::shared_ptr<DrawSettingsEntity> obj);
 public:		std::unordered_map<std::string, std::shared_ptr<Object>> GetUserData() const;
-			std::shared_ptr<Object> FindUserData(const std::string& ID) const;
+			std::shared_ptr<Object> findUserData(const std::string& ID) const;
 
 private:	std::unordered_map<std::string, std::string> TextureList;
 			void UpdateTextureList(std::shared_ptr<DrawSettingsEntity> obj);
 public:		std::unordered_map<std::string, std::string> GetTextureList() const;
 			std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GetTexture() const;
-			std::shared_ptr<BasicTexture> FindTexture(const std::string& ID) const;
+			std::shared_ptr<BasicTexture> findTexture(const std::string& ID) const;
 
 private:	std::string VertexShaderID;
 			void UpdateVertexShaderID(std::shared_ptr<DrawSettingsEntity> obj);

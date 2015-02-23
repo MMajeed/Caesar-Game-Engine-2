@@ -1,6 +1,7 @@
 #include "BallSocket.h"
 
 #include "PhysicsManager.h"
+#include "Resource.h"
 #include <Logger.h>
 
 BallSocket::BallSocket()
@@ -10,8 +11,6 @@ BallSocket::BallSocket()
 
 void BallSocket::Init()
 {
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
 	if(std::shared_ptr<RigidBody> spRigidBodyA = this->Info.RigidBodyA.second.lock())
 	{
 		if(std::shared_ptr<RigidBody> spRigidBodyB = this->Info.RigidBodyB.second.lock())
@@ -37,17 +36,15 @@ void BallSocket::Init()
 
 		this->pConstraint->setBreakingImpulseThreshold((float)this->Info.BreakingThreshold);
 
-		physicsManager.Info.dynamicsWorld->addConstraint(this->pConstraint.get());
+		Resource::dynamicsWorld->addConstraint(this->pConstraint.get());
 	}
 }
 
 void BallSocket::Destory()
 {
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
 	if(this->pConstraint)
 	{
-		physicsManager.Info.dynamicsWorld->removeConstraint(this->pConstraint.get());
+		Resource::dynamicsWorld->removeConstraint(this->pConstraint.get());
 	}
 }
 
@@ -55,12 +52,10 @@ std::shared_ptr<BallSocket> BallSocket::Spawn(std::string RigidBodyIDA, CML::Vec
 											  std::string RigidBodyIDB, CML::Vec3 PivotPointB,
 											  double BreakingThreshold)
 {
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
 	std::shared_ptr<BallSocket> newObject(new BallSocket());
 
-	auto iter = physicsManager.RigidBodyObjs.find(RigidBodyIDA);
-	if(iter != physicsManager.RigidBodyObjs.end())
+	auto iter = Resource::RigidBodyList.find(RigidBodyIDA);
+	if(iter != Resource::RigidBodyList.end())
 	{
 		newObject->Info.RigidBodyA = std::pair<std::string, std::weak_ptr<RigidBody>>(RigidBodyIDA, iter->second);
 	}
@@ -72,8 +67,8 @@ std::shared_ptr<BallSocket> BallSocket::Spawn(std::string RigidBodyIDA, CML::Vec
 	newObject->Info.PivotPointA = PivotPointA;
 
 	
-	iter = physicsManager.RigidBodyObjs.find(RigidBodyIDB);
-	if(iter != physicsManager.RigidBodyObjs.end())
+	iter = Resource::RigidBodyList.find(RigidBodyIDB);
+	if(iter != Resource::RigidBodyList.end())
 	{
 		newObject->Info.RigidBodyB = std::pair<std::string, std::weak_ptr<RigidBody>>(RigidBodyIDB, iter->second);
 	}
@@ -97,8 +92,8 @@ std::shared_ptr<BallSocket> BallSocket::Spawn(std::string RigidBodyIDA, CML::Vec
 
 	std::shared_ptr<BallSocket> newObject(new BallSocket());
 
-	auto iter = physicsManager.RigidBodyObjs.find(RigidBodyIDA);
-	if(iter != physicsManager.RigidBodyObjs.end())
+	auto iter = Resource::RigidBodyList.find(RigidBodyIDA);
+	if(iter != Resource::RigidBodyList.end())
 	{
 		newObject->Info.RigidBodyA = std::pair<std::string, std::weak_ptr<RigidBody>>(RigidBodyIDA, iter->second);
 	}

@@ -349,7 +349,7 @@ std::unordered_map<std::string, VariableCreatorFunction> PopulateVariableTypes()
 
 std::unordered_map<std::string, VariableCreatorFunction> VariableTypes = PopulateVariableTypes();
 
-VariableCreatorFunction FindCBHardVariable(std::string Name)
+VariableCreatorFunction findCBHardVariable(std::string Name)
 {
 	VariableCreatorFunction returnValue;
 		

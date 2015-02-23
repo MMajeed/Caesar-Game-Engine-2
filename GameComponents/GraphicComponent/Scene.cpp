@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 #include "GraphicManager.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 #include "Rasterizer.h"
 #include "Draw.h"
 #include <EntityList.h>
@@ -120,7 +120,7 @@ namespace Scene
 	void ClearScreen(std::shared_ptr<GraphicCameraEntity> Camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings)
 	{
 		GraphicManager& graphic = GraphicManager::GetInstance();
-		auto& d3dStuff = graphic.D3DStuff;
+		auto& d3dStuff = Resource::D3DStuff;
 
 		if(drawSettings->GetClearScreen() == true)
 		{
@@ -140,7 +140,7 @@ namespace Scene
 					 std::shared_ptr<GraphicDrawSettingsEntity> drawSettings,
 					 const std::unordered_map<std::string, std::shared_ptr<GraphicObjectEntity>>& list)
 	{
-		auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
+		auto& d3dStuff = Resource::D3DStuff;
 		ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;
 
 		std::vector<std::shared_ptr<GraphicObjectEntity>> objects = drawSettings->FilterInclusionList(list);

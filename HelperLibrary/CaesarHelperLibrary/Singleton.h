@@ -3,13 +3,15 @@
 
 #include "Linker.h"
 
+#include <memory>
+
 namespace CHL
 {
 	template <class CWrappedClass>
 	class Singleton
 	{
 	protected:
-		static CWrappedClass* ms_instance;
+		static std::shared_ptr<CWrappedClass> ms_instance;
 
 		Singleton(){}
 		Singleton(const Singleton& cs) {}
@@ -19,13 +21,19 @@ namespace CHL
 		static CWrappedClass& GetInstance()
 		{
 			if (ms_instance == 0)
-				ms_instance = new CWrappedClass;
+				ms_instance = std::shared_ptr<CWrappedClass>(new CWrappedClass);
 			return *ms_instance;
+		}
+		static std::shared_ptr<CWrappedClass> GetPointer()
+		{
+			if(ms_instance == 0)
+				ms_instance = std::shared_ptr<CWrappedClass>(new CWrappedClass);
+			return ms_instance;
 		}
 	};
 
 	template <class CWrappedClass>
-	CWrappedClass* Singleton<CWrappedClass>::ms_instance = 0;
+	std::shared_ptr<CWrappedClass> Singleton<CWrappedClass>::ms_instance = 0;
 }
 
 #endif //__Singleton___

@@ -3,283 +3,370 @@
   <ItemGroup>
     <ClInclude Include="GraphicManager.h" />
     <ClInclude Include="DX11Helper.h">
-      <Filter>D3D Tools\DX11Helper</Filter>
+      <Filter>Component\D3D Tools\DX11Helper</Filter>
     </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="BasicTexture.h">
-      <Filter>Drawable\Texture</Filter>
+      <Filter>Component\Drawable\Texture</Filter>
     </ClInclude>
     <ClInclude Include="ScreenShot.h">
-      <Filter>ScreenShot</Filter>
+      <Filter>Component\ScreenShot</Filter>
     </ClInclude>
     <ClInclude Include="DepthScreenShot.h">
-      <Filter>ScreenShot\DepthScreenShot</Filter>
+      <Filter>Component\ScreenShot\DepthScreenShot</Filter>
     </ClInclude>
     <ClInclude Include="CubeScreenShot.h">
-      <Filter>ScreenShot\CubeScreenShot</Filter>
+      <Filter>Component\ScreenShot\CubeScreenShot</Filter>
     </ClInclude>
     <ClInclude Include="BasicScreenShot.h">
-      <Filter>ScreenShot\BasicScreenShot</Filter>
+      <Filter>Component\ScreenShot\BasicScreenShot</Filter>
     </ClInclude>
     <ClInclude Include="ScreenCapture.h">
-      <Filter>ScreenCapture</Filter>
+      <Filter>Component\ScreenCapture</Filter>
     </ClInclude>
     <ClInclude Include="DepthScreenCapture.h">
-      <Filter>ScreenCapture\DepthScreenCapture</Filter>
+      <Filter>Component\ScreenCapture\DepthScreenCapture</Filter>
     </ClInclude>
     <ClInclude Include="CubeScreenCapture.h">
-      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+      <Filter>Component\ScreenCapture\CubeScreenCapture</Filter>
     </ClInclude>
     <ClInclude Include="BasicScreenCapture.h">
-      <Filter>ScreenCapture\BasicScreenCapture</Filter>
+      <Filter>Component\ScreenCapture\BasicScreenCapture</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Scene</Filter>
+      <Filter>Component\Scene</Filter>
     </ClInclude>
     <ClInclude Include="XNAConverter.h">
-      <Filter>D3D Tools\XNAConverter</Filter>
+      <Filter>Component\D3D Tools\XNAConverter</Filter>
     </ClInclude>
     <ClInclude Include="PixelShader.h">
-      <Filter>Drawable\Shader\Shaders\PixelShader</Filter>
+      <Filter>Component\Drawable\Shader\Shaders\PixelShader</Filter>
     </ClInclude>
     <ClInclude Include="VertexShader.h">
-      <Filter>Drawable\Shader\Shaders\VertexShader</Filter>
+      <Filter>Component\Drawable\Shader\Shaders\VertexShader</Filter>
     </ClInclude>
     <ClInclude Include="GeometryShader.h">
-      <Filter>Drawable\Shader\Shaders\GeometryShader</Filter>
+      <Filter>Component\Drawable\Shader\Shaders\GeometryShader</Filter>
     </ClInclude>
     <ClInclude Include="COMSharedPtr.h">
-      <Filter>D3D Tools\COMSharedPtr</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>ResourceManager</Filter>
+      <Filter>Component\D3D Tools\COMSharedPtr</Filter>
     </ClInclude>
     <ClInclude Include="GraphicObjectEntity.h">
-      <Filter>Scene\GraphicEntity\GraphicObjectEntity</Filter>
+      <Filter>Component\Scene\GraphicEntity\GraphicObjectEntity</Filter>
     </ClInclude>
     <ClInclude Include="GraphicCameraEntity.h">
-      <Filter>Scene\GraphicEntity\GraphicCameraEntity</Filter>
+      <Filter>Component\Scene\GraphicEntity\GraphicCameraEntity</Filter>
     </ClInclude>
     <ClInclude Include="GraphicModel.h">
-      <Filter>Drawable\GraphicModel</Filter>
+      <Filter>Component\Drawable\GraphicModel</Filter>
     </ClInclude>
     <ClInclude Include="VertexLayout.h">
-      <Filter>Drawable\GraphicModel\VertexLayout</Filter>
+      <Filter>Component\Drawable\GraphicModel\VertexLayout</Filter>
     </ClInclude>
     <ClInclude Include="TextureSetup.h">
-      <Filter>Drawable\Shader\TextureSetup</Filter>
+      <Filter>Component\Drawable\Shader\TextureSetup</Filter>
     </ClInclude>
     <ClInclude Include="Rasterizer.h">
-      <Filter>Drawable\Rastertzer</Filter>
+      <Filter>Component\Drawable\Rastertzer</Filter>
     </ClInclude>
     <ClInclude Include="CBHardVariables.h">
-      <Filter>Drawable\Shader\CBSetup\CBVariables\CBHardVariables</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup\CBVariables\CBHardVariables</Filter>
     </ClInclude>
     <ClInclude Include="CBWeakVariables.h">
-      <Filter>Drawable\Shader\CBSetup\CBVariables\CBWeakVariables</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup\CBVariables\CBWeakVariables</Filter>
     </ClInclude>
     <ClInclude Include="CBVariables.h">
-      <Filter>Drawable\Shader\CBSetup\CBVariables</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup\CBVariables</Filter>
     </ClInclude>
     <ClInclude Include="CBSetup.h">
-      <Filter>Drawable\Shader\CBSetup</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup</Filter>
     </ClInclude>
     <ClInclude Include="3DMath.h">
-      <Filter>D3D Tools\3DMath</Filter>
+      <Filter>Component\D3D Tools\3DMath</Filter>
     </ClInclude>
     <ClInclude Include="Draw.h">
-      <Filter>Scene\Draw</Filter>
+      <Filter>Component\Scene\Draw</Filter>
     </ClInclude>
     <ClInclude Include="GraphicDrawSettingsEntity.h">
-      <Filter>Scene\GraphicEntity\GraphicDrawSettingsEntity</Filter>
+      <Filter>Component\Scene\GraphicEntity\GraphicDrawSettingsEntity</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicModelFactory.h">
+      <Filter>Factory\GraphicModelFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicSettingsFactory.h">
+      <Filter>Factory\GraphicSettingsFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderFactory.h">
+      <Filter>Factory\ShaderFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenShotFactory.h">
+      <Filter>Factory\ScreenShotFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureFactory.h">
+      <Filter>Factory\TextureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicScreenCaptureFactory.h">
+      <Filter>Factory\ScreenCaptureFactory\BasicScreenCaptureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeScreenCaptureFactory.h">
+      <Filter>Factory\ScreenCaptureFactory\CubeScreenCaptureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthScreenCaptureFactory.h">
+      <Filter>Factory\ScreenCaptureFactory\DepthScreenCaptureFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicFactorySetup.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GraphicManager.cpp" />
     <ClCompile Include="DX11Helper.cpp">
-      <Filter>D3D Tools\DX11Helper</Filter>
+      <Filter>Component\D3D Tools\DX11Helper</Filter>
     </ClCompile>
     <ClCompile Include="BasicTexture.cpp">
-      <Filter>Drawable\Texture</Filter>
+      <Filter>Component\Drawable\Texture</Filter>
     </ClCompile>
     <ClCompile Include="DepthScreenShot.cpp">
-      <Filter>ScreenShot\DepthScreenShot</Filter>
+      <Filter>Component\ScreenShot\DepthScreenShot</Filter>
     </ClCompile>
     <ClCompile Include="CubeScreenShot.cpp">
-      <Filter>ScreenShot\CubeScreenShot</Filter>
+      <Filter>Component\ScreenShot\CubeScreenShot</Filter>
     </ClCompile>
     <ClCompile Include="BasicScreenShot.cpp">
-      <Filter>ScreenShot\BasicScreenShot</Filter>
+      <Filter>Component\ScreenShot\BasicScreenShot</Filter>
     </ClCompile>
     <ClCompile Include="DepthScreenCapture.cpp">
-      <Filter>ScreenCapture\DepthScreenCapture</Filter>
+      <Filter>Component\ScreenCapture\DepthScreenCapture</Filter>
     </ClCompile>
     <ClCompile Include="CubeScreenCapture.cpp">
-      <Filter>ScreenCapture\CubeScreenCapture</Filter>
+      <Filter>Component\ScreenCapture\CubeScreenCapture</Filter>
     </ClCompile>
     <ClCompile Include="BasicScreenCapture.cpp">
-      <Filter>ScreenCapture\BasicScreenCapture</Filter>
+      <Filter>Component\ScreenCapture\BasicScreenCapture</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Scene</Filter>
+      <Filter>Component\Scene</Filter>
     </ClCompile>
     <ClCompile Include="XNAConverter.cpp">
-      <Filter>D3D Tools\XNAConverter</Filter>
+      <Filter>Component\D3D Tools\XNAConverter</Filter>
     </ClCompile>
     <ClCompile Include="PixelShader.cpp">
-      <Filter>Drawable\Shader\Shaders\PixelShader</Filter>
+      <Filter>Component\Drawable\Shader\Shaders\PixelShader</Filter>
     </ClCompile>
     <ClCompile Include="VertexShader.cpp">
-      <Filter>Drawable\Shader\Shaders\VertexShader</Filter>
+      <Filter>Component\Drawable\Shader\Shaders\VertexShader</Filter>
     </ClCompile>
     <ClCompile Include="GeometryShader.cpp">
-      <Filter>Drawable\Shader\Shaders\GeometryShader</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>ResourceManager</Filter>
+      <Filter>Component\Drawable\Shader\Shaders\GeometryShader</Filter>
     </ClCompile>
     <ClCompile Include="GraphicObjectEntity.cpp">
-      <Filter>Scene\GraphicEntity\GraphicObjectEntity</Filter>
+      <Filter>Component\Scene\GraphicEntity\GraphicObjectEntity</Filter>
     </ClCompile>
     <ClCompile Include="GraphicCameraEntity.cpp">
-      <Filter>Scene\GraphicEntity\GraphicCameraEntity</Filter>
+      <Filter>Component\Scene\GraphicEntity\GraphicCameraEntity</Filter>
     </ClCompile>
     <ClCompile Include="GraphicModel.cpp">
-      <Filter>Drawable\GraphicModel</Filter>
+      <Filter>Component\Drawable\GraphicModel</Filter>
     </ClCompile>
     <ClCompile Include="TextureSetup.cpp">
-      <Filter>Drawable\Shader\TextureSetup</Filter>
+      <Filter>Component\Drawable\Shader\TextureSetup</Filter>
     </ClCompile>
     <ClCompile Include="Rasterizer.cpp">
-      <Filter>Drawable\Rastertzer</Filter>
+      <Filter>Component\Drawable\Rastertzer</Filter>
     </ClCompile>
     <ClCompile Include="CBHardVariables.cpp">
-      <Filter>Drawable\Shader\CBSetup\CBVariables\CBHardVariables</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup\CBVariables\CBHardVariables</Filter>
     </ClCompile>
     <ClCompile Include="CBWeakVariables.cpp">
-      <Filter>Drawable\Shader\CBSetup\CBVariables\CBWeakVariables</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup\CBVariables\CBWeakVariables</Filter>
     </ClCompile>
     <ClCompile Include="CBVariables.cpp">
-      <Filter>Drawable\Shader\CBSetup\CBVariables</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup\CBVariables</Filter>
     </ClCompile>
     <ClCompile Include="CBSetup.cpp">
-      <Filter>Drawable\Shader\CBSetup</Filter>
+      <Filter>Component\Drawable\Shader\CBSetup</Filter>
     </ClCompile>
     <ClCompile Include="3DMath.cpp">
-      <Filter>D3D Tools\3DMath</Filter>
+      <Filter>Component\D3D Tools\3DMath</Filter>
     </ClCompile>
     <ClCompile Include="Draw.cpp">
-      <Filter>Scene\Draw</Filter>
+      <Filter>Component\Scene\Draw</Filter>
     </ClCompile>
     <ClCompile Include="GraphicDrawSettingsEntity.cpp">
-      <Filter>Scene\GraphicEntity\GraphicDrawSettingsEntity</Filter>
+      <Filter>Component\Scene\GraphicEntity\GraphicDrawSettingsEntity</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicModelFactory.cpp">
+      <Filter>Factory\GraphicModelFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicSettingsFactory.cpp">
+      <Filter>Factory\GraphicSettingsFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderFactory.cpp">
+      <Filter>Factory\ShaderFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenShotFactory.cpp">
+      <Filter>Factory\ScreenShotFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureFactory.cpp">
+      <Filter>Factory\TextureFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicScreenCaptureFactory.cpp">
+      <Filter>Factory\ScreenCaptureFactory\BasicScreenCaptureFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeScreenCaptureFactory.cpp">
+      <Filter>Factory\ScreenCaptureFactory\CubeScreenCaptureFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthScreenCaptureFactory.cpp">
+      <Filter>Factory\ScreenCaptureFactory\DepthScreenCaptureFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicFactorySetup.cpp">
+      <Filter>Factory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="D3D Tools">
+    <Filter Include="Component">
+      <UniqueIdentifier>{ac7c5c68-2c41-4d01-87f5-60c4dcf6b459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{396cdcd0-1819-4813-9b9d-461ba9b693e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\D3D Tools">
       <UniqueIdentifier>{454d39e7-3edc-445d-9a62-b7e0b96c73f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="D3D Tools\DX11Helper">
+    <Filter Include="Component\D3D Tools\DX11Helper">
       <UniqueIdentifier>{3f838701-51f7-4a5d-93ff-bb8fc553fa3e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScreenCapture">
-      <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenCapture\DepthScreenCapture">
-      <UniqueIdentifier>{cd9f9fbb-8561-4930-b984-a51053aad11c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenCapture\CubeScreenCapture">
-      <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenCapture\BasicScreenCapture">
-      <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenShot">
-      <UniqueIdentifier>{f08569f7-3a68-4706-9360-f7df52b3b06a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenShot\BasicScreenShot">
-      <UniqueIdentifier>{3b8f6676-409e-4e31-ad5b-53b77c5e31c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenShot\DepthScreenShot">
-      <UniqueIdentifier>{fed37b2c-94a3-4884-8f65-d127d3b76693}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScreenShot\CubeScreenShot">
-      <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{bea3c4dd-524f-4282-b497-ddddbe8f9936}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="D3D Tools\XNAConverter">
+    <Filter Include="Component\D3D Tools\XNAConverter">
       <UniqueIdentifier>{8d106226-d622-40e9-9d4a-c28273282255}</UniqueIdentifier>
     </Filter>
-    <Filter Include="D3D Tools\3DMath">
+    <Filter Include="Component\D3D Tools\3DMath">
       <UniqueIdentifier>{014e0cba-67d4-447c-b2c7-f01494f9a965}</UniqueIdentifier>
     </Filter>
-    <Filter Include="D3D Tools\COMSharedPtr">
+    <Filter Include="Component\D3D Tools\COMSharedPtr">
       <UniqueIdentifier>{4bf21998-4e84-4b75-aa90-ea731067fc4a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ResourceManager">
-      <UniqueIdentifier>{30f8f52f-587e-4147-91d5-2ddfa3956a3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\GraphicEntity">
-      <UniqueIdentifier>{db42c558-ca2d-4215-afec-6ce7f2943c5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\GraphicEntity\GraphicObjectEntity">
-      <UniqueIdentifier>{fe417e46-8e79-400a-a977-30e4855aed42}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene\GraphicEntity\GraphicCameraEntity">
-      <UniqueIdentifier>{64e29595-a13c-4561-8a75-e643137e6cde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Drawable">
+    <Filter Include="Component\Drawable">
       <UniqueIdentifier>{fdf0a7c1-100d-4697-b1b8-2ace4e0a2c5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Texture">
+    <Filter Include="Component\Drawable\Texture">
       <UniqueIdentifier>{eee8a27b-c3c2-4638-b09a-37f490eeae54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader">
+    <Filter Include="Component\Drawable\Shader">
       <UniqueIdentifier>{5a69b6cb-a360-4ff9-897a-855c9ccb9626}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\Shaders">
+    <Filter Include="Component\Drawable\Shader\Shaders">
       <UniqueIdentifier>{c1df2eaf-85e8-4503-81ca-c8c3eff5dbc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\Shaders\GeometryShader">
+    <Filter Include="Component\Drawable\Shader\Shaders\GeometryShader">
       <UniqueIdentifier>{5bbc9321-ffd9-4f77-b070-419372526768}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\Shaders\VertexShader">
+    <Filter Include="Component\Drawable\Shader\Shaders\VertexShader">
       <UniqueIdentifier>{253d31b8-5d85-4135-b398-cc386d997e27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\Shaders\PixelShader">
+    <Filter Include="Component\Drawable\Shader\Shaders\PixelShader">
       <UniqueIdentifier>{c0eea300-bcb6-4bd7-9a52-97dd5bd49758}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\GraphicModel">
-      <UniqueIdentifier>{56b71978-f50e-4155-bd36-fcd25bcfa26a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Drawable\GraphicModel\VertexLayout">
-      <UniqueIdentifier>{090385ab-5d0d-4df1-a8bc-1bfb731c87a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Drawable\Shader\TextureSetup">
+    <Filter Include="Component\Drawable\Shader\TextureSetup">
       <UniqueIdentifier>{51655230-6852-4013-8b08-9781c1e0038c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Rastertzer">
-      <UniqueIdentifier>{ffac656d-7446-4313-9007-83cf097728c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Drawable\Shader\CBSetup">
+    <Filter Include="Component\Drawable\Shader\CBSetup">
       <UniqueIdentifier>{4f8ae00f-23ef-4d09-8dc2-41468966f37e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\CBSetup\CBVariables">
+    <Filter Include="Component\Drawable\Shader\CBSetup\CBVariables">
       <UniqueIdentifier>{c21721f5-33f6-4b27-8fb9-f3e8fc89838b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\CBSetup\CBVariables\CBWeakVariables">
+    <Filter Include="Component\Drawable\Shader\CBSetup\CBVariables\CBWeakVariables">
       <UniqueIdentifier>{41a9a63a-5119-4d04-892b-393f5be5dc8c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Drawable\Shader\CBSetup\CBVariables\CBHardVariables">
+    <Filter Include="Component\Drawable\Shader\CBSetup\CBVariables\CBHardVariables">
       <UniqueIdentifier>{f946b745-aac8-4c62-bee9-8c87e83500c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\Draw">
+    <Filter Include="Component\Drawable\GraphicModel">
+      <UniqueIdentifier>{56b71978-f50e-4155-bd36-fcd25bcfa26a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Drawable\GraphicModel\VertexLayout">
+      <UniqueIdentifier>{090385ab-5d0d-4df1-a8bc-1bfb731c87a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Drawable\Rastertzer">
+      <UniqueIdentifier>{ffac656d-7446-4313-9007-83cf097728c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Scene">
+      <UniqueIdentifier>{bea3c4dd-524f-4282-b497-ddddbe8f9936}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Scene\GraphicEntity">
+      <UniqueIdentifier>{db42c558-ca2d-4215-afec-6ce7f2943c5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Scene\GraphicEntity\GraphicObjectEntity">
+      <UniqueIdentifier>{fe417e46-8e79-400a-a977-30e4855aed42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Scene\GraphicEntity\GraphicCameraEntity">
+      <UniqueIdentifier>{64e29595-a13c-4561-8a75-e643137e6cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Scene\GraphicEntity\GraphicDrawSettingsEntity">
+      <UniqueIdentifier>{7109547b-ae9d-4050-9ff3-ec589543ef11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Scene\Draw">
       <UniqueIdentifier>{17ac3a2d-712b-4d6e-a28e-34549b745be3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\GraphicEntity\GraphicDrawSettingsEntity">
-      <UniqueIdentifier>{7109547b-ae9d-4050-9ff3-ec589543ef11}</UniqueIdentifier>
+    <Filter Include="Component\ScreenCapture">
+      <UniqueIdentifier>{9f4c114e-021f-4046-83c5-fc6282c5e2dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenCapture\DepthScreenCapture">
+      <UniqueIdentifier>{cd9f9fbb-8561-4930-b984-a51053aad11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenCapture\CubeScreenCapture">
+      <UniqueIdentifier>{fe957d69-5c91-463f-8542-0f23eb1f9613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenCapture\BasicScreenCapture">
+      <UniqueIdentifier>{f7d62f30-3ba9-48b0-9703-a8163d8bcc69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenShot">
+      <UniqueIdentifier>{f08569f7-3a68-4706-9360-f7df52b3b06a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenShot\BasicScreenShot">
+      <UniqueIdentifier>{3b8f6676-409e-4e31-ad5b-53b77c5e31c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenShot\DepthScreenShot">
+      <UniqueIdentifier>{fed37b2c-94a3-4884-8f65-d127d3b76693}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\ScreenShot\CubeScreenShot">
+      <UniqueIdentifier>{d3613165-6839-417b-9bfa-637e15c75a61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{30f8f52f-587e-4147-91d5-2ddfa3956a3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ScreenCaptureFactory">
+      <UniqueIdentifier>{f4736349-7fc4-48a9-888f-9a10be214da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\GraphicModelFactory">
+      <UniqueIdentifier>{8e3230dc-981a-4ad7-9c33-03303aea2e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\GraphicSettingsFactory">
+      <UniqueIdentifier>{23a6fc46-ca20-462b-bdb2-74239bff2870}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ShaderFactory">
+      <UniqueIdentifier>{fe0a4d11-241f-4138-bd6b-adc4466f84c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ScreenShotFactory">
+      <UniqueIdentifier>{ff608cb4-3183-42ad-aad5-a7fe95486579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\TextureFactory">
+      <UniqueIdentifier>{d9aad777-3c63-49c6-bbc0-2d69aad1d8d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ScreenCaptureFactory\BasicScreenCaptureFactory">
+      <UniqueIdentifier>{a8a4d853-71d9-4d3c-a158-047f2be819cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ScreenCaptureFactory\CubeScreenCaptureFactory">
+      <UniqueIdentifier>{7e82aa22-755e-4dd6-8fab-ed4b25eb7fad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ScreenCaptureFactory\DepthScreenCaptureFactory">
+      <UniqueIdentifier>{c881f023-9f41-4ec4-97ea-51b6609958ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

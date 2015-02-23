@@ -38,7 +38,7 @@ void CBSetup::Init(const std::vector<char>& compiledShader, unsigned int bufferN
 					variableRefl->GetDesc(&varDesc);
 
 					std::string name = varDesc.Name;
-					auto spawnFunc = FindCBHardVariable(name);
+					auto spawnFunc = findCBHardVariable(name);
 					if(spawnFunc)
 					{
 						std::shared_ptr<CBVariables> newCBVariable = spawnFunc(this->cbufferData, varDesc.StartOffset);

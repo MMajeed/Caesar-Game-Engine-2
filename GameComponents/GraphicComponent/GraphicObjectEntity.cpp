@@ -7,9 +7,8 @@
 #include "GeometryShader.h"
 #include "PixelShader.h"
 #include "XNAConverter.h"
-#include "ResourceManager.h"
-#include <AnimationCommunicator\AnimationControllerConfig.h>
-#include <PhysicsCommunicator\RigidBodyConfig.h>
+#include "Resource.h"
+#include <Components.h>
 
 GraphicObjectEntity::GraphicObjectEntity()
 {
@@ -113,8 +112,17 @@ std::string GraphicObjectEntity::GetGraphicModelID() const
 }
 std::shared_ptr<GraphicModel> GraphicObjectEntity::GetGraphicModel() const
 {
+	std::shared_ptr<GraphicModel> returnValue;
+
 	const std::string& id = this->GraphicModelID;
-	std::shared_ptr<GraphicModel> returnValue = ResourceManager::GraphicModelList.Find(id);
+
+	auto iter = Resource::GraphicModelList.find(id);
+
+	if(iter != Resource::GraphicModelList.end())
+	{
+		returnValue = iter->second;
+	}
+
 	return returnValue;
 }
 
@@ -128,8 +136,17 @@ std::string GraphicObjectEntity::GetVertexShaderID() const
 }
 std::shared_ptr<VertexShader> GraphicObjectEntity::GetVertexShader() const
 {
+	std::shared_ptr<VertexShader> returnValue;
+
 	const std::string& id = this->VertexShaderID;
-	std::shared_ptr<VertexShader> returnValue = ResourceManager::VertexShaderList.Find(id);
+
+	auto iter = Resource::VertexShaderList.find(id);
+
+	if(iter != Resource::VertexShaderList.end())
+	{
+		returnValue = iter->second;
+	}
+
 	return returnValue;
 }
 
@@ -143,8 +160,17 @@ std::string GraphicObjectEntity::GetGeometryShaderID() const
 }
 std::shared_ptr<GeometryShader> GraphicObjectEntity::GetGeometryShader() const
 {
+	std::shared_ptr<GeometryShader> returnValue;
+
 	const std::string& id = this->GeometryShaderID;
-	std::shared_ptr<GeometryShader> returnValue = ResourceManager::GeometryShaderList.Find(id);
+
+	auto iter = Resource::GeometryShaderList.find(id);
+
+	if(iter != Resource::GeometryShaderList.end())
+	{
+		returnValue = iter->second;
+	}
+
 	return returnValue;
 }
 
@@ -158,8 +184,17 @@ std::string GraphicObjectEntity::GetPixelShaderID() const
 }
 std::shared_ptr<PixelShader> GraphicObjectEntity::GetPixelShader() const
 {
+	std::shared_ptr<PixelShader> returnValue;
+
 	const std::string& id = this->PixelShaderID;
-	std::shared_ptr<PixelShader> returnValue = ResourceManager::PixelShaderList.Find(id);
+
+	auto iter = Resource::PixelShaderList.find(id);
+
+	if(iter != Resource::PixelShaderList.end())
+	{
+		returnValue = iter->second;
+	}
+
 	return returnValue;
 }
 
@@ -190,7 +225,7 @@ XMFLOAT4X4 GraphicObjectEntity::GetAnimationJoint() const
 {
 	const std::string& id = this->AnimationID;
 	const std::string& jointName = this->AnimationJointName;
-	CML::Matrix4x4 jaMatrix = AnimationControllerConfig::GetSingleJoint(id, jointName);
+	CML::Matrix4x4 jaMatrix = Components::Animation->AnimationControllerFactory()->GetSingleJoint(id, jointName);
 	XMFLOAT4X4 returnValue = Convert4x4(jaMatrix);
 	return returnValue;
 }
@@ -206,7 +241,7 @@ std::string GraphicObjectEntity::GetRigidBodyID() const
 XMFLOAT4X4 GraphicObjectEntity::GetRigidBody() const
 {
 	const std::string& id = this->RigidBodyID;
-	CML::Matrix4x4 jaMatrix = RigidBodyConfig::GetTranslation(id);
+	CML::Matrix4x4 jaMatrix = Components::Physics->RigidBodyFactory()->GetTranslation(id);
 	XMFLOAT4X4 returnValue = Convert4x4(jaMatrix);
 	return returnValue;
 }
@@ -234,19 +269,24 @@ std::unordered_map<std::string, std::shared_ptr<BasicTexture>> GraphicObjectEnti
 
 	for(const auto& iter : this->TextureList)
 	{
-		returnValue[iter.first] = this->FindTexture(iter.second);
+		returnValue[iter.first] = this->findTexture(iter.second);
 	}
 
 	return returnValue;
 }
-std::shared_ptr<BasicTexture> GraphicObjectEntity::FindTexture(const std::string& ID) const
+std::shared_ptr<BasicTexture> GraphicObjectEntity::findTexture(const std::string& ID) const
 {
 	std::shared_ptr<BasicTexture> returnValue;
 
-	auto iter = this->TextureList.find(ID);
-	if(iter != this->TextureList.end())
+	auto textureNameIter = this->TextureList.find(ID);
+	if(textureNameIter != this->TextureList.end())
 	{
-		returnValue = ResourceManager::TextureList.Find(iter->second);
+		auto textureResourceIter = Resource::TextureList.find(textureNameIter->second);
+
+		if(textureResourceIter != Resource::TextureList.end())
+		{
+			returnValue = textureResourceIter->second;
+		}
 	}
 	return returnValue;
 }
@@ -259,7 +299,7 @@ std::unordered_map<std::string, std::shared_ptr<Object>> GraphicObjectEntity::Ge
 {
 	return this->UserData;
 }
-std::shared_ptr<Object> GraphicObjectEntity::FindUserData(const std::string& ID) const
+std::shared_ptr<Object> GraphicObjectEntity::findUserData(const std::string& ID) const
 {
 	auto iter = this->UserData.find(ID);
 	if(iter != this->UserData.cend())

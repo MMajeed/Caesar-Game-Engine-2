@@ -1,6 +1,7 @@
 #include "LuaNode.h"
 
 #include "ScriptManager.h"
+#include "Resource.h"
 #include <Model.h>
 #include <3DLoader.h>
 #include <string>
@@ -47,7 +48,7 @@ namespace LuaNode
 
 	luabind::object Node::GetChildern()
 	{
-		lua_State *lua = ScriptManager::GetInstance().lua;
+		lua_State *lua = Resource::lua;
 		luabind::object outChildren = luabind::newtable(lua);
 
 		unsigned int counter = 1;
@@ -76,7 +77,7 @@ namespace LuaNode
 
 	luabind::object Node::GetMeshes()
 	{
-		lua_State *lua = ScriptManager::GetInstance().lua;
+		lua_State *lua = Resource::lua;
 		luabind::object outChildren = luabind::newtable(lua);
 
 		unsigned int counter = 1;

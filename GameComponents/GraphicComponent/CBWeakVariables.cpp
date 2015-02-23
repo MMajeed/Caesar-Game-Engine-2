@@ -23,10 +23,10 @@ void CBWeakVariables::Update(std::shared_ptr<GraphicCameraEntity> camera, std::s
 {
 	std::vector<char> dataToCopy(this->sizeOfValue);
 
-	std::shared_ptr<Object> objectUserData = object->FindUserData(this->Name);
+	std::shared_ptr<Object> objectUserData = object->findUserData(this->Name);
 	if(objectUserData == false)
 	{// If we didn't find it in object, check camera
-		objectUserData = drawSettings->FindUserData(this->Name);
+		objectUserData = drawSettings->findUserData(this->Name);
 	}
 
 

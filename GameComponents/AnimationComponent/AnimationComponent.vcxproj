@@ -28,16 +28,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationController.h" />
+    <ClInclude Include="AnimationControllerFactory.h" />
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="AnimationPlayer.h" />
     <ClInclude Include="BasicAnimation.h" />
+    <ClInclude Include="BasicAnimationFactory.h" />
     <ClInclude Include="Linker.h" />
+    <ClInclude Include="AnimationFactorySetup.h" />
+    <ClInclude Include="Resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationController.cpp" />
+    <ClCompile Include="AnimationControllerFactory.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="AnimationPlayer.cpp" />
     <ClCompile Include="BasicAnimation.cpp" />
+    <ClCompile Include="BasicAnimationFactory.cpp" />
+    <ClCompile Include="AnimationFactorySetup.cpp" />
+    <ClCompile Include="Resource.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AC90F5BB-AF3A-4CAC-A7D5-3423CD6DC479}</ProjectGuid>

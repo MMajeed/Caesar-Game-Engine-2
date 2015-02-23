@@ -14,7 +14,7 @@ class CommonDLL_API Interface
 public:
 	Interface();
 
-	virtual void Init() = 0;
+	virtual void Init() = 0; // Inits the internal working 
 	virtual void Run();
 	virtual void Shutdown() = 0;	
 

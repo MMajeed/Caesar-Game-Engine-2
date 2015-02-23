@@ -1,11 +1,12 @@
 #include "GeometryShader.h"
 
 #include "GraphicManager.h"
+#include "Resource.h"
 #include "DX11Helper.h"
 
 void GeometryShader::Init()
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	ID3D11GeometryShader* shader;
 	HRESULT hr = graphicD3D.pd3dDevice->CreateGeometryShader(this->CompiledShader.data(),
@@ -44,7 +45,7 @@ void GeometryShader::Init()
 
 void GeometryShader::Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 {
-	auto& graphicD3D = GraphicManager::GetInstance().D3DStuff;
+	auto& graphicD3D = Resource::D3DStuff;
 
 	graphicD3D.pImmediateContext->GSSetShader(this->pGeometryShader, NULL, 0);
 

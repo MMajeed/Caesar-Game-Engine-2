@@ -1,7 +1,6 @@
 #include "LuaAnimationObject.h"
 #include <Logger.h>
-#include <AnimationCommunicator\BasicAnimationConfig.h>
-#include <AnimationCommunicator\AnimationControllerConfig.h>
+#include <Components.h>
 #include <Keys.h>
 
 namespace LuaAnimationObject
@@ -11,11 +10,11 @@ namespace LuaAnimationObject
 	BasicAnimationObject::BasicAnimationObject(const GenericLuaObject& v) : GenericLuaObject(v){}
 	BasicAnimationObject::BasicAnimationObject(LuaAnimation::Animation anim)
 	{
-		this->ID = BasicAnimationConfig::Create(anim);
+		this->ID = Components::Animation->BasicAnimationFactory()->Create(anim);
 	}
 	void BasicAnimationObject::Release()
 	{
-		BasicAnimationConfig::Release(this->ID);
+		Components::Animation->BasicAnimationFactory()->Release(this->ID);
 		this->ID = "";
 	}
 	void BasicAnimationObject::Register(lua_State *lua)
@@ -56,7 +55,7 @@ namespace LuaAnimationObject
 		if(!rootNode.node)
 			Logger::LogError(Keys::AnimationController::ROOTNODE + " is a mandatory field in AnimationController");
 
-		this->ID = AnimationControllerConfig::Create(animationID, rootNode.node, speed);
+		this->ID = Components::Animation->AnimationControllerFactory()->Create(animationID, rootNode.node, speed);
 	}
 	void AnimationController::ChangeAnimation(luabind::object const& table)
 	{
@@ -84,12 +83,12 @@ namespace LuaAnimationObject
 		if(animationID.empty())
 			Logger::LogError(Keys::AnimationController::BASICANIMATION + " is a mandatory field in AnimationController::ChangeAnimation");
 
-		AnimationControllerConfig::TransitionType t = static_cast<AnimationControllerConfig::TransitionType>(transitionType);
-		AnimationControllerConfig::ChangeAnimation(this->ID, animationID, t, transitionLength, startonNextPhase);
+		iAnimationControllerFactory::TransitionType t = static_cast<iAnimationControllerFactory::TransitionType>(transitionType);
+		Components::Animation->AnimationControllerFactory()->ChangeAnimation(this->ID, animationID, t, transitionLength, startonNextPhase);
 	}
 	void AnimationController::ChangeSpeed(double speed)
 	{
-		AnimationControllerConfig::ChangeSpeed(this->ID, speed);
+		Components::Animation->AnimationControllerFactory()->ChangeSpeed(this->ID, speed);
 	}
 	std::string AnimationController::AddMinorAnimation(luabind::object const& table)
 	{
@@ -119,16 +118,16 @@ namespace LuaAnimationObject
 		if(startNodeName.empty())
 			Logger::LogError(Keys::AnimationController::STARTNODENAME + " is a mandatory field in AnimationController::AddMinorAnimation");
 
-		std::string newMinorID = AnimationControllerConfig::AddMinorAnimation(this->ID, animationID, startNodeName, startRatio, stepRatio);
+		std::string newMinorID = Components::Animation->AnimationControllerFactory()->AddMinorAnimation(this->ID, animationID, startNodeName, startRatio, stepRatio);
 		return newMinorID;
 	}
 	void AnimationController::RemoveMinorAnimation(std::string MinorAnimationID)
 	{
-		AnimationControllerConfig::RemoveMinorAnimation(this->ID, MinorAnimationID);
+		Components::Animation->AnimationControllerFactory()->RemoveMinorAnimation(this->ID, MinorAnimationID);
 	}
 	void AnimationController::Release()
 	{
-		AnimationControllerConfig::Release(this->ID);
+		Components::Animation->AnimationControllerFactory()->Release(this->ID);
 		this->ID = "";
 	}
 	void AnimationController::Register(lua_State *lua)

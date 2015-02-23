@@ -1,7 +1,7 @@
 #include "Draw.h"
 
 #include "GraphicManager.h"
-#include "ResourceManager.h"
+#include "Resource.h"
 #include "Rasterizer.h"
 
 namespace Draw
@@ -61,7 +61,7 @@ namespace Draw
 
 	void Setup(std::shared_ptr<GraphicCameraEntity> camera, std::shared_ptr<GraphicDrawSettingsEntity> drawSettings, std::shared_ptr<GraphicObjectEntity> object)
 	{
-		auto& d3dStuff = GraphicManager::GetInstance().D3DStuff;
+		auto& d3dStuff = Resource::D3DStuff;
 		ID3D11DeviceContext* pImmediateContext = d3dStuff.pImmediateContext;
 
 		std::shared_ptr<VertexShader> vertexShader = GetVertexShader(camera, drawSettings, object);

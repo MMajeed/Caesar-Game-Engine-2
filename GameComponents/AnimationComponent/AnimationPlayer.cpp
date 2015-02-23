@@ -2,6 +2,7 @@
 #include "AnimationManager.h"
 #include <MathFunctions.h>
 #include <iostream>
+#include "Resource.h"
 
 AnimationPlayer::AnimationPlayer()
 {
@@ -207,8 +208,8 @@ std::shared_ptr<AnimationPlayer> AnimationPlayer::Spawn(std::string basicAnimati
 
 	std::shared_ptr<AnimationPlayer> newObject(new AnimationPlayer());
 
-	auto iter = animationManager.AnimationsContainer.find(basicAnimationID);
-	if(iter != animationManager.AnimationsContainer.end())
+	auto iter = Resource::AnimationsList.find(basicAnimationID);
+	if(iter != Resource::AnimationsList.end())
 	{
 		newObject->Animation = iter->second;
 	}

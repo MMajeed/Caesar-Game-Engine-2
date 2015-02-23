@@ -1,8 +1,6 @@
 #include "LuaWaitForProcess.h"
 #include "LuaError.h"
-#include <GraphicCommunicator\GraphicCommunicator.h>
-#include <AnimationCommunicator\AnimationCommunicator.h>
-#include <PhysicsCommunicator\PhysicsCommunicator.h>
+#include <Components.h>
 #include "ScriptManager.h"
 #include <Logger.h>
 #include "ProcessMessage.h"
@@ -15,16 +13,16 @@ LuaWaitForProcess::LuaWaitForProcess(LuaWaitForProcess::ProcessType type, luabin
 	switch(this->type)
 	{
 		case LuaWaitForProcess::ProcessType::Graphic:
-			msg = GraphicCommunicator::GetComponent()->GetBackMessage();
+			msg = Components::Graphic->GetComponent()->GetBackMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Script:
-			msg = ScriptManager::GetInstance().GetBackMessage();
+			msg = Components::Script->GetComponent()->GetBackMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Animation:
-			msg = AnimationCommunicator::GetComponent()->GetBackMessage();
+			msg = Components::Animation->GetComponent()->GetBackMessage();
 			break;
 		case LuaWaitForProcess::ProcessType::Physics:
-			msg = PhysicsCommunicator::GetComponent()->GetBackMessage();
+			msg = Components::Physics->GetComponent()->GetBackMessage();
 			break;
 
 	}

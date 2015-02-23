@@ -33,11 +33,11 @@ std::vector<TextureInfo> TextureSetup::Setup(std::shared_ptr<GraphicCameraEntity
 
 	for(const TextureSetup::Textures& ti : this->shaderTextures)
 	{
-		std::shared_ptr<BasicTexture> tx = object->FindTexture(ti.Name);
+		std::shared_ptr<BasicTexture> tx = object->findTexture(ti.Name);
 
 		if(tx == false)
 		{
-			tx = drawSettings->FindTexture(ti.Name);
+			tx = drawSettings->findTexture(ti.Name);
 		}
 		
 		returnValue.push_back({tx, ti.Slot});
