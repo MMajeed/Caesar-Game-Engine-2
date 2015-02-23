@@ -1,8 +1,8 @@
 #include "DepthScreenCaptureFactory.h"
 
 #include <GenerateGUID.h>
+#include <Components.h>
 #include "Resource.h"
-#include "GraphicManager.h"
 #include "DepthScreenCapture.h"
 #include "BasicTexture.h"
 
@@ -14,181 +14,88 @@ void DepthScreenCaptureFactory::Create(unsigned int width,
 									   std::string& ID,
 									   std::string& textureID)
 {
-		class AddDepthScreenCapture : public Message
-		{
-		public:
-			AddDepthScreenCapture(unsigned int width,
-								  unsigned int height,
-								  unsigned int priority,
-								  const std::string& cameraID,
-								  const std::string& drawSettingsID)
-			{
-				this->width = width;
-				this->height = height;
-				this->priority = priority;
-				this->cameraID = cameraID;
-				this->drawSettingsID = drawSettingsID;
-				this->newTextureID = CHL::GenerateGUID();
-				this->ID = CHL::GenerateGUID();
-			}
+	textureID = CHL::GenerateGUID();
+	ID = CHL::GenerateGUID();
 
-			Message::Status Work()
-			{
-				std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+	Components::Graphic->SubmitMessage([=]()
+	{
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-				std::shared_ptr<BasicTexture> newTexture =
-					BasicTexture::Spawn();
-				Resource::TextureList[this->newTextureID] =  newTexture;
+		std::shared_ptr<BasicTexture> newTexture = BasicTexture::Spawn();
+		Resource::TextureList[textureID] = newTexture;
 
-				std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
-					DepthScreenCapture::Spawn(this->newTextureID, this->width, this->height, this->priority, this->cameraID, this->drawSettingsID);
-				Resource::ScreenCaptureList[this->ID] = newDepthScreenShot;
+		std::shared_ptr<DepthScreenCapture> newDepthScreenShot =
+			DepthScreenCapture::Spawn(textureID, width, height, priority, cameraID, drawSettingsID);
+		Resource::ScreenCaptureList[ID] = newDepthScreenShot;
 
-				return Message::Status::Complete;
-			}
-
-
-			std::string cameraID;
-			std::string drawSettingsID;
-			std::string newTextureID;
-			std::string ID;
-			unsigned int width;
-			unsigned int height;
-			unsigned int priority;
-		};
-		std::shared_ptr<AddDepthScreenCapture> msg
-			(new AddDepthScreenCapture(width, height, priority, cameraID, drawSettingsID));
-		GraphicManager::GetInstance().SubmitMessage(msg);
-		ID = msg->ID;
-		textureID = msg->newTextureID;
+		return Message::Status::Complete;
+	});
 }
 void DepthScreenCaptureFactory::SetCameraID(const std::string& id, const std::string& cameraid)
 {
-	class ChangeEye : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		ChangeEye(const std::string& id, const std::string& cameraID)
-		{
-			this->ID = id;
-			this->cameraID = cameraID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		Message::Status Work()
+		auto screenCapture = Resource::ScreenCaptureList.find(id);
+		if(screenCapture != Resource::ScreenCaptureList.end())
 		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			auto screenCapture = Resource::ScreenCaptureList.find(this->ID);
-			if(screenCapture != Resource::ScreenCaptureList.end())
+			std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture->second);
+			if(cast)
 			{
-				std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture->second);
-				if(cast)
-				{
-					cast->cameraID = this->cameraID;
-				}
+				cast->cameraID = cameraid;
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string ID;
-		std::string cameraID;
-	};
 
-	std::shared_ptr<ChangeEye> msg
-		(new ChangeEye(id, cameraid));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void DepthScreenCaptureFactory::SetDrawSettingsID(const std::string& id, const std::string& dsID)
 {
-	class ChangeDrawSettingsMessage : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		ChangeDrawSettingsMessage(const std::string& id, const std::string& DrawSettingsID)
-		{
-			this->ID = id;
-			this->DrawSettingsID = DrawSettingsID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		Message::Status Work()
+		auto screenCapture = Resource::ScreenCaptureList.find(id);
+		if(screenCapture != Resource::ScreenCaptureList.end())
 		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			auto screenCapture = Resource::ScreenCaptureList.find(this->ID);
-			if(screenCapture != Resource::ScreenCaptureList.end())
+			std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture->second);
+			if(cast)
 			{
-				std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture->second);
-				if(cast)
-				{
-					cast->drawSettingsID = this->DrawSettingsID;
-				}
+				cast->drawSettingsID = dsID;
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string ID;
-		std::string DrawSettingsID;
-	};
 
-	std::shared_ptr<ChangeDrawSettingsMessage> msg
-		(new ChangeDrawSettingsMessage(id, dsID));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void DepthScreenCaptureFactory::SetPriority(const std::string& id, int p)
 {
-	class SetPriorityMessage : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		SetPriorityMessage(const std::string& id, int p)
-		{
-			this->ID = id;
-			this->p = p;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		Message::Status Work()
+		auto screenCapture = Resource::ScreenCaptureList.find(id);
+		if(screenCapture != Resource::ScreenCaptureList.end())
 		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			auto screenCapture = Resource::ScreenCaptureList.find(this->ID);
-			if(screenCapture != Resource::ScreenCaptureList.end())
+			std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture->second);
+			if(cast)
 			{
-				std::shared_ptr<DepthScreenCapture> cast = std::dynamic_pointer_cast<DepthScreenCapture>(screenCapture->second);
-				if(cast)
-				{
-					cast->Priority = this->p;
-				}
+				cast->Priority = p;
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string ID;
-		int p;
-	};
 
-	std::shared_ptr<SetPriorityMessage> msg
-		(new SetPriorityMessage(id, p));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void DepthScreenCaptureFactory::Release(std::string ID)
 {
-	class ReleaseCapture : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		std::string ID;
-		ReleaseCapture(std::string ID)
-		{
-			this->ID = ID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+		Resource::ScreenCaptureList.erase(ID);
 
-			Resource::ScreenCaptureList.erase(this->ID);
-
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<ReleaseCapture> msg
-		(new ReleaseCapture(ID));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }

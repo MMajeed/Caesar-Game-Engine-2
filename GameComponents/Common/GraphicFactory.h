@@ -36,7 +36,10 @@ public:
 	virtual bool Verify();
 
 	virtual void SubmitMessage(std::shared_ptr<Message> msg);
+	virtual void SubmitMessage(std::function<Message::Status()> func);
 	virtual std::shared_ptr<Interface> GetComponent();
+
+	virtual std::mutex& Mutex();
 
 	virtual std::shared_ptr<iGraphicModelFactory> GraphicModelFactory();
 	virtual std::shared_ptr<iGraphicSettingsFactory> GraphicSettingsFactory();

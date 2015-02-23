@@ -21,7 +21,17 @@ void ScriptFactory::SubmitMessage(std::shared_ptr<Message> msg)
 {
 	this->_ClassItems._ScriptInterface->SubmitMessage(msg);
 }
+void ScriptFactory::SubmitMessage(std::function<Message::Status()> func)
+{
+	std::shared_ptr<FuncMessage> msg(new FuncMessage(func));
+	this->_ClassItems._ScriptInterface->SubmitMessage(msg);
+}
 std::shared_ptr<Interface> ScriptFactory::GetComponent()
 {
 	return this->_ClassItems._ScriptInterface;
+}
+
+std::mutex& ScriptFactory::Mutex()
+{
+	return this->_ClassItems._ScriptInterface->mutex;
 }

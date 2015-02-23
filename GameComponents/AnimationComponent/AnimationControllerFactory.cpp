@@ -1,257 +1,143 @@
 #include "AnimationControllerFactory.h"
-#include <Message.h>
 #include <GenerateGUID.h>
-#include "AnimationManager.h"
+#include <Components.h>
 #include "Resource.h"
 
 std::string AnimationControllerFactory::Create(std::string basicAnimID, std::shared_ptr<CHL::Node> rootNode, double speed)
 {
-	class  CreateMessage : public Message
+	std::string ID = CHL::GenerateGUID();
+
+	Components::Animation->SubmitMessage([=]()
 	{
-	public:
-		CreateMessage(std::string basicAnimID, std::shared_ptr<CHL::Node> rootNode, double speed)
-		{
-			this->ID = CHL::GenerateGUID();
-			this->basicAnimID = basicAnimID;
-			this->rootNode = rootNode;
-			this->speed = speed;
-		}
+		std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
-			std::shared_ptr<AnimationController> newAnimationController
-				= AnimationController::Spawn(rootNode, this->basicAnimID, speed);
-			Resource::AnimationControllerList[this->ID] = newAnimationController;
+		std::shared_ptr<AnimationController> newAnimationController
+			= AnimationController::Spawn(rootNode, basicAnimID, speed);
+		Resource::AnimationControllerList[ID] = newAnimationController;
 
-			return Message::Status::Complete;
-		}
+		return Message::Status::Complete;
+	});
 
-		std::string basicAnimID;
-		std::shared_ptr<CHL::Node> rootNode;
-		double speed;
-		std::string	ID;
-	};
-
-	std::shared_ptr<CreateMessage> msg(new CreateMessage(basicAnimID, rootNode, speed));
-	AnimationManager::GetInstance().SubmitMessage(msg);
-	return msg->ID;
+	return ID;
 }
 void AnimationControllerFactory::ChangeAnimation(std::string AnimationControllerID,
-					 std::string basicAnimID,
-					 TransitionType Transition,
-					 double TransitionLength,
-					 bool StartNextPhase)
+												 std::string basicAnimID,
+												 TransitionType Transition,
+												 double TransitionLength,
+												 bool StartNextPhase)
 {
-	class ChangeAnimation : public Message
+	Components::Animation->SubmitMessage([=]()
 	{
-	public:
-		ChangeAnimation(std::string AnimationControllerID,
-						std::string basicAnimID,
-						TransitionType Transition,
-						double TransitionLength,
-						bool StartNextPhase)
+		std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
+
+		auto& allController = Resource::AnimationControllerList;
+		auto iterController = allController.find(AnimationControllerID);
+
+		if(iterController != allController.end())
 		{
-			this->AnimationControllerID = AnimationControllerID;
-			this->basicAnimID = basicAnimID;
-			this->Transition = Transition;
-			this->TransitionLength = TransitionLength;
-			this->StartNextPhase = StartNextPhase;
-		}
+			std::shared_ptr<AnimationController> controllerObj = std::dynamic_pointer_cast<AnimationController>(iterController->second);
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
-
-			auto& allController = Resource::AnimationControllerList;
-			auto iterController = allController.find(this->AnimationControllerID);
-
-			if(iterController != allController.end())
+			if(controllerObj)
 			{
-				std::shared_ptr<AnimationController> controllerObj = std::dynamic_pointer_cast<AnimationController>(iterController->second);
-
-				if(controllerObj)
-				{
-					AnimationController::TransitionType type = static_cast<AnimationController::TransitionType>(Transition);
-					controllerObj->ChangeAnimation(basicAnimID, type, TransitionLength, StartNextPhase);
-				}
+				AnimationController::TransitionType type = static_cast<AnimationController::TransitionType>(Transition);
+				controllerObj->ChangeAnimation(basicAnimID, type, TransitionLength, StartNextPhase);
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string AnimationControllerID;
-		std::string basicAnimID;
-		TransitionType Transition;
-		double TransitionLength;
-		bool StartNextPhase;
-	};
 
-	std::shared_ptr<ChangeAnimation> msg(new ChangeAnimation(AnimationControllerID, basicAnimID, Transition, TransitionLength, StartNextPhase));
-	AnimationManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 std::string AnimationControllerFactory::AddMinorAnimation(std::string AnimationControllerID,
-							  std::string basicAnimID,
-							  std::string startNodeName,
-							  double startingRatio,
-							  double stepRatio)
+														  std::string basicAnimID,
+														  std::string startNodeName,
+														  double startingRatio,
+														  double stepRatio)
 {
-	class AddMinorAnimationMessage : public Message
+	std::string MinorAnimationID = CHL::GenerateGUID();
+
+	Components::Animation->SubmitMessage([=]()
 	{
-	public:
-		AddMinorAnimationMessage(std::string AnimationControllerID,
-								 std::string basicAnimID,
-								 std::string startNodeName,
-								 double startingRatio,
-								 double stepRatio)
+		std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
+
+		auto& allController = Resource::AnimationControllerList;
+		auto iterController = allController.find(AnimationControllerID);
+
+		if(iterController != allController.end())
 		{
-			this->MinorAnimationID = CHL::GenerateGUID();
-			this->AnimationControllerID = AnimationControllerID;
-			this->basicAnimID = basicAnimID;
-			this->startNodeName = startNodeName;
-			this->startingRatio = startingRatio;
-			this->stepRatio = stepRatio;
-		}
+			std::shared_ptr<AnimationController> controllerObj = iterController->second;
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
-
-			auto& allController = Resource::AnimationControllerList;
-			auto iterController = allController.find(this->AnimationControllerID);
-
-			if(iterController != allController.end())
+			if(controllerObj)
 			{
-				std::shared_ptr<AnimationController> controllerObj = iterController->second;
-
-				if(controllerObj)
-				{
-					controllerObj->AddMinorAnimation(MinorAnimationID, basicAnimID, startNodeName, startingRatio, stepRatio);
-				}
+				controllerObj->AddMinorAnimation(MinorAnimationID, basicAnimID, startNodeName, startingRatio, stepRatio);
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string MinorAnimationID;
-		std::string AnimationControllerID;
-		std::string basicAnimID;
-		std::string startNodeName;
-		double startingRatio;
-		double stepRatio;
-	};
 
-	std::shared_ptr<AddMinorAnimationMessage> msg(
-		new AddMinorAnimationMessage(AnimationControllerID, basicAnimID, startNodeName, startingRatio, stepRatio));
-	AnimationManager::GetInstance().SubmitMessage(msg);
-	return msg->MinorAnimationID;
+		return Message::Status::Complete;
+	});
+
+	return MinorAnimationID;
 }
 void AnimationControllerFactory::RemoveMinorAnimation(std::string AnimationControllerID, std::string minorAnimationID)
 {
-	class RemoveMinorAnimationMessage : public Message
+	Components::Animation->SubmitMessage([=]()
 	{
-	public:
-		RemoveMinorAnimationMessage(std::string AnimationControllerID, std::string minorAnimationID)
+		std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
+
+		auto& allController = Resource::AnimationControllerList;
+		auto iterController = allController.find(AnimationControllerID);
+
+		if(iterController != allController.end())
 		{
-			this->MinorAnimationID = minorAnimationID;
-			this->AnimationControllerID = AnimationControllerID;
-		}
+			std::shared_ptr<AnimationController> controllerObj = iterController->second;
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
-
-			auto& allController = Resource::AnimationControllerList;
-			auto iterController = allController.find(this->AnimationControllerID);
-
-			if(iterController != allController.end())
+			if(controllerObj)
 			{
-				std::shared_ptr<AnimationController> controllerObj = iterController->second;
-
-				if(controllerObj)
-				{
-					controllerObj->RemoveMinorAnimation(MinorAnimationID);
-				}
+				controllerObj->RemoveMinorAnimation(minorAnimationID);
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string MinorAnimationID;
-		std::string AnimationControllerID;
-	};
 
-	std::shared_ptr<RemoveMinorAnimationMessage> msg(
-		new RemoveMinorAnimationMessage(AnimationControllerID, minorAnimationID));
-	AnimationManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void AnimationControllerFactory::ChangeSpeed(std::string AnimationControllerID, double speed)
 {
-	class ChangeSpeed : public Message
+	Components::Animation->SubmitMessage([=]()
 	{
-	public:
-		ChangeSpeed(std::string AnimationControllerID, double speed)
+		std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
+
+		auto& allController = Resource::AnimationControllerList;
+		auto iterController = allController.find(AnimationControllerID);
+
+		if(iterController != allController.end())
 		{
-			this->AnimationControllerID = AnimationControllerID;
-			this->speed = speed;
-		}
+			std::shared_ptr<AnimationController> controllerObj = std::dynamic_pointer_cast<AnimationController>(iterController->second);
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
-
-			auto& allController = Resource::AnimationControllerList;
-			auto iterController = allController.find(this->AnimationControllerID);
-
-			if(iterController != allController.end())
+			if(controllerObj)
 			{
-				std::shared_ptr<AnimationController> controllerObj = std::dynamic_pointer_cast<AnimationController>(iterController->second);
-
-				if(controllerObj)
-				{
-					controllerObj->SetSpeed(speed);
-				}
+				controllerObj->SetSpeed(speed);
 			}
-
-			return Message::Status::Complete;
 		}
-		std::string AnimationControllerID;
-		double speed;
-	};
 
-	std::shared_ptr<ChangeSpeed> msg(new ChangeSpeed(AnimationControllerID, speed));
-	AnimationManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void AnimationControllerFactory::Release(std::string ID)
 {
-	class ReleaseMessage : public Message
+	Components::Animation->SubmitMessage([=]()
 	{
-	public:
-		std::string ID;
-		ReleaseMessage(std::string ID)
-		{
-			this->ID = ID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(AnimationManager::GetInstance().mutex);
+		Resource::AnimationControllerList.erase(ID);
 
-			Resource::AnimationControllerList.erase(this->ID);
-
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<ReleaseMessage> msg(new ReleaseMessage(ID));
-	AnimationManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 
 CML::Matrix4x4 AnimationControllerFactory::GetSingleJoint(std::string ID, std::string JointName)
 {
-	AnimationManager& animationManager = AnimationManager::GetInstance();
+	std::lock_guard<std::mutex> lock(Components::Animation->Mutex());
 
-	std::lock_guard<std::mutex> lock(animationManager.mutex);
-
-	const std::unordered_map<std::string, std::shared_ptr<AnimationController>>& animController =
-		Resource::AnimationControllerList;
+	const auto& animController = Resource::AnimationControllerList;
 
 	auto iter = animController.find(ID);
 	if(iter != animController.end())

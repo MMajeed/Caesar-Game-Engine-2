@@ -29,9 +29,19 @@ void GraphicFactory::SubmitMessage(std::shared_ptr<Message> msg)
 {
 	this->_ClassItems._GraphicInterface->SubmitMessage(msg);
 }
+void GraphicFactory::SubmitMessage(std::function<Message::Status()> func)
+{
+	std::shared_ptr<FuncMessage> msg(new FuncMessage(func));
+	this->_ClassItems._GraphicInterface->SubmitMessage(msg);
+}
 std::shared_ptr<Interface> GraphicFactory::GetComponent()
 {
 	return this->_ClassItems._GraphicInterface;
+}
+
+std::mutex& GraphicFactory::Mutex()
+{
+	return this->_ClassItems._GraphicInterface->mutex;
 }
 
 std::shared_ptr<iGraphicModelFactory> GraphicFactory::GraphicModelFactory()

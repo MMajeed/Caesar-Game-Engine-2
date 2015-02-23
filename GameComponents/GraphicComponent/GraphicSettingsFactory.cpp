@@ -1,5 +1,6 @@
 #include "GraphicSettingsFactory.h"
 
+#include <Components.h>
 #include <Message.h>
 #include <Converter.h>
 #include <Logger.h>
@@ -9,275 +10,132 @@
 
 void GraphicSettingsFactory::SetMainCamera(std::string cameraID)
 {
-	class SetMainCameraMessage : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		SetMainCameraMessage(std::string cameraID) :
-			cameraID(cameraID){}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		Resource::DefaultCamera = cameraID;
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			Resource::DefaultCamera = cameraID;
-
-			return Message::Status::Complete;
-		}
-		std::string cameraID;
-	};
-
-	std::shared_ptr<SetMainCameraMessage> msg(new SetMainCameraMessage(cameraID));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::SetMainDrawSettings(std::string drawSettingsID)
 {
-	class SetMainDrawSettingsMessage : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		SetMainDrawSettingsMessage(std::string DrawSettingsID) :
-			DrawSettingsID(DrawSettingsID){}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		Resource::DefaultDrawSettings = drawSettingsID;
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			Resource::DefaultDrawSettings = DrawSettingsID;
-
-			return Message::Status::Complete;
-		}
-		std::string DrawSettingsID;
-	};
-
-	std::shared_ptr<SetMainDrawSettingsMessage> msg(new SetMainDrawSettingsMessage(drawSettingsID));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::ChangeWindowsText(std::string s)
 {
-	class SetTitle : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		SetTitle(std::string s)
-		{
-			this->title = s;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
-			std::lock_guard<std::mutex> lock(graphic.mutex);
-			std::wstring ws = CHL::ToWString(title.c_str());
-			SetWindowText(Resource::window.hWnd, ws.c_str());
-			return Message::Status::Complete;
-		}
+		std::wstring ws = CHL::ToWString(s.c_str());
+		SetWindowText(Resource::window.hWnd, ws.c_str());
 
-		std::string title;
-	};
-
-	std::shared_ptr<SetTitle> msg(new SetTitle(s));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::MoveWindow(unsigned int x, unsigned int y)
 {
-	class Move : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		Move(unsigned int x, unsigned int y)
-		{
-			this->x = x;
-			this->y = y;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		SetWindowPos(Resource::window.hWnd, 0, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			SetWindowPos(Resource::window.hWnd, 0, this->x, this->y, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
-			return Message::Status::Complete;
-		}
-
-		unsigned int x;
-		unsigned int y;
-	};
-
-	std::shared_ptr<Move> msg(new Move(x, y));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::ResizeWindow(unsigned int height, unsigned int width)
 {
-	class Resize : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		Resize(unsigned int height, unsigned int width)
-		{
-			this->width = width;
-			this->height = height;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		GraphicManager& graphic = GraphicManager::GetInstance();
+		graphic.ResizeWindow(width, height);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			graphic.ResizeWindow(this->width, this->height);
-
-			return Message::Status::Complete;
-		}
-
-		unsigned int width;
-		unsigned int height;
-	};
-
-	std::shared_ptr<Resize> msg(new Resize(height, width));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::ResizeClient(unsigned int height, unsigned int width)
 {
-	class Resize : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		Resize(unsigned int height, unsigned int width)
-		{
-			this->width = width;
-			this->height = height;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		GraphicManager& graphic = GraphicManager::GetInstance();
+		graphic.ResizeClient(width, height);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			graphic.ResizeClient(this->width, this->height);
-
-			return Message::Status::Complete;
-		}
-
-		unsigned int width;
-		unsigned int height;
-	};
-
-	std::shared_ptr<Resize> msg(new Resize(height, width));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::ResizeRender(unsigned int height, unsigned int width)
 {
-	class ResizeRenderMessage : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		ResizeRenderMessage(unsigned int height, unsigned int width)
-		{
-			this->width = width;
-			this->height = height;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		GraphicManager& graphic = GraphicManager::GetInstance();
+		graphic.ResizeRender(width, height);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-			graphic.ResizeRender(width, height);
-
-			return Message::Status::Complete;
-		}
-
-		unsigned int width;
-		unsigned int height;
-	};
-
-	std::shared_ptr<ResizeRenderMessage> msg(new ResizeRenderMessage(height, width));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::DisableResize()
 {
-	class Resize : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		Resize(){}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		long dwStyle = GetWindowLong(Resource::window.hWnd, GWL_STYLE);
+		dwStyle ^= WS_THICKFRAME;
+		SetWindowLong(Resource::window.hWnd, GWL_STYLE, dwStyle);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-			long dwStyle = GetWindowLong(Resource::window.hWnd, GWL_STYLE);
-			dwStyle ^= WS_THICKFRAME;
-			SetWindowLong(Resource::window.hWnd, GWL_STYLE, dwStyle);
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<Resize> msg(new Resize());
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::EnableResize()
 {
-	class Resize : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		Resize(){}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		long dwStyle = GetWindowLong(Resource::window.hWnd, GWL_STYLE);
+		dwStyle |= WS_THICKFRAME;
+		SetWindowLong(Resource::window.hWnd, GWL_STYLE, dwStyle);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-			long dwStyle = GetWindowLong(Resource::window.hWnd, GWL_STYLE);
-			dwStyle |= WS_THICKFRAME;
-			SetWindowLong(Resource::window.hWnd, GWL_STYLE, dwStyle);
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<Resize> msg(new Resize());
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::FullScreen()
 {
-	class Full : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		Full(){	}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		Resource::D3DStuff.pSwapChain->SetFullscreenState(true, NULL);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-			Resource::D3DStuff.pSwapChain->SetFullscreenState(true, NULL);
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<Full> msg(new Full());
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void GraphicSettingsFactory::LeaveFullScreen()
 {
-	class LeaveFull : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		LeaveFull(){	}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		Resource::D3DStuff.pSwapChain->SetFullscreenState(false, NULL);
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-			Resource::D3DStuff.pSwapChain->SetFullscreenState(false, NULL);
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<LeaveFull> msg(new LeaveFull());
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 bool GraphicSettingsFactory::IsFullScreen()
 {
@@ -348,25 +206,12 @@ void GraphicSettingsFactory::GetPosRelativeToClient(int& x, int& y)
 }
 void GraphicSettingsFactory::VSync(bool v)
 {
-	class VSyncMessage : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		VSyncMessage(bool v) :
-			v(v){}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			GraphicManager& graphic = GraphicManager::GetInstance();
+		Resource::D3DStuff.VSync = (int)v;
 
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
-
-			Resource::D3DStuff.VSync = (int)v;
-
-			return Message::Status::Complete;
-		}
-		bool v;
-	};
-
-	std::shared_ptr<VSyncMessage> msg(new VSyncMessage(v));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }

@@ -3,6 +3,8 @@
 
 #include "Linker.h"
 
+#include <functional>
+
 class CommonDLL_API Message
 {
 public:	
@@ -17,6 +19,16 @@ public:
 	virtual void WaitTillProcccesed();
 
 	Status MessageStatus;
+};
+
+class CommonDLL_API FuncMessage : public Message
+{
+public:
+	FuncMessage(std::function<Message::Status()> p);
+
+	std::function<Message::Status()> work;
+
+	virtual Message::Status Work();
 };
 
 #endif //__Message__

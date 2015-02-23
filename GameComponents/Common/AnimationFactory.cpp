@@ -23,9 +23,19 @@ void AnimationFactory::SubmitMessage(std::shared_ptr<Message> msg)
 {
 	this->_ClassItems._AnimationInterface->SubmitMessage(msg);
 }
+void AnimationFactory::SubmitMessage(std::function<Message::Status()> func)
+{
+	std::shared_ptr<FuncMessage> msg(new FuncMessage(func));
+	this->_ClassItems._AnimationInterface->SubmitMessage(msg);
+}
 std::shared_ptr<Interface> AnimationFactory::GetComponent()
 {
 	return this->_ClassItems._AnimationInterface;
+}
+
+std::mutex& AnimationFactory::Mutex()
+{
+	return this->_ClassItems._AnimationInterface->mutex;
 }
 
 std::shared_ptr<iAnimationControllerFactory> AnimationFactory::AnimationControllerFactory()

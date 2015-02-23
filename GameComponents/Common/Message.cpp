@@ -19,3 +19,16 @@ void Message::WaitTillProcccesed()
 		sleepFor *= 2;
 	}
 }
+
+// ************************************************************************ //
+
+FuncMessage::FuncMessage(std::function<Message::Status()> p)
+	: work(p)
+{
+
+}
+
+Message::Status FuncMessage::Work()
+{
+	return this->work();
+}

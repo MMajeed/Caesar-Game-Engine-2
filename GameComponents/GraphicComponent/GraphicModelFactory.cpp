@@ -1,65 +1,34 @@
 #include "GraphicModelFactory.h"
 
-#include "GraphicModel.h"
-#include "GraphicManager.h"
-#include "Resource.h"
+#include <Components.h>
 #include <GenerateGUID.h>
+#include "GraphicModel.h"
+#include "Resource.h"
 
 std::string GraphicModelFactory::Create(std::shared_ptr<CHL::Model> model)
 {
-	class CreateMessage : public Message
+	std::string ID = CHL::GenerateGUID();
+
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		CreateMessage(std::shared_ptr<CHL::Model> model)
-		{
-			this->ID = CHL::GenerateGUID();
-			this->model = model;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+		std::shared_ptr<GraphicModel> newObject = GraphicModel::Spawn(model);
+		Resource::GraphicModelList[ID] = newObject;
 
-			std::shared_ptr<GraphicModel> newObject =
-				GraphicModel::Spawn(this->model);
-
-			Resource::GraphicModelList[this->ID] = newObject;
-
-			return Message::Status::Complete;
-		}
-
-		std::shared_ptr<CHL::Model> model;
-
-		std::string	ID;
-	};
-
-	std::shared_ptr<CHL::Model> modelClone(new CHL::Model(*model));
-	std::shared_ptr<CreateMessage> msg(new CreateMessage(modelClone));
-	GraphicManager::GetInstance().SubmitMessage(msg);
-	return msg->ID;
+		return Message::Status::Complete;
+	});
+	
+	return ID;
 }
 void GraphicModelFactory::Release(std::string ID)
 {
-	class ReleaseBasicDrawable : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		std::string ID;
-		ReleaseBasicDrawable(std::string ID)
-		{
-			this->ID = ID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+		Resource::GraphicModelList.erase(ID);
 
-			Resource::GraphicModelList.erase(this->ID);
-
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<ReleaseBasicDrawable> msg
-		(new ReleaseBasicDrawable(ID));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }

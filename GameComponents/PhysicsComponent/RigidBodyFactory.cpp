@@ -1,8 +1,7 @@
 #include "RigidBodyFactory.h"
 
-#include <Message.h>
 #include <GenerateGUID.h>
-#include "PhysicsManager.h"
+#include <Components.h>
 #include "Resource.h"
 #include "RigidBody.h"
 
@@ -13,161 +12,79 @@ std::string RigidBodyFactory::Create(std::string CollisionShapeID,
 						   bool calculateIntertia,
 						   CML::Vec3 intertia)
 {
-	class  CreateMesssage : public Message
+	std::string ID = CHL::GenerateGUID();
+
+	Components::Physics->SubmitMessage([=]()
 	{
-	public:
-		CreateMesssage(std::string CollisionShapeID,
-					   CML::Vec3 Location,
-					   CML::Vec3 PYRRotation,
-					   float mass,
-					   bool calculateIntertia,
-					   CML::Vec3 intertia)
-		{
-			this->ID = CHL::GenerateGUID();
-			this->CollisionShapeID = CollisionShapeID;
-			this->Location = Location;
-			this->PYRRotation = PYRRotation;
-			this->mass = mass;
-			this->calculateIntertia = calculateIntertia;
-			this->intertia = intertia;
-		}
+		std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
-			std::shared_ptr<RigidBody> newObj = RigidBody::Spawn(this->CollisionShapeID, this->Location, this->PYRRotation, this->mass, this->calculateIntertia, this->intertia);
-			Resource::RigidBodyList[this->ID] = newObj;
+		std::shared_ptr<RigidBody> newObj = RigidBody::Spawn(CollisionShapeID, Location, PYRRotation, mass, calculateIntertia, intertia);
+		Resource::RigidBodyList[ID] = newObj;
 
-			return Message::Status::Complete;
-		}
+		return Message::Status::Complete;
+	});
 
-		std::string CollisionShapeID;
-		CML::Vec3 Location;
-		CML::Vec3 PYRRotation;
-		float mass;
-		bool calculateIntertia;
-		CML::Vec3 intertia;
-		std::string	ID;
-	};
-
-	std::shared_ptr<CreateMesssage> msg(new CreateMesssage(CollisionShapeID, Location, PYRRotation, mass, calculateIntertia, intertia));
-	PhysicsManager::GetInstance().SubmitMessage(msg);
-	return msg->ID;
+	return ID;
 }
 
 void RigidBodyFactory::ApplyTorque(std::string ID, CML::Vec3 v)
 {
-	class  ApplyTorqueMesssage : public Message
+	Components::Physics->SubmitMessage([=]()
 	{
-	public:
-		ApplyTorqueMesssage(std::string ID, CML::Vec3 v)
+		std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
+
+		const auto& rididBodies = Resource::RigidBodyList;
+
+		auto iter = rididBodies.find(ID);
+		if(iter != rididBodies.end())
 		{
-			this->ID = ID;
-			this->v = v;
+			iter->second->ApplyTorque(v);
 		}
 
-		virtual Message::Status Work()
-		{
-			PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
-			std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
-
-			const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
-				Resource::RigidBodyList;
-
-			auto iter = rididBodies.find(ID);
-			if(iter != rididBodies.end())
-			{
-				iter->second->ApplyTorque(v);
-			}
-			return Message::Status::Complete;
-		}
-
-		CML::Vec3 v;
-		std::string	ID;
-	};
-
-	std::shared_ptr<ApplyTorqueMesssage> msg(new ApplyTorqueMesssage(ID, v));
-	PhysicsManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void RigidBodyFactory::ApplyCentralFroce(std::string ID, CML::Vec3 v)
 {
-	class  ApplyCentralFroceMesssage : public Message
+	Components::Physics->SubmitMessage([=]()
 	{
-	public:
-		ApplyCentralFroceMesssage(std::string ID, CML::Vec3 v)
+		std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
+
+		const auto& rididBodies = Resource::RigidBodyList;
+
+		auto iter = rididBodies.find(ID);
+		if(iter != rididBodies.end())
 		{
-			this->ID = ID;
-			this->v = v;
+			iter->second->ApplyCentralForce(v);
 		}
 
-		virtual Message::Status Work()
-		{
-			PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
-			std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
-
-			const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
-				Resource::RigidBodyList;
-
-			auto iter = rididBodies.find(ID);
-			if(iter != rididBodies.end())
-			{
-				iter->second->ApplyCentralForce(v);
-			}
-			return Message::Status::Complete;
-		}
-
-		CML::Vec3 v;
-		std::string	ID;
-	};
-
-	std::shared_ptr<ApplyCentralFroceMesssage> msg(new ApplyCentralFroceMesssage(ID, v));
-	PhysicsManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 void RigidBodyFactory::SetTorque(std::string ID, CML::Vec3 v)
 {
-	class  SetTorqueMesssage : public Message
+	Components::Physics->SubmitMessage([=]()
 	{
-	public:
-		SetTorqueMesssage(std::string ID, CML::Vec3 v)
+		std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
+
+		const auto& rididBodies = Resource::RigidBodyList;
+
+		auto iter = rididBodies.find(ID);
+		if(iter != rididBodies.end())
 		{
-			this->ID = ID;
-			this->v = v;
+			iter->second->SetTorque(v);
 		}
 
-		virtual Message::Status Work()
-		{
-			PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
-			std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
-
-			const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
-				Resource::RigidBodyList;
-
-			auto iter = rididBodies.find(ID);
-			if(iter != rididBodies.end())
-			{
-				iter->second->SetTorque(v);
-			}
-			return Message::Status::Complete;
-		}
-
-		CML::Vec3 v;
-		std::string	ID;
-	};
-
-	std::shared_ptr<SetTorqueMesssage> msg(new SetTorqueMesssage(ID, v));
-	PhysicsManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }
 
 CML::Vec3 RigidBodyFactory::GetTorque(std::string ID)
 {
 	CML::Vec3 returnValue;
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
-	std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
-
+	std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
+	
 	const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 		Resource::RigidBodyList;
 
@@ -181,9 +98,8 @@ CML::Vec3 RigidBodyFactory::GetTorque(std::string ID)
 CML::Vec3 RigidBodyFactory::GetForce(std::string ID)
 {
 	CML::Vec3 returnValue;
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
-	std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
 
 	const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 		Resource::RigidBodyList;
@@ -198,9 +114,8 @@ CML::Vec3 RigidBodyFactory::GetForce(std::string ID)
 CML::Vec3 RigidBodyFactory::GetLocation(std::string ID)
 {
 	CML::Vec3 returnValue;
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
-	std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
 
 	const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 		Resource::RigidBodyList;
@@ -215,9 +130,8 @@ CML::Vec3 RigidBodyFactory::GetLocation(std::string ID)
 CML::Vec4 RigidBodyFactory::GetQuaRotation(std::string ID)
 {
 	CML::Vec4 returnValue;
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
 
-	std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
 
 	const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 		Resource::RigidBodyList;
@@ -231,9 +145,7 @@ CML::Vec4 RigidBodyFactory::GetQuaRotation(std::string ID)
 }
 CML::Matrix4x4 RigidBodyFactory::GetTranslation(std::string ID)
 {
-	PhysicsManager& physicsManager = PhysicsManager::GetInstance();
-
-	std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
+	std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
 
 	const std::unordered_map<std::string, std::shared_ptr<RigidBody>>& rididBodies =
 		Resource::RigidBodyList;
@@ -248,25 +160,12 @@ CML::Matrix4x4 RigidBodyFactory::GetTranslation(std::string ID)
 
 void RigidBodyFactory::Release(std::string ID)
 {
-	class ReleaseMessage : public Message
+	Components::Physics->SubmitMessage([=]()
 	{
-	public:
-		std::string ID;
-		ReleaseMessage(std::string ID)
-		{
-			this->ID = ID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Physics->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(PhysicsManager::GetInstance().mutex);
+		Resource::RigidBodyList.erase(ID);
 
-			Resource::RigidBodyList.erase(this->ID);
-
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<ReleaseMessage> msg(new ReleaseMessage(ID));
-	PhysicsManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }

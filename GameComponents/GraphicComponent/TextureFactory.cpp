@@ -2,62 +2,33 @@
 
 #include "Resource.h"
 #include "BasicTexture.h"
-#include "GraphicManager.h"
+#include <Components.h>
 #include <GenerateGUID.h>
 
 std::string TextureFactory::Create(std::string texture)
 {
-	class  AddBasicTexture : public Message
+	std::string ID = CHL::GenerateGUID();
+
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		AddBasicTexture(std::string texture)
-		{
-			this->ID = CHL::GenerateGUID();
-			this->TextureFileName = texture;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
+		
+		std::shared_ptr<BasicTexture> newObject = BasicTexture::Spawn(texture);
+		Resource::TextureList[ID] = newObject;
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+		return Message::Status::Complete;
+	});
 
-			std::shared_ptr<BasicTexture> newObject =
-				BasicTexture::Spawn(this->TextureFileName);
-
-			Resource::TextureList[this->ID] = newObject;
-
-			return Message::Status::Complete;
-		}
-
-		std::string	TextureFileName;
-		std::string	ID;
-	};
-
-	std::shared_ptr<AddBasicTexture> msg(new AddBasicTexture(texture));
-	GraphicManager::GetInstance().SubmitMessage(msg);
-	return msg->ID;
+	return ID;
 }
 void TextureFactory::Release(std::string ID)
 {
-	class ReleaseTexture : public Message
+	Components::Graphic->SubmitMessage([=]()
 	{
-	public:
-		std::string ID;
-		ReleaseTexture(std::string ID)
-		{
-			this->ID = ID;
-		}
+		std::lock_guard<std::mutex> lock(Components::Graphic->Mutex());
 
-		virtual Message::Status Work()
-		{
-			std::lock_guard<std::mutex> lock(GraphicManager::GetInstance().mutex);
+		Resource::TextureList.erase(ID);
 
-			Resource::TextureList.erase(this->ID);
-
-			return Message::Status::Complete;
-		}
-	};
-
-	std::shared_ptr<ReleaseTexture> msg
-		(new ReleaseTexture(ID));
-	GraphicManager::GetInstance().SubmitMessage(msg);
+		return Message::Status::Complete;
+	});
 }

@@ -139,10 +139,14 @@ std::shared_ptr<BasicTexture> GraphicDrawSettingsEntity::findTexture(const std::
 {
 	std::shared_ptr<BasicTexture> returnValue;
 
-	auto iter = this->TextureList.find(ID);
-	if(iter != this->TextureList.end())
+	auto textureNameIter = this->TextureList.find(ID);
+	if(textureNameIter != this->TextureList.end())
 	{
-		returnValue = Resource::TextureList.find(iter->second)->second;
+		auto textureIter = Resource::TextureList.find(textureNameIter->second);
+		if(textureIter != Resource::TextureList.end())
+		{
+			returnValue = textureIter->second;
+		}
 	}
 	return returnValue;
 }
@@ -176,8 +180,15 @@ std::string GraphicDrawSettingsEntity::GetVertexShaderID() const
 }
 std::shared_ptr<VertexShader> GraphicDrawSettingsEntity::GetVertexShader() const
 {
+	std::shared_ptr<VertexShader> returnValue;
+
 	const std::string& id = this->VertexShaderID;
-	std::shared_ptr<VertexShader> returnValue = Resource::VertexShaderList.find(id)->second;
+	auto iter = Resource::VertexShaderList.find(id);
+	if(iter != Resource::VertexShaderList.end())
+	{
+		returnValue = iter->second;
+	}
+
 	return returnValue;
 }
 
@@ -201,8 +212,15 @@ std::string GraphicDrawSettingsEntity::GetPixelShaderID() const
 }
 std::shared_ptr<PixelShader> GraphicDrawSettingsEntity::GetPixelShader() const
 {
+	std::shared_ptr<PixelShader> returnValue;
+
 	const std::string& id = this->PixelShaderID;
-	std::shared_ptr<PixelShader> returnValue = Resource::PixelShaderList.find(id)->second;
+	auto iter = Resource::PixelShaderList.find(id);
+	if(iter != Resource::PixelShaderList.end())
+	{
+		returnValue = iter->second;
+	}
+
 	return returnValue;
 }
 

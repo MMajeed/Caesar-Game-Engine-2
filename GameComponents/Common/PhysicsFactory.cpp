@@ -24,9 +24,19 @@ void PhysicsFactory::SubmitMessage(std::shared_ptr<Message> msg)
 {
 	this->_ClassItems._PhysicsInterface->SubmitMessage(msg);
 }
+void PhysicsFactory::SubmitMessage(std::function<Message::Status()> func)
+{
+	std::shared_ptr<FuncMessage> msg(new FuncMessage(func));
+	this->_ClassItems._PhysicsInterface->SubmitMessage(msg);
+}
 std::shared_ptr<Interface> PhysicsFactory::GetComponent()
 {
 	return this->_ClassItems._PhysicsInterface;
+}
+
+std::mutex& PhysicsFactory::Mutex()
+{
+	return this->_ClassItems._PhysicsInterface->mutex;
 }
 
 std::shared_ptr<iCollisionShapeFactory> PhysicsFactory::CollisionShapeFactory()
