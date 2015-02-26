@@ -17,4 +17,6 @@ public:
 	static void Init(lua_State *lua);
 };
 
+static ScriptEntity& ScriptEntityTemp = ScriptEntity::GetInstance();
+
 #endif //__ScriptEntity__

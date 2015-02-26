@@ -14,20 +14,12 @@ Interface::Interface()
 	this->timer.NumberOfFramePerSeconds = 120;
 }
 
-void Interface::Run()
+void Interface::Run(double frameTime)
 {
 	try
 	{
-		// setup the frame timer
-		std::chrono::time_point<std::chrono::system_clock> start = std::chrono::system_clock::now();
-		std::chrono::time_point<std::chrono::system_clock> end = std::chrono::system_clock::now();
-
-		while( running == true )
+		if( running == true )
 		{
-			// update timer
-			start = std::chrono::system_clock::now();
-			std::chrono::duration<double> elapsed_seconds = start - end;
-			double frameTime = elapsed_seconds.count();
 			double deltaTime = frameTime;
 
 			/*const double MIN_TIMESTEP = 0.015;
@@ -40,18 +32,6 @@ void Interface::Run()
 			this->Work(frameTime, deltaTime);
 			this->ProccessMessages();
 
-			// update timer
-			std::chrono::time_point<std::chrono::system_clock> afterWork = std::chrono::system_clock::now();
-			std::chrono::duration<double> elapsedWorkTime = afterWork - end;
-
-			std::chrono::duration<double> minWorkTime(2. / this->timer.NumberOfFramePerSeconds);
-			if(elapsedWorkTime < minWorkTime)
-			{
-				std::chrono::duration<double, std::milli> timeToSleep = minWorkTime - elapsedWorkTime;
-				std::this_thread::sleep_for(std::chrono::duration_cast<std::chrono::milliseconds>(timeToSleep));
-			}
-			// update fps
-			end = start;
 			timer.FrameCount += 1;
 		}
 	}
@@ -93,7 +73,7 @@ void Interface::SubmitMessage(std::shared_ptr<Message> msg)
 void Interface::Start()
 {
 	this->Init();
-	this->Run();
+	//this->Run();
 }
 
 bool Interface::AnyMessage()

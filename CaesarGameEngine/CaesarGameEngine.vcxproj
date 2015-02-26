@@ -239,13 +239,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HalfAndHalfWorker.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ParallelWorker.cpp" />
+    <ClCompile Include="StraightForwardWorker.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ItemGroup>
     <AssimpDLL Include="$(SolutionDir)Lib\Assimp\dll\x86\Assimp32.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HalfAndHalfWorker.h" />
+    <ClInclude Include="ParallelWorker.h" />
+    <ClInclude Include="StraightForwardWorker.h" />
   </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)'=='Debug DLL' ">

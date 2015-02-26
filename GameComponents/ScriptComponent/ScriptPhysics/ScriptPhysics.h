@@ -17,4 +17,6 @@ public:
 	static void Init(lua_State *lua);
 };
 
+static ScriptPhysics& ScriptPhysicsEntity = ScriptPhysics::GetInstance();
+
 #endif //__ScriptPhysics__

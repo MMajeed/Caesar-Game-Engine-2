@@ -175,7 +175,7 @@ std::shared_ptr<BasicScreenShot> BasicScreenShot::Spawn(unsigned int width,
 	newObject->width = width;
 	newObject->height = height;
 	newObject->numberOfTargets = numberOfTargets;
-
+	
 	newObject->Init();
 
 	return newObject;

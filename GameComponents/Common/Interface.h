@@ -15,7 +15,7 @@ public:
 	Interface();
 
 	virtual void Init() = 0; // Inits the internal working 
-	virtual void Run();
+	virtual void Run(double frameTime);
 	virtual void Shutdown() = 0;	
 
 	virtual void ProccessMessages();

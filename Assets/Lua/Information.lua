@@ -10,7 +10,7 @@ MoveWindow(100, 100);
 ReizeClient(768, 1366);
 ResizeRender(768, 1366);
 -- FullScreen();
-VSync(true);
+-- VSync(true);
 
 function ResizeFunction(ID, Width, Height)
 	ResizeRender(Height, Width);

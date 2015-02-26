@@ -166,6 +166,9 @@ function UpdateStickFigure(time, ID)
     end
 end
 
+UpdateStickFigure(0);
+UpdateStickFigureJoints(0);
+
 LoopCall(15, UpdateStickFigure);
 LoopCall(15, UpdateStickFigureJoints);
 

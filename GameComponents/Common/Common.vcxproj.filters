@@ -8,19 +8,19 @@
       <Filter>Message</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Entity List\Entity</Filter>
+      <Filter>Entity\Entity</Filter>
     </ClCompile>
     <ClCompile Include="EntityList.cpp">
-      <Filter>Entity List</Filter>
+      <Filter>Entity</Filter>
     </ClCompile>
     <ClCompile Include="ObjectEntity.cpp">
-      <Filter>Entity List\Entity\ObjectEntity</Filter>
+      <Filter>Entity\Entity\ObjectEntity</Filter>
     </ClCompile>
     <ClCompile Include="CameraEntity.cpp">
-      <Filter>Entity List\Entity\CameraEntity</Filter>
+      <Filter>Entity\Entity\CameraEntity</Filter>
     </ClCompile>
     <ClCompile Include="DrawSettingsEntity.cpp">
-      <Filter>Entity List\Entity\DrawSettingsEntity</Filter>
+      <Filter>Entity\Entity\DrawSettingsEntity</Filter>
     </ClCompile>
     <ClCompile Include="AnimationFactory.cpp">
       <Filter>Factory\Animation</Filter>
@@ -47,22 +47,22 @@
     </ClInclude>
     <ClInclude Include="Linker.h" />
     <ClInclude Include="Entity.h">
-      <Filter>Entity List\Entity</Filter>
+      <Filter>Entity\Entity</Filter>
     </ClInclude>
     <ClInclude Include="EntityList.h">
-      <Filter>Entity List</Filter>
+      <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="ObjectEntity.h">
-      <Filter>Entity List\Entity\ObjectEntity</Filter>
+      <Filter>Entity\Entity\ObjectEntity</Filter>
     </ClInclude>
     <ClInclude Include="CameraEntity.h">
-      <Filter>Entity List\Entity\CameraEntity</Filter>
+      <Filter>Entity\Entity\CameraEntity</Filter>
     </ClInclude>
     <ClInclude Include="Keys.h">
       <Filter>Keys</Filter>
     </ClInclude>
     <ClInclude Include="DrawSettingsEntity.h">
-      <Filter>Entity List\Entity\DrawSettingsEntity</Filter>
+      <Filter>Entity\Entity\DrawSettingsEntity</Filter>
     </ClInclude>
     <ClInclude Include="AnimationFactory.h">
       <Filter>Factory\Animation</Filter>
@@ -129,21 +129,6 @@
     <Filter Include="Message">
       <UniqueIdentifier>{9f928656-2491-4f9c-889a-a462f19ee5cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Entity List">
-      <UniqueIdentifier>{e9ecd327-a7b9-4646-a664-7d2e4d3fec83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity List\Entity">
-      <UniqueIdentifier>{9173c95d-de8b-4cec-82a6-47d0a3551630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity List\Entity\ObjectEntity">
-      <UniqueIdentifier>{9f7b697f-b5e8-49a7-9ed2-9d55cdddd6f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity List\Entity\CameraEntity">
-      <UniqueIdentifier>{263ccd96-3cc0-462a-ac09-6b4fb46e4501}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Entity List\Entity\DrawSettingsEntity">
-      <UniqueIdentifier>{3ab339d8-73e8-4707-97b8-9ab7c698bc8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Factory">
       <UniqueIdentifier>{e701b396-eb85-48f3-b8b9-3d7330bd9d6c}</UniqueIdentifier>
     </Filter>
@@ -200,6 +185,21 @@
     </Filter>
     <Filter Include="Factory\Graphic\ScreenCaptureFactory\iDepthScreenCaptureFactory">
       <UniqueIdentifier>{06917bf0-ad78-4179-a78e-af05207d56ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{e9ecd327-a7b9-4646-a664-7d2e4d3fec83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Entity">
+      <UniqueIdentifier>{9173c95d-de8b-4cec-82a6-47d0a3551630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Entity\ObjectEntity">
+      <UniqueIdentifier>{9f7b697f-b5e8-49a7-9ed2-9d55cdddd6f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Entity\CameraEntity">
+      <UniqueIdentifier>{263ccd96-3cc0-462a-ac09-6b4fb46e4501}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Entity\DrawSettingsEntity">
+      <UniqueIdentifier>{3ab339d8-73e8-4707-97b8-9ab7c698bc8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

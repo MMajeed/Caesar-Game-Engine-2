@@ -17,4 +17,6 @@ public:
 	static void Init(lua_State *lua);
 };
 
+static ScriptGraphic& s = ScriptGraphic::GetInstance();
+
 #endif //__ScriptGraphic__

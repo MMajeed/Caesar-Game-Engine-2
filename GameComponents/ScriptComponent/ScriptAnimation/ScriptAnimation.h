@@ -17,6 +17,6 @@ public:
 	static void Init(lua_State *lua);
 };
 
-
+static ScriptAnimation& ScriptAnimationEntity = ScriptAnimation::GetInstance();
 
 #endif //__ScriptAnimation__

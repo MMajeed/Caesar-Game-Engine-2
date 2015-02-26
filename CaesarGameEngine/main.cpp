@@ -15,11 +15,10 @@
 #include <ScriptInput\ScriptInput.h>
 #include <ScriptPhysics\ScriptPhysics.h>
 
-#include <thread>
-#include <map>
-#include <iomanip>
-
 #include <Common\Components.h>
+#include "StraightForwardWorker.h"
+#include "ParallelWorker.h"
+#include "HalfAndHalfWorker.h"
 
 void Print(std::string s)
 {
@@ -33,12 +32,6 @@ int main()
 	Logger::AddInformationLogger(Print);
 	Logger::AddErrorLogger(Print);
 
-	ScriptAnimation::GetInstance();
-	ScriptEntity::GetInstance();
-	ScriptGraphic::GetInstance();
-	ScriptInput::GetInstance();
-	ScriptPhysics::GetInstance();
-
 	Components::Animation = std::shared_ptr<AnimationFactory>(new AnimationFactory(AnimationFactorySetup::Load()));
 	if(Components::Animation == nullptr){ Logger::LogError("Failed to correctly load Animation"); }
 	Components::Graphic = std::shared_ptr<GraphicFactory>(new GraphicFactory(GraphicFactorySetup::Load()));
@@ -48,30 +41,34 @@ int main()
 	Components::Physics = std::shared_ptr<PhysicsFactory>(new PhysicsFactory(PhysicsFactorySetup::Load()));
 	if(Components::Physics == nullptr){ Logger::LogError("Failed to correctly load Physics"); }
 
+	int state = 0;
 
-	std::map<std::string, std::shared_ptr<Interface>> vInterfaces;
-	std::vector<std::shared_ptr<std::thread>> vThreads;
-
-	vInterfaces["Animation"] = Components::Animation->GetComponent();
-	vInterfaces["Graphic"] = Components::Graphic->GetComponent();
-	vInterfaces["Script"] = Components::Script->GetComponent();
-	vInterfaces["Physics"] = Components::Physics->GetComponent();
-	
-	std::shared_ptr<AnimationFactory> g = Components::Animation;
-
-	for(auto iter = vInterfaces.begin();
-		iter != vInterfaces.end();
-		++iter)
+	if(state == 0)
 	{
-		std::shared_ptr<std::thread> thread
-			= std::shared_ptr<std::thread>(new std::thread(std::bind(&Interface::Start, iter->second)));
-
-		vThreads.push_back(thread);
+		StraightForwardWorker worker;
+		worker.AddComponent(Components::Script->GetComponent(), 0);
+		worker.AddComponent(Components::Animation->GetComponent(), 1);
+		worker.AddComponent(Components::Physics->GetComponent(), 2);
+		worker.AddComponent(Components::Graphic->GetComponent(), 3);
+		worker.Run();
 	}
-
-	while(running == true)
+	else if(state == 1)
 	{
-		std::this_thread::sleep_for(std::chrono::milliseconds((int)(5000)));
+		ParallelWorker worker;
+		worker.AddComponent(Components::Graphic->GetComponent(), 12000);
+		worker.AddComponent(Components::Physics->GetComponent(), 12000);
+		worker.AddComponent(Components::Animation->GetComponent(), 12000);
+		worker.AddComponent(Components::Script->GetComponent(), 12000);
+		worker.Run();
+	}
+	else if(state == 2)
+	{
+		HalfAndHalfWorker worker;
+		worker.AddFirstComponent(Components::Graphic->GetComponent(), 0);
+		worker.AddParallelComponent(Components::Physics->GetComponent());
+		worker.AddParallelComponent(Components::Animation->GetComponent());
+		worker.AddLastComponent(Components::Script->GetComponent(), 0);
+		worker.Run();
 	}
 
 	return 1;

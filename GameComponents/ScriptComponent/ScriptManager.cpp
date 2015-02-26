@@ -17,6 +17,7 @@
 #include "LuaModel.h"
 #include "LuaAnimation.h"
 #include "LuaNode.h"
+#include "ProcessMessage.h"
 
 ScriptManager::ScriptManager()
 {
@@ -45,20 +46,33 @@ void ScriptManager::Init()
 
 	luabind::open(Resource::lua);    
 
-	std::string packagePath = "package.path = \"";
-	packagePath += boost::filesystem::current_path().string() + "/Assets/Lua/?.lua\"";
-	std::replace(packagePath.begin(), packagePath.end(), '\\', '/');
-	luaL_dostring(Resource::lua, packagePath.c_str());	
-	
 	this->ActivateLuaClassesNFunction();
 
-	static const char mainLua[] = "Assets/Lua/main.lua";
+	class RunMain : public LuaProcesses
+	{
+	public:
+		void Update(double realTime, double deltaTime){}
+		void Action(lua_State *lua)
+		{
+			std::string packagePath = "package.path = \"";
+			packagePath += boost::filesystem::current_path().string() + "/Assets/Lua/?.lua\"";
+			std::replace(packagePath.begin(), packagePath.end(), '\\', '/');
+			luaL_dostring(Resource::lua, packagePath.c_str());
 
-	int ErrorException = luaL_loadfile(Resource::lua, mainLua);
-	if(ErrorException != 0) Logger::LogError(LuaError::GetLuaError(Resource::lua));
+			static const char mainLua[] = "Assets/Lua/main.lua";
+			
+			int ErrorException = luaL_loadfile(Resource::lua, mainLua);
+			if(ErrorException != 0) Logger::LogError(LuaError::GetLuaError(Resource::lua));
 
-	ErrorException = lua_pcall(Resource::lua, 0, 0, 0);
-	if(ErrorException != 0)	Logger::LogError(LuaError::GetLuaError(Resource::lua));
+			ErrorException = lua_pcall(Resource::lua, 0, 0, 0);
+			if(ErrorException != 0)	Logger::LogError(LuaError::GetLuaError(Resource::lua));
+
+			this->Delete = true;
+		}
+	};
+
+	std::shared_ptr<RunMain> rm(new RunMain);
+	ProcessMessage::Add(rm);
 }
 
 void ScriptManager::Work(double realTime, double deltaTime)
