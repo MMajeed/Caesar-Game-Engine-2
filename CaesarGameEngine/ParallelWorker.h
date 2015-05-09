@@ -1,18 +1,25 @@
 #ifndef __ParallelWorker__
 #define __ParallelWorker__
 
-#include "Interface.h"
+#include "iWorker.h"
+#include <Interface.h>
 #include <list>
 #include <memory>
 #include <thread>
 #include <condition_variable>
 
-class ParallelWorker
+class ParallelWorker : public iWorker
 {
 public:
+	ParallelWorker(unsigned int fps);
+
 	virtual void Run();
 
-	virtual void AddComponent(std::shared_ptr<Interface> pInterface, unsigned int NumberOfFramePerSeconds);
+	virtual void ChangeFPS(unsigned int p);
+
+	virtual void AddComponent(std::shared_ptr<Interface> pInterface,
+							  unsigned int Priority = 0,
+							  int Parameter = 0);
 protected:
 	class CommonDLL_API ComponentManager
 	{

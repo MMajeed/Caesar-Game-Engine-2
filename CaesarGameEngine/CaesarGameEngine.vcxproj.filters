@@ -11,6 +11,9 @@
     <ClCompile Include="StraightForwardWorker.cpp">
       <Filter>Worker\StraightForwardWorker</Filter>
     </ClCompile>
+    <ClCompile Include="iWorker.cpp">
+      <Filter>Worker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ParallelWorker.h">
@@ -21,6 +24,9 @@
     </ClInclude>
     <ClInclude Include="StraightForwardWorker.h">
       <Filter>Worker\StraightForwardWorker</Filter>
+    </ClInclude>
+    <ClInclude Include="iWorker.h">
+      <Filter>Worker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

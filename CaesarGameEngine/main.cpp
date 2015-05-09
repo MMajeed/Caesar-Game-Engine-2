@@ -41,11 +41,11 @@ int main()
 	Components::Physics = std::shared_ptr<PhysicsFactory>(new PhysicsFactory(PhysicsFactorySetup::Load()));
 	if(Components::Physics == nullptr){ Logger::LogError("Failed to correctly load Physics"); }
 
-	int state = 0;
+	int state = 2;
 
 	if(state == 0)
 	{
-		StraightForwardWorker worker;
+		StraightForwardWorker worker(120);
 		worker.AddComponent(Components::Script->GetComponent(), 0);
 		worker.AddComponent(Components::Animation->GetComponent(), 1);
 		worker.AddComponent(Components::Physics->GetComponent(), 2);
@@ -54,20 +54,20 @@ int main()
 	}
 	else if(state == 1)
 	{
-		ParallelWorker worker;
-		worker.AddComponent(Components::Graphic->GetComponent(), 12000);
-		worker.AddComponent(Components::Physics->GetComponent(), 12000);
-		worker.AddComponent(Components::Animation->GetComponent(), 12000);
-		worker.AddComponent(Components::Script->GetComponent(), 12000);
+		ParallelWorker worker(120);
+		worker.AddComponent(Components::Graphic->GetComponent());
+		worker.AddComponent(Components::Physics->GetComponent());
+		worker.AddComponent(Components::Animation->GetComponent());
+		worker.AddComponent(Components::Script->GetComponent());
 		worker.Run();
 	}
 	else if(state == 2)
 	{
-		HalfAndHalfWorker worker;
-		worker.AddFirstComponent(Components::Graphic->GetComponent(), 0);
-		worker.AddParallelComponent(Components::Physics->GetComponent());
-		worker.AddParallelComponent(Components::Animation->GetComponent());
-		worker.AddLastComponent(Components::Script->GetComponent(), 0);
+		HalfAndHalfWorker worker(120);
+		worker.AddComponent(Components::Script->GetComponent(), 0, HalfAndHalfWorker::ComponentParameter::First);
+		worker.AddComponent(Components::Physics->GetComponent(), 0, HalfAndHalfWorker::ComponentParameter::Parallel);
+		worker.AddComponent(Components::Animation->GetComponent(), 0, HalfAndHalfWorker::ComponentParameter::Parallel);
+		worker.AddComponent(Components::Graphic->GetComponent(), 0, HalfAndHalfWorker::ComponentParameter::Last);
 		worker.Run();
 	}
 

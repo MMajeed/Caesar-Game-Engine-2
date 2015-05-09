@@ -1,18 +1,23 @@
 #ifndef __StraightForwardWorker__
 #define __StraightForwardWorker__
 
-#include "Interface.h"
+#include "iWorker.h"
+#include <Interface.h>
 #include <list>
 #include <memory>
 
-class StraightForwardWorker
+class StraightForwardWorker : public iWorker
 {
 public:
-	StraightForwardWorker();
+	StraightForwardWorker(unsigned int fps);
 
 	virtual void Run();
 
-	virtual void AddComponent(std::shared_ptr<Interface> pInterface, unsigned int Priority);
+	virtual void ChangeFPS(unsigned int p);
+
+	virtual void AddComponent(std::shared_ptr<Interface> pInterface,
+							  unsigned int Priority = 0,
+							  int Parameter = 0);
 protected:
 	struct ComponentInfo
 	{
@@ -21,7 +26,6 @@ protected:
 	};
 
 	std::list<ComponentInfo> ComponentList;
-	unsigned int NumberOfFramePerSeconds;
 };
 
 #endif

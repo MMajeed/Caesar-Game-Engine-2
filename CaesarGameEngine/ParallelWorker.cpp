@@ -4,6 +4,12 @@
 #include <condition_variable>
 
 
+ParallelWorker::ParallelWorker(unsigned int fps)
+	: iWorker(fps)
+{
+
+}
+
 void ParallelWorker::Run()
 {
 	for(const auto& iter : this->ComponentList)
@@ -17,17 +23,25 @@ void ParallelWorker::Run()
 	while(true)
 	{
 		std::this_thread::sleep_for(std::chrono::milliseconds((int)(5000)));
-		
+
 	}
 }
 
-void ParallelWorker::AddComponent(std::shared_ptr<Interface> pInterface, unsigned int NumberOfFramePerSeconds)
+void ParallelWorker::ChangeFPS(unsigned int p)
 {
-	std::shared_ptr<ParallelWorker::ComponentManager> newManager(new ParallelWorker::ComponentManager(pInterface, NumberOfFramePerSeconds));
+	for(auto& iter : this->ComponentList)
+	{
+		iter->NumberOfFramePerSeconds = p;
+	}
+}
+
+void ParallelWorker::AddComponent(std::shared_ptr<Interface> pInterface,
+								  unsigned int Priority,
+								  int Parameter)
+{
+	std::shared_ptr<ParallelWorker::ComponentManager> newManager(new ParallelWorker::ComponentManager(pInterface, this->NumFPS));
 
 	ComponentList.push_back(newManager);
-
-	
 }
 
 // ************************************************************************************* //
@@ -66,7 +80,7 @@ void ParallelWorker::ComponentManager::Run()
 		std::chrono::time_point<std::chrono::system_clock> afterWork = std::chrono::system_clock::now();
 		std::chrono::duration<double> elapsedWorkTime = afterWork - end;
 
-		std::chrono::duration<double> minWorkTime(2. / this->NumberOfFramePerSeconds);
+		std::chrono::duration<double> minWorkTime(1. / this->NumberOfFramePerSeconds);
 		if(elapsedWorkTime < minWorkTime)
 		{
 			std::chrono::duration<double, std::milli> timeToSleep = minWorkTime - elapsedWorkTime;

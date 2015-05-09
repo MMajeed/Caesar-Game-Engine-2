@@ -3,8 +3,8 @@
 #include <thread>
 #include <condition_variable>
 
-HalfAndHalfWorker::HalfAndHalfWorker()
-	: NumberOfFramePerSeconds(12000)
+HalfAndHalfWorker::HalfAndHalfWorker(unsigned int fps)
+	: iWorker(fps)
 {
 
 }
@@ -35,7 +35,7 @@ void HalfAndHalfWorker::Run()
 			iter->Running = true;
 			iter->cv.notify_all();
 		}
-		
+
 		// This loop waits until all the ParallelComponentList to finish their work
 		for(const auto& iter : this->ParallelComponentList)
 		{
@@ -52,7 +52,7 @@ void HalfAndHalfWorker::Run()
 		std::chrono::time_point<std::chrono::system_clock> afterWork = std::chrono::system_clock::now();
 		std::chrono::duration<double> elapsedWorkTime = afterWork - end;
 
-		std::chrono::duration<double> minWorkTime(2. / this->NumberOfFramePerSeconds);
+		std::chrono::duration<double> minWorkTime(1. / this->NumFPS);
 		if(elapsedWorkTime < minWorkTime)
 		{
 			std::chrono::duration<double, std::milli> timeToSleep = minWorkTime - elapsedWorkTime;
@@ -62,6 +62,30 @@ void HalfAndHalfWorker::Run()
 		end = start;
 	}
 }
+
+void HalfAndHalfWorker::ChangeFPS(unsigned int p)
+{
+	this->NumFPS = p;
+}
+
+void HalfAndHalfWorker::AddComponent(std::shared_ptr<Interface> pInterface,
+									 unsigned int Priority,
+									 int Parameter)
+{
+	if(Parameter == (int)HalfAndHalfWorker::ComponentParameter::First)
+	{
+		this->AddFirstComponent(pInterface, Priority);
+	}
+	else if(Parameter == (int)HalfAndHalfWorker::ComponentParameter::Last)
+	{
+		this->AddLastComponent(pInterface, Priority);
+	}
+	else
+	{
+		this->AddParallelComponent(pInterface);
+	}
+}
+
 
 void HalfAndHalfWorker::AddFirstComponent(std::shared_ptr<Interface> pInterface, unsigned int Priority)
 {
@@ -125,8 +149,6 @@ void HalfAndHalfWorker::ParallelManager::Run()
 		// wait for the worker
 		{
 			std::unique_lock<std::mutex> lk(m);
-			this->Running = false; // Set it to false
-			cv.notify_all();
 			cv.wait(lk, [=] { return Running; }); // Wait until it is turned back to true
 		}
 
@@ -139,5 +161,11 @@ void HalfAndHalfWorker::ParallelManager::Run()
 
 		// update fps
 		end = start;
+
+		{
+			std::unique_lock<std::mutex> lk(m);
+			this->Running = false; // Set it to false
+			cv.notify_all();
+		}
 	}
 }

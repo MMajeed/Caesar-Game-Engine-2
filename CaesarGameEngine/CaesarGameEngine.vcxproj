@@ -240,6 +240,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="HalfAndHalfWorker.cpp" />
+    <ClCompile Include="iWorker.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParallelWorker.cpp" />
     <ClCompile Include="StraightForwardWorker.cpp" />
@@ -252,6 +253,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HalfAndHalfWorker.h" />
+    <ClInclude Include="iWorker.h" />
     <ClInclude Include="ParallelWorker.h" />
     <ClInclude Include="StraightForwardWorker.h" />
   </ItemGroup>
